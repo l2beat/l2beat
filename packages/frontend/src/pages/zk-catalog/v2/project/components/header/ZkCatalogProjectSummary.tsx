@@ -1,6 +1,7 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { CustomLink } from '~/components/link/CustomLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
@@ -66,7 +67,10 @@ export function TrustedSetupsByProofSystemSection({
       {/* Mobile */}
       <div className="space-y-4 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
-          ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
+          ([
+            key,
+            { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+          ]) => {
             const proofSystem = trustedSetups[0]?.proofSystem
             if (trustedSetups.length === 0 || !proofSystem) return null
 
@@ -74,6 +78,14 @@ export function TrustedSetupsByProofSystemSection({
               <div key={key} className="flex flex-col gap-3">
                 <TrustedSetupCell trustedSetups={trustedSetups} dotSize="lg" />
                 <div className="grid grid-cols-[200px_1fr] gap-1">
+                  {!!onchainVerifiers?.length && (
+                    <div className="flex flex-col gap-1.5">
+                      <p className="font-medium text-label-value-12 text-secondary">
+                        Onchain verifier
+                      </p>
+                      <OnchainVerifiers onchainVerifiers={onchainVerifiers} />
+                    </div>
+                  )}
                   {projectsUsedIn && (
                     <div className="flex flex-col gap-2">
                       <p className="font-medium text-label-value-12 text-secondary">
@@ -102,7 +114,10 @@ export function TrustedSetupsByProofSystemSection({
         <table className="w-full border-separate border-spacing-y-4">
           <tbody>
             {Object.entries(trustedSetupsByProofSystem).map(
-              ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
+              ([
+                key,
+                { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+              ]) => {
                 const proofSystem = trustedSetups[0]?.proofSystem
                 if (trustedSetups.length === 0 || !proofSystem) return null
 
@@ -113,6 +128,18 @@ export function TrustedSetupsByProofSystemSection({
                         trustedSetups={trustedSetups}
                         dotSize="lg"
                       />
+                    </td>
+                    <td>
+                      {!!onchainVerifiers?.length && (
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-label-value-12 text-secondary">
+                            Onchain verifier
+                          </p>
+                          <OnchainVerifiers
+                            onchainVerifiers={onchainVerifiers}
+                          />
+                        </div>
+                      )}
                     </td>
                     <td>
                       {projectsUsedIn && (
@@ -142,6 +169,27 @@ export function TrustedSetupsByProofSystemSection({
           </tbody>
         </table>
       </div>
+    </div>
+  )
+}
+
+function OnchainVerifiers({
+  onchainVerifiers,
+}: {
+  onchainVerifiers: NonNullable<
+    TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  >
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-14">
+      {onchainVerifiers.map((verifier, index) => (
+        <span key={verifier.href}>
+          <CustomLink href={verifier.href}>{verifier.name}</CustomLink>
+          {index < onchainVerifiers.length - 1 && (
+            <span className="text-secondary">,</span>
+          )}
+        </span>
+      ))}
     </div>
   )
 }

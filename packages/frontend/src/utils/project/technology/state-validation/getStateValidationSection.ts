@@ -34,6 +34,7 @@ export function getStateValidationSection(
       project.id,
       project.scalingInfo.proofSystem?.zkCatalogId,
       zkCatalogProjects,
+      project.contracts,
       contractUtils,
       tvs,
       allProjects,

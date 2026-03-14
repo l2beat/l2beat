@@ -18,6 +18,10 @@ import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 export type TrustedSetupsByProofSystem = Record<
   string,
   {
+    onchainVerifiers?: {
+      name: string
+      href: string
+    }[]
     trustedSetups: (TrustedSetup & {
       proofSystem: ZkCatalogTag
     })[]
