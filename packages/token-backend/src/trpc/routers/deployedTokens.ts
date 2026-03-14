@@ -1,8 +1,9 @@
 import type { TokenDatabase } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { Address32, assert, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
+import { InteropTransferClassifier } from '../../../../shared/build'
 import { Chain } from '../../chains/Chain'
 import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
 import type { AbstractTokenRecord } from '../../schemas/AbstractToken'
@@ -107,7 +108,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     findByChainAndAddress: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -117,7 +118,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     checkIfExists: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -127,13 +128,13 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
     getByChainAndAddress: readOnlyProcedure
       .input(v.array(v.object({ chain: v.string(), address: v.string() })))
       .query(async ({ ctx, input }) =>
-        ctx.db.deployedToken.getByChainAndAddress(input),
+        ctx.tokenDb.deployedToken.getByChainAndAddress(input),
       ),
 
     checks: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {
-        const result = await ctx.db.deployedToken.findByChainAndAddress({
+        const result = await ctx.tokenDb.deployedToken.findByChainAndAddress({
           chain: input.chain,
           address: input.address,
         })
@@ -154,7 +155,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
           }
         }
 
-        const chainRecord = await ctx.db.chain.findByName(input.chain)
+        const chainRecord = await ctx.tokenDb.chain.findByName(input.chain)
         assert(chainRecord, 'Chain not found')
 
         const chain = createChain(chainRecord)
@@ -202,14 +203,14 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         }
 
         const coin = await getCoinByChainAndAddress(
-          ctx.db,
+          ctx.tokenDb,
           input.chain,
           input.address,
         )
         if (coin === null) {
           let abstractTokenSuggestions: AbstractTokenSuggestion[] | undefined
           if (symbol) {
-            const allAbstractTokens = await ctx.db.abstractToken.getAll()
+            const allAbstractTokens = await ctx.tokenDb.abstractToken.getAll()
             abstractTokenSuggestions = findSimilarAbstractTokens(
               symbol,
               allAbstractTokens,
@@ -236,7 +237,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         }
 
         const abstractToken = coin.id
-          ? await ctx.db.abstractToken.findByCoingeckoId(coin.id)
+          ? await ctx.tokenDb.abstractToken.findByCoingeckoId(coin.id)
           : undefined
 
         return {
@@ -262,7 +263,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         if (!coin) {
           return []
         }
-        const chains = await ctx.db.chain.getAll()
+        const chains = await ctx.tokenDb.chain.getAll()
 
         const aliasToChain = new Map([
           ...chains.map((chain) => [chain.name, chain.name] as const),
@@ -273,7 +274,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         ])
 
         const deployedTokens =
-          await ctx.db.deployedToken.getByChainsAndAddresses(
+          await ctx.tokenDb.deployedToken.getByChainsAndAddresses(
             Object.entries(coin.platforms)
               .map(([platform, address]) => {
                 const chain = aliasToChain.get(platform)
@@ -311,6 +312,39 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
 
         return suggestions
       }),
+
+    suggestions: readOnlyProcedure.query(async ({ ctx }) => {
+      const partialTransfers =
+        await ctx.db.interopTransfer.getWithPartialAbstractTokenIds()
+      const classifier = new InteropTransferClassifier()
+      const classified = classifier.groupByBridgeType(partialTransfers)
+      const transfersForSuggestions = [
+        ...classified.lockAndMint,
+        ...classified.burnAndMint,
+      ]
+      const map = new Set<string>()
+      for (const transfer of transfersForSuggestions) {
+        if (!transfer.srcAbstractTokenId) {
+          map.add(
+            `${transfer.srcChain}:${transfer.srcTokenAddress}:${transfer.dstAbstractTokenId}`,
+          )
+        }
+        if (!transfer.dstAbstractTokenId) {
+          map.add(
+            `${transfer.dstChain}:${transfer.dstTokenAddress}:${transfer.srcAbstractTokenId}`,
+          )
+        }
+      }
+
+      return Array.from(map.values()).map((value) => {
+        const [chain, address, abstractTokenId] = value.split(':')
+        return {
+          chain,
+          address: Address32.cropToEthereumAddress(Address32(address)),
+          abstractTokenId,
+        }
+      })
+    }),
   })
 }
 

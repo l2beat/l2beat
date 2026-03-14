@@ -222,6 +222,6 @@ function createRouter(mockDb: TokenDatabase) {
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockDb,
   })
 }

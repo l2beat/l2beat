@@ -401,6 +401,6 @@ function createRouter(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockDb,
   })
 }
