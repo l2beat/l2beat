@@ -26,10 +26,10 @@ import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import type { TechnologyContract } from './ContractEntry'
 
 export interface PastUpgradesData {
   upgrades: {
+    isInitialDeployment?: boolean
     timestamp: UnixTime
     transactionHash: {
       hash: string
@@ -40,11 +40,20 @@ export interface PastUpgradesData {
       href: string
       diffUrl?: string
     }[]
+    proxyContract?: {
+      address: string
+      href: string
+      name?: string
+    }
   }[]
   stats: {
     count: number
     avgInterval: number | null
     lastInterval: number | null
+  }
+  labels?: {
+    proxyContract?: string
+    implementations?: string
   }
 }
 
@@ -53,6 +62,7 @@ export function PastUpgradesDialog({
 }: {
   pastUpgrades: PastUpgradesData
 }) {
+  const showProxyContract = pastUpgrades.upgrades.some((u) => !!u.proxyContract)
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
       <HistoryClockIcon className="size-3.5 fill-brand" />
@@ -62,8 +72,72 @@ export function PastUpgradesDialog({
     </div>
   )
 
-  const stats = (
-    <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
+  return (
+    <>
+      <Dialog>
+        <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
+        <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
+          <DialogHeader>
+            <div className="flex items-center justify-between">
+              <DialogTitle>Past upgrades</DialogTitle>
+              <DialogClose>
+                <CloseIcon className="size-4 fill-primary" />
+              </DialogClose>
+            </div>
+            <DialogDescription className="sr-only">
+              List of past upgrades
+            </DialogDescription>
+          </DialogHeader>
+          <PastUpgradesStats pastUpgrades={pastUpgrades} />
+          <ScrollWithGradient className="-mr-2 space-y-3 pr-2">
+            {pastUpgrades.upgrades?.map((upgrade) => (
+              <PastUpgradeEntry
+                key={`${upgrade.transactionHash.hash}-${upgrade.proxyContract?.address ?? 'no-proxy'}-${upgrade.timestamp.toString()}`}
+                upgrade={upgrade}
+                showProxyContract={showProxyContract}
+                labels={pastUpgrades.labels}
+              />
+            ))}
+          </ScrollWithGradient>
+        </DialogContent>
+      </Dialog>
+      <Drawer>
+        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
+        <DrawerContent className="max-h-[90dvh]">
+          <DrawerHeader className="flex items-center justify-between">
+            <DrawerTitle className="font-semibold text-label-value-18">
+              Past upgrades
+            </DrawerTitle>
+            <DrawerDescription className="sr-only">
+              List of past upgrades
+            </DrawerDescription>
+          </DrawerHeader>
+          <PastUpgradesStats pastUpgrades={pastUpgrades} />
+          <ScrollWithGradient className="mt-2 max-h-[50dvh] space-y-2">
+            {pastUpgrades.upgrades?.map((upgrade) => (
+              <PastUpgradeEntry
+                key={`${upgrade.transactionHash.hash}-${upgrade.proxyContract?.address ?? 'no-proxy'}-${upgrade.timestamp.toString()}`}
+                upgrade={upgrade}
+                showProxyContract={showProxyContract}
+                labels={pastUpgrades.labels}
+              />
+            ))}
+          </ScrollWithGradient>
+        </DrawerContent>
+      </Drawer>
+    </>
+  )
+}
+
+export function PastUpgradesStats({
+  pastUpgrades,
+  className,
+}: {
+  pastUpgrades: PastUpgradesData
+  className?: string
+}) {
+  return (
+    <ChartStats className={cn('md:grid-cols-3 lg:grid-cols-3', className)}>
       <ChartStatsItem label="Count of upgrades" className="max-md:h-7">
         {pastUpgrades.stats.count === 0
           ? 'No upgrades'
@@ -85,72 +159,30 @@ export function PastUpgradesDialog({
       </ChartStatsItem>
     </ChartStats>
   )
-
-  return (
-    <>
-      <Dialog>
-        <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
-        <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
-          <DialogHeader>
-            <div className="flex items-center justify-between">
-              <DialogTitle>Past upgrades</DialogTitle>
-              <DialogClose>
-                <CloseIcon className="size-4 fill-primary" />
-              </DialogClose>
-            </div>
-            <DialogDescription className="sr-only">
-              List of past upgrades
-            </DialogDescription>
-          </DialogHeader>
-          {stats}
-          <ScrollWithGradient className="-mr-2 space-y-3 pr-2">
-            {pastUpgrades.upgrades?.map((upgrade, i) => (
-              <PastUpgradeEntry
-                key={upgrade.timestamp.toString()}
-                upgrade={upgrade}
-                deployment={i === pastUpgrades.upgrades.length - 1}
-              />
-            ))}
-          </ScrollWithGradient>
-        </DialogContent>
-      </Dialog>
-      <Drawer>
-        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className="max-h-[90dvh]">
-          <DrawerHeader className="flex items-center justify-between">
-            <DrawerTitle className="font-semibold text-label-value-18">
-              Past upgrades
-            </DrawerTitle>
-            <DrawerDescription className="sr-only">
-              List of past upgrades
-            </DrawerDescription>
-          </DrawerHeader>
-          {stats}
-          <ScrollWithGradient className="mt-2 max-h-[50dvh] space-y-2">
-            {pastUpgrades.upgrades?.map((upgrade, i) => (
-              <PastUpgradeEntry
-                key={upgrade.timestamp.toString()}
-                upgrade={upgrade}
-                deployment={i === pastUpgrades.upgrades.length - 1}
-              />
-            ))}
-          </ScrollWithGradient>
-        </DrawerContent>
-      </Drawer>
-    </>
-  )
 }
 
 function PastUpgradeEntry({
   upgrade,
-  deployment,
+  showProxyContract,
+  labels,
 }: {
-  upgrade: NonNullable<TechnologyContract['pastUpgrades']>['upgrades'][number]
-  deployment?: boolean
+  upgrade: PastUpgradesData['upgrades'][number]
+  showProxyContract: boolean
+  labels?: PastUpgradesData['labels']
 }) {
+  const implementationsLabel =
+    labels?.implementations ?? 'Implementation addresses'
+  const proxyContractLabel = labels?.proxyContract ?? 'Proxy contract'
+  const deployment = upgrade.isInitialDeployment
+
   return (
     <div className="space-y-4 rounded-sm border border-divider bg-surface-primary p-3">
-      <div className="md:grid md:grid-cols-2">
+      <div
+        className={cn(
+          'md:grid',
+          showProxyContract ? 'md:grid-cols-3' : 'md:grid-cols-2',
+        )}
+      >
         <ValueWithTitle title={deployment ? 'Deployment time' : 'Time'}>
           <span className="font-medium text-label-value-15">
             {formatTimestamp(upgrade.timestamp, {
@@ -159,6 +191,21 @@ function PastUpgradeEntry({
             })}
           </span>
         </ValueWithTitle>
+        {showProxyContract && (
+          <ValueWithTitle title={proxyContractLabel} className="max-md:hidden">
+            {upgrade.proxyContract ? (
+              <CustomLink
+                href={upgrade.proxyContract.href}
+                className="word-break-word font-medium text-label-value-15"
+              >
+                {upgrade.proxyContract.name ??
+                  `${upgrade.proxyContract.address.slice(0, 6)}…${upgrade.proxyContract.address.slice(38, 42)}`}
+              </CustomLink>
+            ) : (
+              <NotApplicableBadge />
+            )}
+          </ValueWithTitle>
+        )}
         <ValueWithTitle
           title={
             deployment ? 'Deployment transaction hash' : 'Transaction hash'
@@ -186,7 +233,22 @@ function PastUpgradeEntry({
           {upgrade.transactionHash.hash.slice(60, 66)}
         </CustomLink>
       </ValueWithTitle>
-      <ValueWithTitle title="Implementation address" className="md:mb-0">
+      {showProxyContract && (
+        <ValueWithTitle title={proxyContractLabel} className="md:hidden">
+          {upgrade.proxyContract ? (
+            <CustomLink
+              href={upgrade.proxyContract.href}
+              className="word-break-word font-medium text-label-value-15"
+            >
+              {upgrade.proxyContract.name ??
+                `${upgrade.proxyContract.address.slice(0, 6)}…${upgrade.proxyContract.address.slice(38, 42)}`}
+            </CustomLink>
+          ) : (
+            <NotApplicableBadge />
+          )}
+        </ValueWithTitle>
+      )}
+      <ValueWithTitle title={implementationsLabel} className="md:mb-0">
         <div className="flex flex-wrap gap-x-4 gap-y-2">
           {upgrade.implementations.map((implementation) => (
             <div

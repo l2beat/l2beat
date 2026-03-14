@@ -29,6 +29,7 @@ import { ScalingTvsSection } from './sections/tvs/ScalingTvsSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
+import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
 import { VerifiersSection } from './sections/VerifiersSection'
 
 interface ProjectDetailsProps {
@@ -277,6 +278,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'GrissiniRiskAnalysisSection':
             return (
               <GrissiniRiskAnalysisSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'UpgradesAndGovernanceSection':
+            return (
+              <UpgradesAndGovernanceSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

@@ -27,6 +27,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './VerifiersSection'
 
 type SectionId =
@@ -59,7 +60,6 @@ type SectionId =
   | 'interop-volume'
   | 'interop-transfers'
   | 'interop-tokens'
-
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -221,6 +221,11 @@ interface ProjectDetailsZkCatalogTvsSection {
   props: ProjectDetailsProps<ZkCatalogTvsSectionProps>
 }
 
+interface ProjectDetailsUpgradesAndGovernanceSection {
+  type: 'UpgradesAndGovernanceSection'
+  props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -255,4 +260,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropVolumeSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
+  | ProjectDetailsUpgradesAndGovernanceSection
 )
