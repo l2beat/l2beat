@@ -1,3 +1,4 @@
+export * from './aggregate'
 export * from './balances'
 export * from './health'
 export * from './positions'

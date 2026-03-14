@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "compiledAt": "2026-03-14T16:15:50.014Z",
+  "project": "uniswap-v2",
+  "metadata": {
+    "protocolName": "Uniswap V2",
+    "protocolSlug": "uniswap-v2",
+    "chain": "Ethereum",
+    "projectType": "dex",
+    "tokenName": "UNI",
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $748.60M."
+  },
+  "totals": {
+    "contractCount": 9,
+    "permissionedFunctionCount": 0,
+    "scoredFunctionCount": 0,
+    "adminCount": 0,
+    "dependencyCount": 0,
+    "totalCapitalAtRisk": 0,
+    "totalTokenValueAtRisk": 0,
+    "totalTokenValue": 0
+  },
+  "admins": [],
+  "dependencies": [],
+  "funds": [
+    {
+      "address": "eth:0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "name": "UniswapV2Factory (All Pairs)",
+      "description": "Factory contract that has deployed $491.24K liquidity pair contracts holding $748.60M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null,
+      "aggregate": {
+        "totalUsdValue": 748597271.7224443,
+        "contractCount": 491241,
+        "handlerName": "uniswap-v2-factory",
+        "label": "All Uniswap-v2 Pairs"
+      }
+    }
+  ],
+  "functions": [],
+  "contracts": [
+    {
+      "address": "eth:0x18e433c7Bf8A2E1d0197CE5d8f9AFAda1A771360",
+      "name": "FeeToSetter",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+      "name": "GovernorBravoDelegate",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "name": "GovernorBravo Governance",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "name": "Governance Timelock (48h)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "name": "UniswapV2Factory (All Pairs)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
+      "name": "UniswapV2Pair",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+      "name": "UniswapV2Router02",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xDAF819c2437a82f9e01f6586207ebF961a7f0970",
+      "name": "FeeTo",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "name": "Wrapped Ether Token",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    }
+  ],
+  "resources": [
+    {
+      "url": "https://app.uniswap.org/",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface/releases",
+      "type": "frontend",
+      "frontendSubtype": "third-party",
+      "label": "IPFS Releases"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface",
+      "type": "frontend",
+      "frontendSubtype": "self-hosted",
+      "label": "Open source Interface"
+    },
+    {
+      "url": "https://x.com/uniswap",
+      "type": "x"
+    }
+  ],
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

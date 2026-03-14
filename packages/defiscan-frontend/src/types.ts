@@ -153,6 +153,12 @@ export interface CompiledFundHolder {
     totalSupply: string
     tokenValue: number
   } | null
+  aggregate?: {
+    totalUsdValue: number
+    contractCount: number
+    handlerName: string
+    label?: string
+  } | null
 }
 
 export interface CompiledFunction {

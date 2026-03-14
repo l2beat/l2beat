@@ -48,6 +48,7 @@ jobs:
             -e ETHEREUM_RPC_URL="${{ secrets.ETHEREUM_RPC_URL }}" \
             -e ETHERSCAN_API_KEY="${{ secrets.ETHERSCAN_API_KEY }}" \
             -e DEBANK_API_KEY="${{ secrets.DEBANK_API_KEY }}" \
+            -e THEGRAPH_API_KEY="${{ secrets.THEGRAPH_API_KEY }}" \
             -e LOG_LEVEL=INFO \
             defidisco-monitor:latest \
             node packages/backend/build/src/defidisco-monitor.js

@@ -72,12 +72,28 @@ export function updateContractTag(
   const newIsToken = updateRequest.isToken ?? existingTag?.isToken ?? false
   const newIsGovernance =
     updateRequest.isGovernance ?? existingTag?.isGovernance ?? false
+  const newFetchAggregate =
+    updateRequest.fetchAggregate ?? existingTag?.fetchAggregate ?? false
   const newEntity =
     updateRequest.entity !== undefined
       ? updateRequest.entity === null
         ? undefined
         : updateRequest.entity
       : existingTag?.entity
+  const newAggregateHandler = newFetchAggregate
+    ? updateRequest.aggregateHandler !== undefined
+      ? updateRequest.aggregateHandler === null
+        ? undefined
+        : updateRequest.aggregateHandler
+      : existingTag?.aggregateHandler
+    : undefined
+  const newAggregateLabel = newFetchAggregate
+    ? updateRequest.aggregateLabel !== undefined
+      ? updateRequest.aggregateLabel === null
+        ? undefined
+        : updateRequest.aggregateLabel
+      : existingTag?.aggregateLabel
+    : undefined
 
   // Check if any meaningful tag data exists
   const hasAnyTagData =
@@ -85,7 +101,8 @@ export function updateContractTag(
     newIsGovernance ||
     newFetchBalances ||
     newFetchPositions ||
-    newIsToken
+    newIsToken ||
+    newFetchAggregate
 
   if (hasAnyTagData) {
     // Create or update tag entry
@@ -97,6 +114,9 @@ export function updateContractTag(
       fetchBalances: newFetchBalances || undefined, // Only store if true
       fetchPositions: newFetchPositions || undefined, // Only store if true
       isToken: newIsToken || undefined, // Only store if true
+      fetchAggregate: newFetchAggregate || undefined, // Only store if true
+      aggregateHandler: newAggregateHandler || undefined,
+      aggregateLabel: newAggregateLabel || undefined,
       timestamp: new Date().toISOString(),
     }
 

@@ -16,17 +16,28 @@ export class FundsRefresher {
     this.logger = this.logger.for(this)
   }
 
-  async refreshFundsForProject(project: string): Promise<void> {
+  /**
+   * Returns an array of warning messages (e.g. aggregate fetch failures).
+   * Empty array means everything succeeded.
+   */
+  async refreshFundsForProject(project: string): Promise<string[]> {
     this.logger.info('Refreshing funds data', { project })
 
     // Set the env var that fetchAllFundsForProject reads
     process.env.DEFISCAN_ENDPOINTS_URL = this.defiscanEndpointsUrl
 
+    const warnings: string[] = []
+
     try {
       await fetchAllFundsForProject(
         this.paths,
         project,
-        (message) => this.logger.info(message, { project }),
+        (message) => {
+          this.logger.info(message, { project })
+          if (message.includes('FAILED')) {
+            warnings.push(message.trim())
+          }
+        },
         true, // forceRefresh — always get fresh data in monitor
       )
       this.logger.info('Funds data refreshed successfully', { project })
@@ -37,5 +48,7 @@ export class FundsRefresher {
       )
       // Don't throw — funds errors shouldn't stop the monitoring loop
     }
+
+    return warnings
   }
 }

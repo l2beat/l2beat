@@ -50,9 +50,9 @@
 ```
 
 - **File Location**: `packages/config/src/projects/{project}/contract-tags.json`
-- **Fields**: `isExternal` (boolean), `isGovernance` (boolean), `entity` (string, groups external contracts by provider)
+- **Fields**: `isExternal` (boolean), `isGovernance` (boolean), `entity` (string, groups external contracts by provider), `fetchBalances` (boolean), `fetchPositions` (boolean), `isToken` (boolean), `fetchAggregate` (boolean), `aggregateHandler` (string), `aggregateLabel` (string)
 - **Update Pattern**: Backend preserves existing attributes when updating individual fields
-- **Cleanup**: When all boolean tag fields (`isExternal`, `isGovernance`, `fetchBalances`, `fetchPositions`, `isToken`) are false, the entry is removed from the file
+- **Cleanup**: When all boolean tag fields (`isExternal`, `isGovernance`, `fetchBalances`, `fetchPositions`, `isToken`, `fetchAggregate`) are false, the entry is removed from the file
 
 ## Funds Tracking
 
@@ -77,7 +77,11 @@
   "contractAddress": "eth:0x...",
   "isExternal": true,
   "fetchBalances": true,
-  "fetchPositions": false
+  "fetchPositions": false,
+  "isToken": false,
+  "fetchAggregate": true,
+  "aggregateHandler": "uniswap-v2-factory",
+  "aggregateLabel": "Uniswap V2 Liquidity Pools"
 }
 ```
 
@@ -101,6 +105,13 @@
         "timestamp": "...",
         "source": "debank"
       },
+      "aggregate": {
+        "totalUsdValue": 748000000,
+        "contractCount": 491000,
+        "handlerName": "uniswap-v2-factory",
+        "timestamp": "...",
+        "source": "thegraph-uniswap-v2"
+      },
       "lastFetched": "2025-12-09T...",
       "error": null
     }
@@ -120,12 +131,42 @@ cd ~/defidisco/packages/config && l2b ui
 cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 ```
 
+### Aggregate Funds
+
+**Factory-level TVL aggregation**: For protocols that deploy many child contracts (e.g., Uniswap V2 pairs), aggregate funds tracking fetches total TVL from a single subgraph query instead of tracking each contract individually.
+
+**How it works**:
+1. Researcher tags a factory contract with `fetchAggregate: true` and selects an `aggregateHandler` (e.g., `uniswap-v2-factory`)
+2. When funds are fetched, l2b calls `defiscan-endpoints /aggregate` endpoint with the handler name
+3. The endpoint dispatches to the matching handler (e.g., `UniswapV2FactoryHandler` queries The Graph subgraph)
+4. Aggregate data is stored in `funds-data.json` under the `aggregate` field
+5. The review compiler includes aggregate-tagged contracts in `compiled-review.json` even without a `review-config.json` entry
+6. `compile-data.ts` adds aggregate values to per-protocol `totalCapitalAtRisk` (counts as TVL)
+
+**UI**:
+- `FundsTagsButton.tsx` — "Fetch Aggregate" checkbox, handler dropdown (`KNOWN_AGGREGATE_HANDLERS`), label text input
+- `FundsSection.tsx` — Separate "Aggregate Funds" section with green badge, handler info, expandable breakdown
+- Frontend `FundCards.tsx` / `FundsTab.tsx` — Aggregate value included in TVL totals, "Aggregate (N)" badge on rows
+
+**Adding new handlers**:
+1. Create handler class in `packages/defiscan-endpoints/src/services/aggregate/handlers/`
+2. Implement `AggregateHandler` interface (`name` + `fetch(address, chain)` → `AggregateResponse`)
+3. Register in `server.ts` constructor array
+4. Add handler name to `KNOWN_AGGREGATE_HANDLERS` in `FundsTagsButton.tsx`
+
+**Files**:
+- Endpoint: `packages/defiscan-endpoints/src/routes/aggregate.ts`
+- Service: `packages/defiscan-endpoints/src/services/aggregate/AggregateService.ts`
+- Handlers: `packages/defiscan-endpoints/src/services/aggregate/handlers/`
+- Types: `packages/defiscan-endpoints/src/types/api.ts` (`AggregateResponse`)
+
 ### Environment Configuration (defiscan-endpoints/.env)
 
 ```bash
 DEBANK_API_KEY=your-debank-api-key
 PORT=3001
 ETHEREUM_RPC_URL_FOR_DISCOVERY=https://your-rpc-url  # Optional: enables Morpho vault onchain positions
+THEGRAPH_API_KEY=your-thegraph-api-key  # Required for aggregate handlers using The Graph
 ```
 
 ### Morpho Vault Onchain Positions
@@ -152,6 +193,9 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - Backend: `packages/l2b/src/implementations/discovery-ui/defidisco/fundsData.ts`
 - Frontend: `packages/protocolbeat/src/apps/discovery/defidisco/FundsSection.tsx`
 - Control: `packages/protocolbeat/src/apps/discovery/defidisco/FundsTagsButton.tsx`
+- Aggregate endpoint: `packages/defiscan-endpoints/src/routes/aggregate.ts`
+- Aggregate service: `packages/defiscan-endpoints/src/services/aggregate/`
+- Aggregate handlers: `packages/defiscan-endpoints/src/services/aggregate/handlers/`
 
 ## DeFiScan Frontend
 

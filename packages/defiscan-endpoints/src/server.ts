@@ -7,15 +7,21 @@ import type { Server } from 'http'
 import { DebankClient } from './clients/DebankClient'
 import { MorphoRpcClient } from './clients/MorphoRpcClient'
 import { type DefiscanEndpointsConfig, getConfig } from './config'
+import { aggregateRouter } from './routes/aggregate'
 import { balancesRouter } from './routes/balances'
 import { healthRouter } from './routes/health'
 import { positionsRouter } from './routes/positions'
 import { tokenRouter } from './routes/token'
+import {
+  AggregateService,
+  UniswapV2FactoryHandler,
+} from './services/aggregate'
 import { BalanceService } from './services/BalanceService'
 import { MorphoVaultService } from './services/MorphoVaultService'
 import { PositionService } from './services/PositionService'
 import { TokenService } from './services/TokenService'
 import type {
+  AggregateResponse,
   BalanceResponse,
   PositionResponse,
   TokenInfoResponse,
@@ -96,6 +102,16 @@ export function createDefiscanServer(
     logger.for('TokenService'),
   )
 
+  // Initialize aggregate service with handlers
+  const aggregateCache = new Cache<AggregateResponse>(
+    config.cache.balancesTTL,
+  )
+  const aggregateService = new AggregateService(
+    [new UniswapV2FactoryHandler(config.thegraph.apiKey)],
+    aggregateCache,
+    logger.for('AggregateService'),
+  )
+
   // Initialize Express app
   const app = express()
 
@@ -114,6 +130,7 @@ export function createDefiscanServer(
 
   // Mount routes
   app.use('/health', healthRouter)
+  app.use('/aggregate', aggregateRouter(aggregateService, logger))
   app.use('/balances', balancesRouter(balanceService, logger))
   app.use('/positions', positionsRouter(positionService, logger))
   app.use('/token', tokenRouter(tokenService, logger))

@@ -10,7 +10,7 @@
       "totals": {
         "contractCount": 23,
         "permissionedFunctionCount": 16,
-        "scoredFunctionCount": 0,
+        "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
         "totalCapitalAtRisk": 169519102.78369424,
@@ -30,9 +30,9 @@
         "scoredFunctionCount": 0,
         "adminCount": 1,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 173573027.09941524,
-        "totalTokenValueAtRisk": 59541165.78398363,
-        "totalTokenValue": 59541165.78398363
+        "totalCapitalAtRisk": 180286993.01814073,
+        "totalTokenValueAtRisk": 61920869.927935034,
+        "totalTokenValue": 61920869.927935034
       }
     },
     {
@@ -47,24 +47,41 @@
         "scoredFunctionCount": 17,
         "adminCount": 0,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 102141085.27789141,
+        "totalCapitalAtRisk": 103317724.78694803,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 31394040.469775736
+        "totalTokenValue": 31369290.995497238
+      }
+    },
+    {
+      "slug": "uniswap-v2",
+      "name": "Uniswap V2",
+      "chain": "Ethereum",
+      "projectType": "dex",
+      "tokenName": "UNI",
+      "totals": {
+        "contractCount": 9,
+        "permissionedFunctionCount": 0,
+        "scoredFunctionCount": 0,
+        "adminCount": 0,
+        "dependencyCount": 0,
+        "totalCapitalAtRisk": 748597271.7224443,
+        "totalTokenValueAtRisk": 0,
+        "totalTokenValue": 0
       }
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 445233215.16100085,
-    "totalTokenValueAtRisk": 59541165.78398363,
-    "totalTokenValue": 90935206.25375937,
-    "protocolsReviewed": 3
+    "totalCapitalAtRisk": 1201721092.3112273,
+    "totalTokenValueAtRisk": 61920869.927935034,
+    "totalTokenValue": 93290160.92343228,
+    "protocolsReviewed": 4
   },
   "dependencies": [
     {
       "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "name": "Chainlink ETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 282537273.0556053,
+      "totalFundsAtRisk": 291823726.94650316,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -80,7 +97,7 @@
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
-      "totalFundsAtRisk": 173573027.09941524,
+      "totalFundsAtRisk": 180286993.01814073,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -104,7 +121,7 @@
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 108964245.95619003,
+      "totalFundsAtRisk": 111536733.9283624,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -116,7 +133,7 @@
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "name": "RocketPool rETH Token",
       "entity": "RocketPool",
-      "totalFundsAtRisk": 108964245.95619003,
+      "totalFundsAtRisk": 111536733.9283624,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -128,7 +145,7 @@
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "name": "Chainlink stETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 105644350.9218677,
+      "totalFundsAtRisk": 107955884.47198528,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -140,7 +157,7 @@
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "name": "Lido wstETH Token",
       "entity": "Lido",
-      "totalFundsAtRisk": 105644350.9218677,
+      "totalFundsAtRisk": 107955884.47198528,
       "protocols": [
         {
           "slug": "liquity-v2",

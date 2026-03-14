@@ -1,0 +1,99 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-14T16:15:49.014Z",
+  "protocolSlug": "uniswap-v2",
+  "protocolName": "Uniswap V2",
+  "tokenName": "UNI",
+  "chain": "Ethereum",
+  "projectType": "dex",
+  "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is {{uniswapV2TotalLiquidity}}.",
+  "admins": {
+    "eth:0x1a9c8182c09f50c8318d769245bea52c32be35bc": {
+      "name": "Governance Timelock (48h)",
+      "description": "Timelock contract with a 48-hour minimum delay, controlled by GovernorBravo (eth:0x408E...24C3). Owns FeeToSetter and FeeTo, giving it the ability to change the protocol fee recipient address and toggle the 0.05% protocol fee on liquidity pools. Cannot modify swap logic, pool contracts, or the factory."
+    },
+    "eth:0x408ed6354d4973f66138c91495f2f2fcbd8724c3": {
+      "name": "GovernorBravo Governance",
+      "description": "On-chain governance contract (GovernorBravoDelegator) that proposes and votes on changes to the Timelock. UNI token holders vote on proposals that, if passed, are queued in the 48-hour Timelock. In practice, the only meaningful action available is controlling the protocol fee switch — all core contracts are immutable."
+    }
+  },
+  "dependencies": {},
+  "funds": {
+    "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
+      "name": "UniswapV2Factory (All Pairs)",
+      "description": "Factory contract that has deployed {{uniswapV2PairCount}} liquidity pair contracts holding {{uniswapV2TotalLiquidity}} in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "uniswapV2TotalLiquidity": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.totalUsdValue",
+    "uniswapV2PairCount": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.contractCount"
+  },
+  "resources": [
+    {
+      "url": "https://app.uniswap.org/",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface/releases",
+      "type": "frontend",
+      "frontendSubtype": "third-party",
+      "label": "IPFS Releases"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface",
+      "type": "frontend",
+      "frontendSubtype": "self-hosted",
+      "label": "Open source Interface"
+    },
+    {
+      "url": "https://x.com/uniswap",
+      "type": "x"
+    }
+  ]
+}

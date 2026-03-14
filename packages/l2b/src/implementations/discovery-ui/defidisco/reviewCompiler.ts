@@ -142,6 +142,12 @@ export interface CompiledFundHolder {
     totalSupply: string
     tokenValue: number
   } | null
+  aggregate?: {
+    totalUsdValue: number
+    contractCount: number
+    handlerName: string
+    label?: string
+  } | null
 }
 
 export interface CompiledFunction {
@@ -628,10 +634,13 @@ export class ReviewCompiler {
     // Build fund holders from funds data + review config descriptions
     const funds: CompiledFundHolder[] = []
     for (const [address, desc] of Object.entries(reviewConfig.funds ?? {})) {
-      const contractFunds = fundsLookup.get(normalizeChainAddress(address))
+      const normalizedAddr = normalizeChainAddress(address)
+      const contractFunds = fundsLookup.get(normalizedAddr)
+
+      const tag = tagsByAddress.get(normalizedAddr)
 
       funds.push({
-        address,
+        address: normalizedAddr,
         name: desc.name ?? address,
         description: desc.description ?? '',
         balances: contractFunds?.balances
@@ -648,6 +657,56 @@ export class ReviewCompiler {
               tokenValue: contractFunds.tokenInfo.tokenValue,
             }
           : null,
+        aggregate: contractFunds?.aggregate
+          ? {
+              totalUsdValue: contractFunds.aggregate.totalUsdValue,
+              contractCount: contractFunds.aggregate.contractCount,
+              handlerName: contractFunds.aggregate.handlerName,
+              label: tag?.aggregateLabel,
+            }
+          : tag?.fetchAggregate
+            ? {
+                totalUsdValue: 0,
+                contractCount: 0,
+                handlerName: tag.aggregateHandler ?? 'unknown',
+                label: tag.aggregateLabel,
+              }
+            : null,
+      })
+    }
+
+    // Add aggregate-tagged contracts not already in reviewConfig.funds
+    const fundsAddressSet = new Set(
+      Object.keys(reviewConfig.funds ?? {}).map((a) =>
+        normalizeChainAddress(a),
+      ),
+    )
+    for (const tag of contractTags.tags) {
+      if (!tag.fetchAggregate) continue
+      const normalizedAddr = normalizeChainAddress(tag.contractAddress)
+      if (fundsAddressSet.has(normalizedAddr)) continue
+      const contractFunds = fundsLookup.get(normalizedAddr)
+      const contractName = tag.aggregateLabel ?? tag.contractAddress
+      funds.push({
+        address: tag.contractAddress,
+        name: contractName,
+        description: '',
+        balances: null,
+        positions: null,
+        tokenInfo: null,
+        aggregate: contractFunds?.aggregate
+          ? {
+              totalUsdValue: contractFunds.aggregate.totalUsdValue,
+              contractCount: contractFunds.aggregate.contractCount,
+              handlerName: contractFunds.aggregate.handlerName,
+              label: tag.aggregateLabel,
+            }
+          : {
+              totalUsdValue: 0,
+              contractCount: 0,
+              handlerName: tag.aggregateHandler ?? 'unknown',
+              label: tag.aggregateLabel,
+            },
       })
     }
 

@@ -63,12 +63,17 @@ export function FundCards({ review, forceExpanded }: FundCardsProps) {
   const unifiedData = funds
     .map((f) => {
       const tvl =
-        (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0)
+        (f.balances?.totalUsdValue ?? 0) +
+        (f.positions?.totalUsdValue ?? 0) +
+        (f.aggregate?.totalUsdValue ?? 0)
       const tokenValue = f.tokenInfo?.tokenValue ?? 0
       return { fund: f, tvl, tokenValue }
     })
     .filter(
-      (d) => d.tvl > 0 || (includeTokens && hasTokens && d.tokenValue > 0),
+      (d) =>
+        d.tvl > 0 ||
+        (includeTokens && hasTokens && d.tokenValue > 0) ||
+        d.fund.aggregate != null,
     )
     .sort((a, b) => {
       const showTokens = includeTokens && hasTokens
@@ -295,6 +300,22 @@ function FundExpandedContent({
               variant="token"
               className="text-sm"
             />
+          </span>
+        </div>
+      )}
+
+      {fund.aggregate && (
+        <div className="flex items-center gap-2">
+          <Badge variant="governance">Aggregate</Badge>
+          <span className="text-sm text-text-secondary">
+            {fund.aggregate.label || fund.aggregate.handlerName}
+            {' \u2014 '}
+            <UsdValue
+              value={fund.aggregate.totalUsdValue}
+              variant="capital"
+              className="text-sm"
+            />{' '}
+            across {fund.aggregate.contractCount} contracts
           </span>
         </div>
       )}

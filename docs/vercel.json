@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- .",
   "rewrites": [
     {
       "source": "/(.*)",

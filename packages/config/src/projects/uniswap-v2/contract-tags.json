@@ -1,11 +1,19 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-25T16:04:10.088Z",
+  "lastModified": "2026-03-14T15:53:11.520Z",
   "tags": [
     {
       "contractAddress": "eth:0x8396296907009455896952918402157131098629",
       "isExternal": true,
       "timestamp": "2025-09-25T16:04:10.087Z"
+    },
+    {
+      "contractAddress": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+      "isExternal": false,
+      "fetchAggregate": true,
+      "aggregateHandler": "uniswap-v2-factory",
+      "aggregateLabel": "All Uniswap-v2 Pairs",
+      "timestamp": "2026-03-14T15:53:11.520Z"
     }
   ]
 }

@@ -16,6 +16,9 @@ export interface DefiscanEndpointsConfig {
   rpc: {
     url: string // Ethereum RPC URL — reuses ETHEREUM_RPC_URL from discovery config
   }
+  thegraph: {
+    apiKey: string
+  }
 }
 
 export function getConfig(): DefiscanEndpointsConfig {
@@ -39,6 +42,9 @@ export function getConfig(): DefiscanEndpointsConfig {
         env.optionalString('ETHEREUM_RPC_URL_FOR_DISCOVERY') ??
         env.optionalString('ETHEREUM_RPC_URL') ??
         '',
+    },
+    thegraph: {
+      apiKey: env.optionalString('THEGRAPH_API_KEY') ?? '',
     },
   }
 }

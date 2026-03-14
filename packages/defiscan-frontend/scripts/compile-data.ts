@@ -52,6 +52,12 @@ interface CompiledReview {
       totalSupply: string
       tokenValue: number
     } | null
+    aggregate?: {
+      totalUsdValue: number
+      contractCount: number
+      handlerName: string
+      label?: string
+    } | null
   }[]
 }
 
@@ -64,6 +70,11 @@ interface FundsData {
       price: number
       totalSupply: string
       tokenValue: number
+    }
+    aggregate?: {
+      totalUsdValue: number
+      contractCount: number
+      handlerName: string
     }
   }>
 }
@@ -142,6 +153,14 @@ function main() {
             tokenValue: contractFunds.tokenInfo.tokenValue,
           }
         }
+        if (contractFunds.aggregate) {
+          fund.aggregate = {
+            totalUsdValue: contractFunds.aggregate.totalUsdValue,
+            contractCount: contractFunds.aggregate.contractCount,
+            handlerName: contractFunds.aggregate.handlerName,
+            label: fund.aggregate?.label,
+          }
+        }
         patched++
       }
       if (patched > 0) {
@@ -171,7 +190,13 @@ function main() {
         ? computedTokenValue
         : (review.totals.totalTokenValue ?? 0)
 
-    // Add to protocol list
+    // Compute aggregate funds value (counts as TVL)
+    const totalAggregateValue = review.funds
+      ? review.funds.reduce((sum, f) => sum + (f.aggregate?.totalUsdValue ?? 0), 0)
+      : 0
+
+    // Add to protocol list (aggregate funds count as TVL)
+    const protocolCapitalAtRisk = review.totals.totalCapitalAtRisk + totalAggregateValue
     protocols.push({
       slug: review.metadata.protocolSlug,
       name: review.metadata.protocolName,
@@ -180,13 +205,14 @@ function main() {
       tokenName: review.metadata.tokenName,
       totals: {
         ...review.totals,
+        totalCapitalAtRisk: protocolCapitalAtRisk,
         totalTokenValue: totalTokenValueForProtocol,
         adminCount: activeAdminCount,
         dependencyCount: depEntities.size + ungroupedDeps,
       },
     })
 
-    totalCapitalAtRisk += review.totals.totalCapitalAtRisk
+    totalCapitalAtRisk += protocolCapitalAtRisk
     const protocolTokenValue = totalTokenValueForProtocol > 0
       ? totalTokenValueForProtocol
       : (review.totals.totalTokenValueAtRisk ?? 0)

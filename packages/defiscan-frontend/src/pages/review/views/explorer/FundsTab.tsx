@@ -29,9 +29,13 @@ export function FundsTab({ review }: FundsTabProps) {
     const copy = [...funds]
     copy.sort((a, b) => {
       const aTotal =
-        (a.balances?.totalUsdValue ?? 0) + (a.positions?.totalUsdValue ?? 0)
+        (a.balances?.totalUsdValue ?? 0) +
+        (a.positions?.totalUsdValue ?? 0) +
+        (a.aggregate?.totalUsdValue ?? 0)
       const bTotal =
-        (b.balances?.totalUsdValue ?? 0) + (b.positions?.totalUsdValue ?? 0)
+        (b.balances?.totalUsdValue ?? 0) +
+        (b.positions?.totalUsdValue ?? 0) +
+        (b.aggregate?.totalUsdValue ?? 0)
       let cmp = 0
       switch (sortField) {
         case 'name':
@@ -71,7 +75,10 @@ export function FundsTab({ review }: FundsTabProps) {
 
   const totalCapital = funds.reduce(
     (s, f) =>
-      s + (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0),
+      s +
+      (f.balances?.totalUsdValue ?? 0) +
+      (f.positions?.totalUsdValue ?? 0) +
+      (f.aggregate?.totalUsdValue ?? 0),
     0,
   )
   const totalTokenValue = funds.reduce(
@@ -79,13 +86,15 @@ export function FundsTab({ review }: FundsTabProps) {
     0,
   )
 
-  // Chart data: TVL (balances + positions) and Market Cap (tokenInfo.tokenValue)
+  // Chart data: TVL (balances + positions + aggregate) and Market Cap (tokenInfo.tokenValue)
   const chartData = funds
     .map((f) => ({
       name:
         f.name.length > 20 ? `${f.name.slice(0, 18)}...` : f.name,
       tvl:
-        (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0),
+        (f.balances?.totalUsdValue ?? 0) +
+        (f.positions?.totalUsdValue ?? 0) +
+        (f.aggregate?.totalUsdValue ?? 0),
       marketCap: f.tokenInfo?.tokenValue ?? 0,
     }))
     .filter((d) => d.tvl > 0 || d.marketCap > 0)
@@ -284,7 +293,8 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
   const [expanded, setExpanded] = useState(false)
   const total =
     (fund.balances?.totalUsdValue ?? 0) +
-    (fund.positions?.totalUsdValue ?? 0)
+    (fund.positions?.totalUsdValue ?? 0) +
+    (fund.aggregate?.totalUsdValue ?? 0)
 
   const balPct =
     total > 0
@@ -313,6 +323,11 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
               />
             </svg>
             <span className="font-medium text-text-primary">{fund.name}</span>
+            {fund.aggregate && (
+              <Badge variant="governance">
+                Aggregate ({fund.aggregate.contractCount})
+              </Badge>
+            )}
           </div>
         </td>
         <td className="px-4 py-2.5">
@@ -375,6 +390,14 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
                 {fund.description}
               </p>
             )}
+            {fund.aggregate && (
+              <p className="text-sm text-text-secondary mb-2">
+                {fund.aggregate.label || fund.aggregate.handlerName}
+                {' \u2014 '}
+                {formatUsdValue(fund.aggregate.totalUsdValue)} across{' '}
+                {fund.aggregate.contractCount} contracts
+              </p>
+            )}
             {total > 0 && (
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-gray-200 rounded overflow-hidden">
@@ -400,7 +423,8 @@ function FundsSummaryLabel({ funds }: { funds: CompiledFundHolder[] }) {
   const tvlCount = funds.filter(
     (f) =>
       (f.balances?.totalUsdValue ?? 0) > 0 ||
-      (f.positions?.totalUsdValue ?? 0) > 0,
+      (f.positions?.totalUsdValue ?? 0) > 0 ||
+      (f.aggregate?.totalUsdValue ?? 0) > 0,
   ).length
   const tokenCount = funds.filter((f) => f.tokenInfo != null).length
 

@@ -449,6 +449,9 @@ export interface ContractTag {
   fetchBalances?: boolean
   fetchPositions?: boolean
   isToken?: boolean
+  fetchAggregate?: boolean
+  aggregateHandler?: string
+  aggregateLabel?: string
   timestamp: string
 }
 
@@ -460,6 +463,9 @@ export interface ApiContractTagsUpdateRequest {
   fetchBalances?: boolean
   fetchPositions?: boolean
   isToken?: boolean
+  fetchAggregate?: boolean
+  aggregateHandler?: string | null
+  aggregateLabel?: string | null
 }
 
 // Funds data types
@@ -489,6 +495,14 @@ export interface ContractFundsData {
     price: number
     totalSupply: string
     tokenValue: number
+    timestamp: string
+    source: string
+  }
+  aggregate?: {
+    totalUsdValue: number
+    contractCount: number
+    handlerName: string
+    breakdown?: Array<{ address: string; name?: string; usdValue: number }>
     timestamp: string
     source: string
   }

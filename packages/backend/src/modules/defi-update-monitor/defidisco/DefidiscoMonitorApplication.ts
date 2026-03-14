@@ -269,7 +269,13 @@ export class DefidiscoMonitorApplication {
       }
 
       // Step 4: Refresh funds
-      await this.fundsRefresher.refreshFundsForProject(project)
+      const fundsWarnings =
+        await this.fundsRefresher.refreshFundsForProject(project)
+      if (fundsWarnings.length > 0) {
+        await this.sendDirectDiscordMessage(
+          `⚠️ **${project}** funds warnings:\n${fundsWarnings.join('\n')}`,
+        )
+      }
 
       // Step 5: Compile review
       await this.compileReview(project)

@@ -1,4 +1,5 @@
 {
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- . ../../packages/config/src/projects",
   "rewrites": [
     { "source": "/((?!data/).*)", "destination": "/index.html" }
   ]

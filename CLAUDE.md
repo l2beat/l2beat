@@ -105,7 +105,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - DeFiScan Panel (contract analysis dashboard)
 - External Contract Attributes & Governance Tag (entity grouping, node coloring)
 - Contract Tags data structure (`contract-tags.json`, cleanup rules)
-- Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`)
+- Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`, aggregate funds via The Graph subgraphs)
 - DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 
@@ -214,7 +214,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 Full path reference with all examples in `docs/developers/features/permissions.md`.
 
-**Contract Tags** (`contract-tags.json`): Array of `{ contractAddress, isExternal, isGovernance, entity, timestamp }`. Full schema in `docs/developers/features/infrastructure.md`.
+**Contract Tags** (`contract-tags.json`): Array of `{ contractAddress, isExternal, isGovernance, entity, fetchBalances, fetchPositions, isToken, fetchAggregate, aggregateHandler, aggregateLabel, timestamp }`. Full schema in `docs/developers/features/infrastructure.md`.
 
 
 ### Panel Development

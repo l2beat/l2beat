@@ -22,7 +22,7 @@ The discovery process is mostly untouched from the initial [l2beat deployment](h
 
 Funds data in the backend relies on the [defiscan endpoint](). It calls this endpoint to fetch the data for the given addresses. Note that the service has to be running (separately). It stores the data locally in a `funds-data.json` file linked to the project.
 
-We support fetching information regarding all balances and DeFi positions a contract might hold, as well as token price and market cap of token contracts.
+We support fetching information regarding all balances and DeFi positions a contract might hold, token price and market cap of token contracts, and aggregate TVL for factory contracts (via The Graph subgraphs).
 
 For implementation details, see [Infrastructure: Funds Tracking](features/infrastructure.md#funds-tracking).
 
@@ -83,7 +83,7 @@ The monitoring service is a standalone background process that continuously watc
 1. **Discovery** — runs the L2Beat discovery engine (`DiscoveryRunner`)
 2. **Diffing** — compares against the previous discovery snapshot stored in PostgreSQL
 3. **Notification** — sends Discord messages when contract changes are detected
-4. **Funds Refresh** — fetches live token balances and DeFi positions via DeBank API
+4. **Funds Refresh** — fetches live token balances, DeFi positions via DeBank API, and aggregate TVL via defiscan-endpoints (The Graph subgraphs). Warnings (e.g. failed aggregate fetches) are reported to Discord.
 5. **Review Compilation** — produces a self-contained `compiled-review.json` per project
 
 After all projects are processed, a cycle summary is posted to Discord with project count, duration, and change count.
@@ -251,10 +251,11 @@ The compiler iterates all functions → their dependencies, building a deduplica
 #### Funds Pipeline
 ```
 review-config.json funds addresses + descriptions
-  + funds-data.json (balances, positions, tokenInfo)
+  + funds-data.json (balances, positions, tokenInfo, aggregate)
+  + contract-tags.json (fetchAggregate tags → auto-included even without review-config entry)
   → CompiledFundHolder[]
 ```
-Pass-through of raw funds data enriched with human descriptions.
+Pass-through of raw funds data enriched with human descriptions. Aggregate-tagged contracts are included automatically even without a `review-config.json` funds entry.
 
 ### Stage 4: Index Aggregation
 
@@ -262,6 +263,8 @@ Pass-through of raw funds data enriched with human descriptions.
 
 Reads all `compiled-review.json` files and produces cross-protocol aggregations:
 - Protocol list with totals (capital, functions, admins, dependencies)
+- Aggregate fund values (`aggregate.totalUsdValue`) are summed into per-protocol `totalCapitalAtRisk` — they count as TVL
+- Token values are computed from `funds[].tokenInfo.tokenValue`
 - Global dependency map: sums `totalFundsAtRisk` across protocols for the same dependency address
 - Global stats (protocols reviewed, total capital)
 
@@ -279,10 +282,10 @@ Two distinct value types flow through the entire pipeline:
 
 | Concept | Source | Computation | Display color |
 |---------|--------|-------------|---------------|
-| **Funds** (Capital at risk) | `balances.totalUsdValue + positions.totalUsdValue` | Token holdings + DeFi positions | Green (`text-green-400`) |
+| **Funds** (Capital at risk) | `balances.totalUsdValue + positions.totalUsdValue + aggregate.totalUsdValue` | Token holdings + DeFi positions + factory aggregate TVL | Green (`text-green-400`) |
 | **Token Value** (Market cap) | `tokenInfo.tokenValue` = totalSupply × price | Only for token contracts | Yellow (`text-aux-yellow`) |
 
-These are always tracked separately (never summed together) through all pipeline stages.
+These are always tracked separately (never summed together) through all pipeline stages. Aggregate funds (from factory contracts like Uniswap V2) are treated as regular TVL — they are included in `totalCapitalAtRisk` at the index aggregation stage.
 
 ### Deduplication Rules
 

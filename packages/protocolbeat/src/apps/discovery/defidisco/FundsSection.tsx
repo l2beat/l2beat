@@ -353,6 +353,135 @@ function TokenContractRow({
   )
 }
 
+function AggregateContractRow({
+  contractAddress,
+  fundsData,
+  contractName,
+  proxyType,
+  onSelect,
+}: {
+  contractAddress: string
+  fundsData: ContractFundsData
+  contractName?: string
+  proxyType?: string
+  onSelect?: () => void
+}) {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const aggregate = fundsData.aggregate
+
+  const shortAddress = stripChainPrefix(contractAddress).slice(0, 10) + '...'
+  const displayName = contractName || shortAddress
+
+  const handleSelectClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onSelect?.()
+  }
+
+  return (
+    <div className="border-coffee-700 border-b last:border-b-0">
+      <div
+        className="flex cursor-pointer items-center justify-between px-2 py-1 hover:bg-coffee-700"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-coffee-400">{isExpanded ? 'v' : '>'}</span>
+          <span className="text-coffee-200">{displayName}</span>
+          <span className="rounded bg-green-900 px-1.5 py-0.5 text-xs text-green-300">
+            Aggregate
+          </span>
+          <ProxyTypeTag proxyType={proxyType} />
+          <span className="text-coffee-500 text-xs">({shortAddress})</span>
+          {onSelect && (
+            <button
+              onClick={handleSelectClick}
+              className="px-1 text-aux-blue hover:opacity-80"
+              title="Select contract in graph"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </button>
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          {fundsData.error && (
+            <span className="text-aux-red text-xs">Error</span>
+          )}
+          {aggregate && (
+            <span className="font-medium text-aux-green">
+              {formatUsdValue(aggregate.totalUsdValue)}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {isExpanded && (
+        <div className="bg-coffee-800 px-4 py-2 text-xs">
+          {fundsData.error && (
+            <div className="mb-2 text-aux-red">Error: {fundsData.error}</div>
+          )}
+
+          <div className="mb-2 text-coffee-500">
+            Last fetched: {formatTimestamp(fundsData.lastFetched)}
+          </div>
+
+          {aggregate ? (
+            <div className="mb-3">
+              <div className="mb-1 font-semibold text-aux-blue">
+                {formatUsdValue(aggregate.totalUsdValue)} across{' '}
+                {aggregate.contractCount} contracts
+              </div>
+              <div className="ml-2 flex flex-col gap-1 text-coffee-400">
+                <div>Handler: {aggregate.handlerName}</div>
+                <div>Source: {aggregate.source}</div>
+              </div>
+              {aggregate.breakdown && aggregate.breakdown.length > 0 && (
+                <div className="ml-2 mt-2">
+                  <div className="mb-1 text-coffee-400">Breakdown:</div>
+                  <div className="ml-2 flex flex-col gap-1">
+                    {aggregate.breakdown.slice(0, 10).map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between text-coffee-300"
+                      >
+                        <span>
+                          {item.name ||
+                            stripChainPrefix(item.address).slice(0, 10) + '...'}
+                        </span>
+                        <span className="text-aux-green">
+                          {formatUsdValue(item.usdValue)}
+                        </span>
+                      </div>
+                    ))}
+                    {aggregate.breakdown.length > 10 && (
+                      <div className="text-coffee-500">
+                        +{aggregate.breakdown.length - 10} more contracts
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-coffee-500">No aggregate data available</div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function TokenRow({ token }: { token: FundsTokenBalance }) {
   const formattedBalance =
     Number.parseFloat(token.balance) / Math.pow(10, token.decimals)
@@ -469,26 +598,44 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     return set
   }, [contractTags])
 
-  // Split funds data into token contracts vs fund contracts
-  const { tokenEntries, fundsEntries } = useMemo(() => {
+  // Build set of aggregate contract addresses
+  const aggregateAddressSet = useMemo(() => {
+    const set = new Set<string>()
+    if (contractTags?.tags) {
+      for (const tag of contractTags.tags) {
+        if (tag.fetchAggregate) {
+          set.add(normalizeForLookup(tag.contractAddress))
+        }
+      }
+    }
+    return set
+  }, [contractTags])
+
+  // Split funds data into token contracts, aggregate contracts, and fund contracts
+  const { tokenEntries, aggregateEntries, fundsEntries } = useMemo(() => {
     const tokenEntries: [string, ContractFundsData][] = []
+    const aggregateEntries: [string, ContractFundsData][] = []
     const fundsEntries: [string, ContractFundsData][] = []
     if (fundsData?.contracts) {
       for (const [address, data] of Object.entries(fundsData.contracts)) {
-        if (tokenAddressSet.has(normalizeForLookup(address))) {
+        const normalized = normalizeForLookup(address)
+        if (tokenAddressSet.has(normalized)) {
           tokenEntries.push([address, data])
+        } else if (aggregateAddressSet.has(normalized)) {
+          aggregateEntries.push([address, data])
         } else {
           fundsEntries.push([address, data])
         }
       }
     }
-    return { tokenEntries, fundsEntries }
-  }, [fundsData, tokenAddressSet])
+    return { tokenEntries, aggregateEntries, fundsEntries }
+  }, [fundsData, tokenAddressSet, aggregateAddressSet])
 
   // Count contracts with funds fetching enabled
   const contractsWithFundsEnabled =
     contractTags?.tags.filter(
-      (t) => t.fetchBalances || t.fetchPositions || t.isToken,
+      (t) =>
+        t.fetchBalances || t.fetchPositions || t.isToken || t.fetchAggregate,
     ).length ?? 0
 
   const handleFetchFunds = () => {
@@ -518,10 +665,11 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
     }
   }
 
-  // Calculate totals separately for tokens and funds
+  // Calculate totals separately for tokens, funds, and aggregates
   let totalBalancesValue = 0
   let totalPositionsValue = 0
   let totalTokenMarketCap = 0
+  let totalAggregateValue = 0
 
   for (const [, data] of fundsEntries) {
     totalBalancesValue += data.balances?.totalUsdValue ?? 0
@@ -530,9 +678,15 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
   for (const [, data] of tokenEntries) {
     totalTokenMarketCap += data.tokenInfo?.tokenValue ?? 0
   }
+  for (const [, data] of aggregateEntries) {
+    totalAggregateValue += data.aggregate?.totalUsdValue ?? 0
+  }
 
   const totalFundsValue = totalBalancesValue + totalPositionsValue
-  const hasAnyData = tokenEntries.length > 0 || fundsEntries.length > 0
+  const hasAnyData =
+    tokenEntries.length > 0 ||
+    fundsEntries.length > 0 ||
+    aggregateEntries.length > 0
 
   if (isLoading) {
     return (
@@ -637,6 +791,14 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                     </span>
                   </span>
                 )}
+                {aggregateEntries.length > 0 && (
+                  <span className="font-semibold">
+                    Aggregate Funds:{' '}
+                    <span className="text-aux-green text-lg">
+                      {formatUsdValue(totalAggregateValue)}
+                    </span>
+                  </span>
+                )}
               </div>
               <div className="mb-3 flex gap-6 text-coffee-400 text-xs">
                 {fundsEntries.length > 0 && (
@@ -648,7 +810,10 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                   </>
                 )}
                 <span>
-                  Contracts: {tokenEntries.length + fundsEntries.length}
+                  Contracts:{' '}
+                  {tokenEntries.length +
+                    fundsEntries.length +
+                    aggregateEntries.length}
                 </span>
               </div>
             </div>
@@ -662,6 +827,29 @@ export function FundsSection({ project, projectData }: FundsSectionProps) {
                 <div className="rounded border border-coffee-700">
                   {tokenEntries.map(([address, data]) => (
                     <TokenContractRow
+                      key={address}
+                      contractAddress={address}
+                      fundsData={data}
+                      contractName={contractNameMap.get(
+                        normalizeForLookup(address),
+                      )}
+                      proxyType={proxyTypeMap.get(normalizeForLookup(address))}
+                      onSelect={() => usePanelStore.getState().select(address)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Aggregate Funds Section */}
+            {aggregateEntries.length > 0 && (
+              <div className="mb-3 ml-2">
+                <div className="mb-1 font-semibold text-aux-blue text-sm">
+                  Aggregate Funds ({aggregateEntries.length})
+                </div>
+                <div className="rounded border border-coffee-700">
+                  {aggregateEntries.map(([address, data]) => (
+                    <AggregateContractRow
                       key={address}
                       contractAddress={address}
                       fundsData={data}

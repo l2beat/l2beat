@@ -300,15 +300,18 @@ Once you have a clear overview of the permissions, it's important to know which 
 > ⚠️ First setup the DeFiScan Endpoint service before you continue: https://github.com/deficollective/defiscan-v2/tree/main/packages/defiscan-endpoints
 ### Marking Contracts for Funds Fetching
 
-In the **Nodes** panel, select a contract and click the **Funds** button in the bottom toolbar. You'll see three options:
+In the **Nodes** panel, select a contract and click the **Funds** button in the bottom toolbar. You'll see four options:
 
 | Option | What it fetches | Use case |
 |--------|-----------------|----------|
 | **Fetch Token Balances** | Tokens held *by* this contract | Treasury contracts, vaults, pools |
 | **Fetch DeFi Positions** | DeFi positions *of* this contract | Contracts that deposit into other protocols |
 | **Token Contract** | Market cap and price of the token | Protocol's native token (e.g., UNI, AAVE) |
+| **Fetch Aggregate** | Total TVL across all child contracts | Factory contracts (e.g., Uniswap V2 Factory) |
 
 > **Note:** "Token Contract" fetches the token's market cap, not its TVL or distribution. To see what assets a token contract holds (like reserves), use "Fetch Token Balances".
+
+> **Note:** "Fetch Aggregate" requires selecting a handler (e.g., `uniswap-v2-factory`) and optionally providing a label for display. The handler determines how TVL is aggregated from child contracts (e.g., via The Graph subgraph). See [Infrastructure: Aggregate Funds](../developers/features/infrastructure.md#aggregate-funds) for adding new handlers.
 
 ### Running the Fetch
 

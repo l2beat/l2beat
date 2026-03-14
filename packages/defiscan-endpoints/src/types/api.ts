@@ -29,6 +29,21 @@ export interface TokenInfoResponse {
   price: number
 }
 
+export interface AggregateBreakdownEntry {
+  address: string
+  name?: string
+  usd_value: number
+}
+
+export interface AggregateResponse {
+  contract_address: string
+  total_usd_value: number
+  contract_count: number
+  breakdown: AggregateBreakdownEntry[]
+  timestamp: string
+  source: string
+}
+
 export interface ErrorResponse {
   error: string
   message: string
