@@ -21,7 +21,7 @@ export function createApiLogger(logger: Logger): Middleware {
 
       logger.info({
         type: 'response',
-        status: ctx.status,
+        status: ctx.respond === false ? res.statusCode : ctx.status,
         timeMs,
         method: ctx.method,
         url: ctx.originalUrl,

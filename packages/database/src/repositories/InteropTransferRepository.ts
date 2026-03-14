@@ -231,11 +231,16 @@ export class InteropTransferRepository extends BaseRepository {
   async getByType(
     type: string,
     options: {
+      plugin?: string
       srcChain?: string
       dstChain?: string
     } = {},
   ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
+
+    if (options.plugin !== undefined) {
+      query = query.where('plugin', '=', options.plugin)
+    }
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)

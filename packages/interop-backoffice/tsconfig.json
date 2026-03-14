@@ -1,0 +1,8 @@
+{
+  "extends": "@l2beat/typescript-config/base",
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
+    "outDir": "build"
+  },
+  "exclude": ["build", "node_modules"]
+}

@@ -72,6 +72,9 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
+      '@l2beat/interop-backoffice':
+        specifier: workspace:*
+        version: link:../interop-backoffice
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -688,6 +691,173 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
+
+  packages/interop-backoffice:
+    dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/database':
+        specifier: workspace:*
+        version: link:../database
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      '@trpc/server':
+        specifier: ^11.0.0-rc.446
+        version: 11.0.0-rc.599
+      '@types/koa':
+        specifier: ^2.13.5
+        version: 2.15.0
+      fuzzysort:
+        specifier: 3.1.0
+        version: 3.1.0
+      jose:
+        specifier: ^6.1.0
+        version: 6.1.0
+      koa:
+        specifier: ^2.14.1
+        version: 2.16.0
+      viem:
+        specifier: ^2.31.6
+        version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
+    devDependencies:
+      '@trpc/client':
+        specifier: ^11.0.0-rc.446
+        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.0
+      '@types/mocha':
+        specifier: ^10.0.6
+        version: 10.0.9
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      earl:
+        specifier: ^1.1.0
+        version: 1.3.0
+      express:
+        specifier: ^5.1.0
+        version: 5.1.0
+      mocha:
+        specifier: ^10.2.0
+        version: 10.7.3
+      ts-node-dev:
+        specifier: ^2.0.0
+        version: 2.0.0(@swc/core@1.15.13)(@types/node@22.8.2)(typescript@5.6.3)
+
+  packages/interop-backoffice-ui:
+    dependencies:
+      '@l2beat/interop-backoffice':
+        specifier: workspace:*
+        version: link:../interop-backoffice
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      '@radix-ui/react-checkbox':
+        specifier: ^1.1.0
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-dialog':
+        specifier: 1.1.2
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-popover':
+        specifier: 1.1.2
+        version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-select':
+        specifier: 2.1.2
+        version: 2.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-slot':
+        specifier: 1.1.1
+        version: 1.1.1(@types/react@19.0.10)(react@19.0.0)
+      '@radix-ui/react-tabs':
+        specifier: 1.1.1
+        version: 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-tooltip':
+        specifier: 1.1.3
+        version: 1.1.3(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tailwindcss/vite':
+        specifier: 4.1.11
+        version: 4.1.11(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
+      '@tanstack/react-query':
+        specifier: 5.59.16
+        version: 5.59.16(react@19.0.0)
+      '@tanstack/react-query-devtools':
+        specifier: 5.59.16
+        version: 5.59.16(@tanstack/react-query@5.59.16(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-table':
+        specifier: ^8.17.3
+        version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@trpc/client':
+        specifier: 11.0.0-rc.599
+        version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
+      '@trpc/react-query':
+        specifier: 11.0.0-rc.599
+        version: 11.0.0-rc.599(@tanstack/react-query@5.59.16(react@19.0.0))(@trpc/client@11.0.0-rc.599(@trpc/server@11.0.0-rc.599))(@trpc/server@11.0.0-rc.599)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      cmdk:
+        specifier: 1.0.0
+        version: 1.0.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      lucide-react:
+        specifier: ^0.544.0
+        version: 0.544.0(react@19.0.0)
+      react:
+        specifier: 19.0.0
+        version: 19.0.0
+      react-dom:
+        specifier: 19.0.0
+        version: 19.0.0(react@19.0.0)
+      react-hook-form:
+        specifier: ^7.63.0
+        version: 7.63.0(react@19.0.0)
+      react-router-dom:
+        specifier: 6.27.0
+        version: 6.27.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      recharts:
+        specifier: ^3.7.0
+        version: 3.7.0(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(redux@5.0.1)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      tailwind-merge:
+        specifier: 3.3.1
+        version: 3.3.1
+      tailwindcss:
+        specifier: 4.1.11
+        version: 4.1.11
+    devDependencies:
+      '@types/react':
+        specifier: 19.0.10
+        version: 19.0.10
+      '@types/react-dom':
+        specifier: 19.0.4
+        version: 19.0.4(@types/react@19.0.10)
+      '@vitejs/plugin-react-swc':
+        specifier: ^3.7.1
+        version: 3.7.1(@swc/helpers@0.5.15)(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
+      vite:
+        specifier: ^5.4.10
+        version: 5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0)
 
   packages/l2b:
     dependencies:
@@ -6324,7 +6494,6 @@ packages:
   keygrip@1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
     engines: {node: '>= 0.6'}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
