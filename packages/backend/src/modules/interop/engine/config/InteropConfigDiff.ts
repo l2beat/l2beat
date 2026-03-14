@@ -1,6 +1,19 @@
 import { type Difference, diff } from '@l2beat/discovery'
 import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 
+type InteropConfigDiffMuteCallback = (entry: Difference) => boolean
+
+export type InteropConfigDiffFilters = Record<
+  string,
+  InteropConfigDiffMuteCallback[]
+>
+
+export const INTEROP_CONFIG_DIFF_FILTERS = {
+  polygon: [
+    (diff) => diff.path.length === 1 && diff.path[0] === 'lastSyncedBlock',
+  ],
+} satisfies InteropConfigDiffFilters
+
 export interface InteropConfigDiff {
   key: string
   previous: unknown
@@ -26,6 +39,24 @@ export function diffInteropConfigValues(
   current: unknown,
 ): Difference[] {
   return diff(normalizeForDiff(previous), normalizeForDiff(current))
+}
+
+export function removeMutedInteropConfigDiffEntries(
+  interopDiff: InteropConfigDiff,
+  filters: InteropConfigDiffFilters = INTEROP_CONFIG_DIFF_FILTERS,
+): InteropConfigDiff {
+  const filtersForPlugin = filters[interopDiff.key] ?? []
+
+  if (filtersForPlugin.length === 0) {
+    return interopDiff
+  }
+
+  return {
+    ...interopDiff,
+    entries: interopDiff.entries.filter(
+      (entry) => !filtersForPlugin.some((isFiltered) => isFiltered(entry)),
+    ),
+  }
 }
 
 export function formatDiffPath(path: (string | number)[]): string {
