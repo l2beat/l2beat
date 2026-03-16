@@ -191,6 +191,9 @@ export function getMonitorConfig(env: Env): MonitorConfig {
           env.optionalString('ETHEREUM_RPC_URL') ??
           '',
       },
+      thegraph: {
+        apiKey: env.optionalString('THEGRAPH_API_KEY') ?? '',
+      },
     },
     projects,
     runOnStart: env.boolean('RUN_ON_START', true),
