@@ -1,4 +1,4 @@
-import type { ProjectContract } from '@l2beat/config'
+import type { ProjectContract, ProjectContracts } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import mean from 'lodash/mean'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
@@ -10,24 +10,59 @@ type UpgradeContext = {
   }
 }
 
+export interface PastUpgradeProxyContract {
+  name?: string
+  address: string
+  href: string
+}
+
+export interface PastUpgradeLabels {
+  proxyContract: string
+  implementations: string
+}
+
 type PastUpgradeWithContext = NonNullable<
   ProjectContract['pastUpgrades']
 >[number] &
   UpgradeContext
 
+export function getProjectPastUpgrades(
+  contracts: ProjectContracts | undefined,
+): PastUpgradeWithContext[] {
+  const allPastUpgrades: PastUpgradeWithContext[] = []
+  const seenPastUpgrades = new Set<string>()
+
+  for (const contract of Object.values(contracts?.addresses ?? {}).flat()) {
+    if (!contract.pastUpgrades || contract.pastUpgrades.length === 0) continue
+
+    for (const upgrade of contract.pastUpgrades) {
+      const proxyAddress = ChainSpecificAddress.address(contract.address)
+      const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}`
+
+      if (!seenPastUpgrades.has(key)) {
+        seenPastUpgrades.add(key)
+        allPastUpgrades.push({
+          ...upgrade,
+          proxyContract: {
+            name: contract.name,
+            address: proxyAddress,
+          },
+        })
+      }
+    }
+  }
+
+  return allPastUpgrades.sort((a, b) => b.timestamp - a.timestamp)
+}
+
 export function getPastUpgradesData(
-  contractPastUpgrades:
-    | PastUpgradeWithContext[]
-    | ProjectContract['pastUpgrades'],
+  contractPastUpgrades: PastUpgradeWithContext[] | undefined,
   explorerUrl: string,
-  labels?: NonNullable<TechnologyContract['pastUpgrades']>['labels'],
+  labels?: PastUpgradeLabels,
 ): TechnologyContract['pastUpgrades'] {
-  const sortedUpgrades: PastUpgradeWithContext[] = (contractPastUpgrades ?? [])
-    .map((upgrade) => ({
-      ...upgrade,
-      proxyContract: (upgrade as PastUpgradeWithContext).proxyContract,
-    }))
-    .sort((a, b) => b.timestamp - a.timestamp)
+  const sortedUpgrades = [...(contractPastUpgrades ?? [])].sort(
+    (a, b) => b.timestamp - a.timestamp,
+  )
   const upgradesByProxy = getUpgradeHistoryByProxy(sortedUpgrades)
   const upgradesByProxyIndex = new Map<string, number>()
 
@@ -52,10 +87,10 @@ export function getPastUpgradesData(
       ),
       proxyContract: proxyAddress
         ? {
-            name: upgrade.proxyContract?.name,
-            address: proxyAddress,
-            href: `${explorerUrl}/address/${proxyAddress}#code`,
-          }
+          name: upgrade.proxyContract?.name,
+          address: proxyAddress,
+          href: `${explorerUrl}/address/${proxyAddress}#code`,
+        }
         : undefined,
     }
   })
@@ -66,7 +101,10 @@ export function getPastUpgradesData(
   return {
     upgrades: pastUpgrades,
     stats: getPastUpgradesStats(pastUpgrades),
-    labels,
+    labels: labels ?? {
+      proxyContract: 'Proxy contract',
+      implementations: 'Implementation addresses',
+    },
   }
 }
 

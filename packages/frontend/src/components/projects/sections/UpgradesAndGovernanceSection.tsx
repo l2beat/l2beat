@@ -1,4 +1,3 @@
-import type { ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
 import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
@@ -9,17 +8,12 @@ import {
   PastUpgradesStats,
 } from './PastUpgradesDialog'
 import { ProjectSection } from './ProjectSection'
-import { ReferenceList } from './ReferenceList'
-import type { TechnologyRisk } from './RiskList'
-import { RiskList } from './RiskList'
 import type { ProjectSectionProps } from './types'
 
 export interface UpgradesAndGovernanceSectionProps extends ProjectSectionProps {
   diagram?: DiagramParams
   content?: string
   mdClassName?: string
-  risks?: TechnologyRisk[]
-  references?: ReferenceLink[]
   pastUpgrades?: PastUpgradesData
 }
 
@@ -27,8 +21,6 @@ export function UpgradesAndGovernanceSection({
   diagram,
   content,
   mdClassName,
-  risks,
-  references,
   pastUpgrades,
   ...projectSectionProps
 }: UpgradesAndGovernanceSectionProps) {
@@ -59,10 +51,6 @@ export function UpgradesAndGovernanceSection({
           <PastUpgradesDialog pastUpgrades={pastUpgrades} />
           <PastUpgradesStats pastUpgrades={pastUpgrades} className="mt-2" />
         </div>
-      )}
-      {risks && risks?.length > 0 && <RiskList risks={risks} />}
-      {references && references?.length > 0 && (
-        <ReferenceList references={references} />
       )}
     </ProjectSection>
   )

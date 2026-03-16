@@ -26,6 +26,10 @@ import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
+import type {
+  PastUpgradeLabels,
+  PastUpgradeProxyContract,
+} from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 
 export interface PastUpgradesData {
   upgrades: {
@@ -40,21 +44,14 @@ export interface PastUpgradesData {
       href: string
       diffUrl?: string
     }[]
-    proxyContract?: {
-      address: string
-      href: string
-      name?: string
-    }
+    proxyContract?: PastUpgradeProxyContract
   }[]
   stats: {
     count: number
     avgInterval: number | null
     lastInterval: number | null
   }
-  labels?: {
-    proxyContract?: string
-    implementations?: string
-  }
+  labels?: PastUpgradeLabels
 }
 
 export function PastUpgradesDialog({
@@ -168,13 +165,8 @@ function PastUpgradeEntry({
 }: {
   upgrade: PastUpgradesData['upgrades'][number]
   showProxyContract: boolean
-  labels?: PastUpgradesData['labels']
+  labels: PastUpgradesData['labels']
 }) {
-  const implementationsLabel =
-    labels?.implementations ?? 'Implementation addresses'
-  const proxyContractLabel = labels?.proxyContract ?? 'Proxy contract'
-  const deployment = upgrade.isInitialDeployment
-
   return (
     <div className="space-y-4 rounded-sm border border-divider bg-surface-primary p-3">
       <div
@@ -183,7 +175,9 @@ function PastUpgradeEntry({
           showProxyContract ? 'md:grid-cols-3' : 'md:grid-cols-2',
         )}
       >
-        <ValueWithTitle title={deployment ? 'Deployment time' : 'Time'}>
+        <ValueWithTitle
+          title={upgrade.isInitialDeployment ? 'Deployment time' : 'Time'}
+        >
           <span className="font-medium text-label-value-15">
             {formatTimestamp(upgrade.timestamp, {
               mode: 'datetime',
@@ -192,7 +186,10 @@ function PastUpgradeEntry({
           </span>
         </ValueWithTitle>
         {showProxyContract && (
-          <ValueWithTitle title={proxyContractLabel} className="max-md:hidden">
+          <ValueWithTitle
+            title={labels?.proxyContract ?? 'Proxy contract'}
+            className="max-md:hidden"
+          >
             {upgrade.proxyContract ? (
               <CustomLink
                 href={upgrade.proxyContract.href}
@@ -208,7 +205,9 @@ function PastUpgradeEntry({
         )}
         <ValueWithTitle
           title={
-            deployment ? 'Deployment transaction hash' : 'Transaction hash'
+            upgrade.isInitialDeployment
+              ? 'Deployment transaction hash'
+              : 'Transaction hash'
           }
           className="max-md:hidden"
         >
@@ -222,7 +221,11 @@ function PastUpgradeEntry({
         </ValueWithTitle>
       </div>
       <ValueWithTitle
-        title={deployment ? 'Deployment transaction hash' : 'Transaction hash'}
+        title={
+          upgrade.isInitialDeployment
+            ? 'Deployment transaction hash'
+            : 'Transaction hash'
+        }
         className="md:hidden"
       >
         <CustomLink
@@ -234,7 +237,10 @@ function PastUpgradeEntry({
         </CustomLink>
       </ValueWithTitle>
       {showProxyContract && (
-        <ValueWithTitle title={proxyContractLabel} className="md:hidden">
+        <ValueWithTitle
+          title={labels?.proxyContract ?? 'Proxy contract'}
+          className="md:hidden"
+        >
           {upgrade.proxyContract ? (
             <CustomLink
               href={upgrade.proxyContract.href}
@@ -248,7 +254,10 @@ function PastUpgradeEntry({
           )}
         </ValueWithTitle>
       )}
-      <ValueWithTitle title={implementationsLabel} className="md:mb-0">
+      <ValueWithTitle
+        title={labels?.implementations ?? 'Implementation addresses'}
+        className="md:mb-0"
+      >
         <div className="flex flex-wrap gap-x-4 gap-y-2">
           {upgrade.implementations.map((implementation) => (
             <div
