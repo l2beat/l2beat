@@ -167,7 +167,7 @@ export const zkcandy: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: v26UpgradeTS,
-        untilTimestamp: v29UpgradeTS
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -193,13 +193,11 @@ export const zkcandy: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xF2704433d11842d15aa76BBF0E00407267a99C92',
         ), // zkcandy diamond on ethereum
-        address: EthereumAddress(
-          '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
-        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x0db9eb87',
         functionSignature:
           'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
-        sinceTimestamp: UnixTime(1764103931),
+        sinceTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -212,13 +210,11 @@ export const zkcandy: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xF2704433d11842d15aa76BBF0E00407267a99C92',
         ), // zkcandy diamond on ethereum
-        address: EthereumAddress(
-          '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
-        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0x9271e450',
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
-        sinceTimestamp: UnixTime(1761146555),
+        sinceTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -231,13 +227,11 @@ export const zkcandy: ScalingProject = zkStackL2({
         firstParameter: EthereumAddress(
           '0xF2704433d11842d15aa76BBF0E00407267a99C92',
         ), // zkcandy diamond on ethereum
-        address: EthereumAddress(
-          '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
-        ),
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
         selector: '0xa085344d',
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
-        sinceTimestamp: UnixTime(1761146555),
+        sinceTimestamp: v29UpgradeTS,
       },
     },
   ],
