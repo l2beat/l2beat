@@ -24,7 +24,7 @@ export interface LegacyToken {
   chainId: ChainId
   chainName: string
   url?: string
-  source: 'canonical' | 'external' | 'native'
+  source: 'canonical' | 'custom-canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   excludeFromTotal?: true
   bridgedUsing?: LegacyTokenBridgedUsing
