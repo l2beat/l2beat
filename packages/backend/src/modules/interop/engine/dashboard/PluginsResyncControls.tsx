@@ -17,7 +17,6 @@ export function PluginsResyncControls(props: {
     <section>
       <h2>Resync plugins</h2>
       <table>
-        <caption>Resync plugins</caption>
         <thead>
           <tr>
             <th>plugin</th>

@@ -1,31 +1,21 @@
 /*
-Mayan Forwarder
-- chooses one of the Mayan protocol
-- emits Event that will allow further matching
-
-ETH Amount Detection for ForwardedEth:
-When tx.value is 0 (e.g., aggregator transactions via LiFi, 1inch, etc.),
-we look for WETH Withdrawal events before ForwardedEth to determine the ETH amount.
-This is because aggregators unwrap WETH to ETH before forwarding to Mayan.
-
-Alternative approach (not implemented):
-Look for aggregator-specific swap events with toAssetAddress=0x0 (native):
-- MagpieRouter Swap(address,address,address,address,uint256,uint256) - amountOut field
-- LiFi AssetSwapped(bytes32,address,address,address,uint256,uint256,uint256) - toAmount field
-These are more direct but require handling multiple aggregator event formats.
+Mayan Forwarder emits a source-side summary for Mayan protocol calls.
+ForwardedEth can arrive through wrappers, so outer tx.value may be zero even when ETH was forwarded.
 */
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { decodeFunctionData, type Log, parseAbi } from 'viem'
+import {
+  decodeAbiParameters,
+  decodeFunctionData,
+  type Log,
+  parseAbi,
+  parseAbiParameters,
+} from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
-import { findBestTransferLog } from './hyperlane-hwr'
 import {
-  decodeMayanProtocol,
-  isBurnAddress,
-  isMayanWrappedNativeEmitter,
+  MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
-  MAYAN_FORWARDER_CHAINS,
   MAYAN_WRAPPED_NATIVE_ADDRESSES,
   toChainSpecificAddresses,
 } from './mayan-shared'
@@ -49,8 +39,6 @@ export const swapAndForwardedEthLog =
 export const swapAndForwardedERC20Log =
   'event SwapAndForwardedERC20(address tokenIn, uint256 amountIn, address swapProtocol, address middleToken, uint256 middleAmount, address mayanProtocol, bytes mayanData)'
 const wethWithdrawalLog = 'event Withdrawal(address indexed src, uint256 wad)'
-const transferLog =
-  'event Transfer(address indexed from, address indexed to, uint256 value)'
 
 const parseWethWithdrawal = createEventParser(wethWithdrawalLog)
 
@@ -67,28 +55,17 @@ export const parseSwapAndForwardedERC20 = createEventParser(
 )
 
 export const MayanForwarded = createInteropEventType<{
-  mayanProtocol: string
   methodSignature: `0x${string}`
   tokenIn: Address32
   amountIn?: bigint
-  srcWasBurned?: boolean
   tokenOut?: Address32
-  minAmountOut?: bigint
   $dstChain: string
 }>('mayan-forwarder.MayanForwarded')
 
-type ForwarderLogKind =
-  | 'ForwardedEth'
-  | 'ForwardedERC20'
-  | 'SwapAndForwardedEth'
-  | 'SwapAndForwardedERC20'
-
 interface NormalizedForwarderLog {
-  kind: ForwarderLogKind
-  mayanProtocol: string
   protocolData: `0x${string}`
-  tokenInFromEvent?: Address32
-  amountInFromEvent?: bigint
+  tokenIn: Address32
+  amountIn?: bigint
 }
 
 export class MayanForwarderPlugin implements InteropPluginResyncable {
@@ -98,7 +75,7 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const forwarderAddresses = toChainSpecificAddresses(
-      MAYAN_FORWARDER_CHAINS,
+      MAYAN_EVM_CHAINS,
       MAYAN_FORWARDER,
     )
 
@@ -106,13 +83,13 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: forwardedEthLog,
+        includeTx: true,
         includeTxEvents: [wethWithdrawalLog],
         addresses: forwarderAddresses,
       },
       {
         type: 'event',
         signature: forwardedERC20Log,
-        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
       {
@@ -123,7 +100,6 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: swapAndForwardedERC20Log,
-        includeTxEvents: [transferLog],
         addresses: forwarderAddresses,
       },
     ]
@@ -137,128 +113,70 @@ export class MayanForwarderPlugin implements InteropPluginResyncable {
     ]
     if (wormholeNetworks.length === 0 && cctpNetworks.length === 0) return
 
-    const normalized = normalizeForwarderLog(input.log)
-    if (!normalized) return
+    const parsed = parseForwarderLog(input.log)
+    if (!parsed) return
 
-    const decodedData = decodeProtocolData(
-      normalized.protocolData,
+    const decodedData = decodeMayanData(
+      parsed.protocolData,
       wormholeNetworks,
       cctpNetworks,
     )
     if (!decodedData) return
 
-    const tokenIn = resolveTokenIn(normalized, decodedData)
-    const amountIn = resolveAmountIn(input, normalized, decodedData)
+    const tokenIn = parsed.tokenIn
+    const amountIn = parsed.amountIn ?? resolveForwardedEthAmount(input)
 
     return [
       MayanForwarded.create(input, {
-        mayanProtocol: decodeMayanProtocol(
-          input.chain,
-          normalized.mayanProtocol,
-        ),
         methodSignature: decodedData.methodSignature,
         tokenIn,
         amountIn,
-        srcWasBurned: inferSrcWasBurned(input, amountIn, tokenIn),
         tokenOut: decodedData.tokenOut,
-        minAmountOut: decodedData.minAmountOut,
         $dstChain: decodedData.dstChain,
       }),
     ]
   }
 }
 
-function normalizeForwarderLog(log: Log): NormalizedForwarderLog | undefined {
+function parseForwarderLog(log: Log): NormalizedForwarderLog | undefined {
   const forwardedEth = parseForwardedEth(log, null)
   if (forwardedEth) {
     return {
-      kind: 'ForwardedEth',
-      mayanProtocol: forwardedEth.mayanProtocol,
       protocolData: forwardedEth.protocolData,
+      tokenIn: Address32.NATIVE,
     }
   }
 
   const forwardedERC20 = parseForwardedERC20(log, null)
   if (forwardedERC20) {
     return {
-      kind: 'ForwardedERC20',
-      mayanProtocol: forwardedERC20.mayanProtocol,
       protocolData: forwardedERC20.protocolData,
-      tokenInFromEvent: Address32.from(forwardedERC20.token),
-      amountInFromEvent: forwardedERC20.amount,
+      tokenIn: Address32.from(forwardedERC20.token),
+      amountIn: forwardedERC20.amount,
     }
   }
 
   const swapAndForwardedEth = parseSwapAndForwardedEth(log, null)
   if (swapAndForwardedEth) {
     return {
-      kind: 'SwapAndForwardedEth',
-      mayanProtocol: swapAndForwardedEth.mayanProtocol,
       protocolData: swapAndForwardedEth.mayanData,
-      tokenInFromEvent: Address32.NATIVE,
-      amountInFromEvent: swapAndForwardedEth.amountIn,
+      tokenIn: Address32.from(swapAndForwardedEth.middleToken),
+      amountIn: swapAndForwardedEth.middleAmount,
     }
   }
 
   const swapAndForwardedERC20 = parseSwapAndForwardedERC20(log, null)
   if (swapAndForwardedERC20) {
     return {
-      kind: 'SwapAndForwardedERC20',
-      mayanProtocol: swapAndForwardedERC20.mayanProtocol,
       protocolData: swapAndForwardedERC20.mayanData,
-      tokenInFromEvent: Address32.from(swapAndForwardedERC20.tokenIn),
-      amountInFromEvent: swapAndForwardedERC20.amountIn,
+      tokenIn: zeroAddressToNative(swapAndForwardedERC20.middleToken),
+      amountIn: swapAndForwardedERC20.middleAmount,
     }
   }
 }
 
-function resolveTokenIn(
-  normalized: NormalizedForwarderLog,
-  decodedData: DecodedData,
-): Address32 {
-  if (normalized.kind === 'ForwardedEth') {
-    return decodedData.tokenIn ?? Address32.NATIVE
-  }
-
-  if (normalized.kind === 'ForwardedERC20') {
-    return (
-      decodedData.tokenIn ?? normalized.tokenInFromEvent ?? Address32.NATIVE
-    )
-  }
-
-  // SwapAndForwarded events always carry user-side input token/amount in the event.
-  return normalized.tokenInFromEvent ?? decodedData.tokenIn ?? Address32.NATIVE
-}
-
-function resolveAmountIn(
-  input: LogToCapture,
-  normalized: NormalizedForwarderLog,
-  decodedData: DecodedData,
-): bigint | undefined {
-  // Amount hierarchy for MayanForwarded:
-  // 1) decoded protocolData / explicit event amount
-  // 2) tx.value for native-forwarded calls (native amount sometimes cannot be detected though)
-  // 3) wrapped-native Withdrawal before ForwardedEth (aggregator unwrapping path)
-  if (normalized.kind === 'ForwardedEth') {
-    // When tx.value is 0 (e.g. aggregator wrappers), derive ETH amount from wrapped-native Withdrawal.
-    const amountIn = decodedData.amountIn ?? input.tx.value
-    if (amountIn !== 0n) return amountIn
-    const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
-    if (!wrappedNative) return amountIn
-    return (
-      findWrappedNativeWithdrawalBefore(
-        input.txLogs,
-        input.log.logIndex,
-        wrappedNative,
-      ) ?? amountIn
-    )
-  }
-
-  if (normalized.kind === 'ForwardedERC20') {
-    return decodedData.amountIn ?? normalized.amountInFromEvent
-  }
-
-  return normalized.amountInFromEvent
+function resolveForwardedEthAmount(input: LogToCapture): bigint | undefined {
+  return findNativeAmountInTx(input, [MAYAN_FORWARDER])
 }
 
 function findWrappedNativeWithdrawalBefore(
@@ -278,65 +196,111 @@ function findWrappedNativeWithdrawalBefore(
   }
 }
 
-function inferSrcWasBurned(
-  input: LogToCapture,
-  amountIn: bigint | undefined,
-  tokenIn: Address32 | undefined,
-): boolean | undefined {
-  // Native source token is never burned; ERC20 burn inference needs amount+matching Transfer.
-  if (tokenIn === Address32.NATIVE) {
-    return false
-  }
+// CALLDATA decoding for AA support
 
-  if (
-    input.log.logIndex === null ||
-    amountIn === undefined ||
-    amountIn === 0n ||
-    tokenIn === undefined
-  ) {
+const executeAbi = parseAbi([
+  'function execute(bytes32 mode, bytes executionData)',
+])
+const executeBatchParams = parseAbiParameters('bytes[]')
+const executeCallParams = parseAbiParameters(
+  '(address to, uint256 value, bytes data)[]',
+)
+
+export function findNativeAmountInTx(
+  input: Pick<LogToCapture, 'tx' | 'txLogs' | 'log' | 'chain'>,
+  targets: EthereumAddress[],
+): bigint | undefined {
+  const txValue = input.tx.value
+  if (txValue !== undefined && txValue > 0n) return txValue
+
+  const nestedValue = findExecuteCallValue(
+    typeof input.tx.data === 'string'
+      ? (input.tx.data as `0x${string}`)
+      : undefined,
+    targets,
+  )
+  if (nestedValue !== undefined && nestedValue > 0n) return nestedValue
+
+  const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
+  if (!wrappedNative) return undefined
+
+  return findWrappedNativeWithdrawalBefore(
+    input.txLogs,
+    input.log.logIndex,
+    wrappedNative,
+  )
+}
+
+function findExecuteCallValue(
+  txData: `0x${string}` | undefined,
+  targets: EthereumAddress[],
+): bigint | undefined {
+  if (!txData) return
+
+  let decoded
+  try {
+    decoded = decodeFunctionData({
+      abi: executeAbi,
+      data: txData,
+    })
+  } catch {
     return undefined
   }
 
-  const transfer = findBestTransferLog(
-    input.txLogs,
-    amountIn,
-    input.log.logIndex,
-  ).transfer
-  if (!transfer) return undefined
-  if (transfer.logAddress !== tokenIn) return undefined
-  if (!isBurnAddress(transfer.to)) return false
+  if (decoded.functionName !== 'execute') return undefined
 
-  // Wrapped-native burn-like Transfer events come from unwrap/deposit mechanics.
-  // They are not interop bridge burn semantics.
-  return !isMayanWrappedNativeEmitter(input.chain, transfer.logAddress)
+  const calls = decodeExecuteCalls(decoded.args[0], decoded.args[1])
+  const targetSet = new Set(targets.map((target) => target.toLowerCase()))
+
+  const directMatch = calls.find(
+    (call) => call.value > 0n && targetSet.has(call.to.toLowerCase()),
+  )
+  if (directMatch) return directMatch.value
+
+  const positiveCalls = calls.filter((call) => call.value > 0n)
+  if (positiveCalls.length === 1) return positiveCalls[0].value
+
+  return undefined
+}
+
+function decodeExecuteCalls(
+  mode: `0x${string}`,
+  executionData: `0x${string}`,
+): Array<{ to: `0x${string}`; value: bigint }> {
+  const modeId = mode.slice(0, 22)
+
+  if (modeId === '0x01000000000078210002') {
+    const [batches] = decodeAbiParameters(executeBatchParams, executionData)
+    return batches.flatMap((batch) => decodeExecuteCalls(mode, batch))
+  }
+
+  if (
+    modeId !== '0x01000000000000000000' &&
+    modeId !== '0x01000000000078210001'
+  ) {
+    return []
+  }
+
+  const [calls] = decodeAbiParameters(executeCallParams, executionData)
+  return calls.map((call) => ({ to: call.to, value: call.value }))
 }
 
 export function logToProtocolData(
   log: Log,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
 ): DecodedData | undefined {
-  const normalized = normalizeForwarderLog(log)
-  if (!normalized) return
-  const decoded = decodeProtocolData(
-    normalized.protocolData,
-    wormholeNetworks,
-    [],
-  )
+  const parsed = parseForwarderLog(log)
+  if (!parsed) return
+  const decoded = decodeMayanData(parsed.protocolData, wormholeNetworks, [])
   if (!decoded) return
 
-  if (
-    normalized.kind === 'SwapAndForwardedEth' ||
-    normalized.kind === 'SwapAndForwardedERC20'
-  ) {
-    decoded.tokenIn = normalized.tokenInFromEvent
-    decoded.amountIn = normalized.amountInFromEvent
-  }
+  decoded.tokenIn = parsed.tokenIn
+  if (parsed.amountIn !== undefined) decoded.amountIn = parsed.amountIn
   return decoded
 }
 
-// Zero tokenOut means native token on destination
-function tokenOutOrNative(tokenOut: string): Address32 {
-  const addr = Address32.from(tokenOut)
+function zeroAddressToNative(address: string): Address32 {
+  const addr = Address32.from(address)
   return addr === Address32.ZERO ? Address32.NATIVE : addr
 }
 
@@ -357,7 +321,9 @@ export function getChainFromCctpDomain(
 const abiItems = parseAbi([
   // mayanSwift 0xC38e4e6A15593f908255214653d3D947CA1c2338
   'function createOrderWithToken(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
+  'function createOrderWithToken(address tokenIn, uint256 amountIn, (uint8 traderType, bytes32 trader, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, uint8 referrerBps, uint8 auctionMode, bytes32 random), bytes customPayload)',
   'function createOrderWithEth((bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random))',
+  'function createOrderWithSig(address tokenIn, uint256 amountIn, (bytes32 trader, bytes32 tokenOut, uint64 minAmountOut, uint64 gasDrop, uint64 cancelFee, uint64 refundFee, uint64 deadline, bytes32 dstAddress, uint16 destChainId, bytes32 referrerAddr, uint8 referrerBps, uint8 auctionMode, bytes32 random), uint256 submissionFee, bytes signedOrderHash, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
   // mayanCircle 0x875d6d37EC55c8cF220B9E5080717549d8Aa8EcA
   'function createOrder((address tokenIn, uint256 amountIn, uint64 _a, bytes32 _b, uint16 destChain, bytes32 tokenOut, uint64 minAmountOut, uint64 _c, uint64 _d, bytes32 _e, uint8 _f))',
   'function bridgeWithFee(address tokenIn, uint256 amountIn, uint64 redeemFee, uint64 gasDrop, bytes32 destAddr, uint32 destDomain, uint8 payloadType, bytes customPayload) returns (uint64 sequence)', // 0x2072197f
@@ -372,7 +338,9 @@ const abiItems = parseAbi([
 ])
 
 const SELECTOR_CREATE_ORDER_WITH_TOKEN = '0x8e8d142b'
+const SELECTOR_CREATE_ORDER_WITH_TOKEN_V2 = '0xa3a30834'
 const SELECTOR_CREATE_ORDER_WITH_ETH = '0xb866e173'
+const SELECTOR_CREATE_ORDER_WITH_SIG = '0x3a30b37f'
 const SELECTOR_CREATE_ORDER_MAYAN_CIRCLE = '0x1c59b7fc'
 const SELECTOR_BRIDGE_WITH_FEE = '0x2072197f'
 const SELECTOR_BRIDGE_WITH_LOCKED_FEE = '0x9be95bb4'
@@ -387,19 +355,14 @@ interface DecodedData {
   tokenIn?: Address32
   amountIn?: bigint
   tokenOut?: Address32
-  minAmountOut?: bigint
 }
 
-function decodeProtocolData(
+export function decodeMayanData(
   data: `0x${string}`,
   wormholeNetworks: { chain: string; wormholeChainId: number }[],
   cctpNetworks: { chain: string; domain: number }[],
 ): DecodedData | undefined {
   const methodSignature = data.slice(0, 10) as `0x${string}`
-  const fallback: DecodedData = {
-    methodSignature,
-    dstChain: 'unknown',
-  }
   let res
   try {
     res = decodeFunctionData({
@@ -412,34 +375,64 @@ function decodeProtocolData(
 
   switch (methodSignature) {
     case SELECTOR_CREATE_ORDER_WITH_TOKEN: {
-      if (res.functionName !== 'createOrderWithToken') return fallback
+      if (res.functionName !== 'createOrderWithToken') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(
           wormholeNetworks,
           res.args[2].destChainId,
         ),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
-        tokenOut: tokenOutOrNative(res.args[2].tokenOut),
-        minAmountOut: res.args[2].minAmountOut,
+        tokenOut: zeroAddressToNative(res.args[2].tokenOut),
+      }
+    }
+    case SELECTOR_CREATE_ORDER_WITH_TOKEN_V2: {
+      if (res.functionName !== 'createOrderWithToken') return
+      const args = res.args as unknown as readonly [
+        `0x${string}`,
+        bigint,
+        {
+          destChainId: number
+          tokenOut: `0x${string}`
+        },
+        `0x${string}`,
+      ]
+      return {
+        methodSignature,
+        dstChain: getChainFromWormholeId(wormholeNetworks, args[2].destChainId),
+        tokenIn: zeroAddressToNative(args[0]),
+        amountIn: args[1],
+        tokenOut: zeroAddressToNative(args[2].tokenOut),
       }
     }
     case SELECTOR_CREATE_ORDER_WITH_ETH: {
-      if (res.functionName !== 'createOrderWithEth') return fallback
+      if (res.functionName !== 'createOrderWithEth') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(
           wormholeNetworks,
           res.args[0].destChainId,
         ),
         tokenIn: Address32.NATIVE,
-        tokenOut: tokenOutOrNative(res.args[0].tokenOut),
-        minAmountOut: res.args[0].minAmountOut,
+        tokenOut: zeroAddressToNative(res.args[0].tokenOut),
+      }
+    }
+    case SELECTOR_CREATE_ORDER_WITH_SIG: {
+      if (res.functionName !== 'createOrderWithSig') return
+      return {
+        methodSignature,
+        dstChain: getChainFromWormholeId(
+          wormholeNetworks,
+          res.args[2].destChainId,
+        ),
+        tokenIn: Address32.from(res.args[0]),
+        amountIn: res.args[1],
+        tokenOut: zeroAddressToNative(res.args[2].tokenOut),
       }
     }
     case SELECTOR_CREATE_ORDER_MAYAN_CIRCLE: {
-      if (res.functionName !== 'createOrder') return fallback
+      if (res.functionName !== 'createOrder') return
       const args = res.args as unknown as readonly [
         {
           tokenIn: `0x${string}`
@@ -450,16 +443,15 @@ function decodeProtocolData(
         },
       ]
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, args[0].destChain),
         tokenIn: Address32.from(args[0].tokenIn),
         amountIn: args[0].amountIn,
-        tokenOut: tokenOutOrNative(args[0].tokenOut),
-        minAmountOut: args[0].minAmountOut,
+        tokenOut: zeroAddressToNative(args[0].tokenOut),
       }
     }
     case SELECTOR_CREATE_ORDER_FAST_MCTP: {
-      if (res.functionName !== 'createOrder') return fallback
+      if (res.functionName !== 'createOrder') return
       const args = res.args as unknown as readonly [
         `0x${string}`,
         bigint,
@@ -472,63 +464,60 @@ function decodeProtocolData(
         },
       ]
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, args[3]),
         tokenIn: Address32.from(args[0]),
         amountIn: args[1],
-        tokenOut: tokenOutOrNative(args[5].tokenOut),
-        minAmountOut: args[5].amountOutMin,
+        tokenOut: zeroAddressToNative(args[5].tokenOut),
       }
     }
     case SELECTOR_BRIDGE_WITH_FEE: {
-      if (res.functionName !== 'bridgeWithFee') return fallback
+      if (res.functionName !== 'bridgeWithFee') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[5]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_BRIDGE_WITH_LOCKED_FEE: {
-      if (res.functionName !== 'bridgeWithLockedFee') return fallback
+      if (res.functionName !== 'bridgeWithLockedFee') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[4]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_BRIDGE_FAST_MCTP: {
-      if (res.functionName !== 'bridge') return fallback
+      if (res.functionName !== 'bridge') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromCctpDomain(cctpNetworks, res.args[6]),
         tokenIn: Address32.from(res.args[0]),
         amountIn: res.args[1],
       }
     }
     case SELECTOR_SWAP: {
-      if (res.functionName !== 'swap') return fallback
+      if (res.functionName !== 'swap') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
         tokenIn: Address32.from(res.args[5]),
         amountIn: res.args[6],
-        tokenOut: tokenOutOrNative(res.args[2]),
-        minAmountOut: res.args[4].amountOutMin,
+        tokenOut: zeroAddressToNative(res.args[2]),
       }
     }
     case SELECTOR_WRAP_AND_SWAP_ETH: {
-      if (res.functionName !== 'wrapAndSwapETH') return fallback
+      if (res.functionName !== 'wrapAndSwapETH') return
       return {
-        ...fallback,
+        methodSignature,
         dstChain: getChainFromWormholeId(wormholeNetworks, res.args[3]),
         tokenIn: Address32.NATIVE,
-        tokenOut: tokenOutOrNative(res.args[2]),
-        minAmountOut: res.args[4].amountOutMin,
+        tokenOut: zeroAddressToNative(res.args[2]),
       }
     }
     default:
-      return fallback
+      return undefined
   }
 }

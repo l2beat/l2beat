@@ -3,7 +3,7 @@ import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { CoingeckoClient } from './chains/clients/coingecko/CoingeckoClient'
 import { getConfig } from './config'
-import { getDb } from './database/db'
+import { getDb, getTokenDb } from './database/db'
 import { createAppRouter } from './trpc/appRouter'
 import { createTRPCContext } from './trpc/trpc'
 
@@ -12,6 +12,7 @@ dotenv()
 function main() {
   const app = express()
   const config = getConfig()
+  const tokenDb = getTokenDb(config)
   const db = getDb(config)
 
   app.use(express.json({ limit: `${config.jsonBodyLimitMb}mb` }))
@@ -37,6 +38,7 @@ function main() {
           headers: new Headers(req.headers as Record<string, string>),
           config,
           db,
+          tokenDb,
         }),
     }),
   )
@@ -49,7 +51,8 @@ function main() {
   function shutdown(signal: NodeJS.Signals) {
     console.log(`Received ${signal}, shutting down...`)
     server.close(() => {
-      db.close()
+      tokenDb
+        .close()
         .then(() => {
           process.exit(0)
         })

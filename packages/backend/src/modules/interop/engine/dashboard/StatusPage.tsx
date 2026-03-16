@@ -2,6 +2,7 @@ import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import type { PluginSyncStatus } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
+import { PluginsRestartFromNowControls } from './PluginsRestartFromNowControls'
 import { PluginsResyncControls } from './PluginsResyncControls'
 import { PluginsStatusTable } from './PluginsStatusTable'
 
@@ -51,10 +52,17 @@ function StatusPageLayout(props: {
       footer={
         <>
           {props.showResyncControls ? (
-            <PluginsResyncControls
-              pluginSyncStatuses={props.pluginSyncStatuses}
-            />
-          ) : null}
+            <>
+              <PluginsResyncControls
+                pluginSyncStatuses={props.pluginSyncStatuses}
+              />
+              <PluginsRestartFromNowControls
+                pluginSyncStatuses={props.pluginSyncStatuses}
+              />
+            </>
+          ) : (
+            <b>Resync operations disabled by environment variable</b>
+          )}
           <script
             dangerouslySetInnerHTML={{
               __html: `

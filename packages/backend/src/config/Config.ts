@@ -213,6 +213,7 @@ export interface InteropFeatureConfig {
   }
   matching: boolean
   cleaner: boolean
+  dangerousOperationsEnabled: boolean
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
@@ -246,6 +247,7 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {

@@ -676,7 +676,13 @@
         "wormhole.LogTransferRedeemed"
       ],
       "messages": ["wormhole.Message"],
-      "transfers": ["wormhole-tokenbridge.Transfer"]
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
     }
   },
   // This tx goes through a Portal Token Bridge Relayer contract, which emits
@@ -700,7 +706,13 @@
         "wormhole.LogTransferRedeemed"
       ],
       "messages": ["wormhole.Message"],
-      "transfers": ["wormhole-tokenbridge.Transfer"]
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
     }
   },
   "mayan-mctp": {
@@ -874,6 +886,15 @@
       {
         "chain": "base",
         "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
+      },
+      // orphan fulfill events with exotic signatures that should correctly decode their $srcChain as solana
+      {
+        "chain": "arbitrum",
+        "tx": "0x0dcc9091d25564ff14333455d40376c78c148ec7d7e7da477301fc0d25b80d4c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xead243cb6f81932a16cd922556b91bcd95cec094bfe9cbb0d86fbfb76d531f14"
       }
     ],
     "expects": {
@@ -888,6 +909,7 @@
         "mayan-forwarder.MayanForwarded",
         "mayan-forwarder.MayanForwarded",
         "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
@@ -899,6 +921,8 @@
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
         "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
         "mayan-swift.OrderFulfilled",
@@ -1425,7 +1449,79 @@
         "chain": "base",
         "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
+  },
+  // Wrapped-to-wrapped transfers (both sides are Wormhole-wrapped WETH, canonical on Ethereum).
+  // Both directions should be burn/mint since neither chain holds the native token.
+  "wormhole-tokenbridge-polygon-avax": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0x93257339849d2b65cfeac0abafba344d851fae8b3fe83b78a3163bc9acb94f05"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x0d44a8dd467cf3e40366084bc8f6ef851624336a16cacaf010728fb4c2b63ed0"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xae431ef3b41d6caca2f0bfa8901c1bc6cb033e31b3146c677d80c9e91d7ee864"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xc0cb4eb819e983288bd8e4df39b065efbf0b846bdbfcce104e9951f3bc203c44"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
   },
   // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
   "wormhole-tokenbridge-unsupported": {
@@ -3064,6 +3160,23 @@
       {
         "chain": "arbitrum",
         "tx": "0x9ff0c8056035b0dabb3b42c9a60ada4cf80080f23d23f2955a33a730493213aa"
+      },
+      // earlier fill must not consume a later deposit
+      {
+        "chain": "arbitrum",
+        "tx": "0xbd974cf83e594079aa215adb93416f00a5eec385fea7ac5f9719c972b818d831"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd89c61cbd50db4df2295dbb16324df5d1828a447c52e8af86fa7a9f5fa86fed1"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x7f911d7955e1ba84bbab699c6c0eb51b828c00e4658ba75803eb40243572a4c0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4379e5493802f2e625fc1b9f924eda0d4537c3b0af8dc64b1f24f191e7bd2ae0"
       }
     ]
   },
