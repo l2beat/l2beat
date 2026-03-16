@@ -9,15 +9,22 @@
   - [Problem](#problem)
   - [Core idea](#core-idea)
   - [Lifecycle](#lifecycle)
-  - [Why persistence is needed](#why-persistence-is-needed)
+  - [Why persistence might be needed](#why-persistence-might-be-needed)
   - [Why an in-memory handler is needed](#why-an-in-memory-handler-is-needed)
   - [v1 scope](#v1-scope)
+- [Worked Example: OP Stack Deposit Tx Hash Derivation](#worked-example-op-stack-deposit-tx-hash-derivation)
+  - [How `sourceHash` is calculated](#how-sourcehash-is-calculated)
+  - [How the Base transaction hash is calculated](#how-the-base-transaction-hash-is-calculated)
+  - [Why this matters for interop](#why-this-matters-for-interop)
+  - [Caveats](#caveats)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Overview
 
 The interop pipeline captures raw blockchain data, converts it into internal `InteropEvent`s, and later matches those events into user-facing messages and transfers.
+
+A concrete OP Stack example is included at the end of this document: an Ethereum deposit into Base via `OptimismPortal`, where the destination transaction emits no logs but its L2 transaction hash can still be derived deterministically from the L1 deposit log.
 
 For resyncable plugins, the capture phase is driven by declarative data requests. This is important because it makes the plugin's external dependencies visible without reading arbitrary TypeScript code. A plugin can state:
 
@@ -236,3 +243,132 @@ If derived data requests prove important and we need a more general system, the 
 - a more generic lifecycle around request persistence and cleanup.
 
 V1 is intentionally smaller than that future direction, but it preserves the same declarative plugin interface so the system can evolve later without forcing plugin authors to rewrite how they declare requests.
+
+## Worked Example: OP Stack Deposit Tx Hash Derivation
+
+One concrete use case for derived data requests is an OP Stack deposit that emits a source-side event on Ethereum, but does not emit any useful destination-side event on the L2 chain.
+
+For the exact case analyzed here:
+
+- source Ethereum transaction: `0x7c76adb9ebe70dfdb57f495c7172b308879f87416ebcc9f2e0438d7fe86a1bee`
+- destination Base transaction: `0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8`
+- L1 deposit contract (`OptimismPortal` on Ethereum for Base): `0x49048044D57e1C92A77f79988d21Fa8fAF74E97e`
+
+The Ethereum transaction calls:
+
+```text
+depositTransaction(address,uint256,uint64,bool,bytes)
+```
+
+and emits:
+
+```text
+TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)
+```
+
+For this transaction, the emitted event and its L1 log metadata are:
+
+- `from = 0xf70da97812CB96acDF810712Aa562db8dfA3dbEF`
+- `to = 0xf70da97812CB96acDF810712Aa562db8dfA3dbEF`
+- `version = 0`
+- `blockHash = 0x55102b6e8f5ceb9803bfd78b9ec84ffd3e34156c821b7690f4c2b045a9696944`
+- `logIndex = 514`
+- `opaqueData = 0x000000000000000000000000000000000000000000000004747bc5c731c56846000000000000000000000000000000000000000000000004747bc5c731c5684600000000000186a000`
+
+For deposit event version `0`, `opaqueData` is parsed as:
+
+```text
+mint      uint256  = 82180496084697442374
+value     uint256  = 82180496084697442374
+gas       uint64   = 100000
+isCreation uint8   = 0
+data      bytes    = 0x
+```
+
+That value is `82.180496084697442374 ETH`.
+
+The destination Base transaction is an OP Stack deposit transaction of type `0x7e`. It has no logs, but its hash is deterministic and can be derived from the source log.
+
+### How `sourceHash` is calculated
+
+For a user deposit, OP Stack computes:
+
+```text
+depositIdHash = keccak256(l1BlockHash || bytes32(l1LogIndex))
+sourceHash    = keccak256(bytes32(0) || depositIdHash)
+```
+
+Using the values above:
+
+```text
+depositIdHash = keccak256(
+  0x55102b6e8f5ceb9803bfd78b9ec84ffd3e34156c821b7690f4c2b045a9696944 ||
+  bytes32(514)
+)
+
+sourceHash = keccak256(bytes32(0) || depositIdHash)
+           = 0xb613781250a490c408694b600c1443b4b0f12e13792551b9aa12703dfb17f879
+```
+
+### How the Base transaction hash is calculated
+
+The rollup node derives a deposit transaction with the following logical fields:
+
+```text
+[
+  sourceHash,
+  from,
+  to,
+  mint,
+  value,
+  gasLimit,
+  isSystemTx,
+  data
+]
+```
+
+For user deposits:
+
+- `from` comes from the emitted event
+- `to` comes from the emitted event, unless `isCreation = true`, in which case `to` is empty / `nil`
+- `mint`, `value`, `gasLimit`, and `data` come from `opaqueData`
+- `isSystemTx = false`
+
+The final L2 transaction hash is then:
+
+```text
+l2TxHash = keccak256(0x7e || RLP([
+  sourceHash,
+  from,
+  to,
+  mint,
+  value,
+  gasLimit,
+  false,
+  data
+]))
+```
+
+For this example:
+
+```text
+l2TxHash = 0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8
+```
+
+which exactly matches the observed Base transaction hash.
+
+### Why this matters for interop
+
+This is a good fit for a derived transaction request:
+
+1. the source Ethereum log is easy to capture historically
+2. the destination Base transaction does not have a matching event to query by log filters
+3. the destination transaction hash can be derived from the source log, so the runtime can register a follow-up "watch this tx hash on Base" request
+
+### Caveats
+
+- The full L1 transaction is not required if the captured log includes both `blockHash` and `logIndex`. Those two fields are necessary for `sourceHash`.
+- Decoded event arguments alone are not sufficient if `blockHash` and `logIndex` were discarded during capture.
+- The correct `from` value is the one emitted in `TransactionDeposited`, not necessarily the original L1 transaction sender. If the depositor is a contract, `OptimismPortal` aliases the address before emitting the event.
+- The `opaqueData` layout depends on the deposit event `version`. This example is for `version = 0`.
+- Contract creation deposits are a special case: when `isCreation = true`, the derived deposit transaction uses an empty `to` field instead of the emitted address.
