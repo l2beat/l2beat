@@ -245,7 +245,12 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, ['canonical', 'custom-canonical'], 'canonical'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
         sumBySource(eb, valueField, ['external'], 'external'),
         sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
@@ -320,7 +325,12 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, ['canonical', 'custom-canonical'], 'canonical'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
         sumBySource(eb, valueField, ['external'], 'external'),
         sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
@@ -418,7 +428,12 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, ['canonical', 'custom-canonical'], 'canonical'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
         sumBySource(eb, valueField, ['external'], 'external'),
         sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
