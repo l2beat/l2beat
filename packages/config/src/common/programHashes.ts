@@ -661,8 +661,6 @@ Verify:
   '0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1'),
-    programUrl:
-      'https://github.com/succinctlabs/op-succinct/tree/v3.5.0/programs/aggregation',
     verificationStatus: 'notVerified',
   },
   '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
