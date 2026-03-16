@@ -2919,8 +2919,47 @@
       {
         "chain": "base",
         "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
+      },
+      // burnmint priority in transfer matching
+      {
+        "chain": "ethereum",
+        "tx": "0x791a654671da9a5ec81a212b8de707e9c298c760f6aef4972b53be4c850bb2a3"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xaff43779f880b234ea7147b777ab866f4e645ec5411b9c4111571b33ff8a6ca3"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        }
+      ],
+      "messages": [
+        {
+          "type": "hyperlane.Message",
+          "app": "cctp"
+        }
+      ]
+    }
   },
   "wormhole-debug": {
     "loadConfigs": ["wormhole"],
