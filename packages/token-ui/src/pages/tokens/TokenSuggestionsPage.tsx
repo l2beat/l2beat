@@ -26,14 +26,11 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
-import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
 
 export function TokenSuggestionsPage() {
   const navigate = useNavigate()
-  const { data: suggestions, isLoading: isLoadingSuggestions } =
+  const { data: suggestions, isLoading } =
     api.deployedTokens.getSuggestionsByPartialTransfers.useQuery()
-  const { data: chains, isLoading: isLoadingChains } =
-    api.chains.getAll.useQuery()
 
   return (
     <AppLayout>
@@ -63,7 +60,7 @@ export function TokenSuggestionsPage() {
           )}
         </CardHeader>
         <CardContent className="h-full overflow-y-auto">
-          {isLoadingSuggestions || isLoadingChains ? (
+          {isLoading ? (
             <LoadingState className="h-full" />
           ) : suggestions?.length === 0 ? (
             <Empty>
@@ -86,10 +83,6 @@ export function TokenSuggestionsPage() {
                   <TableHead>Action</TableHead>
                 </TableRow>
                 {suggestions?.map((suggestion, index) => {
-                  const chain = chains?.find(
-                    (chain) => chain.name === suggestion.chain,
-                  )
-
                   return (
                     <TableRow
                       key={`${suggestion.chain}-${suggestion.address}-${suggestion.abstractToken.id}`}
@@ -99,9 +92,9 @@ export function TokenSuggestionsPage() {
                       </TableCell>
                       <TableCell>{suggestion.chain}</TableCell>
                       <TableCell>
-                        {chain?.explorerUrl ? (
+                        {suggestion.explorerUrl ? (
                           <ExplorerLink
-                            explorerUrl={chain?.explorerUrl}
+                            explorerUrl={suggestion.explorerUrl}
                             value={suggestion.address}
                             type="address"
                           />
@@ -125,10 +118,7 @@ export function TokenSuggestionsPage() {
                         )}
                       </TableCell>
                       <TableCell>
-                        <TransactionsCell
-                          txs={suggestion.txs}
-                          chains={chains}
-                        />
+                        <TransactionsCell txs={suggestion.txs} />
                       </TableCell>
                       <TableCell>
                         <Button
@@ -163,49 +153,47 @@ export function TokenSuggestionsPage() {
 
 function TransactionsCell({
   txs,
-  chains,
 }: {
   txs: {
     srcTxHash: string
     srcChain: string
+    srcExplorerUrl: string | undefined
     dstTxHash: string
     dstChain: string
+    dstExplorerUrl: string | undefined
     transferId: string
     plugin: string
   }[]
-  chains: ChainRecord[] | undefined
 }) {
   return txs.map((tx) => {
-    const srcChain = chains?.find((chain) => chain.name === tx.srcChain)
-    const dstChain = chains?.find((chain) => chain.name === tx.dstChain)
     return (
       <div key={tx.transferId} className="flex items-center gap-1">
         <span>{tx.plugin}:</span>
-        {srcChain?.explorerUrl ? (
+        {tx.srcExplorerUrl ? (
           <ExplorerLink
-            explorerUrl={srcChain.explorerUrl}
+            explorerUrl={tx.srcExplorerUrl}
             value={tx.srcTxHash}
             type="tx"
           >
-            {srcChain.name}
+            {tx.srcChain}
           </ExplorerLink>
         ) : (
           <span>
-            {srcChain?.name ?? 'unknown'}:{tx.srcTxHash}
+            {tx.srcChain}:{tx.srcTxHash}
           </span>
         )}
         <ArrowRightIcon className="size-4" />{' '}
-        {dstChain?.explorerUrl ? (
+        {tx.dstExplorerUrl ? (
           <ExplorerLink
-            explorerUrl={dstChain?.explorerUrl}
+            explorerUrl={tx.dstExplorerUrl}
             value={tx.dstTxHash}
             type="tx"
           >
-            {dstChain.name}
+            {tx.dstChain}
           </ExplorerLink>
         ) : (
           <span>
-            {dstChain?.name ?? 'unknown'}:{tx.dstTxHash}
+            {tx.dstChain}:{tx.dstTxHash}
           </span>
         )}
       </div>
