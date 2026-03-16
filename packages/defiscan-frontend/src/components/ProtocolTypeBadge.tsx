@@ -12,7 +12,7 @@ export const TYPE_LABELS: Record<string, string> = {
   derivatives: 'Derivatives',
   yield: 'Yield',
   'liquid-staking': 'Liquid Staking',
-  cdp: 'CDP',
+  cdp: 'Stablecoin',
   other: 'Other',
 }
 
