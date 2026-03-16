@@ -27,6 +27,16 @@ For resyncable plugins, the capture phase is driven by declarative data requests
 
 That model works well for data that can be requested directly by range, such as EVM logs. It is not enough for cases in which processing one captured event reveals that some other piece of data must be fetched later.
 
+This document describes the constrained **v1** design that we want to implement now. It intentionally favors a small amount of code and a small race surface over a fully generic architecture.
+
+The plugin-facing model remains declarative:
+
+- plugins declare derived data requests,
+- the runtime handles lookup and routing,
+- plugin authors do not manually manage pending work.
+
+However, the internal implementation is intentionally narrower than the fully generic design we may want later.
+
 ## Derived Data Requests
 
 ### Problem
@@ -69,9 +79,19 @@ derived inputs   -> created only after static inputs are processed
 
 The key design rule is that the **shape** of the derivation stays declarative even if the **value** is only known at runtime.
 
+In v1, that declarative shape is intentionally narrow:
+
+- only one derived request family exists: transaction lookup for an event-derived tx hash,
+- the request is declared as part of `getDataRequests()`,
+- the tx hash and target chain are read from top-level fields already stored in `InteropEvent.args`,
+- one creator event type can define at most one derived request,
+- clusters are supported, but request ownership is always tracked by the exact plugin that produced the creator event.
+
+This keeps the plugin API small while avoiding a large internal framework.
+
 ### Lifecycle
 
-The lifecycle of a derived transaction request is:
+The v1 lifecycle of a derived transaction request is:
 
 ```text
 historical logs / new logs
@@ -88,16 +108,24 @@ matches derived request definition?
       yes
         |
         v
-persist derived request row
+creator event remains the only persisted source of truth
+with "derived request fulfilled?" = false/null
+        |
+        v
+add pending request to in-memory index
         |
         +--> do one targeted historical lookup
         |       |
-        |       +--> found: process immediately, then delete request
+        |       +--> found: call captureTx with creator context,
+        |                  save resulting events,
+        |                  mark creator event fulfilled,
+        |                  remove from memory
         |       |
-        |       +--> not found: mark as checked in history
+        |       +--> not found: keep unresolved creator event
+        |                  and keep request active in memory
         |
         v
-keep request active in memory
+on restart: rebuild pending requests from unresolved creator events
         |
         v
 new blocks arrive on target chain
@@ -114,39 +142,47 @@ call captureTx with tx + creator context
 save resulting InteropEvents
         |
         v
-remove derived request from memory and database
+mark creator event fulfilled
+and remove pending request from memory
 ```
 
 Three points matter here:
 
 First, the historical lookup must happen when the derived request is created, not only when a chain reaches tip. This avoids the case in which chain B is already following new blocks while chain A is still catching up and only later discovers a request that points to an old transaction on chain B.
 
-Second, once the request is checked historically and not found, the system does not repeatedly poll the RPC for that same missing transaction. It relies on normal tip following-mode block processing to eventually see the transaction if it appears later. Not only is this more efficient but also saves cost of RPC calls that would have to be made in a loop for transactions by hash.
+Second, once the request is checked historically and not found, the system does not repeatedly poll the RPC for that same missing transaction. It relies on normal tip following-mode block processing to eventually see the transaction if it appears later.
 
-Third, as seen on the flow above, the process of checking if a transaction is "interesting" (matches a pending derived data request) is not something to be done "manually" in captureTx, but happens as part of the block processing flow, and captureTx will be called with the context of all creators of those derived data request (e.g. the event that requested this transacition by hash)
+Third, as seen on the flow above, the process of checking if a transaction is "interesting" is not something to be done manually in `captureTx`. It happens as part of the block processing flow, and `captureTx` receives the creator event context from the framework.
 
-### Why persistence is needed
+### Why persistence might be needed
 
-Derived requests are persisted in their own table rather than kept only in memory.
+In the fully generic design (which we don't implement in v1), derived requests would be persisted in their own table rather than kept only in memory.
 
-This gives the system:
+That table can still be a good future direction if derived data requests become common, more than one request must be produced from a single creator event, or we need richer request-local state.
 
-- restart safety,
-- a durable record of pending follow-up work,
-- correct behavior when chains catch up at different speeds,
-- a place to store request-specific state such as "already checked in history".
+V1 deliberately does **not** introduce that table.
 
-The table is generic enough to support future request kinds, but each row still keeps enough structured information to route and process it efficiently. In practice, a row is tied to its creator, its request type, its target chain, and some request-specific data payload.
+Instead, v1 reuses the existing `InteropEvent` row as the only persisted source of truth:
+
+- unresolved creator events are stored exactly as normal interop events,
+- a small fulfillment flag on the creator event says whether the derived request has already been resolved,
+- startup reconstructs pending requests by reading unresolved creator events for event types that declare a derived request.
+
+This is less performant and less generic, but it removes a large amount of code:
+
+- no new table,
+- no new repository,
+- no additional SQL lifecycle to keep in sync,
+- no separate persisted request-cleanup logic.
 
 ```text
-creator (usually event) + request kind + target chain + request data + state
+v1 persisted state = creator event row + fulfilled flag
 ```
 
-The derived request should expire together with the creator event. If the creator event is matched, marked unsupported, expired, or wiped during resync, its derived requests must be removed as well.
+The tradeoff is intentional: v1 accepts a narrower model in exchange for simpler code and a smaller operational surface.
 
 ### Why an in-memory handler is needed
 
-Persisting requests in SQL is necessary, but consulting SQL for every incoming transaction is too expensive.
 
 During Following Mode (i.e. processing every block as it comes) the system may see very large numbers of transactions. For each of them, we need to answer a small question quickly:
 
@@ -156,18 +192,20 @@ is this tx interesting for any active derived request?
 
 To make that cheap, each derived request type has a dedicated in-memory handler. The handler:
 
-- loads relevant request rows on startup,
-- maintains a compact in-memory index of active identifiers,
-- knows how to perform the one-time historical check,
-- knows how to test whether a newly seen tx is interesting,
-- and removes fulfilled or invalidated requests from both memory and storage.
+- rebuilds pending requests from unresolved creator events on startup,
+- maintains a compact in-memory index of active tx hashes,
+- performs the one-time historical check when a creator event first appears,
+- tests whether a newly seen tx is interesting,
+- and stays in sync with `InteropEventStore` when creator events are added, fulfilled, matched, unsupported, expired, or deleted.
 
 For transaction-by-hash requests, the efficient index is naturally keyed by transaction hash.
 
 This is intentionally similar in spirit to `InteropEventStore`:
 
-- SQL is the durable source of truth,
+- `InteropEvent` SQL rows are the durable source of truth,
 - memory is the fast query surface used during hot-path processing.
+
+The in-memory handler should stay small. V1 does not need a large generic handler framework.
 
 ### v1 scope
 
@@ -177,6 +215,24 @@ The initial version should stay narrow:
 - only events create derived requests,
 - the transaction hash and target chain are read from fields already stored inside the creator event,
 - plugins declare the derivation shape, but they do not perform ad hoc callbacks to build requests,
-- generic processing finds matching derived requests and passes the creator context into transaction capture.
+- one creator event type can define at most one derived request,
+- one creator event instance can therefore produce at most one pending derived request,
+- the pending request is not persisted in its own table,
+- creator-event persistence is reused instead,
+- fulfillment is tracked on the creator event itself,
+- startup rebuilds pending requests from unresolved creator events,
+- generic processing finds matching derived requests and passes the creator context into transaction capture,
+- the system does not poll repeatedly for missing tx hashes,
+- clusters are supported, but exact plugin ownership is preserved throughout capture and fulfillment.
 
-This keeps the solution declarative, restart-safe, and small, while leaving room for future derived request families if interop later needs to follow other kinds of runtime-discovered inputs.
+This is the implementation target for now.
+
+If derived data requests prove important and we need a more general system, the next step should be to introduce a dedicated persistence layer for derived requests. That future version would likely add:
+
+- a dedicated derived-request table,
+- support for multiple derived requests per creator event,
+- request-local state such as "checked in history",
+- more than one derived request family,
+- a more generic lifecycle around request persistence and cleanup.
+
+V1 is intentionally smaller than that future direction, but it preserves the same declarative plugin interface so the system can evolve later without forcing plugin authors to rewrite how they declare requests.
