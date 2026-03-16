@@ -87,10 +87,10 @@ export function getPastUpgradesData(
       ),
       proxyContract: proxyAddress
         ? {
-          name: upgrade.proxyContract?.name,
-          address: proxyAddress,
-          href: `${explorerUrl}/address/${proxyAddress}#code`,
-        }
+            name: upgrade.proxyContract?.name,
+            address: proxyAddress,
+            href: `${explorerUrl}/address/${proxyAddress}#code`,
+          }
         : undefined,
     }
   })
