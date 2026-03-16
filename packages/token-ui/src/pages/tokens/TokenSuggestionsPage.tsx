@@ -46,7 +46,13 @@ export function TokenSuggestionsPage() {
                 variant="outline"
                 onClick={() =>
                   navigate('/tokens/new?tab=deployed', {
-                    state: { queue: suggestions },
+                    state: {
+                      queue: suggestions.map((suggestion) => ({
+                        chain: suggestion.chain,
+                        address: suggestion.address,
+                        abstractTokenId: suggestion.abstractToken.id,
+                      })),
+                    },
                   })
                 }
               >
