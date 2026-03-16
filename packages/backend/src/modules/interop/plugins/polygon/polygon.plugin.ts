@@ -1,3 +1,12 @@
+/**
+ * this covers the plasma bridge and the pos bridge
+ * both use the same InteropEventTypes
+ *
+ * unmatched-docs for both:
+ * - withdrawals need to be claimed on L1
+ * - deposits to polygon are automatically executed
+ */
+
 import {
   Address32,
   ChainSpecificAddress,
