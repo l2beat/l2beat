@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import {
   CheckIcon,
@@ -47,7 +47,6 @@ import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { cn } from '~/utils/cn'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
-import { formatAddress } from '~/utils/formatAddress'
 import { validateResolver } from '~/utils/validateResolver'
 
 type QueueItem = { chain: string; address: string; abstractTokenId?: string }
