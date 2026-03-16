@@ -38,6 +38,11 @@ const governanceConfiguration = discovery.getContractValue<{
   minimumVotes: string
 }>('Governance', 'getConfiguration')
 
+const activeSequencerCount = discovery.getContractValue<number>(
+  'Rollup',
+  'getActiveAttesterCount',
+)
+
 const activationThreshold = discovery.getContractValueBigInt(
   'Rollup',
   'getActivationThreshold',
@@ -380,7 +385,7 @@ export const aztecnetwork: ScalingProject = {
     },
     operator: {
       ...OPERATOR.DECENTRALIZED_OPERATOR,
-      description: `There is no privileged sequencer. Anyone can stake ${activationThresholdString} to join the validator queue, and anyone can call flushEntryQueue() to activate queued validators once the queue rules allow it.`,
+      description: `There is no privileged sequencer. Anyone can stake ${activationThresholdString} to join the sequencer queue, and anyone can call flushEntryQueue() to activate queued sequencers once the queue rules allow it.`,
       references: [
         {
           title: 'Rollup.sol - deposit() on Etherscan',
@@ -394,7 +399,7 @@ export const aztecnetwork: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
-      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active validator set and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
@@ -409,7 +414,7 @@ export const aztecnetwork: ScalingProject = {
     },
     forceTransactions: {
       name: 'Decentralized Sequencers, Escape Hatch',
-      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the validator set by staking ${activationThresholdString}. Transactions can be submitted for the private execution environment, preventing potential censorship based on transaction content. To circumvent the committees formed from the active sequencer set, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
+      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the sequencer set by staking ${activationThresholdString}. Transactions can be submitted for the private execution environment, preventing potential censorship based on transaction content. To circumvent the committees formed from the active sequencer set, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
       references: [
         {
           title: 'Inbox.sol - sendL2Message() on Etherscan',
@@ -514,7 +519,7 @@ Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal
 Once submitted, the proposal enters a delay and voting flow:
 *   **Pending (${governanceVotingDelayString}):** At the end of this delay, voting power is snapshotted.
 *   **Active (${governanceVotingDurationString}):** AZTEC token holders can vote. To pass, a proposal must reach a ${governanceQuorumString} Quorum of all staked power, and the \`yea\` votes must exceed a required margin of ${governanceRequiredYeaMarginString}.
-*   **Queued (${governanceExecutionDelayString}):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting validators to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
+*   **Queued (${governanceExecutionDelayString}):** If successful, the proposal enters an execution delay. This acts as an exit window, allowing dissenting sequencers to initiate a withdrawal of their staked tokens before the malicious/disagreed-upon code is executed.
 *   Executable (${governanceGracePeriodString}): The proposal enters a grace period where anyone can call \`execute()\`. If not executed, it expires.
 
 Total standard delay from proposal to execution: **${governanceTotalDelayString}**.
@@ -525,12 +530,12 @@ If the L2 sequencer set is offline, censoring, or acting maliciously, the \`Gove
 *   These funds are locked for an extended ${governanceLockDelayString}.
 *   Once proposed, the payload enters the exact same ${governanceTotalDelayString} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
 
-### Validator Governance & The GSE (Governance Staking Escrow)
+### Sequencer Governance & The GSE (Governance Staking Escrow)
 The system relies on the \`GSE.sol\` contract to bridge L2 network security with L1 governance.
-*   To become an L2 validator, an entity deposits **${gseActivationThresholdString}** into the GSE.
-*   The GSE takes all validator deposits and stakes them directly into the L1 \`Governance\` contract, aggregating the voting power.
-*   When a proposal is Active on L1, validators call \`vote()\` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
-*   If a proposal upgrades the system to a new canonical rollup, validators do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active validators to the new rollup version if they staked to the special address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup.
+*   To become an L2 sequencer, an entity deposits **${gseActivationThresholdString}** into the GSE.
+*   The GSE takes all sequencer deposits and stakes them directly into the L1 \`Governance\` contract, aggregating the voting power.
+*   When a proposal is Active on L1, sequencers call \`vote()\` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
+*   If a proposal upgrades the system to a new canonical rollup, sequencers do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active sequencers to the new rollup version if they staked to the special address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup.
 
 ### Slashing and the SlashVeto Council
 Aztec features onchain slashing for equivocation or missing attestations, managed by \`Slasher\` and \`TallySlashingProposer\`. 
