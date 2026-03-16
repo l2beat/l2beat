@@ -1,17 +1,17 @@
+import { formatAddress } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { ChevronIcon } from '~/icons/Chevron'
 import { CountWithAttesters } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import { cn } from '~/utils/cn'
-import { formatAddress } from '~/utils/formatAddress'
 import type { VerifierRow } from './VerifiersTable'
 
 const columnHelper = createColumnHelper<VerifierRow>()
 
 export const verifiersColumns = [
   columnHelper.accessor('hash', {
-    header: 'Verified Hash',
+    header: 'Verifier',
     cell: (ctx) => (
       <div className="flex items-baseline gap-1.5">
         <span className="font-medium text-label-value-14 md:text-label-value-15">
@@ -36,11 +36,19 @@ export const verifiersColumns = [
   columnHelper.display({
     id: 'usedIn',
     header: 'Used in',
+    meta: {
+      headClassName: 'max-lg:hidden',
+      cellClassName: 'max-lg:hidden',
+    },
     cell: (ctx) => <ProjectsUsedIn usedIn={ctx.row.original.projectsUsedIn} />,
   }),
   columnHelper.display({
     id: 'knownDeployments',
     header: 'Known deployments',
+    meta: {
+      headClassName: 'max-md:hidden',
+      cellClassName: 'max-md:hidden',
+    },
     cell: (ctx) => (
       <div>
         {(() => {
@@ -77,13 +85,15 @@ export const verifiersColumns = [
     id: 'actions',
     meta: {
       align: 'right',
+      headClassName: 'w-0',
+      cellClassName: '!pr-0',
     },
     cell: (ctx) => {
       const isExpanded = ctx.row.getIsExpanded()
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
       return (
         <button
-          className="flex h-full items-center justify-end p-8"
+          className="flex h-full w-full items-center justify-end p-1"
           onClick={toggleExpandedHandler}
         >
           <ChevronIcon
