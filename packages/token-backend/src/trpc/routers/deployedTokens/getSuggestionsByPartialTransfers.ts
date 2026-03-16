@@ -1,38 +1,51 @@
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type {
+  AbstractTokenRecord,
+  Database,
+  InteropTransferRecord,
+  TokenDatabase,
+} from '@l2beat/database'
 import { Address32, assert } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../../../shared/build'
 
 type TransferSuggestion = {
   chain: string
   address: string
-  abstractTokenId: string
+  abstractToken: AbstractTokenRecord
   txs: {
     srcTxHash: string
     srcChain: string
     dstTxHash: string
     dstChain: string
     transferId: string
+    plugin: string
   }[]
 }
 
 export async function getSuggestionsByPartialTransfers(
   db: Database,
+  tokenDb: TokenDatabase,
 ): Promise<TransferSuggestion[]> {
-  const partialTransfers =
-    await db.interopTransfer.getWithPartialAbstractTokenIds()
+  const [partialTransfers, abstractTokens] = await Promise.all([
+    db.interopTransfer.getWithPartialAbstractTokenIds(),
+    tokenDb.abstractToken.getAll(),
+  ])
   const classifier = new InteropTransferClassifier()
   const classified = classifier.groupByBridgeType(partialTransfers)
   const transfersForSuggestions = [
     ...classified.lockAndMint,
     ...classified.burnAndMint,
   ]
-  return buildTransferSuggestionMap(transfersForSuggestions)
+  return buildTransferSuggestionMap(transfersForSuggestions, abstractTokens)
 }
 
 function buildTransferSuggestionMap(
   transfers: InteropTransferRecord[],
+  abstractTokens: AbstractTokenRecord[],
 ): TransferSuggestion[] {
   const map = new Map<string, TransferSuggestion>()
+  const abstractTokenMap = Object.fromEntries(
+    abstractTokens.map((t) => [t.id, t]),
+  )
 
   const txInfo = (t: InteropTransferRecord) => ({
     srcTxHash: t.srcTxHash,
@@ -40,6 +53,7 @@ function buildTransferSuggestionMap(
     dstTxHash: t.dstTxHash,
     dstChain: t.dstChain,
     transferId: t.transferId,
+    plugin: t.plugin,
   })
 
   const addSuggestion = (
@@ -49,6 +63,9 @@ function buildTransferSuggestionMap(
     tx: ReturnType<typeof txInfo>,
   ) => {
     const key = `${chain}:${tokenAddress}:${abstractTokenId}`
+    const abstractToken = abstractTokenMap[abstractTokenId]
+    assert(abstractToken, 'abstractToken must be known here')
+
     const current = map.get(key)
     const address = Address32.cropToEthereumAddress(Address32(tokenAddress))
     if (current) {
@@ -57,7 +74,7 @@ function buildTransferSuggestionMap(
       map.set(key, {
         chain,
         address,
-        abstractTokenId,
+        abstractToken,
         txs: [tx],
       })
     }

@@ -86,7 +86,7 @@ export function TokenSuggestionsPage() {
 
                   return (
                     <TableRow
-                      key={`${suggestion.chain}-${suggestion.address}-${suggestion.abstractTokenId}`}
+                      key={`${suggestion.chain}-${suggestion.address}-${suggestion.abstractToken.id}`}
                     >
                       <TableCell className="text-right tabular-nums">
                         {index + 1}
@@ -103,7 +103,21 @@ export function TokenSuggestionsPage() {
                           suggestion.address
                         )}
                       </TableCell>
-                      <TableCell>{suggestion.abstractTokenId}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={
+                              suggestion.abstractToken.iconUrl ??
+                              '/images/token-placeholder.png'
+                            }
+                            className="size-5"
+                          />
+                          {suggestion.abstractToken.symbol}
+                        </div>
+                        {suggestion.abstractToken.issuer && (
+                          <p>Issued by {suggestion.abstractToken.issuer}</p>
+                        )}
+                      </TableCell>
                       <TableCell>
                         <TransactionsCell
                           txs={suggestion.txs}
@@ -122,7 +136,7 @@ export function TokenSuggestionsPage() {
                               tab: 'deployed',
                               chain: suggestion.chain,
                               address: suggestion.address,
-                              abstractTokenId: suggestion.abstractTokenId,
+                              abstractTokenId: suggestion.abstractToken.id,
                             })}
                           >
                             <PlusIcon />
@@ -151,6 +165,7 @@ function TransactionsCell({
     dstTxHash: string
     dstChain: string
     transferId: string
+    plugin: string
   }[]
   chains: ChainRecord[] | undefined
 }) {
@@ -159,6 +174,7 @@ function TransactionsCell({
     const dstChain = chains?.find((chain) => chain.name === tx.dstChain)
     return (
       <div key={tx.transferId} className="flex items-center gap-1">
+        <span>{tx.plugin}:</span>
         {srcChain?.explorerUrl ? (
           <ExplorerLink
             explorerUrl={srcChain.explorerUrl}

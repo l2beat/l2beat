@@ -41,6 +41,6 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       ),
 
     getSuggestionsByPartialTransfers: readOnlyProcedure.query(({ ctx }) =>
-      getSuggestionsByPartialTransfers(ctx.db),
+      getSuggestionsByPartialTransfers(ctx.db, ctx.tokenDb),
     ),
   })
