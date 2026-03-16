@@ -30,7 +30,7 @@ export async function getTokensData(
     tokens.push({
       tokenId: token.id,
       symbol: token.symbol,
-      source: token.source,
+      source: token.source === 'custom-canonical' ? 'canonical' : token.source,
       category: token.category,
       priceUsd: tokenValue.priceUsd,
       valueUsd: tokenValue.valueForProject,
