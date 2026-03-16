@@ -31,7 +31,7 @@ import type { ChainRecord } from '../../../../database/dist/repositories/ChainRe
 export function TokenSuggestionsPage() {
   const navigate = useNavigate()
   const { data: suggestions, isLoading: isLoadingSuggestions } =
-    api.deployedTokens.suggestions.useQuery()
+    api.deployedTokens.getSuggestionsByPartialTransfers.useQuery()
   const { data: chains, isLoading: isLoadingChains } =
     api.chains.getAll.useQuery()
 
