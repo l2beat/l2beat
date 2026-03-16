@@ -1506,6 +1506,65 @@ describe('deployedTokensRouter', () => {
       ])
     })
 
+    it('skips suggestion when abstract token is not found', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'unknown-abstract',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
+    })
+
+    it('excludes suggestions for chain/address that already has deployed token', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([ABSTRACT_USDC]),
+        }),
+        deployedToken: mockObject<DeployedTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            {
+              chain: 'ethereum',
+              address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+            } as DeployedTokenRecord,
+          ]),
+        }),
+        chain: mockObject<ChainRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
+    })
+
     it('excludes nonMinting and unknown transfers from suggestions', async () => {
       const nonMintingTransfer = makeTransfer({
         srcAbstractTokenId: undefined,
