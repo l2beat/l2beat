@@ -12,8 +12,13 @@ import {
   traverseWithPaths,
 } from './callGraph'
 import { getContractTags } from './contractTags'
-import { getFunctions } from './functions'
+import {
+  extractAddressesFromResolvedOwners,
+  getFunctions,
+  resolveOwnersWithDataAccess,
+} from './functions'
 import { getFundsData } from './fundsData'
+import { DiscoveredDataAccess } from './ownerResolution'
 import type {
   ApiCallGraphResponse,
   ApiContractTagsResponse,
@@ -63,63 +68,134 @@ function extractWriteFunctionNames(abiEntries: string[]): string[] {
 }
 
 /**
- * Build the set of all write functions per contract from discovered.json ABIs.
+ * Build the set of all write functions per contract from parsed discovered.json.
  * For each contract entry, finds the corresponding ABI (using the contract's
  * own address, plus implementation addresses for proxies) and extracts write functions.
  *
  * Returns Record<contractAddress, Set<functionName>>.
  */
-function buildWriteFunctionsFromAbis(
-  discoveredPath: string,
+function buildWriteFunctionsFromParsed(
+  discovered: any,
 ): Record<string, Set<string>> {
-  if (!fs.existsSync(discoveredPath)) {
-    return {}
-  }
+  const abis: Record<string, string[]> = discovered.abis ?? {}
+  const entries: any[] = discovered.entries ?? []
+  const result: Record<string, Set<string>> = {}
 
-  try {
-    const fileContent = fs.readFileSync(discoveredPath, 'utf8')
-    const discovered = JSON.parse(fileContent)
+  for (const entry of entries) {
+    if (entry.type !== 'Contract') continue
 
-    const abis: Record<string, string[]> = discovered.abis ?? {}
-    const entries: any[] = discovered.entries ?? []
-    const result: Record<string, Set<string>> = {}
+    const contractAddress: string = entry.address
+    const functionNames = new Set<string>()
 
-    for (const entry of entries) {
-      if (entry.type !== 'Contract') continue
+    // Collect ABI addresses: the contract itself + any implementations
+    const abiAddresses: string[] = [contractAddress]
+    const implValue = entry.values?.$implementation
+    if (typeof implValue === 'string') {
+      abiAddresses.push(implValue)
+    } else if (Array.isArray(implValue)) {
+      abiAddresses.push(...implValue.filter((v: any) => typeof v === 'string'))
+    }
 
-      const contractAddress: string = entry.address
-      const functionNames = new Set<string>()
-
-      // Collect ABI addresses: the contract itself + any implementations
-      const abiAddresses: string[] = [contractAddress]
-      const implValue = entry.values?.$implementation
-      if (typeof implValue === 'string') {
-        abiAddresses.push(implValue)
-      } else if (Array.isArray(implValue)) {
-        abiAddresses.push(
-          ...implValue.filter((v: any) => typeof v === 'string'),
-        )
-      }
-
-      // Extract write functions from each ABI
-      for (const abiAddr of abiAddresses) {
-        const abiEntries = abis[abiAddr]
-        if (!abiEntries) continue
-        for (const name of extractWriteFunctionNames(abiEntries)) {
-          functionNames.add(name)
-        }
-      }
-
-      if (functionNames.size > 0) {
-        result[contractAddress] = functionNames
+    // Extract write functions from each ABI
+    for (const abiAddr of abiAddresses) {
+      const abiEntries = abis[abiAddr]
+      if (!abiEntries) continue
+      for (const name of extractWriteFunctionNames(abiEntries)) {
+        functionNames.add(name)
       }
     }
 
-    return result
-  } catch (error) {
-    console.error('Error reading discovered.json for ABI extraction:', error)
-    return {}
+    if (functionNames.size > 0) {
+      result[contractAddress] = functionNames
+    }
   }
+
+  return result
+}
+
+/**
+ * Build a name lookup from discovered.json entries.
+ * Returns Map<normalizedAddress, contractName>.
+ */
+function buildContractNameMap(discovered: any): Map<string, string> {
+  const nameMap = new Map<string, string>()
+  for (const entry of discovered.entries ?? []) {
+    if (entry.address && entry.name) {
+      nameMap.set(normalizeChainAddress(entry.address), entry.name)
+    }
+  }
+  return nameMap
+}
+
+interface WriteDependencyInfo {
+  address: string
+  name: string
+  entity?: string
+}
+
+/**
+ * Build a lookup of external permission-owners for each permissioned function.
+ * Returns Map<"normalizedAddr:functionName", WriteDependencyInfo[]>.
+ */
+function buildWriteDependencyLookup(
+  functionsData: ApiFunctionsResponse,
+  dataAccess: DiscoveredDataAccess,
+  externalAddresses: Set<string>,
+  tagsByAddress: Map<string, ContractTag>,
+  contractNameMap: Map<string, string>,
+): Map<string, WriteDependencyInfo[]> {
+  const lookup = new Map<string, WriteDependencyInfo[]>()
+  if (!functionsData.contracts) return lookup
+
+  // Cache: ownerDefinitions JSON → resolved external addresses
+  const resolutionCache = new Map<string, WriteDependencyInfo[]>()
+
+  for (const [contractAddr, contractData] of Object.entries(
+    functionsData.contracts,
+  )) {
+    for (const func of contractData.functions) {
+      if (
+        !func.isPermissioned ||
+        !func.ownerDefinitions ||
+        func.ownerDefinitions.length === 0
+      ) {
+        continue
+      }
+
+      // Check cache by ownerDefinitions shape
+      const cacheKey = `${normalizeChainAddress(contractAddr)}:${JSON.stringify(func.ownerDefinitions)}`
+      let externalOwners = resolutionCache.get(cacheKey)
+
+      if (!externalOwners) {
+        const resolved = resolveOwnersWithDataAccess(
+          dataAccess,
+          contractAddr,
+          func.ownerDefinitions,
+        )
+        const allAddresses = [
+          ...new Set(extractAddressesFromResolvedOwners(resolved)),
+        ]
+
+        externalOwners = allAddresses
+          .filter((addr) => isExternalAddress(addr, externalAddresses))
+          .map((addr) => {
+            const tag = findTag(tagsByAddress, addr)
+            const name =
+              contractNameMap.get(normalizeChainAddress(addr)) ?? 'Unknown'
+            return { address: addr, name, entity: tag?.entity }
+          })
+
+        resolutionCache.set(cacheKey, externalOwners)
+      }
+
+      if (externalOwners.length > 0) {
+        const key = `${normalizeChainAddress(contractAddr)}:${func.functionName}`
+        lookup.set(key, externalOwners)
+      }
+    }
+  }
+
+  return lookup
 }
 
 // ============================================================================
@@ -172,13 +248,31 @@ export function computeFunctionAnalysis(
 
   const contracts: Record<string, Record<string, FunctionAnalysis>> = {}
 
-  // Build the canonical set of write functions from ABIs
+  // Load discovered.json once for both ABI extraction and owner resolution
   const discoveredPath = path.join(
     paths.discovery,
     projectName,
     'discovered.json',
   )
-  const writeFunctionsByContract = buildWriteFunctionsFromAbis(discoveredPath)
+  let discovered: any
+  try {
+    discovered = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
+  } catch {
+    return { version: '1.0', lastModified: new Date().toISOString(), contracts }
+  }
+
+  const writeFunctionsByContract = buildWriteFunctionsFromParsed(discovered)
+
+  // Build write-dependency lookup (external permission-owners per function)
+  const dataAccess = new DiscoveredDataAccess(discovered)
+  const contractNameMap = buildContractNameMap(discovered)
+  const writeDependencyLookup = buildWriteDependencyLookup(
+    functionsData,
+    dataAccess,
+    externalAddresses,
+    tagsByAddress,
+    contractNameMap,
+  )
 
   // Iterate over all write functions from ABIs
   for (const [contractAddress, functionNames] of Object.entries(
@@ -200,13 +294,18 @@ export function computeFunctionAnalysis(
       )
 
       // --- Dependencies (all functions) ---
+      const lookupKey = `${normalizeChainAddress(contractAddress)}:${functionName}`
+      const writeDeps = writeDependencyLookup.get(lookupKey) ?? []
+
       const dependencies = computeDependencies(
         metadata?.dependencies,
         contractAddress,
+        functionName,
         traversalResult,
         externalAddresses,
         tagsByAddress,
         callGraphData,
+        writeDeps,
       )
 
       // --- Impact (permissioned functions OR functions with dependencies) ---
@@ -372,10 +471,12 @@ function computeImpact(
 function computeDependencies(
   manualDeps: { contractAddress: string }[] | undefined,
   startContractAddress: string,
+  functionName: string,
   traversalResult: ReturnType<typeof traverseWithPaths>,
   externalAddresses: Set<string>,
   tagsByAddress: Map<string, ContractTag>,
   callGraphData: ApiCallGraphResponse,
+  writeDeps: WriteDependencyInfo[],
 ): { entries: FunctionDependencyEntry[] } {
   const entries: FunctionDependencyEntry[] = []
   const seenAddresses = new Set<string>()
@@ -407,6 +508,7 @@ function computeDependencies(
       entity: tag?.entity,
       mitigations: undefined,
       callPath: data.shortestPath,
+      dependencyType: 'callgraph',
     })
   }
 
@@ -432,6 +534,26 @@ function computeDependencies(
         callPath: [], // No path info for manual deps
       })
     }
+  }
+
+  // 3. Write-dependencies: external contracts that are permission-owners
+  for (const dep of writeDeps) {
+    const normalized = normalizeChainAddress(dep.address)
+    // Skip if already covered by call-graph or manual deps (richer path info)
+    if (seenAddresses.has(normalized)) continue
+    seenAddresses.add(normalized)
+
+    entries.push({
+      contractAddress: dep.address,
+      contractName: dep.name,
+      isAutoDetected: true,
+      viewOnlyPath: false, // write access by definition
+      calledFunctions: [functionName], // the function they own
+      entity: dep.entity,
+      mitigations: undefined,
+      callPath: [], // no code-level path exists
+      dependencyType: 'write',
+    })
   }
 
   return { entries }

@@ -2,6 +2,23 @@
   "totalDefiTvl": 100000000000,
   "protocols": [
     {
+      "slug": "Frankencoin",
+      "name": "Frankencoin",
+      "chain": "Ethereum",
+      "projectType": "stablecoin",
+      "tokenName": "ZCHF",
+      "totals": {
+        "contractCount": 24,
+        "permissionedFunctionCount": 73,
+        "scoredFunctionCount": 1,
+        "adminCount": 0,
+        "dependencyCount": 3,
+        "totalCapitalAtRisk": 83050119.92069063,
+        "totalTokenValueAtRisk": 25724637.771031145,
+        "totalTokenValue": 25724637.771031145
+      }
+    },
+    {
       "slug": "Steakhouse-USDC",
       "name": "Steakhouse USDC",
       "chain": "Ethereum",
@@ -13,7 +30,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 170539050.9212706,
+        "totalCapitalAtRisk": 172143850.83967906,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
@@ -30,9 +47,9 @@
         "scoredFunctionCount": 0,
         "adminCount": 1,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 178593772.7895147,
-        "totalTokenValueAtRisk": 62530494.287142284,
-        "totalTokenValue": 62530494.287142284
+        "totalCapitalAtRisk": 192350133.4472736,
+        "totalTokenValueAtRisk": 62519898.70934528,
+        "totalTokenValue": 62519898.70934528
       }
     },
     {
@@ -47,9 +64,9 @@
         "scoredFunctionCount": 17,
         "adminCount": 0,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 104129155.93919545,
+        "totalCapitalAtRisk": 111351463.50414792,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 31375702.863836057
+        "totalTokenValue": 31363497.20687397
       }
     },
     {
@@ -64,24 +81,24 @@
         "scoredFunctionCount": 0,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 748597271.7224443,
+        "totalCapitalAtRisk": 807429106.1172415,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 1201859251.372425,
-    "totalTokenValueAtRisk": 62530494.287142284,
-    "totalTokenValue": 93906197.15097834,
-    "protocolsReviewed": 4
+    "totalCapitalAtRisk": 1366324673.8290327,
+    "totalTokenValueAtRisk": 62519898.70934528,
+    "totalTokenValue": 119608033.68725039,
+    "protocolsReviewed": 5
   },
   "dependencies": [
     {
       "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "name": "Chainlink ETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 290944466.7616046,
+      "totalFundsAtRisk": 311793150.4017025,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -97,7 +114,7 @@
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
-      "totalFundsAtRisk": 178593772.7895147,
+      "totalFundsAtRisk": 192350133.4472736,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -109,7 +126,7 @@
       "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
       "entity": "Morpho",
-      "totalFundsAtRisk": 170539050.9212706,
+      "totalFundsAtRisk": 172143850.83967906,
       "protocols": [
         {
           "slug": "Steakhouse-USDC",
@@ -121,7 +138,7 @@
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 112350693.97208993,
+      "totalFundsAtRisk": 119443016.95442888,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -133,7 +150,7 @@
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "name": "RocketPool rETH Token",
       "entity": "RocketPool",
-      "totalFundsAtRisk": 112350693.97208993,
+      "totalFundsAtRisk": 119443016.95442888,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -145,7 +162,7 @@
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "name": "Chainlink stETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 108769079.41946818,
+      "totalFundsAtRisk": 115807084.50192754,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -157,11 +174,155 @@
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "name": "Lido wstETH Token",
       "entity": "Lido",
-      "totalFundsAtRisk": 108769079.41946818,
+      "totalFundsAtRisk": 115807084.50192754,
       "protocols": [
         {
           "slug": "liquity-v2",
           "name": "Liquity V2"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "name": "VNXCToken (VCHF)",
+      "entity": "VCHF",
+      "totalFundsAtRisk": 503838.1609304662,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+      "name": "Chainlink RBACTimelock",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+      "name": "VNX Proxy Admin",
+      "entity": "VCHF",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+      "name": "CryptoFranc (XCHF)",
+      "entity": "XCHF",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+      "name": "Chainlink ARMProxy",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e",
+      "name": "XCHF Owner 3/4 Multisig",
+      "entity": "XCHF",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6",
+      "name": "XCHF Minter 3/6 Multisig",
+      "entity": "XCHF",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD",
+      "name": "XCHF Operator 3/6 Multisig",
+      "entity": "XCHF",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+      "name": "Chainlink TransferReference",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "name": "Chainlink BurnMintTokenPool",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+      "name": "Chainlink BridgeAccounting",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
+      "name": "Chainlink RBACTimelock (RMNRemote)",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
         }
       ]
     },

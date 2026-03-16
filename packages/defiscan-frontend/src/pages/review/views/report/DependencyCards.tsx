@@ -128,7 +128,7 @@ export function DependencyCards({ review, forceExpanded }: DependencyCardsProps)
           // Sort deps by funds at risk descending within each group
           const depsWithFunds = deps.map((dep) => ({
             dep,
-            fundsAtRisk: dep.totalFundsAtRisk,
+            fundsAtRisk: dep.totalFundsAtRisk + (dep.totalTokenValueAtRisk ?? 0),
           }))
           depsWithFunds.sort((a, b) => b.fundsAtRisk - a.fundsAtRisk)
           const groupTotal = depsWithFunds.reduce(

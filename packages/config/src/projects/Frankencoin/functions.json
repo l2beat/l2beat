@@ -1,0 +1,859 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-16T08:35:14.177Z",
+  "contracts": {
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
+      "functions": [
+        {
+          "functionName": "registerPosition",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:36:12.327Z"
+        },
+        {
+          "functionName": "mintWithReserve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:36:08.616Z"
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:36:05.779Z"
+        },
+        {
+          "functionName": "burnFrom",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:35:43.536Z"
+        },
+        {
+          "functionName": "burnWithoutReserve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:35:55.657Z"
+        },
+        {
+          "functionName": "burnWithReserve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:35:52.782Z"
+        },
+        {
+          "functionName": "burnFromWithReserve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:35:50.221Z"
+        },
+        {
+          "functionName": "coverLoss",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:36:01.889Z"
+        },
+        {
+          "functionName": "collectProfits",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.activeMinters"
+            }
+          ],
+          "timestamp": "2026-01-29T16:35:59.163Z"
+        }
+      ]
+    },
+    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:30:59.088Z"
+        },
+        {
+          "functionName": "setARM",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:30:59.089Z"
+        }
+      ]
+    },
+    "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.s_owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:01.893Z"
+        }
+      ]
+    },
+    "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08": {
+      "functions": [
+        {
+          "functionName": "transferOperator",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.858Z"
+        },
+        {
+          "functionName": "startMigrateToContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.860Z"
+        },
+        {
+          "functionName": "startMigrateFromContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.860Z"
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.861Z"
+        },
+        {
+          "functionName": "acceptOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.newOwner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.862Z"
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.862Z"
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.863Z"
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.minter"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.864Z"
+        },
+        {
+          "functionName": "transferMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.865Z"
+        },
+        {
+          "functionName": "announceRollover",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.865Z"
+        },
+        {
+          "functionName": "migrateFrom",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.migrationFromContract"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.866Z"
+        },
+        {
+          "functionName": "refundForeignTokens",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:07.866Z"
+        }
+      ]
+    },
+    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
+      "functions": [
+        {
+          "functionName": "kamikaze",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:09.336Z"
+        },
+        {
+          "functionName": "restructureCapTable",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:09.336Z"
+        }
+      ]
+    },
+    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
+      "functions": [
+        {
+          "functionName": "openPosition",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:12.973Z"
+        },
+        {
+          "functionName": "clone",
+          "isPermissioned": true,
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-03-16T08:35:14.177Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T08:35:14.177Z"
+          }
+        },
+        {
+          "functionName": "challenge",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:12.974Z"
+        },
+        {
+          "functionName": "bid",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:12.974Z"
+        },
+        {
+          "functionName": "buyExpiredCollateral",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:12.975Z"
+        }
+      ]
+    },
+    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
+      "functions": [
+        {
+          "functionName": "scheduleBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.PROPOSER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.813Z"
+        },
+        {
+          "functionName": "cancel",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.CANCELLER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.813Z"
+        },
+        {
+          "functionName": "executeBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.EXECUTOR_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.818Z"
+        },
+        {
+          "functionName": "updateDelay",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.818Z"
+        },
+        {
+          "functionName": "blockFunctionSelector",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.819Z"
+        },
+        {
+          "functionName": "unblockFunctionSelector",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.819Z"
+        },
+        {
+          "functionName": "bypasserExecuteBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.BYPASSER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:19.821Z"
+        }
+      ]
+    },
+    "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": {
+      "functions": [
+        {
+          "functionName": "scheduleBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.PROPOSER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.662Z"
+        },
+        {
+          "functionName": "cancel",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.CANCELLER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.662Z"
+        },
+        {
+          "functionName": "executeBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.EXECUTOR_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.667Z"
+        },
+        {
+          "functionName": "updateDelay",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.668Z"
+        },
+        {
+          "functionName": "blockFunctionSelector",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.668Z"
+        },
+        {
+          "functionName": "unblockFunctionSelector",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.669Z"
+        },
+        {
+          "functionName": "bypasserExecuteBatch",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.BYPASSER_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:33.670Z"
+        }
+      ]
+    },
+    "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
+      "functions": [
+        {
+          "functionName": "proposeChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@equity.checkQualified"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:34.820Z"
+        }
+      ]
+    },
+    "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
+      "functions": [
+        {
+          "functionName": "proposeChange",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@equity.checkQualified"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:37.626Z"
+        }
+      ]
+    },
+    "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:45.359Z"
+        },
+        {
+          "functionName": "setConfig",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:45.360Z"
+        },
+        {
+          "functionName": "curse",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:45.364Z"
+        },
+        {
+          "functionName": "uncurse",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-01-29T10:31:45.365Z"
+        }
+      ]
+    },
+    "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": {
+      "functions": [
+        {
+          "functionName": "admin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.408Z"
+        },
+        {
+          "functionName": "implementation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.409Z"
+        },
+        {
+          "functionName": "changeAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.413Z"
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.414Z"
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.414Z"
+        }
+      ]
+    },
+    "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6": {
+      "functions": [
+        {
+          "functionName": "setMinterRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.415Z"
+        },
+        {
+          "functionName": "setAssetProtectionRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.415Z"
+        },
+        {
+          "functionName": "changeTransferProvider",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.416Z"
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.417Z"
+        },
+        {
+          "functionName": "configureMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.417Z"
+        },
+        {
+          "functionName": "removeMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.418Z"
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.418Z"
+        },
+        {
+          "functionName": "freeze",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.418Z"
+        },
+        {
+          "functionName": "unFreeze",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.419Z"
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.420Z"
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:14.420Z"
+        }
+      ]
+    },
+    "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": {
+      "functions": [
+        {
+          "functionName": "changeProxyAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@rbacManager.accessControl.upgraderRole.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:17.477Z"
+        },
+        {
+          "functionName": "upgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@rbacManager.accessControl.upgraderRole.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:17.477Z"
+        },
+        {
+          "functionName": "upgradeAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@rbacManager.accessControl.upgraderRole.members"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:17.478Z"
+        }
+      ]
+    },
+    "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE": {
+      "functions": [
+        {
+          "functionName": "transferContractOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roles[0].bearers"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:21.787Z"
+        },
+        {
+          "functionName": "addBearer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roles[roles[role].admin].bearers"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:21.791Z"
+        },
+        {
+          "functionName": "removeBearer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roles[roles[role].admin].bearers"
+            }
+          ],
+          "timestamp": "2026-01-29T10:32:21.791Z"
+        }
+      ]
+    },
+    "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": {
+      "functions": [
+        {
+          "functionName": "roll",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-15T16:18:00.524Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-15T16:18:00.524Z"
+          }
+        },
+        {
+          "functionName": "rollFully",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-16T07:41:09.761Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T07:41:09.761Z"
+          }
+        },
+        {
+          "functionName": "rollFullyWithExpiration",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-16T07:41:10.507Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T07:41:10.507Z"
+          }
+        }
+      ]
+    }
+  }
+}

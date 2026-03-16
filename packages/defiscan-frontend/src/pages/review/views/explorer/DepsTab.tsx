@@ -22,12 +22,12 @@ export function DepsTab({ review }: DepsTabProps) {
   const [sortField, setSortField] = useState<SortField>('fundsAtRisk')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
-  // Use pre-computed funds from compiled review
+  // Use pre-computed funds from compiled review (balances + token value)
   const depsWithFunds = useMemo(
     () =>
       dependencies.map((dep) => ({
         dep,
-        fundsAtRisk: dep.totalFundsAtRisk,
+        fundsAtRisk: dep.totalFundsAtRisk + (dep.totalTokenValueAtRisk ?? 0),
       })),
     [dependencies],
   )

@@ -226,12 +226,15 @@ Merges all analysis data with human-written descriptions into a self-contained J
 #### Admins Pipeline
 ```
 V2ScoreResult.admins.breakdown (AdminDetailWithCapital[])
+  - filter out admins tagged isExternal in contract-tags.json
   + review-config.json admins descriptions
   + contract-tags.json governance flag
   + functions.json mitigations (MitigationValue: hardcoded or field-referenced)
   + configSeverity.ts auto-severity (mitigatedField → config.jsonc HIGH severity)
   → CompiledAdmin[]
 ```
+**External admin filtering:** Admins tagged as `isExternal: true` in `contract-tags.json` are excluded from the compiled review. These represent external dependency admins (e.g., Chainlink governance, CryptoFranc multisigs), not protocol admins. The V2 scoring engine still detects them (visible in protocolbeat's "Show all" toggle), but they are filtered at compilation time.
+
 Each `CompiledAdmin` carries: address, name, description, adminType, isGovernance, functions (with per-function capital), and totals (totalDirectCapital, totalReachableCapital, totalDirectTokenValue, totalReachableTokenValue).
 
 **Mitigation values** can be hardcoded strings or field references using the same path syntax as owner definitions (`$self.field`, `@ref.field`, `eth:0xAddr.field`). Field references are resolved at display time via `resolveFieldValue()` in `ownerResolution.ts`. When a mitigation specifies a `mitigatedField` (contract + field name), `configSeverity.ts` auto-writes `severity: "HIGH"` to `config.jsonc`, ensuring the monitoring service sends priority Discord alerts when that field changes on-chain.

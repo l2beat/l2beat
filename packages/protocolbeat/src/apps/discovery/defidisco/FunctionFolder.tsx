@@ -2296,8 +2296,12 @@ export function FunctionFolder({
                                 >
                                   {dep.contractName}
                                 </button>
-                                <span className="rounded bg-coffee-600 px-1 py-0.5 text-coffee-300 text-[10px]">
-                                  auto
+                                <span
+                                  className={`rounded px-1 py-0.5 text-[10px] ${dep.dependencyType === 'write' ? 'bg-aux-orange/20 text-aux-orange' : 'bg-coffee-600 text-coffee-300'}`}
+                                >
+                                  {dep.dependencyType === 'write'
+                                    ? 'write'
+                                    : 'auto'}
                                 </span>
                                 {dep.viewOnlyPath && (
                                   <span className="rounded bg-coffee-600 px-1 py-0.5 text-coffee-300 text-[10px]">
@@ -2308,7 +2312,10 @@ export function FunctionFolder({
                             </div>
                             {dep.calledFunctions.length > 0 && (
                               <div className="mt-1 text-coffee-500 text-[10px]">
-                                calls: {dep.calledFunctions.join(', ')}
+                                {dep.dependencyType === 'write'
+                                  ? 'owns'
+                                  : 'calls'}
+                                : {dep.calledFunctions.join(', ')}
                               </div>
                             )}
                             {dep.entity && (

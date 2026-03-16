@@ -133,15 +133,30 @@ cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 
 ### Aggregate Funds
 
-**Factory-level TVL aggregation**: For protocols that deploy many child contracts (e.g., Uniswap V2 pairs), aggregate funds tracking fetches total TVL from a single subgraph query instead of tracking each contract individually.
+**Factory-level TVL aggregation**: For protocols that deploy many child contracts (e.g., Uniswap V2 pairs, Frankencoin positions), aggregate funds tracking fetches total TVL via a handler-specific data source instead of tracking each contract individually.
 
 **How it works**:
 1. Researcher tags a factory contract with `fetchAggregate: true` and selects an `aggregateHandler` (e.g., `uniswap-v2-factory`)
 2. When funds are fetched, l2b calls `defiscan-endpoints /aggregate` endpoint with the handler name
-3. The endpoint dispatches to the matching handler (e.g., `UniswapV2FactoryHandler` queries The Graph subgraph)
+3. The endpoint dispatches to the matching handler. If the handler is unknown, the endpoint returns a 500 error (not silent zeros)
 4. Aggregate data is stored in `funds-data.json` under the `aggregate` field
 5. The review compiler includes aggregate-tagged contracts in `compiled-review.json` even without a `review-config.json` entry
 6. `compile-data.ts` adds aggregate values to per-protocol `totalCapitalAtRisk` (counts as TVL)
+
+**Aggregate endpoint** (`GET /aggregate`):
+- `contract_address` (required): Ethereum address of the factory/hub contract
+- `handler` (required): Handler name (e.g., `uniswap-v2-factory`, `frankencoin-mintinghub`)
+- `chain_id` (optional): Chain identifier, defaults to `eth`
+- `force_refresh` (optional): `"true"` to bypass cache
+- Returns `AggregateResponse` with `total_usd_value`, `contract_count`, `breakdown[]`, `timestamp`, `source`
+- Unknown handler → 500 error with available handler names listed
+
+**Available handlers**:
+
+| Handler | Data source | API key required | Notes |
+|---------|-------------|-----------------|-------|
+| `uniswap-v2-factory` | The Graph subgraph | Yes (`THEGRAPH_API_KEY`) | Uses factory address in subgraph query |
+| `frankencoin-mintinghub` | Frankencoin public API (`api.frankencoin.com`) | No | Filters positions by MintingHub version (V1 vs V2) based on the contract address |
 
 **UI**:
 - `FundsTagsButton.tsx` — "Fetch Aggregate" checkbox, handler dropdown (`KNOWN_AGGREGATE_HANDLERS`), label text input
@@ -153,6 +168,7 @@ cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 2. Implement `AggregateHandler` interface (`name` + `fetch(address, chain)` → `AggregateResponse`)
 3. Register in `server.ts` constructor array
 4. Add handler name to `KNOWN_AGGREGATE_HANDLERS` in `FundsTagsButton.tsx`
+5. Handlers receive the `contractAddress` and can use it to filter results (e.g., Frankencoin filters by MintingHub version)
 
 **Files**:
 - Endpoint: `packages/defiscan-endpoints/src/routes/aggregate.ts`
@@ -166,7 +182,7 @@ cd ~/defidisco/packages/l2b && ./scripts/start-with-funds.sh
 DEBANK_API_KEY=your-debank-api-key
 PORT=3001
 ETHEREUM_RPC_URL_FOR_DISCOVERY=https://your-rpc-url  # Optional: enables Morpho vault onchain positions
-THEGRAPH_API_KEY=your-thegraph-api-key  # Required for aggregate handlers using The Graph
+THEGRAPH_API_KEY=your-thegraph-api-key  # Required for uniswap-v2-factory handler (not needed for frankencoin-mintinghub)
 ```
 
 ### Morpho Vault Onchain Positions

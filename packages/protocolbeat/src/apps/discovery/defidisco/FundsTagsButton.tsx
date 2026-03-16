@@ -5,7 +5,10 @@ import { useStore } from '../panel-nodes/store/store'
 import { findByAddress } from './addressUtils'
 import { useContractTags, useUpdateContractTag } from './hooks/useContractTags'
 
-const KNOWN_AGGREGATE_HANDLERS = ['uniswap-v2-factory']
+const KNOWN_AGGREGATE_HANDLERS = [
+  'frankencoin-mintinghub',
+  'uniswap-v2-factory',
+]
 
 export function FundsTagsButton() {
   const { project } = useParams()

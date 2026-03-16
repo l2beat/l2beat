@@ -19,7 +19,7 @@ export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
   const topFunds = [...funds]
     .map((f) => ({
       ...f,
-      total: (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0),
+      total: (f.balances?.totalUsdValue ?? 0) + (f.positions?.totalUsdValue ?? 0) + (f.aggregate?.totalUsdValue ?? 0) + (f.tokenInfo?.tokenValue ?? 0),
     }))
     .sort((a, b) => b.total - a.total)
     .slice(0, 4)

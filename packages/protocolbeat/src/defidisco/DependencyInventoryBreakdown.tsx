@@ -157,18 +157,34 @@ export function DependencyInventoryBreakdown({
   // Toggle for showing/hiding immutable dependencies (default: on)
   const [showImmutable, setShowImmutable] = useState(true)
 
-  // Extract external owners from admin breakdown
+  // Regular dependencies (from call graph / function dependencies)
+  const regularDeps = score.breakdown || []
+
+  // Addresses already covered by write-dependencies in the regular dep breakdown
+  const depAddresses = useMemo(() => {
+    const set = new Set<string>()
+    for (const dep of regularDeps) {
+      set.add(normalizeForLookup(dep.dependencyAddress))
+    }
+    return set
+  }, [regularDeps])
+
+  // Extract external owners from admin breakdown, excluding those already
+  // covered by write-dependencies in the regular dependency pipeline
   const allExternalOwners = useMemo(() => {
     if (!adminScore?.breakdown || !contractTags?.tags) return []
 
     return adminScore.breakdown.filter((admin) => {
+      // Skip if already shown as a write-dependency
+      if (depAddresses.has(normalizeForLookup(admin.adminAddress))) return false
+
       return contractTags.tags.some(
         (tag) =>
           addressesEqual(tag.contractAddress, admin.adminAddress) &&
           tag.isExternal,
       )
     })
-  }, [adminScore, contractTags])
+  }, [adminScore, contractTags, depAddresses])
 
   // Filter immutable/revoked external owners based on toggle
   const isImmutableOrRevoked = (admin: any) =>
@@ -188,9 +204,6 @@ export function DependencyInventoryBreakdown({
   const hasImmutableExternalOwners = useMemo(() => {
     return allExternalOwners.some((a) => isImmutableOrRevoked(a))
   }, [allExternalOwners, proxyTypeMap])
-
-  // Regular dependencies (from call graph / function dependencies)
-  const regularDeps = score.breakdown || []
 
   // Group regular deps by entity
   const { entityGroups, ungroupedDeps, sortedEntities } = useMemo(() => {

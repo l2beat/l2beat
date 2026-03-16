@@ -128,6 +128,8 @@ export interface CompiledDependency {
   totalFundsAtRisk: number
   /** Aggregated token value at risk across all functions that use this dependency (deduplicated by contract) */
   totalTokenValueAtRisk: number
+  /** How this dependency was detected: 'callgraph' (code calls), 'write' (permission-owner) */
+  dependencyType?: 'callgraph' | 'write'
 }
 
 export interface CompiledFundHolder {
@@ -424,11 +426,16 @@ export class ReviewCompiler {
     const admins: CompiledAdmin[] = []
     if (v2Score.inventory.admins.breakdown) {
       for (const admin of v2Score.inventory.admins.breakdown) {
+        const tag = tagsByAddress.get(normalizeChainAddress(admin.adminAddress))
+
+        // Skip admins that are tagged as external — they belong to
+        // external dependencies and are not protocol admins
+        if (tag?.isExternal) continue
+
         const desc = getFromAddressRecord(
           reviewConfig.admins,
           admin.adminAddress,
         )
-        const tag = tagsByAddress.get(normalizeChainAddress(admin.adminAddress))
 
         const withCapital = admin as AdminDetailWithCapital
         const hasCapital = 'totalDirectCapital' in withCapital
@@ -503,6 +510,7 @@ export class ReviewCompiler {
         name: string
         entity: string | undefined
         isAutoDetected: boolean
+        dependencyType: 'callgraph' | 'write' | undefined
         calledFunctions: Set<string>
         functions: CompiledDependencyFunction[]
       }
@@ -521,6 +529,7 @@ export class ReviewCompiler {
               name: dep.contractName,
               entity: dep.entity,
               isAutoDetected: dep.isAutoDetected,
+              dependencyType: dep.dependencyType,
               calledFunctions: new Set(dep.calledFunctions),
               functions: [],
             }
@@ -628,6 +637,7 @@ export class ReviewCompiler {
         functions: dep.functions,
         totalFundsAtRisk,
         totalTokenValueAtRisk,
+        dependencyType: dep.dependencyType,
       })
     }
 
@@ -833,7 +843,16 @@ export class ReviewCompiler {
     const resolved = new Map<string, string>()
     for (const [varName, dataPath] of Object.entries(dataKeys)) {
       const value = this.resolveDataPath(dataPath, sources)
-      resolved.set(varName, value !== null ? formatUsdValue(value) : '(N/A)')
+      if (value === null) {
+        resolved.set(varName, '(N/A)')
+      } else {
+        // Infer format from variable name: "Count" suffix → plain integer
+        const isCount = /count$/i.test(varName)
+        resolved.set(
+          varName,
+          isCount ? String(Math.round(value)) : formatUsdValue(value),
+        )
+      }
     }
 
     // Replace in metadata.description

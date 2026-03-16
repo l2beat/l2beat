@@ -1,0 +1,2931 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-15T09:02:23.320Z",
+  "contracts": {
+    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
+      "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+      "name": "Equity",
+      "externalCalls": [
+        {
+          "callerFunction": "calculateProceeds",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "calculateShares",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "invest",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "invest",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "price",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "redeem",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeemExpected",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "redeemExpected",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "redeemFrom",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "redeemFrom",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "restructureCapTable",
+          "storageVariable": "zchf",
+          "interfaceType": "Frankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-03-15T09:01:58.116Z"
+    },
+    "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
+      "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+      "name": "Savings",
+      "externalCalls": [
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "dropReferrer",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "dropReferrer",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "proposeChange",
+          "storageVariable": "equity",
+          "interfaceType": "IGovernance",
+          "calledFunction": "checkQualified",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshBalance",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshBalance",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshMyBalance",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshMyBalance",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "ZCHF",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-03-15T09:01:59.490Z"
+    },
+    "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
+      "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+      "name": "StablecoinBridge",
+      "externalCalls": [
+        {
+          "callerFunction": "burn",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "resolvedContractName": "VNXCToken",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "burnAndSend",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "burnAndSend",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "resolvedContractName": "VNXCToken",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "resolvedContractName": "VNXCToken",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mintTo",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "resolvedContractName": "VNXCToken",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "mintTo",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:03.952Z"
+    },
+    "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
+      "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+      "name": "Savings",
+      "externalCalls": [
+        {
+          "callerFunction": "accruedInterest",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "accruedInterest",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "msg.sender",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "zchf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "owner",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "adjust",
+          "storageVariable": "zchf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "calculateInterest",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "proposeChange",
+          "storageVariable": "equity",
+          "interfaceType": "IReserve",
+          "calledFunction": "checkQualified",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshBalance",
+          "storageVariable": "owner",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshBalance",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "refreshMyBalance",
+          "storageVariable": "owner",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "refreshMyBalance",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "zchf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "owner",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "zchf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "owner",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "save",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "zchf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "msg.sender",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "withdraw",
+          "storageVariable": "TMP_66",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "equity",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:06.175Z"
+    },
+    "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
+      "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+      "name": "MintingHub",
+      "externalCalls": [
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_25",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengeData"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_47",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeAverted"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_49",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "TMP_116",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_58",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "TMP_122",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_33",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeSucceeded"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "collectProfits",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnWithoutReserve",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "TMP_62",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeStarted"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "existing",
+          "interfaceType": "IPosition",
+          "calledFunction": "original"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_35",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "existing",
+          "interfaceType": "IPosition",
+          "calledFunction": "reduceLimitForClone"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "clonePosition"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "existing",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_42",
+          "interfaceType": "IPosition",
+          "calledFunction": "initializeClone"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "existing",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_45",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_49",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_52",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_9",
+          "interfaceType": "IERC20",
+          "calledFunction": "decimals",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "createNewPosition"
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "collectProfits",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_26",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPositionOneWeek",
+          "storageVariable": "TMP_9",
+          "interfaceType": "IERC20",
+          "calledFunction": "decimals",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPositionOneWeek",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "createNewPosition"
+        },
+        {
+          "callerFunction": "openPositionOneWeek",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPositionOneWeek",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "collectProfits",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPositionOneWeek",
+          "storageVariable": "TMP_26",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "price",
+          "storageVariable": "REF_67",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengeData",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "returnPostponedCollateral",
+          "storageVariable": "TMP_137",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:09.626Z"
+    },
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
+      "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+      "name": "StablecoinBridge",
+      "externalCalls": [
+        {
+          "callerFunction": "burn",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "burn",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "resolvedContractName": "CryptoFranc",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "burnAndSend",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "burnAndSend",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "resolvedContractName": "CryptoFranc",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "resolvedContractName": "CryptoFranc",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mint",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mintTo",
+          "storageVariable": "chf",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "resolvedContractName": "CryptoFranc",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "mintTo",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:09.636Z"
+    },
+    "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": {
+      "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+      "name": "PositionRoller",
+      "externalCalls": [
+        {
+          "callerFunction": "findRepaymentAmount",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "minted",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "findRepaymentAmount",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "reserveContribution",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "findRepaymentAmount",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "calculateFreedAmount",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "repay"
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "withdrawCollateral"
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "TMP_47",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            },
+            {
+              "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+              "contractName": "TransferReference"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "hub"
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "approve",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "TMP_58",
+          "interfaceType": "IMintingHub",
+          "calledFunction": "clone",
+          "resolvedAddress": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+          "resolvedContractName": "MintingHub",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 60,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "TMP_73",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "roll",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "getPositionParent",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "getMintAmount"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "TMP_10",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "minted",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "reserveContribution"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "calculateFreedAmount",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "repay"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "withdrawCollateral"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "TMP_47",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            },
+            {
+              "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+              "contractName": "TransferReference"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "hub"
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "approve",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "TMP_58",
+          "interfaceType": "IMintingHub",
+          "calledFunction": "clone",
+          "resolvedAddress": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+          "resolvedContractName": "MintingHub",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 60,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "TMP_73",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFully",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "getPositionParent",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "getMintAmount"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "TMP_10",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "target",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "minted",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 50,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "reserveContribution"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "calculateFreedAmount",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "repay"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "withdrawCollateral"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "TMP_47",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            },
+            {
+              "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+              "contractName": "TransferReference"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "hub"
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "targetCollateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "approve",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "contractName": "ChainLink Token"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "TMP_58",
+          "interfaceType": "IMintingHub",
+          "calledFunction": "clone",
+          "resolvedAddress": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+          "resolvedContractName": "MintingHub",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 60,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "source",
+          "interfaceType": "IPosition",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "resolvedContractName": "StablecoinBridge",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+              "contractName": "StablecoinBridge"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "contractName": "Frankencoin"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "TMP_73",
+          "interfaceType": "Ownable",
+          "calledFunction": "owner",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "rollFullyWithExpiration",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "getPositionParent",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:18.288Z"
+    },
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "name": "Frankencoin",
+      "externalCalls": [
+        {
+          "callerFunction": "denyMinter",
+          "storageVariable": "reserve",
+          "interfaceType": "IReserve",
+          "calledFunction": "checkQualified",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "initialize",
+          "storageVariable": "reserve",
+          "interfaceType": "IReserve",
+          "calledFunction": "totalSupply",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "deterministic",
+          "isViewCall": true
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:18.301Z"
+    },
+    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
+      "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+      "name": "MintingHub",
+      "externalCalls": [
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_24",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengeData"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_45",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeAverted"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_47",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "TMP_119",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_56",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "TMP_125",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "REF_31",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeSucceeded"
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "collectProfits",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "coverLoss",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "bid",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "burnWithoutReserve",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "TMP_165",
+          "interfaceType": "IERC20",
+          "calledFunction": "balanceOf",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "forceSale"
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration"
+        },
+        {
+          "callerFunction": "buyExpiredCollateral",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengePeriod"
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "TMP_65",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "challenge",
+          "storageVariable": "position",
+          "interfaceType": "IPosition",
+          "calledFunction": "notifyChallengeStarted"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "clonePosition"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "initialize",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "minimumCollateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "collateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_56",
+          "interfaceType": "Ownable",
+          "calledFunction": "transferOwnership",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "clonePosition"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "initialize",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "collateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "minimumCollateral"
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "collateral",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "child",
+          "interfaceType": "IPosition",
+          "calledFunction": "mint",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "clone",
+          "storageVariable": "TMP_56",
+          "interfaceType": "Ownable",
+          "calledFunction": "transferOwnership",
+          "resolvedAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "resolvedContractName": "ARMProxy",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "contractName": "ARMProxy"
+            },
+            {
+              "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+              "contractName": "VNXCToken"
+            },
+            {
+              "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+              "contractName": "BurnMintTokenPool"
+            },
+            {
+              "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+              "contractName": "CryptoFranc"
+            },
+            {
+              "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+              "contractName": "VNXProxyAdmin"
+            },
+            {
+              "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+              "contractName": "VNXManager"
+            },
+            {
+              "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+              "contractName": "RMNRemote"
+            }
+          ],
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "expiredPurchasePrice",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "price",
+          "resolvedAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "resolvedContractName": "Equity",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 30,
+          "resolutionCandidates": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "contractName": "Equity"
+            },
+            {
+              "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+              "contractName": "MintingHub"
+            },
+            {
+              "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+              "contractName": "MintingHub"
+            }
+          ],
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "expiredPurchasePrice",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "expiration",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "expiredPurchasePrice",
+          "storageVariable": "pos",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengePeriod",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_10",
+          "interfaceType": "IERC20",
+          "calledFunction": "decimals",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_14",
+          "interfaceType": "IERC20",
+          "calledFunction": "totalSupply",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_17",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "POSITION_FACTORY",
+          "interfaceType": "IPositionFactory",
+          "calledFunction": "createNewPosition"
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "registerPosition",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "zchf",
+          "interfaceType": "IFrankencoin",
+          "calledFunction": "collectProfits",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "openPosition",
+          "storageVariable": "TMP_34",
+          "interfaceType": "IERC20",
+          "calledFunction": "transferFrom",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "price",
+          "storageVariable": "REF_65",
+          "interfaceType": "IPosition",
+          "calledFunction": "challengeData",
+          "callerIsView": true,
+          "isViewCall": true
+        },
+        {
+          "callerFunction": "returnPostponedCollateral",
+          "storageVariable": "TMP_140",
+          "interfaceType": "IERC20",
+          "calledFunction": "transfer",
+          "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "resolvedContractName": "Frankencoin",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-03-15T09:02:23.318Z"
+    }
+  }
+}

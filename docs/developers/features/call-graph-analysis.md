@@ -96,7 +96,11 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
 
 - **ABI-driven iteration**: Iterates ALL write functions from `discovered.json` ABIs (same set shown in the UI's permissions section), not just entries in `functions.json`. This ensures dependency detection covers every write function visible in the UI.
 - **Impact** (permissioned functions or functions with dependencies): Forward BFS via call graph, filters contracts with funds. Includes `callPath: CallPathStep[]` (shortest path)
-- **Dependencies** (all functions): Auto-detected external contracts (BFS + `isExternal` tag) merged with manual deps from `functions.json`. `isAutoDetected` flag distinguishes them
+- **Dependencies** (all functions): Three sources, merged and deduplicated:
+  1. **Call-graph** (`dependencyType: 'callgraph'`): Auto-detected external contracts reached via forward BFS through call graph edges. Has `callPath` showing the code-level execution trace.
+  2. **Write** (`dependencyType: 'write'`): External contracts that are permission-owners of permissioned functions, detected via `buildWriteDependencyLookup()`. Resolves `ownerDefinitions` from `functions.json` and filters to `isExternal` addresses. Has empty `callPath` (authority relationship, not code execution).
+  3. **Manual**: Dependencies explicitly listed in `functions.json`. `isAutoDetected: false`.
+  - Deduplication: call-graph deps are preferred over write-deps for the same address (richer path info). Manual deps always preserved.
 - **Pre-loaded data**: Accepts optional `FunctionAnalysisPreloadedData` to avoid redundant file I/O when callers (e.g., `v2Scoring.ts`, `reviewCompiler.ts`) have already loaded functions, call graph, funds, or contract tags data
 - Response: `ApiFunctionAnalysisResponse` — `contracts[address][functionName] -> FunctionAnalysis`
 
@@ -104,3 +108,5 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
 
 - `FunctionTraversalResult`, `TraversalTerminal`, `OwnershipChainStep` — enhanced traversal
 - `FunctionImpactEntry`, `FunctionDependencyEntry`, `FunctionAnalysis`, `CallPathStep` — function analysis
+- `FunctionDependencyEntry.dependencyType` — `'callgraph' | 'write'`, indicates how the dependency was detected
+- `WriteDependencyInfo` — internal type for `buildWriteDependencyLookup()` results (address, name, entity)

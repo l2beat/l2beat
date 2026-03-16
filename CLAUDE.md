@@ -248,6 +248,8 @@ packages/
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
+│   ├── FundsTagsButton.tsx         # Funds fetching controls (balances, positions, token, aggregate)
+│   ├── FundsSection.tsx            # Funds display in DeFiScan panel (tokens, aggregate, contracts)
 │   ├── addressUtils.ts             # Frontend address utilities (stripChainPrefix, addressesEqual, normalizeForLookup, findByAddress)
 │   ├── ownerResolution.ts          # Shared owner/field path resolution (UI + backend data access)
 │   └── icons/
@@ -273,6 +275,12 @@ packages/
 │   ├── monitorConfig.ts                # Standalone config
 │   ├── FundsRefresher.ts               # Funds refresh wrapper
 │   └── README.md                       # Monitor documentation
+├── defiscan-endpoints/                # Standalone API service for funds data
+│   └── src/services/aggregate/
+│       ├── AggregateService.ts       # Handler dispatch + caching
+│       └── handlers/                 # Per-protocol aggregate handlers
+│           ├── uniswapV2Factory.ts   # The Graph subgraph (requires THEGRAPH_API_KEY)
+│           └── frankencoinMintinghub.ts  # Frankencoin API (no key needed)
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
     └── review-config.json            # Per-project review config

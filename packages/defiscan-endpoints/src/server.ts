@@ -14,6 +14,7 @@ import { positionsRouter } from './routes/positions'
 import { tokenRouter } from './routes/token'
 import {
   AggregateService,
+  FrankencoinMintinghubHandler,
   UniswapV2FactoryHandler,
 } from './services/aggregate'
 import { BalanceService } from './services/BalanceService'
@@ -107,7 +108,10 @@ export function createDefiscanServer(
     config.cache.balancesTTL,
   )
   const aggregateService = new AggregateService(
-    [new UniswapV2FactoryHandler(config.thegraph.apiKey)],
+    [
+      new UniswapV2FactoryHandler(config.thegraph.apiKey),
+      new FrankencoinMintinghubHandler(),
+    ],
     aggregateCache,
     logger.for('AggregateService'),
   )

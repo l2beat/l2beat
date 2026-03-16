@@ -2,12 +2,12 @@ import type { CompiledDependencyFunction } from '../types'
 
 /**
  * Compute per-function funds from the compiled dependency function data.
- * Sums direct funds + reachable contract funds.
+ * Sums direct funds + token value + reachable contract funds + token value.
  */
 export function getDepFunctionFunds(fn: CompiledDependencyFunction): number {
-  let total = fn.directFundsUsd
+  let total = fn.directFundsUsd + (fn.directTokenValueUsd ?? 0)
   for (const rc of fn.reachableContracts) {
-    total += rc.fundsUsd
+    total += rc.fundsUsd + (rc.tokenValueUsd ?? 0)
   }
   return total
 }

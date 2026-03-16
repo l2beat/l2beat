@@ -1,0 +1,2439 @@
+{
+  "version": "1.0",
+  "compiledAt": "2026-03-16T08:53:05.544Z",
+  "project": "Frankencoin",
+  "metadata": {
+    "protocolName": "Frankencoin",
+    "protocolSlug": "Frankencoin",
+    "chain": "Ethereum",
+    "projectType": "stablecoin",
+    "tokenName": "ZCHF",
+    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.72M, with $68.98M in active collateral positions."
+  },
+  "totals": {
+    "contractCount": 24,
+    "permissionedFunctionCount": 73,
+    "scoredFunctionCount": 1,
+    "adminCount": 16,
+    "dependencyCount": 12,
+    "totalCapitalAtRisk": 13923431.96265291,
+    "totalTokenValueAtRisk": 25724637.771031145,
+    "totalTokenValue": 25724637.771031145
+  },
+  "admins": [
+    {
+      "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+      "name": "MintingHub (Legacy)",
+      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, mint, mintWithReserve, burnFrom, burnWithReserve, burnFromWithReserve, burnWithoutReserve, coverLoss, and collectProfits. This is the older MintingHub, no longer actively used but still registered as a minter with $146.99K in remaining positions.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+      "name": "StablecoinBridge (XCHF)",
+      "description": "Immutable bridge contract that allows 1:1 conversion between XCHF (CryptoFranc) and ZCHF. Registered as an active minter, it can mint and burn ZCHF. The bridge holds XCHF as backing for ZCHF minted through it.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+      "name": "Savings (Legacy)",
+      "description": "Immutable older Savings contract registered as an active minter. Can mint ZCHF to pay interest to depositors. Holds $21.50K in ZCHF deposits. Parameters can be changed by qualified FPS holders via proposeChange.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+      "name": "PositionRoller",
+      "description": "Immutable protocol contract that enables rolling (migrating) collateral positions between MintingHub versions. Registered as an active minter, though its roll/rollFully/rollFullyWithExpiration functions have been scored as no-impact.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+      "name": "MintingHub (Current)",
+      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $68.98M across 51 active positions. Functions including openPosition, challenge, bid, and buyExpiredCollateral are gated by Equity (FPS) token holder qualification.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+      "name": "StablecoinBridge (VCHF)",
+      "description": "Immutable bridge contract enabling 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, holding $503.84K in VCHF reserves. If the VCHF token is paused, frozen, or upgraded by VNX, this bridge's minting and burning would be affected.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+      "name": "Savings (Current)",
+      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $10.22M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 25724637.771031145,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 25724637.771031145
+    },
+    {
+      "address": "eth:0x0000000000000000000000000000000000000000",
+      "name": "Zero Address (Renounced)",
+      "description": "The zero address holds the newOwner role on CryptoFranc (acceptOwnership) and the migrationFromContract reference (migrateFrom). These permissions are effectively renounced and cannot be exercised.",
+      "adminType": "Revoked",
+      "isGovernance": false,
+      "functions": [],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
+    },
+    {
+      "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+      "name": "Equity (FPS Token)",
+      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can call openPosition, challenge, bid, and buyExpiredCollateral on the MintingHub. The Equity contract itself can call kamikaze (self-destruct of shares) and restructureCapTable. It also controls functions on an unknown contract (0xf72e...6Ba6) including setMinterRole, mint, freeze, pause, and setAssetProtectionRole. Holds $13.92M in reserves.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "contractName": "Equity",
+          "functionName": "kamikaze",
+          "impact": "critical",
+          "directFundsUsd": 13923431.96265291,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+          "contractName": "Equity",
+          "functionName": "restructureCapTable",
+          "impact": "critical",
+          "directFundsUsd": 13923431.96265291,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "equity"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "openPosition",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "decimals",
+                "totalSupply",
+                "transfer",
+                "registerPosition",
+                "collectProfits",
+                "transferFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "clone",
+          "impact": "no-impact",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "initialize",
+                "registerPosition",
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+              "name": "ARMProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferOwnership"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalSupply"
+              ],
+              "fundsUsd": 13923431.96265291,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "challenge",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "price"
+              ],
+              "fundsUsd": 13923431.96265291,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "equity"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "bid",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "transfer",
+                "collectProfits",
+                "coverLoss",
+                "burnWithoutReserve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "buyExpiredCollateral",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "balanceOf",
+                "equity"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": true,
+              "calledFunctions": [
+                "price"
+              ],
+              "fundsUsd": 13923431.96265291,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalDirectCapital": 13923431.96265291,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 13923431.96265291,
+      "totalReachableTokenValue": 0
+    }
+  ],
+  "dependencies": [
+    {
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "name": "VNXCToken (VCHF)",
+      "description": "VNX Franc stablecoin, an upgradeable ERC-20 (EIP-1967 proxy) used by the StablecoinBridge for 1:1 VCHF-to-ZCHF conversion. The VCHF token can be paused, frozen per-address, or upgraded by VNX, which would block StablecoinBridge mint/burn operations. Critical dependency for the VCHF bridge path.",
+      "entity": "VCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "transfer",
+        "transferFrom"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "contractName": "StablecoinBridge",
+          "functionName": "burn",
+          "viewOnlyPath": false,
+          "directFundsUsd": 503838.1609304662,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burnFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "contractName": "StablecoinBridge",
+          "functionName": "burnAndSend",
+          "viewOnlyPath": false,
+          "directFundsUsd": 503838.1609304662,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burnFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "contractName": "StablecoinBridge",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 503838.1609304662,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "contractName": "StablecoinBridge",
+          "functionName": "mintTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 503838.1609304662,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "roll",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "registerPosition",
+                "transferFrom",
+                "equity"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "approve",
+                "price"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "rollFully",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "calculateFreedAmount",
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "equity",
+                "registerPosition",
+                "transferFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "price",
+                "transferFrom",
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "minted",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "rollFullyWithExpiration",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "calculateFreedAmount",
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "equity",
+                "registerPosition",
+                "transferFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "price",
+                "transferFrom",
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "minted",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 503838.1609304662,
+      "totalTokenValueAtRisk": 25724637.771031145,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+      "name": "Chainlink RBACTimelock",
+      "description": "Chainlink-operated timelock (3h delay) that owns the ARMProxy and CryptoFranc contracts. Chainlink can modify CCIP configuration and CryptoFranc parameters after the timelock delay. Uses role-based access with PROPOSER, EXECUTOR, CANCELLER, and BYPASSER roles.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "setARM",
+        "transferOwnership"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "contractName": "ARMProxy",
+          "functionName": "setARM",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+          "contractName": "ARMProxy",
+          "functionName": "transferOwnership",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+      "name": "VNX Proxy Admin",
+      "description": "Proxy admin for the VCHF token, controlled by an EOA (0x7B0C...9403). Can upgrade the VCHF token implementation without a timelock, which would directly affect the VCHF StablecoinBridge.",
+      "entity": "VCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "admin",
+        "changeAdmin",
+        "implementation",
+        "upgradeTo",
+        "upgradeToAndCall"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "contractName": "VNXCToken",
+          "functionName": "admin",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "contractName": "VNXCToken",
+          "functionName": "changeAdmin",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "contractName": "VNXCToken",
+          "functionName": "implementation",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "contractName": "VNXCToken",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "contractName": "VNXCToken",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+      "name": "CryptoFranc (XCHF)",
+      "description": "CryptoFranc token used by the StablecoinBridge for 1:1 XCHF-to-ZCHF conversion. XCHF is an immutable token but has centralized controls: it can be paused, its minter and operator can be changed, and token migrations can be initiated. Owned by a Chainlink RBACTimelock (3h delay), with minting controlled by a 3/6 XCHF multisig.",
+      "entity": "XCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "transfer",
+        "transferFrom"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+          "contractName": "StablecoinBridge",
+          "functionName": "burn",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burnFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+          "contractName": "StablecoinBridge",
+          "functionName": "burnAndSend",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "burnFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+          "contractName": "StablecoinBridge",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+          "contractName": "StablecoinBridge",
+          "functionName": "mintTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 25724637.771031145,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 25724637.771031145,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+      "name": "Chainlink ARMProxy",
+      "description": "Chainlink Active Risk Management proxy used by the PositionRoller and MintingHub for cross-chain position operations. Owned by the Chainlink RBACTimelock.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "owner",
+        "transferOwnership"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "roll",
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "registerPosition",
+                "transferFrom",
+                "equity"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom",
+                "approve",
+                "price"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "rollFully",
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "calculateFreedAmount",
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "equity",
+                "registerPosition",
+                "transferFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "price",
+                "transferFrom",
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "minted",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "contractName": "PositionRoller",
+          "functionName": "rollFullyWithExpiration",
+          "viewOnlyPath": true,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "calculateFreedAmount",
+                "mint",
+                "burnFrom",
+                "getPositionParent",
+                "equity",
+                "registerPosition",
+                "transferFrom"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "price",
+                "transferFrom",
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+              "name": "StablecoinBridge",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "minted",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "contractName": "MintingHub",
+          "functionName": "clone",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+              "name": "Frankencoin",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "initialize",
+                "registerPosition",
+                "transferFrom",
+                "mint"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            },
+            {
+              "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+              "name": "Equity",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalSupply"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e",
+      "name": "XCHF Owner 3/4 Multisig",
+      "description": "A 3-of-4 GnosisSafe multisig that owns the CryptoFranc token through the Chainlink RBACTimelock. Controls CryptoFranc ownership transfer, operator assignment, migration, pause/unpause, and minter role changes.",
+      "entity": "XCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "startMigrateToContract",
+        "transferOperator",
+        "unpause",
+        "pause",
+        "startMigrateFromContract",
+        "transferOwnership",
+        "transferMinter"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "startMigrateToContract",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "transferOperator",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "unpause",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "pause",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "startMigrateFromContract",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "transferOwnership",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "transferMinter",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6",
+      "name": "XCHF Minter 3/6 Multisig",
+      "description": "A 3-of-6 GnosisSafe multisig with the minter role on CryptoFranc. Can mint new XCHF tokens, which could be bridged to ZCHF via the StablecoinBridge.",
+      "entity": "XCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "mint"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD",
+      "name": "XCHF Operator 3/6 Multisig",
+      "description": "A 3-of-6 GnosisSafe multisig with the operator role on CryptoFranc. Can announce rollovers and refund foreign tokens.",
+      "entity": "XCHF",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "refundForeignTokens",
+        "announceRollover"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "refundForeignTokens",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+          "contractName": "CryptoFranc",
+          "functionName": "announceRollover",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+      "name": "Chainlink TransferReference",
+      "description": "Chainlink CCIP infrastructure contract that enables cross-chain ZCHF transfers. Registered as an active minter on the Frankencoin token, meaning it can mint and burn ZCHF for bridging operations.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "burnFrom",
+        "burnFromWithReserve",
+        "burnWithReserve",
+        "burnWithoutReserve",
+        "collectProfits",
+        "coverLoss",
+        "mint",
+        "mintWithReserve",
+        "registerPosition"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 25724637.771031145,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "name": "Chainlink BurnMintTokenPool",
+      "description": "Chainlink CCIP token pool that handles burn/mint operations for cross-chain ZCHF transfers. Registered as an active minter on the Frankencoin token.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "burnFrom",
+        "burnFromWithReserve",
+        "burnWithReserve",
+        "burnWithoutReserve",
+        "collectProfits",
+        "coverLoss",
+        "mint",
+        "mintWithReserve",
+        "registerPosition"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 25724637.771031145,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+      "name": "Chainlink BridgeAccounting",
+      "description": "Chainlink CCIP accounting contract tracking cross-chain ZCHF supply. Registered as an active minter on the Frankencoin token.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "burnFrom",
+        "burnFromWithReserve",
+        "burnWithReserve",
+        "burnWithoutReserve",
+        "collectProfits",
+        "coverLoss",
+        "mint",
+        "mintWithReserve",
+        "registerPosition"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 25724637.771031145,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 25724637.771031145,
+      "dependencyType": "write"
+    },
+    {
+      "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
+      "name": "Chainlink RBACTimelock (RMNRemote)",
+      "description": "A second Chainlink RBACTimelock (3h delay) that owns the RMNRemote contract. Controls RMNRemote configuration, curse/uncurse operations, and ownership transfer.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "curse",
+        "setConfig",
+        "transferOwnership",
+        "uncurse"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "contractName": "RMNRemote",
+          "functionName": "curse",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "contractName": "RMNRemote",
+          "functionName": "setConfig",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "contractName": "RMNRemote",
+          "functionName": "transferOwnership",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+          "contractName": "RMNRemote",
+          "functionName": "uncurse",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "write"
+    }
+  ],
+  "funds": [
+    {
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "name": "Frankencoin (ZCHF Token)",
+      "description": "The ZCHF stablecoin token contract itself with a market cap of $25.72M. ZCHF is pegged to the Swiss Franc and backed by collateral locked in MintingHub positions, XCHF/VCHF reserves in StablecoinBridges, and the Equity reserve pool.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": {
+        "symbol": "ZCHF",
+        "price": 1.2638,
+        "totalSupply": "20354991114916240227952988",
+        "tokenValue": 25724637.771031145
+      },
+      "aggregate": null
+    },
+    {
+      "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+      "name": "Equity (FPS Reserve Pool)",
+      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $13.92M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
+      "balances": {
+        "totalUsdValue": 13923431.96265291
+      },
+      "positions": {
+        "totalUsdValue": 0
+      },
+      "tokenInfo": null,
+      "aggregate": null
+    },
+    {
+      "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+      "name": "MintingHub (Current Positions)",
+      "description": "The active MintingHub managing 51 collateral positions worth $68.98M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null,
+      "aggregate": {
+        "totalUsdValue": 68979699.91272724,
+        "contractCount": 51,
+        "handlerName": "frankencoin-mintinghub"
+      }
+    },
+    {
+      "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+      "name": "Savings (Current)",
+      "description": "The current Savings contract holding $10.22M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
+      "balances": {
+        "totalUsdValue": 10220366.480646407
+      },
+      "positions": {
+        "totalUsdValue": 0
+      },
+      "tokenInfo": null,
+      "aggregate": null
+    },
+    {
+      "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+      "name": "StablecoinBridge (VCHF)",
+      "description": "Bridge contract holding $503.84K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path.",
+      "balances": {
+        "totalUsdValue": 503838.1609304662
+      },
+      "positions": null,
+      "tokenInfo": null,
+      "aggregate": null
+    },
+    {
+      "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+      "name": "MintingHub (Legacy Positions)",
+      "description": "The older MintingHub with $146.99K in 2 remaining WBTC collateral positions. No longer used for new position creation.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": null,
+      "aggregate": {
+        "totalUsdValue": 146988.04531047662,
+        "contractCount": 2,
+        "handlerName": "frankencoin-mintinghub"
+      }
+    },
+    {
+      "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+      "name": "Savings (Legacy)",
+      "description": "The older Savings contract holding $21.50K in remaining ZCHF deposits.",
+      "balances": {
+        "totalUsdValue": 21497.250637999998
+      },
+      "positions": {
+        "totalUsdValue": 0
+      },
+      "tokenInfo": null,
+      "aggregate": null
+    }
+  ],
+  "functions": [],
+  "contracts": [
+    {
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "name": "Frankencoin (ZCHF Token)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e",
+      "name": "XCHF Owner 3/4 Multisig",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "XCHF",
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6",
+      "name": "XCHF Minter 3/6 Multisig",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "XCHF",
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD",
+      "name": "XCHF Operator 3/6 Multisig",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "XCHF",
+      "proxyType": "gnosis safe"
+    },
+    {
+      "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+      "name": "Chainlink ARMProxy",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+      "name": "Chainlink BridgeAccounting",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "name": "Chainlink BurnMintTokenPool",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+      "name": "ChainLink Token",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+      "name": "CryptoFranc (XCHF)",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "XCHF",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+      "name": "Equity (FPS Reserve Pool)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+      "name": "MintingHub (Legacy Positions)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+      "name": "MintingHub (Current Positions)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+      "name": "PositionRoller",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+      "name": "Chainlink RBACTimelock",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
+      "name": "Chainlink RBACTimelock (RMNRemote)",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xe8464c353210Cc398A45dB2454FBc5BCd25fFf20",
+      "name": "RMNRemote",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+      "name": "Savings (Current)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+      "name": "Savings (Legacy)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+      "name": "StablecoinBridge (VCHF)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+      "name": "StablecoinBridge (XCHF)",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+      "name": "Chainlink TransferReference",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "Chainlink",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "name": "VNXCToken (VCHF)",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "VCHF",
+      "proxyType": "EIP1967 proxy"
+    },
+    {
+      "address": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
+      "name": "VNXManager",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "VCHF",
+      "proxyType": "immutable"
+    },
+    {
+      "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
+      "name": "VNX Proxy Admin",
+      "isExternal": true,
+      "isGovernance": false,
+      "entity": "VCHF",
+      "proxyType": "immutable"
+    }
+  ],
+  "resources": [
+    {
+      "url": "https://frankencoin.com/",
+      "type": "website"
+    },
+    {
+      "url": "https://app.frankencoin.com/",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://docs.frankencoin.com/",
+      "type": "docs"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/",
+      "type": "github"
+    },
+    {
+      "url": "https://x.com/frankencoinzchf",
+      "type": "x"
+    }
+  ],
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

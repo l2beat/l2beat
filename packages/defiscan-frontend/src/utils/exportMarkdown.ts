@@ -185,7 +185,7 @@ export function reviewToMarkdown(review: CompiledReview): string {
     for (const dep of dependencies) {
       const typeLabel = dep.viewOnlyPath ? 'Read-only' : 'Write'
       lines.push(
-        `| ${dep.name} | ${dep.entity ?? '-'} | \`${stripChainPrefix(dep.address)}\` | ${formatUsdValue(dep.totalFundsAtRisk)} | ${typeLabel} |`,
+        `| ${dep.name} | ${dep.entity ?? '-'} | \`${stripChainPrefix(dep.address)}\` | ${formatUsdValue(dep.totalFundsAtRisk + (dep.totalTokenValueAtRisk ?? 0))} | ${typeLabel} |`,
       )
     }
   }

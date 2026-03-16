@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "Frankencoin",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"],
+  "overrides": {
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
+      "fields": {
+        "activeMinters": {
+          "handler": {
+            "type": "event",
+            "select": "minter",
+            "add": { "event": "MinterApplied" },
+            "remove": { "event": "MinterDenied" }
+          }
+        }
+      }
+    },
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
+      "ignoreMethods": ["challenges"],
+      "description": "Older minting hub no longer in use"
+    },
+    "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08": {
+      "ignoreMethods": ["getCompoundingLevelDate"]
+    },
+    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
+      "ignoreMethods": ["calculateProceeds", "calculateShares"]
+    }
+  }
+}

@@ -139,6 +139,8 @@ export interface CompiledDependency {
   functions: CompiledDependencyFunction[]
   totalFundsAtRisk: number
   totalTokenValueAtRisk: number
+  /** How this dependency was detected: 'callgraph' (code calls), 'write' (permission-owner) */
+  dependencyType?: 'callgraph' | 'write'
 }
 
 export interface CompiledFundHolder {

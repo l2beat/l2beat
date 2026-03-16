@@ -311,7 +311,7 @@ In the **Nodes** panel, select a contract and click the **Funds** button in the 
 
 > **Note:** "Token Contract" fetches the token's market cap, not its TVL or distribution. To see what assets a token contract holds (like reserves), use "Fetch Token Balances".
 
-> **Note:** "Fetch Aggregate" requires selecting a handler (e.g., `uniswap-v2-factory`) and optionally providing a label for display. The handler determines how TVL is aggregated from child contracts (e.g., via The Graph subgraph). See [Infrastructure: Aggregate Funds](../developers/features/infrastructure.md#aggregate-funds) for adding new handlers.
+> **Note:** "Fetch Aggregate" requires selecting a handler (e.g., `uniswap-v2-factory`, `frankencoin-mintinghub`) and optionally providing a label for display. The handler determines how TVL is aggregated from child contracts. Some handlers require API keys (e.g., `uniswap-v2-factory` needs `THEGRAPH_API_KEY` in `.env`), while others use public APIs (e.g., `frankencoin-mintinghub`). See [Infrastructure: Aggregate Funds](../developers/features/infrastructure.md#aggregate-funds) for details.
 
 ### Running the Fetch
 

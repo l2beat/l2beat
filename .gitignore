@@ -7,7 +7,7 @@ yarn-error.log
 
 # AI stuff
 .codex
-.claude
+.claude/**
 **/AGENTS.md
 
 # IDEs
@@ -38,3 +38,7 @@ packages/uops-dashboard/src/chains.json
 # Personal
 research-storage.md
 research-permissions.md
+
+# Claude Code skills (tracked in git)
+!.claude/skills/
+!.claude/skills/**

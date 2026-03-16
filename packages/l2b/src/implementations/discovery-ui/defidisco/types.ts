@@ -872,6 +872,8 @@ export interface FunctionDependencyEntry {
   mitigations?: string
   /** Shortest call path from the starting function to this dependency */
   callPath: CallPathStep[]
+  /** How this dependency was detected: 'callgraph' (code calls), 'write' (permission-owner) */
+  dependencyType?: 'callgraph' | 'write'
 }
 
 /** Per-function analysis combining impact and dependencies */
