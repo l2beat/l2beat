@@ -1,4 +1,4 @@
-import { CoinsIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
+import { ArrowRightIcon, CoinsIcon, ListPlusIcon, PlusIcon } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '~/components/core/Button'
 import {
@@ -26,6 +26,7 @@ import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
+import type { ChainRecord } from '../../../../database/dist/repositories/ChainRepository'
 
 export function TokenSuggestionsPage() {
   const navigate = useNavigate()
@@ -75,12 +76,14 @@ export function TokenSuggestionsPage() {
                   <TableHead>Chain</TableHead>
                   <TableHead>Address</TableHead>
                   <TableHead>Suggested abstract token</TableHead>
+                  <TableHead>Transactions</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
                 {suggestions?.map((suggestion, index) => {
                   const chain = chains?.find(
                     (chain) => chain.name === suggestion.chain,
                   )
+
                   return (
                     <TableRow
                       key={`${suggestion.chain}-${suggestion.address}-${suggestion.abstractTokenId}`}
@@ -101,6 +104,12 @@ export function TokenSuggestionsPage() {
                         )}
                       </TableCell>
                       <TableCell>{suggestion.abstractTokenId}</TableCell>
+                      <TableCell>
+                        <TransactionsCell
+                          txs={suggestion.txs}
+                          chains={chains}
+                        />
+                      </TableCell>
                       <TableCell>
                         <Button
                           variant="link"
@@ -130,4 +139,54 @@ export function TokenSuggestionsPage() {
       </Card>
     </AppLayout>
   )
+}
+
+function TransactionsCell({
+  txs,
+  chains,
+}: {
+  txs: {
+    srcTxHash: string
+    srcChain: string
+    dstTxHash: string
+    dstChain: string
+    transferId: string
+  }[]
+  chains: ChainRecord[] | undefined
+}) {
+  return txs.map((tx) => {
+    const srcChain = chains?.find((chain) => chain.name === tx.srcChain)
+    const dstChain = chains?.find((chain) => chain.name === tx.dstChain)
+    return (
+      <div key={tx.transferId} className="flex items-center gap-1">
+        {srcChain?.explorerUrl ? (
+          <ExplorerLink
+            explorerUrl={srcChain.explorerUrl}
+            value={tx.srcTxHash}
+            type="tx"
+          >
+            {srcChain.name}
+          </ExplorerLink>
+        ) : (
+          <span>
+            {srcChain?.name ?? 'unknown'}:{tx.srcTxHash}
+          </span>
+        )}
+        <ArrowRightIcon className="size-4" />{' '}
+        {dstChain?.explorerUrl ? (
+          <ExplorerLink
+            explorerUrl={dstChain?.explorerUrl}
+            value={tx.dstTxHash}
+            type="tx"
+          >
+            {dstChain.name}
+          </ExplorerLink>
+        ) : (
+          <span>
+            {dstChain?.name ?? 'unknown'}:{tx.dstTxHash}
+          </span>
+        )}
+      </div>
+    )
+  })
 }

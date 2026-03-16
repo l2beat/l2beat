@@ -322,28 +322,87 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) => {
         ...classified.lockAndMint,
         ...classified.burnAndMint,
       ]
-      const map = new Set<string>()
-      for (const transfer of transfersForSuggestions) {
-        if (!transfer.srcAbstractTokenId) {
-          map.add(
-            `${transfer.srcChain}:${transfer.srcTokenAddress}:${transfer.dstAbstractTokenId}`,
-          )
+      const map = new Map<
+        string,
+        {
+          chain: string
+          address: string
+          abstractTokenId: string
+          txs: {
+            srcTxHash: string
+            srcChain: string
+            dstTxHash: string
+            dstChain: string
+            transferId: string
+          }[]
         }
-        if (!transfer.dstAbstractTokenId) {
-          map.add(
-            `${transfer.dstChain}:${transfer.dstTokenAddress}:${transfer.srcAbstractTokenId}`,
-          )
+      >()
+      for (const transfer of transfersForSuggestions) {
+        if (!transfer.srcAbstractTokenId && transfer.srcTokenAddress) {
+          assert(transfer.dstAbstractTokenId, 'dstAbstractTokenId is required')
+          const key = `${transfer.srcChain}:${transfer.srcTokenAddress}:${transfer.dstAbstractTokenId}`
+          const current = map.get(key)
+          if (current) {
+            current.txs.push({
+              srcTxHash: transfer.srcTxHash,
+              srcChain: transfer.srcChain,
+              dstTxHash: transfer.dstTxHash,
+              dstChain: transfer.dstChain,
+              transferId: transfer.transferId,
+            })
+          } else {
+            map.set(key, {
+              chain: transfer.srcChain,
+              address: Address32.cropToEthereumAddress(
+                Address32(transfer.srcTokenAddress),
+              ),
+              abstractTokenId: transfer.dstAbstractTokenId,
+              txs: [
+                {
+                  srcTxHash: transfer.srcTxHash,
+                  srcChain: transfer.srcChain,
+                  dstTxHash: transfer.dstTxHash,
+                  dstChain: transfer.dstChain,
+                  transferId: transfer.transferId,
+                },
+              ],
+            })
+          }
+        }
+        if (!transfer.dstAbstractTokenId && transfer.dstTokenAddress) {
+          assert(transfer.srcAbstractTokenId, 'srcAbstractTokenId is required')
+          const key = `${transfer.dstChain}:${transfer.dstTokenAddress}:${transfer.srcAbstractTokenId}`
+          const current = map.get(key)
+          if (current) {
+            current.txs.push({
+              srcTxHash: transfer.srcTxHash,
+              srcChain: transfer.srcChain,
+              dstTxHash: transfer.dstTxHash,
+              dstChain: transfer.dstChain,
+              transferId: transfer.transferId,
+            })
+          } else {
+            map.set(key, {
+              chain: transfer.dstChain,
+              address: Address32.cropToEthereumAddress(
+                Address32(transfer.dstTokenAddress),
+              ),
+              abstractTokenId: transfer.srcAbstractTokenId,
+              txs: [
+                {
+                  srcTxHash: transfer.srcTxHash,
+                  srcChain: transfer.srcChain,
+                  dstTxHash: transfer.dstTxHash,
+                  dstChain: transfer.dstChain,
+                  transferId: transfer.transferId,
+                },
+              ],
+            })
+          }
         }
       }
 
-      return Array.from(map.values()).map((value) => {
-        const [chain, address, abstractTokenId] = value.split(':')
-        return {
-          chain,
-          address: Address32.cropToEthereumAddress(Address32(address)),
-          abstractTokenId,
-        }
-      })
+      return Array.from(map.values())
     }),
   })
 }
