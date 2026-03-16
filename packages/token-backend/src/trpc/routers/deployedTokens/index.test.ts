@@ -1,4 +1,8 @@
-import type { Database, TokenDatabase } from '@l2beat/database'
+import type {
+  Database,
+  InteropTransferRecord,
+  TokenDatabase,
+} from '@l2beat/database'
 import type {
   AbstractTokenRecord,
   AbstractTokenRepository,
@@ -8,13 +12,11 @@ import type {
   DeployedTokenRecord,
   DeployedTokenRepository,
 } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
+import type { InteropTransferRepository } from '@l2beat/database/dist/repositories/InteropTransferRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { createCallerFactory } from '../trpc'
-import {
-  type DeployedTokensRouterDeps,
-  deployedTokensRouter,
-} from './deployedTokens'
+import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import { createCallerFactory } from '../../trpc'
+import { type DeployedTokensRouterDeps, deployedTokensRouter } from './index'
 
 describe('deployedTokensRouter', () => {
   describe('findByChainAndAddress', () => {
@@ -1267,6 +1269,292 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+        },
+      ])
+    })
+  })
+
+  describe('getSuggestionsByPartialTransfers', () => {
+    function makeTransfer(
+      overrides: Partial<InteropTransferRecord>,
+    ): InteropTransferRecord {
+      return {
+        plugin: 'test-plugin',
+        bridgeType: undefined,
+        transferId: 'transfer-1',
+        type: 'transfer',
+        duration: 10,
+        timestamp: 1000,
+        srcTime: 1000,
+        srcChain: 'ethereum',
+        srcTxHash: '0xsrc',
+        srcLogIndex: 0,
+        srcEventId: 'src-event',
+        srcTokenAddress:
+          '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        srcRawAmount: undefined,
+        srcWasBurned: false,
+        srcAbstractTokenId: undefined,
+        srcSymbol: undefined,
+        srcAmount: undefined,
+        srcPrice: undefined,
+        srcValueUsd: undefined,
+        dstTime: 1000,
+        dstChain: 'arbitrum',
+        dstTxHash: '0xdst',
+        dstLogIndex: 0,
+        dstEventId: 'dst-event',
+        dstTokenAddress:
+          '0x000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831',
+        dstRawAmount: undefined,
+        dstWasMinted: true,
+        dstAbstractTokenId: 'abstract-usdc',
+        dstSymbol: undefined,
+        dstAmount: undefined,
+        dstPrice: undefined,
+        dstValueUsd: undefined,
+        isProcessed: false,
+        ...overrides,
+      }
+    }
+
+    it('returns empty array when no partial transfers exist', async () => {
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
+    })
+
+    it('returns suggestion for src side when srcAbstractTokenId is missing', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([
+        {
+          chain: 'ethereum',
+          address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+          abstractTokenId: 'abstract-usdc',
+          txs: [
+            {
+              srcTxHash: '0xsrc',
+              srcChain: 'ethereum',
+              dstTxHash: '0xdst',
+              dstChain: 'arbitrum',
+              transferId: 'transfer-1',
+            },
+          ],
+        },
+      ])
+    })
+
+    it('returns suggestion for dst side when dstAbstractTokenId is missing', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: true,
+        dstAbstractTokenId: undefined,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([
+        {
+          chain: 'arbitrum',
+          address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+          abstractTokenId: 'abstract-usdc',
+          txs: [
+            {
+              srcTxHash: '0xsrc',
+              srcChain: 'ethereum',
+              dstTxHash: '0xdst',
+              dstChain: 'arbitrum',
+              transferId: 'transfer-1',
+            },
+          ],
+        },
+      ])
+    })
+
+    it('groups multiple transfers for the same chain/address/abstractTokenId', async () => {
+      const transfer1 = makeTransfer({
+        transferId: 'transfer-1',
+        srcTxHash: '0xsrc1',
+        dstTxHash: '0xdst1',
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+      const transfer2 = makeTransfer({
+        transferId: 'transfer-2',
+        srcTxHash: '0xsrc2',
+        dstTxHash: '0xdst2',
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
+            transfer1,
+            transfer2,
+          ]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([
+        {
+          chain: 'ethereum',
+          address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+          abstractTokenId: 'abstract-usdc',
+          txs: [
+            {
+              srcTxHash: '0xsrc1',
+              srcChain: 'ethereum',
+              dstTxHash: '0xdst1',
+              dstChain: 'arbitrum',
+              transferId: 'transfer-1',
+            },
+            {
+              srcTxHash: '0xsrc2',
+              srcChain: 'ethereum',
+              dstTxHash: '0xdst2',
+              dstChain: 'arbitrum',
+              transferId: 'transfer-2',
+            },
+          ],
+        },
+      ])
+    })
+
+    it('excludes nonMinting and unknown transfers from suggestions', async () => {
+      const nonMintingTransfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: false,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
+            nonMintingTransfer,
+          ]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
+    })
+
+    it('returns suggestions from both lockAndMint and burnAndMint transfers', async () => {
+      const lockAndMintTransfer = makeTransfer({
+        transferId: 'lock-mint-1',
+        srcTxHash: '0xsrcLM',
+        dstTxHash: '0xdstLM',
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+      const burnAndMintTransfer = makeTransfer({
+        transferId: 'burn-mint-1',
+        srcTxHash: '0xsrcBM',
+        dstTxHash: '0xdstBM',
+        srcChain: 'optimism',
+        srcTokenAddress:
+          '0x0000000000000000000000000b2c639c533813f4aa9d7837caf62653d097ff85',
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: true,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([
+            lockAndMintTransfer,
+            burnAndMintTransfer,
+          ]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([
+        {
+          chain: 'ethereum',
+          address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+          abstractTokenId: 'abstract-usdc',
+          txs: [
+            {
+              srcTxHash: '0xsrcLM',
+              srcChain: 'ethereum',
+              dstTxHash: '0xdstLM',
+              dstChain: 'arbitrum',
+              transferId: 'lock-mint-1',
+            },
+          ],
+        },
+        {
+          chain: 'optimism',
+          address: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+          abstractTokenId: 'abstract-usdc',
+          txs: [
+            {
+              srcTxHash: '0xsrcBM',
+              srcChain: 'optimism',
+              dstTxHash: '0xdstBM',
+              dstChain: 'arbitrum',
+              transferId: 'burn-mint-1',
+            },
+          ],
         },
       ])
     })

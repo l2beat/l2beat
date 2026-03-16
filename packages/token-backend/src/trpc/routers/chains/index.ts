@@ -1,11 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { BlockscoutClient } from '../../chains/clients/blockscout/BlockscoutClient'
-import { EtherscanClient } from '../../chains/clients/etherscan/EtherscanClient'
-import { RpcClient } from '../../chains/clients/rpc/RpcClient'
-import { ChainRecord, ChainUpdateSchema } from '../../schemas/Chain'
-import { readOnlyProcedure, readWriteProcedure } from '../procedures'
-import { router } from '../trpc'
+import { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
+import { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
+import { RpcClient } from '../../../chains/clients/rpc/RpcClient'
+import { ChainRecord, ChainUpdateSchema } from '../../../schemas/Chain'
+import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
+import { router } from '../../trpc'
 
 export interface ChainsRouterDeps {
   etherscanApiKey: string | undefined
