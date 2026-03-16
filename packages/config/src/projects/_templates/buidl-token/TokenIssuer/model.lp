@@ -15,3 +15,8 @@ permission(Actor, "act", @self, 0, nil, ".minter") :-
   wrapperTrustService(@self, TrustService),
   securitizeRoleOrAbove(TrustService, issuer, Actor),
   not preventActingIndependently(Actor).
+
+% Master role holder can upgrade TokenIssuer and configure service parameters.
+permission(MasterActor, "upgrade", @self, 0, "Can upgrade TokenIssuer and configure service parameters.", ".admin") :-
+  wrapperTrustService(@self, TrustService),
+  securitizeRole(TrustService, master, MasterActor).

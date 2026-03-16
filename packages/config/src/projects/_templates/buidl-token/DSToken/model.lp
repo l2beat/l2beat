@@ -89,3 +89,8 @@ permission(IssuerMulticall, "interact", @self, 0, "Can batch issuer-scoped mint 
 
 permission(IssuerMulticall, "interact", @self, 0, "Can batch issuer-scoped burn calls through IssuerMulticall.", ".burner") :-
   issuerMulticallService(@self, IssuerMulticall).
+
+% Master role holder can upgrade DSToken and configure service parameters.
+permission(MasterActor, "upgrade", @self, 0, "Can upgrade DSToken and configure service parameters.", ".admin") :-
+  tokenTrustService(@self, TrustService),
+  securitizeRole(TrustService, master, MasterActor).

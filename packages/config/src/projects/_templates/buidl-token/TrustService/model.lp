@@ -27,6 +27,10 @@ roleScopeCompatible(".issuerOrAbove", ".issuerRole").
 roleScopeCompatible(".transferAgentRole", ".transferAgentOrAbove").
 roleScopeCompatible(".transferAgentOrAbove", ".transferAgentRole").
 
+% Master role holder can upgrade TrustService and configure service parameters.
+permission(MasterActor, "upgrade", @self, 0, "Can upgrade TrustService and configure service parameters.", ".admin") :-
+  securitizeRole(@self, master, MasterActor).
+
 % DSToken uses functional permission groups that map back to TrustService roles.
 roleScopeCompatible(".admin", ".admin").
 roleScopeCompatible(".admin", ".masterRole").

@@ -26,3 +26,8 @@ permission(Actor, "act", @self, 0, nil, ".burner") :-
   wrapperTrustService(@self, TrustService),
   securitizeRoleOrAbove(TrustService, transferAgent, Actor),
   not preventActingIndependently(Actor).
+
+% Master role holder can upgrade BulkOperator and configure service parameters.
+permission(MasterActor, "upgrade", @self, 0, "Can upgrade BulkOperator and configure service parameters.", ".admin") :-
+  wrapperTrustService(@self, TrustService),
+  securitizeRole(TrustService, master, MasterActor).

@@ -1811,7 +1811,19 @@
         {
           "permission": "upgrade",
           "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x01E851e2A71DAc7eC63D99A6513eC4Fa5568b1Be",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x0c54c51c546e38F470CF31c2FCD98ef630095032",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -1820,8 +1832,26 @@
         },
         {
           "permission": "upgrade",
+          "from": "arb1:0x4bF125b179eB09EFA0152188593b71aF80E68F22",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "arb1:0x92E9122a4e7909470765bbbEC9D0Ad9B896FAEa9",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x9916b67032b9E509a5BBAe5064b8888421fe97AF",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -1836,7 +1866,19 @@
         {
           "permission": "upgrade",
           "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xBfA4b7e66F4efca37FBe4B6Ecd451B3A4104f950",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xC0c61c29Ef8beabC694987c93e5Fe4af647042E7",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -1851,12 +1893,30 @@
         {
           "permission": "upgrade",
           "from": "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can upgrade SecuritizeBridge and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xd06CE4bC952d6003a9847969b0D074bA0499Ff5A",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
           "from": "arb1:0xecC015d2782ae30987D9afE401ab79A3C077F8D0",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xF5Da3b2c4e786F175938Dd63fb8910876eA2865a",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -4052,8 +4112,26 @@
         },
         {
           "permission": "upgrade",
+          "from": "avax:0x0E7b1C6377e8FE4cD1CE219098a6726836a8C4E6",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "avax:0x15a3A35FBA367dc3a9ee81b664839A1bCbE7E680",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x216d7cA771aD6DF8c9dd773a66d61B84c0C6D4f0",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -4062,8 +4140,26 @@
         },
         {
           "permission": "upgrade",
+          "from": "avax:0x3028ADb0351C3B49a6Fc5CfA21e9c8d3e764Bd22",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "avax:0x43f2998A926328a72868c505BD6C574a63fECBb1",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x46a9766495dCA41dCfaBd4DEa3fc946845F1Bad9",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -4078,6 +4174,12 @@
         {
           "permission": "upgrade",
           "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0x53FC82f14F009009b440a706e31c9021E1196A2F",
           "role": "admin"
         },
         {
@@ -4088,12 +4190,30 @@
         {
           "permission": "upgrade",
           "from": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can upgrade SecuritizeBridge and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0xD39D4df31b8e8049c29Dc37BeB4b3a3A72Da6e3B",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "avax:0xdA55d050cADb6fEEd9A3C91e2883a263dAA3839B",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -6334,6 +6454,18 @@
         },
         {
           "permission": "upgrade",
+          "from": "bnb:0x296B3fE25Cdb4AbB97ce02414697f5D15f601D28",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "bnb:0x2D5BdC96D9C8AabBDB38c9A27398513e7E5ef84F",
           "role": "admin"
         },
@@ -6341,6 +6473,12 @@
           "permission": "upgrade",
           "from": "bnb:0x403a2B6622E34a5a8c415A19Ef5407E24A3638e3",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x40d6D03880aa764335Bc80dd753C4b58783542Ad",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -6355,12 +6493,30 @@
         {
           "permission": "upgrade",
           "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xA8868fb285D2f53915A86d11Aa84e2C77a5BDa48",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xae5AE4Db455826DC7628d289fA47d5dC1fAA0Ff8",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xd0165e49E9411aE6975B685Cd075a049d2BCf218",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -6370,12 +6526,30 @@
         {
           "permission": "upgrade",
           "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xEFD597305cF18bD8eB338e780b820625d01d9F95",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xF4a996F595528BCe9bA13853Ab0F3B0Ee6DA31C4",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xF76c116c9C8cDB0C137577C930A982dCd3f8D0D6",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -7507,7 +7681,7 @@
         "0xc448b2bacad0d3f5add1f61af4397da018f8d67898cbd5a017854b4705cfd08c"
       ],
       "proxyType": "EIP1967 proxy",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
@@ -9696,6 +9870,12 @@
         {
           "permission": "upgrade",
           "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34B3724B16db59FDd8B98Cf3B3928100b010395B",
           "role": "admin"
         },
         {
@@ -9710,8 +9890,20 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x51D016b8Cc89f56Fd5A7970892586fB512E202A0",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0x59a100BCc70649485422670dC697B64BD1c6e6c1",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619601b45bF5B2700fF10FA617BAe7709Ee63fF0",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -9721,12 +9913,30 @@
         {
           "permission": "upgrade",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x712244c054244432d0F9eA16a56121598eBa7a2c",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
           "from": "eth:0x7712c34205737192402172409a8F7ccef8aA2AEc",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95E07b0682DA8627DECBB068CB57Ae7Ebe650E9E",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -9741,6 +9951,12 @@
         {
           "permission": "upgrade",
           "from": "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can upgrade SecuritizeBridge and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
           "role": "admin"
         },
         {
@@ -9751,7 +9967,19 @@
         {
           "permission": "upgrade",
           "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD8305cCd41fc67Bd7fc0D6653a89452F4c1F7265",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdDF7b95d79872766B4c0F32284FAC86155c81B3a",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -9772,6 +10000,12 @@
           "permission": "upgrade",
           "from": "eth:0xFC4392dA2C4A3090431Fb87F4F7De63BC6885644",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xFd45dd1F78F9501B4e37b7a02E24Ec29dA64917F",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -10023,7 +10257,7 @@
         "0xc448b2bacad0d3f5add1f61af4397da018f8d67898cbd5a017854b4705cfd08c"
       ],
       "proxyType": "EIP1967 proxy",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x6a9DA2D710BB9B700acde7Cb81F10F1fF8C89041",
@@ -11949,6 +12183,12 @@
         {
           "permission": "upgrade",
           "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x2893Ef551B6dD69F661Ac00F11D93E5Dc5Dc0e99",
           "role": "admin"
         },
         {
@@ -11959,12 +12199,48 @@
         {
           "permission": "upgrade",
           "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x51997d8ee83f11B92254a8e5B81ef11D299368BE",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x736056aEa2E5E69395820dc60b6CA9584Ba79453",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x73Fa6025602F92018401B14A0832d56bB8c81e2C",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x84903f46c93EC6EA14b4beCF2336429c29972743",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x887Ad8b03958897Ae5439aA87c6D19a27B510b4f",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0x9351b31fE6a51592a4C40Af46538a4F66B0190D5",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -11984,12 +12260,30 @@
         {
           "permission": "upgrade",
           "from": "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can upgrade SecuritizeBridge and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
           "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xd7f6BA5e29B408c8b62929a56c746ceba00b4Be5",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "matic:0xE467a05D29eB3Be9F2C0147E43F20a1bAcC41B69",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -14192,6 +14486,24 @@
         },
         {
           "permission": "upgrade",
+          "from": "oeth:0x04F4A8404663B984f44A9B65a9B8CDB6ac2b7A07",
+          "description": "Can upgrade IssuerMulticall and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x172eE78dab372a334c4d3f555244dE66C30BD830",
+          "description": "Can upgrade BulkOperator and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
+          "description": "Can upgrade TokenIssuer and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "oeth:0x1a6e2eA36350599888e0D3D94DE238296D0f611c",
           "role": "admin"
         },
@@ -14199,6 +14511,18 @@
           "permission": "upgrade",
           "from": "oeth:0x347Ac8666F5292354CF817505f46CDA034379512",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x34806282BbbeD6CD3eceD1d901d9Dd4A931BFdD3",
+          "description": "Can upgrade WalletRegistrar and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x36446EE5bd402CdCFcCC5f298b724BB91024c355",
+          "description": "Can upgrade OmnibusTBEController and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -14213,7 +14537,19 @@
         {
           "permission": "upgrade",
           "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+          "description": "Can upgrade DSToken and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xbDbbf81243c4c3C2a2ed1bbdd60FdC917bC12ab0",
+          "description": "Can upgrade TransactionRelayer and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -14228,6 +14564,12 @@
         {
           "permission": "upgrade",
           "from": "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
+          "description": "Can upgrade SecuritizeBridge and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xcbB5B950A76B82Ec7982bABa99F5D4a92bA2288E",
           "role": "admin"
         },
         {
@@ -14238,7 +14580,19 @@
         {
           "permission": "upgrade",
           "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
+          "description": "Can upgrade TokenReallocator and configure service parameters.",
+          "role": ".admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xddABe9419283178aF64ffADb8a67E3320Ee410DC",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xEED3baeb460DDbe3542cbd66E03Dc052c05b70bc",
+          "description": "Can upgrade TrustService and configure service parameters.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
@@ -23365,5 +23719,5 @@
     "optimism": 144853013,
     "polygonpos": 80099855
   },
-  "permissionsConfigHash": "0x75a50c2960e2efcb0184f8ee084d145a6fbc1d8e965df9e0c63c0e75fa4028e1"
+  "permissionsConfigHash": "0x1f97e24d0d43a8b144f2b83c46ff74adae916364fb84345b010e6300e7e8f7a2"
 }

@@ -9,3 +9,11 @@ permission(@self, "interact", DSToken, 0, "Can mint bridged tokens delivered fro
   bridgeDSToken(@self, DSToken).
 
 roleScopedAct(@self).
+
+% Owner can upgrade SecuritizeBridge and configure service parameters.
+bridgeOwner(@self, Owner) :-
+  address(@self, Chain, _),
+  address(Owner, Chain, &owner:raw|lower|quote|orNil).
+
+permission(Owner, "upgrade", @self, 0, "Can upgrade SecuritizeBridge and configure service parameters.", ".admin") :-
+  bridgeOwner(@self, Owner).

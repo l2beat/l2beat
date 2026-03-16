@@ -31,3 +31,8 @@ permission(Actor, "act", @self, 0, nil, ".omnibusOperator") :-
   wrapperTrustService(@self, TrustService),
   securitizeRoleOrAbove(TrustService, transferAgent, Actor),
   not preventActingIndependently(Actor).
+
+% Master role holder can upgrade OmnibusTBEController and configure service parameters.
+permission(MasterActor, "upgrade", @self, 0, "Can upgrade OmnibusTBEController and configure service parameters.", ".admin") :-
+  wrapperTrustService(@self, TrustService),
+  securitizeRole(TrustService, master, MasterActor).
