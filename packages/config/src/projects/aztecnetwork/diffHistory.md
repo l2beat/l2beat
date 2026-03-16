@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa583ca65bc2d07d25dbe369981163aae13ae4b71
+Generated with discovered.json: 0xa94a2540d9cdf5021004a19e429a3126c9350abd
 
-# Diff at Fri, 13 Mar 2026 12:06:14 GMT:
+# Diff at Mon, 16 Mar 2026 15:15:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@701a1d1ad3b6c6bb36a1a5ed8937206d44c94fb9 block: 1771254730
+- comparing to: main@9e34e4220ef65d60c2640f56de079a5a437e4c2b block: 1771254730
 - current timestamp: 1773403504
 
 ## Description
@@ -43,9 +43,9 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       sinceBlock:
 +        24586323
       values:
-+        {"$immutable":true,"getActiveDuration":2,"getBondSize":"332000000000000000000000000","getBondSizeFmt":"332,000,000","getBondToken":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getCandidateCount":0,"getCurrentHatch":2,"getFailedHatchPunishment":"9600000000000000000000000","getFailedHatchPunishmentFmt":"9,600,000","getFrequency":112,"getLagInHatches":1,"getProposingExitDelay":2592000,"getRollup":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","getWithdrawalTax":"1660000000000000000000000","LAG_IN_EPOCHS_FOR_RANDAO":1,"LAG_IN_EPOCHS_FOR_SET_SIZE":2}
++        {"$immutable":true,"getActiveDuration":2,"getBondSize":"332000000000000000000000000","getBondSizeFmt":"332,000,000","getBondToken":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getCandidateCount":0,"getCurrentHatch":2,"getFailedHatchPunishment":"9600000000000000000000000","getFailedHatchPunishmentFmt":"9,600,000","getFrequency":112,"getLagInHatches":1,"getProposingExitDelay":2592000,"getRollup":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","getWithdrawalTax":"1660000000000000000000000","getWithdrawalTaxFmt":"1,660,000","LAG_IN_EPOCHS_FOR_RANDAO":1,"LAG_IN_EPOCHS_FOR_SET_SIZE":2}
       fieldMeta:
-+        {"getBondSizeFmt":{"description":"The amount of tokens required to join the candidate set."},"getCandidateCount":{"severity":"HIGH","description":"Hatch proposer candidates who posted the bond."},"getBondToken":{"description":"The ERC20 token used for candidate bonds."},"getFailedHatchPunishmentFmt":{"description":"The amount deducted from the bond if the designated proposer fails to fulfill their duties."},"getWithdrawalTax":{"description":"The amount deducted from the bond when a candidate voluntarily exits the active set."},"getFrequency":{"description":"The number of epochs between escape hatch windows."},"getActiveDuration":{"description":"The number of epochs an escape hatch remains open."},"getLagInHatches":{"description":"The number of hatches ahead for which candidates are deterministically selected."},"getProposingExitDelay":{"description":"The additional time (in seconds) a proposer must wait after their hatch ends before they can exit."},"LAG_IN_EPOCHS_FOR_RANDAO":{"description":"The number of epochs to look back from the start of the hatch for a stable RANDAO seed."},"LAG_IN_EPOCHS_FOR_SET_SIZE":{"description":"The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."},"getRollup":{"description":"The address of the core Rollup contract."}}
++        {"getBondSizeFmt":{"description":"The amount of tokens required to join the candidate set."},"getWithdrawalTaxFmt":{"description":"The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."},"getCandidateCount":{"severity":"HIGH","description":"Hatch proposer candidates who posted the bond."},"getBondToken":{"description":"The ERC20 token used for candidate bonds."},"getFailedHatchPunishmentFmt":{"description":"The amount deducted from the bond if the designated proposer fails to fulfill their duties."},"getFrequency":{"description":"The number of epochs between escape hatch windows."},"getActiveDuration":{"description":"The number of epochs an escape hatch remains open."},"getLagInHatches":{"description":"The number of hatches ahead for which candidates are deterministically selected."},"getProposingExitDelay":{"description":"The additional time (in seconds) a proposer must wait after their hatch ends before they can exit."},"LAG_IN_EPOCHS_FOR_RANDAO":{"description":"The number of epochs to look back from the start of the hatch for a stable RANDAO seed."},"LAG_IN_EPOCHS_FOR_SET_SIZE":{"description":"The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."},"getRollup":{"description":"The address of the core Rollup contract."}}
       implementationNames:
 +        {"eth:0x8c189ead28D5987A48e522162f9225124D50AD1B":"EscapeHatch"}
       usedTypes:

@@ -349,12 +349,16 @@
         "getProposingExitDelay": 2592000,
         "getRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "getWithdrawalTax": "1660000000000000000000000",
+        "getWithdrawalTaxFmt": "1,660,000",
         "LAG_IN_EPOCHS_FOR_RANDAO": 1,
         "LAG_IN_EPOCHS_FOR_SET_SIZE": 2
       },
       "fieldMeta": {
         "getBondSizeFmt": {
           "description": "The amount of tokens required to join the candidate set."
+        },
+        "getWithdrawalTaxFmt": {
+          "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."
         },
         "getCandidateCount": {
           "severity": "HIGH",
@@ -365,9 +369,6 @@
         },
         "getFailedHatchPunishmentFmt": {
           "description": "The amount deducted from the bond if the designated proposer fails to fulfill their duties."
-        },
-        "getWithdrawalTax": {
-          "description": "The amount deducted from the bond when a candidate voluntarily exits the active set."
         },
         "getFrequency": {
           "description": "The number of epochs between escape hatch windows."
@@ -1626,7 +1627,7 @@
     "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "aztecnetwork/AztecTokenPositionRegistry": "0x59976ab5bef1becfde3f9417e435b12d9d791e7ce50906b3a6af408bad767a3e",
     "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/EscapeHatch": "0xd6ca76ba562f9d5104f0b7436e49280330a5e5bf67513aa1c2574d5f6ccefc25",
+    "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
     "aztecnetwork/FeeJuicePortal": "0x6f147ef34633afd5e35a1aa0eb062b016a58f73357ef821d912ba19733398d9e",
     "aztecnetwork/Governance": "0xda08ff2623a515362905771f5aad21b6e8d84a57d8038332ba62ff0bf5163627",
     "aztecnetwork/GovernanceProposer": "0xd251e17ac927ecce11d82c021b46b918e12f5e9be00219536a2945ce7ff509ac",
