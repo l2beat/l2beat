@@ -1,4 +1,4 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import type {
   AbstractTokenRecord,
   AbstractTokenRepository,
@@ -20,14 +20,15 @@ describe('deployedTokensRouter', () => {
   describe('findByChainAndAddress', () => {
     it('returns null when token is not found', async () => {
       const mockFindByChainAndAddress = mockFn().resolvesTo(undefined)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFindByChainAndAddress,
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.findByChainAndAddress({
         chain: 'ethereum',
         address: '0x123',
@@ -63,14 +64,15 @@ describe('deployedTokensRouter', () => {
           },
         },
       } satisfies DeployedTokenRecord
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.findByChainAndAddress({
         chain: 'ethereum',
         address: '0x123',
@@ -82,14 +84,15 @@ describe('deployedTokensRouter', () => {
 
   describe('checkIfExists', () => {
     it('returns false when token does not exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checkIfExists({
         chain: 'ethereum',
         address: '0x123',
@@ -104,14 +107,15 @@ describe('deployedTokensRouter', () => {
         chain: 'ethereum',
         address: '0x123',
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checkIfExists({
         chain: 'ethereum',
         address: '0x123',
@@ -171,14 +175,15 @@ describe('deployedTokensRouter', () => {
         abstractToken: AbstractTokenRecord | undefined
       }[]
       const mockGetByChainAndAddress = mockFn().resolvesTo(tokens)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getByChainAndAddress: mockGetByChainAndAddress,
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getByChainAndAddress([
         { chain: 'ethereum', address: '0x123' },
         { chain: 'arbitrum', address: '0x456' },
@@ -199,14 +204,15 @@ describe('deployedTokensRouter', () => {
         chain: 'ethereum',
         address: '0x123',
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(existingToken),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0x123',
@@ -222,14 +228,15 @@ describe('deployedTokensRouter', () => {
     })
 
     it('returns undefined error and data when address does not start with 0x', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: 'invalid-address',
@@ -242,7 +249,7 @@ describe('deployedTokensRouter', () => {
     })
 
     it('throws when chain is not found', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -250,9 +257,10 @@ describe('deployedTokensRouter', () => {
           findByName: mockFn().resolvesTo(undefined),
         }),
       })
+      const mockDb = mockObject<Database>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       await expect(
         caller.checks({
           chain: 'nonexistent',
@@ -277,7 +285,8 @@ describe('deployedTokensRouter', () => {
           getSymbol: mockGetSymbol,
         },
       })
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
@@ -303,7 +312,7 @@ describe('deployedTokensRouter', () => {
         ]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient, {
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
         createChain: mockCreateChain,
       })
       const result = await caller.checks({
@@ -345,7 +354,8 @@ describe('deployedTokensRouter', () => {
           getSymbol: mockGetSymbol,
         },
       })
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -361,7 +371,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient, {
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
         createChain: mockCreateChain,
       })
       const result = await caller.checks({
@@ -398,7 +408,8 @@ describe('deployedTokensRouter', () => {
         aliases: [],
         apis: [],
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -419,7 +430,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0x123',
@@ -457,7 +468,8 @@ describe('deployedTokensRouter', () => {
           getSymbol: mockFn().resolvesTo('USDC'),
         },
       })
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -496,7 +508,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient, {
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
         createChain: mockCreateChain,
       })
       const result = await caller.checks({
@@ -527,7 +539,8 @@ describe('deployedTokensRouter', () => {
           getSymbol: mockFn().resolvesTo('USDC.e'),
         },
       })
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -566,7 +579,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient, {
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
         createChain: mockCreateChain,
       })
       const result = await caller.checks({
@@ -590,7 +603,8 @@ describe('deployedTokensRouter', () => {
         apis: [],
       }
       const mockGetAll = mockFn().resolvesTo([])
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -606,7 +620,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0x123',
@@ -641,7 +655,8 @@ describe('deployedTokensRouter', () => {
         comment: null,
         reviewed: true,
       }))
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -657,7 +672,7 @@ describe('deployedTokensRouter', () => {
         getCoinList: mockFn().resolvesTo([]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient, {
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
         createChain: mockCreateChain,
       })
       const result = await caller.checks({
@@ -677,7 +692,8 @@ describe('deployedTokensRouter', () => {
         aliases: ['eth'],
         apis: [],
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
@@ -719,7 +735,7 @@ describe('deployedTokensRouter', () => {
         ]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -746,7 +762,8 @@ describe('deployedTokensRouter', () => {
         aliases: ['eth'],
         apis: [],
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
@@ -780,7 +797,7 @@ describe('deployedTokensRouter', () => {
         ]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -798,7 +815,8 @@ describe('deployedTokensRouter', () => {
         aliases: ['eth'],
         apis: [],
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn()
             .resolvesTo(undefined)
@@ -855,7 +873,7 @@ describe('deployedTokensRouter', () => {
         ]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -878,7 +896,8 @@ describe('deployedTokensRouter', () => {
         aliases: ['eth'],
         apis: [],
       }
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
           getByChainsAndAddresses: mockFn().resolvesTo([]),
@@ -912,7 +931,7 @@ describe('deployedTokensRouter', () => {
         ]),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.checks({
         chain: 'ethereum',
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -925,12 +944,12 @@ describe('deployedTokensRouter', () => {
 
   describe('getSuggestionsByCoingeckoId', () => {
     it('returns empty array when coin is not found', async () => {
-      const mockDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockFn().resolvesTo(null),
       })
-
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const mockDb = mockObject<Database>({})
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result =
         await caller.getSuggestionsByCoingeckoId('nonexistent-coin')
 
@@ -972,7 +991,8 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: 0,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -992,7 +1012,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqualUnsorted([
@@ -1044,7 +1064,8 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: 0,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -1063,7 +1084,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqual([])
@@ -1079,7 +1100,8 @@ describe('deployedTokensRouter', () => {
           apis: [],
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -1098,7 +1120,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqual([
@@ -1119,7 +1141,8 @@ describe('deployedTokensRouter', () => {
           apis: [],
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -1138,7 +1161,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqual([
@@ -1159,7 +1182,8 @@ describe('deployedTokensRouter', () => {
           apis: [],
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -1177,7 +1201,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqual([
@@ -1216,7 +1240,8 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp: 0,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo(chains),
         }),
@@ -1235,7 +1260,7 @@ describe('deployedTokensRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
       expect(result).toEqual([
@@ -1249,7 +1274,8 @@ describe('deployedTokensRouter', () => {
 })
 
 function createRouter(
-  mockDb: TokenDatabase,
+  mockTokenDb: TokenDatabase,
+  mockDb: Database,
   mockCoingeckoClient: CoingeckoClient,
   deps: Partial<Pick<DeployedTokensRouterDeps, 'createChain'>> = {},
 ) {
@@ -1267,5 +1293,6 @@ function createRouter(
       permissions: ['read', 'write'],
     },
     db: mockDb,
+    tokenDb: mockTokenDb,
   })
 }

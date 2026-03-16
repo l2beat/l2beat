@@ -1,4 +1,4 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type {
   DeployedTokenRecord,
@@ -37,14 +37,14 @@ describe('abstractTokensRouter', () => {
         },
       ]
       const mockGetAll = mockFn().resolvesTo(abstractTokens)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockGetAll,
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAll()
 
       expect(result).toEqual(abstractTokens)
@@ -52,14 +52,14 @@ describe('abstractTokensRouter', () => {
     })
 
     it('returns empty array when no tokens exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAll()
 
       expect(result).toEqual([])
@@ -142,7 +142,7 @@ describe('abstractTokensRouter', () => {
           },
         },
       ] satisfies DeployedTokenRecord[]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
@@ -152,7 +152,7 @@ describe('abstractTokensRouter', () => {
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAllWithDeployedTokens()
 
       expect(result.abstractTokens).toEqual([
@@ -178,7 +178,7 @@ describe('abstractTokensRouter', () => {
           reviewed: false,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           getAll: mockFn().resolvesTo(abstractTokens),
         }),
@@ -188,7 +188,7 @@ describe('abstractTokensRouter', () => {
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAllWithDeployedTokens()
 
       expect(result.abstractTokens).toEqual([
@@ -239,7 +239,7 @@ describe('abstractTokensRouter', () => {
           },
         },
       ] satisfies DeployedTokenRecord[]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           findById: mockFn().resolvesTo(abstractToken),
         }),
@@ -249,7 +249,7 @@ describe('abstractTokensRouter', () => {
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getById('TK0001')
 
       expect(result).toEqual({
@@ -259,14 +259,14 @@ describe('abstractTokensRouter', () => {
     })
 
     it('returns null when abstract token does not exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         abstractToken: mockObject<AbstractTokenRepository>({
           findById: mockFn().resolvesTo(undefined),
         }),
       })
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getById('TK9999')
 
       expect(result).toEqual(null)
@@ -275,12 +275,12 @@ describe('abstractTokensRouter', () => {
 
   describe('checks', () => {
     it('returns not-found-on-coingecko error when coin does not exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockFn().rejectsWith(new Error('Coin not found')),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('nonexistent-coin')
 
       expect(result).toEqual({
@@ -311,13 +311,13 @@ describe('abstractTokensRouter', () => {
       }
       const mockGetCoinDataById = mockFn().resolvesTo(coin)
       const mockGetCoinMarketChartRange = mockFn().resolvesTo(marketChart)
-      const mockDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockGetCoinDataById,
         getCoinMarketChartRange: mockGetCoinMarketChartRange,
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
@@ -340,13 +340,13 @@ describe('abstractTokensRouter', () => {
         prices: [],
         marketCaps: [],
       }
-      const mockDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockFn().resolvesTo(coin),
         getCoinMarketChartRange: mockFn().resolvesTo(marketChart),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
       expect(result).toEqual({
@@ -368,13 +368,13 @@ describe('abstractTokensRouter', () => {
           large: 'https://example.com/bitcoin.png',
         },
       }
-      const mockDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockFn().resolvesTo(coin),
         getCoinMarketChartRange: mockFn().rejectsWith(new Error('API error')),
       })
 
-      const caller = createRouter(mockDb, mockCoingeckoClient)
+      const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
       expect(result?.error).toEqual(undefined)
@@ -387,7 +387,7 @@ describe('abstractTokensRouter', () => {
 })
 
 function createRouter(
-  mockDb: TokenDatabase,
+  mockTokenDb: TokenDatabase,
   mockCoingeckoClient: CoingeckoClient,
 ) {
   const router = abstractTokensRouter({
@@ -401,6 +401,7 @@ function createRouter(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockTokenDb,
+    db: mockObject<Database>({}),
   })
 }

@@ -1,4 +1,4 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories/AbstractTokenRepository'
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
@@ -20,7 +20,7 @@ describe('searchRouter', () => {
           deploymentTimestamp: 0,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
@@ -32,7 +32,7 @@ describe('searchRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.all(
         '0x0000000000000000000000000000000000000000',
       )
@@ -83,7 +83,7 @@ describe('searchRouter', () => {
       const mockGetAllDeployed = mockFn().resolvesTo(deployedTokens)
       const mockGetAllAbstract = mockFn().resolvesTo(abstractTokens)
       const mockGetAllChains = mockFn().resolvesTo([])
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockGetAllDeployed,
         }),
@@ -95,7 +95,7 @@ describe('searchRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.all('bitcoin')
 
       expect(result.abstractTokens.length).toBeGreaterThan(0)
@@ -106,7 +106,7 @@ describe('searchRouter', () => {
     })
 
     it('returns empty arrays when no tokens exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockFn().resolvesTo([]),
         }),
@@ -118,7 +118,7 @@ describe('searchRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.all('test')
 
       expect(result).toEqual({
@@ -149,7 +149,7 @@ describe('searchRouter', () => {
         abstractTokenId: null,
         deploymentTimestamp: 0,
       }))
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockFn().resolvesTo(deployedTokens),
         }),
@@ -161,7 +161,7 @@ describe('searchRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.all('token')
 
       expect(result.abstractTokens.length).toBeLessThanOrEqual(15)
@@ -193,7 +193,7 @@ describe('searchRouter', () => {
           apis: null,
         },
       ]
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           getAll: mockFn().resolvesTo([]),
         }),
@@ -205,7 +205,7 @@ describe('searchRouter', () => {
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.all('ethereum')
 
       expect(result.chains.length).toBeGreaterThan(0)
@@ -214,7 +214,7 @@ describe('searchRouter', () => {
   })
 })
 
-function createRouter(mockDb: TokenDatabase) {
+function createRouter(mockTokenDb: TokenDatabase) {
   const callerFactory = createCallerFactory(searchRouter)
   return callerFactory({
     headers: new Headers(),
@@ -222,6 +222,7 @@ function createRouter(mockDb: TokenDatabase) {
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    db: mockObject<Database>({}),
+    tokenDb: mockTokenDb,
   })
 }

@@ -1,4 +1,4 @@
-import type { TokenDatabase } from '@l2beat/database'
+import type { Database, TokenDatabase } from '@l2beat/database'
 import type {
   ChainRecord,
   ChainRepository,
@@ -14,13 +14,13 @@ import { chainsRouter } from './chains'
 describe('chainRouter', () => {
   describe('getAll', () => {
     it('returns empty array when no chains exist', async () => {
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockFn().resolvesTo([]),
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
       expect(result).toEqual([])
@@ -44,13 +44,13 @@ describe('chainRouter', () => {
         },
       ]
       const mockGetAll = mockFn().resolvesTo(chains)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           getAll: mockGetAll,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
 
       expect(result).toEqual(chains)
@@ -68,13 +68,13 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockFindByName = mockFn().resolvesTo(chain)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           findByName: mockFindByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('ethereum')
 
       expect(result).toEqual(chain)
@@ -83,13 +83,13 @@ describe('chainRouter', () => {
 
     it('returns null when chain does not exist', async () => {
       const mockFindByName = mockFn().resolvesTo(undefined)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           findByName: mockFindByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('nonexistent')
 
       expect(result).toEqual(null)
@@ -107,13 +107,13 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockInsert = mockFn().resolvesTo(undefined)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           insert: mockInsert,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
       expect(result).toEqual({ success: true })
@@ -129,13 +129,13 @@ describe('chainRouter', () => {
         apis: null,
       }
       const mockInsert = mockFn().resolvesTo(undefined)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           insert: mockInsert,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
       expect(result).toEqual({ success: true })
@@ -156,13 +156,13 @@ describe('chainRouter', () => {
         ],
       }
       const mockInsert = mockFn().resolvesTo(undefined)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           insert: mockInsert,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
 
       expect(result).toEqual({ success: true })
@@ -180,13 +180,13 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           updateByName: mockUpdateByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.update({
         name: 'ethereum',
         update,
@@ -202,13 +202,13 @@ describe('chainRouter', () => {
         explorerUrl: 'https://updated-explorer.io',
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           updateByName: mockUpdateByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.update({
         name: 'ethereum',
         update,
@@ -226,13 +226,13 @@ describe('chainRouter', () => {
         apis: null,
       }
       const mockUpdateByName = mockFn().resolvesTo(1)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           updateByName: mockUpdateByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.update({
         name: 'arbitrum',
         update,
@@ -246,13 +246,13 @@ describe('chainRouter', () => {
   describe('delete', () => {
     it('deletes an existing chain', async () => {
       const mockDeleteByName = mockFn().resolvesTo(1)
-      const mockDb = mockObject<TokenDatabase>({
+      const mockTokenDb = mockObject<TokenDatabase>({
         chain: mockObject<ChainRepository>({
           deleteByName: mockDeleteByName,
         }),
       })
 
-      const caller = createRouter(mockDb)
+      const caller = createRouter(mockTokenDb)
       const result = await caller.delete({ name: 'ethereum' })
 
       expect(result).toEqual(1)
@@ -267,11 +267,11 @@ describe('chainRouter', () => {
           test: mockFn().resolvesTo({ success: true }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouter(mockDb, {
+        const caller = createRouter(mockTokenDb, {
           createRpcClient: () => mockRpcClient,
         })
         const result = await caller.testApi({
@@ -291,11 +291,11 @@ describe('chainRouter', () => {
           }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouter(mockDb, {
+        const caller = createRouter(mockTokenDb, {
           createRpcClient: () => mockRpcClient,
         })
         const result = await caller.testApi({
@@ -313,11 +313,11 @@ describe('chainRouter', () => {
           test: mockFn().resolvesTo({ success: true }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouter(mockDb, {
+        const caller = createRouter(mockTokenDb, {
           createBlockscoutClient: () => mockBlockscoutClient,
         })
         const result = await caller.testApi({
@@ -337,11 +337,11 @@ describe('chainRouter', () => {
           }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouter(mockDb, {
+        const caller = createRouter(mockTokenDb, {
           createBlockscoutClient: () => mockBlockscoutClient,
         })
         const result = await caller.testApi({
@@ -359,13 +359,17 @@ describe('chainRouter', () => {
           test: mockFn().resolvesTo({ success: true }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouterWithEtherscanKey(mockDb, 'test-api-key', {
-          createEtherscanClient: () => mockEtherscanClient,
-        })
+        const caller = createRouterWithEtherscanKey(
+          mockTokenDb,
+          'test-api-key',
+          {
+            createEtherscanClient: () => mockEtherscanClient,
+          },
+        )
         const result = await caller.testApi({
           type: 'etherscan',
           chainId: 1,
@@ -376,11 +380,11 @@ describe('chainRouter', () => {
       })
 
       it('returns failure when API key is not configured', async () => {
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouter(mockDb)
+        const caller = createRouter(mockTokenDb)
         const result = await caller.testApi({
           type: 'etherscan',
           chainId: 1,
@@ -400,13 +404,17 @@ describe('chainRouter', () => {
           }),
         })
 
-        const mockDb = mockObject<TokenDatabase>({
+        const mockTokenDb = mockObject<TokenDatabase>({
           chain: mockObject<ChainRepository>({}),
         })
 
-        const caller = createRouterWithEtherscanKey(mockDb, 'test-api-key', {
-          createEtherscanClient: () => mockEtherscanClient,
-        })
+        const caller = createRouterWithEtherscanKey(
+          mockTokenDb,
+          'test-api-key',
+          {
+            createEtherscanClient: () => mockEtherscanClient,
+          },
+        )
         const result = await caller.testApi({
           type: 'etherscan',
           chainId: 1,
@@ -419,7 +427,7 @@ describe('chainRouter', () => {
 })
 
 function createRouter(
-  mockDb: TokenDatabase,
+  mockTokenDb: TokenDatabase,
   clientFactories?: {
     createRpcClient?: (config: { url: string }) => RpcClient
     createBlockscoutClient?: (config: { url: string }) => BlockscoutClient
@@ -441,12 +449,13 @@ function createRouter(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockTokenDb,
+    db: mockObject<Database>({}),
   })
 }
 
 function createRouterWithEtherscanKey(
-  mockDb: TokenDatabase,
+  mockTokenDb: TokenDatabase,
   etherscanApiKey: string,
   clientFactories?: {
     createRpcClient?: (config: { url: string }) => RpcClient
@@ -469,6 +478,7 @@ function createRouterWithEtherscanKey(
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockDb,
+    tokenDb: mockTokenDb,
+    db: mockObject<Database>({}),
   })
 }

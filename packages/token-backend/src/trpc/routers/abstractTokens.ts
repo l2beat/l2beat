@@ -14,12 +14,12 @@ export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
 
   return router({
     getAll: readOnlyProcedure.query(({ ctx }) => {
-      return ctx.db.abstractToken.getAll()
+      return ctx.tokenDb.abstractToken.getAll()
     }),
     getAllWithDeployedTokens: readOnlyProcedure.query(async ({ ctx }) => {
       const [abstractTokens, allDeployedTokens] = await Promise.all([
-        ctx.db.abstractToken.getAll(),
-        ctx.db.deployedToken.getAll(),
+        ctx.tokenDb.abstractToken.getAll(),
+        ctx.tokenDb.deployedToken.getAll(),
       ])
 
       const deployedByAbstract = allDeployedTokens.reduce(
@@ -53,12 +53,12 @@ export const abstractTokensRouter = (deps: AbstractTokensRouterDeps) => {
     getById: readOnlyProcedure
       .input(v.string())
       .query(async ({ ctx, input }) => {
-        const abstractToken = await ctx.db.abstractToken.findById(input)
+        const abstractToken = await ctx.tokenDb.abstractToken.findById(input)
         if (!abstractToken) {
           return null
         }
         const deployedTokens =
-          await ctx.db.deployedToken.getByAbstractTokenId(input)
+          await ctx.tokenDb.deployedToken.getByAbstractTokenId(input)
         return {
           ...abstractToken,
           deployedTokens,
