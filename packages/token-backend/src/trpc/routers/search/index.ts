@@ -1,13 +1,13 @@
 import { v } from '@l2beat/validate'
 import fuzzysort from 'fuzzysort'
-import { readOnlyProcedure } from '../procedures'
-import { router } from '../trpc'
+import { readOnlyProcedure } from '../../procedures'
+import { router } from '../../trpc'
 
 export const searchRouter = router({
   all: readOnlyProcedure.input(v.string()).query(async ({ ctx, input }) => {
-    const deployedTokens = await ctx.db.deployedToken.getAll()
-    const abstractTokens = await ctx.db.abstractToken.getAll()
-    const chains = await ctx.db.chain.getAll()
+    const deployedTokens = await ctx.tokenDb.deployedToken.getAll()
+    const abstractTokens = await ctx.tokenDb.abstractToken.getAll()
+    const chains = await ctx.tokenDb.chain.getAll()
 
     const abstractResult = fuzzysort.go(input, abstractTokens, {
       limit: 15,

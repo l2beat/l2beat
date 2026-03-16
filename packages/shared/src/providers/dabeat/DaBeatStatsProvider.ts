@@ -3,6 +3,7 @@ import type {
   AvailWsClient,
   BeaconChainClient,
   CelestiaRpcClient,
+  EspressoClient,
   NearClient,
 } from '../../clients'
 
@@ -18,6 +19,7 @@ export class DaBeatStatsProvider {
     private readonly nearClient: NearClient | undefined,
     private readonly celestiaClient: CelestiaRpcClient | undefined,
     private readonly availWsClient: AvailWsClient | undefined,
+    private readonly espressoClient: EspressoClient | undefined,
   ) {}
 
   // every change should be reflected in getProjects.test.ts (daLayer)
@@ -31,6 +33,8 @@ export class DaBeatStatsProvider {
         return await this.getCelestiaStats()
       case 'avail':
         return await this.getAvailStats()
+      case 'espresso':
+        return await this.getEspressoStats()
       default:
         throw new Error(`Stats provider not implemented for: ${projectId}`)
     }
@@ -114,6 +118,22 @@ export class DaBeatStatsProvider {
       }
     } finally {
       await this.availWsClient.disconnect()
+    }
+  }
+
+  async getEspressoStats(): Promise<DaBeatStats> {
+    assert(this.espressoClient, 'Espresso client not found')
+
+    const { stake_table } = await this.espressoClient.getStakeTable()
+    const totalStake = stake_table.reduce(
+      (acc, entry) => acc + BigInt(entry.stake_table_entry.stake_amount),
+      0n,
+    )
+
+    return {
+      totalStake,
+      thresholdStake: (totalStake * 2n) / 3n,
+      numberOfValidators: stake_table.length,
     }
   }
 }
