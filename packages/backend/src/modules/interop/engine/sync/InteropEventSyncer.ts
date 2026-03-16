@@ -253,11 +253,6 @@ export class InteropEventSyncer extends TimeLoop {
     )
   }
 
-  async isResyncRequestedFrom(): Promise<UnixTime | undefined> {
-    const { resyncFrom } = await this.getResyncState()
-    return resyncFrom
-  }
-
   async getResyncState(): Promise<{
     resyncFrom?: UnixTime
     wipeRequired: boolean

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xb9def753e26c70b370ed847be530d0195bae29d4
+
+# Diff at Thu, 12 Mar 2026 13:08:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772791434
+- current timestamp: 1773320760
+
+## Description
+
+OptimismPortal2 and AnchorStateRegistry upgraded (same tx). proofMaturityDelaySeconds reduced from 604800 (7 days) to 86400 (1 day), disputeGameFinalityDelaySeconds from 302400 (3.5 days) to 86400 (1 day). Actual withdrawal time still depends on Kailua game resolution / proof timing. Templates still match — no new functionality, just constructor parameter changes baked into the new implementations. OptimismPortal2 diff: https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287 AnchorStateRegistry diff: https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287"
+      values.$pastUpgrades.10:
++        ["2026-03-12T10:39:35.000Z","0x0c0e889a96e766d168753f3e596af7d57a9c07f7d84fb0ba05e3d46adf61ddd8",["eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        86400
+      values.proofMaturityDelaySeconds:
+-        604800
++        86400
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431"
+      values.$pastUpgrades.1:
++        ["2026-03-12T10:39:35.000Z","0x0c0e889a96e766d168753f3e596af7d57a9c07f7d84fb0ba05e3d46adf61ddd8",["eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        86400
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431:
++        "AnchorStateRegistry"
+    }
+```
+
 Generated with discovered.json: 0xafd6a86c6d5cf320b1babb5e8a37aa4c4ad7f314
 
 # Diff at Fri, 06 Mar 2026 10:05:07 GMT:
