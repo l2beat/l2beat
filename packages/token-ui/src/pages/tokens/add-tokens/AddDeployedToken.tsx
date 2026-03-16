@@ -201,6 +201,7 @@ export function AddDeployedToken() {
     form.resetField('deploymentTimestamp')
     form.resetField('abstractTokenId')
     form.resetField('comment')
+    form.clearErrors()
 
     if (next) {
       setSearchParams((prev) => {

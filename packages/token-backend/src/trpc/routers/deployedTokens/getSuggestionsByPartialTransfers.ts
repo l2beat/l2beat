@@ -62,10 +62,9 @@ function buildTransferSuggestionMap(
     abstractTokens.map((t) => [t.id, t]),
   )
   const deployedTokenMap = Object.fromEntries(
-    deployedTokens.map((t) => [`${t.chain}:${t.address}`, t]),
+    deployedTokens.map((t) => [`${t.chain}:${t.address.toLowerCase()}`, t]),
   )
   const chainMap = Object.fromEntries(chains.map((c) => [c.name, c]))
-
   const txInfo = (t: InteropTransferRecord) => ({
     srcTxHash: t.srcTxHash,
     srcChain: t.srcChain,
@@ -81,11 +80,17 @@ function buildTransferSuggestionMap(
     abstractTokenId: string,
     tx: ReturnType<typeof txInfo>,
   ) => {
-    const key = `${chain}:${tokenAddress}:${abstractTokenId}`
+    const key = `${chain}:${tokenAddress.toLowerCase()}:${abstractTokenId}`
     const abstractToken = abstractTokenMap[abstractTokenId]
     assert(abstractToken, 'abstractToken must be known here')
 
-    const deployedToken = deployedTokenMap[`${chain}:${tokenAddress}`]
+    const ethereumAddress = Address32.cropToEthereumAddress(
+      Address32(tokenAddress),
+    )
+
+    const deployedToken =
+      deployedTokenMap[`${chain}:${ethereumAddress.toLowerCase()}`]
+
     // Skip if the token is already exists
     if (deployedToken) {
       return
@@ -101,7 +106,7 @@ function buildTransferSuggestionMap(
     } else {
       map.set(key, {
         chain,
-        address: Address32.cropToEthereumAddress(Address32(tokenAddress)),
+        address: ethereumAddress,
         explorerUrl: chainMap[chain]?.explorerUrl ?? undefined,
         abstractToken,
         txs: [
