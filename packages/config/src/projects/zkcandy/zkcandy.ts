@@ -151,7 +151,7 @@ export const zkcandy: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
-        untilTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
