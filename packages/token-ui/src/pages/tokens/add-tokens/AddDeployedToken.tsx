@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import {
   CheckIcon,
@@ -7,9 +7,9 @@ import {
   ListXIcon,
   PlusIcon,
 } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Button, buttonVariants } from '~/components/core/Button'
@@ -49,15 +49,21 @@ import { cn } from '~/utils/cn'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
 
+type QueueItem = { chain: string; address: string; abstractTokenId?: string }
+
 export function AddDeployedToken() {
+  const location = useLocation()
+  const navigateQueue = location.state?.queue as QueueItem[] | undefined
   const [, setSearchParams] = useSearchParams()
   const [queryChain] = useQueryState('chain', '')
   const [queryAddress] = useQueryState('address', '')
   const [abstractTokenId] = useQueryState('abstractTokenId', '')
 
-  const [queue, setQueue] = useState<{ chain: string; address: string }[]>([])
-  const addToQueue = useCallback((chain: string, address: string) => {
-    setQueue((prev) => [...prev, { chain, address }])
+  const [queue, setQueue] = useState<QueueItem[]>(
+    navigateQueue ? [...navigateQueue] : [],
+  )
+  const addToQueue = useCallback((item: QueueItem) => {
+    setQueue((prev) => [...prev, item])
   }, [])
 
   const form = useForm<DeployedTokenSchema>({
@@ -163,21 +169,71 @@ export function AddDeployedToken() {
     })
   }
 
-  function handleImport(tokens: { chain: string; address: string }[]) {
-    if (!chain && !address) {
-      const first = tokens.shift()
-      if (!first) return
+  const handleImport = useCallback(
+    (tokens: QueueItem[]) => {
+      if (!chain && !address) {
+        const first = tokens.shift()
+        if (!first) return
 
+        setSearchParams((prev) => {
+          const newParams = new URLSearchParams(prev)
+          newParams.set('chain', first.chain)
+          newParams.set('address', first.address)
+          if (first.abstractTokenId) {
+            newParams.set('abstractTokenId', first.abstractTokenId)
+          } else {
+            newParams.delete('abstractTokenId')
+          }
+          return newParams
+        })
+      }
+
+      setQueue((prev) => [...prev, ...tokens])
+    },
+    [chain, address, setSearchParams],
+  )
+
+  const skipToNextItemInQueue = useCallback(() => {
+    const next = queue.at(0)
+    setQueue((prev) => prev.slice(1))
+    form.resetField('symbol')
+    form.resetField('decimals')
+    form.resetField('deploymentTimestamp')
+    form.resetField('abstractTokenId')
+    form.resetField('comment')
+    form.clearErrors()
+
+    if (next) {
       setSearchParams((prev) => {
         const newParams = new URLSearchParams(prev)
-        newParams.set('chain', first.chain)
-        newParams.set('address', first.address)
+        newParams.set('chain', next.chain)
+        newParams.set('address', next.address)
+        if (next.abstractTokenId) {
+          newParams.set('abstractTokenId', next.abstractTokenId)
+        } else {
+          newParams.delete('abstractTokenId')
+        }
+        return newParams
+      })
+    } else {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev)
+        newParams.delete('chain')
+        newParams.delete('address')
+        newParams.delete('abstractTokenId')
         return newParams
       })
     }
+  }, [queue, form, setSearchParams])
 
-    setQueue((prev) => [...prev, ...tokens])
-  }
+  const hasInitializedFromQueue = useRef(false)
+  useEffect(() => {
+    // If we are coming from the suggestions page, prefill the inputs with the first item in the queue (once)
+    if (navigateQueue && !hasInitializedFromQueue.current) {
+      hasInitializedFromQueue.current = true
+      skipToNextItemInQueue()
+    }
+  }, [navigateQueue, skipToNextItemInQueue])
 
   const chainRecord = chains?.find((c) => c.name === chain)
 
@@ -202,7 +258,11 @@ export function AddDeployedToken() {
               const newParams = new URLSearchParams(prev)
               newParams.set('chain', queueItem.chain)
               newParams.set('address', queueItem.address)
-              newParams.delete('abstractTokenId')
+              if (queueItem.abstractTokenId) {
+                newParams.set('abstractTokenId', queueItem.abstractTokenId)
+              } else {
+                newParams.delete('abstractTokenId')
+              }
               return newParams
             })
             setQueue(queue.slice(1))
@@ -257,31 +317,7 @@ export function AddDeployedToken() {
                   variant="outline"
                   className="w-full"
                   type="button"
-                  onClick={() => {
-                    const next = queue.at(0)
-                    setQueue((prev) => prev.slice(1))
-                    form.resetField('symbol')
-                    form.resetField('decimals')
-                    form.resetField('deploymentTimestamp')
-                    form.resetField('abstractTokenId')
-                    form.resetField('comment')
-
-                    if (next) {
-                      setSearchParams((prev) => {
-                        const newParams = new URLSearchParams(prev)
-                        newParams.set('chain', next.chain)
-                        newParams.set('address', next.address)
-                        return newParams
-                      })
-                    } else {
-                      setSearchParams((prev) => {
-                        const newParams = new URLSearchParams(prev)
-                        newParams.delete('chain')
-                        newParams.delete('address')
-                        return newParams
-                      })
-                    }
-                  }}
+                  onClick={skipToNextItemInQueue}
                 >
                   Skip
                 </Button>
@@ -299,7 +335,7 @@ export function AddDeployedToken() {
             >
               <ListIcon className="size-4" />
               {queue.length > 0 && (
-                <span className="-right-2 -bottom-2 absolute flex size-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs">
+                <span className="-right-2 -bottom-2 absolute flex h-5 min-w-5 items-center justify-center rounded-md bg-primary px-0.5 py-px text-primary-foreground text-xs">
                   {queue.length}
                 </span>
               )}
@@ -325,8 +361,8 @@ function Suggestions({
   addToQueue,
 }: {
   suggestions: { chain: string; address: string }[]
-  queue: { chain: string; address: string }[]
-  addToQueue: (chain: string, address: string) => void
+  queue: QueueItem[]
+  addToQueue: (item: QueueItem) => void
 }) {
   return (
     <Card className="mt-4">
@@ -361,7 +397,10 @@ function Suggestions({
                       variant="link"
                       size="icon"
                       onClick={() =>
-                        addToQueue(suggestion.chain, suggestion.address)
+                        addToQueue({
+                          chain: suggestion.chain,
+                          address: suggestion.address,
+                        })
                       }
                     >
                       <ListPlusIcon />
@@ -394,8 +433,8 @@ function Queue({
   queue,
   onImport,
 }: {
-  queue: { chain: string; address: string }[]
-  onImport: (tokens: { chain: string; address: string }[]) => void
+  queue: QueueItem[]
+  onImport: (tokens: QueueItem[]) => void
 }) {
   const [csvInput, setCsvInput] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -437,7 +476,9 @@ function Queue({
                 key={index}
                 className="truncate whitespace-nowrap even:bg-muted"
               >
-                {item.chain} ({item.address})
+                {[item.chain, formatAddress(item.address), item.abstractTokenId]
+                  .filter(Boolean)
+                  .join(' | ')}
               </li>
             ))}
           </ul>
@@ -460,7 +501,7 @@ function Queue({
               setCsvInput(e.target.value)
               setError(null)
             }}
-            placeholder="ethereum,0x1234567890123456789012345678901234567890&#10;arbitrum,0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
+            placeholder="chain*,address*,abstractTokenId"
             rows={10}
             className="max-h-[192px] font-mono text-sm"
           />
@@ -474,27 +515,31 @@ function Queue({
   )
 }
 
-function parseCSV(csv: string): { chain: string; address: string }[] {
+function parseCSV(csv: string): QueueItem[] {
   const lines = csv.trim().split('\n')
-  const tokens: { chain: string; address: string }[] = []
+  const tokens: QueueItem[] = []
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]?.trim()
     if (!line) continue // Skip empty lines
 
     const parts = line.split(',').map((part) => part.trim())
-    if (parts.length !== 2) {
+    if (parts.length < 2 || parts.length > 3) {
       throw new Error(
-        `Line ${i + 1}: Expected format "chain,address", got "${line}"`,
+        `Line ${i + 1}: Expected format "chain*,address*,abstractTokenId", got "${line}"`,
       )
     }
 
-    const [chain, address] = parts
+    const [chain, address, abstractTokenId] = parts
     if (!chain || !address) {
       throw new Error(`Line ${i + 1}: Both chain and address are required`)
     }
 
-    tokens.push({ chain, address })
+    tokens.push({
+      chain,
+      address,
+      abstractTokenId: abstractTokenId || undefined,
+    })
   }
 
   return tokens

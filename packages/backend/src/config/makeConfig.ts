@@ -168,6 +168,10 @@ export async function makeConfig(
       },
       matching: flags.isEnabled('interop', 'matching'),
       cleaner: flags.isEnabled('interop', 'cleaner'),
+      dangerousOperationsEnabled: env.boolean(
+        'INTEROP_DANGEROUS_OPERATIONS_ENABLED',
+        false,
+      ),
       dashboard: {
         enabled: flags.isEnabled('interop', 'dashboard'),
         getExplorerUrl: (chain: string) => {
@@ -191,7 +195,7 @@ export async function makeConfig(
           .map((c) => ({ id: c.chainId as number, name: c.name })),
         configIntervalMs: env.integer(
           'INTEROP_CONFIG_INTERVAL_MS',
-          12 * 60 * 1000, // 12 hours
+          12 * 60 * 60 * 1000, // 12 hours
         ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),

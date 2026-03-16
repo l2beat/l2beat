@@ -1,6 +1,6 @@
 {
   "name": "fuel",
-  "timestamp": 1773234316,
+  "timestamp": 1773319393,
   "configHash": "0xb6d6727829e7245bc4444784756e2b3de12a753724a568d8ade284b5840f018f",
   "entries": [
     {
@@ -36,7 +36,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "7 of 10 (70%)",
-        "nonce": 48,
+        "nonce": 49,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -276,7 +276,7 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "469731123000000000",
+        "currentPeriodAmount": "475099316000000000",
         "currentPeriodEnd": 1773732155,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -293,7 +293,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "1587160915107000000000",
+        "totalDeposited": "1587155546914000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -376,7 +376,10 @@
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"]
+            "members": [
+              "eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF",
+              "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+            ]
           }
         },
         "BLOCKS_PER_COMMIT_INTERVAL": 10800,
@@ -384,7 +387,7 @@
         "COMMITTER_ROLE": "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "NUM_COMMIT_SLOTS": 240,
-        "paused": true,
+        "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "TIME_TO_FINALIZE": 86400
       },
@@ -713,6 +716,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24634411 },
+  "usedBlockNumbers": { "ethereum": 24641460 },
   "permissionsConfigHash": "0xf4eceed8c1d8ff189154fbbd3d50d56873c10d71e60a7d4d5f7825d86d3aa99d"
 }

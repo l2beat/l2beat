@@ -17,7 +17,10 @@ describe(FollowingState.name, () => {
   describe(FollowingState.prototype.checkStatus.name, () => {
     it('switches to catching up when resync is requested', async () => {
       const syncer = createSyncer({
-        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(1)),
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(1),
+          wipeRequired: false,
+        }),
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
@@ -26,10 +29,30 @@ describe(FollowingState.name, () => {
       expect(nextState).toBeA(CatchingUpState)
     })
 
+    it('switches to catching up when wipe is required without new blocks', async () => {
+      const getLastSyncedRange = mockFn().resolvesTo(makeSyncedRange())
+      const syncer = createSyncer({
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: undefined,
+          wipeRequired: true,
+        }),
+        getLastSyncedRange,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      const nextState = await state.checkStatus()
+
+      expect(nextState).toBeA(CatchingUpState)
+      expect(getLastSyncedRange).not.toHaveBeenCalled()
+    })
+
     it('returns itself when there is no resync request', async () => {
       const getLastSyncedRange = mockFn().resolvesTo(makeSyncedRange())
       const syncer = createSyncer({
-        isResyncRequestedFrom: mockFn().resolvesTo(undefined),
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: undefined,
+          wipeRequired: false,
+        }),
         getLastSyncedRange,
       })
       const state = new FollowingState(syncer, Logger.SILENT)
@@ -50,7 +73,10 @@ describe(FollowingState.name, () => {
       })
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
-        isResyncRequestedFrom: mockFn().resolvesTo(UnixTime(1)),
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(1),
+          wipeRequired: false,
+        }),
         getLastSyncedRange,
         getItemsToCapture,
         saveProducedInteropEvents,
@@ -230,7 +256,10 @@ function createSyncer(
       name: 'mock-cluster',
       plugins: [],
     } as InteropEventSyncer['cluster'],
-    isResyncRequestedFrom: mockFn().resolvesTo(undefined),
+    getResyncState: mockFn().resolvesTo({
+      resyncFrom: undefined,
+      wipeRequired: false,
+    }),
     getLastSyncedRange: mockFn().resolvesTo(undefined),
     getOldestEventForPluginAndChain: mockFn().resolvesTo(undefined),
     getItemsToCapture: mockFn().returns({
