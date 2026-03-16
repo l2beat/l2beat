@@ -22,14 +22,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 
-type TimestampedMilestone = {
-  timestamp: number
-  milestone: Milestone | undefined
+type ChartMilestoneData = Milestone & {
+  projectIcon?: string
 }
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
-  milestones: Milestone[]
+  milestones: ChartMilestoneData[]
   ref: React.RefObject<HTMLDivElement | null>
 }
 
@@ -39,10 +38,6 @@ export function ChartMilestones<T extends { timestamp: number }>({
   ref,
 }: Props<T>) {
   const [width, setWidth] = useState<number>()
-  const timestampedMilestones = useMemo(
-    () => getTimestampedMilestones(data, milestones),
-    [data, milestones],
-  )
 
   useEffect(() => {
     if (!ref.current) return
@@ -54,25 +49,73 @@ export function ChartMilestones<T extends { timestamp: number }>({
     setWidth(ref.current.getBoundingClientRect().width)
   })
 
-  if (!timestampedMilestones || width === undefined) return null
+  const sortedMilestones = useMemo(
+    () =>
+      [...milestones].sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+      }),
+    [milestones],
+  )
 
-  const sortedMilestones = [...milestones].sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime()
-  })
+  const milestonesWithPositions = useMemo(() => {
+    if (!data || data.length < 2) return []
+
+    return sortedMilestones
+      .map((milestone) => {
+        const milestoneTimestamp = new Date(milestone.date).getTime() / 1000
+
+        // Find closest data point index
+        let closestIndex = 0
+        const firstPoint = data[0]
+        if (!firstPoint) return null
+
+        let minDiff = Math.abs(firstPoint.timestamp - milestoneTimestamp)
+
+        for (let i = 1; i < data.length; i++) {
+          const point = data[i]
+          if (!point) continue
+
+          const diff = Math.abs(point.timestamp - milestoneTimestamp)
+          if (diff < minDiff) {
+            minDiff = diff
+            closestIndex = i
+          }
+        }
+
+        // Only show milestones that are within the range of data
+        const lastPoint = data[data.length - 1]
+        if (!lastPoint) return null
+
+        const firstTimestamp = firstPoint.timestamp
+        const lastTimestamp = lastPoint.timestamp
+        if (
+          milestoneTimestamp < firstTimestamp ||
+          milestoneTimestamp > lastTimestamp
+        ) {
+          return null
+        }
+
+        return {
+          milestone,
+          left: (closestIndex / (data.length - 1)) * 100,
+        }
+      })
+      .filter((m) => m !== null)
+  }, [data, sortedMilestones])
+
+  if (width === undefined) return null
 
   return (
     <div data-role="milestones">
-      {timestampedMilestones?.map((data, index) => {
-        if (!data.milestone) return null
-        const x = index / (timestampedMilestones.length - 1)
+      {milestonesWithPositions.map((m) => {
         const milestoneIndex = sortedMilestones.findIndex(
-          (m) => m.date === data.milestone?.date,
+          (sm) => sm.date === m.milestone.date,
         )
 
         return (
           <ChartMilestone
-            key={data.milestone.date}
-            left={x * width - 10}
+            key={m.milestone.date}
+            left={(m.left / 100) * width - 10}
             milestoneIndex={milestoneIndex}
             allMilestones={sortedMilestones}
           />
@@ -89,7 +132,7 @@ function ChartMilestone({
 }: {
   left: number
   milestoneIndex: number
-  allMilestones: Milestone[]
+  allMilestones: ChartMilestoneData[]
 }) {
   const { isDesktop } = useDevice()
   const triggerMilestone = allMilestones[milestoneIndex]
@@ -97,8 +140,13 @@ function ChartMilestone({
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
-  const Icon =
-    triggerMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
+  const Icon = triggerMilestone.projectIcon ? (
+    <img src={triggerMilestone.projectIcon} className="size-5 rounded-full" />
+  ) : triggerMilestone.type === 'general' ? (
+    <MilestoneIcon />
+  ) : (
+    <IncidentIcon />
+  )
 
   const common = cn(
     'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-[34px]',
@@ -118,7 +166,7 @@ function ChartMilestone({
             target="_blank"
             rel="noreferrer"
           >
-            <Icon />
+            {Icon}
           </a>
         </TooltipTrigger>
         <TooltipContent side="bottom">
@@ -126,7 +174,16 @@ function ChartMilestone({
             {formatDate(triggerMilestone.date.slice(0, 10))}
           </div>
           <div className="flex max-w-[216px] font-bold">
-            <Icon className="mt-px size-3.5 shrink-0" />
+            {triggerMilestone.projectIcon ? (
+              <img
+                src={triggerMilestone.projectIcon}
+                className="mt-px size-3.5 shrink-0 rounded-full"
+              />
+            ) : triggerMilestone.type === 'general' ? (
+              <MilestoneIcon className="mt-px size-3.5 shrink-0" />
+            ) : (
+              <IncidentIcon className="mt-px size-3.5 shrink-0" />
+            )}
             <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
           </div>
           {triggerMilestone.description && (
@@ -142,7 +199,9 @@ function ChartMilestone({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Icon className={cn(common, 'scale-75')} style={{ left }} />
+        <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
+          {Icon}
+        </div>
       </DrawerTrigger>
       <DrawerContent>
         <MilestoneDrawerContent
@@ -159,21 +218,29 @@ export function MilestoneDrawerContent({
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: (Milestone & { projectName?: string })[]
+  allMilestones: (ChartMilestoneData & { projectName?: string })[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
   const tooltipMilestone = allMilestones[selectedMilestoneIndex]
   assert(tooltipMilestone)
 
-  const Icon =
-    tooltipMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
+  const Icon = tooltipMilestone.projectIcon ? (
+    <img
+      src={tooltipMilestone.projectIcon}
+      className="size-[18px] shrink-0 rounded-full"
+    />
+  ) : tooltipMilestone.type === 'general' ? (
+    <MilestoneIcon className="size-[18px] shrink-0" />
+  ) : (
+    <IncidentIcon className="size-[18px] shrink-0" />
+  )
 
   return (
     <>
       <DrawerHeader>
         <DialogTitle className="flex gap-1.5 font-bold">
-          <Icon className="size-[18px] shrink-0" />
+          {Icon}
           <span>{tooltipMilestone.title}</span>
         </DialogTitle>
         <p className="ml-6 text-secondary text-xs">
@@ -218,26 +285,4 @@ export function MilestoneDrawerContent({
       </DrawerFooter>
     </>
   )
-}
-
-function getTimestampedMilestones<T extends { timestamp: number }>(
-  data: T[] | undefined,
-  milestones: Milestone[],
-): TimestampedMilestone[] {
-  const mappedMilestones = mapMilestones(milestones)
-  return (
-    data?.map((point) => ({
-      timestamp: point.timestamp,
-      milestone: mappedMilestones[point.timestamp],
-    })) ?? []
-  )
-}
-
-function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
-  for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
-  }
-  return result
 }

@@ -211,13 +211,14 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
-
 export interface Milestone {
   title: string
   url: string
   date: string
   description?: string
   type: 'general' | 'incident'
+  projectId?: ProjectId
+  projectIcon?: string
 }
 
 export interface ChainConfig {
