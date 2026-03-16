@@ -330,7 +330,7 @@
         "0x075ee4b441a07410b5aa3c5fc868789251bc02707bc5ba28a174648dafad785d"
       ],
       "proxyType": "immutable",
-      "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.",
+      "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.",
       "ignoreInWatchMode": ["getCurrentHatch"],
       "sinceTimestamp": 1772654171,
       "sinceBlock": 24586323,

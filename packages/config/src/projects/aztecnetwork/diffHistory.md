@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa94a2540d9cdf5021004a19e429a3126c9350abd
+Generated with discovered.json: 0xb639811672a897e055c30df74b89acc77de4e421
 
-# Diff at Mon, 16 Mar 2026 15:15:30 GMT:
+# Diff at Mon, 16 Mar 2026 16:02:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9e34e4220ef65d60c2640f56de079a5a437e4c2b block: 1771254730
@@ -23,7 +23,7 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 
 ```diff
     contract EscapeHatch (eth:0x8c189ead28D5987A48e522162f9225124D50AD1B) {
-    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
+    +++ description: Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates.
       type:
 -        "EOA"
 +        "Contract"
@@ -37,7 +37,7 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       sourceHashes:
 +        ["0x075ee4b441a07410b5aa3c5fc868789251bc02707bc5ba28a174648dafad785d"]
       description:
-+        "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates."
++        "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of 332,000,000 AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by 9,600,000 AZTEC. The minimum tax deducted from their bond is 1,660,000 AZTEC, even if the proposal is successful. The escape hatch regularly opens every 112 epochs, given there are any bonded candidates."
       sinceTimestamp:
 +        1772654171
       sinceBlock:
