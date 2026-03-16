@@ -82,16 +82,16 @@ function buildTransferSuggestionMap(
   ) => {
     const key = `${chain}:${tokenAddress.toLowerCase()}:${abstractTokenId}`
     const abstractToken = abstractTokenMap[abstractTokenId]
-    assert(abstractToken, 'abstractToken must be known here')
+    if (!abstractToken) {
+      return
+    }
 
     const ethereumAddress = Address32.cropToEthereumAddress(
       Address32(tokenAddress),
     )
-
     const deployedToken =
       deployedTokenMap[`${chain}:${ethereumAddress.toLowerCase()}`]
 
-    // Skip if the token is already exists
     if (deployedToken) {
       return
     }
