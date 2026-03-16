@@ -62,6 +62,16 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   minted?: boolean
 }>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
+type NormalizedOFTSentAmounts = {
+  amountSentLD: bigint
+  amountReceivedLD: bigint
+}
+
+type OFTSentTransferData = {
+  address: Address32
+  burned: boolean
+}
+
 export function getBridgeType({
   srcTokenAddress,
   dstTokenAddress,
@@ -134,6 +144,45 @@ export function getBridgeType({
     : 'lockAndMint'
 }
 
+function parseMatchingOFTSentTransfer(
+  log: LogToCapture['txLogs'][number],
+  normalized: NormalizedOFTSentAmounts,
+): OFTSentTransferData | undefined {
+  const transfer = parseTransfer(log, null)
+  if (!transfer) return
+
+  if (
+    transfer.value !== normalized.amountSentLD &&
+    transfer.value !== normalized.amountReceivedLD
+  ) {
+    return
+  }
+
+  return {
+    address: Address32.from(log.address),
+    burned: Address32.from(transfer.to) === Address32.ZERO,
+  }
+}
+
+// matching both amounts due to fees
+// and preferring transfers that burned the tokens
+export function findOFTSentTransferData(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  normalized: NormalizedOFTSentAmounts,
+): OFTSentTransferData | undefined {
+  return (
+    findParsedAround(logs, startLogIndex, (log) => {
+      const transfer = parseMatchingOFTSentTransfer(log, normalized)
+      if (!transfer?.burned) return
+      return transfer
+    }) ??
+    findParsedAround(logs, startLogIndex, (log) =>
+      parseMatchingOFTSentTransfer(log, normalized),
+    )
+  )
+}
+
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
 
@@ -185,20 +234,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
 
-      const matchingTransferData = findParsedAround(
+      const matchingTransferData = findOFTSentTransferData(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== normalized.amountSentLD) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        normalized,
       )
 
       return [

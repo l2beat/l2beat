@@ -3019,8 +3019,45 @@
       {
         "chain": "celo",
         "tx": "0x6ff4008db4c54dad1cafd6a5179342b4f67ac658bc35809a8464b59cd3dbfc5c"
+      },
+      // burnMint with fees
+      {
+        "chain": "bsc",
+        "tx": "0xe4542a28e94a22c1a3905294ab3cb832aae73dafc7983ab4df6d19ece2e993b2"
+      },
+      {
+        "chain": "base",
+        "tx": "0xac2254035ff788d5f9ee4bb15c0805eac0ec29e96a40083b48ecf2850fb6ed3a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        }
+      ]
+    }
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
