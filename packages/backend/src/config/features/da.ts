@@ -174,6 +174,9 @@ export async function getDaTrackingConfig(
     timestampLayers,
     blockProjects: allBlockProjects,
     timestampProjects: allTimestampProjects,
+    ethereumNotifierDiscordWebhookUrl: env.optionalString(
+      'ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL',
+    ),
   }
 }
 

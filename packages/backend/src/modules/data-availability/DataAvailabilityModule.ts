@@ -8,6 +8,7 @@ import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
+import { DiscordWebhookClient } from '../anomalies/clients/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
@@ -149,20 +150,26 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      const hourlyIndexer = new HourlyIndexer(logger, clock)
-      notifierIndexers.push(hourlyIndexer)
+      if (config.ethereumNotifierDiscordWebhookUrl) {
+        const discordClient = new DiscordWebhookClient(
+          config.ethereumNotifierDiscordWebhookUrl,
+        )
+        const hourlyIndexer = new HourlyIndexer(logger, clock)
+        notifierIndexers.push(hourlyIndexer)
 
-      const notifierIndexer = new EthereumBlobNotifierIndexer(
-        {
-          db: database,
-          configurations: configurations.filter((c) => c.type === 'ethereum'),
-          indexerService,
-          minHeight: 0,
-          parents: [hourlyIndexer],
-        },
-        logger,
-      )
-      notifierIndexers.push(notifierIndexer)
+        const notifierIndexer = new EthereumBlobNotifierIndexer(
+          {
+            db: database,
+            configurations: configurations.filter((c) => c.type === 'ethereum'),
+            discordClient,
+            indexerService,
+            minHeight: 0,
+            parents: [hourlyIndexer],
+          },
+          logger,
+        )
+        notifierIndexers.push(notifierIndexer)
+      }
     }
 
     const indexer = new DaIndexer(

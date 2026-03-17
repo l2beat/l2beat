@@ -8,11 +8,13 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
+import type { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
 import { matchEthereumProject } from '../services/DaService'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configurations: EthereumDaTrackingConfig[]
+  discordClient: DiscordWebhookClient
 }
 
 export interface UnmatchedBlobPair {
@@ -59,7 +61,14 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     this.logger.info('Found unmatched blob pairs', {
       count: unmatchedPairs.length,
     })
-    console.table(unmatchedPairs)
+
+    const message = formatDiscordMessage(unmatchedPairs, to)
+    try {
+      await this.$.discordClient.sendMessage(message)
+      this.logger.info('Sent Discord notification')
+    } catch (error) {
+      this.logger.error('Failed to send Discord notification', { error })
+    }
 
     return to
   }
@@ -101,4 +110,26 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+export function formatDiscordMessage(
+  pairs: UnmatchedBlobPair[],
+  to: number,
+): string {
+  const date = new Date((UnixTime.toStartOf(to, 'day') - UnixTime.DAY) * 1000)
+    .toISOString()
+    .slice(0, 10)
+
+  const sorted = [...pairs].sort((a, b) => b.count - a.count)
+
+  const lines = sorted.map(
+    (p) => `\`${p.from}\` → \`${p.to ?? 'null'}\` — **${p.count}** blobs`,
+  )
+
+  return [
+    `**Unmatched Ethereum Blob Pairs** (${date})`,
+    `Found **${pairs.length}** address pairs with 100+ blobs not matching any project config:`,
+    '',
+    ...lines,
+  ].join('\n')
 }
