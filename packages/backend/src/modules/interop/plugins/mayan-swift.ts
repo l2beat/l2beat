@@ -5,7 +5,7 @@ or directly from MayanSwift calldata. The protocol itself is lock/release, so it
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
-import { findParsedAround } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   decodeMayanData,
   findNativeAmountInTx,

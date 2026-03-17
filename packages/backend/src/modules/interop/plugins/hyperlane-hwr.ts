@@ -21,6 +21,7 @@ import {
   processLog,
 } from './hyperlane'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround, type ParsedTransferLog } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -322,40 +323,6 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
       }),
     ]
   }
-}
-
-export function findParsedAround<T>(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  transform: (
-    log: LogToCapture['txLogs'][number],
-    index: number,
-  ) => T | undefined,
-): T | undefined {
-  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
-  if (startPos === -1) return
-
-  for (let offset = 0; offset < logs.length; offset++) {
-    const forward = startPos + offset
-    if (forward < logs.length) {
-      const transformed = transform(logs[forward], forward)
-      if (transformed) return transformed
-    }
-
-    if (offset === 0) continue
-    const backward = startPos - offset
-    if (backward >= 0) {
-      const transformed = transform(logs[backward], backward)
-      if (transformed) return transformed
-    }
-  }
-}
-
-export type ParsedTransferLog = {
-  logAddress: Address32
-  from: Address32
-  to: Address32
-  value: bigint
 }
 
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
