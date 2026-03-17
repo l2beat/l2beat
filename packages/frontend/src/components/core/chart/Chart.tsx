@@ -1,4 +1,3 @@
-import type { Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
@@ -7,6 +6,7 @@ import { Logo } from '~/components/Logo'
 import { useIsClient } from '~/hooks/useIsClient'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { cn } from '~/utils/cn'
+import type { Milestone } from '../../../../../config/src/types'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {

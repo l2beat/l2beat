@@ -302,7 +302,7 @@ export async function getEcosystemEntry(
   }
 }
 
-export interface EcosystemMilestone extends Milestone {
+export type EcosystemMilestone = Milestone & {
   projectName: string
 }
 

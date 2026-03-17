@@ -4,6 +4,7 @@ import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
+import type { ProjectMilestone } from '../../../../../../config/src/types'
 import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
@@ -60,21 +61,23 @@ export function getZkCatalogTvsSection(
     ).map((project) => [project.id, project]),
   )
 
-  const milestonesFromProjects = projectsForTvs
-    .map((p) => {
+  const milestonesFromProjects: ProjectMilestone[] = projectsForTvs.flatMap(
+    (p) => {
       const resolved = projectsUsedIn.get(p.projectId)
-      if (!resolved) return undefined
+      if (!resolved) return []
 
-      return {
-        date: new Date(p.sinceTimestamp * 1000).toISOString(),
-        title: `${p.name} started using ${project.name}`,
-        type: 'general' as const,
-        projectId: p.projectId,
-        projectIcon: resolved.icon,
-        url: resolved.url,
-      }
-    })
-    .filter((x) => x !== undefined)
+      return [
+        {
+          date: new Date(p.sinceTimestamp * 1000).toISOString(),
+          title: `${p.name} started using ${project.name}`,
+          type: 'project',
+          projectId: p.projectId,
+          projectIcon: resolved.icon,
+          url: resolved.url,
+        },
+      ]
+    },
+  )
 
   const milestones = [...(project.milestones ?? []), ...milestonesFromProjects]
 

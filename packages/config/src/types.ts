@@ -211,15 +211,29 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
-export interface Milestone {
+
+interface BaseMilestone {
   title: string
   url: string
   date: string
   description?: string
-  type: 'general' | 'incident'
-  projectId?: ProjectId
-  projectIcon?: string
 }
+
+interface GeneralMilestone extends BaseMilestone {
+  type: 'general'
+}
+
+interface IncidentMilestone extends BaseMilestone {
+  type: 'incident'
+}
+
+export interface ProjectMilestone extends BaseMilestone {
+  projectId: ProjectId
+  projectIcon: string
+  type: 'project'
+}
+
+export type Milestone = ProjectMilestone | GeneralMilestone | IncidentMilestone
 
 export interface ChainConfig {
   /**

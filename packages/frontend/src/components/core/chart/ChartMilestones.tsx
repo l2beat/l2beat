@@ -1,5 +1,4 @@
-import type { Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
@@ -9,6 +8,10 @@ import { IncidentIcon } from '~/icons/Incident'
 import { MilestoneIcon } from '~/icons/Milestone'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
+import type {
+  Milestone,
+  ProjectMilestone,
+} from '../../../../../config/src/types'
 import { Button } from '../Button'
 import { DialogTitle } from '../Dialog'
 import {
@@ -22,13 +25,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
 
-type ChartMilestoneData = Milestone & {
-  projectIcon?: string
+type MilestoneWithProjectName = Milestone & {
+  projectName?: string
 }
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
-  milestones: ChartMilestoneData[]
+  milestones: Milestone[]
   ref: React.RefObject<HTMLDivElement | null>
 }
 
@@ -38,6 +41,10 @@ export function ChartMilestones<T extends { timestamp: number }>({
   ref,
 }: Props<T>) {
   const [width, setWidth] = useState<number>()
+  const timestampedMilestones = useMemo(
+    () => getTimestampedMilestones(data, milestones),
+    [data, milestones],
+  )
 
   useEffect(() => {
     if (!ref.current) return
@@ -57,65 +64,21 @@ export function ChartMilestones<T extends { timestamp: number }>({
     [milestones],
   )
 
-  const milestonesWithPositions = useMemo(() => {
-    if (!data || data.length < 2) return []
-
-    return sortedMilestones
-      .map((milestone) => {
-        const milestoneTimestamp = new Date(milestone.date).getTime() / 1000
-
-        // Find closest data point index
-        let closestIndex = 0
-        const firstPoint = data[0]
-        if (!firstPoint) return null
-
-        let minDiff = Math.abs(firstPoint.timestamp - milestoneTimestamp)
-
-        for (let i = 1; i < data.length; i++) {
-          const point = data[i]
-          if (!point) continue
-
-          const diff = Math.abs(point.timestamp - milestoneTimestamp)
-          if (diff < minDiff) {
-            minDiff = diff
-            closestIndex = i
-          }
-        }
-
-        // Only show milestones that are within the range of data
-        const lastPoint = data[data.length - 1]
-        if (!lastPoint) return null
-
-        const firstTimestamp = firstPoint.timestamp
-        const lastTimestamp = lastPoint.timestamp
-        if (
-          milestoneTimestamp < firstTimestamp ||
-          milestoneTimestamp > lastTimestamp
-        ) {
-          return null
-        }
-
-        return {
-          milestone,
-          left: (closestIndex / (data.length - 1)) * 100,
-        }
-      })
-      .filter((m) => m !== null)
-  }, [data, sortedMilestones])
-
-  if (width === undefined) return null
+  if (width === undefined || timestampedMilestones.length < 2) return null
 
   return (
     <div data-role="milestones">
-      {milestonesWithPositions.map((m) => {
+      {timestampedMilestones.map((data, index) => {
+        if (!data.milestone) return null
+        const x = index / (timestampedMilestones.length - 1)
         const milestoneIndex = sortedMilestones.findIndex(
-          (sm) => sm.date === m.milestone.date,
+          (sm) => sm.date === data.milestone?.date,
         )
 
         return (
           <ChartMilestone
-            key={m.milestone.date}
-            left={(m.left / 100) * width - 10}
+            key={data.milestone.date}
+            left={x * width - 10}
             milestoneIndex={milestoneIndex}
             allMilestones={sortedMilestones}
           />
@@ -132,7 +95,7 @@ function ChartMilestone({
 }: {
   left: number
   milestoneIndex: number
-  allMilestones: ChartMilestoneData[]
+  allMilestones: Milestone[]
 }) {
   const { isDesktop } = useDevice()
   const triggerMilestone = allMilestones[milestoneIndex]
@@ -140,7 +103,7 @@ function ChartMilestone({
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
-  const Icon = triggerMilestone.projectIcon ? (
+  const Icon = isProjectMilestone(triggerMilestone) ? (
     <img src={triggerMilestone.projectIcon} className="size-5 rounded-full" />
   ) : triggerMilestone.type === 'general' ? (
     <MilestoneIcon />
@@ -174,7 +137,7 @@ function ChartMilestone({
             {formatDate(triggerMilestone.date.slice(0, 10))}
           </div>
           <div className="flex max-w-[216px] font-bold">
-            {triggerMilestone.projectIcon ? (
+            {isProjectMilestone(triggerMilestone) ? (
               <img
                 src={triggerMilestone.projectIcon}
                 className="mt-px size-3.5 shrink-0 rounded-full"
@@ -218,14 +181,14 @@ export function MilestoneDrawerContent({
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: (ChartMilestoneData & { projectName?: string })[]
+  allMilestones: MilestoneWithProjectName[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
   const tooltipMilestone = allMilestones[selectedMilestoneIndex]
   assert(tooltipMilestone)
 
-  const Icon = tooltipMilestone.projectIcon ? (
+  const Icon = isProjectMilestone(tooltipMilestone) ? (
     <img
       src={tooltipMilestone.projectIcon}
       className="size-[18px] shrink-0 rounded-full"
@@ -285,4 +248,42 @@ export function MilestoneDrawerContent({
       </DrawerFooter>
     </>
   )
+}
+
+function isProjectMilestone(
+  milestone: MilestoneWithProjectName,
+): milestone is ProjectMilestone {
+  return milestone.type === 'project'
+}
+
+type TimestampedMilestone = {
+  timestamp: number
+  milestone: Milestone | undefined
+}
+
+function getTimestampedMilestones<T extends { timestamp: number }>(
+  data: T[] | undefined,
+  milestones: Milestone[],
+): TimestampedMilestone[] {
+  if (!data || data.length < 2) return []
+
+  const mappedMilestones = mapMilestones(milestones)
+  return data.map((point) => ({
+    timestamp: point.timestamp,
+    milestone: mappedMilestones[point.timestamp],
+  }))
+}
+
+function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
+  const result: Record<number, Milestone> = {}
+
+  for (const milestone of milestones) {
+    const timestamp = UnixTime.toStartOf(
+      UnixTime.fromDate(new Date(milestone.date)),
+      'day',
+    )
+    result[timestamp] = milestone
+  }
+
+  return result
 }
