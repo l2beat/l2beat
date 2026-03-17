@@ -51,16 +51,16 @@ describe(L2CostsUpdater.name, () => {
       expect(insertedRecords?.length).toEqual(2)
     })
 
-    it('handles transactions across multiple blocks', async () => {
+    it('handles transactions across multiple blocks regardless of input order', async () => {
       const repository = getMockL2CostsRepository()
       const transactions: TrackedTxResult[] = [
         {
-          ...getMockTrackedTxResults()[0],
-          blockNumber: 100,
-        },
-        {
           ...getMockTrackedTxResults()[1],
           blockNumber: 200,
+        },
+        {
+          ...getMockTrackedTxResults()[0],
+          blockNumber: 100,
         },
       ]
       const blobPricesByBlock = new Map<number, bigint>([

@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
 import type { TrackedTxId } from '@l2beat/shared'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { TrackedTxResult } from '../../types/model'
 import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { ONE_BLOB_GAS } from '../../utils/const'
@@ -23,9 +23,23 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       this.logger.info('Update skipped - no transactions to process')
       return
     }
-    const blockNumbers = transactions.map((tx) => tx.blockNumber)
-    const oldestBlock = Math.min(...blockNumbers)
-    const newestBlock = Math.max(...blockNumbers)
+
+    const firstTransaction = transactions[0]
+    assert(firstTransaction !== undefined, 'Transactions list empty!')
+
+    let oldestBlock = firstTransaction.blockNumber
+    let newestBlock = firstTransaction.blockNumber
+
+    for (const transaction of transactions) {
+      if (transaction.blockNumber < oldestBlock) {
+        oldestBlock = transaction.blockNumber
+      }
+
+      if (transaction.blockNumber > newestBlock) {
+        newestBlock = transaction.blockNumber
+      }
+    }
+
     const blobPriceByBlock =
       await this.blobPriceProvider.getBlobPricesByBlockRange([
         oldestBlock,
