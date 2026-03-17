@@ -236,6 +236,9 @@ export class TokenValueRepository extends BaseRepository {
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
     const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db

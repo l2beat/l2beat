@@ -880,6 +880,21 @@ describeDatabase(TokenValueRepository.name, (db) => {
           ])
         })
 
+        it('returns empty array when projectIds is empty', async () => {
+          const result = await repository.getSummedByTimestampByProjects(
+            [],
+            null,
+            null,
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqual([])
+        })
+
         it('returns empty array when no matching projects', async () => {
           const result = await repository.getSummedByTimestampByProjects(
             ['non-existent'],

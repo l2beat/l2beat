@@ -105,6 +105,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     projectIds: string[],
     timeRange: [UnixTime | null, UnixTime],
   ): Promise<DataAvailabilityRecord[]> {
+    if (projectIds.length === 0) return []
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('DataAvailability')
@@ -127,6 +128,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     timeRange: [UnixTime | null, UnixTime],
     excludedProjectIds?: string[],
   ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
+    if (daLayers.length === 0) return []
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('DataAvailability')
@@ -165,6 +167,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     timeRange: [UnixTime | null, UnixTime],
     excludedProjectIds?: string[],
   ): Promise<DataAvailabilityRecord[]> {
+    if (daLayers.length === 0) return []
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('DataAvailability')
