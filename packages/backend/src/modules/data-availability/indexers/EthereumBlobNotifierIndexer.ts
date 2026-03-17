@@ -44,14 +44,22 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   async update(_from: number, to: number): Promise<number> {
     // Only run at 1 AM UTC
     if (UnixTime.toStartOf(to, 'day') + 1 * UnixTime.HOUR !== to) {
+      this.logger.info('Skipping update', { to })
       return to
     }
 
+    this.logger.info('Checking for unmatched blob pairs', { to })
     const unmatchedPairs = await this.getUnmatchedPairs(to)
 
-    if (unmatchedPairs.length > 0) {
-      console.table(unmatchedPairs)
+    if (unmatchedPairs.length === 0) {
+      this.logger.info('No unmatched blob pairs found')
+      return to
     }
+
+    this.logger.info('Found unmatched blob pairs', {
+      count: unmatchedPairs.length,
+    })
+    console.table(unmatchedPairs)
 
     return to
   }
