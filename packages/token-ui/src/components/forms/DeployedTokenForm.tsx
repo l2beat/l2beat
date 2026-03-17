@@ -90,7 +90,7 @@ const symbolSourceToLabel = {
 
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
-  source: v.enum(['canonical', 'external', 'native']),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
   supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   excludeFromTotal: v.boolean(),
   bridgedUsing: v.array(
