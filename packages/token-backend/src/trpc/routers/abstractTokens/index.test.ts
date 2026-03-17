@@ -5,9 +5,9 @@ import type {
   DeployedTokenRepository,
 } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import type { CoingeckoClient } from '../../chains/clients/coingecko/CoingeckoClient'
-import { createCallerFactory } from '../trpc'
-import { abstractTokensRouter } from './abstractTokens'
+import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import { createCallerFactory } from '../../trpc'
+import { abstractTokensRouter } from './index'
 
 describe('abstractTokensRouter', () => {
   describe('getAll', () => {

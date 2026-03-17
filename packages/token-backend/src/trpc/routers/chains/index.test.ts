@@ -4,12 +4,12 @@ import type {
   ChainRepository,
 } from '@l2beat/database/dist/repositories/ChainRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import type { BlockscoutClient } from '../../chains/clients/blockscout/BlockscoutClient'
-import type { EtherscanClient } from '../../chains/clients/etherscan/EtherscanClient'
-import type { RpcClient } from '../../chains/clients/rpc/RpcClient'
-import type { ChainUpdate } from '../../schemas/Chain'
-import { createCallerFactory } from '../trpc'
-import { chainsRouter } from './chains'
+import type { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
+import type { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
+import type { RpcClient } from '../../../chains/clients/rpc/RpcClient'
+import type { ChainUpdate } from '../../../schemas/Chain'
+import { createCallerFactory } from '../../trpc'
+import { chainsRouter } from './index'
 
 describe('chainRouter', () => {
   describe('getAll', () => {

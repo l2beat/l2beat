@@ -880,6 +880,21 @@ describeDatabase(TokenValueRepository.name, (db) => {
           ])
         })
 
+        it('returns empty array when projectIds is empty', async () => {
+          const result = await repository.getSummedByTimestampByProjects(
+            [],
+            null,
+            null,
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqual([])
+        })
+
         it('returns empty array when no matching projects', async () => {
           const result = await repository.getSummedByTimestampByProjects(
             ['non-existent'],
@@ -922,6 +937,60 @@ describeDatabase(TokenValueRepository.name, (db) => {
               rwaRestricted: 0, // excluded
               rwaPublic: 6400.5, // 'h'
               other: 0,
+            },
+          ])
+        })
+
+        it('includes custom-canonical tokens in the canonical sum', async () => {
+          // Add a custom-canonical token on top of existing data
+          await metadataRepository.insertMany([
+            {
+              projectId: 'ethereum',
+              tokenId: 'i',
+              source: 'custom-canonical',
+              category: 'stablecoin',
+              isAssociated: false,
+            },
+          ])
+          await repository.upsertMany([
+            tokenValue(
+              'i',
+              'ethereum',
+              UnixTime(100),
+              50,
+              5000,
+              4000,
+              3000,
+              100,
+            ),
+          ])
+
+          const result = await repository.getSummedByTimestampByProjects(
+            ['ethereum'],
+            UnixTime(100),
+            UnixTime(100),
+            {
+              forSummary: false,
+              excludeAssociated: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqualUnsorted([
+            {
+              timestamp: UnixTime(100),
+              // a (canonical-ether) + b (canonical-stablecoin) + c (external-btc) + d (native-other) + e (canonical-ether-associated) + cc (custom-canonical-stablecoin)
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
+              // canonical includes both canonical and custom-canonical tokens
+              canonical: 8000.5 + 16000.25 + 800.25 + 4000,
+              external: 4000.75,
+              native: 2400.5,
+              ether: 8000.5 + 800.25,
+              stablecoin: 16000.25 + 4000,
+              btc: 4000.75,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 2400.5,
             },
           ])
         })

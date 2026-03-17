@@ -236,6 +236,9 @@ export class TokenValueRepository extends BaseRepository {
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
     const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db
@@ -245,9 +248,14 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, 'canonical'),
-        sumBySource(eb, valueField, 'external'),
-        sumBySource(eb, valueField, 'native'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
+        sumBySource(eb, valueField, ['external'], 'external'),
+        sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -320,9 +328,14 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, 'canonical'),
-        sumBySource(eb, valueField, 'external'),
-        sumBySource(eb, valueField, 'native'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
+        sumBySource(eb, valueField, ['external'], 'external'),
+        sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -418,9 +431,14 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(eb, valueField, 'canonical'),
-        sumBySource(eb, valueField, 'external'),
-        sumBySource(eb, valueField, 'native'),
+        sumBySource(
+          eb,
+          valueField,
+          ['canonical', 'custom-canonical'],
+          'canonical',
+        ),
+        sumBySource(eb, valueField, ['external'], 'external'),
+        sumBySource(eb, valueField, ['native'], 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -518,16 +536,21 @@ function sumByCategory(
 function sumBySource(
   eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
   valueField: 'valueForProject' | 'valueForSummary',
-  source: TokenSource,
+  sources: TokenSource[],
+  alias: string,
 ) {
+  if (sources.length === 0) {
+    return eb.cast(eb.val(0), 'double precision').as(alias)
+  }
+
   return eb.fn
     .sum(
       eb
         .case()
-        .when('TokenMetadata.source', '=', source)
+        .when('TokenMetadata.source', 'in', sources)
         .then(eb.ref(valueField))
         .else(eb.cast(eb.val(0), 'double precision'))
         .end(),
     )
-    .as(source)
+    .as(alias)
 }
