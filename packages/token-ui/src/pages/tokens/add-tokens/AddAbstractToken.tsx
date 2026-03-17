@@ -35,6 +35,7 @@ export function AddAbstractToken({
     defaultValues: defaultValues ?? {
       id: generateRandomId(),
       reviewed: true,
+      category: null,
     },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
@@ -111,6 +112,7 @@ export function AddAbstractToken({
       record: {
         ...values,
         issuer: values.issuer || null,
+        category: values.category ?? null,
         iconUrl: values.iconUrl || null,
         coingeckoId: values.coingeckoId || null,
         comment: values.comment || null,

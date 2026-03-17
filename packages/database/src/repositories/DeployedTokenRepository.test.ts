@@ -655,7 +655,7 @@ function abstractToken(
     id: overrides.id,
     issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
-    category: overrides.category ?? 'other',
+    category: overrides.category ?? null,
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,

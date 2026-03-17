@@ -14,7 +14,7 @@ export const searchRouter = router({
       keys: [
         (e) => e.id,
         (e) => e.symbol,
-        (e) => e.category,
+        (e) => e.category ?? '',
         (e) => e.coingeckoId ?? '',
         (e) => e.issuer ?? 'unknown',
       ],
