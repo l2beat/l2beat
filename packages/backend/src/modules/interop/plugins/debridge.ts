@@ -28,10 +28,6 @@ const parseSent = createEventParser(
   'event Sent(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, bytes receiver, uint256 nonce, uint256 indexed chainIdTo, uint32 referralCode, (uint256 receivedAmount, uint256 fixFee, uint256 transferFee, bool useAssetFee, bool isNativeToken) feeParams, bytes autoParams, address nativeSender)',
 )
 
-const parseMonitoringSend = createEventParser(
-  'event MonitoringSendEvent(bytes32 submissionId, uint256 nonce, uint256 lockedOrMintedAmount, uint256 totalSupply)',
-)
-
 const parseClaimed = createEventParser(
   'event Claimed(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, address indexed receiver, uint256 nonce, uint256 indexed chainIdFrom, bytes autoParams, bool isNativeToken)',
 )
@@ -46,6 +42,10 @@ function isWithinTolerance(value: bigint, target: bigint): boolean {
   if (target === 0n) return value === 0n
   const delta = (target * TRANSFER_AMOUNT_TOLERANCE_BPS) / 10_000n
   return value >= target - delta && value <= target + delta
+}
+
+function hasTransferEvent(logs: LogToCapture['txLogs']): boolean {
+  return logs.some((log) => parseTransfer(log, null) !== undefined)
 }
 
 // https://docs.debridge.com/dmp-details/dmp/deployed-contracts
@@ -92,26 +92,12 @@ export class DeBridgePlugin implements InteropPlugin {
       let srcTokenAddress: Address32 | undefined
       let srcWasBurned: boolean | undefined
       if (sent.amount > 0n) {
-        // the amount from this event is usually closer to the amount
-        // in the Transfer event due to fees
-        const srcTokenAmount =
-          findParsedAround(input.txLogs, input.log.logIndex ?? -1, (log) => {
-            const parsed = parseMonitoringSend(log, [
-              EthereumAddress(input.log.address),
-            ])
-            if (!parsed || parsed.submissionId !== sent.submissionId) return
-            return parsed.lockedOrMintedAmount
-          }) ?? sent.amount
-
         const transferInfo = findParsedAround(
           input.txLogs,
           input.log.logIndex ?? -1,
           (log) => {
             const transfer = parseTransfer(log, null)
-            if (
-              !transfer ||
-              !isWithinTolerance(transfer.value, srcTokenAmount)
-            ) {
+            if (!transfer || !isWithinTolerance(transfer.value, sent.amount)) {
               return
             }
             return {
@@ -122,7 +108,7 @@ export class DeBridgePlugin implements InteropPlugin {
         )
         srcTokenAddress = transferInfo?.address
         srcWasBurned = transferInfo?.burned
-        if (!srcTokenAddress) {
+        if (!srcTokenAddress && !hasTransferEvent(input.txLogs)) {
           srcTokenAddress = Address32.NATIVE // gas does not emit
           srcWasBurned = false
         }
@@ -166,6 +152,10 @@ export class DeBridgePlugin implements InteropPlugin {
         )
         dstTokenAddress = transferInfo?.address
         dstWasMinted = transferInfo?.minted
+        if (!dstTokenAddress && !hasTransferEvent(input.txLogs)) {
+          dstTokenAddress = Address32.NATIVE
+          dstWasMinted = false
+        }
       }
 
       return [
@@ -203,11 +193,11 @@ export class DeBridgePlugin implements InteropPlugin {
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
-          srcTokenAddress: sent.args.srcTokenAddress ?? Address32.NATIVE,
+          srcTokenAddress: sent.args.srcTokenAddress,
           srcAmount: claimed.args.amount,
           srcWasBurned: sent.args.srcWasBurned,
           dstEvent: claimed,
-          dstTokenAddress: claimed.args.dstTokenAddress ?? Address32.NATIVE,
+          dstTokenAddress: claimed.args.dstTokenAddress,
           dstAmount: claimed.args.amount,
           dstWasMinted: claimed.args.dstWasMinted,
           bridgeType: 'lockAndMint',
