@@ -155,7 +155,7 @@ function createIndexers(
       const notifierIndexer = new EthereumBlobNotifierIndexer(
         {
           db: database,
-          ethereumConfigs: configurations.filter((c) => c.type === 'ethereum'),
+          configurations: configurations.filter((c) => c.type === 'ethereum'),
           indexerService,
           minHeight: 0,
           parents: [hourlyIndexer],

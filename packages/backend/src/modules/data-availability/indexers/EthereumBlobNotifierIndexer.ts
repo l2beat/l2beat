@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
@@ -12,7 +12,7 @@ import { matchEthereumProject } from '../services/DaService'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  ethereumConfigs: Extract<BlockDaIndexedConfig, { type: 'ethereum' }>[]
+  configurations: EthereumDaTrackingConfig[]
 }
 
 export interface UnmatchedBlobPair {
@@ -60,17 +60,13 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       UnixTime.toDate(yesterdayStart),
       UnixTime.toDate(todayStart),
     )
-    const ethereumConfigs = this.$.ethereumConfigs.filter(
-      (c): c is Extract<BlockDaIndexedConfig, { type: 'ethereum' }> =>
-        c.type === 'ethereum',
-    )
 
     const unmatchedPairs: UnmatchedBlobPair[] = []
 
     for (const pair of pairs) {
       if (pair.count < 100) continue
 
-      const isMatched = ethereumConfigs.some((config) =>
+      const isMatched = this.$.configurations.some((config) =>
         matchEthereumProject(
           {
             inbox: pair.to ?? '',
