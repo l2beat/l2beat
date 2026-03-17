@@ -70,8 +70,8 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
 
     const pairs = await this.$.db.blobs.getCountPerAddressInbox(
       'ethereum',
-      UnixTime.toDate(yesterdayStart),
-      UnixTime.toDate(todayStart),
+      yesterdayStart,
+      todayStart,
     )
 
     const unmatchedPairs: UnmatchedBlobPair[] = []

@@ -136,8 +136,8 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getCountPerAddressInbox(
         'ethereum',
-        UnixTime.toDate(base),
-        UnixTime.toDate(base + UnixTime.DAY),
+        base,
+        base + UnixTime.DAY,
       )
 
       expect(results).toEqualUnsorted([
@@ -182,8 +182,8 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getCountPerAddressInbox(
         'ethereum',
-        UnixTime.toDate(base),
-        UnixTime.toDate(base + UnixTime.DAY),
+        base,
+        base + UnixTime.DAY,
       )
 
       expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
@@ -195,8 +195,8 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getCountPerAddressInbox(
         'ethereum',
-        UnixTime.toDate(base),
-        UnixTime.toDate(base + UnixTime.DAY),
+        base,
+        base + UnixTime.DAY,
       )
 
       expect(results).toEqual([])

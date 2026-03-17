@@ -89,16 +89,16 @@ export class BlobsRepository extends BaseRepository {
 
   async getCountPerAddressInbox(
     daLayer: string,
-    fromTimestamp: Date,
-    toTimestamp: Date,
+    from: UnixTime,
+    to: UnixTime,
   ): Promise<BlobPairCount[]> {
     const rows = await this.db
       .selectFrom('Blob')
       .select(['from', 'to'])
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .where('daLayer', '=', daLayerToNumber(daLayer))
-      .where('timestamp', '>=', fromTimestamp)
-      .where('timestamp', '<', toTimestamp)
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .groupBy(['from', 'to'])
       .execute()
 
