@@ -12,7 +12,7 @@ import { matchEthereumProject } from '../services/DaService'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  ethereumConfigs: BlockDaIndexedConfig[]
+  ethereumConfigs: Extract<BlockDaIndexedConfig, { type: 'ethereum' }>[]
 }
 
 export interface UnmatchedBlobPair {
@@ -21,7 +21,7 @@ export interface UnmatchedBlobPair {
   count: number
 }
 
-export class DaBlobNotifierIndexer extends ManagedChildIndexer {
+export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   constructor(
     private readonly $: Dependencies,
     logger: Logger,
