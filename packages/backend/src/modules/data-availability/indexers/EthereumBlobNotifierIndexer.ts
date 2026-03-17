@@ -65,12 +65,8 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     })
 
     const message = formatDiscordMessage(unmatchedPairs, to)
-    try {
-      await this.$.discordClient.sendMessage(message)
-      this.logger.info('Sent Discord notification')
-    } catch (error) {
-      this.logger.error('Failed to send Discord notification', { error })
-    }
+    await this.$.discordClient.sendMessage(message)
+    this.logger.info('Sent Discord notification')
 
     return to
   }

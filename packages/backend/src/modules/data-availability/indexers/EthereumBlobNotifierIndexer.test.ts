@@ -63,6 +63,22 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(result).toEqual(oneAm)
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
     })
+
+    it('propagates error when Discord send fails', async () => {
+      const discordClient = mockDiscordClient(new Error('Discord API error'))
+      const indexer = createIndexer({
+        blobsRepository: mockBlobsRepository([
+          { from: '0xUnknown', to: '0xUnknownInbox', count: 150 },
+        ]),
+        discordClient,
+      })
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      await expect(indexer.update(0, oneAm)).toBeRejectedWith(
+        'Discord API error',
+      )
+    })
   })
 
   describe(EthereumBlobNotifierIndexer.prototype.getUnmatchedPairs.name, () => {
