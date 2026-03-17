@@ -538,6 +538,7 @@ model AggregatedInteropTransfer {
   dstChain            String   @db.VarChar(255)
   transferTypeStats   Json?
   transferCount       Int
+  durationCount       Int      @default(0)
   identifiedCount     Int      @default(0)
   totalDurationSum    Int
   srcValueUsd         Float?   @db.Real
@@ -568,6 +569,7 @@ model AggregatedInteropToken {
   mintedValueUsd      Float?   @db.Real
   burnedValueUsd      Float?   @db.Real
   transferCount       Int
+  durationCount       Int      @default(0)
   totalDurationSum    Int
   volume              Float    @db.Real
   minTransferValueUsd Float?   @db.Real

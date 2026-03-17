@@ -1287,6 +1287,7 @@ function record({
   dstChain,
   transferTypeStats,
   transferCount = 1,
+  durationCount = transferCount,
   identifiedCount = 1,
   totalDurationSum = 0,
   bridgeType = 'unknown',
@@ -1309,6 +1310,7 @@ function record({
   dstChain: string
   transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
+  durationCount?: number
   identifiedCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
@@ -1332,6 +1334,7 @@ function record({
     dstChain,
     transferTypeStats,
     transferCount,
+    durationCount,
     identifiedCount,
     totalDurationSum,
     srcValueUsd,

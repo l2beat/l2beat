@@ -898,6 +898,7 @@ function record({
   abstractTokenId,
   transferTypeStats,
   transferCount = 1,
+  durationCount = transferCount,
   totalDurationSum = 0,
   bridgeType = 'unknown',
   volume = 1000,
@@ -913,6 +914,7 @@ function record({
   abstractTokenId: string
   transferTypeStats?: AggregatedInteropTokenRecord['transferTypeStats']
   transferCount?: number
+  durationCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
   volume?: number
@@ -930,6 +932,7 @@ function record({
     abstractTokenId,
     transferTypeStats,
     transferCount,
+    durationCount,
     totalDurationSum,
     volume,
     minTransferValueUsd,
