@@ -2,6 +2,12 @@ name: Deploy to Coolify
 
 on:
   workflow_call:
+    inputs:
+      pr:
+        description: "Pull request number for a preview deployment"
+        required: false
+        type: string
+        default: ''
     secrets:
       COOLIFY_SERVER:
         required: true
@@ -17,32 +23,46 @@ jobs:
   deploy:
     name: Deploy to Coolify
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     env:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
       COOLIFY_API_KEY: ${{ secrets.COOLIFY_DEPLOY_API_KEY }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Cache Coolify CLI
-        id: cache-coolify
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/bin/coolify
-          key: coolify-cli-v1
-
-      - name: Install Coolify CLI
-        if: steps.cache-coolify.outputs.cache-hit != 'true'
+      - name: Trigger Coolify deployment
+        env:
+          COOLIFY_PR: ${{ inputs.pr }}
+          COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
         run: |
-          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+          set -euo pipefail
 
-      - name: Setup Coolify context
-        run: |
-          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
-          coolify context use l2beat
+          server="${COOLIFY_SERVER%/}"
+          case "$server" in
+            */api/v1) api_url="$server/deploy" ;;
+            */api) api_url="$server/v1/deploy" ;;
+            *) api_url="$server/api/v1/deploy" ;;
+          esac
 
-      - name: Deploy to Coolify
-        run: |
-          echo "Deploying to Coolify..."
-          coolify deploy uuid ${{ secrets.COOLIFY_UUID }}
+          message="Deploying resource $COOLIFY_UUID"
+
+          if [ -n "$COOLIFY_PR" ]; then
+            message="Deploying PR preview #$COOLIFY_PR for resource $COOLIFY_UUID"
+          fi
+
+          echo "$message"
+
+          curl_args=(
+            --fail-with-body
+            --silent
+            --show-error
+            --request GET
+            --get
+            --header "Authorization: Bearer $COOLIFY_API_KEY"
+            --header "Accept: application/json"
+            --data-urlencode "uuid=$COOLIFY_UUID"
+          )
+
+          if [ -n "$COOLIFY_PR" ]; then
+            curl_args+=(--data-urlencode "pr=$COOLIFY_PR")
+          fi
+
+          curl "${curl_args[@]}" "$api_url"
