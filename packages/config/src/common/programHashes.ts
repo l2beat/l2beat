@@ -658,6 +658,11 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
     `,
   },
+  '0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     proverSystemProject: ProjectId('sp1turbo'),
@@ -687,6 +692,11 @@ Verify:
 2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
     `,
+  },
+  '0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
   },
   '0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0': {
     title: 'SP1 Helios program',

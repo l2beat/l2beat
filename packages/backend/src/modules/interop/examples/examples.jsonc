@@ -1287,8 +1287,29 @@
       {
         "chain": "base",
         "tx": "0x574ee29934a0c965243b46c2c66c9b8c6cd77a2de8dfcb0d75ee32940fd11cad"
+      },
+      // tokenbridge with MonitoringSendEvent gross amount >> Sent.amount
+      {
+        "chain": "arbitrum",
+        "tx": "0xcebb9c80105ca18f748a8ad9bd86f69b60471196179805e5653f8bbb2204ecc8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf4c14edca7fea1c1ad9f15cf25fd680a491d982f1b4bde047d9fae307784ef3a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "debridge.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "debridge.Transfer",
+          "bridgeType": "lockAndMint"
+        }
+      ]
+    }
   },
   "debridge-dln": {
     "txs": [
@@ -2919,8 +2940,47 @@
       {
         "chain": "base",
         "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
+      },
+      // burnmint priority in transfer matching
+      {
+        "chain": "ethereum",
+        "tx": "0x791a654671da9a5ec81a212b8de707e9c298c760f6aef4972b53be4c850bb2a3"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xaff43779f880b234ea7147b777ab866f4e645ec5411b9c4111571b33ff8a6ca3"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        }
+      ],
+      "messages": [
+        {
+          "type": "hyperlane.Message",
+          "app": "cctp"
+        }
+      ]
+    }
   },
   "wormhole-debug": {
     "loadConfigs": ["wormhole"],
@@ -2980,8 +3040,45 @@
       {
         "chain": "celo",
         "tx": "0x6ff4008db4c54dad1cafd6a5179342b4f67ac658bc35809a8464b59cd3dbfc5c"
+      },
+      // burnMint with fees
+      {
+        "chain": "bsc",
+        "tx": "0xe4542a28e94a22c1a3905294ab3cb832aae73dafc7983ab4df6d19ece2e993b2"
+      },
+      {
+        "chain": "base",
+        "tx": "0xac2254035ff788d5f9ee4bb15c0805eac0ec29e96a40083b48ecf2850fb6ed3a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        }
+      ]
+    }
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
