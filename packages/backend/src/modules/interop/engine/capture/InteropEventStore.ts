@@ -6,24 +6,33 @@ import type {
   InteropEventDb,
   InteropEventQuery,
   InteropEventType,
+  InteropPluginResyncable,
 } from '../../plugins/types'
+import { DerivedTxStore } from '../sync/DerivedTxStore'
 import { InMemoryEventDb } from './InMemoryEventDb'
 
 export class InteropEventStore implements InteropEventDb {
-  private eventDb: InMemoryEventDb
+  readonly derivedTxStore: DerivedTxStore
+  private readonly eventDb: InMemoryEventDb
 
   constructor(
     private db: Database,
     inMemoryLimit: number,
+    plugins: InteropPluginResyncable[] = [],
   ) {
     this.eventDb = new InMemoryEventDb(inMemoryLimit)
+    this.derivedTxStore = new DerivedTxStore(plugins)
   }
 
   async start() {
     const records = await this.db.interopEvent.getUnmatched()
     for (const record of records) {
       const event = fromDbRecord(record)
-      this.eventDb.addEvent(event)
+      const removed = this.eventDb.addEvent(event)
+      if (removed) {
+        this.derivedTxStore.onEventsRemoved([removed])
+      }
+      this.derivedTxStore.onEventCreated(event)
     }
   }
 
@@ -32,7 +41,11 @@ export class InteropEventStore implements InteropEventDb {
     const records = events.map((e) => toDbRecord(e))
     await this.db.interopEvent.insertMany(records)
     for (const event of events) {
-      this.eventDb.addEvent(event)
+      const removed = this.eventDb.addEvent(event)
+      if (removed) {
+        this.derivedTxStore.onEventsRemoved([removed])
+      }
+      this.derivedTxStore.onEventCreated(event)
     }
   }
 
@@ -49,7 +62,9 @@ export class InteropEventStore implements InteropEventDb {
         unsupported.map((e) => e.eventId),
       )
     })
-    this.eventDb.removeEvents([...matched, ...unsupported])
+    this.derivedTxStore.onEventsRemoved(
+      this.eventDb.removeEvents([...matched, ...unsupported]),
+    )
   }
 
   getEvents(type: string): InteropEvent[] {
@@ -88,13 +103,13 @@ export class InteropEventStore implements InteropEventDb {
 
   async deleteExpired(now: UnixTime) {
     const count = await this.db.interopEvent.deleteExpired(now)
-    this.eventDb.removeExpired(now)
+    this.derivedTxStore.onEventsRemoved(this.eventDb.removeExpired(now))
     return count
   }
 
   async deleteAllForPlugin(plugin: string) {
     const count = await this.db.interopEvent.deleteAllForPlugin(plugin)
-    this.eventDb.removeForPlugin(plugin)
+    this.derivedTxStore.onEventsRemoved(this.eventDb.removeForPlugin(plugin))
     return count
   }
 }

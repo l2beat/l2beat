@@ -39,6 +39,7 @@ export class InMemoryEventDb implements InteropEventDb {
   }
 
   addEvent(event: InteropEvent) {
+    let removed: InteropEvent | undefined
     if (this.count >= this.eventCap) {
       let minStore: EventTypeStore<unknown> | undefined
       let minExpiresAt = Number.POSITIVE_INFINITY
@@ -51,34 +52,45 @@ export class InMemoryEventDb implements InteropEventDb {
           minStore = store
         }
       }
-      if (minStore?.removeNextToExpire()) {
+      removed = minStore?.removeNextToExpire()
+      if (removed) {
         this.count -= 1
       }
     }
     this.getStore(event.type).add(event)
     this.count += 1
+    return removed
   }
 
   removeExpired(now: UnixTime) {
+    const removed: InteropEvent[] = []
     for (const store of this.stores) {
       while (true) {
         const next = store.peekNextToExpire()
         if (!next || next.expiresAt >= now) break
-        store.removeNextToExpire()
+        const removedEvent = store.removeNextToExpire()
+        if (removedEvent) {
+          removed.push(removedEvent)
+        }
         this.count -= 1
       }
     }
+    return removed
   }
 
   removeEvents(events: InteropEvent[]) {
+    const removed: InteropEvent[] = []
     for (const event of events) {
       if (this.getStore(event.type).remove(event)) {
         this.count -= 1
+        removed.push(event)
       }
     }
+    return removed
   }
 
   removeForPlugin(plugin: string) {
+    const removed: InteropEvent[] = []
     for (const store of this.stores) {
       const pluginEvents = store.getAll().filter((e) => e.plugin === plugin)
       // Side note: don't interate `store.getAll()` in a loop below because
@@ -86,9 +98,11 @@ export class InMemoryEventDb implements InteropEventDb {
       for (const event of pluginEvents) {
         if (store.remove(event)) {
           this.count -= 1
+          removed.push(event)
         }
       }
     }
+    return removed
   }
 
   find<T>(
@@ -166,9 +180,9 @@ class EventTypeStore<T> {
     return this.all[0]
   }
 
-  removeNextToExpire(): boolean {
+  removeNextToExpire(): InteropEvent<T> | undefined {
     if (this.all.length === 0) {
-      return false
+      return undefined
     }
 
     const element = this.all[0]
@@ -178,12 +192,12 @@ class EventTypeStore<T> {
     }
 
     const last = this.all.pop()
-    if (!last || last === element) return true
+    if (!last || last === element) return element
 
     this.all[0] = last
     this.indices.set(last, 0)
     this.siftDown(0)
-    return true
+    return element
   }
 
   add(event: InteropEvent<T>) {
