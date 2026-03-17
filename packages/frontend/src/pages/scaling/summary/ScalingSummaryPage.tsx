@@ -42,7 +42,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader>Summary</MainPageHeader>
+          <MainPageHeader>test</MainPageHeader>
           <div className="grid grid-cols-2 gap-4 max-lg:hidden">
             <PrimaryCard>{tvsChart}</PrimaryCard>
             <PrimaryCard>{activityChart}</PrimaryCard>
