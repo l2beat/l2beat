@@ -21,6 +21,7 @@ import {
   processLog,
 } from './hyperlane'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround, type ParsedTransferLog } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -324,41 +325,8 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 }
 
-export function findParsedAround<T>(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  transform: (
-    log: LogToCapture['txLogs'][number],
-    index: number,
-  ) => T | undefined,
-): T | undefined {
-  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
-  if (startPos === -1) return
-
-  for (let offset = 0; offset < logs.length; offset++) {
-    const forward = startPos + offset
-    if (forward < logs.length) {
-      const transformed = transform(logs[forward], forward)
-      if (transformed) return transformed
-    }
-
-    if (offset === 0) continue
-    const backward = startPos - offset
-    if (backward >= 0) {
-      const transformed = transform(logs[backward], backward)
-      if (transformed) return transformed
-    }
-  }
-}
-
-export type ParsedTransferLog = {
-  logAddress: Address32
-  from: Address32
-  to: Address32
-  value: bigint
-}
-
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
+// priorities: smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
 export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
@@ -387,13 +355,28 @@ export function findBestTransferLog(
         ? Number.POSITIVE_INFINITY
         : Math.abs(log.logIndex - startLogIndex)
 
-    if (
-      closestDelta === undefined ||
-      delta < closestDelta ||
-      (delta === closestDelta &&
-        (closestDistance === undefined || distance < closestDistance))
-    ) {
+    if (closestDelta === undefined || delta < closestDelta) {
       closestDelta = delta
+      closestDistance = distance
+      closestMatch = parsed
+      continue
+    }
+
+    if (delta > closestDelta) continue
+
+    if (
+      closestMatch &&
+      parsed.value === closestMatch.value &&
+      isMintOrBurnTransfer(parsed) !== isMintOrBurnTransfer(closestMatch)
+    ) {
+      if (isMintOrBurnTransfer(parsed)) {
+        closestDistance = distance
+        closestMatch = parsed
+      }
+      continue
+    }
+
+    if (closestDistance === undefined || distance < closestDistance) {
       closestDistance = distance
       closestMatch = parsed
     }
@@ -404,6 +387,10 @@ export function findBestTransferLog(
 
 function absDiff(value: bigint, target: bigint): bigint {
   return value >= target ? value - target : target - value
+}
+
+function isMintOrBurnTransfer(transfer: ParsedTransferLog): boolean {
+  return transfer.from === Address32.ZERO || transfer.to === Address32.ZERO
 }
 
 function pickTransferAmount(

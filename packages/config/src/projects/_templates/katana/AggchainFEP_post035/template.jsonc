@@ -59,7 +59,7 @@
         "method": "function opSuccinctConfigs(bytes32) view returns (bytes32 aggregationVkey, bytes32 rangeVkeyCommitment, bytes32 rollupConfigHash)",
         // "args": ["{{ selectedOpSuccinctConfigName }}"] // should be this but there is a bug
         "args": [
-          "0xf7803dc0ac1322b6bff3d4f9a48ffd57102e4076d8e40333dd72084f0cf9cc68"
+          "0x36e852219a68060b42e38154cd2c3e2b36ae97ea0445b1b9a034232cda5b3c00"
         ]
       }
     },

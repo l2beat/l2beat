@@ -1275,6 +1275,18 @@ describe('deployedTokensRouter', () => {
   })
 
   describe('getSuggestionsByPartialTransfers', () => {
+    const ABSTRACT_USDC: AbstractTokenRecord = {
+      id: 'abstract-usdc',
+      symbol: 'USDC',
+      issuer: null,
+      category: 'stablecoin',
+      iconUrl: null,
+      coingeckoId: 'usd-coin',
+      coingeckoListingTimestamp: null,
+      comment: null,
+      reviewed: true,
+    }
+
     function makeTransfer(
       overrides: Partial<InteropTransferRecord>,
     ): InteropTransferRecord {
@@ -1318,13 +1330,26 @@ describe('deployedTokensRouter', () => {
       }
     }
 
+    const mockTokenDbForSuggestions = (abstractTokens: AbstractTokenRecord[]) =>
+      mockObject<TokenDatabase>({
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo(abstractTokens),
+        }),
+        deployedToken: mockObject<DeployedTokenRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
+        chain: mockObject<ChainRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
+      })
+
     it('returns empty array when no partial transfers exist', async () => {
       const mockDb = mockObject<Database>({
         interopTransfer: mockObject<InteropTransferRepository>({
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1346,7 +1371,7 @@ describe('deployedTokensRouter', () => {
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1356,14 +1381,18 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-          abstractTokenId: 'abstract-usdc',
+          explorerUrl: undefined,
+          abstractToken: ABSTRACT_USDC,
           txs: [
             {
               srcTxHash: '0xsrc',
               srcChain: 'ethereum',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdst',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'transfer-1',
+              plugin: 'test-plugin',
             },
           ],
         },
@@ -1383,7 +1412,7 @@ describe('deployedTokensRouter', () => {
           getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1393,14 +1422,18 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'arbitrum',
           address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
-          abstractTokenId: 'abstract-usdc',
+          explorerUrl: undefined,
+          abstractToken: ABSTRACT_USDC,
           txs: [
             {
               srcTxHash: '0xsrc',
               srcChain: 'ethereum',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdst',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'transfer-1',
+              plugin: 'test-plugin',
             },
           ],
         },
@@ -1435,7 +1468,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1445,25 +1478,91 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-          abstractTokenId: 'abstract-usdc',
+          explorerUrl: undefined,
+          abstractToken: ABSTRACT_USDC,
           txs: [
             {
               srcTxHash: '0xsrc1',
               srcChain: 'ethereum',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdst1',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'transfer-1',
+              plugin: 'test-plugin',
             },
             {
               srcTxHash: '0xsrc2',
               srcChain: 'ethereum',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdst2',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'transfer-2',
+              plugin: 'test-plugin',
             },
           ],
         },
       ])
+    })
+
+    it('skips suggestion when abstract token is not found', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'unknown-abstract',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
+    })
+
+    it('excludes suggestions for chain/address that already has deployed token', async () => {
+      const transfer = makeTransfer({
+        srcAbstractTokenId: undefined,
+        dstAbstractTokenId: 'abstract-usdc',
+        srcWasBurned: false,
+        dstWasMinted: true,
+      })
+
+      const mockDb = mockObject<Database>({
+        interopTransfer: mockObject<InteropTransferRepository>({
+          getWithPartialAbstractTokenIds: mockFn().resolvesTo([transfer]),
+        }),
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({
+        abstractToken: mockObject<AbstractTokenRepository>({
+          getAll: mockFn().resolvesTo([ABSTRACT_USDC]),
+        }),
+        deployedToken: mockObject<DeployedTokenRepository>({
+          getAll: mockFn().resolvesTo([
+            {
+              chain: 'ethereum',
+              address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+            } as DeployedTokenRecord,
+          ]),
+        }),
+        chain: mockObject<ChainRepository>({
+          getAll: mockFn().resolvesTo([]),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({})
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
+      const result = await caller.getSuggestionsByPartialTransfers()
+
+      expect(result).toEqual([])
     })
 
     it('excludes nonMinting and unknown transfers from suggestions', async () => {
@@ -1481,7 +1580,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1521,7 +1620,7 @@ describe('deployedTokensRouter', () => {
           ]),
         }),
       })
-      const mockTokenDb = mockObject<TokenDatabase>({})
+      const mockTokenDb = mockTokenDbForSuggestions([ABSTRACT_USDC])
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
@@ -1531,28 +1630,36 @@ describe('deployedTokensRouter', () => {
         {
           chain: 'ethereum',
           address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-          abstractTokenId: 'abstract-usdc',
+          explorerUrl: undefined,
+          abstractToken: ABSTRACT_USDC,
           txs: [
             {
               srcTxHash: '0xsrcLM',
               srcChain: 'ethereum',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdstLM',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'lock-mint-1',
+              plugin: 'test-plugin',
             },
           ],
         },
         {
           chain: 'optimism',
           address: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
-          abstractTokenId: 'abstract-usdc',
+          explorerUrl: undefined,
+          abstractToken: ABSTRACT_USDC,
           txs: [
             {
               srcTxHash: '0xsrcBM',
               srcChain: 'optimism',
+              srcExplorerUrl: undefined,
               dstTxHash: '0xdstBM',
               dstChain: 'arbitrum',
+              dstExplorerUrl: undefined,
               transferId: 'burn-mint-1',
+              plugin: 'test-plugin',
             },
           ],
         },
