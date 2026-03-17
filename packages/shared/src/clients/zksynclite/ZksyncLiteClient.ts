@@ -50,7 +50,7 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
       async (blockNumber) => {
         const transactions = await this.getTransactionsInBlock(blockNumber)
         return {
-          timestamp: Math.min(...transactions.map((t) => t.createdAt)),
+          timestamp: this.getOldestTransactionTimestamp(transactions),
         }
       },
     )
@@ -66,7 +66,7 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
       number: blockNumber,
       hash: 'UNSUPPORTED',
       logsBloom: 'UNSUPPORTED',
-      timestamp: Math.min(...transactions.map((t) => t.createdAt)),
+      timestamp: this.getOldestTransactionTimestamp(transactions),
       transactions: transactions.map((t) => ({
         hash: t.txHash,
       })),
@@ -103,6 +103,18 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     )
 
     return filteredTransactions
+  }
+
+  private getOldestTransactionTimestamp(transactions: Transaction[]): UnixTime {
+    let oldestTransactionTimestamp = Number.POSITIVE_INFINITY
+
+    for (const transaction of transactions) {
+      if (transaction.createdAt < oldestTransactionTimestamp) {
+        oldestTransactionTimestamp = transaction.createdAt
+      }
+    }
+
+    return oldestTransactionTimestamp as UnixTime
   }
 
   private async getTransactionsPage(blockNumber: number, from: string) {

@@ -89,6 +89,31 @@ describe(ZksyncLiteClient.name, () => {
     })
   })
 
+  describe(ZksyncLiteClient.prototype.getBlockWithTransactions.name, () => {
+    it('uses the oldest transaction timestamp from an unsorted block', async () => {
+      const transactions = [
+        fakeTransaction('tx-hash-1', '2024-01-03T00:00:00.000Z'),
+        fakeTransaction('tx-hash-2', '2024-01-01T00:00:00.000Z'),
+        fakeTransaction('tx-hash-3', '2024-01-02T00:00:00.000Z'),
+      ]
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: {
+            list: transactions,
+            pagination: { count: transactions.length },
+          },
+        }),
+      })
+      const zksyncClient = mockClient({ http })
+
+      const result = await zksyncClient.getBlockWithTransactions(42)
+
+      expect(result.timestamp).toEqual(
+        UnixTime.fromDate(new Date('2024-01-01T00:00:00.000Z')),
+      )
+    })
+  })
+
   describe(ZksyncLiteClient.prototype.query.name, () => {
     it('calls with correct params and returns response', async () => {
       const http = mockObject<HttpClient>({
@@ -141,10 +166,10 @@ function mockClient(deps: {
   })
 }
 
-function fakeTransaction(txHash?: string) {
+function fakeTransaction(txHash?: string, createdAt?: string) {
   return {
     txHash: txHash ?? 'tx-hash',
     blockIndex: Math.floor(Math.random() * 1000),
-    createdAt: new Date().toString(),
+    createdAt: createdAt ?? new Date().toString(),
   }
 }
