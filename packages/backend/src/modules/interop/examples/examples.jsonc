@@ -286,9 +286,7 @@
       }
     ],
     "expects": {
-      "transfers": [
-        { "type": "ccip.Transfer" }
-      ]
+      "transfers": [{ "type": "ccip.Transfer" }]
     }
   },
   "ccip-batched": {
