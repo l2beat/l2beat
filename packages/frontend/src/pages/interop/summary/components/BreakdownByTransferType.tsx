@@ -130,7 +130,9 @@ function BreakdownSection({
                     {value.formattedValue}
                   </span>
                   <span className="font-medium text-label-value-15 text-secondary">
-                    ({total === 0 ? '0.00%' : formatPercent(value.value / total)})
+                    (
+                    {total === 0 ? '0.00%' : formatPercent(value.value / total)}
+                    )
                   </span>
                 </span>
               </div>
