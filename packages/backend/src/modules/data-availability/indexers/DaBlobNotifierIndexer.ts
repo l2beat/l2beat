@@ -38,9 +38,9 @@ export class DaBlobNotifierIndexer extends ManagedChildIndexer {
 
   async update(_from: number, to: number): Promise<number> {
     // Only run at 1 AM UTC
-    // if (UnixTime.toStartOf(to, 'day') + 1 * UnixTime.HOUR !== to) {
-    //   return to
-    // }
+    if (UnixTime.toStartOf(to, 'day') + 1 * UnixTime.HOUR !== to) {
+      return to
+    }
 
     const unmatchedPairs = await this.getUnmatchedPairs(to)
 
@@ -55,38 +55,11 @@ export class DaBlobNotifierIndexer extends ManagedChildIndexer {
     const todayStart = UnixTime.toStartOf(to, 'day')
     const yesterdayStart = todayStart - UnixTime.DAY
 
-    const groups = await this.$.db.blobs.getGroupedByAddressInbox(
+    const pairs = await this.$.db.blobs.getGroupedByAddressInbox(
       'ethereum',
       UnixTime.toDate(yesterdayStart),
       UnixTime.toDate(todayStart),
     )
-
-    // Aggregate by (from, to) to get total counts
-    const pairMap = new Map<
-      string,
-      {
-        from: string
-        to: string | null
-        totalCount: number
-        groups: typeof groups
-      }
-    >()
-    for (const g of groups) {
-      const key = `${g.from}|${g.to}`
-      const existing = pairMap.get(key)
-      if (existing) {
-        existing.totalCount += g.count
-        existing.groups.push(g)
-      } else {
-        pairMap.set(key, {
-          from: g.from,
-          to: g.to,
-          totalCount: g.count,
-          groups: [g],
-        })
-      }
-    }
-
     const ethereumConfigs = this.$.ethereumConfigs.filter(
       (c): c is Extract<BlockDaIndexedConfig, { type: 'ethereum' }> =>
         c.type === 'ethereum',
@@ -94,28 +67,22 @@ export class DaBlobNotifierIndexer extends ManagedChildIndexer {
 
     const unmatchedPairs: UnmatchedBlobPair[] = []
 
-    for (const [_, pair] of pairMap) {
-      if (pair.totalCount < 100) continue
+    for (const pair of pairs) {
+      if (pair.count < 100) continue
 
-      const isMatched = pair.groups.some((g) =>
-        ethereumConfigs.some((config) =>
-          matchEthereumProject(
-            {
-              inbox: g.to ?? '',
-              sequencer: g.from,
-              topics: g.topics ?? [],
-            },
-            config,
-          ),
+      const isMatched = ethereumConfigs.some((config) =>
+        matchEthereumProject(
+          {
+            inbox: pair.to ?? '',
+            sequencer: pair.from,
+            topics: [],
+          },
+          config,
         ),
       )
 
       if (!isMatched) {
-        unmatchedPairs.push({
-          from: pair.from,
-          to: pair.to,
-          count: pair.totalCount,
-        })
+        unmatchedPairs.push(pair)
       }
     }
 

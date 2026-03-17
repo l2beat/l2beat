@@ -73,7 +73,6 @@ export function numberToDaLayer(daLayer: number): string {
 export interface BlobPairCount {
   from: string
   to: string | null
-  topics: string[] | null
   count: number
 }
 
@@ -95,18 +94,17 @@ export class BlobsRepository extends BaseRepository {
   ): Promise<BlobPairCount[]> {
     const rows = await this.db
       .selectFrom('Blob')
-      .select(['from', 'to', 'topics'])
+      .select(['from', 'to'])
       .select((eb) => eb.fn.countAll<number>().as('count'))
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('timestamp', '>=', fromTimestamp)
       .where('timestamp', '<', toTimestamp)
-      .groupBy(['from', 'to', 'topics'])
+      .groupBy(['from', 'to'])
       .execute()
 
     return rows.map((r) => ({
       from: r.from,
       to: r.to ?? null,
-      topics: r.topics ? JSON.parse(r.topics) : null,
       count: Number(r.count),
     }))
   }
