@@ -307,14 +307,14 @@ export const aztecnetwork: ScalingProject = {
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,
     bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA, // uses SpongeBlob for cryptographic commitments and packing, no compression
+    mode: DA_MODES.STATE_DIFFS, // uses SpongeBlob for cryptographic commitments and packing, no compression
   },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN, // UltraHonk and CHONK (Client-side Highly Optimized ploNK)
       executionDelay: 0, // a proposed checkpoint can be immediately proven
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: {
       value: formatSeconds(executionDelay),
       sentiment: 'good',
@@ -368,7 +368,7 @@ export const aztecnetwork: ScalingProject = {
   ),
   technology: {
     dataAvailability: {
-      name: 'All transaction data is published in Ethereum blobs',
+      name: 'All transaction results (state diffs) are published in Ethereum blobs',
       description:
         'Each checkpoint proposal includes EIP-4844 blob commitments that are checked against the blob hashes in the proposing transaction. The epoch proof revalidates the accumulated blob commitments before the epoch is finalized.',
       references: [
