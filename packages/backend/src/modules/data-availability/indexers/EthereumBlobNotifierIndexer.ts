@@ -21,6 +21,11 @@ export interface UnmatchedBlobPair {
   count: number
 }
 
+/**
+ * This indexer is used to notify about unmatched blob pairs for Ethereum.
+ * It is run daily and checks for unmatched blob pairs for the previous day.
+ * If there are any unmatched blob pairs, it will notify about them on discord channel.
+ */
 export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   constructor(
     private readonly $: Dependencies,
