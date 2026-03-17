@@ -16,6 +16,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -49,16 +50,19 @@ export function TokenCount({
     (tokenCount ?? 0) > 0 && !!topItems && topItems.items.length > 0
 
   return (
-    <PrimaryCard className="flex flex-col border-transparent md:border-t-4">
+    <PrimaryCard className="flex flex-col border-transparent max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex h-[34px] shrink-0 items-center gap-2">
         <h2 className="font-bold text-heading-20 md:text-heading-24">
           Count of all tokens
         </h2>
       </div>
       <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Count of unique abstract tokens transferred
+        Count of unique abstract tokens transferred{' '}
+        <div className="inline-block">
+          <BetweenChainsInfo className="lowercase" />
+        </div>
       </div>
-      <BetweenChainsInfo className="mt-1" />
+
       <div className="mt-4 flex min-h-[128px] flex-1 flex-col items-center justify-center rounded-lg border border-divider px-4 py-5">
         {isLoading ? (
           <TokenCountSkeleton />
@@ -197,7 +201,9 @@ function TokenIcon({ token, index }: { token: TokenData; index: number }) {
           style={{ zIndex: 5 - index }}
         />
       </TooltipTrigger>
-      <TooltipContent>{token.symbol}</TooltipContent>
+      <TooltipPortal>
+        <TooltipContent>{token.symbol}</TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }
