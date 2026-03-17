@@ -4,7 +4,7 @@ import mean from 'lodash/mean'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 
 type UpgradeContext = {
-  proxyContract?: {
+  proxyContract: {
     name?: string
     address: string
   }
@@ -72,7 +72,6 @@ export function getPastUpgradesData(
     const previousUpgrade =
       upgradesByProxy.get(proxyKey)?.[currentProxyIndex + 1]
     upgradesByProxyIndex.set(proxyKey, currentProxyIndex + 1)
-    const proxyAddress = upgrade.proxyContract?.address
     return {
       isInitialDeployment: previousUpgrade === undefined,
       timestamp: upgrade.timestamp,
@@ -85,19 +84,14 @@ export function getPastUpgradesData(
         upgrade.implementations,
         previousUpgrade,
       ),
-      proxyContract: proxyAddress
-        ? {
-            name: upgrade.proxyContract?.name,
-            address: proxyAddress,
-            href: `${explorerUrl}/address/${proxyAddress}#code`,
-          }
-        : undefined,
+      proxyContract: {
+        name: upgrade.proxyContract.name,
+        address: upgrade.proxyContract.address,
+        href: `${explorerUrl}/address/${upgrade.proxyContract.address}#code`,
+      },
     }
   })
-
-  const lastUpgrade = pastUpgrades[0]
-  if (!lastUpgrade) return
-
+  if (pastUpgrades.length === 0) return
   return {
     upgrades: pastUpgrades,
     stats: getPastUpgradesStats(pastUpgrades),
@@ -125,7 +119,7 @@ function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
 }
 
 function getProxyKey(upgrade: UpgradeContext) {
-  return upgrade.proxyContract?.address ?? '__single-contract__'
+  return upgrade.proxyContract.address
 }
 
 function getImplementations(
@@ -148,7 +142,11 @@ function getImplementations(
 }
 
 function getPastUpgradesStats(
-  pastUpgrades: NonNullable<TechnologyContract['pastUpgrades']>['upgrades'],
+  pastUpgrades: (NonNullable<
+    TechnologyContract['pastUpgrades']
+  >['upgrades'][number] & {
+    proxyContract: PastUpgradeProxyContract
+  })[],
 ) {
   const intervals: number[] = []
   let count = 0

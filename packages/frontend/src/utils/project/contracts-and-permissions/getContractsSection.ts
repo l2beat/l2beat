@@ -250,6 +250,14 @@ function makeTechnologyContract(
     ),
     'id',
   )
+  const contractAddress = ChainSpecificAddress.address(item.address)
+  const pastUpgrades = item.pastUpgrades?.map((upgrade) => ({
+    ...upgrade,
+    proxyContract: {
+      name: item.name,
+      address: contractAddress,
+    },
+  }))
 
   return {
     id: item.name,
@@ -263,7 +271,7 @@ function makeTechnologyContract(
     impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
-    pastUpgrades: getPastUpgradesData(item.pastUpgrades, explorerUrl),
+    pastUpgrades: getPastUpgradesData(pastUpgrades, explorerUrl),
     escrow,
   }
 }

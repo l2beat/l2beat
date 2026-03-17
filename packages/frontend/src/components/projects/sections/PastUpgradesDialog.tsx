@@ -33,7 +33,7 @@ import type {
 
 export interface PastUpgradesData {
   upgrades: {
-    isInitialDeployment?: boolean
+    isInitialDeployment: boolean
     timestamp: UnixTime
     transactionHash: {
       hash: string
