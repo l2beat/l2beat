@@ -3,15 +3,19 @@ import type {
   DiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
+import * as fs from 'fs'
+import * as path from 'path'
 import { getProject } from '../getProject'
 import {
   addressesEqual,
+  buildImplementationToProxyMap,
   normalizeChainAddress,
   stripChainPrefix,
 } from './addressUtils'
 import { getCallGraphData } from './callGraph'
 import { CapitalAnalysisCalculator } from './capitalAnalysis'
 import { getContractTags } from './contractTags'
+import { buildEnhancedGraph, buildIndices } from './enhancedTraversal'
 import {
   extractAddressesFromResolvedOwners,
   getFunctions,
@@ -20,6 +24,7 @@ import {
 } from './functions'
 import { computeFunctionAnalysis } from './functionAnalysis'
 import { getFundsData } from './fundsData'
+import { DiscoveredDataAccess } from './ownerResolution'
 import type {
   AdminDetail,
   AdminDetailWithCapital,
@@ -382,6 +387,30 @@ class AdminInventoryModule {
       })
     })
 
+    // Map implementation addresses to their proxy's name so that
+    // functions keyed by implementation address resolve correctly
+    const discoveredPath = path.join(
+      data.paths.discovery,
+      data.projectName,
+      'discovered.json',
+    )
+    let discovered: any = null
+    try {
+      const fileContent = fs.readFileSync(discoveredPath, 'utf8')
+      discovered = JSON.parse(fileContent)
+      const implToProxy = buildImplementationToProxyMap(discovered)
+      for (const [implAddr, proxyAddr] of implToProxy) {
+        if (!contractNameMap.has(implAddr)) {
+          const proxyName = contractNameMap.get(proxyAddr)
+          if (proxyName) {
+            contractNameMap.set(implAddr, proxyName)
+          }
+        }
+      }
+    } catch {
+      // discovered.json not available — implementation names won't resolve
+    }
+
     // Group functions by admin address with caching optimization
     const adminsMap = new Map<string, AdminDetail>()
     const ownerResolutionCache = new Map<string, string[]>()
@@ -475,12 +504,30 @@ class AdminInventoryModule {
     const hasFundsData = Object.keys(fundsData?.contracts ?? {}).length > 0
 
     if (hasCallGraphData && hasFundsData) {
-      // Perform capital analysis for each admin
-      // Pass functions data so we can check impact scores of called functions
-      const capitalCalculator = new CapitalAnalysisCalculator(
+      // Build enhanced graph (call graph + permission edges) for capital traversal
+      const dataAccess = discovered
+        ? new DiscoveredDataAccess(discovered)
+        : new DiscoveredDataAccess({ contracts: [] })
+
+      const { edges } = buildEnhancedGraph(
         data.callGraphData,
+        data.functions,
+        dataAccess,
+      )
+      const enhancedGraph = buildIndices(edges)
+
+      // Build impl→proxy map for deduplication across proxy/implementation
+      const implToProxyMap = discovered
+        ? buildImplementationToProxyMap(discovered)
+        : new Map<string, string>()
+
+      // Perform capital analysis using enhanced graph (follows permission chains)
+      const capitalCalculator = new CapitalAnalysisCalculator(
+        enhancedGraph,
         fundsData,
         data.functions,
+        contractNameMap,
+        implToProxyMap,
       )
 
       const adminsWithCapital: AdminDetailWithCapital[] = []
@@ -490,11 +537,18 @@ class AdminInventoryModule {
         adminsWithCapital.push(adminWithCapital)
       }
 
-      // Deduplicate capital across all admins by contract address
+      // Deduplicate capital across all admins by contract address.
+      // Implementation addresses in funcAnalysis.contractAddress (from admin
+      // function lists) are resolved to proxy. Reachable contract addresses
+      // are already proxy-resolved by traverseForward.
       const contractCapitalMap = new Map<
         string,
         { funds: number; tokenValue: number }
       >()
+      const resolveAddr = (raw: string): string => {
+        const norm = normalizeChainAddress(raw)
+        return implToProxyMap.get(norm) ?? norm
+      }
       for (const admin of adminsWithCapital) {
         // Direct contracts from per-function capital analysis (respects no-impact)
         for (const funcAnalysis of admin.functionsWithCapital) {
@@ -503,7 +557,7 @@ class AdminInventoryModule {
             funcAnalysis.directTokenValueUsd <= 0
           )
             continue
-          const addr = normalizeChainAddress(funcAnalysis.contractAddress)
+          const addr = resolveAddr(funcAnalysis.contractAddress)
           if (!contractCapitalMap.has(addr)) {
             contractCapitalMap.set(addr, {
               funds: funcAnalysis.directFundsUsd,
@@ -511,7 +565,7 @@ class AdminInventoryModule {
             })
           }
         }
-        // Reachable contracts from capital analysis
+        // Reachable contracts from capital analysis (already proxy-resolved)
         for (const funcAnalysis of admin.functionsWithCapital) {
           for (const rc of funcAnalysis.reachableContracts) {
             if (!rc.fundsAtRisk) continue

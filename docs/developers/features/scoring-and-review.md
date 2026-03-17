@@ -46,6 +46,26 @@
 - Header totals in Owners/Dependencies use `computeDeduplicatedCapital()` to avoid double-counting the same contract across multiple admins
 - Functions with `score: 'no-impact'` are excluded from capital calculations: `functionIsNoImpact()` in `capitalAnalysis.ts` zeros out direct funds and skips the contract from admin-level totals
 
+### Capital Analysis — Enhanced Graph Forward Traversal
+
+`CapitalAnalysisCalculator` in `capitalAnalysis.ts` computes per-admin capital using the **enhanced graph** (call graph + permission edges) from `enhancedTraversal.ts`. This is the same unified graph used for backward governance chain resolution, but traversed **forward** to find all contracts reachable from an admin's functions.
+
+**Why not call-graph-only?** Generic admin functions like Timelock's `queueTransaction`/`executeTransaction` take arbitrary calldata — Slither can't statically resolve their targets. Without permission edges, these functions show $0 reachable capital. The enhanced graph adds permission edges (e.g., Timelock → CometProxyAdmin.changeAdmin) so capital propagates transitively through the ownership chain.
+
+**How it works:**
+1. `v2Scoring.ts` builds the enhanced graph via `buildEnhancedGraph()` + `buildIndices()` (exported from `enhancedTraversal.ts`)
+2. Passes the graph to `CapitalAnalysisCalculator` along with funds data, functions data, and a contract name map
+3. For each admin function, `traverseForward()` does BFS through the enhanced graph's forward index:
+   - **Call graph edges**: Follows edges where `sourceFunction` matches the current function
+   - **Permission edges**: Follows all edges from the current contract (permission edges are contract-level, no `sourceFunction`)
+4. Cycle detection via visited `(contract:function)` pairs (handles circular ownership like Governor ↔ Timelock)
+5. Reachable contracts are checked for funds; `fundsAtRisk` is true only if at least one called function has an impact score
+
+**Key files:**
+- `capitalAnalysis.ts` — `CapitalAnalysisCalculator` with `traverseForward()` BFS
+- `enhancedTraversal.ts` — exports `buildEnhancedGraph()`, `buildIndices()`, `EnhancedGraph`, `EnhancedEdge`
+- `v2Scoring.ts` — builds the enhanced graph in `AdminInventoryModule.calculate()`
+
 ## Review Builder
 
 **Unified review configuration**: Protocol metadata, descriptions, entity annotations, and section-based layout all stored in a single `review-config.json` file per project.

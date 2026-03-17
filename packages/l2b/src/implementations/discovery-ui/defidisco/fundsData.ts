@@ -1,7 +1,12 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
-import { addressesEqual, stripChainPrefix } from './addressUtils'
+import {
+  addressesEqual,
+  buildImplementationToProxyMap,
+  normalizeChainAddress,
+  stripChainPrefix,
+} from './addressUtils'
 import { getContractTags } from './contractTags'
 import type {
   ApiFundsDataResponse,
@@ -50,21 +55,25 @@ export function getFundsData(
 ): ApiFundsDataResponse {
   const fundsPath = getFundsDataPath(paths, project)
 
+  let data: ApiFundsDataResponse = {
+    version: '1.0',
+    lastModified: new Date().toISOString(),
+    contracts: {},
+  }
+
   if (fs.existsSync(fundsPath)) {
     try {
       const fileContent = fs.readFileSync(fundsPath, 'utf8')
-      const data = JSON.parse(fileContent) as ApiFundsDataResponse
-      return data
+      data = JSON.parse(fileContent) as ApiFundsDataResponse
     } catch (error) {
       console.error('Error parsing funds data file:', error)
     }
   }
 
-  return {
-    version: '1.0',
-    lastModified: new Date().toISOString(),
-    contracts: {},
-  }
+  // Enrich with implementation address entries (in-memory only, not persisted).
+  // Implementation contracts execute via delegatecall in the proxy's context,
+  // so they should inherit the proxy's funds for impact calculations.
+  return enrichFundsWithImplementations(data, paths, project)
 }
 
 export function saveFundsData(
@@ -90,6 +99,56 @@ export function saveFundsData(
 
 function getFundsDataPath(paths: DiscoveryPaths, project: string): string {
   return path.join(paths.discovery, project, 'funds-data.json')
+}
+
+/**
+ * Add funds entries for implementation addresses that point to their proxy's funds.
+ * This ensures that impact calculations for functions on implementation contracts
+ * correctly reflect the proxy's funds (since they share context via delegatecall).
+ */
+function enrichFundsWithImplementations(
+  data: ApiFundsDataResponse,
+  paths: DiscoveryPaths,
+  project: string,
+): ApiFundsDataResponse {
+  const discoveredPath = path.join(paths.discovery, project, 'discovered.json')
+  if (!fs.existsSync(discoveredPath)) return data
+
+  let discovered: any
+  try {
+    discovered = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
+  } catch {
+    return data
+  }
+
+  const implToProxy = buildImplementationToProxyMap(discovered)
+  if (implToProxy.size === 0) return data
+
+  // Build normalized lookup for existing funds entries
+  const normalizedFunds = new Map<string, ContractFundsData>()
+  for (const [addr, funds] of Object.entries(data.contracts)) {
+    normalizedFunds.set(normalizeChainAddress(addr), funds)
+  }
+
+  const enrichedContracts = { ...data.contracts }
+  let added = 0
+
+  for (const [implAddr, proxyAddr] of implToProxy) {
+    // Skip if implementation already has its own entry
+    if (normalizedFunds.has(implAddr)) continue
+
+    // Find the proxy's funds data
+    const proxyFunds = normalizedFunds.get(proxyAddr)
+    if (!proxyFunds) continue
+
+    // Add an entry for the implementation address referencing the proxy's funds
+    enrichedContracts[implAddr] = { ...proxyFunds, proxyAddress: proxyAddr }
+    added++
+  }
+
+  if (added === 0) return data
+
+  return { ...data, contracts: enrichedContracts }
 }
 
 export function getContractsToFetch(

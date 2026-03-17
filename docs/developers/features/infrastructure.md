@@ -220,7 +220,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Package**: `packages/defiscan-frontend/` (Vite + React + TailwindCSS + Recharts)
 - **Data Model**: Static JSON — reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
 - **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats, entity-grouped dependency counts, and active admin counts (excludes Immutable/Revoked)
-- **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Dashboard), Compare (side-by-side charts), About (mission, methodology, team)
+- **Pages**: Landing (protocol table + stats), Review (3 views: Report, Explorer, Activity), Compare (side-by-side charts), About (mission, methodology, team)
 - **Explorer Tabs** (in order): Overview, Funds, Admins, Governance, Dependencies, Contracts
   - **Admins tab**: Shows non-governance human admins only (`getHumanAdmins().filter(!isGovernance)`)
   - **Governance tab**: Shows governance contracts only (`admins.filter(isGovernance)`), same table layout as Admins but without the Type column
@@ -241,6 +241,17 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
 - **Share Dropdown**: Copy link, share on X (Twitter), share on Farcaster. Menu closes on outside click via `mousedown` listener
 - **Export for AI**: Converts the compiled review to markdown via `exportMarkdown.ts` utility and copies to clipboard
 - **Section Navigation**: Sticky nav bar with `IntersectionObserver`-based active section tracking and smooth scroll-to-section
+
+### Activity Feed
+
+**Contract upgrade timeline**: Third top-level view in defiscan-frontend (alongside Report and Explorer), showing a chronological history of protocol changes.
+
+- **Data Source**: `$pastUpgrades` field on proxy contracts in `discovered.json` — each tuple contains `[isoTimestamp, txHash, implementationAddresses[]]`
+- **Compilation**: `reviewCompiler.ts` extracts upgrade events during `buildCompiledReview()`, iterating `discovery.entries` for contracts with `$pastUpgrades`. External contracts (tagged `isExternal`) are skipped. Events sorted newest-first into `CompiledReview.activity?: ActivityEvent[]`
+- **Types**: `UpgradeEvent { type, timestamp, contractAddress, contractName, txHash, implementations }` — defined in both `reviewCompiler.ts` (backend) and `types.ts` (frontend). `ActivityEvent` is a union type (currently just `UpgradeEvent`, will expand with monitored change events)
+- **View Component**: `packages/defiscan-frontend/src/pages/review/views/ActivityView.tsx` — timeline grouped by year-month, expandable rows showing contract address, Etherscan tx link, and new implementation addresses
+- **View Registration**: `ViewModeToggle.tsx` has three modes (`report | explorer | activity`), `ReviewPage.tsx` lazy-loads `ActivityView`
+- **Future**: Monitored field-level changes from the PostgreSQL UpdateNotifier table will be added as a second event type (`MonitoredChangeEvent`)
 
 ## Continuous Monitoring Service
 
@@ -288,7 +299,8 @@ Before compiling, checks for required data files. If missing, skips silently (lo
 - Written to `packages/defiscan-frontend/public/data/<slug>/` (alongside `funds-data.json`)
 - Joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with descriptions from `review-config.json`
 - Template variables (`{{variableName}}`) resolved at compile time via `dataKeys` map
-- See `reviewCompiler.ts` in `packages/l2b/` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
+- See `reviewCompiler.ts` in `packages/l2b/` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`, `ActivityEvent`, `UpgradeEvent`
+- **Activity data**: `activity?: ActivityEvent[]` — upgrade events extracted from `$pastUpgrades` in `discovered.json` during compilation
 
 ### Adding/Removing Projects
 

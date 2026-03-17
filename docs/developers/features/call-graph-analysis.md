@@ -89,8 +89,15 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
 ### Enhanced Traversal (`enhancedTraversal.ts`)
 
 - Unified graph from call graph edges (caller->callee) + permission edges (owner->function)
-- Backward BFS from each permissioned function, collapses chains into `CollapsedChainStep[]`
+- **Backward BFS** from each permissioned function, collapses chains into `CollapsedChainStep[]` — used for governance chain display in FunctionFolder
+- **Forward BFS** through the same graph — used by `capitalAnalysis.ts` for capital computation (see [Scoring & Review: Capital Analysis](scoring-and-review.md#capital-analysis--enhanced-graph-forward-traversal))
 - Response: `ApiEnhancedTraversalResponse` — `contracts[address][functionName] -> FunctionTraversalResult`
+
+**Exported utilities** (used by `capitalAnalysis.ts` and `v2Scoring.ts`):
+- `buildEnhancedGraph(callGraphData, functionsData, dataAccess)` — builds unified edge array from call graph + permission resolution
+- `buildIndices(edges)` — creates `EnhancedGraph` with `forwardIndex` and `backwardIndex` (both keyed by normalized contract address)
+- `EnhancedEdge` — edge with `sourceContract`, `sourceFunction?`, `targetContract`, `targetFunction`, `edgeType: 'permission' | 'callgraph'`, `isViewCall?`
+- `EnhancedGraph` — `{ forwardIndex, backwardIndex }` maps
 
 ### Function Analysis (`functionAnalysis.ts`)
 

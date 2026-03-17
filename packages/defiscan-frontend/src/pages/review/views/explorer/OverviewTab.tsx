@@ -27,7 +27,7 @@ export function OverviewTab({ review }: OverviewTabProps) {
   const topAdmin =
     humanAdmins.length > 0
       ? humanAdmins.reduce((a, b) =>
-          a.totalDirectCapital > b.totalDirectCapital ? a : b,
+          a.totalReachableCapital > b.totalReachableCapital ? a : b,
         )
       : null
 
@@ -225,11 +225,11 @@ export function OverviewTab({ review }: OverviewTabProps) {
                   : `${dependencies.length} external contract${dependencies.length !== 1 ? 's' : ''}`
               }
             />
-            {topAdmin && topAdmin.totalDirectCapital > 0 && (
+            {topAdmin && topAdmin.totalReachableCapital > 0 && (
               <RiskRow
                 label="Max single-admin TVL"
                 status="info"
-                detail={`${topAdmin.name}: ${formatUsdValue(topAdmin.totalDirectCapital)}`}
+                detail={`${topAdmin.name}: ${formatUsdValue(topAdmin.totalReachableCapital)}`}
               />
             )}
           </div>

@@ -190,13 +190,7 @@ function main() {
         ? computedTokenValue
         : (review.totals.totalTokenValue ?? 0)
 
-    // Compute aggregate funds value (counts as TVL)
-    const totalAggregateValue = review.funds
-      ? review.funds.reduce((sum, f) => sum + (f.aggregate?.totalUsdValue ?? 0), 0)
-      : 0
-
-    // Add to protocol list (aggregate funds count as TVL)
-    const protocolCapitalAtRisk = review.totals.totalCapitalAtRisk + totalAggregateValue
+    // totalCapitalAtRisk in compiled review already includes aggregate funds
     protocols.push({
       slug: review.metadata.protocolSlug,
       name: review.metadata.protocolName,
@@ -205,14 +199,13 @@ function main() {
       tokenName: review.metadata.tokenName,
       totals: {
         ...review.totals,
-        totalCapitalAtRisk: protocolCapitalAtRisk,
         totalTokenValue: totalTokenValueForProtocol,
         adminCount: activeAdminCount,
         dependencyCount: depEntities.size + ungroupedDeps,
       },
     })
 
-    totalCapitalAtRisk += protocolCapitalAtRisk
+    totalCapitalAtRisk += review.totals.totalCapitalAtRisk
     const protocolTokenValue = totalTokenValueForProtocol > 0
       ? totalTokenValueForProtocol
       : (review.totals.totalTokenValueAtRisk ?? 0)

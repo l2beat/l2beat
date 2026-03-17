@@ -43,18 +43,7 @@
         }
       ]
     },
-    "minters": {
-      "description": "All minters, ignoring their 'allowed amount'",
-      "handler": {
-        "type": "event",
-        "select": "minter",
-        "add": {
-          "event": "MinterConfigured"
-        },
-        "remove": {
-          "event": "event MinterRemoved(address indexed minter)"
-        }
-      }
-    }
-  }
+    "minters": { "description": "All minters, ignoring their 'allowed amount'" }
+  },
+  "ignoreMethods": ["masterMinter", "minters"]
 }

@@ -71,7 +71,7 @@ function sortAdminsByRisk(admins: CompiledAdmin[]): CompiledAdmin[] {
   }
 
   return [...admins].sort((a, b) => {
-    const fundsDiff = b.totalDirectCapital - a.totalDirectCapital
+    const fundsDiff = b.totalReachableCapital - a.totalReachableCapital
     if (fundsDiff !== 0) return fundsDiff
     // Tiebreaker: riskier admin types first
     const aOrder = riskOrder[a.adminType] ?? 5
@@ -127,10 +127,10 @@ export function AdminCards({ review, forceExpanded }: AdminCardsProps) {
   }
 
   const humanTotal = humanControlled.reduce(
-    (sum, a) => sum + a.totalDirectCapital,
+    (sum, a) => sum + a.totalReachableCapital,
     0,
   )
-  const govTotal = governance.reduce((sum, a) => sum + a.totalDirectCapital, 0)
+  const govTotal = governance.reduce((sum, a) => sum + a.totalReachableCapital, 0)
 
   return (
     <div>
@@ -217,7 +217,7 @@ function AdminDistributionChart({
   onToggle: (key: string) => void
   forceExpanded?: boolean
 }) {
-  const maxCapital = Math.max(...admins.map((a) => a.totalDirectCapital), 0)
+  const maxCapital = Math.max(...admins.map((a) => a.totalReachableCapital), 0)
 
   return (
     <div className="rounded-xl border border-border bg-white p-6 shadow-sm">
@@ -228,7 +228,7 @@ function AdminDistributionChart({
       <div className="space-y-3">
         {admins.map((admin, index) => {
           const percentage =
-            maxCapital > 0 ? (admin.totalDirectCapital / maxCapital) * 100 : 0
+            maxCapital > 0 ? (admin.totalReachableCapital / maxCapital) * 100 : 0
           const expandKey = `admin-${admin.address}`
           const isExpanded = forceExpanded || expandedSet.has(expandKey)
 
@@ -266,11 +266,9 @@ function AdminDistributionChart({
                       ))
                     })()}
                   </span>
-                  {admin.totalDirectCapital > 0 && (
-                    <span className="font-semibold shrink-0 text-capital">
-                      {formatUsdValue(admin.totalDirectCapital)}
-                    </span>
-                  )}
+                  <span className="font-semibold shrink-0 text-capital">
+                    {formatUsdValue(admin.totalReachableCapital)}
+                  </span>
                 </div>
                 {totalCapital > 0 && (
                   <div className="h-3 rounded-full bg-bg-muted overflow-hidden">

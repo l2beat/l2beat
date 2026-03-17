@@ -90,12 +90,12 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 ### Call Graph Analysis — `docs/developers/features/call-graph-analysis.md`
 - Slither-based external call detection (SlithIR parsing, heuristic resolution engine)
-- Enhanced Traversal (backward BFS for governance chains)
+- Enhanced Traversal (unified graph: call graph + permission edges, backward BFS for governance chains, forward BFS for capital analysis)
 - Function Analysis (forward BFS for impact + dependency detection)
 - Shared traversal helpers (`traverseWithPaths`, `findContractGraph`, `extractChainAddresses`)
 
 ### Scoring & Review — `docs/developers/features/scoring-and-review.md`
-- V2 Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display)
+- V2 Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
 - Review Builder (`review-config.json`, entity descriptions, resources, templates)
 - Review Generation Agent (`/generate-review` Claude Code skill)
 - Review Compiler (`compiled-review.json`, template variable resolution)
@@ -107,6 +107,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Contract Tags data structure (`contract-tags.json`, cleanup rules)
 - Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`, aggregate funds via The Graph subgraphs)
 - DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
+- Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 
 ---
@@ -261,7 +262,8 @@ packages/
 │   ├── generatePermissionsReport.ts
 │   ├── callGraph.ts                  # Slither-based external call detection
 │   ├── callGraphHeuristics.ts        # Heuristic engine for variable-to-address resolution
-│   ├── enhancedTraversal.ts          # Backward BFS governance chains
+│   ├── enhancedTraversal.ts          # Enhanced graph (call graph + permission edges), backward BFS governance chains, exports graph builders for capital analysis
+│   ├── capitalAnalysis.ts            # Capital computation via enhanced graph forward BFS
 │   ├── functionAnalysis.ts           # Forward BFS impact & dependencies
 │   ├── configSeverity.ts            # Auto-severity for mitigated fields in config.jsonc
 │   └── addressUtils.ts              # Backend address utilities (stripChainPrefix, ensureChainPrefix, addressesEqual, isChainAddress)
@@ -269,6 +271,7 @@ packages/
 │   ├── scripts/compile-data.ts       # Build-time data aggregation
 │   └── src/
 │       ├── components/MitigationBadge.tsx  # Mitigation badge display (delay, valueRange, relativeValue, other)
+│       ├── pages/review/views/ActivityView.tsx  # Activity feed (upgrade timeline, top-level view)
 │       └── pages/review/views/explorer/shared.tsx  # Shared explorer tab components (SortHeader, MitigationsSummary, ExpandedAdminFunctions)
 ├── backend/src/modules/defi-update-monitor/defidisco/
 │   ├── DefidiscoMonitorApplication.ts  # Monitor orchestrator

@@ -13,9 +13,14 @@ const ExplorerView = lazy(() =>
     default: m.ExplorerView,
   })),
 )
+const ActivityView = lazy(() =>
+  import('./views/ActivityView').then((m) => ({
+    default: m.ActivityView,
+  })),
+)
 
 function isValidView(v: string | null): v is ViewMode {
-  return v === 'report' || v === 'explorer'
+  return v === 'report' || v === 'explorer' || v === 'activity'
 }
 
 export function ReviewPage() {
@@ -143,6 +148,7 @@ export function ReviewPage() {
           <ReportView review={review} forceExpanded={forceExpanded} />
         )}
         {view === 'explorer' && <ExplorerView review={review} />}
+        {view === 'activity' && <ActivityView review={review} />}
       </Suspense>
     </div>
   )

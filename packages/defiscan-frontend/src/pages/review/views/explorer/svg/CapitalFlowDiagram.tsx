@@ -12,7 +12,7 @@ export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
 
   // Only show human-controlled admins (centralization risk focus)
   const topAdmins = [...getHumanAdmins(admins)]
-    .sort((a, b) => b.totalDirectCapital - a.totalDirectCapital)
+    .sort((a, b) => b.totalReachableCapital - a.totalReachableCapital)
     .slice(0, 4)
 
   // Pick up to 4 fund holders sorted by total value
@@ -248,7 +248,7 @@ export function CapitalFlowDiagram({ review }: CapitalFlowDiagramProps) {
               fill="#6B7280"
               fontSize="9"
             >
-              {admin.adminType} | {admin.functions.length} fn | {formatUsdValue(admin.totalDirectCapital)}
+              {admin.adminType} | {admin.functions.length} fn | {formatUsdValue(admin.totalReachableCapital)}
             </text>
           </g>
         )

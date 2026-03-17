@@ -1,39 +1,56 @@
 import { addressesEqual, normalizeChainAddress } from './addressUtils'
-import { CallGraphTraverser } from './callGraphTraversal'
+import type { EnhancedGraph } from './enhancedTraversal'
 import type {
   AdminDetail,
   AdminDetailWithCapital,
-  ApiCallGraphResponse,
   ApiFunctionsResponse,
   ApiFundsDataResponse,
+  CallGraphTraversalResult,
   FunctionCapitalAnalysis,
   Impact,
   ReachableContract,
 } from './types'
 
 /**
- * CapitalAnalysisCalculator combines call graph traversal with funds data
+ * CapitalAnalysisCalculator combines enhanced graph traversal with funds data
  * to calculate the total capital at risk for each admin.
  *
+ * Uses the enhanced graph (call graph + permission edges) for forward traversal,
+ * so capital propagates through permission chains (e.g., Governor → Timelock → contracts).
+ *
  * IMPORTANT: Only counts a contract's funds as "at risk" if:
- * 1. The contract is reachable via call graph from a permissioned function
+ * 1. The contract is reachable via enhanced graph from a permissioned function
  * 2. At least one function called on that contract has an impact score (not unscored)
  */
 export class CapitalAnalysisCalculator {
-  private traverser: CallGraphTraverser
+  private enhancedGraph: EnhancedGraph
   private fundsData: ApiFundsDataResponse
-  private callGraphData: ApiCallGraphResponse
   private functionsData: ApiFunctionsResponse
+  private contractNameMap: Map<string, string>
+  private implToProxy: Map<string, string>
 
   constructor(
-    callGraphData: ApiCallGraphResponse,
+    enhancedGraph: EnhancedGraph,
     fundsData: ApiFundsDataResponse,
     functionsData: ApiFunctionsResponse,
+    contractNameMap: Map<string, string>,
+    implToProxy?: Map<string, string>,
   ) {
-    this.callGraphData = callGraphData
+    this.enhancedGraph = enhancedGraph
     this.fundsData = fundsData
     this.functionsData = functionsData
-    this.traverser = new CallGraphTraverser(callGraphData)
+    this.contractNameMap = contractNameMap
+    this.implToProxy = implToProxy ?? new Map()
+  }
+
+  /**
+   * Resolve an address to its proxy if it's an implementation address.
+   * This prevents double-counting funds that exist at the proxy address
+   * but are mirrored to the implementation address by enrichFundsWithImplementations.
+   */
+  private resolveToProxy(address: string): string {
+    const norm = normalizeChainAddress(address)
+    return this.implToProxy.get(norm) ?? norm
   }
 
   /**
@@ -111,6 +128,92 @@ export class CapitalAnalysisCalculator {
   }
 
   /**
+   * Forward BFS through the enhanced graph (call graph + permission edges).
+   * Follows both call graph edges (function-level) and permission edges (contract-level)
+   * to find all contracts reachable from a starting (contract, function) pair.
+   *
+   * The output map keys implementation addresses resolved to their proxy,
+   * so proxy + implementation are merged into a single entry. This prevents
+   * double-counting funds that exist at the proxy but are mirrored to
+   * implementations by enrichFundsWithImplementations.
+   */
+  private traverseForward(
+    startContract: string,
+    startFunction: string,
+  ): CallGraphTraversalResult {
+    const visited = new Set<string>()
+    const reachableContracts = new Map<
+      string,
+      {
+        contractName?: string
+        viewOnlyPath: boolean
+        calledFunctions: Set<string>
+      }
+    >()
+
+    // BFS queue: each entry is a (contract, function, viewOnlyPath) triple
+    const queue: Array<{
+      contract: string
+      function: string
+      pathIsViewOnly: boolean
+    }> = [
+      {
+        contract: startContract,
+        function: startFunction,
+        pathIsViewOnly: true,
+      },
+    ]
+
+    while (queue.length > 0) {
+      const { contract, function: func, pathIsViewOnly } = queue.shift()!
+
+      const visitKey = `${normalizeChainAddress(contract)}:${func}`
+      if (visited.has(visitKey)) continue
+      visited.add(visitKey)
+
+      const normalizedContract = normalizeChainAddress(contract)
+      const edges = this.enhancedGraph.forwardIndex.get(normalizedContract)
+      if (!edges) continue
+
+      for (const edge of edges) {
+        const isCallGraph = edge.edgeType === 'callgraph'
+
+        // Call graph edges: follow only edges from the current function
+        if (isCallGraph && edge.sourceFunction !== func) continue
+
+        const isViewCall = isCallGraph && edge.isViewCall === true
+        const newPathIsViewOnly = isCallGraph
+          ? pathIsViewOnly && isViewCall
+          : false // Permission edges are always non-view
+
+        // Resolve implementation addresses to proxy for the output map,
+        // so we don't create separate entries for proxy and implementation.
+        const targetNorm = this.resolveToProxy(edge.targetContract)
+        const existing = reachableContracts.get(targetNorm)
+        if (existing) {
+          if (!newPathIsViewOnly) existing.viewOnlyPath = false
+          existing.calledFunctions.add(edge.targetFunction)
+        } else {
+          reachableContracts.set(targetNorm, {
+            contractName: this.contractNameMap.get(targetNorm) ?? 'Unknown',
+            viewOnlyPath: newPathIsViewOnly,
+            calledFunctions: new Set([edge.targetFunction]),
+          })
+        }
+
+        // BFS queue uses original addresses for correct edge lookup
+        queue.push({
+          contract: edge.targetContract,
+          function: edge.targetFunction,
+          pathIsViewOnly: newPathIsViewOnly,
+        })
+      }
+    }
+
+    return { reachableContracts, unresolvedCalls: [] }
+  }
+
+  /**
    * Get total funds (balances + positions) for a contract address.
    * Performs case-insensitive lookup.
    */
@@ -163,26 +266,35 @@ export class CapitalAnalysisCalculator {
     // Get direct funds and token value in the contract containing this function
     // If function is explicitly marked no-impact, zero out direct funds
     const isNoImpact = this.functionIsNoImpact(contractAddress, functionName)
-    const directFundsUsd = isNoImpact
-      ? 0
-      : this.getContractFunds(contractAddress)
-    const directTokenValueUsd = isNoImpact
-      ? 0
-      : this.getContractTokenValue(contractAddress)
 
-    // Traverse call graph from this function
-    const traversalResult = this.traverser.traverseFromFunction(
-      contractAddress,
-      functionName,
-      true, // Include view calls
-    )
+    // If function is explicitly marked no-impact, skip traversal entirely
+    if (isNoImpact) {
+      return {
+        contractAddress,
+        contractName,
+        functionName,
+        impact,
+        directFundsUsd: 0,
+        directTokenValueUsd: 0,
+        reachableContracts: [],
+        totalReachableFundsUsd: 0,
+        totalReachableTokenValueUsd: 0,
+        unresolvedCallsCount: 0,
+      }
+    }
+
+    const directFundsUsd = this.getContractFunds(contractAddress)
+    const directTokenValueUsd = this.getContractTokenValue(contractAddress)
+
+    // Traverse enhanced graph (call graph + permission edges) from this function
+    const traversalResult = this.traverseForward(contractAddress, functionName)
 
     // Build reachable contracts with funds
     const reachableContracts: ReachableContract[] = []
 
     for (const [addr, data] of traversalResult.reachableContracts) {
-      // Skip self-reference (the starting contract)
-      if (addressesEqual(addr, contractAddress)) continue
+      // Skip self-reference (the starting contract, resolved to proxy by traverseForward)
+      if (addressesEqual(addr, this.resolveToProxy(contractAddress))) continue
 
       const fundsUsd = this.getContractFunds(addr)
       const tokenValueUsd = this.getContractTokenValue(addr)
@@ -225,7 +337,7 @@ export class CapitalAnalysisCalculator {
       reachableContracts,
       totalReachableFundsUsd,
       totalReachableTokenValueUsd,
-      unresolvedCallsCount: traversalResult.unresolvedCalls.length,
+      unresolvedCallsCount: 0,
     }
   }
 
@@ -242,25 +354,10 @@ export class CapitalAnalysisCalculator {
 
     // Analyze each function
     for (const func of admin.functions) {
-      // Check if we have call graph data for this contract
-      const hasCallGraphData =
-        this.callGraphData.contracts[func.contractAddress] !== undefined ||
-        Object.keys(this.callGraphData.contracts).some((addr) =>
-          addressesEqual(addr, func.contractAddress),
-        )
-
       const isNoImpact = this.functionIsNoImpact(
         func.contractAddress,
         func.functionName,
       )
-
-      if (!hasCallGraphData) {
-        // No call graph data - just track direct capital (skip no-impact)
-        if (!isNoImpact) {
-          directContracts.add(normalizeChainAddress(func.contractAddress))
-        }
-        continue
-      }
 
       const analysis = this.analyzeFunctionCapital(
         func.contractAddress,
@@ -278,10 +375,11 @@ export class CapitalAnalysisCalculator {
 
       // Track direct contracts (skip no-impact functions)
       if (!isNoImpact) {
-        directContracts.add(normalizeChainAddress(func.contractAddress))
+        directContracts.add(this.resolveToProxy(func.contractAddress))
       }
 
       // Track reachable contracts - only mark as at risk if fundsAtRisk is true
+      // Addresses are already proxy-resolved by traverseForward
       for (const reachable of analysis.reachableContracts) {
         const addr = normalizeChainAddress(reachable.contractAddress)
         const existingRisk = contractsAtRisk.get(addr)
@@ -327,13 +425,6 @@ export class CapitalAnalysisCalculator {
       totalReachableTokenValue,
       uniqueContractsAffected: allAffectedContracts.size,
     }
-  }
-
-  /**
-   * Check if there's any call graph data available.
-   */
-  hasCallGraphData(): boolean {
-    return Object.keys(this.callGraphData.contracts).length > 0
   }
 
   /**

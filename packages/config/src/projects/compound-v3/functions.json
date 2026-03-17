@@ -1,17 +1,7 @@
 {
   "version": "1.0",
-  "lastModified": "2025-10-30T17:38:22.674Z",
+  "lastModified": "2026-03-17T15:11:57.437Z",
   "contracts": {
-    "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
-      "functions": [
-        {
-          "functionName": "acceptAdmin",
-          "isPermissioned": true,
-          "timestamp": "2025-09-16T18:01:56.876Z",
-          "reason": "Test permission toggle"
-        }
-      ]
-    },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "functions": [
         {
@@ -127,20 +117,36 @@
         {
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
-          "timestamp": "2025-09-17T16:09:02.745Z",
-          "checked": true
+          "checked": true,
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-16T19:12:54.306Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T19:12:54.306Z"
+          }
         },
         {
           "functionName": "changeAdmin",
           "isPermissioned": true,
-          "timestamp": "2025-10-01T19:09:44.175Z",
           "checked": true,
           "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ]
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T09:54:49.906Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T09:54:49.906Z"
+          }
         },
         {
           "functionName": "implementation",
@@ -152,12 +158,16 @@
         {
           "functionName": "upgradeTo",
           "isPermissioned": true,
-          "timestamp": "2025-09-30T15:21:54.826Z",
           "checked": true,
           "score": "critical",
           "delay": {
             "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
             "fieldName": "delay"
+          },
+          "timestamp": "2026-03-16T18:33:43.404Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T18:33:43.404Z"
           }
         },
         {
@@ -171,49 +181,968 @@
         }
       ]
     },
-    "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": {
+    "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925": {
       "functions": [
         {
-          "functionName": "admin",
+          "functionName": "setDelay",
           "isPermissioned": true,
-          "timestamp": "2025-09-18T22:07:55.636Z",
-          "checked": true,
-          "score": "critical"
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-03-16T12:54:00.766Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T12:54:00.766Z"
+          }
         },
         {
-          "functionName": "upgradeTo",
+          "functionName": "acceptAdmin",
           "isPermissioned": true,
-          "timestamp": "2025-09-18T22:08:37.444Z",
-          "score": "critical"
+          "ownerDefinitions": [
+            {
+              "path": "$self.pendingAdmin"
+            }
+          ],
+          "timestamp": "2026-03-16T12:54:00.767Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T12:54:00.767Z"
+          }
         },
         {
-          "functionName": "upgradeToAndCall",
+          "functionName": "setPendingAdmin",
           "isPermissioned": true,
-          "timestamp": "2025-09-18T22:08:38.899Z",
-          "score": "critical"
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-03-16T12:54:00.771Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T12:54:00.771Z"
+          }
         },
         {
-          "functionName": "implementation",
+          "functionName": "queueTransaction",
           "isPermissioned": true,
-          "timestamp": "2025-09-22T23:05:27.892Z",
-          "checked": false,
-          "score": "critical"
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-17T15:11:37.225Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T15:11:37.225Z"
+          }
         },
         {
-          "functionName": "changeAdmin",
+          "functionName": "cancelTransaction",
           "isPermissioned": true,
-          "timestamp": "2025-09-22T23:05:28.567Z",
-          "checked": false,
-          "score": "critical"
+          "score": "no-impact",
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-17T15:11:48.858Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T15:11:48.858Z"
+          }
+        },
+        {
+          "functionName": "executeTransaction",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T15:11:57.437Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T15:11:57.437Z"
+          }
         }
       ]
     },
     "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3": {
       "functions": [
         {
+          "functionName": "changeAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-16T19:12:35.412Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-16T19:12:35.412Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:01:03.808Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:01:03.808Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:01:08.770Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:01:08.770Z"
+          }
+        }
+      ]
+    },
+    "eth:0xcFC1fA6b7ca982176529899D99af6473aD80DF4F": {
+      "functions": [
+        {
+          "functionName": "setFactory",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:17.556Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:17.556Z"
+          }
+        },
+        {
+          "functionName": "setConfiguration",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:06.800Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:06.800Z"
+          }
+        },
+        {
+          "functionName": "setGovernor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:22.342Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:22.342Z"
+          }
+        },
+        {
+          "functionName": "setPauseGuardian",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:26.898Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:26.898Z"
+          }
+        },
+        {
+          "functionName": "setBaseTokenPriceFeed",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:34.547Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:34.547Z"
+          }
+        },
+        {
+          "functionName": "setExtensionDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:11.491Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:11.491Z"
+          }
+        },
+        {
+          "functionName": "setSupplyKink",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:37.375Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:37.375Z"
+          }
+        },
+        {
+          "functionName": "setSupplyPerYearInterestRateSlopeLow",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:50.150Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:50.150Z"
+          }
+        },
+        {
+          "functionName": "setSupplyPerYearInterestRateSlopeHigh",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:46.107Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:46.107Z"
+          }
+        },
+        {
+          "functionName": "setSupplyPerYearInterestRateBase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:42.203Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:42.203Z"
+          }
+        },
+        {
+          "functionName": "setBorrowKink",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:46.870Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:46.870Z"
+          }
+        },
+        {
+          "functionName": "setBorrowPerYearInterestRateSlopeLow",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:00.404Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:00.404Z"
+          }
+        },
+        {
+          "functionName": "setBorrowPerYearInterestRateSlopeHigh",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:55.386Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:55.386Z"
+          }
+        },
+        {
+          "functionName": "setBorrowPerYearInterestRateBase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:51.615Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:51.615Z"
+          }
+        },
+        {
+          "functionName": "setStoreFrontPriceFactor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:33.829Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:33.829Z"
+          }
+        },
+        {
+          "functionName": "setBaseTrackingSupplySpeed",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:43.719Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:43.719Z"
+          }
+        },
+        {
+          "functionName": "setBaseTrackingBorrowSpeed",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:38.853Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:38.853Z"
+          }
+        },
+        {
+          "functionName": "setBaseMinForRewards",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:27.910Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:27.910Z"
+          }
+        },
+        {
+          "functionName": "setBaseBorrowMin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:18.491Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:18.491Z"
+          }
+        },
+        {
+          "functionName": "setTargetReserves",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:04:54.920Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:04:54.920Z"
+          }
+        },
+        {
+          "functionName": "addAsset",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:03:09.104Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:03:09.104Z"
+          }
+        },
+        {
+          "functionName": "updateAsset",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:05.140Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:05.140Z"
+          }
+        },
+        {
+          "functionName": "updateAssetPriceFeed",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:22.016Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:22.016Z"
+          }
+        },
+        {
+          "functionName": "updateAssetBorrowCollateralFactor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:10.518Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:10.518Z"
+          }
+        },
+        {
+          "functionName": "updateAssetLiquidateCollateralFactor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:14.207Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:14.207Z"
+          }
+        },
+        {
+          "functionName": "updateAssetLiquidationFactor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:18.070Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:18.070Z"
+          }
+        },
+        {
+          "functionName": "updateAssetSupplyCap",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:26.166Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:26.166Z"
+          }
+        },
+        {
+          "functionName": "transferGovernor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T11:05:00.675Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T11:05:00.675Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779": {
+      "functions": [
+        {
+          "functionName": "changeProxyAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:14:51.548Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:14:51.548Z"
+          }
+        },
+        {
+          "functionName": "upgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:15:05.542Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:15:05.542Z"
+          }
+        },
+        {
+          "functionName": "upgradeAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:15:08.957Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:15:08.957Z"
+          }
+        },
+        {
+          "functionName": "deployAndUpgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:14:56.476Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:14:56.476Z"
+          }
+        },
+        {
+          "functionName": "deployUpgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:15:01.317Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:15:01.317Z"
+          }
+        }
+      ]
+    },
+    "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94": {
+      "functions": [
+        {
           "functionName": "admin",
           "isPermissioned": true,
-          "timestamp": "2025-09-23T16:18:18.029Z"
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:20:12.476Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:20:12.476Z"
+          }
+        },
+        {
+          "functionName": "implementation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:20:21.726Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:20:21.726Z"
+          }
+        },
+        {
+          "functionName": "changeAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:20:17.507Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:20:17.507Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:20:25.484Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:20:25.484Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:20:29.755Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:20:29.755Z"
+          }
+        }
+      ]
+    },
+    "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14": {
+      "functions": [
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            },
+            {
+              "path": "$self.pauseGuardian"
+            }
+          ],
+          "timestamp": "2026-03-17T10:22:47.610Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:22:47.610Z"
+          }
+        },
+        {
+          "functionName": "withdrawReserves",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:21:51.819Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:21:51.819Z"
+          }
+        },
+        {
+          "functionName": "approveThis",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:22:42.133Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:22:42.133Z"
+          }
+        }
+      ]
+    },
+    "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451": {
+      "functions": [
+        {
+          "functionName": "approveThis",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:29:19.762Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:29:19.762Z"
+          }
+        },
+        {
+          "functionName": "withdrawReserves",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.governor"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+            "fieldName": "delay"
+          },
+          "timestamp": "2026-03-17T10:29:25.822Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:29:25.822Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauseGuardian"
+            }
+          ],
+          "timestamp": "2026-03-17T10:29:01.311Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-17T10:29:01.311Z"
+          }
         }
       ]
     }

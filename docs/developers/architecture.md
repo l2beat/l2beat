@@ -207,7 +207,13 @@ Four inventory modules aggregate function-level data into per-entity inventories
 | **FunctionInventoryModule** | `functions.json` permissioned + scored functions | Filter and map | `FunctionDetail[]` — scored functions with impact |
 | **ContractInventoryModule** | `discovered.json` entries | Count and categorize | Contract totals |
 
-**Capital Analysis** (optional, runs when call graph + funds exist): `CapitalAnalysisCalculator` enriches `AdminDetail` → `AdminDetailWithCapital` by joining admin functions with funds data via call graph traversal.
+**Capital Analysis** (optional, runs when call graph + funds exist): `CapitalAnalysisCalculator` enriches `AdminDetail` → `AdminDetailWithCapital` by joining admin functions with funds data via **enhanced graph forward traversal**.
+
+The enhanced graph (built by `buildEnhancedGraph()` + `buildIndices()` from `enhancedTraversal.ts`) unifies two edge types:
+- **Call graph edges** (caller function → callee function): Slither-detected external calls
+- **Permission edges** (owner contract → owned function): Resolved from `ownerDefinitions` in `functions.json`
+
+Forward BFS through this unified graph follows both edge types, so capital propagates through permission chains. For example, Governor → Timelock (permission) → ProxyAdmin (permission) → market contract with $735M. Without permission edges, the Timelock's `queueTransaction` (which takes arbitrary calldata) would show $0 reachable — the static call graph can't resolve dynamic dispatch.
 
 **Admin capital computation:**
 ```
@@ -296,7 +302,7 @@ Capital and funds are deduplicated at different stages to prevent double-countin
 
 | Stage | Entity | Dedup Strategy |
 |-------|--------|----------------|
-| Capital Analysis | Admin → contracts | Set of unique contract addresses per admin |
+| Capital Analysis | Admin → contracts | Set of unique contract addresses per admin (via enhanced graph forward BFS) |
 | Review Compiler | Dependency → reachable contracts | `Math.max(existing, new)` per contract address across functions |
 | Index Aggregation | Dependency across protocols | Sum per dependency address (protocols are independent) |
 | V2 Scoring header totals | Admins → total capital | `computeDeduplicatedCapital()` across all admins |

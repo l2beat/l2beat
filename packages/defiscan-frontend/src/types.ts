@@ -32,6 +32,7 @@ export interface CompiledReview {
   contracts: CompiledContract[]
 
   resources?: CompiledResourceEntry[]
+  activity?: ActivityEvent[]
   sections: Record<string, unknown>
 }
 
@@ -179,6 +180,19 @@ export interface CompiledContract {
   entity: string | null
   proxyType: string | null
 }
+
+// Activity Feed types
+
+export interface UpgradeEvent {
+  type: 'upgrade'
+  timestamp: string
+  contractAddress: string
+  contractName: string
+  txHash: string
+  implementations: string[]
+}
+
+export type ActivityEvent = UpgradeEvent
 
 // Index types — produced by compile-data.ts
 

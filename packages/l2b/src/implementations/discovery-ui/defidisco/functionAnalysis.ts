@@ -324,11 +324,7 @@ export function computeFunctionAnalysis(
             ...impact,
             totalFundsAtRisk: 0,
             totalTokenValueAtRisk: 0,
-            reachableContracts: impact.reachableContracts.map((c) => ({
-              ...c,
-              fundsUsd: 0,
-              tokenValueUsd: 0,
-            })),
+            reachableContracts: [],
           }
         }
       }

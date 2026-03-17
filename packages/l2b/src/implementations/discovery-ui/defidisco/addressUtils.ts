@@ -167,3 +167,57 @@ export function getFromAddressRecord<T>(
   }
   return undefined
 }
+
+// ---------------------------------------------------------------------------
+// Proxy / implementation helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a mapping from implementation addresses to their proxy addresses.
+ * Scans discovered.json entries for contracts with `implementationNames`
+ * and/or `$implementation` values.
+ *
+ * Returns Map<normalizedImplAddress, normalizedProxyAddress>.
+ */
+export function buildImplementationToProxyMap(
+  discovered: any,
+): Map<string, string> {
+  const map = new Map<string, string>()
+  for (const entry of discovered.entries ?? []) {
+    if (entry.type !== 'Contract') continue
+    const proxyAddr = normalizeChainAddress(entry.address)
+
+    // Check implementationNames (Record<implAddress, name>)
+    if (
+      entry.implementationNames &&
+      typeof entry.implementationNames === 'object'
+    ) {
+      for (const implAddr of Object.keys(entry.implementationNames)) {
+        const normalized = normalizeChainAddress(implAddr)
+        // Don't map the proxy address to itself
+        if (normalized !== proxyAddr) {
+          map.set(normalized, proxyAddr)
+        }
+      }
+    }
+
+    // Also check $implementation in values (string or string[])
+    const implValue = entry.values?.$implementation
+    if (typeof implValue === 'string') {
+      const normalized = normalizeChainAddress(implValue)
+      if (normalized !== proxyAddr) {
+        map.set(normalized, proxyAddr)
+      }
+    } else if (Array.isArray(implValue)) {
+      for (const v of implValue) {
+        if (typeof v === 'string') {
+          const normalized = normalizeChainAddress(v)
+          if (normalized !== proxyAddr) {
+            map.set(normalized, proxyAddr)
+          }
+        }
+      }
+    }
+  }
+  return map
+}

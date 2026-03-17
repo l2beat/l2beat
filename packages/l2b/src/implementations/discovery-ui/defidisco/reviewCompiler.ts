@@ -1,5 +1,6 @@
 import {
   ConfigReader,
+  type DiscoveryOutput,
   type DiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
@@ -24,6 +25,7 @@ import {
   normalizeChainAddress,
   addressesEqual,
   getFromAddressRecord,
+  buildImplementationToProxyMap,
 } from './addressUtils'
 import { getProject } from '../getProject'
 import * as fs from 'fs'
@@ -64,6 +66,7 @@ export interface CompiledReview {
   functions: CompiledFunction[]
   contracts: CompiledContract[]
   resources: CompiledResourceEntry[]
+  activity?: ActivityEvent[]
 
   sections: Record<string, unknown>
 }
@@ -172,6 +175,21 @@ export interface CompiledContract {
 export type CompiledResourceEntry = ResourceEntry
 
 // ============================================================================
+// Activity Feed Types
+// ============================================================================
+
+export interface UpgradeEvent {
+  type: 'upgrade'
+  timestamp: string
+  contractAddress: string
+  contractName: string
+  txHash: string
+  implementations: string[]
+}
+
+export type ActivityEvent = UpgradeEvent
+
+// ============================================================================
 // Compilation Result
 // ============================================================================
 
@@ -271,6 +289,9 @@ export class ReviewCompiler {
       // 6. Load project data for contract names (applies config name overrides + multisig formatting)
       const projectData = getProject(configReader, templateService, project)
 
+      // 6b. Read discovery output for $pastUpgrades (activity feed)
+      const discovery = configReader.readDiscovery(project)
+
       // 7. Build flat list of contracts with names from getProject
       const allProjectContracts: {
         name: string
@@ -325,6 +346,7 @@ export class ReviewCompiler {
         functionAnalysis,
         functionsData,
         discoveryEntries,
+        discovery,
       )
 
       // 11. Resolve template variables in all description fields
@@ -362,6 +384,7 @@ export class ReviewCompiler {
     functionAnalysis: ApiFunctionAnalysisResponse,
     functionsData: ApiFunctionsResponse,
     discoveryEntries: { name?: string; address: string; proxyType?: string }[],
+    discovery: DiscoveryOutput,
   ): CompiledReview {
     // Build mitigations lookup: (contractAddress|functionName) → merged Mitigation[]
     const mitigationsLookup = new Map<string, Mitigation[]>()
@@ -499,6 +522,18 @@ export class ReviewCompiler {
     for (const entry of discoveryEntries) {
       if (entry.name) {
         contractNameMap.set(normalizeChainAddress(entry.address), entry.name)
+      }
+    }
+
+    // Map implementation addresses to their proxy's name so that
+    // functions keyed by implementation address resolve correctly
+    const implToProxy = buildImplementationToProxyMap(discovery)
+    for (const [implAddr, proxyAddr] of implToProxy) {
+      if (!contractNameMap.has(implAddr)) {
+        const proxyName = contractNameMap.get(proxyAddr)
+        if (proxyName) {
+          contractNameMap.set(implAddr, proxyName)
+        }
       }
     }
 
@@ -786,6 +821,45 @@ export class ReviewCompiler {
       })
     }
 
+    // Build activity feed from $pastUpgrades in discovery entries
+    const activity: ActivityEvent[] = []
+    for (const entry of discovery.entries) {
+      const pastUpgrades = entry.values?.['$pastUpgrades']
+      if (!Array.isArray(pastUpgrades)) continue
+
+      // Skip external contracts
+      const addrNorm = normalizeChainAddress(entry.address)
+      const tag = tagsByAddress.get(addrNorm)
+      if (tag?.isExternal) continue
+
+      const name = contractNameMap.get(addrNorm) ?? entry.name ?? entry.address
+
+      for (const upgrade of pastUpgrades) {
+        if (!Array.isArray(upgrade) || upgrade.length < 3) continue
+        const [timestamp, txHash, implementations] = upgrade as [
+          string,
+          string,
+          string[],
+        ]
+        activity.push({
+          type: 'upgrade',
+          timestamp: String(timestamp),
+          contractAddress: entry.address,
+          contractName: name,
+          txHash: String(txHash),
+          implementations: Array.isArray(implementations)
+            ? implementations.map(String)
+            : [],
+        })
+      }
+    }
+
+    // Sort newest first
+    activity.sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+    )
+
     return {
       version: '1.0',
       compiledAt: new Date().toISOString(),
@@ -806,7 +880,9 @@ export class ReviewCompiler {
         scoredFunctionCount: v2Score.inventory.functions.breakdown?.length ?? 0,
         adminCount: v2Score.inventory.admins.inventory,
         dependencyCount: v2Score.inventory.dependencies.inventory,
-        totalCapitalAtRisk: v2Score.inventory.admins.totalCapitalAtRisk ?? 0,
+        totalCapitalAtRisk:
+          (v2Score.inventory.admins.totalCapitalAtRisk ?? 0) +
+          funds.reduce((sum, f) => sum + (f.aggregate?.totalUsdValue ?? 0), 0),
         totalTokenValueAtRisk:
           v2Score.inventory.admins.totalTokenValueAtRisk ?? 0,
         totalTokenValue: funds.reduce(
@@ -821,6 +897,7 @@ export class ReviewCompiler {
       functions,
       contracts,
       resources: reviewConfig.resources ?? [],
+      activity: activity.length > 0 ? activity : undefined,
       sections: reviewConfig.sections ?? {},
     }
   }

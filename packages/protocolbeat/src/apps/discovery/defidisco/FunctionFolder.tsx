@@ -594,12 +594,7 @@ export function FunctionFolder({
         return contract.fields
           .filter((field) => {
             const isNumeric = field.value?.type === 'number'
-            const hasDelayName =
-              field.name?.toLowerCase().includes('delay') ||
-              field.name?.toLowerCase().includes('timelock') ||
-              field.name?.toLowerCase().includes('period') ||
-              field.name?.toLowerCase().includes('duration')
-            return isNumeric && (hasDelayName || true) // Accept all numeric fields, but prefer delay-related ones
+            return isNumeric
           })
           .map((field) => ({
             name: field.name,
@@ -1297,16 +1292,21 @@ export function FunctionFolder({
           {(() => {
             const hasDelay = currentFunction?.delay && resolvedDelay?.isResolved
             const seconds = resolvedDelay?.seconds ?? 0
-            const delayColor = !hasDelay
-              ? '#9ca3af' // gray-400 (no delay)
-              : seconds >= 7 * 86400
+            const hasSuggestion = !hasDelay && functionTraversal?.suggestedDelay
+            const delayColor = hasDelay
+              ? seconds >= 7 * 86400
                 ? '#22c55e' // green-500 (>= 7 days)
                 : seconds >= 86400
                   ? '#eab308' // yellow-500 (>= 1 day)
                   : '#ef4444' // red-500 (< 1 day)
+              : hasSuggestion
+                ? '#06b6d4' // cyan-500 (detected but not confirmed)
+                : '#9ca3af' // gray-400 (no delay)
             const delayTitle = hasDelay
               ? `Delay: ${formatDelay(seconds)}`
-              : 'No delay set'
+              : hasSuggestion
+                ? `Detected: ${formatDelay(functionTraversal!.suggestedDelay!.seconds)} via ${functionTraversal!.suggestedDelay!.contractName}`
+                : 'No delay set'
             return (
               <span
                 className="inline-block"
@@ -2489,21 +2489,67 @@ export function FunctionFolder({
             {/* Display current delay */}
             {currentFunction?.delay && (
               <div className="mb-3">
-                <div className="rounded bg-coffee-800 p-2">
-                  <div className="mb-1 font-mono text-coffee-300 text-xs">
-                    {currentFunction.delay.fieldName} on{' '}
-                    {getContractName(currentFunction.delay.contractAddress)}
+                <div className="flex items-center gap-2 rounded border border-green-900 bg-green-950/30 p-2">
+                  <span className="text-aux-green" style={{ flexShrink: 0 }}>
+                    <IconClock />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    {resolvedDelay?.isResolved && (
+                      <div className="text-coffee-200 text-xs">
+                        Delay:{' '}
+                        <span className="font-bold text-aux-green">
+                          {formatDelay(resolvedDelay.seconds)}
+                        </span>
+                      </div>
+                    )}
+                    {resolvedDelay && !resolvedDelay.isResolved && (
+                      <div className="text-aux-red text-xs">
+                        Error: {resolvedDelay.error}
+                      </div>
+                    )}
+                    <div className="font-mono text-coffee-400 text-xs">
+                      {currentFunction.delay.fieldName} on{' '}
+                      {getContractName(currentFunction.delay.contractAddress)}
+                    </div>
                   </div>
-                  {resolvedDelay?.isResolved && (
-                    <div className="font-bold text-aux-green text-sm">
-                      Delay: {formatDelay(resolvedDelay.seconds)}
+                </div>
+              </div>
+            )}
+
+            {/* Auto-detected delay suggestion */}
+            {!currentFunction?.delay && functionTraversal?.suggestedDelay && (
+              <div className="mb-3">
+                <div className="flex items-center gap-2 rounded border border-cyan-800 bg-cyan-950/30 p-2">
+                  <span className="text-aux-cyan" style={{ flexShrink: 0 }}>
+                    <IconClock />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-coffee-200 text-xs">
+                      Detected:{' '}
+                      <span className="font-bold text-aux-cyan">
+                        {formatDelay(functionTraversal.suggestedDelay.seconds)}
+                      </span>{' '}
+                      via {functionTraversal.suggestedDelay.contractName}
                     </div>
-                  )}
-                  {resolvedDelay && !resolvedDelay.isResolved && (
-                    <div className="text-aux-red text-xs">
-                      Error: {resolvedDelay.error}
+                    <div className="font-mono text-coffee-400 text-xs">
+                      {functionTraversal.suggestedDelay.fieldName} on{' '}
+                      {getContractName(
+                        functionTraversal.suggestedDelay.contractAddress,
+                      )}
                     </div>
-                  )}
+                  </div>
+                  <button
+                    onClick={() => {
+                      const s = functionTraversal.suggestedDelay!
+                      onDelayUpdate(contractAddress, functionName, {
+                        contractAddress: s.contractAddress,
+                        fieldName: s.fieldName,
+                      })
+                    }}
+                    className="shrink-0 rounded bg-cyan-700 px-2 py-1 text-white text-xs hover:bg-cyan-600"
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}

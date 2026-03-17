@@ -635,9 +635,9 @@ function AdminCompareCard({ admin }: { admin: CompiledAdmin }) {
           {admin.functions.length} fn
           {admin.functions.length !== 1 ? 's' : ''}
         </span>
-        {admin.totalDirectCapital > 0 && (
+        {admin.totalReachableCapital > 0 && (
           <span className="text-capital">
-            {formatUsdValue(admin.totalDirectCapital)}
+            {formatUsdValue(admin.totalReachableCapital)}
           </span>
         )}
       </div>

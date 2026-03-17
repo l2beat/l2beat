@@ -14,29 +14,28 @@ Rebuild the packages that have been modified so changes take effect.
    - **l2b** — backend/CLI (`packages/l2b/`)
    - **defiscan-frontend** — public review site (`packages/defiscan-frontend/`)
 
-2. Build only the packages that had changes. Use the turbo filters to build them together in a single command. The filter flags are:
-   - `--filter=@l2beat/protocolbeat` for protocolbeat
-   - `--filter=@l2beat/l2b` for l2b
-   - `--filter=@l2beat/defiscan-frontend` for defiscan-frontend
+2. Build each package by running `pnpm build` from its directory. This is simpler and more reliable than using turbo filters.
 
    **Important**: Always source nvm first to ensure `pnpm` is available:
    ```bash
    export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
    ```
 
-   **Most common case** (protocolbeat + l2b both changed):
+   **Examples:**
+
+   **Single package** (most common — e.g. l2b):
    ```bash
-   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco && pnpm turbo run build --filter=@l2beat/protocolbeat --filter=@l2beat/l2b
+   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco/packages/l2b && pnpm build
    ```
 
-   **All three** (if defiscan-frontend also changed):
+   **Multiple packages** (run sequentially):
    ```bash
-   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco && pnpm turbo run build --filter=@l2beat/protocolbeat --filter=@l2beat/l2b --filter=@l2beat/defiscan-frontend
+   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco/packages/l2b && pnpm build && cd /home/emilien/defidisco/packages/protocolbeat && pnpm build
    ```
 
-   **Single package** (if only one changed):
+   **All three**:
    ```bash
-   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco && pnpm turbo run build --filter=@l2beat/<package-name>
+   export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && cd /home/emilien/defidisco/packages/l2b && pnpm build && cd /home/emilien/defidisco/packages/protocolbeat && pnpm build && cd /home/emilien/defidisco/packages/defiscan-frontend && pnpm build
    ```
 
 3. If the build fails, read the error output and fix the issue, then retry.

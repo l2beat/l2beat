@@ -14,6 +14,7 @@ import {
   resolveOwnersWithDataAccess,
 } from './functions'
 import { DiscoveredDataAccess } from './ownerResolution'
+import { detectTimelockInChain } from './timelockDetection'
 import type {
   ApiAddressType,
   ApiCallGraphResponse,
@@ -35,7 +36,7 @@ const MAX_DEPTH = 10
  * - Call graph: caller → callee
  * - Permission: owner → owned function
  */
-interface EnhancedEdge {
+export interface EnhancedEdge {
   /** Caller contract (call graph) or owner contract (permission) */
   sourceContract: string
   /** Specific function on source (call graph only, undefined for permission) */
@@ -53,7 +54,7 @@ interface EnhancedEdge {
  * - Forward index: "what does this contract call/own?"
  * - Backward index: "who calls/owns functions on this contract?"
  */
-interface EnhancedGraph {
+export interface EnhancedGraph {
   forwardIndex: Map<string, EnhancedEdge[]>
   backwardIndex: Map<string, EnhancedEdge[]>
 }
@@ -67,7 +68,7 @@ interface EnhancedGraph {
  * Edges stay in natural direction (caller→callee, owner→function).
  * Permission resolution happens here upfront (single pass over discovered.json).
  */
-function buildEnhancedGraph(
+export function buildEnhancedGraph(
   callGraphData: ApiCallGraphResponse,
   functionsData: ApiFunctionsResponse,
   dataAccess: DiscoveredDataAccess,
@@ -146,7 +147,7 @@ function buildEnhancedGraph(
 /**
  * Build both forward and backward indices from the same edge array.
  */
-function buildIndices(edges: EnhancedEdge[]): EnhancedGraph {
+export function buildIndices(edges: EnhancedEdge[]): EnhancedGraph {
   const forwardIndex = new Map<string, EnhancedEdge[]>()
   const backwardIndex = new Map<string, EnhancedEdge[]>()
 
@@ -699,13 +700,26 @@ export function resolveEnhancedTraversal(
           contracts[contractAddress] = {}
         }
 
-        contracts[contractAddress][func.functionName] = {
+        const traversalResult: FunctionTraversalResult = {
           contractAddress,
           functionName: func.functionName,
           terminals,
           errors: allErrors,
           depthLimitReached: result.depthLimitReached,
         }
+
+        // Auto-detect timelock delay from ownership chains
+        if (func.delay === undefined && terminals.length > 0) {
+          for (const terminal of terminals) {
+            const detected = detectTimelockInChain(terminal.chain, dataAccess)
+            if (detected) {
+              traversalResult.suggestedDelay = detected
+              break
+            }
+          }
+        }
+
+        contracts[contractAddress][func.functionName] = traversalResult
       }
     }
   }

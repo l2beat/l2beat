@@ -1,3 +1,239 @@
+Generated with discovered.json: 0xf998151a4265735b8864a18e4b9e7c26f7b0bd07
+
+# Diff at Mon, 16 Mar 2026 12:40:16 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@e7ca7437ee1c35343e7f86c9bb3f61098b9e2cdc block: 1758729268
+- current timestamp: 1773664735
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252"
++        "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781"
+    }
+```
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.proposalGuardian.expiration:
+-        1789229978
++        1898467200
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AssetList (eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c)
+    +++ description: None
+```
+
+```diff
+    contract cUSDTv3 (eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94) {
+    +++ description: Compound v3 USDT market - lending pool for USDT
+      values.$implementation:
+-        "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d"
++        "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
+      values.$pastUpgrades.45:
++        ["2025-11-26T02:39:11.000Z","0xc6b122a0355d3c71388083fe63e858fc6eded6422b4bf1167feb98db9cec79b0",["eth:0xC78846c98CC782e8F066Be1DC86a2b323d6d5E2e"]]
+      values.$pastUpgrades.46:
++        ["2025-12-03T08:59:23.000Z","0x18c82c2b7a8a92311649a6718f3513162dc691f76ea755e76006498cd6e92163",["eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"]]
+      values.$upgradeCount:
+-        45
++        47
+      values.assetList:
+-        "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c"
++        "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae"
+      values.numAssets:
+-        15
++        17
+      implementationNames.eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d:
+-        "CometWithExtendedAssetList"
+      implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14:
++        "CometWithExtendedAssetList"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AssetList (eth:0xB7859b967374566bdeA8d23C6d248e6619BC0f88)
+    +++ description: None
+```
+
+```diff
+    contract GnosisSafe (eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2"
+      values.$members.5:
+-        "eth:0xC3AaE58Ab81663872dd36d73613eb295b167F546"
++        "eth:0x46B360011A84C5759680852ed90E6Db44E18F08c"
+      values.$members.6:
+-        "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC"
++        "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627"
+      values.$members.9:
+-        "eth:0x54A37d93E57c5DA659F508069Cf65A381b61E189"
+      values.multisigThreshold:
+-        "5 of 10 (50%)"
++        "5 of 8 (63%)"
+    }
+```
+
+```diff
+    contract cUSDCv3 (eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3) {
+    +++ description: Compound v3 USDC market - main lending pool for USDC with enhanced capital efficiency
+      values.$implementation:
+-        "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b"
++        "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
+      values.$pastUpgrades.49:
++        ["2025-10-23T08:25:59.000Z","0xacd95981f12369778d6d022d967539bcd75f5c7443b29c0bec5a189c074fc611",["eth:0xdf2cD7552610E3b5Cddd410Ca89A172aC0aD444C"]]
+      values.$pastUpgrades.50:
++        ["2025-11-06T18:53:11.000Z","0xa5a3b65cd02cb3ef981cf7a5b5be729cc74231c879f8d9a86de11f02ead0ab1e",["eth:0xC5fb5c72eda5C609db7EA23a50FFD47c046032B7"]]
+      values.$pastUpgrades.51:
++        ["2025-11-15T21:06:23.000Z","0x3d66c349b52768311d4a6ecd2e8e6c3ae0516f2ef406822a6162e2c22ad8b9e5",["eth:0xEEB860216B1ea7E3aB80fE5Fc1886dAEf6bDc440"]]
+      values.$pastUpgrades.52:
++        ["2025-12-31T09:36:47.000Z","0x2906ca0ed01b573c369048cb99b8bad6774b6230a35e5cca3d3b27e14df833ed",["eth:0xEb330B7c1622E0F8b18a7dD1decc27Cf3d980E61"]]
+      values.$pastUpgrades.53:
++        ["2026-02-26T06:39:23.000Z","0x38bf1b111205cb9d590d6eb9293003224d6d22fc9b3bfb9288cdb86008529ef2",["eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"]]
+      values.$upgradeCount:
+-        49
++        54
+      values.assetList:
+-        "eth:0xB7859b967374566bdeA8d23C6d248e6619BC0f88"
++        "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614"
+      values.numAssets:
+-        12
++        13
+      implementationNames.eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b:
+-        "CometWithExtendedAssetList"
+      implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451:
++        "CometWithExtendedAssetList"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetList (eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AssetList (eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AssetList-eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614.sol}         | 0
+ .../AssetList-eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae.sol}         | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758729268 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayMinter (eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205)
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
+    contract CompoundGovernor (eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0) {
+    +++ description: None
+      values.proposalDeadline:
+-        [0,0,0,0,0]
+      values.proposalDetails:
+-        []
+      errors:
+-        {"proposalDeadline":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayWallet (eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE)
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
+```diff
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) {
+    +++ description: None
+      values.masterMinter:
+-        "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters:
+-        ["eth:0x5B6122C109B78C6755486966148C1D70a50A47D7","eth:0x19a932fC5A8320939c3575302a8705147a7f27D8","eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3","eth:0x55FE002aefF02F77364de339a1292923A15844B8","eth:0x895F07957B863f4AB6086035a6990d8366Bc3266","eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907","eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7","eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61","eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F","eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946","eth:0x2b52e60C844d7946b6d910D3296940dC889CC785","eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd","eth:0xfd78EE919681417d192449715b2594ab58f5D002","eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205","eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (eth:0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
 Generated with discovered.json: 0x3876cf93ab01ed262637f1eb2b7ff1b9e48034ca
 
 # Diff at Tue, 03 Mar 2026 15:20:25 GMT:

@@ -17,7 +17,7 @@ interface FundsTabProps {
   review: CompiledReview
 }
 
-type SortField = 'name' | 'total' | 'balances' | 'positions'
+type SortField = 'name' | 'total'
 type SortDir = 'asc' | 'desc'
 
 export function FundsTab({ review }: FundsTabProps) {
@@ -36,23 +36,15 @@ export function FundsTab({ review }: FundsTabProps) {
         (b.balances?.totalUsdValue ?? 0) +
         (b.positions?.totalUsdValue ?? 0) +
         (b.aggregate?.totalUsdValue ?? 0)
+      const aTokenValue = a.tokenInfo?.tokenValue ?? 0
+      const bTokenValue = b.tokenInfo?.tokenValue ?? 0
       let cmp = 0
       switch (sortField) {
         case 'name':
           cmp = a.name.localeCompare(b.name)
           break
         case 'total':
-          cmp = aTotal - bTotal
-          break
-        case 'balances':
-          cmp =
-            (a.balances?.totalUsdValue ?? 0) -
-            (b.balances?.totalUsdValue ?? 0)
-          break
-        case 'positions':
-          cmp =
-            (a.positions?.totalUsdValue ?? 0) -
-            (b.positions?.totalUsdValue ?? 0)
+          cmp = aTotal + aTokenValue - (bTotal + bTokenValue)
           break
       }
       return sortDir === 'desc' ? -cmp : cmp
@@ -129,7 +121,7 @@ export function FundsTab({ review }: FundsTabProps) {
       {chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
-            TVL Distribution
+            TVS Distribution
           </h3>
           <ResponsiveContainer
             width="100%"
@@ -204,32 +196,13 @@ export function FundsTab({ review }: FundsTabProps) {
                 Address
               </th>
               <SortHeader
-                field="balances"
-                label="Balances"
-                current={sortField}
-                dir={sortDir}
-                onClick={handleSort}
-                className="text-right"
-              />
-              <SortHeader
-                field="positions"
-                label="Positions"
-                current={sortField}
-                dir={sortDir}
-                onClick={handleSort}
-                className="text-right"
-              />
-              <SortHeader
                 field="total"
-                label="TVL"
+                label="TVS"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
-                className="text-right"
+                className="text-center"
               />
-              <th className="px-4 py-2 font-medium text-text-secondary text-left">
-                Market Cap Token
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -245,41 +218,12 @@ export function FundsTab({ review }: FundsTabProps) {
               >
                 Total
               </td>
-              <td className="px-4 py-2 text-right">
+              <td className="px-4 py-2 text-center">
                 <UsdValue
-                  value={funds.reduce(
-                    (s, f) => s + (f.balances?.totalUsdValue ?? 0),
-                    0,
-                  )}
-                  variant="capital"
-                  className="text-sm font-semibold"
-                />
-              </td>
-              <td className="px-4 py-2 text-right">
-                <UsdValue
-                  value={funds.reduce(
-                    (s, f) => s + (f.positions?.totalUsdValue ?? 0),
-                    0,
-                  )}
-                  variant="capital"
-                  className="text-sm font-semibold"
-                />
-              </td>
-              <td className="px-4 py-2 text-right">
-                <UsdValue
-                  value={totalCapital}
+                  value={totalCapital + totalTokenValue}
                   variant="capital"
                   className="text-sm font-bold"
                 />
-              </td>
-              <td className="px-4 py-2">
-                {totalTokenValue > 0 && (
-                  <UsdValue
-                    value={totalTokenValue}
-                    variant="token"
-                    className="text-sm font-semibold"
-                  />
-                )}
               </td>
             </tr>
           </tfoot>
@@ -295,11 +239,6 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
     (fund.balances?.totalUsdValue ?? 0) +
     (fund.positions?.totalUsdValue ?? 0) +
     (fund.aggregate?.totalUsdValue ?? 0)
-
-  const balPct =
-    total > 0
-      ? ((fund.balances?.totalUsdValue ?? 0) / total) * 100
-      : 0
 
   return (
     <>
@@ -333,56 +272,23 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
         <td className="px-4 py-2.5">
           <AddressDisplay address={fund.address} className="text-xs" />
         </td>
-        <td className="px-4 py-2.5 text-right tabular-nums">
-          {(fund.balances?.totalUsdValue ?? 0) > 0 ? (
+        <td className="px-4 py-2.5">
+          <div className="flex items-center justify-center gap-2">
+            {fund.tokenInfo && (
+              <Badge variant="purple">{fund.tokenInfo.symbol}</Badge>
+            )}
             <UsdValue
-              value={fund.balances!.totalUsdValue}
-              variant="capital"
-              className="text-sm"
-            />
-          ) : (
-            <span className="text-text-muted">-</span>
-          )}
-        </td>
-        <td className="px-4 py-2.5 text-right tabular-nums">
-          {(fund.positions?.totalUsdValue ?? 0) > 0 ? (
-            <UsdValue
-              value={fund.positions!.totalUsdValue}
-              variant="capital"
-              className="text-sm"
-            />
-          ) : (
-            <span className="text-text-muted">-</span>
-          )}
-        </td>
-        <td className="px-4 py-2.5 text-right">
-          {total > 0 ? (
-            <UsdValue
-              value={total}
+              value={total + (fund.tokenInfo?.tokenValue ?? 0)}
               variant="capital"
               className="text-sm font-semibold"
             />
-          ) : (
-            <span className="text-text-muted">$0</span>
-          )}
-        </td>
-        <td className="px-4 py-2.5">
-          {fund.tokenInfo ? (
-            <div className="flex items-center gap-1">
-              <Badge variant="purple">{fund.tokenInfo.symbol}</Badge>
-              <span className="text-xs text-token tabular-nums">
-                {formatUsdValue(fund.tokenInfo.tokenValue)}
-              </span>
-            </div>
-          ) : (
-            <span className="text-text-muted">-</span>
-          )}
+          </div>
         </td>
       </tr>
       {expanded && (
         <tr>
           <td
-            colSpan={6}
+            colSpan={3}
             className="px-8 py-3 bg-bg-muted/50 border-b border-border"
           >
             {fund.description && (
@@ -397,20 +303,6 @@ function FundRow({ fund }: { fund: CompiledFundHolder }) {
                 {formatUsdValue(fund.aggregate.totalUsdValue)} across{' '}
                 {fund.aggregate.contractCount} contracts
               </p>
-            )}
-            {total > 0 && (
-              <div className="flex items-center gap-2">
-                <div className="flex-1 h-2 bg-gray-200 rounded overflow-hidden">
-                  <div
-                    className="h-full bg-status-green rounded-l"
-                    style={{ width: `${balPct}%` }}
-                  />
-                </div>
-                <span className="text-xs text-text-muted">
-                  {balPct.toFixed(0)}% balances / {(100 - balPct).toFixed(0)}%
-                  positions
-                </span>
-              </div>
             )}
           </td>
         </tr>

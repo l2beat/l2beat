@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-09-30T19:47:51.353Z",
+  "lastModified": "2026-03-16T18:31:42.755Z",
   "tags": [
     {
       "contractAddress": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -15,7 +15,8 @@
     {
       "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "isExternal": false,
-      "timestamp": "2025-09-22T20:23:19.956Z"
+      "fetchBalances": true,
+      "timestamp": "2026-03-11T17:16:41.254Z"
     },
     {
       "contractAddress": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
@@ -85,8 +86,8 @@
     {
       "contractAddress": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "isExternal": true,
-      "timestamp": "2025-09-30T19:47:42.278Z",
-      "centralization": "high"
+      "entity": "Chainlink",
+      "timestamp": "2026-03-16T10:52:58.324Z"
     },
     {
       "contractAddress": "eth:0xF38326579519377178725A741C35999E8051e907",
@@ -211,38 +212,73 @@
     {
       "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "isExternal": true,
-      "timestamp": "2025-09-30T19:47:51.353Z",
-      "centralization": "high"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.952Z"
     },
     {
       "contractAddress": "eth:0x4914f61d25e5C567143774B76EdbF4D5109a8566",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:05.005Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.972Z"
     },
     {
       "contractAddress": "eth:0xFcb19e6a322b27c06842A71e8c725399f049AE3a",
       "isExternal": true,
-      "timestamp": "2025-09-30T19:13:55.466Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.991Z"
     },
     {
       "contractAddress": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:04.989Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.938Z"
     },
     {
       "contractAddress": "eth:0x0A06BE16275B95a7d2567fBdAE118b36C7DA78F9",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:05.000Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.958Z"
     },
     {
       "contractAddress": "eth:0x807a96288A1A408dBC13DE2b1d087d10356395d2",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:05.009Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.980Z"
     },
     {
       "contractAddress": "eth:0xC1d9fe41D19Dd52cb3Ae5d1D3b0030B5D498c704",
       "isExternal": true,
-      "timestamp": "2025-09-22T23:12:05.013Z"
+      "entity": "Circle USDC",
+      "timestamp": "2026-03-11T17:26:39.987Z"
+    },
+    {
+      "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-11T17:16:41.257Z"
+    },
+    {
+      "contractAddress": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-11T17:16:44.991Z"
+    },
+    {
+      "contractAddress": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-03-16T10:48:55.990Z"
+    },
+    {
+      "contractAddress": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
+      "isExternal": true,
+      "timestamp": "2026-03-16T10:51:56.427Z"
+    },
+    {
+      "contractAddress": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-03-16T12:48:44.896Z"
     }
   ]
 }

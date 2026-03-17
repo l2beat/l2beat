@@ -43,6 +43,9 @@
     },
     "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB": {
       "ignoreInWatchMode": ["latestRoundData"]
+    },
+    "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": {
+      "ignoreMethods": ["getMinterManager", "owner"]
     }
   }
 }

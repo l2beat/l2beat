@@ -11,7 +11,7 @@ import { GovernanceTab } from './GovernanceTab'
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'funds', label: 'TVL' },
+  { id: 'funds', label: 'TVS' },
   { id: 'admins', label: 'Admins' },
   { id: 'governance', label: 'Governance' },
   { id: 'dependencies', label: 'Dependencies' },

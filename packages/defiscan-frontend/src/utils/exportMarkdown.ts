@@ -140,9 +140,9 @@ export function reviewToMarkdown(review: CompiledReview): string {
       if (admin.isGovernance) {
         lines.push('- **Governance:** Yes')
       }
-      if (admin.totalDirectCapital > 0) {
+      if (admin.totalReachableCapital > 0) {
         lines.push(
-          `- **Direct TVL at risk:** ${formatUsdValue(admin.totalDirectCapital)}`,
+          `- **TVL at risk:** ${formatUsdValue(admin.totalReachableCapital)}`,
         )
       }
       if (admin.description) {
