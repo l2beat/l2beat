@@ -73,6 +73,7 @@ export class L2CostRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ) {
+    if (configIds.length === 0) return []
     const query = await this.db
       .selectFrom('L2Cost')
       .select((eb) => [

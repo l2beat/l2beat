@@ -82,6 +82,7 @@ export class AnomaliesRepository extends BaseRepository {
     projectIds: ProjectId[],
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
+    if (projectIds.length === 0) return []
     const rows = await this.db
       .selectFrom('Anomaly')
       .selectAll()
