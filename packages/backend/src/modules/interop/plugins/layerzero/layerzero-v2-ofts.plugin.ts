@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { TokenMap } from '../../engine/match/TokenMap'
-import { findParsedAround } from '../hyperlane-hwr'
+import { findParsedAround } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,

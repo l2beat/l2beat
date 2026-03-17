@@ -10,7 +10,7 @@ import {
   SentOrderCancel,
   SentOrderUnlock,
 } from './debridge-dln'
-import { findParsedAround } from './hyperlane-hwr'
+import { findTransferLogAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -28,10 +28,6 @@ const parseSent = createEventParser(
   'event Sent(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, bytes receiver, uint256 nonce, uint256 indexed chainIdTo, uint32 referralCode, (uint256 receivedAmount, uint256 fixFee, uint256 transferFee, bool useAssetFee, bool isNativeToken) feeParams, bytes autoParams, address nativeSender)',
 )
 
-const parseMonitoringSend = createEventParser(
-  'event MonitoringSendEvent(bytes32 submissionId, uint256 nonce, uint256 lockedOrMintedAmount, uint256 totalSupply)',
-)
-
 const parseClaimed = createEventParser(
   'event Claimed(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, address indexed receiver, uint256 nonce, uint256 indexed chainIdFrom, bytes autoParams, bool isNativeToken)',
 )
@@ -46,6 +42,43 @@ function isWithinTolerance(value: bigint, target: bigint): boolean {
   if (target === 0n) return value === 0n
   const delta = (target * TRANSFER_AMOUNT_TOLERANCE_BPS) / 10_000n
   return value >= target - delta && value <= target + delta
+}
+
+type ResolvedTransfer = {
+  tokenAddress?: Address32
+  zeroAddressMatched?: boolean
+}
+
+function resolveTransfer(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  amount: bigint,
+  zeroAddressField: 'from' | 'to',
+): ResolvedTransfer {
+  if (amount === 0n) return {}
+
+  const transferMatch = findTransferLogAround(
+    logs,
+    startLogIndex,
+    (log) => parseTransfer(log, null),
+    (transfer) => isWithinTolerance(transfer.value, amount),
+  )
+  if (transferMatch.transfer) {
+    return {
+      tokenAddress: transferMatch.transfer.logAddress,
+      zeroAddressMatched:
+        transferMatch.transfer[zeroAddressField] === Address32.ZERO,
+    }
+  }
+
+  if (!transferMatch.hasTransfer) {
+    return {
+      tokenAddress: Address32.NATIVE, // gas does not emit
+      zeroAddressMatched: false,
+    }
+  }
+
+  return {}
 }
 
 // https://docs.debridge.com/dmp-details/dmp/deployed-contracts
@@ -89,49 +122,17 @@ export class DeBridgePlugin implements InteropPlugin {
   capture(input: LogToCapture) {
     const sent = parseSent(input.log, null)
     if (sent) {
-      let srcTokenAddress: Address32 | undefined
-      let srcWasBurned: boolean | undefined
-      if (sent.amount > 0n) {
-        // the amount from this event is usually closer to the amount
-        // in the Transfer event due to fees
-        const srcTokenAmount =
-          findParsedAround(input.txLogs, input.log.logIndex ?? -1, (log) => {
-            const parsed = parseMonitoringSend(log, [
-              EthereumAddress(input.log.address),
-            ])
-            if (!parsed || parsed.submissionId !== sent.submissionId) return
-            return parsed.lockedOrMintedAmount
-          }) ?? sent.amount
-
-        const transferInfo = findParsedAround(
-          input.txLogs,
-          input.log.logIndex ?? -1,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (
-              !transfer ||
-              !isWithinTolerance(transfer.value, srcTokenAmount)
-            ) {
-              return
-            }
-            return {
-              address: Address32.from(log.address),
-              burned: Address32.from(transfer.to) === Address32.ZERO,
-            }
-          },
-        )
-        srcTokenAddress = transferInfo?.address
-        srcWasBurned = transferInfo?.burned
-        if (!srcTokenAddress) {
-          srcTokenAddress = Address32.NATIVE // gas does not emit
-          srcWasBurned = false
-        }
-      }
+      const transfer = resolveTransfer(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        sent.amount,
+        'to',
+      )
       return [
         Sent.create(input, {
           submissionId: sent.submissionId,
-          srcTokenAddress,
-          srcWasBurned,
+          srcTokenAddress: transfer.tokenAddress,
+          srcWasBurned: transfer.zeroAddressMatched,
           amount: sent.amount,
           $dstChain: findChain(
             DEBRIDGE_NETWORKS,
@@ -144,36 +145,19 @@ export class DeBridgePlugin implements InteropPlugin {
 
     const claimed = parseClaimed(input.log, null)
     if (claimed) {
-      let dstTokenAddress: Address32 | undefined
-      let dstWasMinted: boolean | undefined
-      if (claimed.amount > 0n) {
-        const transferInfo = findParsedAround(
-          input.txLogs,
-          input.log.logIndex ?? -1,
-          (log) => {
-            const transfer = parseTransfer(log, null)
-            if (
-              !transfer ||
-              !isWithinTolerance(transfer.value, claimed.amount)
-            ) {
-              return
-            }
-            return {
-              address: Address32.from(log.address),
-              minted: Address32.from(transfer.from) === Address32.ZERO,
-            }
-          },
-        )
-        dstTokenAddress = transferInfo?.address
-        dstWasMinted = transferInfo?.minted
-      }
+      const transfer = resolveTransfer(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        claimed.amount,
+        'from',
+      )
 
       return [
         Claimed.create(input, {
           submissionId: claimed.submissionId,
           amount: claimed.amount,
-          dstTokenAddress,
-          dstWasMinted,
+          dstTokenAddress: transfer.tokenAddress,
+          dstWasMinted: transfer.zeroAddressMatched,
           receiver: EthereumAddress(claimed.receiver),
           $srcChain: findChain(
             DEBRIDGE_NETWORKS,
@@ -194,20 +178,16 @@ export class DeBridgePlugin implements InteropPlugin {
     if (!sent) return
 
     const results: MatchResult = []
-    let app = 'unknown'
-    const extraEvents: InteropEvent[] = []
-
-    const hasTransfer = claimed.args.amount > 0
+    const hasTransfer = claimed.args.amount > 0n
     if (hasTransfer) {
-      app = 'tokenBridge'
       results.push(
         Result.Transfer('debridge.Transfer', {
           srcEvent: sent,
-          srcTokenAddress: sent.args.srcTokenAddress ?? Address32.NATIVE,
+          srcTokenAddress: sent.args.srcTokenAddress,
           srcAmount: claimed.args.amount,
           srcWasBurned: sent.args.srcWasBurned,
           dstEvent: claimed,
-          dstTokenAddress: claimed.args.dstTokenAddress ?? Address32.NATIVE,
+          dstTokenAddress: claimed.args.dstTokenAddress,
           dstAmount: claimed.args.amount,
           dstWasMinted: claimed.args.dstWasMinted,
           bridgeType: 'lockAndMint',
@@ -215,73 +195,88 @@ export class DeBridgePlugin implements InteropPlugin {
       )
     }
 
-    const claimedUnlockBatch = db.findAll(ClaimedUnlock, {
-      sameTxBefore: claimed,
-    })
-    // dln fills are matched in debridge-dln.ts
-    // dln settlement is batched and matched here, not in debridge-dln.ts
-    if (claimedUnlockBatch.length > 0) {
-      app = 'debridge-dln-settlement'
-      const sentOrderUnlockBatch = db.findAll(SentOrderUnlock, {
-        submissionId: claimed.args.submissionId,
-      })
-      const sentOrderUnlockById = new Map(
-        sentOrderUnlockBatch.map((event) => [event.args.orderId, event]),
-      )
-
-      for (const claimedUnlock of claimedUnlockBatch) {
-        const sentOrderUnlock = sentOrderUnlockById.get(
-          claimedUnlock.args.orderId,
-        )
-        if (!sentOrderUnlock) continue
-
-        // TODO: it is not really necessary to match the individual settlements here
-        // but it might be interesting to match intent fill to its settlement at some point
-        extraEvents.push(sentOrderUnlock, claimedUnlock)
-        // would doublecount settlement transfers
-        // results.push(
-        //   Result.Transfer('debridge-dln-settlement.Transfer', {
-        //     srcEvent: sentOrderUnlock,
-        //     dstEvent: claimedUnlock,
-        //     dstTokenAddress: claimedUnlock.args.giveTokenAddress,
-        //     dstAmount: claimedUnlock.args.giveAmount,
-        //   }),
-        // )
-      }
-    }
-    // cancellation: works like settlement but without the fill/transfer
-    // (debridge message from dst to src)
-    const claimedOrderCancel = db.find(ClaimedOrderCancel, {
-      sameTxBefore: claimed,
-    })
-    if (claimedOrderCancel) {
-      const sentOrderCancel = db.find(SentOrderCancel, {
-        submissionId: claimed.args.submissionId,
-      })
-      if (sentOrderCancel) {
-        const originalCreatedOrder = db.find(CreatedOrder, {
-          orderId: sentOrderCancel.args.orderId,
-        })
-        if (originalCreatedOrder) {
-          app = 'debridge-dln-cancellation'
-          extraEvents.push(
-            originalCreatedOrder,
-            sentOrderCancel,
-            claimedOrderCancel,
-          )
-        }
-      }
-    }
+    const dln = collectDlnExtraEvents(claimed, db)
+    const app =
+      dln.app !== 'unknown' ? dln.app : hasTransfer ? 'tokenBridge' : 'unknown'
 
     results.push(
       Result.Message('debridge.Message', {
         app,
         srcEvent: sent,
         dstEvent: claimed,
-        extraEvents,
+        extraEvents: dln.extraEvents,
       }),
     )
 
     return results
   }
+}
+
+function collectDlnExtraEvents(
+  claimed: InteropEvent<{ submissionId: `0x${string}` }>,
+  db: InteropEventDb,
+): { app: string; extraEvents: InteropEvent[] } {
+  const extraEvents: InteropEvent[] = []
+  let app = 'unknown'
+
+  const claimedUnlockBatch = db.findAll(ClaimedUnlock, {
+    sameTxBefore: claimed,
+  })
+  // dln fills are matched in debridge-dln.ts
+  // dln settlement is batched and matched here, not in debridge-dln.ts
+  if (claimedUnlockBatch.length > 0) {
+    app = 'debridge-dln-settlement'
+    const sentOrderUnlockBatch = db.findAll(SentOrderUnlock, {
+      submissionId: claimed.args.submissionId,
+    })
+    const sentOrderUnlockById = new Map(
+      sentOrderUnlockBatch.map((event) => [event.args.orderId, event]),
+    )
+
+    for (const claimedUnlock of claimedUnlockBatch) {
+      const sentOrderUnlock = sentOrderUnlockById.get(
+        claimedUnlock.args.orderId,
+      )
+      if (!sentOrderUnlock) continue
+
+      // TODO: it is not really necessary to match the individual settlements here
+      // but it might be interesting to match intent fill to its settlement at some point
+      extraEvents.push(sentOrderUnlock, claimedUnlock)
+      // would doublecount settlement transfers
+      // results.push(
+      //   Result.Transfer('debridge-dln-settlement.Transfer', {
+      //     srcEvent: sentOrderUnlock,
+      //     dstEvent: claimedUnlock,
+      //     dstTokenAddress: claimedUnlock.args.giveTokenAddress,
+      //     dstAmount: claimedUnlock.args.giveAmount,
+      //   }),
+      // )
+    }
+  }
+
+  // cancellation: works like settlement but without the fill/transfer
+  // (debridge message from dst to src)
+  const claimedOrderCancel = db.find(ClaimedOrderCancel, {
+    sameTxBefore: claimed,
+  })
+  if (claimedOrderCancel) {
+    const sentOrderCancel = db.find(SentOrderCancel, {
+      submissionId: claimed.args.submissionId,
+    })
+    if (sentOrderCancel) {
+      const originalCreatedOrder = db.find(CreatedOrder, {
+        orderId: sentOrderCancel.args.orderId,
+      })
+      if (originalCreatedOrder) {
+        app = 'debridge-dln-cancellation'
+        extraEvents.push(
+          originalCreatedOrder,
+          sentOrderCancel,
+          claimedOrderCancel,
+        )
+      }
+    }
+  }
+
+  return { app, extraEvents }
 }
