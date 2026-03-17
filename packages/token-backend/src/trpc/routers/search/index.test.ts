@@ -3,8 +3,8 @@ import type { AbstractTokenRepository } from '@l2beat/database/dist/repositories
 import type { ChainRepository } from '@l2beat/database/dist/repositories/ChainRepository'
 import type { DeployedTokenRepository } from '@l2beat/database/dist/repositories/DeployedTokenRepository'
 import { expect, mockFn, mockObject } from 'earl'
-import { createCallerFactory } from '../trpc'
-import { searchRouter } from './search'
+import { createCallerFactory } from '../../trpc'
+import { searchRouter } from './index'
 
 describe('searchRouter', () => {
   describe('tokens', () => {

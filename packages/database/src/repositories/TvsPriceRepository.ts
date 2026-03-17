@@ -62,6 +62,7 @@ export class TvsPriceRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<TvsPriceRecord[]> {
+    if (configurationIds.length === 0) return []
     const rows = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])

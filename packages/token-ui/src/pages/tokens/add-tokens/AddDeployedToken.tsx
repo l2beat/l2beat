@@ -7,7 +7,7 @@ import {
   ListXIcon,
   PlusIcon,
 } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -53,13 +53,14 @@ type QueueItem = { chain: string; address: string; abstractTokenId?: string }
 
 export function AddDeployedToken() {
   const location = useLocation()
+  const navigateQueue = location.state?.queue as QueueItem[] | undefined
   const [, setSearchParams] = useSearchParams()
   const [queryChain] = useQueryState('chain', '')
   const [queryAddress] = useQueryState('address', '')
   const [abstractTokenId] = useQueryState('abstractTokenId', '')
 
   const [queue, setQueue] = useState<QueueItem[]>(
-    location.state?.queue ? [...location.state.queue] : [],
+    navigateQueue ? [...navigateQueue] : [],
   )
   const addToQueue = useCallback((item: QueueItem) => {
     setQueue((prev) => [...prev, item])
@@ -192,6 +193,48 @@ export function AddDeployedToken() {
     [chain, address, setSearchParams],
   )
 
+  const skipToNextItemInQueue = useCallback(() => {
+    const next = queue.at(0)
+    setQueue((prev) => prev.slice(1))
+    form.resetField('symbol')
+    form.resetField('decimals')
+    form.resetField('deploymentTimestamp')
+    form.resetField('abstractTokenId')
+    form.resetField('comment')
+    form.clearErrors()
+
+    if (next) {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev)
+        newParams.set('chain', next.chain)
+        newParams.set('address', next.address)
+        if (next.abstractTokenId) {
+          newParams.set('abstractTokenId', next.abstractTokenId)
+        } else {
+          newParams.delete('abstractTokenId')
+        }
+        return newParams
+      })
+    } else {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev)
+        newParams.delete('chain')
+        newParams.delete('address')
+        newParams.delete('abstractTokenId')
+        return newParams
+      })
+    }
+  }, [queue, form, setSearchParams])
+
+  const hasInitializedFromQueue = useRef(false)
+  useEffect(() => {
+    // If we are coming from the suggestions page, prefill the inputs with the first item in the queue (once)
+    if (navigateQueue && !hasInitializedFromQueue.current) {
+      hasInitializedFromQueue.current = true
+      skipToNextItemInQueue()
+    }
+  }, [navigateQueue, skipToNextItemInQueue])
+
   const chainRecord = chains?.find((c) => c.name === chain)
 
   return (
@@ -274,37 +317,7 @@ export function AddDeployedToken() {
                   variant="outline"
                   className="w-full"
                   type="button"
-                  onClick={() => {
-                    const next = queue.at(0)
-                    setQueue((prev) => prev.slice(1))
-                    form.resetField('symbol')
-                    form.resetField('decimals')
-                    form.resetField('deploymentTimestamp')
-                    form.resetField('abstractTokenId')
-                    form.resetField('comment')
-
-                    if (next) {
-                      setSearchParams((prev) => {
-                        const newParams = new URLSearchParams(prev)
-                        newParams.set('chain', next.chain)
-                        newParams.set('address', next.address)
-                        if (next.abstractTokenId) {
-                          newParams.set('abstractTokenId', next.abstractTokenId)
-                        } else {
-                          newParams.delete('abstractTokenId')
-                        }
-                        return newParams
-                      })
-                    } else {
-                      setSearchParams((prev) => {
-                        const newParams = new URLSearchParams(prev)
-                        newParams.delete('chain')
-                        newParams.delete('address')
-                        newParams.delete('abstractTokenId')
-                        return newParams
-                      })
-                    }
-                  }}
+                  onClick={skipToNextItemInQueue}
                 >
                   Skip
                 </Button>

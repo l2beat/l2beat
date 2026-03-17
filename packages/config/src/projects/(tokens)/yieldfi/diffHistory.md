@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x329301b20b05ee2df3dcaf5fdcd10d8b771bdd5d
+
+# Diff at Mon, 16 Mar 2026 14:12:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1769433017
+- current timestamp: 1773669732
+
+## Description
+
+config: ignore relative.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769433017 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x12113ee3c5d50d1583102ba45f791eb33ee1e607
 
 # Diff at Mon, 26 Jan 2026 13:11:21 GMT:

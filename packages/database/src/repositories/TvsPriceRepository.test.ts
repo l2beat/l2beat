@@ -135,6 +135,18 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('returns empty array when configurationIds is empty', async () => {
+      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+
+      const result = await repository.getPricesInRange(
+        [],
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
   })
 
   describe(TvsPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {

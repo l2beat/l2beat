@@ -1,6 +1,6 @@
 {
   "name": "xlayer",
-  "timestamp": 1768998877,
+  "timestamp": 1773665851,
   "configHash": "0xd99857e33141571ee459b81285c7a125cfb2a56304459e49fb351dba55bf48b9",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -43,13 +43,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
-        "anchorGame": "eth:0x0873CcC0BBbC11Be570564A657c17c5a17F0D416",
+        "anchorGame": "eth:0x658477788Ca495828A017587eF5dE4e2093b70e9",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x07da2244fa30867f9efa0b907d0848cc4be9666bb32732d4609fd99b3d2f469b",
-          49622437
+          "0xe6256d3000c7e1a552e6890c12f207f4f00de1825e12c4b43240cf1bca4d2e35",
+          54286982
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -437,7 +437,7 @@
         "DELAYED_WETH_SLOT": "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff",
         "delayedWETH": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
-        "eip1559Denominator": 100000000,
+        "eip1559Denominator": 50,
         "eip1559Elasticity": 1,
         "gasLimit": 50000000,
         "gasPayingToken": {
@@ -465,7 +465,7 @@
         "l1StandardBridge": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
         "l2ChainId": 196,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 20000000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -611,7 +611,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24277729
+          "prevBlockNum": 24664750
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -797,7 +797,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2037,
+        "gameCount": 3329,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -812,7 +812,7 @@
         "initVersion": 1,
         "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 2037,
+        "permissionedGamesTotal": 3329,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
@@ -1236,7 +1236,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619843",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619897",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2270,6 +2270,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 24283195 },
+  "usedBlockNumbers": { "ethereum": 24670205 },
   "permissionsConfigHash": "0xc3f263683f13bb34a96bed4c37a9109e77464d1d416add204678547c54a9fd59"
 }

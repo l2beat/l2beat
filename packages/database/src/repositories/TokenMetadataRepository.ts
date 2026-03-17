@@ -10,7 +10,11 @@ export type TokenCategory =
   | 'rwaPublic'
   | 'other'
 
-export type TokenSource = 'canonical' | 'external' | 'native'
+export type TokenSource =
+  | 'canonical'
+  | 'custom-canonical'
+  | 'external'
+  | 'native'
 
 export interface TokenMetadataRecord {
   projectId: string
