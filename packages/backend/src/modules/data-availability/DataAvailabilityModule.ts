@@ -11,6 +11,7 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
+import { DaBlobNotifierIndexer } from './indexers/DaBlobNotifierIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
@@ -34,13 +35,8 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers, eigenIndexers } = createIndexers(
-    config.da,
-    clock,
-    db,
-    logger,
-    providers,
-  )
+  const { targetIndexers, daIndexers, eigenIndexers, notifierIndexers } =
+    createIndexers(config.da, clock, db, logger, providers)
 
   return {
     start: async () => {
@@ -76,6 +72,16 @@ export function initDataAvailabilityModule({
         )
         logger.info('EigenDA indexer started')
       }
+
+      if (notifierIndexers.length > 0) {
+        logger.info('Starting notifier indexers')
+        await Promise.all(
+          notifierIndexers.map(async (indexer) => {
+            await indexer.start()
+          }),
+        )
+        logger.info('Notifier indexers started')
+      }
     },
   }
 }
@@ -97,6 +103,7 @@ function createIndexers(
     | EigenDaProjectsIndexer
     | HourlyIndexer
   )[] = []
+  const notifierIndexers: (HourlyIndexer | DaBlobNotifierIndexer)[] = []
 
   for (const daLayer of config.blockLayers) {
     const configurations = config.blockProjects.filter(
@@ -164,6 +171,26 @@ function createIndexers(
     )
 
     daIndexers.push(indexer)
+  }
+
+  const ethereumConfigs = config.blockProjects.filter(
+    (c) => c.type === 'ethereum',
+  )
+  if (ethereumConfigs.length > 0) {
+    const notifierHourlyIndexer = new HourlyIndexer(logger, clock)
+    notifierIndexers.push(notifierHourlyIndexer)
+
+    const notifierIndexer = new DaBlobNotifierIndexer(
+      {
+        db: database,
+        ethereumConfigs,
+        indexerService,
+        minHeight: clock.getLastHour(),
+        parents: [notifierHourlyIndexer],
+      },
+      logger,
+    )
+    notifierIndexers.push(notifierIndexer)
   }
 
   for (const daLayer of config.timestampLayers) {
@@ -241,5 +268,5 @@ function createIndexers(
     eigenIndexers.push(projectsIndexer)
   }
 
-  return { targetIndexers, daIndexers, eigenIndexers }
+  return { targetIndexers, daIndexers, eigenIndexers, notifierIndexers }
 }

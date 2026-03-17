@@ -4,12 +4,7 @@ import type {
   EthereumDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type {
-  AvailBlob,
-  CelestiaBlob,
-  DaBlob,
-  EthereumBlob,
-} from '@l2beat/shared'
+import type { AvailBlob, CelestiaBlob, DaBlob } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 
@@ -119,8 +114,8 @@ export class DaService {
   }
 }
 
-function matchEthereumProject(
-  blob: EthereumBlob,
+export function matchEthereumProject(
+  blob: { inbox: string; sequencer: string; topics: string[] },
   config: EthereumDaTrackingConfig,
 ) {
   if (config.topics) {
