@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
@@ -130,7 +130,7 @@ export function formatDiscordMessage(
 
   return [
     `**Unmatched Ethereum Blob Pairs** (${date})`,
-    `Found **${pairs.length}** address pairs with ${COUNT_THRESHOLD}+ blobs not matching any project config:`,
+    `Found **${pairs.length}** address ${pluralize(pairs.length, 'pair')} with ${COUNT_THRESHOLD}+ blobs not matching any project config:`,
     '',
     ...lines,
   ].join('\n')
