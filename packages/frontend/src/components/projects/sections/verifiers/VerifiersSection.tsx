@@ -53,7 +53,7 @@ export function VerifiersSection({
           <TechStackTag
             className="mb-2 w-fit"
             tag={proofSystem}
-            withTypePrefix
+            displayType="typeAndName"
           />
           <p className="text-paragraph-14 text-secondary">
             {proofSystem.description ??
