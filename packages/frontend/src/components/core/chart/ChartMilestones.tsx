@@ -69,17 +69,14 @@ export function ChartMilestones<T extends { timestamp: number }>({
   return (
     <div data-role="milestones">
       {timestampedMilestones.map((data, index) => {
-        if (!data.milestone) return null
+        if (data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)
-        const milestoneIndex = sortedMilestones.findIndex(
-          (sm) => sm.date === data.milestone?.date,
-        )
 
         return (
           <ChartMilestone
-            key={data.milestone.date}
+            key={data.timestamp}
             left={x * width - 10}
-            milestoneIndex={milestoneIndex}
+            milestonesAtPoint={data.milestones}
             allMilestones={sortedMilestones}
           />
         )
@@ -90,29 +87,28 @@ export function ChartMilestones<T extends { timestamp: number }>({
 
 function ChartMilestone({
   left,
-  milestoneIndex,
+  milestonesAtPoint,
   allMilestones,
 }: {
   left: number
-  milestoneIndex: number
-  allMilestones: Milestone[]
+  milestonesAtPoint: MilestoneWithProjectName[]
+  allMilestones: MilestoneWithProjectName[]
 }) {
   const { isDesktop } = useDevice()
-  const triggerMilestone = allMilestones[milestoneIndex]
+  const triggerMilestone = milestonesAtPoint[0]
   assert(triggerMilestone)
+  const isMerged = milestonesAtPoint.length > 1
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
-
-  const Icon = isProjectMilestone(triggerMilestone) ? (
-    <img src={triggerMilestone.projectIcon} className="size-5 rounded-full" />
-  ) : triggerMilestone.type === 'general' ? (
-    <MilestoneIcon />
-  ) : (
-    <IncidentIcon />
-  )
+  const milestoneIndex = isMerged
+    ? 0
+    : allMilestones.findIndex((milestone) => milestone === triggerMilestone)
+  const drawerMilestones = isMerged ? milestonesAtPoint : allMilestones
+  const countLabel = getCountLabel(milestonesAtPoint.length)
+  assert(milestoneIndex !== -1)
 
   const common = cn(
-    'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-[34px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
     !hasFinishedOnboardingInitial &&
       interactiveLegend &&
       !interactiveLegend.disableOnboarding &&
@@ -122,38 +118,30 @@ function ChartMilestone({
     return (
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>
-          <a
-            className={common}
-            href={triggerMilestone.url}
-            style={{ left }}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {Icon}
-          </a>
+          {isMerged ? (
+            <div className={cn(common, 'cursor-pointer')} style={{ left }}>
+              <MilestoneMarker
+                milestones={milestonesAtPoint}
+                countLabel={countLabel}
+              />
+            </div>
+          ) : (
+            <a
+              className={common}
+              href={triggerMilestone.url}
+              style={{ left }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MilestoneMarker
+                milestones={milestonesAtPoint}
+                countLabel={countLabel}
+              />
+            </a>
+          )}
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          <div className="mb-1 whitespace-nowrap">
-            {formatDate(triggerMilestone.date.slice(0, 10))}
-          </div>
-          <div className="flex max-w-[216px] font-bold">
-            {isProjectMilestone(triggerMilestone) ? (
-              <img
-                src={triggerMilestone.projectIcon}
-                className="mt-px size-3.5 shrink-0 rounded-full"
-              />
-            ) : triggerMilestone.type === 'general' ? (
-              <MilestoneIcon className="mt-px size-3.5 shrink-0" />
-            ) : (
-              <IncidentIcon className="mt-px size-3.5 shrink-0" />
-            )}
-            <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
-          </div>
-          {triggerMilestone.description && (
-            <div className="mt-2 max-w-[216px] text-left">
-              {triggerMilestone.description}
-            </div>
-          )}
+          <MilestoneTooltipContent milestones={milestonesAtPoint} />
         </TooltipContent>
       </Tooltip>
     )
@@ -163,16 +151,95 @@ function ChartMilestone({
     <Drawer>
       <DrawerTrigger asChild>
         <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
-          {Icon}
+          <MilestoneMarker
+            milestones={milestonesAtPoint}
+            countLabel={countLabel}
+          />
         </div>
       </DrawerTrigger>
       <DrawerContent>
         <MilestoneDrawerContent
           milestoneIndex={milestoneIndex}
-          allMilestones={allMilestones}
+          allMilestones={drawerMilestones}
         />
       </DrawerContent>
     </Drawer>
+  )
+}
+
+function MilestoneMarker({
+  milestones,
+  countLabel,
+}: {
+  milestones: MilestoneWithProjectName[]
+  countLabel: string
+}) {
+  if (milestones.length > 1) {
+    return (
+      <div className="flex size-5 items-center justify-center rounded-full bg-brand font-bold text-[10px] text-primary-invert">
+        {countLabel}
+      </div>
+    )
+  }
+
+  const milestone = milestones[0]
+  assert(milestone)
+
+  if (isProjectMilestone(milestone)) {
+    return <img src={milestone.projectIcon} className="size-5 rounded-full" />
+  }
+
+  return milestone.type === 'general' ? <MilestoneIcon /> : <IncidentIcon />
+}
+
+function MilestoneTooltipContent({
+  milestones,
+}: {
+  milestones: MilestoneWithProjectName[]
+}) {
+  const firstMilestone = milestones[0]
+  assert(firstMilestone)
+
+  return (
+    <>
+      <div className="mb-1 whitespace-nowrap">
+        {formatDate(firstMilestone.date.slice(0, 10))}
+      </div>
+      <div className="flex max-w-[216px] flex-col gap-2 text-left">
+        {milestones.map((milestone) => (
+          <div key={`${milestone.date}-${milestone.title}`}>
+            <div className="flex font-bold">
+              <MilestoneListIcon milestone={milestone} />
+              <span className="ml-1.5">{milestone.title}</span>
+            </div>
+            {milestone.description && (
+              <div className="mt-1 max-w-[216px]">{milestone.description}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function MilestoneListIcon({
+  milestone,
+}: {
+  milestone: MilestoneWithProjectName
+}) {
+  if (isProjectMilestone(milestone)) {
+    return (
+      <img
+        src={milestone.projectIcon}
+        className="mt-px size-3.5 shrink-0 rounded-full"
+      />
+    )
+  }
+
+  return milestone.type === 'general' ? (
+    <MilestoneIcon className="mt-px size-3.5 shrink-0" />
+  ) : (
+    <IncidentIcon className="mt-px size-3.5 shrink-0" />
   )
 }
 
@@ -258,7 +325,7 @@ function isProjectMilestone(
 
 type TimestampedMilestone = {
   timestamp: number
-  milestone: Milestone | undefined
+  milestones: Milestone[]
 }
 
 function getTimestampedMilestones<T extends { timestamp: number }>(
@@ -270,20 +337,25 @@ function getTimestampedMilestones<T extends { timestamp: number }>(
   const mappedMilestones = mapMilestones(milestones)
   return data.map((point) => ({
     timestamp: point.timestamp,
-    milestone: mappedMilestones[point.timestamp],
+    milestones: mappedMilestones[point.timestamp] ?? [],
   }))
 }
 
-function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
+function mapMilestones(milestones: Milestone[]): Record<number, Milestone[]> {
+  const result: Record<number, Milestone[]> = {}
 
   for (const milestone of milestones) {
     const timestamp = UnixTime.toStartOf(
       UnixTime.fromDate(new Date(milestone.date)),
       'day',
     )
-    result[timestamp] = milestone
+    result[timestamp] ??= []
+    result[timestamp].push(milestone)
   }
 
   return result
+}
+
+function getCountLabel(count: number) {
+  return count > 9 ? '9+' : count.toString()
 }
