@@ -87,7 +87,7 @@ export class BlobsRepository extends BaseRepository {
     return rows.length
   }
 
-  async getGroupedByAddressInbox(
+  async getCountPerAddressInbox(
     daLayer: string,
     fromTimestamp: Date,
     toTimestamp: Date,

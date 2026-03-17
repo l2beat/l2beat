@@ -60,7 +60,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     const todayStart = UnixTime.toStartOf(to, 'day')
     const yesterdayStart = todayStart - UnixTime.DAY
 
-    const pairs = await this.$.db.blobs.getGroupedByAddressInbox(
+    const pairs = await this.$.db.blobs.getCountPerAddressInbox(
       'ethereum',
       UnixTime.toDate(yesterdayStart),
       UnixTime.toDate(todayStart),
