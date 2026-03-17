@@ -12,7 +12,6 @@ export interface AggregatedInteropTransferRecord {
   dstChain: string
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
-  durationCount: number
   identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
@@ -60,7 +59,6 @@ export function toRecord(
       (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
       undefined,
     transferCount: row.transferCount,
-    durationCount: row.durationCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -89,7 +87,7 @@ export function toRow(
     dstChain: record.dstChain,
     transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
-    durationCount: record.durationCount,
+    durationCount: record.transferCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
