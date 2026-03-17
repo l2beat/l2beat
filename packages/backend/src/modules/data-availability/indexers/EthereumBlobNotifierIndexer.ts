@@ -23,6 +23,8 @@ export interface UnmatchedBlobPair {
   count: number
 }
 
+const COUNT_THRESHOLD = 100
+
 /**
  * This indexer is used to notify about unmatched blob pairs for Ethereum.
  * It is run daily and checks for unmatched blob pairs for the previous day.
@@ -36,7 +38,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     super(
       {
         ...$,
-        name: INDEXER_NAMES.DA_BLOB_NOTIFIER,
+        name: INDEXER_NAMES.ETHEREUM_BLOB_NOTIFIER,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
@@ -86,7 +88,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     const unmatchedPairs: UnmatchedBlobPair[] = []
 
     for (const pair of pairs) {
-      if (pair.count < 100) continue
+      if (pair.count < COUNT_THRESHOLD) continue
 
       const isMatched = this.$.configurations.some((config) =>
         matchEthereumProject(
@@ -128,7 +130,7 @@ export function formatDiscordMessage(
 
   return [
     `**Unmatched Ethereum Blob Pairs** (${date})`,
-    `Found **${pairs.length}** address pairs with 100+ blobs not matching any project config:`,
+    `Found **${pairs.length}** address pairs with ${COUNT_THRESHOLD}+ blobs not matching any project config:`,
     '',
     ...lines,
   ].join('\n')
