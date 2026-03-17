@@ -536,6 +536,10 @@ function sumBySource(
   sources: TokenSource[],
   alias: string,
 ) {
+  if (sources.length === 0) {
+    return eb.cast(eb.val(0), 'double precision').as(alias)
+  }
+
   return eb.fn
     .sum(
       eb

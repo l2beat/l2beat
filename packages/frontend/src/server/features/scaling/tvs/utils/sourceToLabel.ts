@@ -7,7 +7,7 @@ import capitalize from 'lodash/capitalize'
  */
 export function sourceToLabel(source: TvsToken['source']): string {
   if (source === 'custom-canonical') {
-    return 'Canonical'
+    return sourceToLabel('canonical')
   }
   return capitalize(source)
 }
