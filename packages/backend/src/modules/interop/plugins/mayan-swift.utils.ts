@@ -24,6 +24,16 @@ const mayanSwiftUnlockAbi = parseAbi([
   'function unlockBatch(bytes encodedVm)',
 ])
 
+const mayanSwiftFulfillAbi = parseAbi([
+  'function fulfillOrder(uint256 fulfillAmount, bytes encodedVm, bytes32 recepient, bool batch)',
+  'function fulfillSimple(uint256 fulfillAmount, bytes32 orderHash, uint16 srcChainId, bytes32 tokenIn, uint8 protocolBps, (bytes32, bytes32, uint64, uint64, uint64, uint64, uint64, bytes32, uint16, bytes32, uint8, uint8, bytes32), bytes32 recepient, bool batch)',
+])
+
+const mayanSwiftFulfillWrapperAbi = parseAbi([
+  'function fulfillWithERC20(address tokenIn, uint256 amountIn, address router, address allowanceTarget, bytes swapCalldata, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
+  'function directFulfill(address tokenIn, uint256 amountIn, address mayan, bytes mayanCalldata, (uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s))',
+])
+
 // Message format:
 // - UNLOCK: 0x02 + orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)
 // - BATCH_UNLOCK: 0x04 + count(2) + [orderKey(32) + dstChainId(2) + tokenAddr(32) + recipient(32)] * count
@@ -120,6 +130,62 @@ export function extractWormholeEmitterChainFromTxData(
   }
 }
 
+export function extractMayanSwiftFulfillSourceChainFromTxData(
+  txData: string | undefined,
+): number | undefined {
+  try {
+    if (!txData) return undefined
+    return extractMayanSwiftFulfillSourceChainFromCallData(
+      txData as `0x${string}`,
+    )
+  } catch {
+    return undefined
+  }
+}
+
+function extractMayanSwiftFulfillSourceChainFromCallData(
+  txData: `0x${string}`,
+): number | undefined {
+  try {
+    const decoded = decodeFunctionData({
+      abi: mayanSwiftFulfillAbi,
+      data: txData,
+    })
+
+    if (decoded.functionName === 'fulfillOrder') {
+      const encodedVm = decoded.args[1]
+      if (typeof encodedVm !== 'string') return undefined
+      return extractMayanSwiftFulfillSourceChainFromVaa(encodedVm)
+    }
+
+    if (decoded.functionName === 'fulfillSimple') {
+      return decoded.args[2]
+    }
+  } catch {}
+
+  try {
+    const decoded = decodeFunctionData({
+      abi: mayanSwiftFulfillWrapperAbi,
+      data: txData,
+    })
+    if (
+      decoded.functionName !== 'fulfillWithERC20' &&
+      decoded.functionName !== 'directFulfill'
+    ) {
+      return undefined
+    }
+
+    const mayanCalldata =
+      decoded.functionName === 'fulfillWithERC20'
+        ? decoded.args[6]
+        : decoded.args[3]
+    if (typeof mayanCalldata !== 'string') return undefined
+    return extractMayanSwiftFulfillSourceChainFromCallData(mayanCalldata)
+  } catch {
+    return undefined
+  }
+}
+
 function extractWormholeEmitterChainFromVaa(
   encodedVm: `0x${string}`,
 ): number | undefined {
@@ -130,6 +196,39 @@ function extractWormholeEmitterChainFromVaa(
     reader.skipBytes(signatures * 66)
     reader.skipBytes(4 + 4) // timestamp + nonce
     return reader.readUint16()
+  } catch {
+    return undefined
+  }
+}
+
+function extractMayanSwiftFulfillSourceChainFromVaa(
+  encodedVm: `0x${string}`,
+): number | undefined {
+  try {
+    const payload = extractWormholePayloadFromVaa(encodedVm)
+    if (!payload) return undefined
+
+    const reader = new BinaryReader(payload)
+    if (reader.length < 35) return undefined
+    const action = reader.readUint8()
+    if (action !== 1) return undefined
+    reader.skipBytes(32)
+    return reader.readUint16()
+  } catch {
+    return undefined
+  }
+}
+
+function extractWormholePayloadFromVaa(
+  encodedVm: `0x${string}`,
+): `0x${string}` | undefined {
+  try {
+    const reader = new BinaryReader(encodedVm)
+    reader.skipBytes(1 + 4)
+    const signatures = reader.readUint8()
+    reader.skipBytes(signatures * 66)
+    reader.skipBytes(4 + 4 + 2 + 32 + 8 + 1)
+    return reader.readRemainingBytes() as `0x${string}`
   } catch {
     return undefined
   }

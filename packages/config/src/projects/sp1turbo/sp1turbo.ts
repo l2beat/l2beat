@@ -343,6 +343,12 @@ make build-circuits
             ),
             chain: 'ethereum',
           },
+          {
+            address: EthereumAddress(
+              '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
+            ),
+            chain: 'ethereum',
+          },
         ],
         verificationStatus: 'notVerified',
       },

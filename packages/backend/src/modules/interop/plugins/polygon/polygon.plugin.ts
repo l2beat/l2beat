@@ -1,3 +1,12 @@
+/**
+ * this covers the plasma bridge and the pos bridge
+ * both use the same InteropEventTypes
+ *
+ * unmatched-docs for both:
+ * - withdrawals need to be claimed on L1
+ * - deposits to polygon are automatically executed
+ */
+
 import {
   Address32,
   ChainSpecificAddress,
@@ -5,7 +14,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
-import { findParsedAround } from '../hyperlane-hwr'
+import { findParsedAround } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
