@@ -30,7 +30,7 @@ import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
-import { VerifiersSection } from './sections/VerifiersSection'
+import { VerifiersSection } from './sections/verifiers/VerifiersSection'
 
 interface ProjectDetailsProps {
   nested?: boolean
