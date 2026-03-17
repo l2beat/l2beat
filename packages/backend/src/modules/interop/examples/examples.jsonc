@@ -3848,5 +3848,26 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  "opstack-derived-tx-base-deposit": {
+    "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7c76adb9ebe70dfdb57f495c7172b308879f87416ebcc9f2e0438d7fe86a1bee"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "opstack.TransactionDeposited",
+          "args": {
+            "chain": "base",
+            "l2TxHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          }
+        }
+      ]
+    }
   }
 }
