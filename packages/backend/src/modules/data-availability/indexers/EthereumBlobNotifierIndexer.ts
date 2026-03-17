@@ -44,7 +44,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
   }
 
   async update(_from: number, to: number): Promise<number> {
-    // Only run at 1 AM UTC
+    // Only run at 1 AM UTC, when we are sure that we have blobs for the previous day
     if (UnixTime.toStartOf(to, 'day') + 1 * UnixTime.HOUR !== to) {
       this.logger.info('Skipping update', { to })
       return to

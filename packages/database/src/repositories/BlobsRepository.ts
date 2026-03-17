@@ -15,6 +15,12 @@ export interface BlobRecord {
   size: bigint | null
 }
 
+export interface BlobPairCount {
+  from: string
+  to: string | null
+  count: number
+}
+
 export function toRecord(row: Selectable<Blob>): BlobRecord {
   return {
     id: row.id,
@@ -68,12 +74,6 @@ export function numberToDaLayer(daLayer: number): string {
     default:
       throw new Error(`Unknown daLayer number: ${daLayer}`)
   }
-}
-
-export interface BlobPairCount {
-  from: string
-  to: string | null
-  count: number
 }
 
 export class BlobsRepository extends BaseRepository {
