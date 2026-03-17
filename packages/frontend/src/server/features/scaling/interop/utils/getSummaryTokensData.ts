@@ -1,0 +1,98 @@
+import { notUndefined } from '@l2beat/shared-pure'
+import { getLogger } from '~/server/utils/logger'
+import { manifest } from '~/utils/Manifest'
+import type {
+  AggregatedInteropTransferWithTokens,
+  CommonInteropData,
+  TokenData,
+  TokenFlowData,
+} from '../types'
+import { INITIAL_COMMON_INTEROP_DATA, accumulateTokens } from './accumulate'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
+import { getInteropChains } from './getInteropChains'
+
+type TokenInteropData = CommonInteropData & {
+  flows: Map<string, TokenFlowData>
+}
+
+const logger = getLogger().for('getSummaryTokensData')
+
+export function getSummaryTokensData(
+  records: AggregatedInteropTransferWithTokens[],
+  tokensDetailsMap: TokensDetailsMap,
+): TokenData[] {
+  const chainIconMap = new Map(
+    getInteropChains().map((chain) => [
+      chain.id,
+      manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    ]),
+  )
+
+  const result: Map<string, TokenInteropData> = new Map()
+  for (const record of records) {
+    for (const token of record.tokens) {
+      const current = result.get(token.abstractTokenId) ?? {
+        ...INITIAL_COMMON_INTEROP_DATA,
+        flows: new Map<string, TokenFlowData>(),
+      }
+
+      result.set(token.abstractTokenId, {
+        ...accumulateTokens(current, token),
+        flows: current.flows,
+      })
+
+      const flowKey = `${record.srcChain}::${record.dstChain}`
+      const currentFlow = current.flows.get(flowKey)
+      if (currentFlow) {
+        currentFlow.volume += token.volume
+      } else {
+        current.flows.set(flowKey, {
+          srcChain: {
+            id: record.srcChain,
+            iconUrl: chainIconMap.get(record.srcChain),
+          },
+          dstChain: {
+            id: record.dstChain,
+            iconUrl: chainIconMap.get(record.dstChain),
+          },
+          volume: token.volume,
+        })
+      }
+    }
+  }
+
+  return Array.from(result.entries())
+    .map(([tokenId, token]) => {
+      const tokenDetails = tokensDetailsMap.get(tokenId)
+
+      if (!tokenDetails) {
+        logger.warn(`Token not found: ${tokenId}`)
+        return undefined
+      }
+
+      return {
+        id: tokenId,
+        symbol: tokenDetails.symbol,
+        issuer: tokenDetails.issuer,
+        iconUrl:
+          tokenDetails.iconUrl ??
+          manifest.getUrl('/images/token-placeholder.png'),
+        volume: token.volume,
+        transferCount: token.transferCount,
+        avgDuration: null,
+        avgValue:
+          token.transferCount > 0 ? token.volume / token.transferCount : null,
+        minTransferValueUsd: token.minTransferValueUsd,
+        maxTransferValueUsd: token.maxTransferValueUsd,
+        netMintedValue:
+          token.mintedValueUsd !== undefined && token.burnedValueUsd !== undefined
+            ? token.mintedValueUsd - token.burnedValueUsd
+            : undefined,
+        flows: Array.from(token.flows.values()).toSorted(
+          (a, b) => b.volume - a.volume,
+        ),
+      } satisfies TokenData
+    })
+    .filter(notUndefined)
+    .toSorted((a, b) => (b.volume ?? 0) - (a.volume ?? 0))
+}
