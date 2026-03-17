@@ -12,6 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '~/components/core/Drawer'
+import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -33,9 +34,11 @@ import {
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
+  isLoading,
   tokenCount,
   topItems,
 }: {
+  isLoading: boolean
   tokenCount: number | undefined
   topItems: TopItems<TokenData> | undefined
 }) {
@@ -57,28 +60,34 @@ export function TokenCount({
       </div>
       <BetweenChainsInfo className="mt-1" />
       <div className="mt-4 flex min-h-[128px] flex-1 flex-col items-center justify-center rounded-lg border border-divider px-4 py-5">
-        <span className="font-bold text-[44px] leading-none md:text-[56px]">
-          {formatInteger(tokenCount ?? 0)}
-        </span>
-        {hasTokens && topItems && (
-          <button
-            className="mt-4 flex items-center gap-2"
-            onClick={() => setIsOpen(true)}
-            onMouseEnter={() =>
-              utils.interop.summaryTokens.prefetch(selectionForApi)
-            }
-          >
-            <div className="-space-x-2 flex items-center">
-              {topItems.items.map((token, index) => (
-                <TokenIcon key={token.id} token={token} index={index} />
-              ))}
-            </div>
-            {topItems.remainingCount > 0 && (
-              <span className="font-bold text-label-value-15">
-                +{topItems.remainingCount}
-              </span>
-            )}
-          </button>
+        {isLoading ? (
+          <TokenCountSkeleton />
+        ) : (
+          <>
+            <span className="font-bold text-[44px] leading-none md:text-[56px]">
+              {formatInteger(tokenCount ?? 0)}
+            </span>
+            {hasTokens && topItems ? (
+              <button
+                className="mt-4 flex items-center gap-2"
+                onClick={() => setIsOpen(true)}
+                onMouseEnter={() =>
+                  utils.interop.summaryTokens.prefetch(selectionForApi)
+                }
+              >
+                <div className="-space-x-2 flex items-center">
+                  {topItems.items.map((token, index) => (
+                    <TokenIcon key={token.id} token={token} index={index} />
+                  ))}
+                </div>
+                {topItems.remainingCount > 0 && (
+                  <span className="font-bold text-label-value-15">
+                    +{topItems.remainingCount} more
+                  </span>
+                )}
+              </button>
+            ) : null}
+          </>
         )}
       </div>
       <TokenCountContent isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -190,5 +199,25 @@ function TokenIcon({ token, index }: { token: TokenData; index: number }) {
       </TooltipTrigger>
       <TooltipContent>{token.symbol}</TooltipContent>
     </Tooltip>
+  )
+}
+
+function TokenCountSkeleton() {
+  return (
+    <div className="flex w-full flex-col items-center">
+      <Skeleton className="h-14 w-24 md:h-16 md:w-28" />
+      <div className="mt-4 flex items-center gap-2">
+        <div className="-space-x-2 flex items-center">
+          {[0, 1, 2, 3, 4].map((index) => (
+            <Skeleton
+              key={index}
+              className="size-7 rounded-full border border-divider"
+              style={{ zIndex: 5 - index }}
+            />
+          ))}
+        </div>
+        <Skeleton className="h-5 w-16" />
+      </div>
+    </div>
   )
 }

@@ -163,9 +163,13 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
-      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,6fr)_minmax(0,4fr)] min-md:gap-5">
-        <BreakdownByTransferType breakdown={breakdown} />
-        <TokenCount tokenCount={data?.tokenCount} topItems={data?.topTokens} />
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] min-md:gap-5">
+        <BreakdownByTransferType isLoading={isLoading} breakdown={breakdown} />
+        <TokenCount
+          isLoading={isLoading}
+          tokenCount={data?.tokenCount}
+          topItems={data?.topTokens}
+        />
       </div>
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />

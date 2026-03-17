@@ -9,7 +9,9 @@ export async function getInteropSummaryTokens(
 ): Promise<TokenData[]> {
   const { records } = await getLatestAggregatedInteropTransferWithTokens(input)
   const abstractTokenIds = unique(
-    records.flatMap((record) => record.tokens.map((token) => token.abstractTokenId)),
+    records.flatMap((record) =>
+      record.tokens.map((token) => token.abstractTokenId),
+    ),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 

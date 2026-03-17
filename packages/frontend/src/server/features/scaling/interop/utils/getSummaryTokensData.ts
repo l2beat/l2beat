@@ -7,7 +7,7 @@ import type {
   TokenData,
   TokenFlowData,
 } from '../types'
-import { INITIAL_COMMON_INTEROP_DATA, accumulateTokens } from './accumulate'
+import { accumulateTokens, INITIAL_COMMON_INTEROP_DATA } from './accumulate'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getInteropChains } from './getInteropChains'
 
@@ -79,13 +79,22 @@ export function getSummaryTokensData(
           manifest.getUrl('/images/token-placeholder.png'),
         volume: token.volume,
         transferCount: token.transferCount,
-        avgDuration: null,
+        avgDuration:
+          token.transferCount > 0
+            ? {
+                type: 'single',
+                duration: Math.floor(
+                  token.totalDurationSum / token.transferCount,
+                ),
+              }
+            : null,
         avgValue:
           token.transferCount > 0 ? token.volume / token.transferCount : null,
         minTransferValueUsd: token.minTransferValueUsd,
         maxTransferValueUsd: token.maxTransferValueUsd,
         netMintedValue:
-          token.mintedValueUsd !== undefined && token.burnedValueUsd !== undefined
+          token.mintedValueUsd !== undefined &&
+          token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
         flows: Array.from(token.flows.values()).toSorted(

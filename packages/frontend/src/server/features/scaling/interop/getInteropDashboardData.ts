@@ -2,23 +2,22 @@ import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams, ProtocolEntry } from './types'
+import type { InteropDashboardParams, ProtocolEntry, TokenData } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
+import { getSummaryTokensData } from './utils/getSummaryTokensData'
+import { getTopItems, type TopItems } from './utils/getTopItems'
 import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
 import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
-import { getTopItems, type TopItems } from './utils/getTopItems'
 import {
   getTransferSizeChartData,
   type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
-import { getSummaryTokensData } from './utils/getSummaryTokensData'
-import type { TokenData } from './types'
 
 export type InteropDashboardData = {
   flows: InteropFlowData[]
