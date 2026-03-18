@@ -1,5 +1,5 @@
-import { getConnectionPath } from './ConnectionPaths'
 import type { ChainNodeLayout } from './computeGraphLayout'
+import { getConnectionPath } from './graphUtils'
 
 interface Props {
   chainIds: string[]
@@ -8,6 +8,10 @@ interface Props {
   centerY: number
 }
 
+/**
+ * Renders a faint curved line for every unique chain pair,
+ * so the "roads" between nodes are always visible in the background.
+ */
 export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
   const pairs: { a: string; b: string }[] = []
   for (let i = 0; i < chainIds.length; i++) {
@@ -23,12 +27,10 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
         const dstLayout = layout.get(b)
         if (!srcLayout || !dstLayout) return null
 
-        const path = getConnectionPath(srcLayout, dstLayout, centerX, centerY)
-
         return (
           <path
             key={`road-${a}-${b}`}
-            d={path}
+            d={getConnectionPath(srcLayout, dstLayout, centerX, centerY)}
             fill="none"
             className="stroke-divider"
             strokeWidth={1}

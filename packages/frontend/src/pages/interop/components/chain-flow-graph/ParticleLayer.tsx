@@ -1,15 +1,14 @@
 import type { ChainNodeLayout } from './computeGraphLayout'
-import { getConnectionPath } from './ConnectionPaths'
-import { getChainColorBright } from './getChainColor'
-
-interface Flow {
-  srcChain: string
-  dstChain: string
-  volume: number
-}
+import { getChainColor } from './getChainColor'
+import {
+  type GraphFlow,
+  VOLUME_THRESHOLD_RATIO,
+  getConnectionPath,
+  lerp,
+} from './graphUtils'
 
 interface Props {
-  flows: Flow[]
+  flows: GraphFlow[]
   layout: Map<string, ChainNodeLayout>
   chainIds: string[]
   centerX: number
@@ -18,10 +17,17 @@ interface Props {
 }
 
 const MAX_TOTAL_PARTICLES = 150
-const MIN_PARTICLES_PER_FLOW = 1
-const MAX_PARTICLES_PER_FLOW = 15
+const MIN_PARTICLES = 1
+const MAX_PARTICLES = 15
+/** Each particle takes this many seconds to travel the full path. */
 const DURATION_S = 3
 
+/**
+ * Renders animated dots flowing along each connection path.
+ * Particle count per flow is proportional to its volume — higher-volume
+ * connections get more particles. Uses SVG <animateMotion> so animation
+ * runs on the compositor without JS re-renders.
+ */
 export function ParticleLayer({
   flows,
   layout,
@@ -30,19 +36,15 @@ export function ParticleLayer({
   centerY,
   maxVolume,
 }: Props) {
-  const threshold = maxVolume * 0.001
+  const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
   const visibleFlows = flows.filter((f) => f.volume >= threshold)
 
-  // Particle count proportional to volume ratio
-  const rawCounts = visibleFlows.map((flow) => {
-    const ratio = flow.volume / maxVolume
-    return Math.round(
-      MIN_PARTICLES_PER_FLOW +
-        (MAX_PARTICLES_PER_FLOW - MIN_PARTICLES_PER_FLOW) * ratio,
-    )
-  })
+  // More volume = more particles (1–15 per flow)
+  const rawCounts = visibleFlows.map((flow) =>
+    Math.round(lerp(MIN_PARTICLES, MAX_PARTICLES, flow.volume / maxVolume)),
+  )
 
-  // Scale down if total exceeds cap
+  // If too many particles total, scale all counts down proportionally
   const totalRaw = rawCounts.reduce((sum, c) => sum + c, 0)
   const scale =
     totalRaw > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalRaw : 1
@@ -55,32 +57,26 @@ export function ParticleLayer({
         if (!src || !dst) return null
 
         const path = getConnectionPath(src, dst, centerX, centerY)
-        const particleCount = Math.max(
-          1,
-          Math.round((rawCounts[flowIndex] ?? 1) * scale),
-        )
+        const count = Math.max(1, Math.round((rawCounts[flowIndex] ?? 1) * scale))
         const chainIndex = chainIds.indexOf(flow.srcChain)
-        const color = getChainColorBright(chainIndex, chainIds.length)
+        const color = getChainColor(chainIndex, chainIds.length, true)
 
-        return Array.from({ length: particleCount }, (_, i) => {
-          const staggerOffset = (i / particleCount) * DURATION_S
-
-          return (
-            <circle
-              key={`${flow.srcChain}-${flow.dstChain}-${i}`}
-              r="2"
-              fill={color}
-              opacity={0.8}
-            >
-              <animateMotion
-                path={path}
-                dur={`${DURATION_S}s`}
-                begin={`${staggerOffset}s`}
-                repeatCount="indefinite"
-              />
-            </circle>
-          )
-        })
+        return Array.from({ length: count }, (_, i) => (
+          <circle
+            key={`${flow.srcChain}-${flow.dstChain}-${i}`}
+            r="2"
+            fill={color}
+            opacity={0.8}
+          >
+            {/* Stagger start times so particles are evenly distributed along the path */}
+            <animateMotion
+              path={path}
+              dur={`${DURATION_S}s`}
+              begin={`${(i / count) * DURATION_S}s`}
+              repeatCount="indefinite"
+            />
+          </circle>
+        ))
       })}
     </g>
   )

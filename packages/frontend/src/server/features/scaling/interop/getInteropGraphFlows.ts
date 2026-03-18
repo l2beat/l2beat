@@ -5,9 +5,23 @@ import { getDb } from '~/server/database'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { getInteropChains } from './utils/getInteropChains'
 
+interface Flow {
+  srcChain: string
+  dstChain: string
+  volume: number
+}
+
+interface ChainVolume {
+  chainId: string
+  /** Sum of all inflows + outflows for this chain */
+  totalVolume: number
+  /** Inflows minus outflows — positive means net receiver */
+  netFlow: number
+}
+
 export type InteropGraphFlowsData = {
-  flows: { srcChain: string; dstChain: string; volume: number }[]
-  chainVolumes: { chainId: string; totalVolume: number; netFlow: number }[]
+  flows: Flow[]
+  chainVolumes: ChainVolume[]
 }
 
 export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
@@ -30,6 +44,7 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
     chainIds,
   )
 
+  // Skip subgroup projects to avoid double-counting (same pattern as getInteropDashboardData)
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
@@ -39,16 +54,15 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
       .map((p) => p.id),
   )
 
-  // Aggregate volumes by srcChain::dstChain
+  // Aggregate transfer volumes by srcChain::dstChain pair
   const flowMap = new Map<string, number>()
   for (const record of transfers) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
     const key = `${record.srcChain}::${record.dstChain}`
-    const current = flowMap.get(key) ?? 0
-    flowMap.set(key, current + (getInteropTransferValue(record) ?? 0))
+    flowMap.set(key, (flowMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0))
   }
 
-  const flows: InteropGraphFlowsData['flows'] = []
+  const flows: Flow[] = []
   for (const [key, volume] of flowMap) {
     if (volume <= 0) continue
     const [srcChain, dstChain] = key.split('::')
@@ -57,7 +71,11 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
     }
   }
 
-  // Compute per-chain volumes
+  return { flows, chainVolumes: computeChainVolumes(flows, chainIds) }
+}
+
+/** Derives per-chain totalVolume and netFlow from the list of directional flows. */
+function computeChainVolumes(flows: Flow[], chainIds: string[]): ChainVolume[] {
   const inflows = new Map<string, number>()
   const outflows = new Map<string, number>()
   for (const flow of flows) {
@@ -65,55 +83,29 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
     inflows.set(flow.dstChain, (inflows.get(flow.dstChain) ?? 0) + flow.volume)
   }
 
-  const chainVolumes: InteropGraphFlowsData['chainVolumes'] = chainIds.map(
-    (chainId) => {
-      const inflow = inflows.get(chainId) ?? 0
-      const outflow = outflows.get(chainId) ?? 0
-      return {
-        chainId,
-        totalVolume: inflow + outflow,
-        netFlow: inflow - outflow,
-      }
-    },
-  )
-
-  return { flows, chainVolumes }
+  return chainIds.map((chainId) => {
+    const inflow = inflows.get(chainId) ?? 0
+    const outflow = outflows.get(chainId) ?? 0
+    return {
+      chainId,
+      totalVolume: inflow + outflow,
+      netFlow: inflow - outflow,
+    }
+  })
 }
 
 function getMockInteropGraphFlows(): InteropGraphFlowsData {
-  const chains = getInteropChains()
-  const chainIds = chains.map((c) => c.id)
+  const chainIds = getInteropChains().map((c) => c.id)
 
-  const flows: InteropGraphFlowsData['flows'] = []
+  // Generate a deterministic mock volume for every chain pair
+  const flows: Flow[] = []
   for (let i = 0; i < chainIds.length; i++) {
     for (let j = 0; j < chainIds.length; j++) {
       if (i === j) continue
-      const src = chainIds[i]!
-      const dst = chainIds[j]!
-      // Generate varied mock volumes
-      const baseVolume = (((i + 1) * (j + 2) * 7_123_456) % 50_000_000) + 500_000
-      flows.push({ srcChain: src, dstChain: dst, volume: baseVolume })
+      const volume = (((i + 1) * (j + 2) * 7_123_456) % 50_000_000) + 500_000
+      flows.push({ srcChain: chainIds[i]!, dstChain: chainIds[j]!, volume })
     }
   }
 
-  const inflows = new Map<string, number>()
-  const outflows = new Map<string, number>()
-  for (const flow of flows) {
-    outflows.set(flow.srcChain, (outflows.get(flow.srcChain) ?? 0) + flow.volume)
-    inflows.set(flow.dstChain, (inflows.get(flow.dstChain) ?? 0) + flow.volume)
-  }
-
-  const chainVolumes: InteropGraphFlowsData['chainVolumes'] = chainIds.map(
-    (chainId) => {
-      const inflow = inflows.get(chainId) ?? 0
-      const outflow = outflows.get(chainId) ?? 0
-      return {
-        chainId,
-        totalVolume: inflow + outflow,
-        netFlow: inflow - outflow,
-      }
-    },
-  )
-
-  return { flows, chainVolumes }
+  return { flows, chainVolumes: computeChainVolumes(flows, chainIds) }
 }

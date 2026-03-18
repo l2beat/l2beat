@@ -43,15 +43,10 @@ export function ChainFlowGraphSvg({
     [chainIds, data.chainVolumes, width, height],
   )
 
-  const netFlowMap = useMemo(() => {
-    const map = new Map<string, number>()
-    for (const cv of data.chainVolumes) {
-      map.set(cv.chainId, cv.netFlow)
-    }
-    return map
-  }, [data.chainVolumes])
-
-  // Precompute per-chain volume in/out and top routes
+  /**
+   * Per-chain aggregated stats derived from the flows list.
+   * Used for the tooltip and the net flow labels on each bubble.
+   */
   const chainStatsMap = useMemo(() => {
     const stats = new Map<
       string,
@@ -59,19 +54,12 @@ export function ChainFlowGraphSvg({
         volumeIn: number
         volumeOut: number
         connectedChains: Set<string>
-        routesIn: { chainId: string; volume: number }[]
-        routesOut: { chainId: string; volume: number }[]
+        routes: { direction: 'in' | 'out'; chainId: string; volume: number }[]
       }
     >()
 
     for (const id of chainIds) {
-      stats.set(id, {
-        volumeIn: 0,
-        volumeOut: 0,
-        connectedChains: new Set(),
-        routesIn: [],
-        routesOut: [],
-      })
+      stats.set(id, { volumeIn: 0, volumeOut: 0, connectedChains: new Set(), routes: [] })
     }
 
     for (const flow of data.flows) {
@@ -80,25 +68,17 @@ export function ChainFlowGraphSvg({
       if (srcStats) {
         srcStats.volumeOut += flow.volume
         srcStats.connectedChains.add(flow.dstChain)
-        srcStats.routesOut.push({
-          chainId: flow.dstChain,
-          volume: flow.volume,
-        })
+        srcStats.routes.push({ direction: 'out', chainId: flow.dstChain, volume: flow.volume })
       }
       if (dstStats) {
         dstStats.volumeIn += flow.volume
         dstStats.connectedChains.add(flow.srcChain)
-        dstStats.routesIn.push({
-          chainId: flow.srcChain,
-          volume: flow.volume,
-        })
+        dstStats.routes.push({ direction: 'in', chainId: flow.srcChain, volume: flow.volume })
       }
     }
 
-    // Sort routes by volume
     for (const s of stats.values()) {
-      s.routesIn.sort((a, b) => b.volume - a.volume)
-      s.routesOut.sort((a, b) => b.volume - a.volume)
+      s.routes.sort((a, b) => b.volume - a.volume)
     }
 
     return stats
@@ -127,32 +107,24 @@ export function ChainFlowGraphSvg({
       const nodeLayout = layout.get(chainId)
       if (!stats || !chain || !nodeLayout) return
 
-      // Build top routes: interleave out and in, sorted by volume
-      const allRoutes: ChainTooltipData['topRoutes'] = []
-      for (const r of stats.routesOut) {
-        const c = chainMap.get(r.chainId)
-        if (c) allRoutes.push({ direction: 'out', chain: c, volume: r.volume })
-      }
-      for (const r of stats.routesIn) {
-        const c = chainMap.get(r.chainId)
-        if (c) allRoutes.push({ direction: 'in', chain: c, volume: r.volume })
-      }
-      allRoutes.sort((a, b) => b.volume - a.volume)
-
       onHoverChain(
         {
           chain,
           volumeIn: stats.volumeIn,
           volumeOut: stats.volumeOut,
-          netFlow: netFlowMap.get(chainId) ?? 0,
+          netFlow: stats.volumeIn - stats.volumeOut,
           connectedChains: stats.connectedChains.size,
-          topRoutes: allRoutes.slice(0, TOP_ROUTES_COUNT),
+          topRoutes: stats.routes.slice(0, TOP_ROUTES_COUNT).map((r) => ({
+            direction: r.direction,
+            chain: chainMap.get(r.chainId)!,
+            volume: r.volume,
+          })),
         },
         nodeLayout.x,
         nodeLayout.y,
       )
     },
-    [chainStatsMap, chainMap, layout, netFlowMap, onHoverChain],
+    [chainStatsMap, chainMap, layout, onHoverChain],
   )
 
   const handleMouseLeave = useCallback(() => {
@@ -171,8 +143,12 @@ export function ChainFlowGraphSvg({
     }
     if (!secondSelectedChainId) {
       selectChain('to', chainId)
-      return
     }
+  }
+
+  function getNetFlow(chainId: string): number {
+    const stats = chainStatsMap.get(chainId)
+    return stats ? stats.volumeIn - stats.volumeOut : 0
   }
 
   return (
@@ -217,7 +193,7 @@ export function ChainFlowGraphSvg({
             chain={chain}
             layout={nodeLayout}
             selected={selectedChainIds.has(chainId)}
-            netFlow={netFlowMap.get(chainId) ?? 0}
+            netFlow={getNetFlow(chainId)}
             firstSelectedChainId={firstSelectedChainId}
             type={type}
             onClick={() => toggleChain(chainId)}

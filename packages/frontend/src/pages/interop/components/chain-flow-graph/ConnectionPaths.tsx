@@ -1,14 +1,14 @@
 import type { ChainNodeLayout } from './computeGraphLayout'
 import { getChainColor } from './getChainColor'
-
-interface Flow {
-  srcChain: string
-  dstChain: string
-  volume: number
-}
+import {
+  type GraphFlow,
+  VOLUME_THRESHOLD_RATIO,
+  getConnectionPath,
+  lerp,
+} from './graphUtils'
 
 interface Props {
-  flows: Flow[]
+  flows: GraphFlow[]
   layout: Map<string, ChainNodeLayout>
   chainIds: string[]
   centerX: number
@@ -23,6 +23,10 @@ const MAX_STROKE = 3
 const MIN_OPACITY = 0.05
 const MAX_OPACITY = 0.25
 
+/**
+ * Renders colored bezier paths for each flow with volume above the threshold.
+ * Stroke width and opacity scale with the flow's share of maxVolume.
+ */
 export function ConnectionPaths({
   flows,
   layout,
@@ -33,7 +37,7 @@ export function ConnectionPaths({
   selectedChainIds,
   hoveredChainId,
 }: Props) {
-  const threshold = maxVolume * 0.001
+  const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
 
   return (
     <g>
@@ -45,34 +49,23 @@ export function ConnectionPaths({
         if (!src || !dst) return null
 
         const ratio = flow.volume / maxVolume
-        const strokeWidth = MIN_STROKE + (MAX_STROKE - MIN_STROKE) * ratio
+        const strokeWidth = lerp(MIN_STROKE, MAX_STROKE, ratio)
 
-        const isHovered =
-          hoveredChainId !== null &&
-          (hoveredChainId === flow.srcChain ||
-            hoveredChainId === flow.dstChain)
-
+        const touchesHovered =
+          hoveredChainId === flow.srcChain || hoveredChainId === flow.dstChain
+        const touchesSelected =
+          selectedChainIds.has(flow.srcChain) ||
+          selectedChainIds.has(flow.dstChain)
         const isHighlighted =
-          isHovered ||
-          (selectedChainIds.size > 0 &&
-            (selectedChainIds.has(flow.srcChain) ||
-              selectedChainIds.has(flow.dstChain)))
+          touchesHovered || (selectedChainIds.size > 0 && touchesSelected)
 
         const opacity = isHighlighted
           ? MAX_OPACITY * 2.5
-          : MIN_OPACITY + (MAX_OPACITY - MIN_OPACITY) * ratio
+          : lerp(MIN_OPACITY, MAX_OPACITY, ratio)
 
         const chainIndex = chainIds.indexOf(flow.srcChain)
         const color = getChainColor(chainIndex, chainIds.length)
-
-        // Quadratic bezier curving toward center
-        const midX = (src.x + dst.x) / 2
-        const midY = (src.y + dst.y) / 2
-        const curveFactor = 0.15
-        const ctrlX = midX + (centerX - midX) * curveFactor
-        const ctrlY = midY + (centerY - midY) * curveFactor
-
-        const path = `M ${src.x} ${src.y} Q ${ctrlX} ${ctrlY} ${dst.x} ${dst.y}`
+        const path = getConnectionPath(src, dst, centerX, centerY)
 
         return (
           <path
@@ -80,25 +73,11 @@ export function ConnectionPaths({
             d={path}
             fill="none"
             stroke={color}
-            strokeWidth={isHovered ? strokeWidth + 1 : strokeWidth}
+            strokeWidth={touchesHovered ? strokeWidth + 1 : strokeWidth}
             opacity={opacity}
           />
         )
       })}
     </g>
   )
-}
-
-export function getConnectionPath(
-  srcLayout: ChainNodeLayout,
-  dstLayout: ChainNodeLayout,
-  centerX: number,
-  centerY: number,
-): string {
-  const midX = (srcLayout.x + dstLayout.x) / 2
-  const midY = (srcLayout.y + dstLayout.y) / 2
-  const curveFactor = 0.15
-  const ctrlX = midX + (centerX - midX) * curveFactor
-  const ctrlY = midY + (centerY - midY) * curveFactor
-  return `M ${srcLayout.x} ${srcLayout.y} Q ${ctrlX} ${ctrlY} ${dstLayout.x} ${dstLayout.y}`
 }
