@@ -15,8 +15,8 @@ let db: Database | undefined
 export function getTokenDb(config: Config) {
   if (!tokenDb) {
     tokenDb = createTokenDatabase({
-      ...config.tokenDatabase,
-      log: process.env.DATABASE_LOG_ENABLED
+      ...config.tokenDatabase.pool,
+      log: config.tokenDatabase.logsEnabled
         ? makeDbLogger('TokenDatabase')
         : undefined,
     })
@@ -27,10 +27,8 @@ export function getTokenDb(config: Config) {
 export function getDb(config: Config) {
   if (!db) {
     db = createDatabase({
-      ...config.database,
-      log: process.env.DATABASE_LOG_ENABLED
-        ? makeDbLogger('Database')
-        : undefined,
+      ...config.database.pool,
+      log: config.database.logsEnabled ? makeDbLogger('Database') : undefined,
     })
   }
   return db
