@@ -182,10 +182,6 @@ export async function checkDeployedToken(
   } catch (error) {
     console.error(error)
   }
-  console.log(
-    'partialTransferAbstractTokenSuggestions',
-    partialTransferAbstractTokenSuggestions,
-  )
 
   if (coin === null) {
     return {
