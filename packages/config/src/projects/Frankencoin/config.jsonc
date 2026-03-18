@@ -15,7 +15,7 @@
           }
         }
       },
-      "ignoreInWatchMode": ["equity", "minterReserve"]
+      "ignoreInWatchMode": ["equity", "minterReserve", "totalSupply"]
     },
     "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
       "ignoreDiscovery": true
