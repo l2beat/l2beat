@@ -100,6 +100,7 @@ async function getCachedData(
     apiSelection.from.length > 0 && apiSelection.to.length > 0
       ? helpers.interop.dashboard.prefetch({ ...apiSelection })
       : undefined,
+    helpers.interop.graphFlows.prefetch(),
   ])
 
   return {

@@ -9,7 +9,7 @@ import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
-import { InitialChainSelector } from '../components/InitialChainSelector'
+import { ChainFlowGraph } from '../components/chain-flow-graph/ChainFlowGraph'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
 import { MobileCarouselWidget } from '../components/widgets/protocols/MobileCarouselWidget'
 import { TopProtocolsByTransfers } from '../components/widgets/protocols/TopProtocolsByTransfers'
@@ -86,8 +86,8 @@ function Content({
     (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
   ) {
     return (
-      <InitialChainSelector
-        interopChains={onboardingInteropChains}
+      <ChainFlowGraph
+        interopChains={interopChains}
         selectedChains={selectedChains}
         selectChain={selectChain}
         type={undefined}

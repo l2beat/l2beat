@@ -1,4 +1,5 @@
 import { getInteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
+import { getInteropGraphFlows } from '~/server/features/scaling/interop/getInteropGraphFlows'
 import { getInteropProtocolChains } from '~/server/features/scaling/interop/getInteropProtocolChains'
 import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { getInteropProtocolTokens } from '~/server/features/scaling/interop/getInteropProtocolTokens'
@@ -11,6 +12,7 @@ import {
 import { procedure, router } from '../trpc'
 
 export const interopRouter = router({
+  graphFlows: procedure.query(() => getInteropGraphFlows()),
   dashboard: procedure
     .input(InteropDashboardParams)
     .query(({ input }) => getInteropDashboardData(input)),
