@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0283eea5c54bf71fae8bac49a01dec7a4c2a68dc
 
 ## Description
 
-Routine Security Council election rotation: currentCohort switched from 0 to 1, electionCount incremented to 6.
+Security Council cohort 1 election completed (election #6).
 
 ## Watched changes
 
