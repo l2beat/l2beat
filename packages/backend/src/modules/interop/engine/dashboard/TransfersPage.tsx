@@ -195,7 +195,11 @@ function TxHash({
   }
 
   return (
-    <a target="_blank" rel="noreferrer noopener" href={`${explorerUrl}/tx/${hash}`}>
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      href={`${explorerUrl}/tx/${hash}`}
+    >
       <ShortenedHash hash={hash} />
     </a>
   )
