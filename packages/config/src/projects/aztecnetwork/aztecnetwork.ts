@@ -103,8 +103,6 @@ const aztecTotalSupply = discovery.getContractValueBigInt(
   'totalSupply',
 )
 
-const executionDelay = governanceConfiguration.executionDelay
-
 const feeJuicePortal = discovery.getContract('FeeJuicePortal')
 const governance = discovery.getContract('Governance')
 const honkVerifier = discovery.getContract('HonkVerifier')
@@ -314,12 +312,10 @@ export const aztecnetwork: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: {
-      value: formatSeconds(executionDelay),
-      sentiment: 'good',
-      orderHint: executionDelay,
-      description: `Any upgrade is delayed by ${formatSeconds(
-        executionDelay,
-      )} before being executed. During that period, users can exit through regular, private or escape-hatch withdrawals.`,
+      ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+      description:
+        RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE.description +
+        `The onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay. While the old rollup remains immutable with functional L1 <-> L2 messaging, many escrows may not.`,
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
@@ -330,7 +326,7 @@ export const aztecnetwork: ScalingProject = {
       value: 'Self Propose',
       sentiment: 'good',
       description:
-        'Anyone can submit epoch root proofs which finalize the proven checkpoints. Checkpoint proposals come from the open sequencer set, with the escape hatch providing a bonded fallback if the sampled committees are censoring or unavailable.',
+        'Checkpoint proposals come from the open sequencer set, with the escape hatch providing a bonded fallback if the sampled committees are censoring or unavailable. Anyone with access to the required hardware can submit epoch root proofs which finalize the proven checkpoints.',
     },
   },
   stage: getStage(
