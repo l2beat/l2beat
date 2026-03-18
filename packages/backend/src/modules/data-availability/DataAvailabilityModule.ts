@@ -35,7 +35,7 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers, eigenIndexers, notifierIndexers } =
+  const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
     createIndexers(config.da, clock, db, logger, providers)
 
   return {
@@ -73,10 +73,10 @@ export function initDataAvailabilityModule({
         logger.info('EigenDA indexer started')
       }
 
-      if (notifierIndexers.length > 0) {
+      if (notificationIndexers.length > 0) {
         logger.info('Starting notification indexers')
         await Promise.all(
-          notifierIndexers.map(async (indexer) => {
+          notificationIndexers.map(async (indexer) => {
             await indexer.start()
           }),
         )
@@ -271,6 +271,6 @@ function createIndexers(
     targetIndexers,
     daIndexers,
     eigenIndexers,
-    notifierIndexers: notificationIndexers,
+    notificationIndexers,
   }
 }
