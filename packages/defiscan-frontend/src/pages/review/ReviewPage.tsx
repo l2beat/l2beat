@@ -129,9 +129,10 @@ export function ReviewPage() {
               )}
             </p>
           </div>
-          <div className="flex items-center gap-3 print:hidden">
-            <ViewModeToggle current={view} onChange={handleViewChange} />
-            <ShareButton review={review} onExportPdf={handleExportPdf} />
+          <div className="print:hidden">
+            <ViewModeToggle current={view} onChange={handleViewChange}>
+              <ShareButton review={review} onExportPdf={handleExportPdf} />
+            </ViewModeToggle>
           </div>
         </div>
       </div>

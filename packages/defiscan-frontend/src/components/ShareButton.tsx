@@ -67,7 +67,7 @@ export function ShareButton({ review, onExportPdf }: ShareButtonProps) {
       <button
         type="button"
         onClick={() => setShowShareMenu((v) => !v)}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-purple-200 px-3 py-1.5 font-medium text-purple-600 text-sm transition-colors hover:bg-purple-50"
+        className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all text-text-secondary hover:text-purple-600"
       >
         <svg
           className="h-4 w-4"

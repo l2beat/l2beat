@@ -5,6 +5,7 @@ export type ViewMode = 'report' | 'explorer' | 'activity'
 interface ViewModeToggleProps {
   current: ViewMode
   onChange: (mode: ViewMode) => void
+  children?: React.ReactNode
 }
 
 const modes: { value: ViewMode; label: string; description: string; icon: React.ReactNode }[] = [
@@ -40,7 +41,7 @@ const modes: { value: ViewMode; label: string; description: string; icon: React.
   },
 ]
 
-export function ViewModeToggle({ current, onChange }: ViewModeToggleProps) {
+export function ViewModeToggle({ current, onChange, children }: ViewModeToggleProps) {
   return (
     <div className="flex items-center gap-1 p-1 bg-bg-muted rounded-xl border border-border">
       {modes.map((mode) => (
@@ -60,6 +61,12 @@ export function ViewModeToggle({ current, onChange }: ViewModeToggleProps) {
           {mode.label}
         </button>
       ))}
+      {children && (
+        <>
+          <div className="w-px h-6 bg-border mx-0.5" />
+          {children}
+        </>
+      )}
     </div>
   )
 }
