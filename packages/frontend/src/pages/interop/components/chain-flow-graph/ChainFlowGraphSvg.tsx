@@ -1,12 +1,11 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import type { InteropGraphFlowsData } from '~/server/features/scaling/interop/getInteropGraphFlows'
 import type { InteropChainWithIcon } from '../chain-selector/types'
 import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubble } from './ChainBubble'
 import type { ChainTooltipData } from './ChainTooltip'
 import { computeGraphLayout } from './computeGraphLayout'
-import { ConnectionPaths } from './ConnectionPaths'
 import { ParticleLayer } from './ParticleLayer'
 
 interface Props {
@@ -97,11 +96,8 @@ export function ChainFlowGraphSvg({
   if (firstSelectedChainId) selectedChainIds.add(firstSelectedChainId)
   if (secondSelectedChainId) selectedChainIds.add(secondSelectedChainId)
 
-  const [hoveredChainId, setHoveredChainId] = useState<string | null>(null)
-
   const handleMouseEnter = useCallback(
     (chainId: string) => {
-      setHoveredChainId(chainId)
       const stats = chainStatsMap.get(chainId)
       const chain = chainMap.get(chainId)
       const nodeLayout = layout.get(chainId)
@@ -128,7 +124,6 @@ export function ChainFlowGraphSvg({
   )
 
   const handleMouseLeave = useCallback(() => {
-    setHoveredChainId(null)
     onHoverChain(null, 0, 0)
   }, [onHoverChain])
 
@@ -163,16 +158,6 @@ export function ChainFlowGraphSvg({
         layout={layout}
         centerX={centerX}
         centerY={centerY}
-      />
-      <ConnectionPaths
-        flows={data.flows}
-        layout={layout}
-        chainIds={chainIds}
-        centerX={centerX}
-        centerY={centerY}
-        maxVolume={maxVolume}
-        selectedChainIds={selectedChainIds}
-        hoveredChainId={hoveredChainId}
       />
       <ParticleLayer
         flows={data.flows}

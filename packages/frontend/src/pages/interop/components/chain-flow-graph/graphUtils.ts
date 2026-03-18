@@ -27,8 +27,3 @@ export function getConnectionPath(
   const ctrlY = midY + (centerY - midY) * 0.15
   return `M ${src.x} ${src.y} Q ${ctrlX} ${ctrlY} ${dst.x} ${dst.y}`
 }
-
-/** Linear interpolation between min and max by ratio (0–1). */
-export function lerp(min: number, max: number, ratio: number): number {
-  return min + (max - min) * ratio
-}
