@@ -106,6 +106,103 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
+  describe(BlobsRepository.prototype.getCountPerAddressInbox.name, () => {
+    it('should group by from and to and return counts', async () => {
+      await repository.deleteAll()
+      const base = UnixTime.toStartOf(UnixTime.now(), 'day')
+      await repository.insertMany([
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base + 1,
+          daLayer: 'ethereum',
+          blockNumber: 10,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base + 2,
+          daLayer: 'ethereum',
+          blockNumber: 11,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xC',
+          timestamp: base + 3,
+          daLayer: 'ethereum',
+          blockNumber: 12,
+        }),
+      ])
+
+      const results = await repository.getCountPerAddressInbox(
+        'ethereum',
+        base,
+        base + UnixTime.DAY,
+      )
+
+      expect(results).toEqualUnsorted([
+        { from: '0xA', to: '0xB', count: 2 },
+        { from: '0xA', to: '0xC', count: 1 },
+      ])
+    })
+
+    it('should filter by timestamp range (inclusive start, exclusive end)', async () => {
+      await repository.deleteAll()
+      const base = UnixTime.toStartOf(UnixTime.now(), 'day')
+      await repository.insertMany([
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base - 1,
+          daLayer: 'ethereum',
+          blockNumber: 10,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base,
+          daLayer: 'ethereum',
+          blockNumber: 11,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base + 100,
+          daLayer: 'ethereum',
+          blockNumber: 12,
+        }),
+        blob({
+          from: '0xA',
+          to: '0xB',
+          timestamp: base + UnixTime.DAY,
+          daLayer: 'ethereum',
+          blockNumber: 13,
+        }),
+      ])
+
+      const results = await repository.getCountPerAddressInbox(
+        'ethereum',
+        base,
+        base + UnixTime.DAY,
+      )
+
+      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
+    })
+
+    it('should return empty array when no data matches', async () => {
+      await repository.deleteAll()
+      const base = UnixTime.toStartOf(UnixTime.now(), 'day')
+
+      const results = await repository.getCountPerAddressInbox(
+        'ethereum',
+        base,
+        base + UnixTime.DAY,
+      )
+
+      expect(results).toEqual([])
+    })
+  })
+
   describe(BlobsRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
@@ -126,3 +223,17 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 })
+
+function blob(
+  overrides: Partial<Omit<BlobRecord, 'id'>>,
+): Omit<BlobRecord, 'id'> {
+  return {
+    blockNumber: overrides.blockNumber ?? 1,
+    timestamp: overrides.timestamp ?? UnixTime.now(),
+    daLayer: overrides.daLayer ?? 'ethereum',
+    from: overrides.from ?? '0x0',
+    to: overrides.to ?? null,
+    topics: overrides.topics ?? null,
+    size: overrides.size ?? BigInt(100),
+  }
+}

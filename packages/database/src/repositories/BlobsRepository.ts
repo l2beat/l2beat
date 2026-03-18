@@ -15,6 +15,12 @@ export interface BlobRecord {
   size: bigint | null
 }
 
+export interface BlobPairCount {
+  from: string
+  to: string | null
+  count: number
+}
+
 export function toRecord(row: Selectable<Blob>): BlobRecord {
   return {
     id: row.id,
@@ -79,6 +85,28 @@ export class BlobsRepository extends BaseRepository {
       await this.db.insertInto('Blob').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getCountPerAddressInbox(
+    daLayer: string,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<BlobPairCount[]> {
+    const rows = await this.db
+      .selectFrom('Blob')
+      .select(['from', 'to'])
+      .select((eb) => eb.fn.countAll<number>().as('count'))
+      .where('daLayer', '=', daLayerToNumber(daLayer))
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .groupBy(['from', 'to'])
+      .execute()
+
+    return rows.map((r) => ({
+      from: r.from,
+      to: r.to ?? null,
+      count: Number(r.count),
+    }))
   }
 
   async getAll(): Promise<BlobRecord[]> {
