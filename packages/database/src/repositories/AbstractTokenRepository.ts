@@ -8,7 +8,7 @@ export type AbstractTokenRecord = {
   symbol: string
   id: string
   issuer: string | null
-  category: 'btc' | 'ether' | 'stablecoin' | 'other'
+  category: 'btc' | 'ether' | 'stablecoin' | 'other' | null
   iconUrl: string | null
   coingeckoId: string | null
   coingeckoListingTimestamp: UnixTime | null
@@ -24,7 +24,7 @@ export type AbstractTokenUpdateable = Omit<
 function toRecord(row: Selectable<AbstractToken>): AbstractTokenRecord {
   return {
     ...row,
-    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other',
+    category: row.category as 'btc' | 'ether' | 'stablecoin' | 'other' | null,
     coingeckoListingTimestamp: toTimestamp(row.coingeckoListingTimestamp),
   }
 }

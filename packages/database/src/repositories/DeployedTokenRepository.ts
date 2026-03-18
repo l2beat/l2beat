@@ -143,7 +143,6 @@ export class DeployedTokenRepository extends BaseRepository {
       abstractToken:
         row.AbstractToken_id === null ||
         row.AbstractToken_symbol === null ||
-        row.AbstractToken_category === null ||
         row.AbstractToken_reviewed === null
           ? undefined
           : toAbstractTokenRecord({
