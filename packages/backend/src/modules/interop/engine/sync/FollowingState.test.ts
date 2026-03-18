@@ -252,26 +252,13 @@ describe(FollowingState.name, () => {
       })
     })
 
-    it('captures txs both generically and with creator context', async () => {
+    it('delegates tx capture to the syncer once per tx', async () => {
       const txToCapture = mockObject<TxToCapture>({
         chain: 'base',
         tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
       })
-      const creatorEvent = mockObject<InteropEvent>({
-        plugin: 'mock-plugin',
-      })
-      const genericTxEvent = mockObject<InteropEvent>({})
       const txEvent = mockObject<InteropEvent>({})
-      const captureTx = mockFn()
-        .returnsOnce([genericTxEvent])
-        .returnsOnce([txEvent])
-      const getRequestedTxs = mockFn().returns([
-        {
-          chain: 'base',
-          txHash: '0x123',
-          creatorEvent,
-        },
-      ])
+      const captureTx = mockFn().returnsOnce([txEvent])
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({
         getLastSyncedRange: mockFn().resolvesTo(
@@ -283,28 +270,18 @@ describe(FollowingState.name, () => {
         }),
         captureTx,
         saveProducedInteropEvents,
-        store: mockObject<InteropEventStore>({
-          derivedTxStore: mockObject<DerivedTxStore>({
-            get: getRequestedTxs,
-          }),
-        }),
       })
       const state = new FollowingState(syncer, Logger.SILENT)
 
       await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(getRequestedTxs).toHaveBeenCalledWith('base', '0x123')
-      expect(captureTx).toHaveBeenNthCalledWith(1, txToCapture)
-      expect(captureTx).toHaveBeenCalledWith(txToCapture, creatorEvent)
-      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
-        [genericTxEvent, txEvent],
-        {
-          fromBlock: 90n,
-          fromTimestamp: UnixTime(0),
-          toBlock: 100n,
-          toTimestamp: UnixTime(1_000),
-        },
-      )
+      expect(captureTx).toHaveBeenCalledWith(txToCapture)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith([txEvent], {
+        fromBlock: 90n,
+        fromTimestamp: UnixTime(0),
+        toBlock: 100n,
+        toTimestamp: UnixTime(1_000),
+      })
     })
   })
 })
@@ -321,6 +298,7 @@ function createSyncer(
     store: mockObject<InteropEventStore>({
       derivedTxStore: mockObject<DerivedTxStore>({
         get: mockFn().returns([]),
+        getCreatorEvents: mockFn().returns(undefined),
       }),
     }),
     getResyncState: mockFn().resolvesTo({

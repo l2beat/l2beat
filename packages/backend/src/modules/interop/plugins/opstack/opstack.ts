@@ -369,20 +369,22 @@ export class OpStackPlugin implements InteropPluginResyncable {
     ]
   }
 
-  captureTx(input: TxToCapture, creatorEvent?: InteropEvent) {
-    if (!creatorEvent || !TransactionDeposited.checkType(creatorEvent)) {
-      return
-    }
+  captureTx(input: TxToCapture, creatorEvents?: InteropEvent[]) {
+    for (const creatorEvent of creatorEvents ?? []) {
+      if (!TransactionDeposited.checkType(creatorEvent)) {
+        continue
+      }
 
-    return [
-      PortalDepositFinalized.createTx(input, {
-        chain: creatorEvent.args.chain,
-        from: creatorEvent.args.from,
-        ...(creatorEvent.args.to ? { to: creatorEvent.args.to } : {}),
-        value: creatorEvent.args.value,
-        sourceHash: creatorEvent.args.sourceHash,
-      }),
-    ]
+      return [
+        PortalDepositFinalized.createTx(input, {
+          chain: creatorEvent.args.chain,
+          from: creatorEvent.args.from,
+          ...(creatorEvent.args.to ? { to: creatorEvent.args.to } : {}),
+          value: creatorEvent.args.value,
+          sourceHash: creatorEvent.args.sourceHash,
+        }),
+      ]
+    }
   }
 
   capture(input: LogToCapture) {

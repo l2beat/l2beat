@@ -71,24 +71,6 @@ export class FollowingState implements BlockProcessorState {
       if (produced) {
         interopEvents.push(produced)
       }
-
-      const txHash = txToCapture.tx.hash
-      if (!txHash) {
-        continue
-      }
-      const requestedTxs = this.syncer.store.derivedTxStore.get(
-        txToCapture.chain,
-        txHash,
-      )
-      for (const request of requestedTxs) {
-        const produced = this.syncer.captureTx(
-          txToCapture,
-          request.creatorEvent,
-        )
-        if (produced) {
-          interopEvents.push(produced)
-        }
-      }
     }
     for (const logToCapture of toCapture.logsToCapture) {
       const produced = this.syncer.captureLog(logToCapture)

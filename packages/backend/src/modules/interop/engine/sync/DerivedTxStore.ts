@@ -65,6 +65,13 @@ export class DerivedTxStore {
     return this.entriesByChain.get(chain)?.get(txHash) ?? []
   }
 
+  getCreatorEvents(chain: string, txHash: string, plugin: string) {
+    const creatorEvents = this.get(chain, txHash)
+      .filter((entry) => entry.creatorEvent.plugin === plugin)
+      .map((entry) => entry.creatorEvent)
+    return creatorEvents.length > 0 ? creatorEvents : undefined
+  }
+
   getCount(): number {
     let count = 0
     for (const entriesByTxHash of this.entriesByChain.values()) {

@@ -251,7 +251,7 @@ export interface InteropPlugin {
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
   captureTx?: (
     input: TxToCapture,
-    creatorEvent?: InteropEvent,
+    creatorEvents?: InteropEvent[],
   ) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (

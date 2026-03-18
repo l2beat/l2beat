@@ -27,6 +27,7 @@ import type {
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { toEventSelector } from '../utils'
+import type { DerivedTxStore } from './DerivedTxStore'
 import { FollowingState } from './FollowingState'
 import {
   type BlockProcessorState,
@@ -309,12 +310,18 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe(InteropEventSyncer.prototype.captureTx.name, () => {
-    it('captures using the requested plugin only and passes creator context', () => {
+    it('preserves plugin order and passes only plugin-local creator events', () => {
       const event = makeInteropEventNoPlugin()
-      const firstCapture = mockFn().returns([event])
+      const firstCapture = mockFn().returns(undefined)
       const secondCapture = mockFn().returns([event])
-      const txToCapture = mockObject<TxToCapture>({})
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
       const creatorEvent = { ...makeInteropEvent(), plugin: 'wormhole' }
+      const getCreatorEvents = mockFn()
+        .returnsOnce(undefined)
+        .returnsOnce([creatorEvent])
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -323,13 +330,82 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({ name: 'wormhole', captureTx: secondCapture }),
           ],
         }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
       })
 
-      const result = syncer.captureTx(txToCapture, creatorEvent)
+      const result = syncer.captureTx(txToCapture)
 
-      expect(firstCapture).not.toHaveBeenCalled()
-      expect(secondCapture).toHaveBeenCalledWith(txToCapture, creatorEvent)
+      expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
+      expect(secondCapture).toHaveBeenCalledWith(txToCapture, [creatorEvent])
+      expect(getCreatorEvents).toHaveBeenNthCalledWith(
+        1,
+        txToCapture.chain,
+        txToCapture.tx.hash,
+        'across',
+      )
+      expect(getCreatorEvents).toHaveBeenNthCalledWith(
+        2,
+        txToCapture.chain,
+        txToCapture.tx.hash,
+        'wormhole',
+      )
       expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
+    })
+
+    it('stops at the first plugin that captures even if a later plugin has creator events', () => {
+      const event = makeInteropEventNoPlugin()
+      const firstCapture = mockFn().returns([event])
+      const secondCapture = mockFn().returns([event])
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
+      const getCreatorEvents = mockFn().returns(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across', captureTx: firstCapture }),
+            makePlugin({ name: 'wormhole', captureTx: secondCapture }),
+          ],
+        }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
+      })
+
+      const result = syncer.captureTx(txToCapture)
+
+      expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
+      expect(secondCapture).not.toHaveBeenCalled()
+      expect(getCreatorEvents).toHaveBeenCalledTimes(1)
+      expect(result).toEqual([{ ...event, plugin: 'across' }])
+    })
+
+    it('returns early when no plugin has captureTx', () => {
+      const getCreatorEvents = mockFn().returns(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across', captureTx: undefined })],
+        }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
+      })
+
+      const result = syncer.captureTx(mockObject<TxToCapture>({}))
+
+      expect(result).toEqual(undefined)
+      expect(getCreatorEvents).not.toHaveBeenCalled()
     })
   })
 
@@ -705,16 +781,16 @@ class TestSyncer extends InteropEventSyncer {
 }
 
 function createSyncer(overrides: Partial<TestSyncer> = {}) {
-  const plugin = makePlugin({ name: 'across' })
+  const { chain, cluster, rpcClient, store, db, ...rest } = overrides
   const syncer = new TestSyncer(
-    'ethereum',
-    makeCluster({ name: 'clusterName', plugins: [plugin] }),
-    mockRpcClient(),
-    mockStore(),
-    mockDb(),
+    chain ?? 'ethereum',
+    cluster ?? makeCluster({ name: 'clusterName', plugins: [makePlugin()] }),
+    rpcClient ?? mockRpcClient(),
+    store ?? mockStore(),
+    db ?? mockDb(),
     Logger.SILENT,
   )
-  Object.assign(syncer, overrides)
+  Object.assign(syncer, rest)
   return syncer
 }
 
@@ -736,14 +812,14 @@ function makePlugin(
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
     captureTx?: (
       input: TxToCapture,
-      creatorEvent?: InteropEvent,
+      creatorEvents?: InteropEvent[],
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
   } = {},
 ): InteropPluginResyncable {
   return {
     name: params.name ?? 'across',
     capture: params.capture ?? mockFn().returns(undefined),
-    captureTx: params.captureTx ?? mockFn().returns(undefined),
+    captureTx: params.captureTx,
     getDataRequests: () => params.dataRequests ?? [],
   }
 }
@@ -930,6 +1006,9 @@ function mockStore() {
   return mockObject<InteropEventStore>({
     saveNewEvents: mockFn().resolvesTo(undefined),
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
+    derivedTxStore: mockObject<DerivedTxStore>({
+      getCreatorEvents: mockFn().returns(undefined),
+    }),
   })
 }
 

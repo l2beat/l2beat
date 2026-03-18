@@ -117,30 +117,19 @@ export class ExampleRunner {
         if (!plugin.captureTx) {
           continue
         }
-        const captured = plugin.captureTx(txToCapture)
+        const creatorEvents = tx.hash
+          ? eventStore.derivedTxStore.getCreatorEvents(
+              txEntry.chain,
+              tx.hash,
+              plugin.name,
+            )
+          : undefined
+        const captured = plugin.captureTx(txToCapture, creatorEvents)
         if (captured) {
           newEvents.push(
             ...captured.map((c) => ({ ...c, plugin: plugin.name })),
           )
           break
-        }
-      }
-
-      for (const request of eventStore.derivedTxStore.get(
-        txEntry.chain,
-        tx.hash,
-      )) {
-        const plugin = eventPlugins.find(
-          (x) => x.name === request.creatorEvent.plugin,
-        )
-        if (!plugin) {
-          continue
-        }
-        const captured = plugin.captureTx?.(txToCapture, request.creatorEvent)
-        if (captured) {
-          newEvents.push(
-            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
-          )
         }
       }
 

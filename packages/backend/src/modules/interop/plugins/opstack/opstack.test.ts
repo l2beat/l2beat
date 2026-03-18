@@ -91,7 +91,7 @@ describe(OpStackPlugin.name, () => {
       const plugin = new OpStackPlugin()
       const creatorEvent = getCreatorEvent(plugin)
 
-      const captured = plugin.captureTx(makeDerivedTxCapture(), creatorEvent)
+      const captured = plugin.captureTx(makeDerivedTxCapture(), [creatorEvent])
 
       expect(captured).not.toEqual(undefined)
       if (!captured) {
