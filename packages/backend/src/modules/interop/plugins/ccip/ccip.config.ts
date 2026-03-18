@@ -65,6 +65,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'gnosis-mainnet': 'gnosis',
   'metis-mainnet': 'metis',
   'soneium-mainnet': 'soneium',
+  'hyperliquid-mainnet': 'hyperevm',
 }
 
 // Maps a Chainlink chain name to an L2Beat chain name, or derives a readable
