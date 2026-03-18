@@ -539,7 +539,6 @@ export interface ProjectScalingTechnology {
   otherConsiderations?: ProjectTechnologyChoice[]
   upgradesAndGovernance?: string
   upgradesAndGovernanceImage?: string
-  pastUpgrades?: ProjectContract['pastUpgrades']
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string

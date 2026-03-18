@@ -4,6 +4,7 @@ import mean from 'lodash/mean'
 import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
 
 type UpgradeContext = {
+  explorerUrl: string
   proxyContract: {
     name?: string
     address: string
@@ -19,6 +20,10 @@ export interface PastUpgradeProxyContract {
 export interface PastUpgradeLabels {
   proxyContract: string
   implementations: string
+}
+
+interface GetPastUpgradesDataOptions {
+  labels?: PastUpgradeLabels
 }
 
 type PastUpgradeWithContext = NonNullable<
@@ -37,12 +42,16 @@ export function getProjectPastUpgrades(
 
     for (const upgrade of contract.pastUpgrades) {
       const proxyAddress = ChainSpecificAddress.address(contract.address)
+      const explorerUrl = contract.url
+        ? new URL(contract.url).origin
+        : 'https://etherscan.io'
       const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}`
 
       if (!seenPastUpgrades.has(key)) {
         seenPastUpgrades.add(key)
         allPastUpgrades.push({
           ...upgrade,
+          explorerUrl,
           proxyContract: {
             name: contract.name,
             address: proxyAddress,
@@ -57,8 +66,7 @@ export function getProjectPastUpgrades(
 
 export function getPastUpgradesData(
   contractPastUpgrades: PastUpgradeWithContext[] | undefined,
-  explorerUrl: string,
-  labels?: PastUpgradeLabels,
+  options?: GetPastUpgradesDataOptions,
 ): TechnologyContract['pastUpgrades'] {
   const sortedUpgrades = [...(contractPastUpgrades ?? [])].sort(
     (a, b) => b.timestamp - a.timestamp,
@@ -77,17 +85,17 @@ export function getPastUpgradesData(
       timestamp: upgrade.timestamp,
       transactionHash: {
         hash: upgrade.transactionHash,
-        href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+        href: `${upgrade.explorerUrl}/tx/${upgrade.transactionHash}`,
       },
       implementations: getImplementations(
-        explorerUrl,
+        upgrade.explorerUrl,
         upgrade.implementations,
         previousUpgrade,
       ),
       proxyContract: {
         name: upgrade.proxyContract.name,
         address: upgrade.proxyContract.address,
-        href: `${explorerUrl}/address/${upgrade.proxyContract.address}#code`,
+        href: `${upgrade.explorerUrl}/address/${upgrade.proxyContract.address}#code`,
       },
     }
   })
@@ -95,7 +103,7 @@ export function getPastUpgradesData(
   return {
     upgrades: pastUpgrades,
     stats: getPastUpgradesStats(pastUpgrades),
-    labels: labels ?? {
+    labels: options?.labels ?? {
       proxyContract: 'Proxy contract',
       implementations: 'Implementation addresses',
     },
@@ -118,7 +126,7 @@ function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
   return result
 }
 
-function getProxyKey(upgrade: UpgradeContext) {
+function getProxyKey(upgrade: { proxyContract: { address: string } }) {
   return upgrade.proxyContract.address
 }
 

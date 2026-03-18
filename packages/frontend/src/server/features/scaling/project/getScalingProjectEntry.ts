@@ -613,14 +613,12 @@ export async function getScalingProjectEntry(
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
 
-        pastUpgrades: getPastUpgradesData(
-          allPastUpgrades,
-          project.chainConfig?.explorerUrl ?? 'https://etherscan.io',
-          {
+        pastUpgrades: getPastUpgradesData(allPastUpgrades, {
+          labels: {
             proxyContract: 'Proxy contract',
             implementations: 'Implementation addresses',
           },
-        ),
+        }),
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
