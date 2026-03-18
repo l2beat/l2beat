@@ -148,6 +148,7 @@ export type AggregatedInteropTransferWithTokens =
 export type CommonInteropData = {
   volume: number
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
