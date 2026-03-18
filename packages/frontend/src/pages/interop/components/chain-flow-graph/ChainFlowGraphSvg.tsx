@@ -58,7 +58,12 @@ export function ChainFlowGraphSvg({
     >()
 
     for (const id of chainIds) {
-      stats.set(id, { volumeIn: 0, volumeOut: 0, connectedChains: new Set(), routes: [] })
+      stats.set(id, {
+        volumeIn: 0,
+        volumeOut: 0,
+        connectedChains: new Set(),
+        routes: [],
+      })
     }
 
     for (const flow of data.flows) {
@@ -67,12 +72,20 @@ export function ChainFlowGraphSvg({
       if (srcStats) {
         srcStats.volumeOut += flow.volume
         srcStats.connectedChains.add(flow.dstChain)
-        srcStats.routes.push({ direction: 'out', chainId: flow.dstChain, volume: flow.volume })
+        srcStats.routes.push({
+          direction: 'out',
+          chainId: flow.dstChain,
+          volume: flow.volume,
+        })
       }
       if (dstStats) {
         dstStats.volumeIn += flow.volume
         dstStats.connectedChains.add(flow.srcChain)
-        dstStats.routes.push({ direction: 'in', chainId: flow.srcChain, volume: flow.volume })
+        dstStats.routes.push({
+          direction: 'in',
+          chainId: flow.srcChain,
+          volume: flow.volume,
+        })
       }
     }
 

@@ -1,7 +1,7 @@
 import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { ps } from '~/server/projects'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { getInteropChains } from './utils/getInteropChains'
 
@@ -49,9 +49,7 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
     select: ['interopConfig'],
   })
   const subgroupProjects = new Set(
-    interopProjects
-      .filter((p) => p.interopConfig.subgroupId)
-      .map((p) => p.id),
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
   // Aggregate transfer volumes by srcChain::dstChain pair
@@ -59,7 +57,10 @@ export async function getInteropGraphFlows(): Promise<InteropGraphFlowsData> {
   for (const record of transfers) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
     const key = `${record.srcChain}::${record.dstChain}`
-    flowMap.set(key, (flowMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0))
+    flowMap.set(
+      key,
+      (flowMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0),
+    )
   }
 
   const flows: Flow[] = []
@@ -79,7 +80,10 @@ function computeChainVolumes(flows: Flow[], chainIds: string[]): ChainVolume[] {
   const inflows = new Map<string, number>()
   const outflows = new Map<string, number>()
   for (const flow of flows) {
-    outflows.set(flow.srcChain, (outflows.get(flow.srcChain) ?? 0) + flow.volume)
+    outflows.set(
+      flow.srcChain,
+      (outflows.get(flow.srcChain) ?? 0) + flow.volume,
+    )
     inflows.set(flow.dstChain, (inflows.get(flow.dstChain) ?? 0) + flow.volume)
   }
 

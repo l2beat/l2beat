@@ -48,7 +48,10 @@ export function ChainFlowGraph({
       <h2 className="text-balance text-center text-brand text-heading-32">
         Select a pair of chains
       </h2>
-      <div ref={containerRef} className="relative h-[400px] w-full md:h-[580px] lg:h-[700px]">
+      <div
+        ref={containerRef}
+        className="relative h-[400px] w-full md:h-[580px] lg:h-[700px]"
+      >
         {isLoading || !data || !width || !height ? (
           <Skeleton className="h-full w-full rounded-lg" />
         ) : (

@@ -53,10 +53,7 @@ export function ChainTooltip({ data, x, y, containerWidth }: Props) {
       {/* Stats table */}
       <div className="flex flex-col gap-0.5 text-[12px]">
         <Row label="Volume In" value={formatCurrency(data.volumeIn, 'usd')} />
-        <Row
-          label="Volume Out"
-          value={formatCurrency(data.volumeOut, 'usd')}
-        />
+        <Row label="Volume Out" value={formatCurrency(data.volumeOut, 'usd')} />
         <Row
           label="Net Flow"
           value={`${data.netFlow >= 0 ? '' : '-'}${formatCurrency(Math.abs(data.netFlow), 'usd')}`}
