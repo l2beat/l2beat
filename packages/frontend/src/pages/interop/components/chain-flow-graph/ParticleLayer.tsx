@@ -19,11 +19,11 @@ const SECONDS_IN_DAY = 86_400
 /** Each particle represents this many USD of volume. */
 const DOLLARS_PER_PARTICLE = 50
 /** Base travel time for a particle to cross the full path. */
-const BASE_DURATION_S = 3
+const BASE_DURATION_S = 5
 /** Per-flow upper bound to avoid excessive DOM nodes. */
 const MAX_PARTICLES_PER_FLOW = 30
 /** Global upper bound — if exceeded, all counts are scaled down proportionally. */
-const MAX_TOTAL_PARTICLES = 250
+const MAX_TOTAL_PARTICLES = 350
 
 /**
  * Renders animated dots flowing along each connection path.
@@ -60,7 +60,9 @@ export function ParticleLayer({
   })
 
   // Apply per-flow cap
-  const cappedCounts = exactCounts.map((c) => Math.min(c, MAX_PARTICLES_PER_FLOW))
+  const cappedCounts = exactCounts.map((c) =>
+    Math.min(c, MAX_PARTICLES_PER_FLOW),
+  )
 
   // Apply global cap — scale all counts down proportionally if needed
   const totalCapped = cappedCounts.reduce((sum, c) => sum + Math.max(c, 1), 0)
@@ -76,25 +78,41 @@ export function ParticleLayer({
 
         const path = getConnectionPath(src, dst, centerX, centerY)
         const chainIndex = chainIds.indexOf(flow.srcChain)
-        const color = getChainColor(flow.srcChain, chainIndex, chainIds.length, true)
+        const color = getChainColor(
+          flow.srcChain,
+          chainIndex,
+          chainIds.length,
+          true,
+        )
 
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
         if (exact < 1) {
-          // Sub-1 flow: render 1 particle but slow it down so it appears
-          // proportionally less often (e.g. 0.2 → 5x slower travel time)
-          const duration = BASE_DURATION_S / Math.max(exact, 0.01)
+          // Sub-1 flow: render 1 particle that still travels in exactly
+          // BASE_DURATION_S, but with a longer gap between trips.
+          // e.g. exact=0.2 → cycle=25s, particle visible for first 5s only.
+          const cycleDuration = BASE_DURATION_S / Math.max(exact, 0.01)
+          const t = BASE_DURATION_S / cycleDuration
           return (
             <circle
               key={`${flow.srcChain}-${flow.dstChain}-0`}
               r="2"
               fill={color}
-              opacity={0.8}
             >
               <animateMotion
                 path={path}
-                dur={`${duration}s`}
+                dur={`${cycleDuration}s`}
+                keyPoints="0;1;1"
+                keyTimes={`0;${t};1`}
+                calcMode="linear"
                 begin="0s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                dur={`${cycleDuration}s`}
+                values="0.8;0.8;0;0"
+                keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
                 repeatCount="indefinite"
               />
             </circle>
