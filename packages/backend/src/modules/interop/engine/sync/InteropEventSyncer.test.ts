@@ -23,6 +23,7 @@ import type {
   InteropEvent,
   InteropPluginResyncable,
   LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { toEventSelector } from '../utils'
@@ -304,6 +305,29 @@ describe(InteropEventSyncer.name, () => {
       const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(result).toEqual(undefined)
+    })
+  })
+
+  describe(InteropEventSyncer.prototype.captureTx.name, () => {
+    it('captures using the requested plugin only', () => {
+      const event = makeInteropEventNoPlugin()
+      const firstCapture = mockFn().returns([event])
+      const secondCapture = mockFn().returns([event])
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across', captureTx: firstCapture }),
+            makePlugin({ name: 'wormhole', captureTx: secondCapture }),
+          ],
+        }),
+      })
+
+      const result = syncer.captureTx(mockObject<TxToCapture>({}), 'wormhole')
+
+      expect(firstCapture).not.toHaveBeenCalled()
+      expect(secondCapture).toHaveBeenCalled()
+      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
     })
   })
 
@@ -708,11 +732,15 @@ function makePlugin(
     capture?: (
       input: LogToCapture,
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
+    captureTx?: (
+      input: TxToCapture,
+    ) => Omit<InteropEvent, 'plugin'>[] | undefined
   } = {},
 ): InteropPluginResyncable {
   return {
     name: params.name ?? 'across',
     capture: params.capture ?? mockFn().returns(undefined),
+    captureTx: params.captureTx ?? mockFn().returns(undefined),
     getDataRequests: () => params.dataRequests ?? [],
   }
 }

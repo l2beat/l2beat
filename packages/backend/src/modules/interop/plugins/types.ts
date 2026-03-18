@@ -170,6 +170,7 @@ export interface TxToCapture {
   tx: Transaction
   block: Block
   chain: string
+  creatorEvent?: InteropEvent
 }
 
 export type MatchResult = (

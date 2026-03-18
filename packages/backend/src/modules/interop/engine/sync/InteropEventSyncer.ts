@@ -27,6 +27,7 @@ import type {
   InteropEvent,
   InteropPluginResyncable,
   LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
 import { getItemsToCapture } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -209,6 +210,18 @@ export class InteropEventSyncer extends TimeLoop {
   captureLog(logToCapture: LogToCapture) {
     for (const plugin of this.cluster.plugins) {
       const produced = plugin.capture(logToCapture)
+      if (produced) {
+        return produced.map((p) => ({ ...p, plugin: plugin.name }))
+      }
+    }
+  }
+
+  captureTx(txToCapture: TxToCapture, pluginName?: string) {
+    for (const plugin of this.cluster.plugins) {
+      if (pluginName && plugin.name !== pluginName) {
+        continue
+      }
+      const produced = plugin.captureTx?.(txToCapture)
       if (produced) {
         return produced.map((p) => ({ ...p, plugin: plugin.name }))
       }
