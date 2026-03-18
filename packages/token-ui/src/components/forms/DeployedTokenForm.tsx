@@ -276,7 +276,9 @@ export function DeployedTokenForm({
                     <FormMessage>
                       {tokenDetails.data?.error?.type === 'chain-not-found' && (
                         <Link
-                          to={`/chains/new?name=${field.value}`}
+                          to={buildUrlWithParams('/chains/new', {
+                            name: field.value,
+                          })}
                           className="underline"
                         >
                           Add chain
