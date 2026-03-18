@@ -159,6 +159,7 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
   const chainValue = form.watch('chain')
+  const addressValue = form.watch('address')
   const symbolValue = form.watch('symbol')
 
   const chainFieldSuccess =
@@ -278,6 +279,9 @@ export function DeployedTokenForm({
                         <Link
                           to={buildUrlWithParams('/chains/new', {
                             name: field.value,
+                            redirectTo: 'deployed',
+                            address: addressValue,
+                            abstractTokenId,
                           })}
                           className="underline"
                         >
