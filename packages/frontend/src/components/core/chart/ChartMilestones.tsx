@@ -5,8 +5,8 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
 import { ChevronIcon } from '~/icons/Chevron'
-import { IncidentIcon as IncidentMilestoneIcon } from '~/icons/Incident'
-import { MilestoneIcon as GeneralMilestoneIcon } from '~/icons/Milestone'
+import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
+import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
 import { Button } from '../Button'
@@ -21,10 +21,6 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
-
-type MilestoneWithProjectName = Milestone & {
-  projectName?: string
-}
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
@@ -66,6 +62,7 @@ export function ChartMilestones<T extends { timestamp: number }>({
             key={data.timestamp}
             left={x * width - 10}
             milestonesAtPoint={data.milestones}
+            allMilestones={milestones}
           />
         )
       })}
@@ -76,18 +73,19 @@ export function ChartMilestones<T extends { timestamp: number }>({
 function ChartMilestone({
   left,
   milestonesAtPoint,
+  allMilestones,
 }: {
   left: number
-  milestonesAtPoint: MilestoneWithProjectName[]
+  milestonesAtPoint: Milestone[]
+  allMilestones: Milestone[]
 }) {
   const { isDesktop } = useDevice()
   const triggerMilestone = milestonesAtPoint[0]
   assert(triggerMilestone)
-  const isMerged = milestonesAtPoint.length > 1
+  const milestoneIndex = allMilestones.indexOf(triggerMilestone)
+  assert(milestoneIndex !== -1)
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
-  const milestoneIndex = 0
-  const drawerMilestones = isMerged ? milestonesAtPoint : [triggerMilestone]
 
   const common = cn(
     'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
@@ -100,21 +98,9 @@ function ChartMilestone({
     return (
       <Tooltip delayDuration={0} disableHoverableContent={false}>
         <TooltipTrigger asChild>
-          {isMerged ? (
-            <div className={cn(common, 'cursor-pointer')} style={{ left }}>
-              <MilestoneMarker milestones={milestonesAtPoint} />
-            </div>
-          ) : (
-            <a
-              className={common}
-              href={triggerMilestone.url}
-              style={{ left }}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MilestoneMarker milestones={milestonesAtPoint} />
-            </a>
-          )}
+          <div className={cn(common, 'cursor-pointer')} style={{ left }}>
+            <MilestoneMarker milestones={milestonesAtPoint} />
+          </div>
         </TooltipTrigger>
         <TooltipContent side="bottom">
           <MilestoneTooltipContent milestones={milestonesAtPoint} />
@@ -133,18 +119,14 @@ function ChartMilestone({
       <DrawerContent>
         <MilestoneDrawerContent
           milestoneIndex={milestoneIndex}
-          allMilestones={drawerMilestones}
+          allMilestones={allMilestones}
         />
       </DrawerContent>
     </Drawer>
   )
 }
 
-function MilestoneMarker({
-  milestones,
-}: {
-  milestones: MilestoneWithProjectName[]
-}) {
+function MilestoneMarker({ milestones }: { milestones: Milestone[] }) {
   if (milestones.length > 1) {
     return (
       <div className="flex size-5 items-center justify-center rounded-full bg-brand font-bold text-[10px] text-primary-invert">
@@ -158,14 +140,9 @@ function MilestoneMarker({
   return <SingleMilestoneIcon milestone={milestone} />
 }
 
-function MilestoneTooltipContent({
-  milestones,
-}: {
-  milestones: MilestoneWithProjectName[]
-}) {
+function MilestoneTooltipContent({ milestones }: { milestones: Milestone[] }) {
   const firstMilestone = milestones[0]
   assert(firstMilestone)
-  const isMerged = milestones.length > 1
 
   return (
     <>
@@ -182,14 +159,12 @@ function MilestoneTooltipContent({
             {milestone.description && (
               <div className="mt-1 max-w-[216px]">{milestone.description}</div>
             )}
-            {isMerged && (
-              <CustomLink
-                href={milestone.url}
-                className="mt-1 block w-fit text-xs"
-              >
-                {getMilestoneLinkLabel(milestone)}
-              </CustomLink>
-            )}
+            <CustomLink
+              href={milestone.url}
+              className="ml-auto block w-fit text-[12px]"
+            >
+              {getMilestoneLinkLabel(milestone)}
+            </CustomLink>
           </div>
         ))}
       </div>
@@ -197,11 +172,7 @@ function MilestoneTooltipContent({
   )
 }
 
-function MilestoneListIcon({
-  milestone,
-}: {
-  milestone: MilestoneWithProjectName
-}) {
+function MilestoneListIcon({ milestone }: { milestone: Milestone }) {
   return (
     <SingleMilestoneIcon
       milestone={milestone}
@@ -215,7 +186,7 @@ export function MilestoneDrawerContent({
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: MilestoneWithProjectName[]
+  allMilestones: Milestone[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
@@ -235,9 +206,6 @@ export function MilestoneDrawerContent({
         </DialogTitle>
         <p className="ml-6 text-secondary text-xs">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
-          {tooltipMilestone.projectName
-            ? ` • ${tooltipMilestone.projectName}`
-            : ''}
         </p>
         {tooltipMilestone.description && (
           <p className="text-sm leading-[140%]">
@@ -300,7 +268,7 @@ function SingleMilestoneIcon({
   milestone,
   className,
 }: {
-  milestone: MilestoneWithProjectName
+  milestone: Milestone
   className?: string
 }) {
   switch (milestone.type) {
