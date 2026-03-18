@@ -1,10 +1,10 @@
 import {
   ChainSpecificAddress,
+  formatLargeNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -108,7 +108,6 @@ const executionDelay = governanceConfiguration.executionDelay
 const feeJuicePortal = discovery.getContract('FeeJuicePortal')
 const governance = discovery.getContract('Governance')
 const honkVerifier = discovery.getContract('HonkVerifier')
-const inbox = discovery.getContract('Inbox')
 const outbox = discovery.getContract('Outbox')
 const registry = discovery.getContract('Registry')
 const rollup = discovery.getContract('Rollup')
@@ -116,7 +115,6 @@ const escapeHatch = discovery.getContract('EscapeHatch')
 
 const rollupAddress = ChainSpecificAddress.address(rollup.address)
 const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
-const inboxAddress = ChainSpecificAddress.address(inbox.address)
 const outboxAddress = ChainSpecificAddress.address(outbox.address)
 const governanceAddress = ChainSpecificAddress.address(governance.address)
 const registryAddress = ChainSpecificAddress.address(registry.address)
@@ -125,7 +123,7 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 const alphaGenesisTimestamp = UnixTime(1774839144) // Monday, 30 March 2026 04:52 GMT+2
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatEther(amount)} AZTEC`
+  return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
 }
 
 function formatPercentage(value: string): string {
@@ -321,18 +319,18 @@ export const aztecnetwork: ScalingProject = {
       orderHint: executionDelay,
       description: `Any upgrade is delayed by ${formatSeconds(
         executionDelay,
-      )} before being executed. During that time, users can exit through 1) regular withdrawals initiated privately on L2 via the decentralized, permissionless sequencer set and 2) proposing and proving their own withdrawal via the escape hatch.`,
+      )} before being executed. During that period, users can exit through regular, private or escape-hatch withdrawals.`,
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'good',
-      description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the committees censor, anyone can bond ${escapeHatchBondString} to join the escape hatch candidate set, which opens every ${escapeHatchFrequencyString}.`,
+      description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the pseudo-randomly sampled committees censor proposals, anyone who bonds ${escapeHatchBondString} will join the escape hatch candidate set. Every ${escapeHatchFrequencyString}, a candidate is pseudo-randomly selected to propose and prove checkpoints fully autonomously. A candidate remains in the set until they are selected or leave voluntarily.`,
     },
     proposerFailure: {
       value: 'Self Propose',
       sentiment: 'good',
       description:
-        'Anyone can submit epoch root proofs for pending checkpoints. Checkpoint proposals themselves come from the open sequencer set, with the escape hatch providing a bonded fallback if the committees are censoring or unavailable.',
+        'Anyone can submit epoch root proofs which finalize the proven checkpoints. Checkpoint proposals come from the open sequencer set, with the escape hatch providing a bonded fallback if the sampled committees are censoring or unavailable.',
     },
   },
   stage: getStage(
@@ -412,31 +410,12 @@ export const aztecnetwork: ScalingProject = {
       ],
       risks: [],
     },
-    forceTransactions: {
-      name: 'Decentralized Sequencers, Escape Hatch',
-      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the sequencer set by staking ${activationThresholdString}. Transactions can be submitted for the private execution environment, preventing potential censorship based on transaction content. To circumvent the committees formed from the active sequencer set, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
-      references: [
-        {
-          title: 'Inbox.sol - sendL2Message() on Etherscan',
-          url: `https://etherscan.io/address/${inboxAddress.toString()}#code`,
-        },
-        {
-          title: 'Rollup.sol - deposit() on Etherscan',
-          url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
-        },
-        {
-          title: 'EscapeHatch.sol - joinCandidateSet() on Etherscan',
-          url: `https://etherscan.io/address/${escapeHatchAddress.toString()}#code`,
-        },
-      ],
-      risks: [],
-    },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
         description:
           EXITS.REGULAR_MESSAGING('zk').description +
-          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum.',
+          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be triggered privately on L2, revealing only the L1 part of the withdrawal.',
         references: [
           {
             title: 'Rollup.sol - submitEpochRootProof() on Etherscan',
