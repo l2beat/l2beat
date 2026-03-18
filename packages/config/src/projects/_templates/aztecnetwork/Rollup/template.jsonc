@@ -66,5 +66,6 @@
     "getLagInEpochsForRandao": {
       "description": "The delay in epochs for the RANDAO seed to be applied to validator selection to prevent manipulation."
     }
-  }
+  },
+  "category": "core"
 }

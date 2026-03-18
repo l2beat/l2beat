@@ -17,5 +17,6 @@
     "VERSION": {
       "description": "The identifier of the Aztec instance/version to ensure deposits are routed to the correct chain."
     }
-  }
+  },
+  "category": "bridge-canonical"
 }

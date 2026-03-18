@@ -7,5 +7,6 @@
     "getWithdrawal",
     "totalPowerAt"
   ],
-  "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"]
+  "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
+  "category": "gov"
 }

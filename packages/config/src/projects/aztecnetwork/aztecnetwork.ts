@@ -343,7 +343,7 @@ export const aztecnetwork: ScalingProject = {
         principle: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
+        securityCouncilProperlySetUp: true, // TODO: does it count as an SC?
         noRedTrustedSetups: true, // TODO: ?
         programHashesReproducible: true, // TODO: ?
         proverSourcePublished: true,
