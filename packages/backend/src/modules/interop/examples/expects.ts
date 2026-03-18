@@ -128,9 +128,11 @@ function checkTypedSimple(
       unexpected.push(value)
     }
     const tag = idx !== -1 ? PASS : XTRA
+    const srcChain = value.src.event?.ctx.chain ?? value.src.chain
+    const dstChain = value.dst.event?.ctx.chain ?? value.dst.chain
     const display = verbose
       ? formatVerbose(value)
-      : `${value.type} (${value.src.event.ctx.chain} → ${value.dst.event.ctx.chain})`
+      : `${value.type} (${srcChain} → ${dstChain})`
     console.log(tag, name, display)
   }
   for (const exp of normalizedExpected) {
