@@ -13,6 +13,8 @@ interface Props {
   firstSelectedChainId: string | undefined
   type: KnownInteropBridgeType | undefined
   onClick: () => void
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }
 
 export function ChainBubble({
@@ -23,6 +25,8 @@ export function ChainBubble({
   firstSelectedChainId,
   type,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
 }: Props) {
   const utils = api.useUtils()
   const { x, y, radius } = layout
@@ -38,6 +42,7 @@ export function ChainBubble({
       className="cursor-pointer"
       onClick={onClick}
       onMouseEnter={() => {
+        onMouseEnter()
         if (!firstSelectedChainId) return
         utils.interop.dashboard.prefetch({
           ...toInteropApiSelection(
@@ -47,6 +52,7 @@ export function ChainBubble({
           type,
         })
       }}
+      onMouseLeave={onMouseLeave}
     >
       <circle
         cx={x}

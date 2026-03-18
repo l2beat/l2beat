@@ -15,6 +15,7 @@ interface Props {
   centerY: number
   maxVolume: number
   selectedChainIds: Set<string>
+  hoveredChainId: string | null
 }
 
 const MIN_STROKE = 0.5
@@ -30,6 +31,7 @@ export function ConnectionPaths({
   centerY,
   maxVolume,
   selectedChainIds,
+  hoveredChainId,
 }: Props) {
   const threshold = maxVolume * 0.001
 
@@ -45,13 +47,19 @@ export function ConnectionPaths({
         const ratio = flow.volume / maxVolume
         const strokeWidth = MIN_STROKE + (MAX_STROKE - MIN_STROKE) * ratio
 
+        const isHovered =
+          hoveredChainId !== null &&
+          (hoveredChainId === flow.srcChain ||
+            hoveredChainId === flow.dstChain)
+
         const isHighlighted =
-          selectedChainIds.size > 0 &&
-          (selectedChainIds.has(flow.srcChain) ||
-            selectedChainIds.has(flow.dstChain))
+          isHovered ||
+          (selectedChainIds.size > 0 &&
+            (selectedChainIds.has(flow.srcChain) ||
+              selectedChainIds.has(flow.dstChain)))
 
         const opacity = isHighlighted
-          ? MAX_OPACITY * 2
+          ? MAX_OPACITY * 2.5
           : MIN_OPACITY + (MAX_OPACITY - MIN_OPACITY) * ratio
 
         const chainIndex = chainIds.indexOf(flow.srcChain)
@@ -72,7 +80,7 @@ export function ConnectionPaths({
             d={path}
             fill="none"
             stroke={color}
-            strokeWidth={strokeWidth}
+            strokeWidth={isHovered ? strokeWidth + 1 : strokeWidth}
             opacity={opacity}
           />
         )
