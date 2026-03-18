@@ -97,17 +97,17 @@ export function toRecord(
   }
 
   // Remove me: Just to apply migration
-  assert(row.duration)
+  assert(row.duration !== null)
 
-  assert(row.srcTime)
-  assert(row.srcTxHash)
-  assert(row.srcEventId)
-  assert(row.srcLogIndex)
+  assert(row.srcTime !== null)
+  assert(row.srcTxHash !== null)
+  assert(row.srcEventId !== null)
+  assert(row.srcLogIndex !== null)
 
-  assert(row.dstTime)
-  assert(row.dstTxHash)
-  assert(row.dstEventId)
-  assert(row.dstLogIndex)
+  assert(row.dstTime !== null)
+  assert(row.dstTxHash !== null)
+  assert(row.dstEventId !== null)
+  assert(row.dstLogIndex !== null)
 
   return {
     plugin: row.plugin,
