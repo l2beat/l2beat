@@ -15,10 +15,10 @@ export type TransferSuggestion = {
   explorerUrl: string | undefined
   abstractToken: AbstractTokenRecord
   txs: {
-    srcTxHash: string
+    srcTxHash: string | undefined
     srcChain: string
     srcExplorerUrl: string | undefined
-    dstTxHash: string
+    dstTxHash: string | undefined
     dstChain: string
     dstExplorerUrl: string | undefined
     transferId: string
