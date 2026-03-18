@@ -821,7 +821,11 @@ export interface ProjectAssociatedToken {
   icon: string | undefined
 }
 
-export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
+export type ProjectEscrowSource =
+  | 'canonical'
+  | 'custom-canonical'
+  | 'external'
+  | 'native'
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
@@ -1405,7 +1409,7 @@ export const TvsTokenSchema = v.object({
     'rwaPublic',
     'other',
   ]),
-  source: v.enum(['canonical', 'external', 'native']),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v
     .object({
