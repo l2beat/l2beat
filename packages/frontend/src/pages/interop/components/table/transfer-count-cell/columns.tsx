@@ -86,11 +86,16 @@ export const columns = [
   columnHelper.accessor('duration', {
     header: 'Transfer time',
     enableSorting: false,
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-14 text-primary">
-        {formatSeconds(ctx.row.original.duration)}
-      </span>
-    ),
+    cell: (ctx) => {
+      const { duration } = ctx.row.original
+      if (duration === undefined) return <NoDataBadge />
+
+      return (
+        <span className="font-medium text-label-value-14 text-primary">
+          {formatSeconds(duration)}
+        </span>
+      )
+    },
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
@@ -191,8 +196,20 @@ function shortenHash(hash: string): string {
   return `${hash.slice(0, 6)}...${hash.slice(-4)}`
 }
 
-function TxHashCell({ hash, href }: { hash: string; href: string }) {
+function TxHashCell({
+  hash,
+  href,
+}: {
+  hash: string | undefined
+  href: string | undefined
+}) {
+  if (!hash) return <NoDataBadge />
+
   const content = shortenHash(hash)
+  if (!href) {
+    return <span className="font-medium text-label-value-14">{content}</span>
+  }
+
   return (
     <a
       href={href}
