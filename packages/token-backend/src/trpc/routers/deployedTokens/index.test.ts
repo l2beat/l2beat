@@ -413,7 +413,7 @@ describe('deployedTokensRouter', () => {
           deploymentTimestamp,
           abstractTokenId: undefined,
           coingeckoId: 'token-id',
-          abstractTokenSuggestions: undefined,
+          abstractTokenSuggestions: [],
         },
       })
     })
