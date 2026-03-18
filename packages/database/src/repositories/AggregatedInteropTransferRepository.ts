@@ -12,6 +12,7 @@ export interface AggregatedInteropTransferRecord {
   dstChain: string
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
+  transfersWithDurationCount?: number
   identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
@@ -40,6 +41,7 @@ export interface AggregatedInteropTransferIdSeriesRecord {
   timestamp: UnixTime
   id: string
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
@@ -58,6 +60,7 @@ export function toRecord(
       (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
       undefined,
     transferCount: row.transferCount,
+    transfersWithDurationCount: row.transfersWithDurationCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -86,6 +89,7 @@ export function toRow(
     dstChain: record.dstChain,
     transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
+    transfersWithDurationCount: record.transferCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
@@ -210,6 +214,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<string>`"latest_per_day"."id"`.as('id'),
         sql<Date>`"latest_per_day"."day"`.as('day'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('transfersWithDurationCount').as('duration_count'),
         eb.fn.sum('totalDurationSum').as('total_duration_sum'),
         eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
         eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
@@ -222,6 +227,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      transfersWithDurationCount: Number(row.duration_count ?? 0),
       totalDurationSum: Number(row.total_duration_sum ?? 0),
       totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
       totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),

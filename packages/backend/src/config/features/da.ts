@@ -27,7 +27,7 @@ export async function getDaTrackingConfig(
   env: Env,
 ): Promise<DataAvailabilityTrackingConfig> {
   // TODO: automate it
-  const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
+  const ethereumEnabled = !!env.optionalString('ETHEREUM_BEACON_API_URL')
   const celestiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
   const availEnabled = !!env.optionalString('AVAIL_BLOBS_API_URL')
   const eigenDaEnabled =
@@ -46,8 +46,8 @@ export async function getDaTrackingConfig(
     blockLayers.push({
       type: 'ethereum' as const,
       name: 'ethereum',
-      url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
-      callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
+      url: env.string('ETHEREUM_BEACON_API_URL'),
+      callsPerMinute: env.integer('ETHEREUM_BEACON_API_CALLS_PER_MINUTE', 600),
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
       startingBlock: ETHEREUM_START_BLOCK,
     })
@@ -174,6 +174,9 @@ export async function getDaTrackingConfig(
     timestampLayers,
     blockProjects: allBlockProjects,
     timestampProjects: allTimestampProjects,
+    ethereumNotifierDiscordWebhookUrl: env.optionalString(
+      'ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL',
+    ),
   }
 }
 

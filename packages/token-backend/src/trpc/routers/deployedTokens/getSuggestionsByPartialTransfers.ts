@@ -9,7 +9,7 @@ import { Address32, assert } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../../../shared/build'
 import type { ChainRecord } from '../../../schemas/Chain'
 
-type TransferSuggestion = {
+export type TransferSuggestion = {
   chain: string
   address: string
   explorerUrl: string | undefined
@@ -30,25 +30,58 @@ export async function getSuggestionsByPartialTransfers(
   db: Database,
   tokenDb: TokenDatabase,
 ): Promise<TransferSuggestion[]> {
-  const [partialTransfers, abstractTokens, deployedTokens, chains] =
-    await Promise.all([
-      db.interopTransfer.getWithPartialAbstractTokenIds(),
-      tokenDb.abstractToken.getAll(),
-      tokenDb.deployedToken.getAll(),
-      tokenDb.chain.getAll(),
-    ])
-  const classifier = new InteropTransferClassifier()
-  const classified = classifier.groupByBridgeType(partialTransfers)
-  const transfersForSuggestions = [
-    ...classified.lockAndMint,
-    ...classified.burnAndMint,
-  ]
+  const partialTransfers =
+    await db.interopTransfer.getWithPartialAbstractTokenIds()
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const [abstractTokens, deployedTokens, chains] = await Promise.all([
+    tokenDb.abstractToken.getAll(),
+    tokenDb.deployedToken.getAll(),
+    tokenDb.chain.getAll(),
+  ])
+
   return buildTransferSuggestionMap(
     transfersForSuggestions,
     abstractTokens,
     deployedTokens,
     chains,
   )
+}
+
+export async function getSuggestionsByPartialTransfersForToken(
+  db: Database,
+  tokenDb: TokenDatabase,
+  token: { chain: string; address: Address32 },
+): Promise<TransferSuggestion[]> {
+  const partialTransfers =
+    await db.interopTransfer.getWithPartialAbstractTokenIdsForToken(token)
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const abstractTokens = await tokenDb.abstractToken.getAll()
+
+  return buildTransferSuggestionMap(
+    transfersForSuggestions,
+    abstractTokens,
+    [],
+    [],
+  )
+}
+
+function getEligibleTransfersForSuggestions(
+  transfers: InteropTransferRecord[],
+) {
+  const classifier = new InteropTransferClassifier()
+  const classified = classifier.groupByBridgeType(transfers)
+  return [...classified.lockAndMint, ...classified.burnAndMint]
 }
 
 function buildTransferSuggestionMap(

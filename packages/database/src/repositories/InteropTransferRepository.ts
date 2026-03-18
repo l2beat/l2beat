@@ -1,4 +1,5 @@
 import {
+  type Address32,
   assert,
   type InteropBridgeType,
   InteropBridgeTypeValues,
@@ -81,6 +82,11 @@ export interface InteropMissingTokenInfo {
   plugins: string[]
 }
 
+interface PartialAbstractTokenFilter {
+  chain: string
+  address: Address32
+}
+
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
@@ -89,6 +95,19 @@ export function toRecord(
       `Invalid interop transfer bridge type: ${row.bridgeType} for transfer ${row.transferId}`,
     )
   }
+
+  // Remove me: Just to apply migration
+  assert(row.duration !== null)
+
+  assert(row.srcTime !== null)
+  assert(row.srcTxHash !== null)
+  assert(row.srcEventId !== null)
+  assert(row.srcLogIndex !== null)
+
+  assert(row.dstTime !== null)
+  assert(row.dstTxHash !== null)
+  assert(row.dstEventId !== null)
+  assert(row.dstLogIndex !== null)
 
   return {
     plugin: row.plugin,
@@ -343,7 +362,37 @@ export class InteropTransferRepository extends BaseRepository {
   }
 
   async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {
-    const rows = await this.db
+    const rows = await this.getPartialAbstractTokenIdsQuery()
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getWithPartialAbstractTokenIdsForToken(
+    filter: PartialAbstractTokenFilter,
+  ): Promise<InteropTransferRecord[]> {
+    const rows = await this.getPartialAbstractTokenIdsQuery()
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('srcChain', '=', filter.chain),
+            eb('srcTokenAddress', '=', filter.address),
+          ]),
+          eb.and([
+            eb('dstChain', '=', filter.chain),
+            eb('dstTokenAddress', '=', filter.address),
+          ]),
+        ]),
+      )
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  private getPartialAbstractTokenIdsQuery() {
+    return this.db
       .selectFrom('InteropTransfer')
       .selectAll()
       .where((eb) =>
@@ -358,10 +407,6 @@ export class InteropTransferRepository extends BaseRepository {
           ]),
         ]),
       )
-      .orderBy('timestamp', 'desc')
-      .execute()
-
-    return rows.map(toRecord)
   }
 
   async updateFinancials(

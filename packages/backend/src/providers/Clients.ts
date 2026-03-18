@@ -32,6 +32,7 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
+import { DiscordWebhookClient } from '../modules/anomalies/clients/DiscordWebhookClient'
 
 export interface Clients {
   block: BlockClient[]
@@ -58,6 +59,7 @@ export interface Clients {
   espresso: EspressoClient | undefined
   dune: DuneClient | undefined
   discord: DiscordClient | undefined
+  blobNotifierDiscord: DiscordWebhookClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -78,6 +80,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
   let discord: DiscordClient | undefined
+  let blobNotifierDiscord: DiscordWebhookClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -272,6 +275,12 @@ export function initClients(config: Config, logger: Logger): Clients {
           assertUnreachable(layer.type)
       }
     }
+
+    if (config.da.ethereumNotifierDiscordWebhookUrl) {
+      blobNotifierDiscord = new DiscordWebhookClient(
+        config.da.ethereumNotifierDiscordWebhookUrl,
+      )
+    }
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
@@ -399,5 +408,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     lighter: lighterClient,
     dune,
     discord,
+    blobNotifierDiscord,
   }
 }
