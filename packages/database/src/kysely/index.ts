@@ -4,11 +4,13 @@ import {
   Kysely,
   type Transaction as KyselyTransaction,
   type LogConfig,
+  type LogEvent,
   PostgresDialect,
 } from 'kysely'
 import { defaults, Pool, type PoolConfig, types } from 'pg'
 import type { DB as GeneratedDB } from './generated/types'
 
+export type KyselyLogEvent = LogEvent
 export type DB = GeneratedDB
 // Interpret `timestamp without time zone` as UTC
 defaults.parseInputDatesAsUTC = true
