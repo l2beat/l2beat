@@ -96,6 +96,19 @@ export function toRecord(
     )
   }
 
+  // Remove me: Just to apply migration
+  assert(row.duration)
+
+  assert(row.srcTime)
+  assert(row.srcTxHash)
+  assert(row.srcEventId)
+  assert(row.srcLogIndex)
+
+  assert(row.dstTime)
+  assert(row.dstTxHash)
+  assert(row.dstEventId)
+  assert(row.dstLogIndex)
+
   return {
     plugin: row.plugin,
     transferId: row.transferId,
