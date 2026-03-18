@@ -7,6 +7,7 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
+import { DISCORD_MAX_MESSAGE_LENGTH } from '../../anomalies/clients/DiscordWebhookClient'
 import { EthereumBlobNotifierIndexer } from './EthereumBlobNotifierIndexer'
 
 describe(EthereumBlobNotifierIndexer.name, () => {
@@ -144,6 +145,61 @@ describe(EthereumBlobNotifierIndexer.name, () => {
       expect(result).toEqual([])
     })
   })
+
+  describe(
+    EthereumBlobNotifierIndexer.prototype.formatDiscordMessages.name,
+    () => {
+      const oneAm =
+        UnixTime.toStartOf(UnixTime.now(), 'day') + 1 * UnixTime.HOUR
+
+      it('returns single message for small payload', () => {
+        const indexer = createIndexer()
+        const pairs = [
+          { from: '0xA', to: '0xB', count: 200 },
+          { from: '0xC', to: '0xD', count: 150 },
+        ]
+
+        const messages = indexer.formatDiscordMessages(pairs, oneAm)
+
+        expect(messages).toHaveLength(1)
+        expect(messages[0]).toInclude('**Unmatched Ethereum Blob Pairs**')
+        expect(messages[0]).toInclude('`0xA` → `0xB` — **200** blobs')
+        expect(messages[0]).toInclude('`0xC` → `0xD` — **150** blobs')
+      })
+
+      it('splits messages when exceeding Discord limit', () => {
+        const indexer = createIndexer()
+        const pairs = Array.from({ length: 30 }, (_, i) => ({
+          from: '0x' + 'A'.repeat(40),
+          to: '0x' + 'B'.repeat(40),
+          count: 1000 - i,
+        }))
+
+        const messages = indexer.formatDiscordMessages(pairs, oneAm)
+
+        expect(messages.length).toBeGreaterThan(1)
+        for (const msg of messages) {
+          expect(msg.length).toBeLessThanOrEqual(DISCORD_MAX_MESSAGE_LENGTH)
+        }
+      })
+
+      it('includes header only in first message', () => {
+        const indexer = createIndexer()
+        const pairs = Array.from({ length: 30 }, (_, i) => ({
+          from: '0x' + 'A'.repeat(40),
+          to: '0x' + 'B'.repeat(40),
+          count: 1000 - i,
+        }))
+
+        const messages = indexer.formatDiscordMessages(pairs, oneAm)
+
+        expect(messages[0]).toInclude('**Unmatched Ethereum Blob Pairs**')
+        for (const msg of messages.slice(1)) {
+          expect(msg).not.toInclude('**Unmatched Ethereum Blob Pairs**')
+        }
+      })
+    },
+  )
 })
 
 function config(

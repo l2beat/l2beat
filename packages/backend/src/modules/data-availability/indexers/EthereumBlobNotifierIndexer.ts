@@ -7,7 +7,10 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import type { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
+import {
+  DISCORD_MAX_MESSAGE_LENGTH,
+  type DiscordWebhookClient,
+} from '../../anomalies/clients/DiscordWebhookClient'
 import { matchEthereumProject } from '../services/DaService'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -62,8 +65,10 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       count: unmatchedPairs.length,
     })
 
-    const message = formatDiscordMessage(unmatchedPairs, to)
-    await this.$.discordClient.sendMessage(message)
+    const messages = this.formatDiscordMessages(unmatchedPairs, to)
+    for (const message of messages) {
+      await this.$.discordClient.sendMessage(message)
+    }
     this.logger.info('Sent Discord notification')
 
     return to
@@ -103,29 +108,38 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
     return unmatchedPairs
   }
 
+  formatDiscordMessages(pairs: UnmatchedBlobPair[], to: number): string[] {
+    const date = new Date((UnixTime.toStartOf(to, 'day') - UnixTime.DAY) * 1000)
+      .toISOString()
+      .slice(0, 10)
+
+    const sorted = [...pairs].sort((a, b) => b.count - a.count)
+
+    const header = [
+      `**Unmatched Ethereum Blob Pairs** (${date})`,
+      `Found **${pairs.length}** address ${pluralize(pairs.length, 'pair')} with ${COUNT_THRESHOLD}+ blobs not matching any project config:`,
+      '',
+    ].join('\n')
+
+    const messages: string[] = []
+    let current = header
+
+    for (const p of sorted) {
+      const line = `\`${p.from}\` → \`${p.to ?? 'null'}\` — **${p.count}** blobs`
+
+      if (current.length + 1 + line.length > DISCORD_MAX_MESSAGE_LENGTH) {
+        messages.push(current)
+        current = line
+      } else {
+        current += '\n' + line
+      }
+    }
+
+    messages.push(current)
+    return messages
+  }
+
   async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
-}
-
-export function formatDiscordMessage(
-  pairs: UnmatchedBlobPair[],
-  to: number,
-): string {
-  const date = new Date((UnixTime.toStartOf(to, 'day') - UnixTime.DAY) * 1000)
-    .toISOString()
-    .slice(0, 10)
-
-  const sorted = [...pairs].sort((a, b) => b.count - a.count)
-
-  const lines = sorted.map(
-    (p) => `\`${p.from}\` → \`${p.to ?? 'null'}\` — **${p.count}** blobs`,
-  )
-
-  return [
-    `**Unmatched Ethereum Blob Pairs** (${date})`,
-    `Found **${pairs.length}** address ${pluralize(pairs.length, 'pair')} with ${COUNT_THRESHOLD}+ blobs not matching any project config:`,
-    '',
-    ...lines,
-  ].join('\n')
 }
