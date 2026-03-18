@@ -17,6 +17,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
+  type TxToCapture,
 } from '../types'
 
 // == Event signatures ==
@@ -69,6 +70,14 @@ export const TransactionDeposited = createInteropEventType<{
   gasLimit: bigint
   data: string
 }>('opstack.TransactionDeposited')
+
+export const PortalDepositFinalized = createInteropEventType<{
+  chain: string
+  from: Address32
+  to?: Address32
+  value: bigint
+  sourceHash: `0x${string}`
+}>('opstack.PortalDepositFinalized')
 
 export const parseTransactionDeposited = createEventParser(
   transactionDepositedLog,
@@ -356,6 +365,27 @@ export class OpStackPlugin implements InteropPluginResyncable {
         creatorEvent: TransactionDeposited,
         txHashArg: 'l2TxHash',
         chainArg: 'chain',
+      }),
+    ]
+  }
+
+  captureTx(input: TxToCapture) {
+    if (
+      !input.creatorEvent ||
+      !TransactionDeposited.checkType(input.creatorEvent)
+    ) {
+      return
+    }
+
+    return [
+      PortalDepositFinalized.createTx(input, {
+        chain: input.creatorEvent.args.chain,
+        from: input.creatorEvent.args.from,
+        ...(input.creatorEvent.args.to
+          ? { to: input.creatorEvent.args.to }
+          : {}),
+        value: input.creatorEvent.args.value,
+        sourceHash: input.creatorEvent.args.sourceHash,
       }),
     ]
   }

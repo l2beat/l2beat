@@ -87,6 +87,11 @@ export class ExampleRunner {
 
     await this.loadConfigs(plugins)
     const eventPlugins = flattenClusters(plugins.eventPlugins)
+    const eventStore = new InteropEventStore(
+      createExampleDb(),
+      500_000,
+      eventPlugins.filter(isPluginResyncable),
+    )
 
     const events: InteropEvent[] = []
 
@@ -100,6 +105,31 @@ export class ExampleRunner {
       const txLogs = logs
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
+      const newEvents: InteropEvent[] = []
+
+      for (const request of eventStore.derivedTxStore.get(
+        txEntry.chain,
+        tx.hash,
+      )) {
+        const plugin = eventPlugins.find(
+          (x) => x.name === request.creatorEvent.plugin,
+        )
+        if (!plugin) {
+          continue
+        }
+        const captured = plugin.captureTx?.({
+          chain: txEntry.chain,
+          tx,
+          block,
+          txLogs,
+          creatorEvent: request.creatorEvent,
+        })
+        if (captured) {
+          newEvents.push(
+            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+          )
+        }
+      }
 
       for (const plugin of eventPlugins) {
         if (!plugin.captureTx) {
@@ -112,7 +142,9 @@ export class ExampleRunner {
           txLogs,
         })
         if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+          newEvents.push(
+            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+          )
           break
         }
       }
@@ -130,19 +162,17 @@ export class ExampleRunner {
             txLogs,
           })
           if (captured) {
-            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+            newEvents.push(
+              ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+            )
             break
           }
         }
       }
-    }
 
-    const eventStore = new InteropEventStore(
-      createExampleDb(),
-      500_000,
-      eventPlugins.filter(isPluginResyncable),
-    )
-    await eventStore.saveNewEvents(events)
+      events.push(...newEvents)
+      await eventStore.saveNewEvents(newEvents)
+    }
 
     const tokenMap = await this.getTokenMap()
 

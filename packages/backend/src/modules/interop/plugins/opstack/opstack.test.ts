@@ -2,10 +2,11 @@ import { Address32 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { Log } from 'viem'
-import type { LogToCapture } from '../types'
+import type { InteropEvent, LogToCapture, TxToCapture } from '../types'
 import {
   derivePortalDeposit,
   OpStackPlugin,
+  PortalDepositFinalized,
   TransactionDeposited,
 } from './opstack'
 
@@ -84,6 +85,33 @@ describe(OpStackPlugin.name, () => {
       expect(event.args.value).toEqual(82180496084697442374n)
     })
   })
+
+  describe(OpStackPlugin.prototype.captureTx.name, () => {
+    it('captures the derived Base deposit tx using the creator event context', () => {
+      const plugin = new OpStackPlugin()
+      const creatorEvent = getCreatorEvent(plugin)
+
+      const captured = plugin.captureTx(makeDerivedTxCapture(creatorEvent))
+
+      expect(captured).not.toEqual(undefined)
+      if (!captured) {
+        return
+      }
+
+      expect(captured).toHaveLength(1)
+      const event = { ...captured[0], plugin: 'opstack' }
+      expect(PortalDepositFinalized.checkType(event)).toEqual(true)
+      if (!PortalDepositFinalized.checkType(event)) {
+        return
+      }
+
+      expect(event.args.chain).toEqual('base')
+      expect(event.args.sourceHash).toEqual(WORKED_EXAMPLE.sourceHash)
+      expect(event.args.value).toEqual(82180496084697442374n)
+      expect(event.ctx.chain).toEqual('base')
+      expect(event.ctx.txHash).toEqual(WORKED_EXAMPLE.l2TxHash)
+    })
+  })
 })
 
 const transactionDepositedInterface = new utils.Interface([
@@ -138,5 +166,31 @@ function makePortalDepositCapture(): LogToCapture {
       transactions: [{ hash: WORKED_EXAMPLE.sourceTxHash }],
     },
     chain: 'ethereum',
+  }
+}
+
+function getCreatorEvent(plugin: OpStackPlugin): InteropEvent {
+  const captured = plugin.capture(makePortalDepositCapture())
+  if (!captured) {
+    throw new Error('Expected creator event to be captured')
+  }
+  return { ...captured[0], plugin: 'opstack' }
+}
+
+function makeDerivedTxCapture(creatorEvent: InteropEvent): TxToCapture {
+  return {
+    txLogs: [],
+    tx: {
+      hash: WORKED_EXAMPLE.l2TxHash,
+    },
+    block: {
+      number: 1,
+      hash: '0x',
+      logsBloom: '0x',
+      timestamp: 1,
+      transactions: [{ hash: WORKED_EXAMPLE.l2TxHash }],
+    },
+    chain: 'base',
+    creatorEvent,
   }
 }
