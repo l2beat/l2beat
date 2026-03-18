@@ -42,6 +42,7 @@ describe(DerivedTxStore.name, () => {
         creatorEvent,
       },
     ])
+    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
   })
 
   it('indexes multiple derived tx requests for the same creator event type', () => {
@@ -125,5 +126,45 @@ describe(DerivedTxStore.name, () => {
 
     expect(store.getCount()).toEqual(0)
     expect(store.get('base', '0xabc')).toEqual([])
+  })
+
+  it('requeues the same tx hash when another creator event for it appears later', () => {
+    const CreatorEvent = createInteropEventType<{
+      chain: string
+      txHash: string
+    }>('test.CreatorEvent')
+    const plugin: InteropPluginResyncable = {
+      name: 'across',
+      capture: () => undefined,
+      getDataRequests: () => [
+        createDerivedTxRequest({
+          creatorEvent: CreatorEvent,
+          chainArg: 'chain',
+          txHashArg: 'txHash',
+        }),
+      ],
+    }
+    const firstEvent = {
+      ...CreatorEvent.mock({
+        chain: 'base',
+        txHash: '0xabc',
+      }),
+      plugin: plugin.name,
+    }
+    const secondEvent = {
+      ...CreatorEvent.mock({
+        chain: 'base',
+        txHash: '0xabc',
+      }),
+      plugin: plugin.name,
+    }
+
+    const store = new DerivedTxStore([plugin])
+    store.onEventCreated(firstEvent)
+    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
+
+    store.onEventCreated(secondEvent)
+
+    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
   })
 })

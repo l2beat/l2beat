@@ -64,23 +64,25 @@ export class FollowingState implements BlockProcessorState {
         ? await this.bootstrapSyncedRange(block)
         : decision.updatedSyncedRange
 
-    const interopEvents = []
+    const interopEvents = await this.syncer.capturePendingHistoricalTxs(
+      BigInt(block.number),
+    )
     const toCapture = this.syncer.getItemsToCapture(block, logs)
     for (const txToCapture of toCapture.txsToCapture) {
       const produced = this.syncer.captureTx(txToCapture)
       if (produced) {
-        interopEvents.push(produced)
+        interopEvents.push(...produced)
       }
     }
     for (const logToCapture of toCapture.logsToCapture) {
       const produced = this.syncer.captureLog(logToCapture)
       if (produced) {
-        interopEvents.push(produced)
+        interopEvents.push(...produced)
       }
     }
 
     await this.syncer.saveProducedInteropEvents(
-      interopEvents.flat(),
+      interopEvents,
       updatedSyncedRange,
     )
 

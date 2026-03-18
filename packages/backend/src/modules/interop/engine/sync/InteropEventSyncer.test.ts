@@ -409,6 +409,75 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
+  describe(
+    InteropEventSyncer.prototype.capturePendingHistoricalTxs.name,
+    () => {
+      it('captures pending txs that are older than the current block', async () => {
+        const event = makeInteropEventNoPlugin()
+        const captureTx = mockFn().returns([event])
+        const txHash = '0x123'
+        const syncer = createSyncer({
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [makePlugin({ name: 'across', captureTx })],
+          }),
+          store: mockObject<InteropEventStore>({
+            derivedTxStore: mockObject<DerivedTxStore>({
+              takePendingTxHashes: mockFn().returns([txHash]),
+              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
+              requeuePendingTxHash: mockFn().returns(undefined),
+            }),
+          }),
+          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            getTransactionByHash: mockFn().resolvesTo(
+              makeRpcTransaction({ hash: txHash, blockNumber: 9n }),
+            ),
+            getTransactionReceipt: mockFn().resolvesTo(makeRpcReceipt()),
+            getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(9n)),
+          }),
+        })
+
+        const result = await syncer.capturePendingHistoricalTxs(10n)
+
+        expect(captureTx).toHaveBeenCalled()
+        expect(result).toEqual([{ ...event, plugin: 'across' }])
+      })
+
+      it('ignores pending txs from the current block or later', async () => {
+        const captureTx = mockFn().returns(undefined)
+        const getTransactionReceipt = mockFn().resolvesTo(makeRpcReceipt())
+        const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(10n))
+        const syncer = createSyncer({
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [makePlugin({ name: 'across', captureTx })],
+          }),
+          store: mockObject<InteropEventStore>({
+            derivedTxStore: mockObject<DerivedTxStore>({
+              takePendingTxHashes: mockFn().returns(['0x123']),
+              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
+              requeuePendingTxHash: mockFn().returns(undefined),
+            }),
+          }),
+          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            getTransactionByHash: mockFn().resolvesTo(
+              makeRpcTransaction({ hash: '0x123', blockNumber: 10n }),
+            ),
+            getTransactionReceipt,
+            getBlockByNumber,
+          }),
+        })
+
+        const result = await syncer.capturePendingHistoricalTxs(10n)
+
+        expect(result).toEqual([])
+        expect(captureTx).not.toHaveBeenCalled()
+        expect(getTransactionReceipt).not.toHaveBeenCalled()
+        expect(getBlockByNumber).not.toHaveBeenCalled()
+      })
+    },
+  )
+
   describe(InteropEventSyncer.prototype.saveProducedInteropEvents.name, () => {
     it('saves events and updates synced range in a transaction', async () => {
       const saveNewEvents = mockFn().resolvesTo(undefined)
@@ -942,6 +1011,8 @@ function makeRpcBlock(number: bigint): RpcBlock {
   return {
     number,
     timestamp: number,
+    hash: ZERO_HASH,
+    logsBloom: `0x${'00'.repeat(256)}`,
   } as RpcBlock
 }
 
@@ -1008,6 +1079,8 @@ function mockStore() {
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
     derivedTxStore: mockObject<DerivedTxStore>({
       getCreatorEvents: mockFn().returns(undefined),
+      takePendingTxHashes: mockFn().returns([]),
+      requeuePendingTxHash: mockFn().returns(undefined),
     }),
   })
 }

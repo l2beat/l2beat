@@ -11,9 +11,11 @@ import {
   type RpcLog,
   type RpcReceipt,
   type RpcTransaction,
+  toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import {
+  assert,
   type Block,
   ChainSpecificAddress,
   type EthereumAddress,
@@ -29,7 +31,7 @@ import type {
   LogToCapture,
   TxToCapture,
 } from '../../plugins/types'
-import { getItemsToCapture } from '../capture/getItemsToCapture'
+import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
@@ -235,6 +237,52 @@ export class InteropEventSyncer extends TimeLoop {
     }
   }
 
+  async capturePendingHistoricalTxs(beforeBlock: bigint) {
+    const txHashes = this.store.derivedTxStore.takePendingTxHashes(this.chain)
+    const interopEvents = []
+    let index = 0
+
+    try {
+      for (; index < txHashes.length; index++) {
+        const txHash = txHashes[index]
+        assert(txHash)
+
+        const tx = await this.getTransactionByHash(txHash)
+        if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+          continue
+        }
+
+        const receipt = await this.getTransactionReceipt(txHash)
+        assert(receipt, `Missing receipt for tx ${txHash}`)
+
+        const block = await this.getBlockByNumber(tx.blockNumber)
+        assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
+
+        const produced = this.captureTx({
+          chain: this.chain,
+          tx: toTransaction(tx),
+          block: toBlock(block),
+          txLogs: receipt.logs
+            .map((log) => logToViemLog(toEVMLog(log)))
+            .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
+        })
+        if (produced) {
+          interopEvents.push(...produced)
+        }
+      }
+    } catch (error) {
+      for (; index < txHashes.length; index++) {
+        const txHash = txHashes[index]
+        if (txHash) {
+          this.store.derivedTxStore.requeuePendingTxHash(this.chain, txHash)
+        }
+      }
+      throw error
+    }
+
+    return interopEvents
+  }
+
   async saveProducedInteropEvents(
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
@@ -333,5 +381,29 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
+  }
+}
+
+function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
+  return {
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to ?? undefined,
+    data: tx.input,
+    type: tx.type?.toString(),
+    value: tx.value,
+  }
+}
+
+function toBlock(block: RpcBlock): TxToCapture['block'] {
+  assert(block.hash, `Missing hash for block ${block.number}`)
+  assert(block.number !== null, 'Missing block number')
+
+  return {
+    number: Number(block.number),
+    hash: block.hash,
+    logsBloom: block.logsBloom,
+    timestamp: Number(block.timestamp),
+    transactions: [],
   }
 }
