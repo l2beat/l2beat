@@ -121,9 +121,9 @@
 
 - `ReviewProjectType`: `'stablecoin' | 'lending' | 'dex' | 'bridge' | 'derivatives' | 'yield' | 'liquid-staking' | 'cdp' | 'other'`
 - `EntityDescription`: `{ name?, description }` — used for admins, dependencies, and funds
-- `ResourceType`: `'frontend' | 'docs' | 'source-code' | 'github' | 'x' | 'other'`
+- `ResourceType`: `'frontend' | 'website' | 'docs' | 'source-code' | 'github' | 'x' | 'license' | 'defiscan-v1' | 'other'`
 - `FrontendSubtype`: `'official' | 'third-party' | 'self-hosted'`
-- `ResourceEntry`: `{ url, type: ResourceType, label?, frontendSubtype?: FrontendSubtype }`
+- `ResourceEntry`: `{ url, type: ResourceType, label?, frontendSubtype?: FrontendSubtype, licenseScope?: string }`
 - `ApiUpdateEntityDescriptionRequest`: `{ section: 'admins' | 'dependencies' | 'funds', address, name?, description }`
 - `ReviewConfig`: Full config including metadata, descriptions, resources, sections, and dataKeys
 
@@ -135,9 +135,9 @@
 
 ### Resources
 
-Protocol links (frontends, docs, GitHub, X, source code, other) stored as `resources: ResourceEntry[]`
+Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored as `resources: ResourceEntry[]`
 
-- **Types**: `frontend` (with subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`
+- **Types**: `frontend` (with subtype: official/third-party/self-hosted), `website`, `docs`, `source-code`, `github`, `x`, `license` (with `licenseScope`), `defiscan-v1`, `other`
 - **Compiler**: Pass-through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
 - **Preservation**: The `/generate-review` skill extracts and restores resources automatically (not AI-generated)
 

@@ -138,6 +138,16 @@
       "url": "https://app.compound.finance/?market=usdc-mainnet",
       "type": "frontend",
       "frontendSubtype": "official"
+    },
+    {
+      "url": "https://github.com/compound-finance/comet/blob/main/LICENSE",
+      "type": "license",
+      "label": "BUSL-1.1",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/compound-v3/ethereum",
+      "type": "defiscan-v1"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-16T08:51:24.937Z",
+  "lastModified": "2026-03-18T09:43:28.762Z",
   "protocolSlug": "Frankencoin",
   "protocolName": "Frankencoin",
   "tokenName": "ZCHF",
@@ -228,6 +228,18 @@
     {
       "url": "https://x.com/frankencoinzchf",
       "type": "x"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/LICENSE",
+      "type": "license",
+      "label": "MIT",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/frankencoin-dapp/blob/main/LICENSE",
+      "type": "license",
+      "label": "MIT",
+      "licenseScope": "Frontend"
     }
   ]
 }

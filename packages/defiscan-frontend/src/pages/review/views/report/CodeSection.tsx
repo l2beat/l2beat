@@ -140,6 +140,22 @@ function LensIcon({ className }: { className?: string }) {
   )
 }
 
+function DeFiScanIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  )
+}
+
 function LinkIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -213,6 +229,8 @@ export function CodeSection({ review }: CodeSectionProps) {
   const x = resources.filter((r) => r.type === 'x')
   const docs = resources.filter((r) => r.type === 'docs')
   const sourceCode = resources.filter((r) => r.type === 'source-code')
+  const licenses = resources.filter((r) => r.type === 'license')
+  const defiscanV1 = resources.filter((r) => r.type === 'defiscan-v1')
   const other = resources.filter((r) => r.type === 'other')
 
   return (
@@ -259,6 +277,14 @@ export function CodeSection({ review }: CodeSectionProps) {
             label={r.label || 'Source Code'}
           />
         ))}
+        {defiscanV1.map((r, i) => (
+          <QuickLinkPill
+            key={`dsv1-${i}`}
+            href={r.url}
+            icon={<DeFiScanIcon className="h-4 w-4" />}
+            label={r.label || 'DeFiScan V1'}
+          />
+        ))}
         <ExternalLink
           href={lensUrl}
           className="inline-flex items-center gap-2 rounded-lg border border-purple-200 bg-purple-50 px-3.5 py-2 text-sm font-medium text-purple-700 shadow-sm transition-colors hover:bg-purple-100 hover:text-purple-800"
@@ -277,6 +303,20 @@ export function CodeSection({ review }: CodeSectionProps) {
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {frontends.map((r, i) => (
               <FrontendCard key={i} resource={r} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Licenses — card grid */}
+      {licenses.length > 0 && (
+        <div>
+          <h3 className="mb-3 font-semibold text-sm text-text-primary">
+            Licenses
+          </h3>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {licenses.map((r, i) => (
+              <LicenseCard key={i} resource={r} />
             ))}
           </div>
         </div>
@@ -338,6 +378,71 @@ function QuickLinkPill({
     >
       {icon}
       {label}
+    </ExternalLink>
+  )
+}
+
+const OPEN_SOURCE_LICENSES = [
+  'MIT',
+  'Apache-2.0',
+  'GPL-3.0',
+  'GPL-2.0',
+  'LGPL-3.0',
+  'BSD-2-Clause',
+  'BSD-3-Clause',
+  'MPL-2.0',
+  'ISC',
+]
+
+function getLicenseStyle(label?: string): {
+  border: string
+  bg: string
+  text: string
+  dot: string
+} {
+  if (!label || label === 'Unlicensed') {
+    return {
+      border: 'border-orange-200',
+      bg: 'bg-orange-50',
+      text: 'text-orange-700',
+      dot: 'bg-orange-400',
+    }
+  }
+  if (OPEN_SOURCE_LICENSES.includes(label)) {
+    return {
+      border: 'border-green-200',
+      bg: 'bg-green-50',
+      text: 'text-green-700',
+      dot: 'bg-green-400',
+    }
+  }
+  // Closed source / proprietary / BUSL / custom
+  return {
+    border: 'border-blue-200',
+    bg: 'bg-blue-50',
+    text: 'text-blue-700',
+    dot: 'bg-blue-400',
+  }
+}
+
+function LicenseCard({ resource }: { resource: CompiledResourceEntry }) {
+  const style = getLicenseStyle(resource.label)
+  return (
+    <ExternalLink
+      href={resource.url}
+      className={`group flex items-center gap-3 rounded-lg border px-4 py-3 transition-colors hover:shadow-sm ${style.border} ${style.bg} ${style.text}`}
+    >
+      <span className={`h-2 w-2 shrink-0 rounded-full ${style.dot}`} />
+      <div className="min-w-0 flex-1">
+        <div className="truncate font-medium text-sm">
+          {resource.label || 'Unlicensed'}
+        </div>
+      </div>
+      {resource.licenseScope && (
+        <span className="font-medium text-[10px] uppercase tracking-wide opacity-60">
+          {resource.licenseScope}
+        </span>
+      )}
     </ExternalLink>
   )
 }

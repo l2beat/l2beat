@@ -850,6 +850,8 @@ export type ResourceType =
   | 'source-code'
   | 'github'
   | 'x'
+  | 'license'
+  | 'defiscan-v1'
   | 'other'
 export type FrontendSubtype = 'official' | 'third-party' | 'self-hosted'
 
@@ -858,6 +860,7 @@ export interface ResourceEntry {
   type: ResourceType
   label?: string
   frontendSubtype?: FrontendSubtype
+  licenseScope?: string
 }
 
 export interface ReviewConfig {

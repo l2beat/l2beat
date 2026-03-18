@@ -43,6 +43,8 @@ export type CompiledResourceType =
   | 'source-code'
   | 'github'
   | 'x'
+  | 'license'
+  | 'defiscan-v1'
   | 'other'
 export type CompiledFrontendSubtype = 'official' | 'third-party' | 'self-hosted'
 
@@ -51,6 +53,7 @@ export interface CompiledResourceEntry {
   type: CompiledResourceType
   label?: string
   frontendSubtype?: CompiledFrontendSubtype
+  licenseScope?: string
 }
 
 export interface CompiledAdmin {

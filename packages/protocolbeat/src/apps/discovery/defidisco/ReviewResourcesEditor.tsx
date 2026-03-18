@@ -12,6 +12,8 @@ const RESOURCE_TYPES: { value: ResourceType; label: string }[] = [
   { value: 'source-code', label: 'Source Code' },
   { value: 'github', label: 'GitHub' },
   { value: 'x', label: 'X (Twitter)' },
+  { value: 'license', label: 'License' },
+  { value: 'defiscan-v1', label: 'DeFiScan V1' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -19,6 +21,21 @@ const FRONTEND_SUBTYPES: { value: FrontendSubtype; label: string }[] = [
   { value: 'official', label: 'Official' },
   { value: 'third-party', label: 'Third-party' },
   { value: 'self-hosted', label: 'Self-hosted' },
+]
+
+const LICENSE_PRESETS = [
+  'MIT',
+  'Apache-2.0',
+  'GPL-3.0',
+  'GPL-2.0',
+  'LGPL-3.0',
+  'BSD-2-Clause',
+  'BSD-3-Clause',
+  'MPL-2.0',
+  'ISC',
+  'BUSL-1.1',
+  'Proprietary',
+  'Unlicensed',
 ]
 
 interface ReviewResourcesEditorProps {
@@ -106,6 +123,8 @@ function ResourceTypeBadge({ type }: { type: ResourceType }) {
     'source-code': 'bg-purple-900/50 text-purple-300',
     github: 'bg-gray-700/50 text-gray-300',
     x: 'bg-sky-900/50 text-sky-300',
+    license: 'bg-amber-900/50 text-amber-300',
+    'defiscan-v1': 'bg-indigo-900/50 text-indigo-300',
     other: 'bg-coffee-700 text-coffee-300',
   }
   const labels: Record<ResourceType, string> = {
@@ -115,6 +134,8 @@ function ResourceTypeBadge({ type }: { type: ResourceType }) {
     'source-code': 'Source',
     github: 'GitHub',
     x: 'X',
+    license: 'License',
+    'defiscan-v1': 'DeFiScan V1',
     other: 'Other',
   }
   return (
@@ -172,6 +193,11 @@ function ResourceEntryRow({
           <span className="truncate text-xs text-coffee-100">
             {entry.label || entry.url}
           </span>
+          {entry.type === 'license' && entry.licenseScope && (
+            <span className="text-[10px] text-coffee-400">
+              ({entry.licenseScope})
+            </span>
+          )}
         </div>
         {isDirty && <span className="text-xs text-yellow-400">*</span>}
       </button>
@@ -191,6 +217,12 @@ function ResourceEntryRow({
                     type === 'frontend'
                       ? (localEntry.frontendSubtype ?? 'official')
                       : undefined,
+                  label:
+                    type === 'license'
+                      ? (localEntry.label ?? 'MIT')
+                      : localEntry.label,
+                  licenseScope:
+                    type === 'license' ? localEntry.licenseScope : undefined,
                 })
               }}
               className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
@@ -232,21 +264,80 @@ function ResourceEntryRow({
               className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
             />
           </div>
-          <div className="flex items-center gap-2">
-            <label className="w-14 text-xs text-coffee-200">Label:</label>
-            <input
-              type="text"
-              value={localEntry.label ?? ''}
-              onChange={(e) =>
-                setLocalEntry({
-                  ...localEntry,
-                  label: e.target.value || undefined,
-                })
-              }
-              placeholder="Optional label"
-              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
-            />
-          </div>
+          {localEntry.type === 'license' ? (
+            <>
+              <div className="flex items-center gap-2">
+                <label className="w-14 text-xs text-coffee-200">License:</label>
+                <select
+                  value={
+                    LICENSE_PRESETS.includes(localEntry.label ?? '')
+                      ? localEntry.label
+                      : '__other__'
+                  }
+                  onChange={(e) => {
+                    const v = e.target.value
+                    setLocalEntry({
+                      ...localEntry,
+                      label: v === '__other__' ? '' : v,
+                    })
+                  }}
+                  className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+                >
+                  {LICENSE_PRESETS.map((l) => (
+                    <option key={l} value={l}>
+                      {l}
+                    </option>
+                  ))}
+                  <option value="__other__">Other</option>
+                </select>
+                {!LICENSE_PRESETS.includes(localEntry.label ?? '') && (
+                  <input
+                    type="text"
+                    value={localEntry.label ?? ''}
+                    onChange={(e) =>
+                      setLocalEntry({
+                        ...localEntry,
+                        label: e.target.value || undefined,
+                      })
+                    }
+                    placeholder="License name"
+                    className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+                  />
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="w-14 text-xs text-coffee-200">Scope:</label>
+                <input
+                  type="text"
+                  value={localEntry.licenseScope ?? ''}
+                  onChange={(e) =>
+                    setLocalEntry({
+                      ...localEntry,
+                      licenseScope: e.target.value || undefined,
+                    })
+                  }
+                  placeholder="e.g. Contracts, Frontend, SDK"
+                  className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <label className="w-14 text-xs text-coffee-200">Label:</label>
+              <input
+                type="text"
+                value={localEntry.label ?? ''}
+                onChange={(e) =>
+                  setLocalEntry({
+                    ...localEntry,
+                    label: e.target.value || undefined,
+                  })
+                }
+                placeholder="Optional label"
+                className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+              />
+            </div>
+          )}
           <div className="flex justify-end gap-2">
             <button
               onClick={onDelete}
@@ -284,6 +375,7 @@ function AddResourceForm({
     useState<FrontendSubtype>('official')
   const [url, setUrl] = useState('')
   const [label, setLabel] = useState('')
+  const [licenseScope, setLicenseScope] = useState('')
 
   const isValid = url.trim().length > 0
 
@@ -294,8 +386,12 @@ function AddResourceForm({
       type,
       label: label.trim() || undefined,
       frontendSubtype: type === 'frontend' ? frontendSubtype : undefined,
+      licenseScope:
+        type === 'license' && licenseScope.trim()
+          ? licenseScope.trim()
+          : undefined,
     })
-  }, [url, type, label, frontendSubtype, isValid, onSave])
+  }, [url, type, label, frontendSubtype, licenseScope, isValid, onSave])
 
   return (
     <div className="mb-2 rounded border border-dashed border-coffee-500 bg-coffee-800/50 p-2 space-y-1">
@@ -303,7 +399,16 @@ function AddResourceForm({
         <label className="w-14 text-xs text-coffee-200">Type:</label>
         <select
           value={type}
-          onChange={(e) => setType(e.target.value as ResourceType)}
+          onChange={(e) => {
+            const newType = e.target.value as ResourceType
+            setType(newType)
+            if (newType === 'license') {
+              setLabel(label || 'MIT')
+            }
+            if (newType !== 'license') {
+              setLicenseScope('')
+            }
+          }}
           className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
         >
           {RESOURCE_TYPES.map((rt) => (
@@ -338,16 +443,58 @@ function AddResourceForm({
           className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
         />
       </div>
-      <div className="flex items-center gap-2">
-        <label className="w-14 text-xs text-coffee-200">Label:</label>
-        <input
-          type="text"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          placeholder="Optional label"
-          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
-        />
-      </div>
+      {type === 'license' ? (
+        <>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">License:</label>
+            <select
+              value={LICENSE_PRESETS.includes(label) ? label : '__other__'}
+              onChange={(e) => {
+                const v = e.target.value
+                setLabel(v === '__other__' ? '' : v)
+              }}
+              className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+            >
+              {LICENSE_PRESETS.map((l) => (
+                <option key={l} value={l}>
+                  {l}
+                </option>
+              ))}
+              <option value="__other__">Other</option>
+            </select>
+            {!LICENSE_PRESETS.includes(label) && (
+              <input
+                type="text"
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
+                placeholder="License name"
+                className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+              />
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">Scope:</label>
+            <input
+              type="text"
+              value={licenseScope}
+              onChange={(e) => setLicenseScope(e.target.value)}
+              placeholder="e.g. Contracts, Frontend, SDK"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+            />
+          </div>
+        </>
+      ) : (
+        <div className="flex items-center gap-2">
+          <label className="w-14 text-xs text-coffee-200">Label:</label>
+          <input
+            type="text"
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+            placeholder="Optional label"
+            className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+          />
+        </div>
+      )}
       <div className="flex justify-end gap-2">
         <button
           onClick={onCancel}

@@ -94,6 +94,16 @@
     {
       "url": "https://x.com/uniswap",
       "type": "x"
+    },
+    {
+      "url": "https://github.com/Uniswap/v2-core/blob/master/LICENSE",
+      "type": "license",
+      "label": "GPL-3.0",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
+      "type": "defiscan-v1"
     }
   ]
 }

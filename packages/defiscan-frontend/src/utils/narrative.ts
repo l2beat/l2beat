@@ -9,6 +9,22 @@ import { displayMitigationValue } from '../types'
 import { formatUsdValue } from './format'
 import { computeEntityDependencyCount } from './dependencies'
 
+function formatDelayDuration(seconds: number): string {
+  if (seconds >= 86400) {
+    const days = seconds / 86400
+    return `${days === Math.floor(days) ? `${days}` : `${days.toFixed(1)}`} day${days !== 1 ? 's' : ''}`
+  }
+  if (seconds >= 3600) {
+    const hours = seconds / 3600
+    return `${hours === Math.floor(hours) ? `${hours}` : `${hours.toFixed(1)}`} hour${hours !== 1 ? 's' : ''}`
+  }
+  if (seconds >= 60) {
+    const minutes = seconds / 60
+    return `${minutes === Math.floor(minutes) ? `${minutes}` : `${minutes.toFixed(1)}`} min`
+  }
+  return `${seconds}s`
+}
+
 /** Generate executive summary sentence from review data */
 export function generateExecutiveSummary(review: CompiledReview): string {
   const { totals, metadata, admins } = review
@@ -197,17 +213,19 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
 
   // Mitigations
   const allMitigations: Mitigation[] = []
-  let fundsImpactFnCount = 0
+  let totalFnCount = 0
   let mitigatedFnCount = 0
   for (const admin of admins) {
     for (const fn of admin.functions) {
-      if (fn.directFundsUsd > 0) {
-        fundsImpactFnCount++
-        if (fn.mitigations && fn.mitigations.length > 0) {
-          mitigatedFnCount++
-        }
-      }
       if (fn.mitigations) allMitigations.push(...fn.mitigations)
+      const reachableFunds = fn.reachableContracts
+        .filter((rc) => rc.fundsAtRisk)
+        .reduce((sum, rc) => sum + rc.fundsUsd, 0)
+      if (fn.directFundsUsd <= 0 && reachableFunds <= 0) continue
+      totalFnCount++
+      if (fn.mitigations && fn.mitigations.length > 0) {
+        mitigatedFnCount++
+      }
     }
   }
   for (const dep of dependencies) {
@@ -217,7 +235,7 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
   }
 
   if (allMitigations.length > 0) {
-    // Deduplicate
+    // Deduplicate mitigations
     const seen = new Set<string>()
     const unique: Mitigation[] = []
     for (const m of allMitigations) {
@@ -230,7 +248,18 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
 
     const types = new Set<MitigationType>(unique.map((m) => m.type))
     const typeLabels: string[] = []
-    if (types.has('delay')) typeLabels.push('time delays')
+    if (types.has('delay')) {
+      const delays = unique
+        .filter((m) => m.type === 'delay' && m.delaySeconds !== undefined)
+        .map((m) => m.delaySeconds!)
+      const uniqueDelays = [...new Set(delays)].sort((a, b) => a - b)
+      if (uniqueDelays.length > 0) {
+        const formatted = uniqueDelays.map(formatDelayDuration)
+        typeLabels.push(`time delays (${formatted.join(', ')})`)
+      } else {
+        typeLabels.push('time delays')
+      }
+    }
     if (types.has('valueRange')) typeLabels.push('value range limits')
     if (types.has('relativeValue')) typeLabels.push('relative value caps')
     if (types.has('other')) typeLabels.push('additional safeguards')
@@ -240,15 +269,10 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
         ? `${typeLabels.slice(0, -1).join(', ')} and ${typeLabels[typeLabels.length - 1]}`
         : typeLabels[0]
 
-    const coverage =
-      fundsImpactFnCount > 0 && mitigatedFnCount >= fundsImpactFnCount
-        ? 'All'
-        : 'Some'
-
     findings.push({
       type: 'info',
-      title: `${unique.length} mitigation${unique.length !== 1 ? 's' : ''} in place`,
-      detail: `${coverage} permissioned functions that impact funds implement mitigations such as ${typeList}, constraining the scope of admin changes.`,
+      title: `${mitigatedFnCount} out of ${totalFnCount} functions with potential impact on funds have mitigations`,
+      detail: `Taking into account only functions which can impact funds. Mitigations include ${typeList}.`,
     })
   }
 

@@ -333,7 +333,7 @@ The **Review Builder** panel lets you compose the final review document for a pr
 1. Open the **Review Builder** panel from the panel selector
 2. Fill in **protocol metadata** (name, slug, chain, project type, token name)
 3. Use the **Descriptions** tab to write human-readable descriptions for admins, dependencies, and fund-holding contracts
-4. Use the **Resources** section (bottom of Descriptions tab) to add project links — frontends (official/third-party/self-hosted), documentation, GitHub, X (Twitter), source code, and other resources
+4. Use the **Resources** section (bottom of Descriptions tab) to add project links — frontends (official/third-party/self-hosted), website, documentation, GitHub, X (Twitter), source code, licenses (with optional scope like "Contracts"), DeFiScan V1 review links, and other resources
 5. Use the **Code & Audits** tab to configure data tables and audit information
 
 ### AI-Powered Review Generation

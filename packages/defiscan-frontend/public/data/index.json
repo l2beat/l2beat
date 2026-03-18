@@ -30,7 +30,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 169519102.78369424,
+        "totalCapitalAtRisk": 193073153.28789482,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
@@ -105,7 +105,7 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 2144649361.2035286,
+    "totalCapitalAtRisk": 2168203411.7077293,
     "totalTokenValueAtRisk": 254803451.70080653,
     "totalTokenValue": 311853474.72530407,
     "protocolsReviewed": 6
@@ -152,6 +152,18 @@
       ]
     },
     {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 193073153.28789482,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
@@ -160,18 +172,6 @@
         {
           "slug": "liquity-v1",
           "name": "Liquity V1"
-        }
-      ]
-    },
-    {
-      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-      "name": "Morpho Blue",
-      "entity": "Morpho",
-      "totalFundsAtRisk": 169519102.78369424,
-      "protocols": [
-        {
-          "slug": "Steakhouse-USDC",
-          "name": "Steakhouse USDC"
         }
       ]
     },

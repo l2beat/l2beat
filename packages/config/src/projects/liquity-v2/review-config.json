@@ -186,6 +186,16 @@
     {
       "url": "https://www.liquity.org/",
       "type": "website"
+    },
+    {
+      "url": "https://github.com/liquity/bold/blob/main/LICENSE",
+      "type": "license",
+      "label": "BUSL-1.1",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/liquity-v2/ethereum",
+      "type": "defiscan-v1"
     }
   ]
 }

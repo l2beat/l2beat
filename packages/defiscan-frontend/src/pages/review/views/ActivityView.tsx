@@ -121,11 +121,10 @@ export function ActivityView({ review }: ActivityViewProps) {
           </svg>
         </div>
         <h3 className="text-lg font-medium text-text-primary">
-          No activity events recorded yet
+          No activity recorded yet
         </h3>
         <p className="mt-2 text-sm text-text-secondary">
-          Contract upgrade history will appear here once discovery data is
-          compiled.
+          Contract upgrades will appear here.
         </p>
       </div>
     )
