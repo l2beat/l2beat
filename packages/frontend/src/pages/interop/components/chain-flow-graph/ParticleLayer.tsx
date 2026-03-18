@@ -76,7 +76,7 @@ export function ParticleLayer({
 
         const path = getConnectionPath(src, dst, centerX, centerY)
         const chainIndex = chainIds.indexOf(flow.srcChain)
-        const color = getChainColor(chainIndex, chainIds.length, true)
+        const color = getChainColor(flow.srcChain, chainIndex, chainIds.length, true)
 
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
