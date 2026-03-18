@@ -56,10 +56,11 @@ export interface PastUpgradesData {
 
 export function PastUpgradesDialog({
   pastUpgrades,
+  showProxyContract = false,
 }: {
   pastUpgrades: PastUpgradesData
+  showProxyContract?: boolean
 }) {
-  const showProxyContract = pastUpgrades.upgrades.some((u) => !!u.proxyContract)
   const trigger = (
     <div className="mt-2 flex items-center gap-1">
       <HistoryClockIcon className="size-3.5 fill-brand" />

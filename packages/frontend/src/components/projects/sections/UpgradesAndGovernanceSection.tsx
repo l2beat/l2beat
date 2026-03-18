@@ -48,7 +48,10 @@ export function UpgradesAndGovernanceSection({
             The metrics include upgrades on the currently used proxy contracts.
             Historical proxy contracts and changes of such are not included.
           </p>
-          <PastUpgradesDialog pastUpgrades={pastUpgrades} />
+          <PastUpgradesDialog
+            pastUpgrades={pastUpgrades}
+            showProxyContract={true}
+          />
           <PastUpgradesStats pastUpgrades={pastUpgrades} className="mt-2" />
         </div>
       )}
