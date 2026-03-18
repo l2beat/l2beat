@@ -9,5 +9,11 @@
     "address": "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75",
     "chain": "base",
     "blockNumber": 42923027
+  },
+  "FeeDisburser_v3": {
+    "hash": "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be",
+    "address": "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6",
+    "chain": "base",
+    "blockNumber": 43301167
   }
 }
