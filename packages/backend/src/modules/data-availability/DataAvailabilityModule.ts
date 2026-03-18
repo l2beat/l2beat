@@ -8,7 +8,6 @@ import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import { DiscordWebhookClient } from '../anomalies/clients/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
@@ -151,10 +150,7 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      if (config.ethereumNotifierDiscordWebhookUrl) {
-        const discordClient = new DiscordWebhookClient(
-          config.ethereumNotifierDiscordWebhookUrl,
-        )
+      if (providers.clients.blobNotifierDiscord) {
         const hourlyIndexer = new HourlyIndexer(logger, clock)
         notificationIndexers.push(hourlyIndexer)
 
@@ -162,7 +158,7 @@ function createIndexers(
           {
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
-            discordClient,
+            discordClient: providers.clients.blobNotifierDiscord,
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],
