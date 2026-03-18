@@ -215,6 +215,7 @@ export type BadgeFilterId =
 interface BaseMilestone {
   title: string
   url: string
+  linkLabel?: string
   date: string
   description?: string
 }
@@ -227,13 +228,16 @@ interface IncidentMilestone extends BaseMilestone {
   type: 'incident'
 }
 
-export interface ProjectMilestone extends BaseMilestone {
+interface ProjectIconMilestone extends BaseMilestone {
   projectId: ProjectId
   projectIcon: string
   type: 'project'
 }
 
-export type Milestone = ProjectMilestone | GeneralMilestone | IncidentMilestone
+export type Milestone =
+  | ProjectIconMilestone
+  | GeneralMilestone
+  | IncidentMilestone
 
 export interface ChainConfig {
   /**

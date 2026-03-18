@@ -1,10 +1,9 @@
-import type { Project } from '@l2beat/config'
+import type { Milestone, Project } from '@l2beat/config'
 import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tvs/ZkCatalogTvsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
-import type { ProjectMilestone } from '../../../../../../config/src/types'
 import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
@@ -61,23 +60,22 @@ export function getZkCatalogTvsSection(
     ).map((project) => [project.id, project]),
   )
 
-  const milestonesFromProjects: ProjectMilestone[] = projectsForTvs.flatMap(
-    (p) => {
-      const resolved = projectsUsedIn.get(p.projectId)
-      if (!resolved) return []
+  const milestonesFromProjects: Milestone[] = projectsForTvs.flatMap((p) => {
+    const resolved = projectsUsedIn.get(p.projectId)
+    if (!resolved) return []
 
-      return [
-        {
-          date: new Date(p.sinceTimestamp * 1000).toISOString(),
-          title: `${p.name} started using ${project.name}`,
-          type: 'project',
-          projectId: p.projectId,
-          projectIcon: resolved.icon,
-          url: resolved.url,
-        },
-      ]
-    },
-  )
+    return [
+      {
+        date: new Date(p.sinceTimestamp * 1000).toISOString(),
+        title: `${p.name} started using ${project.name}`,
+        type: 'project',
+        projectId: p.projectId,
+        projectIcon: resolved.icon,
+        linkLabel: 'Go to project page',
+        url: resolved.url,
+      },
+    ]
+  })
 
   const milestones = [...(project.milestones ?? []), ...milestonesFromProjects]
 

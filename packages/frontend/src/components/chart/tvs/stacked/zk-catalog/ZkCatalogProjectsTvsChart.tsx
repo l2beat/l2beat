@@ -1,7 +1,9 @@
+import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
+import type { ChartUnit } from '~/components/chart/types'
 import type {
   ChartMeta,
   ChartProject,
@@ -24,8 +26,6 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { Milestone } from '../../../../../../../config/src/types'
-import type { ChartUnit } from '../../../types'
 
 interface ZkCatalogProjectsTvsChartProps {
   project: ChartProject

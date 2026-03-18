@@ -1,17 +1,14 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { Milestone } from '@l2beat/config'
+import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
 import { ChevronIcon } from '~/icons/Chevron'
-import { IncidentIcon } from '~/icons/Incident'
-import { MilestoneIcon } from '~/icons/Milestone'
+import { IncidentIcon as IncidentMilestoneIcon } from '~/icons/Incident'
+import { MilestoneIcon as GeneralMilestoneIcon } from '~/icons/Milestone'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
-import type {
-  Milestone,
-  ProjectMilestone,
-} from '../../../../../config/src/types'
 import { Button } from '../Button'
 import { DialogTitle } from '../Dialog'
 import {
@@ -56,14 +53,6 @@ export function ChartMilestones<T extends { timestamp: number }>({
     setWidth(ref.current.getBoundingClientRect().width)
   })
 
-  const sortedMilestones = useMemo(
-    () =>
-      [...milestones].sort((a, b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime()
-      }),
-    [milestones],
-  )
-
   if (width === undefined || timestampedMilestones.length < 2) return null
 
   return (
@@ -77,7 +66,6 @@ export function ChartMilestones<T extends { timestamp: number }>({
             key={data.timestamp}
             left={x * width - 10}
             milestonesAtPoint={data.milestones}
-            allMilestones={sortedMilestones}
           />
         )
       })}
@@ -88,11 +76,9 @@ export function ChartMilestones<T extends { timestamp: number }>({
 function ChartMilestone({
   left,
   milestonesAtPoint,
-  allMilestones,
 }: {
   left: number
   milestonesAtPoint: MilestoneWithProjectName[]
-  allMilestones: MilestoneWithProjectName[]
 }) {
   const { isDesktop } = useDevice()
   const triggerMilestone = milestonesAtPoint[0]
@@ -100,12 +86,8 @@ function ChartMilestone({
   const isMerged = milestonesAtPoint.length > 1
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
-  const milestoneIndex = isMerged
-    ? 0
-    : allMilestones.findIndex((milestone) => milestone === triggerMilestone)
-  const drawerMilestones = isMerged ? milestonesAtPoint : allMilestones
-  const countLabel = getCountLabel(milestonesAtPoint.length)
-  assert(milestoneIndex !== -1)
+  const milestoneIndex = 0
+  const drawerMilestones = isMerged ? milestonesAtPoint : [triggerMilestone]
 
   const common = cn(
     'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
@@ -116,14 +98,11 @@ function ChartMilestone({
   )
   if (isDesktop) {
     return (
-      <Tooltip delayDuration={0}>
+      <Tooltip delayDuration={0} disableHoverableContent={false}>
         <TooltipTrigger asChild>
           {isMerged ? (
             <div className={cn(common, 'cursor-pointer')} style={{ left }}>
-              <MilestoneMarker
-                milestones={milestonesAtPoint}
-                countLabel={countLabel}
-              />
+              <MilestoneMarker milestones={milestonesAtPoint} />
             </div>
           ) : (
             <a
@@ -133,10 +112,7 @@ function ChartMilestone({
               target="_blank"
               rel="noreferrer"
             >
-              <MilestoneMarker
-                milestones={milestonesAtPoint}
-                countLabel={countLabel}
-              />
+              <MilestoneMarker milestones={milestonesAtPoint} />
             </a>
           )}
         </TooltipTrigger>
@@ -151,10 +127,7 @@ function ChartMilestone({
     <Drawer>
       <DrawerTrigger asChild>
         <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
-          <MilestoneMarker
-            milestones={milestonesAtPoint}
-            countLabel={countLabel}
-          />
+          <MilestoneMarker milestones={milestonesAtPoint} />
         </div>
       </DrawerTrigger>
       <DrawerContent>
@@ -169,27 +142,20 @@ function ChartMilestone({
 
 function MilestoneMarker({
   milestones,
-  countLabel,
 }: {
   milestones: MilestoneWithProjectName[]
-  countLabel: string
 }) {
   if (milestones.length > 1) {
     return (
       <div className="flex size-5 items-center justify-center rounded-full bg-brand font-bold text-[10px] text-primary-invert">
-        {countLabel}
+        {milestones.length > 9 ? '9+' : milestones.length.toString()}
       </div>
     )
   }
 
   const milestone = milestones[0]
   assert(milestone)
-
-  if (isProjectMilestone(milestone)) {
-    return <img src={milestone.projectIcon} className="size-5 rounded-full" />
-  }
-
-  return milestone.type === 'general' ? <MilestoneIcon /> : <IncidentIcon />
+  return <SingleMilestoneIcon milestone={milestone} />
 }
 
 function MilestoneTooltipContent({
@@ -199,6 +165,7 @@ function MilestoneTooltipContent({
 }) {
   const firstMilestone = milestones[0]
   assert(firstMilestone)
+  const isMerged = milestones.length > 1
 
   return (
     <>
@@ -215,6 +182,14 @@ function MilestoneTooltipContent({
             {milestone.description && (
               <div className="mt-1 max-w-[216px]">{milestone.description}</div>
             )}
+            {isMerged && (
+              <CustomLink
+                href={milestone.url}
+                className="mt-1 block w-fit text-xs"
+              >
+                {getMilestoneLinkLabel(milestone)}
+              </CustomLink>
+            )}
           </div>
         ))}
       </div>
@@ -227,19 +202,11 @@ function MilestoneListIcon({
 }: {
   milestone: MilestoneWithProjectName
 }) {
-  if (isProjectMilestone(milestone)) {
-    return (
-      <img
-        src={milestone.projectIcon}
-        className="mt-px size-3.5 shrink-0 rounded-full"
-      />
-    )
-  }
-
-  return milestone.type === 'general' ? (
-    <MilestoneIcon className="mt-px size-3.5 shrink-0" />
-  ) : (
-    <IncidentIcon className="mt-px size-3.5 shrink-0" />
+  return (
+    <SingleMilestoneIcon
+      milestone={milestone}
+      className="mt-px size-3.5 shrink-0"
+    />
   )
 }
 
@@ -254,23 +221,16 @@ export function MilestoneDrawerContent({
     useState<number>(milestoneIndex)
   const tooltipMilestone = allMilestones[selectedMilestoneIndex]
   assert(tooltipMilestone)
-
-  const Icon = isProjectMilestone(tooltipMilestone) ? (
-    <img
-      src={tooltipMilestone.projectIcon}
-      className="size-[18px] shrink-0 rounded-full"
-    />
-  ) : tooltipMilestone.type === 'general' ? (
-    <MilestoneIcon className="size-[18px] shrink-0" />
-  ) : (
-    <IncidentIcon className="size-[18px] shrink-0" />
-  )
+  const hasNavigation = allMilestones.length > 1
 
   return (
     <>
       <DrawerHeader>
         <DialogTitle className="flex gap-1.5 font-bold">
-          {Icon}
+          <SingleMilestoneIcon
+            milestone={tooltipMilestone}
+            className="size-[18px] shrink-0"
+          />
           <span>{tooltipMilestone.title}</span>
         </DialogTitle>
         <p className="ml-6 text-secondary text-xs">
@@ -285,47 +245,79 @@ export function MilestoneDrawerContent({
           </p>
         )}
         <CustomLink href={tooltipMilestone.url} className="mt-2">
-          Learn more
+          {getMilestoneLinkLabel(tooltipMilestone)}
         </CustomLink>
       </DrawerHeader>
-      <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
-        <Button
-          size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
-          onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
-          aria-label="Previous milestone"
-          disabled={selectedMilestoneIndex === 0}
-        >
-          <ChevronIcon className="mr-1 size-3 rotate-90" />
-          Previous
-        </Button>
-        <div className="text-[13px] text-secondary">
-          {selectedMilestoneIndex + 1} of {allMilestones.length}
-        </div>
-        <Button
-          size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
-          onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
-          aria-label="Next milestone"
-          disabled={selectedMilestoneIndex === allMilestones.length - 1}
-        >
-          Next
-          <ChevronIcon className="-rotate-90 ml-1 size-3" />
-        </Button>
-      </DrawerFooter>
+      {hasNavigation && (
+        <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
+          <Button
+            size="sm"
+            className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
+            onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
+            aria-label="Previous milestone"
+            disabled={selectedMilestoneIndex === 0}
+          >
+            <ChevronIcon className="mr-1 size-3 rotate-90" />
+            Previous
+          </Button>
+          <div className="text-[13px] text-secondary">
+            {selectedMilestoneIndex + 1} of {allMilestones.length}
+          </div>
+          <Button
+            size="sm"
+            className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
+            onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
+            aria-label="Next milestone"
+            disabled={selectedMilestoneIndex === allMilestones.length - 1}
+          >
+            Next
+            <ChevronIcon className="-rotate-90 ml-1 size-3" />
+          </Button>
+        </DrawerFooter>
+      )}
     </>
   )
-}
-
-function isProjectMilestone(
-  milestone: MilestoneWithProjectName,
-): milestone is ProjectMilestone {
-  return milestone.type === 'project'
 }
 
 type TimestampedMilestone = {
   timestamp: number
   milestones: Milestone[]
+}
+
+function ProjectMilestoneIcon({
+  projectIcon,
+  className,
+}: {
+  projectIcon: string
+  className?: string
+}) {
+  return (
+    <img src={projectIcon} className={cn('size-5 rounded-full', className)} />
+  )
+}
+
+function SingleMilestoneIcon({
+  milestone,
+  className,
+}: {
+  milestone: MilestoneWithProjectName
+  className?: string
+}) {
+  switch (milestone.type) {
+    case 'project':
+      return (
+        <ProjectMilestoneIcon
+          projectIcon={milestone.projectIcon}
+          className={className}
+        />
+      )
+    case 'general':
+      return <GeneralMilestoneIcon className={className} />
+    case 'incident':
+      return <IncidentMilestoneIcon className={className} />
+    default:
+      assertUnreachable(milestone)
+  }
 }
 
 function getTimestampedMilestones<T extends { timestamp: number }>(
@@ -356,6 +348,6 @@ function mapMilestones(milestones: Milestone[]): Record<number, Milestone[]> {
   return result
 }
 
-function getCountLabel(count: number) {
-  return count > 9 ? '9+' : count.toString()
+function getMilestoneLinkLabel(milestone: { linkLabel?: string }) {
+  return milestone.linkLabel ?? 'Learn more'
 }
