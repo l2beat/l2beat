@@ -161,4 +161,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'HYPER',
     explorerUrl: 'https://hyperevmscan.io',
   },
-]
+] as const
+
+export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const
