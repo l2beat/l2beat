@@ -216,12 +216,13 @@ export class InteropEventSyncer extends TimeLoop {
     }
   }
 
-  captureTx(txToCapture: TxToCapture, pluginName?: string) {
+  captureTx(txToCapture: TxToCapture, creatorEvent?: InteropEvent) {
+    const targetPlugin = creatorEvent?.plugin
     for (const plugin of this.cluster.plugins) {
-      if (pluginName && plugin.name !== pluginName) {
+      if (targetPlugin && plugin.name !== targetPlugin) {
         continue
       }
-      const produced = plugin.captureTx?.(txToCapture)
+      const produced = plugin.captureTx?.(txToCapture, creatorEvent)
       if (produced) {
         return produced.map((p) => ({ ...p, plugin: plugin.name }))
       }

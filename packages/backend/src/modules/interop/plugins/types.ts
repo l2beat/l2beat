@@ -170,7 +170,6 @@ export interface TxToCapture {
   tx: Transaction
   block: Block
   chain: string
-  creatorEvent?: InteropEvent
 }
 
 export type MatchResult = (
@@ -250,7 +249,10 @@ export type DeployedToAbstractMap = Map<
 export interface InteropPlugin {
   readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
-  captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
+  captureTx?: (
+    input: TxToCapture,
+    creatorEvent?: InteropEvent,
+  ) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,

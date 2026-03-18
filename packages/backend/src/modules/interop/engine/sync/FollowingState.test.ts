@@ -252,7 +252,7 @@ describe(FollowingState.name, () => {
       })
     })
 
-    it('captures requested txs with creator context', async () => {
+    it('captures txs both generically and with creator context', async () => {
       const txToCapture = mockObject<TxToCapture>({
         chain: 'base',
         tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
@@ -260,8 +260,11 @@ describe(FollowingState.name, () => {
       const creatorEvent = mockObject<InteropEvent>({
         plugin: 'mock-plugin',
       })
+      const genericTxEvent = mockObject<InteropEvent>({})
       const txEvent = mockObject<InteropEvent>({})
-      const captureTx = mockFn().returnsOnce([txEvent])
+      const captureTx = mockFn()
+        .returnsOnce([genericTxEvent])
+        .returnsOnce([txEvent])
       const getRequestedTxs = mockFn().returns([
         {
           chain: 'base',
@@ -291,16 +294,17 @@ describe(FollowingState.name, () => {
       await state.processNewestBlock(BLOCK, LOGS)
 
       expect(getRequestedTxs).toHaveBeenCalledWith('base', '0x123')
-      expect(captureTx).toHaveBeenCalledWith(
-        { ...txToCapture, creatorEvent },
-        'mock-plugin',
+      expect(captureTx).toHaveBeenNthCalledWith(1, txToCapture)
+      expect(captureTx).toHaveBeenCalledWith(txToCapture, creatorEvent)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [genericTxEvent, txEvent],
+        {
+          fromBlock: 90n,
+          fromTimestamp: UnixTime(0),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
       )
-      expect(saveProducedInteropEvents).toHaveBeenCalledWith([txEvent], {
-        fromBlock: 90n,
-        fromTimestamp: UnixTime(0),
-        toBlock: 100n,
-        toTimestamp: UnixTime(1_000),
-      })
     })
   })
 })

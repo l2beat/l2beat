@@ -309,10 +309,12 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe(InteropEventSyncer.prototype.captureTx.name, () => {
-    it('captures using the requested plugin only', () => {
+    it('captures using the requested plugin only and passes creator context', () => {
       const event = makeInteropEventNoPlugin()
       const firstCapture = mockFn().returns([event])
       const secondCapture = mockFn().returns([event])
+      const txToCapture = mockObject<TxToCapture>({})
+      const creatorEvent = { ...makeInteropEvent(), plugin: 'wormhole' }
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
@@ -323,10 +325,10 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = syncer.captureTx(mockObject<TxToCapture>({}), 'wormhole')
+      const result = syncer.captureTx(txToCapture, creatorEvent)
 
       expect(firstCapture).not.toHaveBeenCalled()
-      expect(secondCapture).toHaveBeenCalled()
+      expect(secondCapture).toHaveBeenCalledWith(txToCapture, creatorEvent)
       expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
     })
   })
@@ -734,6 +736,7 @@ function makePlugin(
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
     captureTx?: (
       input: TxToCapture,
+      creatorEvent?: InteropEvent,
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
   } = {},
 ): InteropPluginResyncable {

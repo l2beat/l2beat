@@ -91,7 +91,7 @@ describe(OpStackPlugin.name, () => {
       const plugin = new OpStackPlugin()
       const creatorEvent = getCreatorEvent(plugin)
 
-      const captured = plugin.captureTx(makeDerivedTxCapture(creatorEvent))
+      const captured = plugin.captureTx(makeDerivedTxCapture(), creatorEvent)
 
       expect(captured).not.toEqual(undefined)
       if (!captured) {
@@ -177,7 +177,7 @@ function getCreatorEvent(plugin: OpStackPlugin): InteropEvent {
   return { ...captured[0], plugin: 'opstack' }
 }
 
-function makeDerivedTxCapture(creatorEvent: InteropEvent): TxToCapture {
+function makeDerivedTxCapture(): TxToCapture {
   return {
     txLogs: [],
     tx: {
@@ -191,6 +191,5 @@ function makeDerivedTxCapture(creatorEvent: InteropEvent): TxToCapture {
       transactions: [{ hash: WORKED_EXAMPLE.l2TxHash }],
     },
     chain: 'base',
-    creatorEvent,
   }
 }

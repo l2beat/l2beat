@@ -106,6 +106,25 @@ export class ExampleRunner {
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
       const newEvents: InteropEvent[] = []
+      const txToCapture = {
+        chain: txEntry.chain,
+        tx,
+        block,
+        txLogs,
+      }
+
+      for (const plugin of eventPlugins) {
+        if (!plugin.captureTx) {
+          continue
+        }
+        const captured = plugin.captureTx(txToCapture)
+        if (captured) {
+          newEvents.push(
+            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+          )
+          break
+        }
+      }
 
       for (const request of eventStore.derivedTxStore.get(
         txEntry.chain,
@@ -117,35 +136,11 @@ export class ExampleRunner {
         if (!plugin) {
           continue
         }
-        const captured = plugin.captureTx?.({
-          chain: txEntry.chain,
-          tx,
-          block,
-          txLogs,
-          creatorEvent: request.creatorEvent,
-        })
+        const captured = plugin.captureTx?.(txToCapture, request.creatorEvent)
         if (captured) {
           newEvents.push(
             ...captured.map((c) => ({ ...c, plugin: plugin.name })),
           )
-        }
-      }
-
-      for (const plugin of eventPlugins) {
-        if (!plugin.captureTx) {
-          continue
-        }
-        const captured = plugin.captureTx({
-          chain: txEntry.chain,
-          tx,
-          block,
-          txLogs,
-        })
-        if (captured) {
-          newEvents.push(
-            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
-          )
-          break
         }
       }
 
