@@ -13,7 +13,7 @@ export interface AggregatedInteropTokenRecord {
   abstractTokenId: string
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
-  durationCount?: number
+  transfersWithDurationCount?: number
   totalDurationSum: number
   volume: number
   minTransferValueUsd: number | undefined
@@ -36,7 +36,7 @@ export function toRecord(
       (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
       undefined,
     transferCount: row.transferCount,
-    durationCount: row.durationCount,
+    transfersWithDurationCount: row.transfersWithDurationCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
     minTransferValueUsd: row.minTransferValueUsd ?? undefined,
@@ -58,7 +58,7 @@ export function toRow(
     abstractTokenId: record.abstractTokenId,
     transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
-    durationCount: record.durationCount,
+    transfersWithDurationCount: record.transfersWithDurationCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
     minTransferValueUsd: record.minTransferValueUsd,
