@@ -75,13 +75,13 @@ export function initDataAvailabilityModule({
       }
 
       if (notifierIndexers.length > 0) {
-        logger.info('Starting notifier indexers')
+        logger.info('Starting notification indexers')
         await Promise.all(
           notifierIndexers.map(async (indexer) => {
             await indexer.start()
           }),
         )
-        logger.info('Notifier indexers started')
+        logger.info('Notification indexers started')
       }
     },
   }
@@ -104,7 +104,8 @@ function createIndexers(
     | EigenDaProjectsIndexer
     | HourlyIndexer
   )[] = []
-  const notifierIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] = []
+  const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
+    []
 
   for (const daLayer of config.blockLayers) {
     const configurations = config.blockProjects.filter(
@@ -155,7 +156,7 @@ function createIndexers(
           config.ethereumNotifierDiscordWebhookUrl,
         )
         const hourlyIndexer = new HourlyIndexer(logger, clock)
-        notifierIndexers.push(hourlyIndexer)
+        notificationIndexers.push(hourlyIndexer)
 
         const notifierIndexer = new EthereumBlobNotifierIndexer(
           {
@@ -168,7 +169,7 @@ function createIndexers(
           },
           logger,
         )
-        notifierIndexers.push(notifierIndexer)
+        notificationIndexers.push(notifierIndexer)
       }
     }
 
@@ -270,5 +271,10 @@ function createIndexers(
     eigenIndexers.push(projectsIndexer)
   }
 
-  return { targetIndexers, daIndexers, eigenIndexers, notifierIndexers }
+  return {
+    targetIndexers,
+    daIndexers,
+    eigenIndexers,
+    notifierIndexers: notificationIndexers,
+  }
 }

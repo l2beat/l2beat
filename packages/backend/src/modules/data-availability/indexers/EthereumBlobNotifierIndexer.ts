@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { pluralize, UnixTime } from '@l2beat/shared-pure'
-import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
@@ -39,7 +38,6 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
       {
         ...$,
         name: INDEXER_NAMES.ETHEREUM_BLOB_NOTIFIER,
-        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
       logger,
     )
