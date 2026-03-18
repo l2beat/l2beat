@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork-alphapayload",
-  "timestamp": 1773403587,
+  "timestamp": 1773850672,
   "configHash": "0x8af65a117b0a38508b8e9752b2d044a5477e9bad13f0f9728ca10efae8676410",
   "sharedModules": ["aztecnetwork"],
   "entries": [
@@ -90,7 +90,7 @@
       "values": {
         "_epochProofVerifier": "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5",
         "$immutable": true,
-        "archive": "0x1c1eef7dcfd33a9d688c14f70d9c87d3f2bbd5f9d78ce70965651ea0b1934643",
+        "archive": "0x23b983806a0d120a1509386211f4854b6eea0b1bd8d436bebec2c1578d4bea04",
         "checkBlob": true,
         "eip712Domain": {
           "fields": "0x0f",
@@ -102,14 +102,14 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3984,
+        "getActiveAttesterCount": 3994,
         "getAvailableValidatorFlushes": 4,
         "getBlockReward": "400000000000000000000",
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x00d02de4822eef92e39ba0693ac990885c79f53744409fae5119b719b6867eed",
-        "getCurrentEpoch": 4517,
-        "getCurrentSampleSeed": "112600992210795577649505989799863506777343147507177951452037216944845270938621",
-        "getCurrentSlot": 144561,
+        "getCurrentBlobCommitmentsHash": "0x00388ace0be4acc09cd0e80b2b60bce98901e80f4808d3cae47a809730fbe2ab",
+        "getCurrentEpoch": 4711,
+        "getCurrentSampleSeed": "26533121310748690043342699818614700439619552080757955467168025563804653264556",
+        "getCurrentSlot": 150771,
         "getEarliestRewardsClaimableTimestamp": 1770818400,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
@@ -129,11 +129,11 @@
         "getLocalEjectionThreshold": "196000000000000000000000",
         "getManaLimit": 0,
         "getManaTarget": 0,
-        "getNextFlushableEpoch": 4508,
+        "getNextFlushableEpoch": 4709,
         "getOutbox": "eth:0xf006c41097861AFeb18b05e586B921c081411Ee9",
-        "getPendingBlockNumber": 121361,
+        "getPendingBlockNumber": 127001,
         "getProofSubmissionEpochs": 1,
-        "getProvenBlockNumber": 121348,
+        "getProvenBlockNumber": 126981,
         "getProvingCostPerManaInEth": 0,
         "getProvingCostPerManaInFeeAsset": 0,
         "getRewardConfig": {
@@ -151,8 +151,8 @@
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 24,
         "getTips": {
-          "pendingBlockNumber": 121361,
-          "provenBlockNumber": 121348
+          "pendingBlockNumber": 127001,
+          "provenBlockNumber": 126981
         },
         "getVersion": 0,
         "isRewardsClaimable": true,
@@ -217,7 +217,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5": "HonkVerifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "AlphaPayload",
@@ -253,7 +254,7 @@
           },
           {
             "target": "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65",
-            "data": "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f34000000000000000000000000000000000000000000006490616e0ff6afd00000"
+            "data": "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f3400000000000000000000000000000000000000000000641e8a13563d8f800000"
           },
           {
             "target": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
@@ -298,7 +299,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 1129,
+        "getCurrentRound": 1177,
         "INSTANCE": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -339,7 +340,7 @@
         "REWARD_ASSET": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "rewardPerInsertion": "100000000000000000000",
         "rewardPerInsertionFmt": "100",
-        "rewardsAvailable": "474900000000000000000000",
+        "rewardsAvailable": "472800000000000000000000",
         "ROLLUP": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12"
       },
       "implementationNames": {
@@ -418,7 +419,7 @@
       "targetProject": "aztecnetwork"
     },
     {
-      "name": "Safe",
+      "name": "SlashVeto Council",
       "address": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
       "type": "Reference",
       "targetType": "Contract",
@@ -893,6 +894,6 @@
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7"
   },
-  "usedBlockNumbers": { "ethereum": 24648435 },
+  "usedBlockNumbers": { "ethereum": 24685511 },
   "permissionsConfigHash": "0x5529958f5ca596a9c6f354aa4d17c9fba4b01dfce401fb2ec9d2ac574ff39584"
 }

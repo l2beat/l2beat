@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa40757fdb9f1b28556a74c8c8a11f40b01b1fe54
+Generated with discovered.json: 0x1493d2f2635c0f4cf35225953c915f670d07c55f
 
-# Diff at Fri, 13 Mar 2026 12:07:37 GMT:
+# Diff at Wed, 18 Mar 2026 16:19:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@701a1d1ad3b6c6bb36a1a5ed8937206d44c94fb9 block: 1772790297
-- current timestamp: 1773403587
+- comparing to: main@6efe4272895cd940e6f11b02230b048063c0fc22 block: 1772790297
+- current timestamp: 1773850672
 
 ## Description
 
@@ -17,7 +17,7 @@ config: remove canonical rollup from aztecnetwork disco (adding it here automati
     +++ description: The Alpha Upgrade Governance Payload encoding the recipe for bringing execution to the next Aztec rollup smart contract system.
       values.getActions.4.data:
 -        "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f3400000000000000000000000000000000000000000000659f6e5e74d408f00000"
-+        "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f34000000000000000000000000000000000000000000006490616e0ff6afd00000"
++        "0x1ec82cb8000000000000000000000000a27ec0006e59f245217ff08cd52a7e8b169e62d2000000000000000000000000f1acfb0c6add7104e700b8fad3ea025dbb041f3400000000000000000000000000000000000000000000641e8a13563d8f800000"
     }
 ```
 
@@ -155,6 +155,15 @@ discovery. Values are for block 1772790297 (main branch discovery), not current.
 +        "Contract"
       targetProject:
 +        "aztecnetwork"
+    }
+```
+
+```diff
+    reference SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) {
+    +++ description: None
+      name:
+-        "Safe"
++        "SlashVeto Council"
     }
 ```
 
