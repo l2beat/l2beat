@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -88,7 +89,7 @@ export const columns = [
     enableSorting: false,
     cell: (ctx) => {
       const { duration } = ctx.row.original
-      if (duration === undefined) return <NoDataBadge />
+      if (duration === undefined) return <InteropNoDataBadge />
 
       return (
         <span className="font-medium text-label-value-14 text-primary">
@@ -203,7 +204,7 @@ function TxHashCell({
   hash: string | undefined
   href: string | undefined
 }) {
-  if (!hash) return <NoDataBadge />
+  if (!hash) return <InteropNoDataBadge />
 
   const content = shortenHash(hash)
   if (!href) {
