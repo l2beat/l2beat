@@ -2,12 +2,12 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
-import { interopDescriptions } from '~/pages/interop/descriptions'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
 import type { LockAndMintProtocolEntry } from './tables/getBridgeTypeEntries'
 import { LockAndMintTable } from './tables/LockAndMintTable'
+import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 
 export function LockAndMintCard({
   entries,
@@ -40,7 +40,7 @@ export function LockAndMintCard({
       </div>
       <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
-        {interopDescriptions.lockAndMint}
+        {TRANSFER_TYPE_DISPLAY.lockAndMint.description}
       </div>
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />

@@ -9,8 +9,11 @@ import {
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
+import {
+  INTEROP_TYPE_TO_BG_COLOR,
+  TRANSFER_TYPE_DISPLAY,
+} from '../../utils/display'
 import type { TransferTypeBreakdown } from '../getTransferTypeBreakdown'
 import { SelectedPathNoDataState } from './SelectedPathNoDataState'
 
@@ -18,24 +21,6 @@ interface Props {
   isLoading: boolean
   breakdown: TransferTypeBreakdown
 }
-
-const TRANSFER_TYPE_CONFIG = [
-  {
-    key: 'nonMinting',
-    label: 'Non-minting',
-    className: 'bg-non-minting',
-  },
-  {
-    key: 'lockAndMint',
-    label: 'Lock & Mint',
-    className: 'bg-lock-and-mint',
-  },
-  {
-    key: 'burnAndMint',
-    label: 'Burn & Mint',
-    className: 'bg-burn-and-mint',
-  },
-] as const
 
 export function BreakdownByTransferType({ isLoading, breakdown }: Props) {
   const hasTransfers =
@@ -64,19 +49,28 @@ export function BreakdownByTransferType({ isLoading, breakdown }: Props) {
         <div className="mt-4 flex flex-col gap-5">
           <BreakdownSection
             label="Volume"
-            values={TRANSFER_TYPE_CONFIG.map((item) => ({
-              ...item,
-              value: breakdown.volume[item.key],
-              formattedValue: formatCurrency(breakdown.volume[item.key], 'usd'),
-            }))}
+            values={(['lockAndMint', 'burnAndMint', 'nonMinting'] as const).map(
+              (key) => ({
+                label: TRANSFER_TYPE_DISPLAY[key].label,
+                value: breakdown.volume[key],
+                formattedValue: formatCurrency(breakdown.volume[key], 'usd'),
+                className: INTEROP_TYPE_TO_BG_COLOR[key],
+              }),
+            )}
           />
           <BreakdownSection
             label="Transfer count"
-            values={TRANSFER_TYPE_CONFIG.map((item) => ({
-              ...item,
-              value: breakdown.transferCount[item.key],
-              formattedValue: formatInteger(breakdown.transferCount[item.key]),
-            }))}
+            values={(['lockAndMint', 'burnAndMint', 'nonMinting'] as const).map(
+              (key) => ({
+                label: TRANSFER_TYPE_DISPLAY[key].label,
+                value: breakdown.transferCount[key],
+                formattedValue: formatCurrency(
+                  breakdown.transferCount[key],
+                  'usd',
+                ),
+                className: INTEROP_TYPE_TO_BG_COLOR[key],
+              }),
+            )}
           />
         </div>
       ) : (
