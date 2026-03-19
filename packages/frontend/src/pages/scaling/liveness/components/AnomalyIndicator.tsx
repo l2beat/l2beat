@@ -15,32 +15,47 @@ interface Props {
 
 export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
+  const uptimePercentage = calculateUptimePercentage(anomalies)
 
-  const bars = (
-    <div className="flex h-6 w-min gap-x-0.5">
-      {indicators.map((indicator, i) => (
-        <div
-          key={i}
-          className={cn(
-            'w-0.5 rounded-full',
-            indicator === 'none' && 'bg-blue-500',
-            indicator === 'recovered' && 'bg-orange-400',
-            indicator === 'ongoing' && 'bg-negative',
-          )}
-        />
-      ))}
+  const content = (
+    <div className="flex flex-col items-center gap-0.5">
+      <div className="flex h-6 w-min gap-x-0.5">
+        {indicators.map((indicator, i) => (
+          <div
+            key={i}
+            className={cn(
+              'w-0.5 rounded-full',
+              indicator === 'none' && 'bg-blue-500',
+              indicator === 'recovered' && 'bg-orange-400',
+              indicator === 'ongoing' && 'bg-negative',
+            )}
+          />
+        ))}
+      </div>
+      <span
+        className={cn(
+          'whitespace-nowrap font-medium text-2xs uppercase leading-none',
+          uptimePercentage >= 95
+            ? 'text-blue-500'
+            : uptimePercentage >= 90
+              ? 'text-orange-400'
+              : 'text-negative',
+        )}
+      >
+        {uptimePercentage}% normal uptime
+      </span>
     </div>
   )
 
   if (!href) {
-    return bars
+    return content
   }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <a href={href} className="cursor-pointer">
-          {bars}
+          {content}
         </a>
       </TooltipTrigger>
       <TooltipContent>
@@ -48,8 +63,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
           <div>No anomalies detected in the last 30 days</div>
         ) : (
           <div>
-            There {anomalies.length === 1 ? 'was' : 'were'}{' '}
-            {anomalies.length}{' '}
+            There {anomalies.length === 1 ? 'was' : 'were'} {anomalies.length}{' '}
             {pluralize(anomalies.length, 'anomaly', 'anomalies')} over the past
             30 days. Click to learn more.
           </div>
@@ -70,6 +84,24 @@ export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
     default:
       assertUnreachable(type)
   }
+}
+
+function calculateUptimePercentage(anomalies: LivenessAnomaly[]) {
+  const now = UnixTime.now()
+  const thirtyDaysAgo = now - 30 * UnixTime.DAY
+  const totalHours = 30 * 24
+
+  let anomalyHours = 0
+  for (const anomaly of anomalies) {
+    const start = Math.max(anomaly.start, thirtyDaysAgo)
+    const end = anomaly.end ? Math.min(anomaly.end, now) : now
+    if (end > start) {
+      anomalyHours += (end - start) / UnixTime.HOUR
+    }
+  }
+
+  const percentage = ((totalHours - anomalyHours) / totalHours) * 100
+  return Math.floor(percentage)
 }
 
 function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
