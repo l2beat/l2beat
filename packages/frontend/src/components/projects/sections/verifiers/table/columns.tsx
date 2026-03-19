@@ -1,4 +1,3 @@
-import { formatAddress } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
@@ -10,12 +9,12 @@ import type { VerifierRow } from './VerifiersTable'
 const columnHelper = createColumnHelper<VerifierRow>()
 
 export const verifiersColumns = [
-  columnHelper.accessor('hash', {
+  columnHelper.accessor('name', {
     header: 'Verifier',
     cell: (ctx) => (
       <div className="flex items-baseline gap-1.5">
         <span className="font-medium text-label-value-14 md:text-label-value-15">
-          {formatAddress(ctx.row.original.hash)}
+          {ctx.row.original.name}
         </span>
       </div>
     ),

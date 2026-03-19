@@ -498,11 +498,11 @@ export interface StageConfiguredMessage {
 export interface StageSummary {
   stage: Stage
   principle:
-    | {
-        satisfied: boolean | 'UnderReview'
-        description: string
-      }
-    | undefined
+  | {
+    satisfied: boolean | 'UnderReview'
+    description: string
+  }
+  | undefined
   requirements: {
     satisfied: boolean | 'UnderReview'
     description: string
@@ -580,19 +580,19 @@ export interface ProjectScalingStateValidation {
 
 export interface ProjectScalingStateValidationCategory {
   title: // ZK
-    | 'ZK Circuits'
-    | 'Prover Architecture'
-    | 'Verification Keys Generation'
-    | 'Proven Program'
-    | 'Validity proofs'
-    | 'Pessimistic Proofs'
-    // Optimistic
-    | 'State root proposals'
-    | 'Challenges'
-    | 'Fast confirmations'
-    | 'Fraud proofs'
-    // Other
-    | 'No state validation'
+  | 'ZK Circuits'
+  | 'Prover Architecture'
+  | 'Verification Keys Generation'
+  | 'Proven Program'
+  | 'Validity proofs'
+  | 'Pessimistic Proofs'
+  // Optimistic
+  | 'State root proposals'
+  | 'Challenges'
+  | 'Fast confirmations'
+  | 'Fraud proofs'
+  // Other
+  | 'No state validation'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -706,12 +706,12 @@ export interface DaEconomicSecurity {
 
 export type DaValidators =
   | {
-      type: 'static'
-      count: number
-    }
+    type: 'static'
+    count: number
+  }
   | {
-      type: 'dynamic'
-    }
+    type: 'dynamic'
+  }
 
 export interface ProjectDaBridge {
   name: string
@@ -796,6 +796,8 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string,
+    sourceLink?: string,
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
