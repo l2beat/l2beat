@@ -6,26 +6,10 @@ import { DiscordClient } from './DiscordClient'
 describe(DiscordClient.name, () => {
   const config = {
     token: '<discord-token>',
-    publicChannelId: '<channel-id>',
-    internalChannelId: '<channel-id-2>',
+    internalChannelId: '<channel-id>',
     callsPerMinute: 3000,
   }
   describe(DiscordClient.prototype.sendMessage.name, () => {
-    it('sends to public channel', async () => {
-      const httpClient = mockObject<HttpClient>({
-        fetch: async (url) => {
-          expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
-          )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
-        },
-      })
-
-      const discord = new DiscordClient(httpClient, config)
-
-      await discord.sendMessage('', 'PUBLIC')
-    })
-
     it('sends to internal channel', async () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async (url) => {
@@ -38,14 +22,14 @@ describe(DiscordClient.name, () => {
 
       const discord = new DiscordClient(httpClient, config)
 
-      await discord.sendMessage('', 'INTERNAL')
+      await discord.sendMessage('')
     })
 
     it('constructs a correct url', async () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async (url) => {
           expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${config.publicChannelId}/messages`,
+            `https://discord.com/api/v10/channels/${config.internalChannelId}/messages`,
           )
           return new Response(JSON.stringify({ status: '1', message: 'OK' }))
         },
@@ -53,7 +37,7 @@ describe(DiscordClient.name, () => {
 
       const discord = new DiscordClient(httpClient, config)
 
-      await discord.sendMessage('', 'PUBLIC')
+      await discord.sendMessage('')
     })
 
     it('includes message in the body', async () => {
@@ -66,7 +50,7 @@ describe(DiscordClient.name, () => {
       })
       const discord = new DiscordClient(httpClient, config)
 
-      await discord.sendMessage(message, 'PUBLIC')
+      await discord.sendMessage(message)
     })
 
     it('adds headers', async () => {
@@ -81,7 +65,7 @@ describe(DiscordClient.name, () => {
       })
       const discord = new DiscordClient(httpClient, config)
 
-      await discord.sendMessage('', 'PUBLIC')
+      await discord.sendMessage('')
     })
 
     it('throws when message is too long', async () => {
@@ -89,7 +73,7 @@ describe(DiscordClient.name, () => {
       const discord = new DiscordClient(httpClient, config)
 
       const message = 'a'.repeat(2001)
-      await expect(discord.sendMessage(message, 'PUBLIC')).toBeRejectedWith(
+      await expect(discord.sendMessage(message)).toBeRejectedWith(
         'Discord error: Message size exceeded (2000 characters)',
       )
     })
