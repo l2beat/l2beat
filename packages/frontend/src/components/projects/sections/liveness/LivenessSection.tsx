@@ -12,9 +12,10 @@ import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAn
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import type { ChartRange } from '~/utils/range/range'
-import { TrackedTransactions } from './costs/TrackedTransactions'
-import { ProjectSection } from './ProjectSection'
-import type { ProjectSectionProps } from './types'
+import { TrackedTransactions } from '../costs/TrackedTransactions'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import { Last30DayAnomalies } from './Last30DayAnomalies'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
   project: ChartProject
@@ -69,6 +70,12 @@ export function LivenessSection({
       <div className="mt-4">
         <TrackedTransactions {...trackedTransactions} />
       </div>
+      {!isArchived && (
+        <>
+          <HorizontalSeparator className="my-6" />
+          <Last30DayAnomalies anomalies={anomalies} />
+        </>
+      )}
     </ProjectSection>
   )
 }
