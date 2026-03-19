@@ -38,7 +38,8 @@ export function computeGraphLayout(
   const circleRadius = Math.min(width, height) * 0.42 - LABEL_PADDING
 
   for (let i = 0; i < chainIds.length; i++) {
-    const chainId = chainIds[i]!
+    const chainId = chainIds[i]
+    if (!chainId) continue
     // Start from the top (-π/2) and distribute evenly
     const angle = (2 * Math.PI * i) / chainIds.length - Math.PI / 2
 

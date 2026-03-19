@@ -107,7 +107,9 @@ function getMockInteropGraphFlows(): InteropGraphFlowsData {
     for (let j = 0; j < chainIds.length; j++) {
       if (i === j) continue
       const volume = (((i + 1) * (j + 2) * 7_123_456) % 50_000_000) + 500_000
-      flows.push({ srcChain: chainIds[i]!, dstChain: chainIds[j]!, volume })
+      const srcChain = chainIds[i]
+      const dstChain = chainIds[j]
+      if (srcChain && dstChain) flows.push({ srcChain, dstChain, volume })
     }
   }
 

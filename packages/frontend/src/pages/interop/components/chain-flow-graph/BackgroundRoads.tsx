@@ -16,7 +16,9 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
   const pairs: { a: string; b: string }[] = []
   for (let i = 0; i < chainIds.length; i++) {
     for (let j = i + 1; j < chainIds.length; j++) {
-      pairs.push({ a: chainIds[i]!, b: chainIds[j]! })
+      const a = chainIds[i]
+      const b = chainIds[j]
+      if (a && b) pairs.push({ a, b })
     }
   }
 

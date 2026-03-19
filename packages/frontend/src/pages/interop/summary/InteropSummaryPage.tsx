@@ -71,7 +71,7 @@ export function InteropSummaryPage({
 function Content({
   mode,
   interopChains,
-  onboardingInteropChains,
+  onboardingInteropChains: _onboardingInteropChains,
   protocols,
 }: {
   mode: InteropMode
