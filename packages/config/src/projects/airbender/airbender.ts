@@ -110,6 +110,7 @@ export const airbender: BaseProject = {
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        name: 'Airbender Fflonk Adi verifier',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
@@ -126,6 +127,7 @@ export const airbender: BaseProject = {
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
         hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        name: 'Airbender Plonk Adi verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {

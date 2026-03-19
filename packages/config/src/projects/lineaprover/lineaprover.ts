@@ -157,6 +157,9 @@ export const lineaprover: BaseProject = {
       // },
       {
         hash: '0xb0444511433f868a05ccdd4ca0e2d1d8749c74b8f4b5bd630f2700cde7f41b46',
+        name: 'Linea Plonk v6.1.3',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/blob/94d0554912ab9f570b8b60e985a788ac7f78f96d/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -175,6 +178,9 @@ export const lineaprover: BaseProject = {
       },
       {
         hash: '0xa2d1e02fe3b174b3b039ed8e33e7d9cb57b2b4990b5e4b22d634872e4d9e9325',
+        name: 'Linea Plonk v6.1.1',
+        sourceLink:
+          'https://github.com/Consensys/linea-monorepo/blob/456c3a8b8c4c1dd0659057237476bf507bae1860/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {

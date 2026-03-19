@@ -102,6 +102,9 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
     verifierHashes: [
       {
         hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',
+        name: 'OpenVM Feynman',
+        sourceLink:
+          'https://github.com/scroll-tech/zkvm-prover/tree/v0.5.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -138,6 +141,9 @@ solc --version  # should be 0.8.19
       },
       {
         hash: '0xf86ce35d4f5b1478f21194d9c6fc825f8d8afc0468425c981dc017149f0cac5e',
+        name: 'OpenVM Galileo',
+        sourceLink:
+          'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
