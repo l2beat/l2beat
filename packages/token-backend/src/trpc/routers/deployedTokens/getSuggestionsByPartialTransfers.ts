@@ -45,6 +45,12 @@ export async function getSuggestionsByPartialTransfers(
     tokenDb.chain.getAll(),
   ])
 
+  console.log(
+    'transfers',
+    transfersForSuggestions.find(
+      (t) => t.srcTokenAddress === 'native' || t.dstTokenAddress === 'native',
+    ),
+  )
   return buildTransferSuggestionMap(
     transfersForSuggestions,
     abstractTokens,
@@ -119,11 +125,10 @@ function buildTransferSuggestionMap(
       return
     }
 
-    const ethereumAddress = Address32.cropToEthereumAddress(
-      Address32(tokenAddress),
-    )
-    const deployedToken =
-      deployedTokenMap[`${chain}:${ethereumAddress.toLowerCase()}`]
+    const address = tokenAddress.startsWith('0x')
+      ? Address32.cropToEthereumAddress(Address32(tokenAddress))
+      : tokenAddress
+    const deployedToken = deployedTokenMap[`${chain}:${address.toLowerCase()}`]
 
     if (deployedToken) {
       return
@@ -139,7 +144,7 @@ function buildTransferSuggestionMap(
     } else {
       map.set(key, {
         chain,
-        address: ethereumAddress,
+        address,
         explorerUrl: chainMap[chain]?.explorerUrl ?? undefined,
         abstractToken,
         txs: [
