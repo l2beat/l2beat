@@ -9,6 +9,8 @@ interface Props {
   chain: InteropChainWithIcon
   layout: ChainNodeLayout
   selected: boolean
+  hovered: boolean
+  color: string
   netFlow: number
   firstSelectedChainId: string | undefined
   type: KnownInteropBridgeType | undefined
@@ -21,6 +23,8 @@ export function ChainBubble({
   chain,
   layout,
   selected,
+  hovered,
+  color,
   netFlow,
   firstSelectedChainId,
   type,
@@ -58,12 +62,11 @@ export function ChainBubble({
         cx={x}
         cy={y}
         r={radius}
-        className={
-          selected
-            ? 'fill-brand/15 stroke-brand'
-            : 'fill-surface-secondary stroke-divider hover:fill-brand/5'
-        }
+        fill={color}
+        fillOpacity={selected ? 0.25 : hovered ? 0.2 : 0.15}
+        stroke={color}
         strokeWidth={selected ? 2.5 : 1.5}
+        strokeOpacity={selected ? 1 : hovered ? 0.8 : 0.5}
       />
       <image
         href={chain.iconUrl}

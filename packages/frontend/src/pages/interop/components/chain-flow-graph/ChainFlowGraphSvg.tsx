@@ -6,6 +6,7 @@ import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubble } from './ChainBubble'
 import type { ChainTooltipData } from './ChainTooltip'
 import { computeGraphLayout } from './computeGraphLayout'
+import { getChainColor } from './getChainColor'
 import { ParticleLayer } from './ParticleLayer'
 
 interface Props {
@@ -185,7 +186,7 @@ export function ChainFlowGraphSvg({
         maxVolume={maxVolume}
         hoveredChainId={hoveredChainId}
       />
-      {chainIds.map((chainId) => {
+      {chainIds.map((chainId, i) => {
         const chain = chainMap.get(chainId)
         const nodeLayout = layout.get(chainId)
         if (!chain || !nodeLayout) return null
@@ -196,6 +197,8 @@ export function ChainFlowGraphSvg({
             chain={chain}
             layout={nodeLayout}
             selected={selectedChainIds.has(chainId)}
+            hovered={hoveredChainId === chainId}
+            color={getChainColor(chainId, i, chainIds.length)}
             netFlow={getNetFlow(chainId)}
             firstSelectedChainId={firstSelectedChainId}
             type={type}
