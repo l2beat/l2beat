@@ -20,10 +20,10 @@ export function NonMintingCard({
   const viewAllUrl = buildUrl('/interop/non-minting')
 
   return (
-    <PrimaryCard className="flex flex-col border-t-blue-600 max-md:border-b max-md:border-b-divider md:border-t-4">
+    <PrimaryCard className="flex flex-col border-t-non-minting max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-blue-600 underline-offset-6 max-md:underline md:text-heading-24">
+          <h2 className="font-bold text-heading-20 decoration-non-minting underline-offset-6 max-md:underline md:text-heading-24">
             Non-minting
           </h2>
           <TopNBadge n={5} />

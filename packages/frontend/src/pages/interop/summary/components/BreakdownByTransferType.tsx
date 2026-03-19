@@ -23,17 +23,17 @@ const TRANSFER_TYPE_CONFIG = [
   {
     key: 'nonMinting',
     label: 'Non-minting',
-    className: 'bg-blue-600',
+    className: 'bg-non-minting',
   },
   {
     key: 'lockAndMint',
     label: 'Lock & Mint',
-    className: 'bg-yellow-700',
+    className: 'bg-lock-and-mint',
   },
   {
     key: 'burnAndMint',
     label: 'Burn & Mint',
-    className: 'bg-teal-500',
+    className: 'bg-burn-and-mint',
   },
 ] as const
 

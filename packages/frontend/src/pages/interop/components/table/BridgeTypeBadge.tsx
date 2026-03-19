@@ -10,15 +10,15 @@ import { interopDescriptions } from '../../descriptions'
 const typeToLabel = {
   nonMinting: {
     label: 'Non-minting',
-    bgColor: 'bg-blue-600',
+    bgColor: 'bg-non-minting',
   },
   lockAndMint: {
     label: 'Lock & Mint',
-    bgColor: 'bg-yellow-700',
+    bgColor: 'bg-lock-and-mint',
   },
   burnAndMint: {
     label: 'Burn & Mint',
-    bgColor: 'bg-teal-500',
+    bgColor: 'bg-burn-and-mint',
   },
 } as const
 
