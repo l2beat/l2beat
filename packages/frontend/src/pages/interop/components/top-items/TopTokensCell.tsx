@@ -4,8 +4,8 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { InteropTopItems } from './TopItems'
 import { TokenTableModal } from './TokenTableModal'
+import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
   topItems,

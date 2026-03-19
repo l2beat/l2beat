@@ -43,13 +43,12 @@ export function InteropTopItems({
           />
         ))}
       </div>
-      {topItems.remainingCount > 0 && (
-        renderRemainingCount?.(topItems.remainingCount) ?? (
+      {topItems.remainingCount > 0 &&
+        (renderRemainingCount?.(topItems.remainingCount) ?? (
           <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
             +{topItems.remainingCount}
           </span>
-        )
-      )}
+        ))}
     </button>
   )
 }

@@ -2,12 +2,12 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
+import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
 import type { LockAndMintProtocolEntry } from './tables/getBridgeTypeEntries'
 import { LockAndMintTable } from './tables/LockAndMintTable'
-import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 
 export function LockAndMintCard({
   entries,
