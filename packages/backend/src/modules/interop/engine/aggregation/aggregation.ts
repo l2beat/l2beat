@@ -57,6 +57,7 @@ export function getAggregatedTransfer(
   assert(first, 'Group is empty')
 
   let totalDurationSum = 0
+  let transfersWithDurationCount = 0
   let srcValueUsd: number | undefined = undefined
   let dstValueUsd: number | undefined = undefined
   let valueInFlight: number | undefined = undefined
@@ -73,12 +74,16 @@ export function getAggregatedTransfer(
   let maxTransferValueUsd: number | undefined = undefined
 
   for (const transfer of group) {
-    totalDurationSum += transfer.duration
-    transferTypeStats = addTransferTypeStats(
-      transferTypeStats,
-      transfer.type,
-      transfer.duration,
-    )
+    const duration = transfer.duration
+    if (duration !== undefined) {
+      totalDurationSum += duration
+      transfersWithDurationCount++
+      transferTypeStats = addTransferTypeStats(
+        transferTypeStats,
+        transfer.type,
+        duration,
+      )
+    }
     if (srcValueUsd === undefined) {
       srcValueUsd = transfer.srcValueUsd ?? transfer.dstValueUsd
     } else {
@@ -130,9 +135,8 @@ export function getAggregatedTransfer(
         assertUnreachable(bucket)
     }
 
-    if (options?.calculateValueInFlight) {
-      valueInFlight =
-        (valueInFlight ?? 0) + (transferValueUsd ?? 0) * transfer.duration
+    if (options?.calculateValueInFlight && duration !== undefined) {
+      valueInFlight = (valueInFlight ?? 0) + (transferValueUsd ?? 0) * duration
     }
 
     if (options?.calculateNetMinted) {
@@ -150,6 +154,7 @@ export function getAggregatedTransfer(
     dstChain: first.dstChain,
     transferTypeStats,
     transferCount: group.length,
+    transfersWithDurationCount,
     totalDurationSum,
     srcValueUsd: srcValueUsd ? Math.round(srcValueUsd * 100) / 100 : undefined,
     dstValueUsd: dstValueUsd ? Math.round(dstValueUsd * 100) / 100 : undefined,
@@ -192,6 +197,7 @@ export function getAggregatedTokens(
     {
       transferCount: number
       totalDurationSum: number
+      transfersWithDurationCount: number
       volume: number
       minTransferValueUsd: number | undefined
       maxTransferValueUsd: number | undefined
@@ -202,6 +208,7 @@ export function getAggregatedTokens(
   > = {}
 
   for (const transfer of group) {
+    const duration = transfer.duration
     const isSameToken =
       transfer.srcAbstractTokenId === transfer.dstAbstractTokenId
 
@@ -219,12 +226,18 @@ export function getAggregatedTokens(
       tokens[transfer.srcAbstractTokenId] = {
         transferCount: (currentSrcToken?.transferCount ?? 0) + 1,
         totalDurationSum:
-          (currentSrcToken?.totalDurationSum ?? 0) + transfer.duration,
-        transferTypeStats: addTransferTypeStats(
-          currentSrcToken?.transferTypeStats,
-          transfer.type,
-          transfer.duration,
-        ),
+          (currentSrcToken?.totalDurationSum ?? 0) + (duration ?? 0),
+        transfersWithDurationCount:
+          (currentSrcToken?.transfersWithDurationCount ?? 0) +
+          (duration !== undefined ? 1 : 0),
+        transferTypeStats:
+          duration !== undefined
+            ? addTransferTypeStats(
+                currentSrcToken?.transferTypeStats,
+                transfer.type,
+                duration,
+              )
+            : currentSrcToken?.transferTypeStats,
         volume: (currentSrcToken?.volume ?? 0) + (transfer.srcValueUsd ?? 0),
         minTransferValueUsd:
           srcTokenTransferValueUsd !== undefined
@@ -272,12 +285,18 @@ export function getAggregatedTokens(
       tokens[transfer.dstAbstractTokenId] = {
         transferCount: (currentDstToken?.transferCount ?? 0) + 1,
         totalDurationSum:
-          (currentDstToken?.totalDurationSum ?? 0) + transfer.duration,
-        transferTypeStats: addTransferTypeStats(
-          currentDstToken?.transferTypeStats,
-          transfer.type,
-          transfer.duration,
-        ),
+          (currentDstToken?.totalDurationSum ?? 0) + (duration ?? 0),
+        transfersWithDurationCount:
+          (currentDstToken?.transfersWithDurationCount ?? 0) +
+          (duration !== undefined ? 1 : 0),
+        transferTypeStats:
+          duration !== undefined
+            ? addTransferTypeStats(
+                currentDstToken?.transferTypeStats,
+                transfer.type,
+                duration,
+              )
+            : currentDstToken?.transferTypeStats,
         volume: (currentDstToken?.volume ?? 0) + (transfer.dstValueUsd ?? 0),
         minTransferValueUsd:
           dstTokenTransferValueUsd !== undefined
@@ -325,6 +344,7 @@ export function getAggregatedTokens(
     abstractTokenId: abstractTokenId,
     transferTypeStats: data.transferTypeStats,
     transferCount: data.transferCount,
+    transfersWithDurationCount: data.transfersWithDurationCount,
     totalDurationSum: data.totalDurationSum,
     volume: data.volume,
     minTransferValueUsd:

@@ -75,6 +75,79 @@ describe(getAverageDuration.name, () => {
     })
   })
 
+  it('uses only transfers with known duration in single mode', () => {
+    const result = getAverageDuration(
+      'canonical',
+      ['lockAndMint'],
+      commonInteropData({
+        transferCount: 6,
+        transfersWithDurationCount: 3,
+        totalDurationSum: 480,
+        transferTypeStats: undefined,
+      }),
+      undefined,
+    )
+
+    expect(result).toEqual({
+      type: 'single',
+      duration: 160,
+    })
+  })
+
+  it('uses only transfers with known duration in split mode', () => {
+    const result = getAverageDuration(
+      'stargate',
+      ['nonMinting'],
+      commonInteropData({
+        transferCount: 10,
+        transfersWithDurationCount: 4,
+        totalDurationSum: 200,
+        transferTypeStats: {
+          bus: { transferCount: 1, totalDurationSum: 50 },
+          taxi: { transferCount: 3, totalDurationSum: 150 },
+        },
+      }),
+      new Map([
+        [
+          'stargate',
+          new Map([
+            [
+              'nonMinting',
+              [
+                { label: 'Bus', transferTypes: ['bus'] },
+                { label: 'Taxi', transferTypes: ['taxi'] },
+              ],
+            ],
+          ]),
+        ],
+      ]) satisfies DurationSplitMap,
+    )
+
+    expect(result).toEqual({
+      type: 'split',
+      splits: [
+        { label: 'Bus', duration: 50 },
+        { label: 'Taxi', duration: 50 },
+      ],
+    })
+  })
+
+  it('returns null in single mode when no transfer has duration', () => {
+    const result = getAverageDuration(
+      'canonical',
+      ['lockAndMint'],
+      commonInteropData({
+        transferCount: 3,
+        transfersWithDurationCount: 0,
+        totalDurationSum: 0,
+        transferTypeStats: undefined,
+      }),
+      undefined,
+    )
+
+    expect(result).toEqual(null)
+  })
+
   it('keeps configured splits even when a subset has no matching transfers', () => {
     const result = getAverageDuration(
       'stargate',
@@ -278,9 +351,12 @@ describe(getAverageDuration.name, () => {
 function commonInteropData(
   overrides: Partial<CommonInteropData> = {},
 ): CommonInteropData {
+  const transferCount = overrides.transferCount ?? 0
   return {
     volume: 0,
-    transferCount: 0,
+    transferCount,
+    transfersWithDurationCount:
+      overrides.transfersWithDurationCount ?? transferCount,
     totalDurationSum: 0,
     transferTypeStats: undefined,
     minTransferValueUsd: undefined,

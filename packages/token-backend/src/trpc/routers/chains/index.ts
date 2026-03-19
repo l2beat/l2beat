@@ -1,11 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { BlockscoutClient } from '../../chains/clients/blockscout/BlockscoutClient'
-import { EtherscanClient } from '../../chains/clients/etherscan/EtherscanClient'
-import { RpcClient } from '../../chains/clients/rpc/RpcClient'
-import { ChainRecord, ChainUpdateSchema } from '../../schemas/Chain'
-import { readOnlyProcedure, readWriteProcedure } from '../procedures'
-import { router } from '../trpc'
+import { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
+import { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
+import { RpcClient } from '../../../chains/clients/rpc/RpcClient'
+import { ChainRecord, ChainUpdateSchema } from '../../../schemas/Chain'
+import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
+import { router } from '../../trpc'
 
 export interface ChainsRouterDeps {
   etherscanApiKey: string | undefined
@@ -19,17 +19,17 @@ export interface ChainsRouterDeps {
 
 export const chainsRouter = (deps: ChainsRouterDeps) =>
   router({
-    getAll: readOnlyProcedure.query(({ ctx }) => ctx.db.chain.getAll()),
+    getAll: readOnlyProcedure.query(({ ctx }) => ctx.tokenDb.chain.getAll()),
     getByName: readOnlyProcedure
       .input(v.string())
       .query(async ({ input, ctx }) => {
-        const result = await ctx.db.chain.findByName(input)
+        const result = await ctx.tokenDb.chain.findByName(input)
         return result ?? null
       }),
     insert: readWriteProcedure
       .input(ChainRecord)
       .mutation(async ({ input, ctx }) => {
-        await ctx.db.chain.insert(input)
+        await ctx.tokenDb.chain.insert(input)
         return { success: true }
       }),
     update: readWriteProcedure
@@ -40,12 +40,12 @@ export const chainsRouter = (deps: ChainsRouterDeps) =>
         }),
       )
       .mutation(async ({ input, ctx }) =>
-        ctx.db.chain.updateByName(input.name, input.update),
+        ctx.tokenDb.chain.updateByName(input.name, input.update),
       ),
     delete: readWriteProcedure
       .input(v.object({ name: v.string() }))
       .mutation(async ({ input, ctx }) =>
-        ctx.db.chain.deleteByName(input.name),
+        ctx.tokenDb.chain.deleteByName(input.name),
       ),
     testApi: readOnlyProcedure
       .input(

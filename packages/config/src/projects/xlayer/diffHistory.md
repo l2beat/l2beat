@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x5c953fbccfeea0d64905b49fab60115b630d4b00
+
+# Diff at Mon, 16 Mar 2026 12:59:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1768998877
+- current timestamp: 1773665851
+
+## Description
+
+fee config changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        100000000
++        50
+      values.minBaseFee:
+-        0
++        20000000
+    }
+```
+
 Generated with discovered.json: 0xa0d62645da0a7f803f2a660bd7f58d8cad227a3e
 
 # Diff at Wed, 04 Mar 2026 08:44:00 GMT:

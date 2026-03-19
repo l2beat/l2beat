@@ -114,6 +114,15 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       expect(results).toEqualUnsorted(DATA.slice(1, 2))
     })
+
+    it('returns empty array when projectIds is empty', async () => {
+      const results = await repository.getByProjectIdsFrom(
+        [],
+        START - 2 * UnixTime.HOUR,
+      )
+
+      expect(results).toEqual([])
+    })
   })
 
   describe(AnomaliesRepository.prototype.deleteAll.name, () => {

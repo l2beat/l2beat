@@ -247,6 +247,7 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {
@@ -313,6 +314,7 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {

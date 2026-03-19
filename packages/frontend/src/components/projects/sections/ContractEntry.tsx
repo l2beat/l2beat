@@ -51,6 +51,7 @@ export interface TechnologyContractAddress {
 export interface TechnologyContractEscrow {
   tokens: string[] | '*'
   tokenIcons: TechnologyContractEscrowToken[]
+  isCustom?: boolean
 }
 
 interface TechnologyContractEscrowToken {
@@ -91,7 +92,9 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             >
               {contract.name}
             </strong>
-            {contract.escrow && <EscrowBadge />}
+            {contract.escrow && (
+              <EscrowBadge isCustom={contract.escrow.isCustom} />
+            )}
             {entries.map((address, i) => (
               <HighlightableLink
                 key={i}
@@ -198,14 +201,14 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
   )
 }
 
-function EscrowBadge() {
+function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
   return (
     <Badge
       type="pink"
       padding="regular"
       className="text-[13px] uppercase leading-none"
     >
-      Escrow
+      {isCustom ? 'Custom Escrow' : 'Escrow'}
     </Badge>
   )
 }

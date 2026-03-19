@@ -272,10 +272,13 @@ function getEscrowDetails(
   escrow: ProjectEscrow,
   tokenIconMap: Map<string, string>,
 ): NonNullable<TechnologyContract['escrow']> {
+  const isCustom = escrow.source === 'custom-canonical'
+
   if (escrow.tokens === '*') {
     return {
       tokens: escrow.tokens,
       tokenIcons: [],
+      isCustom,
     }
   }
 
@@ -287,6 +290,7 @@ function getEscrowDetails(
         tokenIconMap.get(symbol) ??
         manifest.getUrl('/images/token-placeholder.png'),
     })),
+    isCustom,
   }
 }
 

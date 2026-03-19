@@ -264,6 +264,7 @@ function calculateBreakdown(
 
     switch (tokenConfig.source) {
       case 'canonical':
+      case 'custom-canonical':
         tvsBreakdown.source.canonical.value += token.valueForProject
         tvsBreakdown.source.canonical.tokens.push(token)
         break

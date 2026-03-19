@@ -8,6 +8,7 @@ import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
+  transfersWithDurationCount: 0,
   totalDurationSum: 0,
   transferTypeStats: undefined,
   minTransferValueUsd: undefined,
@@ -31,6 +32,7 @@ export function accumulateChains(
   return accumulate(current, {
     volume: source === 'src' ? record.srcValueUsd : record.dstValueUsd,
     transferCount: record.transferCount,
+    transfersWithDurationCount: record.transfersWithDurationCount,
     totalDurationSum: record.totalDurationSum,
     minTransferValueUsd: record.minTransferValueUsd,
     maxTransferValueUsd: record.maxTransferValueUsd,
@@ -45,6 +47,7 @@ function accumulate(
   record: {
     volume: number | undefined
     transferCount: number | undefined
+    transfersWithDurationCount: number | undefined
     totalDurationSum: number | undefined
     minTransferValueUsd: number | undefined
     maxTransferValueUsd: number | undefined
@@ -54,11 +57,14 @@ function accumulate(
   },
 ) {
   const transferCount = record.transferCount ?? 0
+  const transfersWithDurationCount = record.transfersWithDurationCount ?? 0
   const durationSum = record.totalDurationSum ?? 0
 
   return {
     volume: current.volume + (record.volume ?? 0),
     transferCount: current.transferCount + transferCount,
+    transfersWithDurationCount:
+      current.transfersWithDurationCount + transfersWithDurationCount,
     totalDurationSum: current.totalDurationSum + durationSum,
     transferTypeStats: mergeTransferTypeStats(
       current.transferTypeStats,

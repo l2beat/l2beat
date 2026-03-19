@@ -8,8 +8,8 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { findParsedAround } from './hyperlane-hwr'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,

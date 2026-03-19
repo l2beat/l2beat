@@ -117,13 +117,13 @@ export type InteropProtocolTransferDetailsItem = {
   dstSymbol: string | undefined
   dstTokenIconUrl: string
   valueUsd: number | undefined
-  duration: number
+  duration: number | undefined
   srcChain: string
-  srcTxHash: string
-  srcTxHashHref: string
+  srcTxHash: string | undefined
+  srcTxHashHref: string | undefined
   dstChain: string
-  dstTxHash: string
-  dstTxHashHref: string
+  dstTxHash: string | undefined
+  dstTxHashHref: string | undefined
 }
 
 export type InteropProtocolTransferStats = {
@@ -148,6 +148,7 @@ export type AggregatedInteropTransferWithTokens =
 export type CommonInteropData = {
   volume: number
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
