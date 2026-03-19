@@ -224,7 +224,8 @@ describe('deployedTokensRouter', () => {
       expect(result).toEqual({
         error: {
           type: 'already-exists',
-          message: 'Deployed token with given address and chain already exists',
+          message:
+            'Deployed token with given address and chain already exists.',
         },
         data: undefined,
       })
@@ -251,7 +252,7 @@ describe('deployedTokensRouter', () => {
       })
     })
 
-    it('throws when chain is not found', async () => {
+    it('returns chain-not-found error when chain does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
         deployedToken: mockObject<DeployedTokenRepository>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
@@ -264,12 +265,18 @@ describe('deployedTokensRouter', () => {
       const mockCoingeckoClient = mockObject<CoingeckoClient>({})
 
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
-      await expect(
-        caller.checks({
-          chain: 'nonexistent',
-          address: '0x123',
-        }),
-      ).toBeRejectedWith('Chain not found')
+      const result = await caller.checks({
+        chain: 'nonexistent',
+        address: '0x123',
+      })
+
+      expect(result).toEqual({
+        error: {
+          type: 'chain-not-found',
+          message: 'Chain not found.',
+        },
+        data: undefined,
+      })
     })
 
     it('includes rpc symbol and decimals in success response when available', async () => {
@@ -341,6 +348,76 @@ describe('deployedTokensRouter', () => {
       expect(mockGetSymbol).toHaveBeenCalledWith('0x123')
     })
 
+    it('includes deployment timestamp when etherscan returns contract creation', async () => {
+      const chainRecord = {
+        id: 1,
+        name: 'ethereum',
+        chainId: 1,
+        aliases: [],
+        apis: [],
+      }
+      const deploymentTimestamp = 1234567890
+      const mockCreateChain = mockFn().returns({
+        rpc: {
+          getDecimals: mockFn().resolvesTo(18),
+          getSymbol: mockFn().resolvesTo('TKN'),
+        },
+        etherscan: {
+          getContractCreation: mockFn().resolvesTo([
+            { timestamp: deploymentTimestamp },
+          ]),
+        },
+      })
+      const mockDb = mockObject<Database>({})
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<DeployedTokenRepository>({
+          findByChainAndAddress: mockFn().resolvesTo(undefined),
+          getByChainsAndAddresses: mockFn().resolvesTo([]),
+        }),
+        chain: mockObject<ChainRepository>({
+          findByName: mockFn().resolvesTo(chainRecord),
+          getAll: mockFn().resolvesTo([chainRecord]),
+        }),
+        abstractToken: mockObject<AbstractTokenRepository>({
+          findByCoingeckoId: mockFn().resolvesTo(undefined),
+        }),
+      })
+      const mockCoingeckoClient = mockObject<CoingeckoClient>({
+        getCoinList: mockFn().resolvesTo([
+          {
+            id: 'token-id',
+            name: 'Token',
+            symbol: 'TKN',
+            platforms: {
+              ethereum: '0x123',
+            },
+          },
+        ]),
+      })
+
+      const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient, {
+        createChain: mockCreateChain,
+      })
+      const result = await caller.checks({
+        chain: 'ethereum',
+        address: '0x123',
+      })
+
+      expect(result).toEqual({
+        error: undefined,
+        data: {
+          symbol: 'TKN',
+          symbolSource: 'rpc',
+          suggestions: [],
+          decimals: 18,
+          deploymentTimestamp,
+          abstractTokenId: undefined,
+          coingeckoId: 'token-id',
+          abstractTokenSuggestions: [],
+        },
+      })
+    })
+
     it('includes rpc symbol and decimals in not-found-on-coingecko response', async () => {
       const chainRecord = {
         id: 1,
@@ -385,7 +462,7 @@ describe('deployedTokensRouter', () => {
       expect(result).toEqual({
         error: {
           type: 'not-found-on-coingecko',
-          message: 'Coin not found on Coingecko',
+          message: 'Coin not found on Coingecko.',
         },
         data: {
           symbol: 'USDC-RPC',
@@ -442,7 +519,7 @@ describe('deployedTokensRouter', () => {
       expect(result).toEqual({
         error: {
           type: 'not-found-on-coingecko',
-          message: 'Coin not found on Coingecko',
+          message: 'Coin not found on Coingecko.',
         },
         data: {
           symbol: undefined,

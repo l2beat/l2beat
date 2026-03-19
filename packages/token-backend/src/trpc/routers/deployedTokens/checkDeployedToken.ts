@@ -4,7 +4,7 @@ import type {
   TokenDatabase,
 } from '@l2beat/database'
 import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainRepository'
-import { Address32, assert, type UnixTime } from '@l2beat/shared-pure'
+import { Address32, type UnixTime } from '@l2beat/shared-pure'
 import { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
 import {
@@ -139,7 +139,7 @@ export async function checkDeployedToken(
     return {
       error: {
         type: 'already-exists' as const,
-        message: 'Deployed token with given address and chain already exists',
+        message: 'Deployed token with given address and chain already exists.',
       },
       data: undefined,
     }
@@ -152,7 +152,16 @@ export async function checkDeployedToken(
   }
 
   const chainRecord = await tokenDb.chain.findByName(input.chain)
-  assert(chainRecord, 'Chain not found')
+
+  if (!chainRecord) {
+    return {
+      error: {
+        type: 'chain-not-found' as const,
+        message: 'Chain not found.',
+      },
+      data: undefined,
+    }
+  }
 
   const chain = createChain(chainRecord)
 
@@ -187,7 +196,7 @@ export async function checkDeployedToken(
     return {
       error: {
         type: 'not-found-on-coingecko' as const,
-        message: 'Coin not found on Coingecko',
+        message: 'Coin not found on Coingecko.',
       },
       data: {
         symbol,

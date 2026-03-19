@@ -1,15 +1,23 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Card, CardContent } from '~/components/core/Card'
 import { ChainForm, ChainSchema } from '~/components/forms/ChainForm'
+import { useQueryState } from '~/hooks/useQueryState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
+import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
 
 export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
   const utils = api.useUtils()
+  const navigate = useNavigate()
+  const [queryName] = useQueryState('name', '')
+  const [queryAddress] = useQueryState('address', '')
+  const [queryAbstractTokenId] = useQueryState('abstractTokenId', '')
+  const [redirectTo] = useQueryState('redirectTo', '')
   const form = useForm<ChainSchema>({
     resolver: validateResolver(ChainSchema),
     defaultValues: defaultValues ?? {
@@ -29,6 +37,18 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
       )
       utils.chains.getAll.invalidate()
       utils.search.all.invalidate()
+      if (redirectTo === 'deployed') {
+        utils.deployedTokens.checks.invalidate()
+        navigate(
+          buildUrlWithParams('/tokens/new', {
+            tab: redirectTo,
+            chain: vars.name,
+            address: queryAddress,
+            abstractTokenId: queryAbstractTokenId,
+          }),
+        )
+        return
+      }
       form.reset()
     },
     onError: (error: { message?: string }) => {
@@ -45,6 +65,12 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
       apis: values.apis || null,
     })
   }
+
+  useEffect(() => {
+    if (queryName) {
+      form.setValue('name', queryName)
+    }
+  }, [queryName, form.setValue])
 
   return (
     <AppLayout>

@@ -41,40 +41,48 @@ function MessagesTable(props: {
                 {new Date(e.timestamp * 1000).toLocaleString()}
               </td>
               <td data-order={e.duration} data-sort={e.duration}>
-                {e.duration && formatSeconds(e.duration)}
+                {e.duration !== undefined && formatSeconds(e.duration)}
               </td>
               <td>{e.app}</td>
               <td>{e.srcChain}</td>
               <td>
-                {srcExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
-                  >
-                    <ShortenedHash hash={e.srcTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.srcTxHash} />
-                )}
+                <TxHash explorerUrl={srcExplorerUrl} hash={e.srcTxHash} />
               </td>
               <td>{e.dstChain}</td>
               <td>
-                {dstExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
-                  >
-                    <ShortenedHash hash={e.dstTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.dstTxHash} />
-                )}
+                <TxHash explorerUrl={dstExplorerUrl} hash={e.dstTxHash} />
               </td>
             </tr>
           )
         })}
       </tbody>
     </table>
+  )
+}
+
+function TxHash({
+  explorerUrl,
+  hash,
+}: {
+  explorerUrl: string | undefined
+  hash: string | undefined
+}) {
+  if (!hash) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+
+  if (!explorerUrl) {
+    return <ShortenedHash hash={hash} />
+  }
+
+  return (
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      href={`${explorerUrl}/tx/${hash}`}
+    >
+      <ShortenedHash hash={hash} />
+    </a>
   )
 }
 

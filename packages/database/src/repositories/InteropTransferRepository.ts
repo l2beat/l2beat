@@ -31,13 +31,13 @@ export interface InteropTransferRecord {
   bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
-  duration: number
+  duration: number | undefined
   timestamp: UnixTime
-  srcTime: UnixTime
+  srcTime: UnixTime | undefined
   srcChain: string
-  srcTxHash: string
-  srcLogIndex: number
-  srcEventId: string
+  srcTxHash: string | undefined
+  srcLogIndex: number | undefined
+  srcEventId: string | undefined
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
   srcWasBurned: boolean | undefined
@@ -46,11 +46,11 @@ export interface InteropTransferRecord {
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
-  dstTime: UnixTime
+  dstTime: UnixTime | undefined
   dstChain: string
-  dstTxHash: string
-  dstLogIndex: number
-  dstEventId: string
+  dstTxHash: string | undefined
+  dstLogIndex: number | undefined
+  dstEventId: string | undefined
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
   dstWasMinted: boolean | undefined
@@ -96,19 +96,6 @@ export function toRecord(
     )
   }
 
-  // Remove me: Just to apply migration
-  assert(row.duration !== null)
-
-  assert(row.srcTime !== null)
-  assert(row.srcTxHash !== null)
-  assert(row.srcEventId !== null)
-  assert(row.srcLogIndex !== null)
-
-  assert(row.dstTime !== null)
-  assert(row.dstTxHash !== null)
-  assert(row.dstEventId !== null)
-  assert(row.dstLogIndex !== null)
-
   return {
     plugin: row.plugin,
     transferId: row.transferId,
@@ -117,13 +104,13 @@ export function toRecord(
       row.bridgeType === null
         ? undefined
         : (row.bridgeType as KnownInteropBridgeType),
-    duration: row.duration,
+    duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
-    srcTime: UnixTime.fromDate(row.srcTime),
+    srcTime: row.srcTime ? UnixTime.fromDate(row.srcTime) : undefined,
     srcChain: row.srcChain,
-    srcTxHash: row.srcTxHash,
-    srcLogIndex: row.srcLogIndex,
-    srcEventId: row.srcEventId,
+    srcTxHash: row.srcTxHash ?? undefined,
+    srcLogIndex: row.srcLogIndex ?? undefined,
+    srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcWasBurned: row.srcWasBurned ?? undefined,
@@ -132,11 +119,11 @@ export function toRecord(
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
-    dstTime: UnixTime.fromDate(row.dstTime),
+    dstTime: row.dstTime ? UnixTime.fromDate(row.dstTime) : undefined,
     dstChain: row.dstChain,
-    dstTxHash: row.dstTxHash,
-    dstLogIndex: row.dstLogIndex,
-    dstEventId: row.dstEventId,
+    dstTxHash: row.dstTxHash ?? undefined,
+    dstLogIndex: row.dstLogIndex ?? undefined,
+    dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstWasMinted: row.dstWasMinted ?? undefined,
@@ -157,13 +144,13 @@ export function toRow(
     transferId: record.transferId,
     type: record.type,
     bridgeType: record.bridgeType,
-    duration: record.duration,
+    duration: record.duration ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
-    srcTime: UnixTime.toDate(record.srcTime),
-    srcChain: record.srcChain,
-    srcTxHash: record.srcTxHash?.toLowerCase(),
-    srcLogIndex: record.srcLogIndex,
-    srcEventId: record.srcEventId,
+    srcTime: record.srcTime ? UnixTime.toDate(record.srcTime) : null,
+    srcChain: record.srcChain ?? null,
+    srcTxHash: record.srcTxHash?.toLowerCase() ?? null,
+    srcLogIndex: record.srcLogIndex ?? null,
+    srcEventId: record.srcEventId ?? null,
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
     srcWasBurned: record.srcWasBurned,
@@ -172,11 +159,11 @@ export function toRow(
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
-    dstTime: UnixTime.toDate(record.dstTime),
-    dstChain: record.dstChain,
-    dstTxHash: record.dstTxHash?.toLowerCase(),
-    dstLogIndex: record.dstLogIndex,
-    dstEventId: record.dstEventId,
+    dstTime: record.dstTime ? UnixTime.toDate(record.dstTime) : null,
+    dstChain: record.dstChain ?? null,
+    dstTxHash: record.dstTxHash?.toLowerCase() ?? null,
+    dstLogIndex: record.dstLogIndex ?? null,
+    dstEventId: record.dstEventId ?? null,
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
     dstWasMinted: record.dstWasMinted,
