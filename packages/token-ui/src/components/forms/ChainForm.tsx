@@ -153,7 +153,7 @@ export function ChainForm({
             <FormLabel>Aliases</FormLabel>
             <div className="space-y-2">
               {aliasFields.map((aliasField, index) => (
-                <div key={aliasField.id} className="flex items-center gap-2">
+                <div key={aliasField.id} className="flex gap-2">
                   <FormField
                     control={form.control}
                     name={`aliases.${index}.value`}
