@@ -372,13 +372,13 @@ model InteropTransfer {
   bridgeType String?  @db.VarChar(32)
   timestamp  DateTime @db.Timestamp(6)
 
-  duration Int
+  duration Int?
 
-  srcTime         DateTime @db.Timestamp(6)
+  srcTime         DateTime? @db.Timestamp(6)
   srcChain        String   @db.VarChar(32)
-  srcTxHash       String   @db.VarChar(66)
-  srcLogIndex     Int
-  srcEventId      String   @db.VarChar(40)
+  srcTxHash       String?   @db.VarChar(66)
+  srcLogIndex     Int?
+  srcEventId      String?   @db.VarChar(40)
   srcTokenAddress String?  @db.VarChar(66)
   srcRawAmount    Decimal? @db.Decimal(80, 0)
 
@@ -389,11 +389,11 @@ model InteropTransfer {
   srcValueUsd        Float?   @db.Real
   srcWasBurned       Boolean?
 
-  dstTime         DateTime @db.Timestamp(6)
+  dstTime         DateTime? @db.Timestamp(6)
   dstChain        String   @db.VarChar(32)
-  dstTxHash       String   @db.VarChar(66)
-  dstLogIndex     Int
-  dstEventId      String   @db.VarChar(40)
+  dstTxHash       String?   @db.VarChar(66)
+  dstLogIndex     Int?
+  dstEventId      String?   @db.VarChar(40)
   dstTokenAddress String?  @db.VarChar(66)
   dstRawAmount    Decimal? @db.Decimal(80, 0)
 
@@ -433,7 +433,7 @@ model AbstractToken {
   id                        String    @db.Char(6)
   issuer                    String?   @db.VarChar(255)
   symbol                    String    @db.VarChar(255)
-  category                  String    @db.VarChar(255)
+  category                  String?   @db.VarChar(255)
   iconUrl                   String?   @db.VarChar(255)
   coingeckoId               String?   @db.VarChar(255)
   coingeckoListingTimestamp DateTime? @db.Timestamp(6)
@@ -531,47 +531,49 @@ model InteropPluginSyncedRange {
 }
 
 model AggregatedInteropTransfer {
-  timestamp           DateTime @db.Timestamp(6)
-  id                  String   @db.VarChar(255)
-  bridgeType          String   @default("unknown") @db.VarChar(255)
-  srcChain            String   @db.VarChar(255)
-  dstChain            String   @db.VarChar(255)
-  transferTypeStats   Json?
-  transferCount       Int
-  identifiedCount     Int      @default(0)
-  totalDurationSum    Int
-  srcValueUsd         Float?   @db.Real
-  dstValueUsd         Float?   @db.Real
-  minTransferValueUsd Float?   @db.Real
-  maxTransferValueUsd Float?   @db.Real
-  avgValueInFlight    Float?   @db.Real
-  mintedValueUsd      Float?   @db.Real
-  burnedValueUsd      Float?   @db.Real
-  countUnder100       Int      @default(0)
-  count100To1K        Int      @default(0)
-  count1KTo10K        Int      @default(0)
-  count10KTo100K      Int      @default(0)
-  countOver100K       Int      @default(0)
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  transferTypeStats          Json?
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  identifiedCount            Int      @default(0)
+  totalDurationSum           Int
+  srcValueUsd                Float?   @db.Real
+  dstValueUsd                Float?   @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
+  avgValueInFlight           Float?   @db.Real
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  countUnder100              Int      @default(0)
+  count100To1K               Int      @default(0)
+  count1KTo10K               Int      @default(0)
+  count10KTo100K             Int      @default(0)
+  countOver100K              Int      @default(0)
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
 model AggregatedInteropToken {
-  timestamp           DateTime @db.Timestamp(6)
-  id                  String   @db.VarChar(255)
-  srcChain            String   @db.VarChar(255)
-  dstChain            String   @db.VarChar(255)
-  bridgeType          String   @default("unknown") @db.VarChar(255)
-  abstractTokenId     String   @db.VarChar(6)
-  transferTypeStats   Json?
-  mintedValueUsd      Float?   @db.Real
-  burnedValueUsd      Float?   @db.Real
-  transferCount       Int
-  totalDurationSum    Int
-  volume              Float    @db.Real
-  minTransferValueUsd Float?   @db.Real
-  maxTransferValueUsd Float?   @db.Real
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  abstractTokenId            String   @db.VarChar(6)
+  transferTypeStats          Json?
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  totalDurationSum           Int
+  volume                     Float    @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, abstractTokenId])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])

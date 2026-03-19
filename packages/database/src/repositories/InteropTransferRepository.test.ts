@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { Selectable } from 'kysely'
 import type { InteropTransfer } from '../kysely/generated/types'
@@ -1001,6 +1001,61 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const result = await repository.getWithPartialAbstractTokenIds()
 
         expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.getWithPartialAbstractTokenIdsForToken
+      .name,
+    () => {
+      it('filters partial transfers to a specific chain and token address', async () => {
+        const target = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+        )
+        target.srcAbstractTokenId = undefined
+        target.dstAbstractTokenId = 'token-1'
+        target.srcTokenAddress =
+          '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+        const differentAddress = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+        )
+        differentAddress.srcAbstractTokenId = undefined
+        differentAddress.dstAbstractTokenId = 'token-2'
+        differentAddress.srcTokenAddress = EthereumAddress.random()
+
+        const differentChain = transfer(
+          'plugin1',
+          'msg3',
+          'deposit',
+          UnixTime(300),
+          'base',
+          'ethereum',
+        )
+        differentChain.srcAbstractTokenId = undefined
+        differentChain.dstAbstractTokenId = 'token-3'
+        differentChain.srcTokenAddress =
+          '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+        await repository.insertMany([target, differentAddress, differentChain])
+
+        const result = await repository.getWithPartialAbstractTokenIdsForToken({
+          chain: 'ethereum',
+          address: Address32.from('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+        })
+
+        expect(result.map((r) => r.transferId)).toEqual(['msg1'])
       })
     },
   )

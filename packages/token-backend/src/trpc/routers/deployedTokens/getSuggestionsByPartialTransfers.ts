@@ -9,16 +9,16 @@ import { Address32, assert } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../../../shared/build'
 import type { ChainRecord } from '../../../schemas/Chain'
 
-type TransferSuggestion = {
+export type TransferSuggestion = {
   chain: string
   address: string
   explorerUrl: string | undefined
   abstractToken: AbstractTokenRecord
   txs: {
-    srcTxHash: string
+    srcTxHash: string | undefined
     srcChain: string
     srcExplorerUrl: string | undefined
-    dstTxHash: string
+    dstTxHash: string | undefined
     dstChain: string
     dstExplorerUrl: string | undefined
     transferId: string
@@ -30,25 +30,58 @@ export async function getSuggestionsByPartialTransfers(
   db: Database,
   tokenDb: TokenDatabase,
 ): Promise<TransferSuggestion[]> {
-  const [partialTransfers, abstractTokens, deployedTokens, chains] =
-    await Promise.all([
-      db.interopTransfer.getWithPartialAbstractTokenIds(),
-      tokenDb.abstractToken.getAll(),
-      tokenDb.deployedToken.getAll(),
-      tokenDb.chain.getAll(),
-    ])
-  const classifier = new InteropTransferClassifier()
-  const classified = classifier.groupByBridgeType(partialTransfers)
-  const transfersForSuggestions = [
-    ...classified.lockAndMint,
-    ...classified.burnAndMint,
-  ]
+  const partialTransfers =
+    await db.interopTransfer.getWithPartialAbstractTokenIds()
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const [abstractTokens, deployedTokens, chains] = await Promise.all([
+    tokenDb.abstractToken.getAll(),
+    tokenDb.deployedToken.getAll(),
+    tokenDb.chain.getAll(),
+  ])
+
   return buildTransferSuggestionMap(
     transfersForSuggestions,
     abstractTokens,
     deployedTokens,
     chains,
   )
+}
+
+export async function getSuggestionsByPartialTransfersForToken(
+  db: Database,
+  tokenDb: TokenDatabase,
+  token: { chain: string; address: Address32 },
+): Promise<TransferSuggestion[]> {
+  const partialTransfers =
+    await db.interopTransfer.getWithPartialAbstractTokenIdsForToken(token)
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const abstractTokens = await tokenDb.abstractToken.getAll()
+
+  return buildTransferSuggestionMap(
+    transfersForSuggestions,
+    abstractTokens,
+    [],
+    [],
+  )
+}
+
+function getEligibleTransfersForSuggestions(
+  transfers: InteropTransferRecord[],
+) {
+  const classifier = new InteropTransferClassifier()
+  const classified = classifier.groupByBridgeType(transfers)
+  return [...classified.lockAndMint, ...classified.burnAndMint]
 }
 
 function buildTransferSuggestionMap(
@@ -86,11 +119,10 @@ function buildTransferSuggestionMap(
       return
     }
 
-    const ethereumAddress = Address32.cropToEthereumAddress(
-      Address32(tokenAddress),
-    )
-    const deployedToken =
-      deployedTokenMap[`${chain}:${ethereumAddress.toLowerCase()}`]
+    const address = tokenAddress.startsWith('0x')
+      ? Address32.cropToEthereumAddress(Address32(tokenAddress))
+      : tokenAddress
+    const deployedToken = deployedTokenMap[`${chain}:${address.toLowerCase()}`]
 
     if (deployedToken) {
       return
@@ -106,7 +138,7 @@ function buildTransferSuggestionMap(
     } else {
       map.set(key, {
         chain,
-        address: ethereumAddress,
+        address,
         explorerUrl: chainMap[chain]?.explorerUrl ?? undefined,
         abstractToken,
         txs: [
