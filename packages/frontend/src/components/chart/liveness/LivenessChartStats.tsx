@@ -55,10 +55,7 @@ export function LivenessChartStats({
         {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE ? (
           <NoDataBadge />
         ) : (
-          <AnomalyIndicator
-            anomalies={anomalies}
-            hasTrackedContractsChanged={hasTrackedContractsChanged}
-          />
+          <AnomalyIndicator anomalies={anomalies} />
         )}
       </ChartStatsItem>
     ),

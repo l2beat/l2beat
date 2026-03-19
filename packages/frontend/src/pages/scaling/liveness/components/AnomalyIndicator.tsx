@@ -1,118 +1,61 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, pluralize, UnixTime } from '@l2beat/shared-pure'
 
-import { Callout } from '~/components/Callout'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { LiveIndicator } from '~/components/LiveIndicator'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { AnomalyText } from './AnomalyText'
-
-const SHOWN_ANOMALIES = 4
 
 interface Props {
   anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
+  href?: string
 }
 
-export function AnomalyIndicator({
-  anomalies,
-  hasTrackedContractsChanged,
-}: Props) {
+export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
+
+  const bars = (
+    <div className="flex h-6 w-min gap-x-0.5">
+      {indicators.map((indicator, i) => (
+        <div
+          key={i}
+          className={cn(
+            'w-0.5 rounded-full',
+            indicator === 'none' && 'bg-blue-500',
+            indicator === 'recovered' && 'bg-orange-400',
+            indicator === 'ongoing' && 'bg-negative',
+          )}
+        />
+      ))}
+    </div>
+  )
+
+  if (!href) {
+    return bars
+  }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="flex h-6 w-min cursor-pointer gap-x-0.5">
-          {indicators.map((indicator, i) => (
-            <div
-              key={i}
-              className={cn(
-                'w-0.5 rounded-full',
-                indicator === 'none' && 'bg-blue-500',
-                indicator === 'recovered' && 'bg-orange-400',
-                indicator === 'ongoing' && 'bg-negative',
-              )}
-            />
-          ))}
-        </div>
+        <a href={href} className="cursor-pointer">
+          {bars}
+        </a>
       </TooltipTrigger>
-      <TooltipContent className="max-xs:max-w-[300px]">
-        <AnomalyTooltipContent
-          anomalies={anomalies}
-          hasTrackedContractsChanged={hasTrackedContractsChanged}
-        />
+      <TooltipContent>
+        {anomalies.length === 0 ? (
+          <div>No anomalies detected in the last 30 days</div>
+        ) : (
+          <div>
+            There {anomalies.length === 1 ? 'was' : 'were'}{' '}
+            {anomalies.length}{' '}
+            {pluralize(anomalies.length, 'anomaly', 'anomalies')} over the past
+            30 days. Click to learn more.
+          </div>
+        )}
       </TooltipContent>
     </Tooltip>
-  )
-}
-
-function AnomalyTooltipContent(props: {
-  anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
-}) {
-  if (props.anomalies.length === 0) {
-    return <div>No anomalies detected in the last 30 days</div>
-  }
-
-  return (
-    <>
-      <span>Anomalies from last 30 days:</span>
-      <div className="-mx-4 mt-2 list-disc">
-        {props.anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
-          return (
-            <div
-              className="space-y-0.5 border-divider border-t px-4 py-2"
-              key={anomaly.start}
-            >
-              {anomaly.end === undefined ? (
-                <div className="mb-1 flex items-center gap-1">
-                  <LiveIndicator />
-                  <span className="text-negative text-subtitle-12 uppercase leading-none">
-                    Ongoing anomaly
-                  </span>
-                </div>
-              ) : (
-                <span className="text-secondary text-subtitle-12 uppercase leading-none">
-                  Resolved
-                </span>
-              )}
-              {anomaly.end === undefined &&
-                props.hasTrackedContractsChanged && (
-                  <Callout
-                    className="rounded px-3 py-2 text-[13px] leading-[130%]"
-                    color="yellow"
-                    small
-                    icon={
-                      <RoundedWarningIcon
-                        className="size-4"
-                        sentiment="warning"
-                      />
-                    }
-                    body={
-                      <>
-                        There are implementation changes, data might be
-                        incorrect.
-                      </>
-                    }
-                  />
-                )}
-              <AnomalyText anomaly={anomaly} />
-            </div>
-          )
-        })}
-      </div>
-      {props.anomalies.length > 4 && (
-        <div className="-mx-4 border-divider border-t px-4 pt-2">
-          And {props.anomalies.length - SHOWN_ANOMALIES} more
-        </div>
-      )}
-    </>
   )
 }
 
