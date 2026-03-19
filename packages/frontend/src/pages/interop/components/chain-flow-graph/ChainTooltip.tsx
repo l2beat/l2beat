@@ -16,30 +16,36 @@ export interface ChainTooltipData {
 
 interface Props {
   data: ChainTooltipData
-  x: number
-  y: number
+  mouseX: number
+  mouseY: number
   containerWidth: number
 }
 
-export function ChainTooltip({ data, x, y, containerWidth }: Props) {
+export function ChainTooltip({
+  data,
+  mouseX,
+  mouseY,
+  containerWidth,
+}: Props) {
   const tooltipWidth = 260
-  // Position to the right of the bubble by default, flip to left if too close to edge
-  const flipped = x + tooltipWidth + 20 > containerWidth
-  const left = flipped ? x - tooltipWidth - 10 : x + 10
-  const top = y
+  // Center horizontally on cursor, but clamp to container edges
+  const left = Math.max(
+    8,
+    Math.min(mouseX - tooltipWidth / 2, containerWidth - tooltipWidth - 8),
+  )
 
   return (
     <div
-      className="pointer-events-none absolute z-50 rounded-lg bg-surface-primary p-3 shadow-popover dark:bg-header-secondary"
+      className="pointer-events-none absolute z-50 rounded-lg bg-surface-primary px-3 py-2 shadow-popover dark:bg-header-secondary"
       style={{
         left,
-        top,
+        top: mouseY,
         width: tooltipWidth,
-        transform: 'translateY(-50%)',
+        transform: 'translateY(calc(-100% - 16px))',
       }}
     >
       {/* Chain header */}
-      <div className="mb-2 flex items-center gap-2">
+      <div className="mb-1 flex items-center gap-2">
         <img
           src={data.chain.iconUrl}
           alt={data.chain.name}
@@ -51,7 +57,7 @@ export function ChainTooltip({ data, x, y, containerWidth }: Props) {
       </div>
 
       {/* Stats table */}
-      <div className="flex flex-col gap-0.5 text-[12px]">
+      <div className="flex flex-col text-[12px]">
         <Row label="Volume In" value={formatCurrency(data.volumeIn, 'usd')} />
         <Row label="Volume Out" value={formatCurrency(data.volumeOut, 'usd')} />
         <Row
@@ -73,11 +79,11 @@ export function ChainTooltip({ data, x, y, containerWidth }: Props) {
 
       {/* Top routes */}
       {data.topRoutes.length > 0 && (
-        <div className="mt-2 border-divider border-t pt-2">
-          <div className="mb-1 font-bold text-[10px] text-secondary uppercase tracking-wider">
+        <div className="mt-1 border-divider border-t pt-1">
+          <div className="mb-0.5 font-bold text-[10px] text-secondary uppercase tracking-wider">
             Top Routes
           </div>
-          <div className="flex flex-col gap-0.5">
+          <div className="flex flex-col">
             {data.topRoutes.map((route, i) => (
               <div
                 key={`${route.direction}-${route.chain.id}-${i}`}
@@ -103,8 +109,7 @@ export function ChainTooltip({ data, x, y, containerWidth }: Props) {
         </div>
       )}
 
-      {/* Footer */}
-      <div className="mt-2 border-divider border-t pt-1.5 text-center text-[10px] text-secondary">
+      <div className="mt-1 border-divider border-t pt-1 text-center text-[10px] text-secondary">
         Click to focus
       </div>
     </div>

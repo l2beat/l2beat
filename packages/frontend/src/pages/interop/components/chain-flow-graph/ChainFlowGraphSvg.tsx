@@ -16,7 +16,7 @@ interface Props {
   type: KnownInteropBridgeType | undefined
   width: number
   height: number
-  onHoverChain: (data: ChainTooltipData | null, x: number, y: number) => void
+  onHoverChain: (data: ChainTooltipData | null) => void
 }
 
 const TOP_ROUTES_COUNT = 5
@@ -120,32 +120,27 @@ export function ChainFlowGraphSvg({
 
       const stats = chainStatsMap.get(chainId)
       const chain = chainMap.get(chainId)
-      const nodeLayout = layout.get(chainId)
-      if (!stats || !chain || !nodeLayout) return
+      if (!stats || !chain) return
 
-      onHoverChain(
-        {
-          chain,
-          volumeIn: stats.volumeIn,
-          volumeOut: stats.volumeOut,
-          netFlow: stats.volumeIn - stats.volumeOut,
-          connectedChains: stats.connectedChains.size,
-          topRoutes: stats.routes.slice(0, TOP_ROUTES_COUNT).flatMap((r) => {
-            const c = chainMap.get(r.chainId)
-            if (!c) return []
-            return [{ ...r, chain: c }]
-          }),
-        },
-        nodeLayout.x,
-        nodeLayout.y,
-      )
+      onHoverChain({
+        chain,
+        volumeIn: stats.volumeIn,
+        volumeOut: stats.volumeOut,
+        netFlow: stats.volumeIn - stats.volumeOut,
+        connectedChains: stats.connectedChains.size,
+        topRoutes: stats.routes.slice(0, TOP_ROUTES_COUNT).flatMap((r) => {
+          const c = chainMap.get(r.chainId)
+          if (!c) return []
+          return [{ ...r, chain: c }]
+        }),
+      })
     },
-    [chainStatsMap, chainMap, layout, onHoverChain],
+    [chainStatsMap, chainMap, onHoverChain],
   )
 
   const handleMouseLeave = useCallback(() => {
     setHoveredChainId(null)
-    onHoverChain(null, 0, 0)
+    onHoverChain(null)
   }, [onHoverChain])
 
   function toggleChain(chainId: string) {

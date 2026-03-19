@@ -1,5 +1,5 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { api } from '~/trpc/React'
@@ -17,8 +17,8 @@ interface Props {
 
 interface TooltipState {
   data: ChainTooltipData
-  x: number
-  y: number
+  mouseX: number
+  mouseY: number
 }
 
 export function ChainFlowGraph({
@@ -28,16 +28,36 @@ export function ChainFlowGraph({
   type,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
   const { width, height } = useResizeObserver({ ref: containerRef })
   const { data, isLoading } = api.interop.graphFlows.useQuery()
   const [tooltip, setTooltip] = useState<TooltipState | null>(null)
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+      setTooltip((prev) => {
+        if (!prev) return null
+        return { ...prev, mouseX: mouseRef.current.x, mouseY: mouseRef.current.y }
+      })
+    }
+    container.addEventListener('mousemove', onMouseMove)
+    return () => container.removeEventListener('mousemove', onMouseMove)
+  }, [])
+
   const onHoverChain = useCallback(
-    (tooltipData: ChainTooltipData | null, x: number, y: number) => {
+    (tooltipData: ChainTooltipData | null) => {
       if (!tooltipData) {
         setTooltip(null)
       } else {
-        setTooltip({ data: tooltipData, x, y })
+        setTooltip({
+          data: tooltipData,
+          mouseX: mouseRef.current.x,
+          mouseY: mouseRef.current.y,
+        })
       }
     },
     [],
@@ -69,8 +89,8 @@ export function ChainFlowGraph({
             {tooltip && (
               <ChainTooltip
                 data={tooltip.data}
-                x={tooltip.x}
-                y={tooltip.y}
+                mouseX={tooltip.mouseX}
+                mouseY={tooltip.mouseY}
                 containerWidth={width}
               />
             )}
