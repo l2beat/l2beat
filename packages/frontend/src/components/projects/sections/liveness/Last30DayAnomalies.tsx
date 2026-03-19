@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Callout } from '~/components/Callout'
 import {
   getPaginationItems,
   Pagination,
@@ -7,6 +8,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from '~/components/Pagination'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 
@@ -14,8 +16,10 @@ const ANOMALIES_PER_PAGE = 5
 
 export function Last30DayAnomalies({
   anomalies,
+  hasTrackedContractsChanged,
 }: {
   anomalies: LivenessAnomaly[]
+  hasTrackedContractsChanged: boolean
 }) {
   const [currentPage, setCurrentPage] = useState(0)
   const pageCount = Math.ceil(anomalies.length / ANOMALIES_PER_PAGE)
@@ -41,6 +45,15 @@ export function Last30DayAnomalies({
         All liveness anomalies detected for this project in the last 30 days,
         helping you review recent downtime and availability issues.
       </p>
+      {hasTrackedContractsChanged && (
+        <Callout
+          className="mt-4 rounded px-3 py-2 text-[13px] leading-[130%]"
+          color="yellow"
+          small
+          icon={<RoundedWarningIcon className="size-4" sentiment="warning" />}
+          body="There are implementation changes to tracked contracts, anomaly data might be inaccurate."
+        />
+      )}
       <div className="mt-4 flex flex-col">
         {currentAnomalies.map((anomaly) => (
           <div

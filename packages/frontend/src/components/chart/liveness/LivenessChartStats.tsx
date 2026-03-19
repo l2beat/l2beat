@@ -12,7 +12,6 @@ import { cn } from '~/utils/cn'
 export function LivenessChartStats({
   stats,
   anomalies,
-  hasTrackedContractsChanged,
   isLoading,
   configuredSubtypes,
   isArchived,
@@ -24,7 +23,6 @@ export function LivenessChartStats({
     | undefined
   anomalies: LivenessAnomaly[]
   configuredSubtypes: TrackedTxsConfigSubtype[]
-  hasTrackedContractsChanged: boolean
   isLoading: boolean
   isArchived: boolean
 }) {

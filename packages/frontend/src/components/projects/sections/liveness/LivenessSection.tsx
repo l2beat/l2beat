@@ -1,12 +1,14 @@
 import type { Milestone } from '@l2beat/config'
 import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import React from 'react'
+import { Callout } from '~/components/Callout'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { TrackedTxsOutageNotice } from '~/components/TrackedTxsOutageNotice'
 import { env } from '~/env'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
@@ -54,14 +56,18 @@ export function LivenessSection({
       {env.CLIENT_SIDE_TRACKED_TXS_OUTAGE && (
         <TrackedTxsOutageNotice type="section" />
       )}
-      {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
+      {!isArchived && (
+        <OngoingAnomalies
+          anomalies={ongoingAnomalies}
+          hasTrackedContractsChanged={hasTrackedContractsChanged}
+        />
+      )}
 
       <HorizontalSeparator className="my-4" />
       <ProjectLivenessChart
         project={project}
         configuredSubtypes={configuredSubtypes}
         anomalies={anomalies}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
         milestones={milestones}
         defaultRange={defaultRange}
         isArchived={isArchived}
@@ -73,14 +79,23 @@ export function LivenessSection({
       {!isArchived && (
         <>
           <HorizontalSeparator className="my-6" />
-          <Last30DayAnomalies anomalies={anomalies} />
+          <Last30DayAnomalies
+            anomalies={anomalies}
+            hasTrackedContractsChanged={hasTrackedContractsChanged}
+          />
         </>
       )}
     </ProjectSection>
   )
 }
 
-function OngoingAnomalies({ anomalies }: { anomalies: LivenessAnomaly[] }) {
+function OngoingAnomalies({
+  anomalies,
+  hasTrackedContractsChanged,
+}: {
+  anomalies: LivenessAnomaly[]
+  hasTrackedContractsChanged: boolean
+}) {
   if (anomalies.length === 0) {
     return <NoAnomaliesState className="rounded-lg!" type="ongoing" />
   }
@@ -93,6 +108,7 @@ function OngoingAnomalies({ anomalies }: { anomalies: LivenessAnomaly[] }) {
           Ongoing {pluralize(anomalies.length, 'anomaly', 'anomalies')}
         </h3>
       </div>
+      {hasTrackedContractsChanged && <ImplementationChangeCallout />}
       {anomalies.map((anomaly) => (
         <React.Fragment key={`${anomaly.start}-${anomaly.subtype}`}>
           <AnomalyText anomaly={anomaly} />
@@ -100,5 +116,17 @@ function OngoingAnomalies({ anomalies }: { anomalies: LivenessAnomaly[] }) {
         </React.Fragment>
       ))}
     </div>
+  )
+}
+
+function ImplementationChangeCallout() {
+  return (
+    <Callout
+      className="mb-3 rounded px-3 py-2 text-[13px] leading-[130%]"
+      color="yellow"
+      small
+      icon={<RoundedWarningIcon className="size-4" sentiment="warning" />}
+      body="There are implementation changes to tracked contracts, anomaly data might be inaccurate."
+    />
   )
 }
