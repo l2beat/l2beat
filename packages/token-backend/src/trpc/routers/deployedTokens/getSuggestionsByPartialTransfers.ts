@@ -45,12 +45,6 @@ export async function getSuggestionsByPartialTransfers(
     tokenDb.chain.getAll(),
   ])
 
-  console.log(
-    'transfers',
-    transfersForSuggestions.find(
-      (t) => t.srcTokenAddress === 'native' || t.dstTokenAddress === 'native',
-    ),
-  )
   return buildTransferSuggestionMap(
     transfersForSuggestions,
     abstractTokens,
