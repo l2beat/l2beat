@@ -40,8 +40,10 @@ export function Last30DayAnomalies({
 
   return (
     <div>
-      <h3 className="font-bold text-heading-24">Last 30 day anomalies</h3>
-      <p className="mt-4 text-paragraph-16">
+      <h3 className="font-bold text-heading-20 md:text-heading-24">
+        Last 30 day anomalies
+      </h3>
+      <p className="mt-4 text-paragraph-15 md:text-paragraph-16">
         All liveness anomalies detected for this project in the last 30 days,
         helping you review recent downtime and availability issues.
       </p>
@@ -58,9 +60,9 @@ export function Last30DayAnomalies({
         {currentAnomalies.map((anomaly) => (
           <div
             key={`${anomaly.start}-${anomaly.subtype}`}
-            className="border-divider border-t px-5 py-4 last:border-b"
+            className="border-divider border-t px-2 py-3 last:border-b md:px-5 md:py-4"
           >
-            <AnomalyText anomaly={anomaly} className="text-paragraph-14" />
+            <AnomalyText anomaly={anomaly} className="md:text-paragraph-14" />
           </div>
         ))}
       </div>
