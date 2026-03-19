@@ -312,10 +312,16 @@ export const aztecnetwork: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+      ...RISK_VIEW.EXIT_WINDOW(
+        governanceConfiguration.executionDelay,
+        20 * UnixTime.DAY,
+      ), // from crsim, to be formalized
       description:
-        RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE.description +
-        `The onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay. While the old rollup remains immutable with functional L1 <-> L2 messaging, many escrows may not.`,
+        RISK_VIEW.EXIT_WINDOW(
+          governanceConfiguration.executionDelay,
+          20 * UnixTime.DAY,
+        ).description +
+        `Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an 'upgrade' for the exit window.`,
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
@@ -340,19 +346,19 @@ export const aztecnetwork: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true,
+        principle: true, // assuming the probabilistic inclusion provides the 7d exit window, also there is no SC
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true, // TODO: does it count as an SC?
+        securityCouncilProperlySetUp: null, // TODO: does it count as an SC?
         noRedTrustedSetups: true, // TODO: ?
         programHashesReproducible: true, // TODO: ?
         proverSourcePublished: true,
         verifierContractsReproducible: true, // TODO: ?
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: true,
+        proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: true,
+        delayWith30DExitWindow: false, // 30d gov delay means <30d exit window due to inclusion delay
       },
     },
     {
@@ -390,6 +396,7 @@ export const aztecnetwork: ScalingProject = {
           url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
         },
       ],
+      risks: [],
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
@@ -429,7 +436,7 @@ export const aztecnetwork: ScalingProject = {
       {
         name: 'Upgrades replace the canonical rollup',
         description:
-          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay.',
+          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay. Governance also owns critical config parameters that can freeze or compromise the Rollup system.',
         references: [
           {
             title: 'Registry.sol - addRollup() on Etherscan',
@@ -477,12 +484,12 @@ export const aztecnetwork: ScalingProject = {
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [], // 30d delay for the canonical rollup pointer but main contracts are immutable
+    risks: [], // 30d delay for the canonical rollup pointer and config but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   upgradesAndGovernance: `
 # Standard Path (Signaling)
-Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum.
+Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
 ## 1. The Signaling Phase (\`GovernanceProposer\`)
 Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. 
