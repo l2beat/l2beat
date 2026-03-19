@@ -235,8 +235,8 @@ export class UpdateMonitor {
         },
         error,
       )
-    }
-
+      throw error
+    } finally {
     const projectUpdateEnd = UnixTime.now()
     this.logger.info('Project update finished', {
       project,
@@ -244,6 +244,7 @@ export class UpdateMonitor {
       end: projectUpdateEnd,
       duration: projectUpdateEnd - projectUpdateStart,
     })
+    }
   }
 
   private logErrorsInDiscovery(
