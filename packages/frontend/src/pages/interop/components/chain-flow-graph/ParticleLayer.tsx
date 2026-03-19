@@ -23,7 +23,7 @@ const BASE_DURATION_S = 5
 /** Per-flow upper bound to avoid excessive DOM nodes. */
 const MAX_PARTICLES_PER_FLOW = 30
 /** Global upper bound — if exceeded, all counts are scaled down proportionally. */
-const MAX_TOTAL_PARTICLES = 350
+const MAX_TOTAL_PARTICLES = 450
 
 /**
  * Renders animated dots flowing along each connection path.
