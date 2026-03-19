@@ -123,11 +123,11 @@ export function ChainFlowGraphSvg({
           volumeOut: stats.volumeOut,
           netFlow: stats.volumeIn - stats.volumeOut,
           connectedChains: stats.connectedChains.size,
-          topRoutes: stats.routes.slice(0, TOP_ROUTES_COUNT).map((r) => ({
-            direction: r.direction,
-            chain: chainMap.get(r.chainId)!,
-            volume: r.volume,
-          })),
+          topRoutes: stats.routes.slice(0, TOP_ROUTES_COUNT).flatMap((r) => {
+            const c = chainMap.get(r.chainId)
+            if (!c) return []
+            return [{ ...r, chain: c }]
+          }),
         },
         nodeLayout.x,
         nodeLayout.y,
