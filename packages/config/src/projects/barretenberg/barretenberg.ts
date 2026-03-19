@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 
 export const barretenberg: BaseProject = {
   id: ProjectId('barretenberg'),
@@ -58,18 +58,20 @@ export const barretenberg: BaseProject = {
       },
     ],
     verifierHashes: [
-        {
-            hash: '0x059ad02b037fcfd4df2b9db771777d067a400f06fc55cf45fa601511e58e2c3e',
-            proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
-            knownDeployments: [
-                {
-                    address: EthereumAddress('0x70aEDda427f26480D240bc0f4308ceDec8d31348'),
-                    chain: 'ethereum',
-                },
-            ],
-            verificationStatus: 'successful',
-            attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-            verificationSteps: `
+      {
+        hash: '0x059ad02b037fcfd4df2b9db771777d067a400f06fc55cf45fa601511e58e2c3e',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
+        knownDeployments: [
+          {
+            address: EthereumAddress(
+              '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
+            ),
+            chain: 'ethereum',
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: `
 The regeneration process consumed 32 GiB memory on the peak. It could be done on macOS or Linux machines, however in our experience Linux setup was smoother. 
 The steps below worked for clean Ubuntu 22.04.
 
@@ -147,7 +149,7 @@ NO_CACHE=1 ./bootstrap.sh
 \`\`\`
 The build should produce correct onchain verifier in \`target/keys/rollup_root_verifier.sol\`.
             `,
-        }
+      },
     ],
   },
 }
