@@ -13,6 +13,7 @@ interface Props {
   centerX: number
   centerY: number
   maxVolume: number
+  hoveredChainId: string | null
 }
 
 const SECONDS_IN_DAY = 86_400
@@ -48,6 +49,7 @@ export function ParticleLayer({
   centerX,
   centerY,
   maxVolume,
+  hoveredChainId,
 }: Props) {
   const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
   const visibleFlows = flows.filter((f) => f.volume >= threshold)
@@ -85,6 +87,12 @@ export function ParticleLayer({
           true,
         )
 
+        const highlighted =
+          !hoveredChainId ||
+          flow.srcChain === hoveredChainId ||
+          flow.dstChain === hoveredChainId
+        const groupOpacity = highlighted ? 1 : 0.15
+
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
         if (exact < 1) {
@@ -94,47 +102,44 @@ export function ParticleLayer({
           const cycleDuration = BASE_DURATION_S / Math.max(exact, 0.01)
           const t = BASE_DURATION_S / cycleDuration
           return (
-            <circle
-              key={`${flow.srcChain}-${flow.dstChain}-0`}
-              r="2"
-              fill={color}
-            >
-              <animateMotion
-                path={path}
-                dur={`${cycleDuration}s`}
-                keyPoints="0;1;1"
-                keyTimes={`0;${t};1`}
-                calcMode="linear"
-                begin="0s"
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="opacity"
-                dur={`${cycleDuration}s`}
-                values="0.8;0.8;0;0"
-                keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
-                repeatCount="indefinite"
-              />
-            </circle>
+            <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
+              <circle r="2" fill={color}>
+                <animateMotion
+                  path={path}
+                  dur={`${cycleDuration}s`}
+                  keyPoints="0;1;1"
+                  keyTimes={`0;${t};1`}
+                  calcMode="linear"
+                  begin="0s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  dur={`${cycleDuration}s`}
+                  values="0.8;0.8;0;0"
+                  keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
           )
         }
 
         const count = Math.round(exact)
-        return Array.from({ length: count }, (_, i) => (
-          <circle
-            key={`${flow.srcChain}-${flow.dstChain}-${i}`}
-            r="2"
-            fill={color}
-            opacity={0.8}
-          >
-            <animateMotion
-              path={path}
-              dur={`${BASE_DURATION_S}s`}
-              begin={`${(i / count) * BASE_DURATION_S}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
-        ))
+        return (
+          <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
+            {Array.from({ length: count }, (_, i) => (
+              <circle key={i} r="2" fill={color} opacity={0.8}>
+                <animateMotion
+                  path={path}
+                  dur={`${BASE_DURATION_S}s`}
+                  begin={`${(i / count) * BASE_DURATION_S}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            ))}
+          </g>
+        )
       })}
     </g>
   )
