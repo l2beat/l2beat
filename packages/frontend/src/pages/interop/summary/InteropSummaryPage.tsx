@@ -28,7 +28,7 @@ import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
-import { getTransferTypeBreakdown } from './getTransferTypeBreakdown'
+import { getTransferTypeBreakdown } from './utils/getTransferTypeBreakdown'
 
 interface Props extends AppLayoutProps {
   mode: InteropMode

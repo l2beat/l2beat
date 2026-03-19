@@ -1,21 +1,16 @@
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { Skeleton } from '~/components/core/Skeleton'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EmptyStateIcon } from '~/icons/EmptyState'
 import { formatPercent } from '~/utils/calculatePercentageChange'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import {
   INTEROP_TYPE_TO_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,
 } from '../../utils/display'
-import type { TransferTypeBreakdown } from '../getTransferTypeBreakdown'
-import { SelectedPathNoDataState } from './SelectedPathNoDataState'
+import type { TransferTypeBreakdown } from '../utils/getTransferTypeBreakdown'
 
 interface Props {
   isLoading: boolean
@@ -38,9 +33,7 @@ export function BreakdownByTransferType({ isLoading, breakdown }: Props) {
       </div>
       <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
         Volume and count of transfers per transfer type{' '}
-        <div className="inline-block">
-          <BetweenChainsInfo className="lowercase" />
-        </div>
+        <BetweenChainsInfo className="inline-flex lowercase" />
       </div>
 
       {isLoading ? (
@@ -99,41 +92,7 @@ function BreakdownSection({
       <div className="font-medium text-label-value-12 text-secondary uppercase">
         {label}
       </div>
-
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="cursor-pointer">
-            <Breakdown className="mt-2! h-2 w-full" gap={0} values={values} />
-          </div>
-        </TooltipTrigger>
-        <TooltipPortal>
-          <TooltipContent className="flex flex-col gap-1">
-            {values.map((value) => (
-              <div
-                key={value.label}
-                className="flex items-center justify-between gap-x-6"
-              >
-                <span className="flex items-center gap-1">
-                  <div className={`size-2.5 rounded-sm ${value.className}`} />
-                  <span className="font-medium text-label-value-15">
-                    {value.label}
-                  </span>
-                </span>
-                <span>
-                  <span className="mr-1 font-bold text-label-value-15">
-                    {value.formattedValue}
-                  </span>
-                  <span className="font-medium text-label-value-15 text-secondary">
-                    (
-                    {total === 0 ? '0.00%' : formatPercent(value.value / total)}
-                    )
-                  </span>
-                </span>
-              </div>
-            ))}
-          </TooltipContent>
-        </TooltipPortal>
-      </Tooltip>
+      <Breakdown className="mt-2! h-2 w-full" gap={0} values={values} />
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
         {values.map((value) => (
           <div key={value.label} className="flex items-center gap-1">
@@ -144,8 +103,8 @@ function BreakdownSection({
             <span className="font-bold text-label-value-12">
               {value.formattedValue}
             </span>
-            <span className="hidden font-bold text-label-value-12 text-secondary md:inline">
-              ({total === 0 ? '0.00%' : formatPercent(value.value / total)})
+            <span className="font-bold text-label-value-12 text-secondary">
+              ({formatPercent(total === 0 ? total : value.value / total)})
             </span>
           </div>
         ))}
@@ -162,16 +121,32 @@ function BreakdownByTransferTypeSkeleton() {
           <Skeleton className="h-4 w-28" />
           <Skeleton className="mt-2 h-2 w-full rounded-full" />
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-            {[0, 1, 2].map((item) => (
-              <div key={item} className="flex items-center gap-2">
-                <Skeleton className="size-2 rounded-full" />
-                <Skeleton className="h-4 w-20" />
-                <Skeleton className="h-4 w-14" />
-              </div>
-            ))}
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-4 w-40" />
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+
+function SelectedPathNoDataState({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center text-center',
+        className,
+      )}
+    >
+      <EmptyStateIcon className="mb-4 size-10 fill-yellow-700 dark:fill-yellow-200" />
+      <span className="mb-2 font-bold text-heading-20">
+        No data for the selected path
+      </span>
+      <span className="text-balance text-paragraph-14 text-secondary">
+        We couldn&apos;t find data for this path. Select another route or adjust
+        your filters.
+      </span>
     </div>
   )
 }

@@ -1,37 +1,13 @@
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '~/components/core/Dialog'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-} from '~/components/core/Drawer'
+import { useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { BasicTable } from '~/components/table/BasicTable'
-import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { useTable } from '~/hooks/useTable'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import {
-  getTopItemsColumns,
-  type TopItemRow,
-} from '../../components/top-items/columns'
+import { TokenTableModal } from '../../components/top-items/TokenTableModal'
+import { InteropTopItems } from '../../components/top-items/TopItems'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
@@ -72,24 +48,36 @@ export function TokenCount({
               {formatInteger(tokenCount ?? 0)}
             </span>
             {hasTokens && topItems ? (
-              <button
+              <InteropTopItems
+                topItems={{
+                  items: topItems.items.map((token) => ({
+                    id: token.id,
+                    displayName: token.symbol,
+                    iconUrl: token.iconUrl,
+                    volume: token.volume,
+                    issuer: token.issuer,
+                    transferCount: token.transferCount,
+                    avgDuration: token.avgDuration,
+                    avgValue: token.avgValue,
+                    minTransferValueUsd: token.minTransferValueUsd,
+                    maxTransferValueUsd: token.maxTransferValueUsd,
+                    netMintedValue: token.netMintedValue,
+                    flows: token.flows,
+                  })),
+                  remainingCount: topItems.remainingCount,
+                }}
                 className="mt-4 flex items-center gap-2"
-                onClick={() => setIsOpen(true)}
+                iconClassName="size-7 min-w-7 rounded-full border border-divider bg-white shadow-sm"
+                renderRemainingCount={(remainingCount) => (
+                  <span className="font-bold text-label-value-15">
+                    +{remainingCount} more
+                  </span>
+                )}
                 onMouseEnter={() =>
                   utils.interop.summaryTokens.prefetch(selectionForApi)
                 }
-              >
-                <div className="-space-x-2 flex items-center">
-                  {topItems.items.map((token, index) => (
-                    <TokenIcon key={token.id} token={token} index={index} />
-                  ))}
-                </div>
-                {topItems.remainingCount > 0 && (
-                  <span className="font-bold text-label-value-15">
-                    +{topItems.remainingCount} more
-                  </span>
-                )}
-              </button>
+                setIsOpen={setIsOpen}
+              />
             ) : null}
           </>
         )}
@@ -106,7 +94,6 @@ function TokenCountContent({
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
-  const breakpoint = useBreakpoint()
   const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.summaryTokens.useQuery(
     selectionForApi,
@@ -115,96 +102,14 @@ function TokenCountContent({
     },
   )
 
-  const tableData = useMemo(
-    () =>
-      data?.map((token) => ({
-        ...token,
-        displayName: token.symbol,
-      })) ?? [],
-    [data],
-  )
-
-  const columns = useMemo(() => getTopItemsColumns('tokens'), [])
-
-  const table = useTable<TopItemRow>({
-    data: tableData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    manualFiltering: true,
-    initialState: {
-      columnPinning: {
-        left: ['icon'],
-      },
-      sorting: [
-        {
-          id: 'volume',
-          desc: true,
-        },
-      ],
-    },
-  })
-
-  if (breakpoint === 'xs' || breakpoint === 'sm') {
-    return (
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
-        <DrawerContent>
-          <DrawerHeader className="mb-2">
-            <DrawerTitle className="mb-0 text-xl">
-              All tokens by volume
-            </DrawerTitle>
-            <BetweenChainsInfo />
-          </DrawerHeader>
-          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
-          </div>
-        </DrawerContent>
-      </Drawer>
-    )
-  }
-
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
-        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
-          <DialogTitle>All tokens by volume</DialogTitle>
-          <BetweenChainsInfo className="mt-1" />
-        </DialogHeader>
-        <div className="overflow-x-auto">
-          <div className="mx-6">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
-function TokenIcon({ token, index }: { token: TokenData; index: number }) {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <img
-          src={token.iconUrl}
-          alt={token.symbol}
-          className="relative size-7 rounded-full border border-divider bg-white shadow-sm"
-          style={{ zIndex: 5 - index }}
-        />
-      </TooltipTrigger>
-      <TooltipPortal>
-        <TooltipContent>{token.symbol}</TooltipContent>
-      </TooltipPortal>
-    </Tooltip>
+    <TokenTableModal
+      data={data}
+      isLoading={isLoading}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title="All tokens by volume"
+    />
   )
 }
 
@@ -217,7 +122,7 @@ function TokenCountSkeleton() {
           {[0, 1, 2, 3, 4].map((index) => (
             <Skeleton
               key={index}
-              className="size-7 rounded-full border border-divider"
+              className="size-7 rounded-full"
               style={{ zIndex: 5 - index }}
             />
           ))}
