@@ -28,15 +28,26 @@ export function getSummaryTokensData(
     ]),
   )
 
-  const result: Map<string, TokenInteropData> = new Map()
+  const counts = {
+    transferCount: records.reduce(
+      (acc, transfer) => acc + transfer.transferCount,
+      0,
+    ),
+    identifiedCount: records.reduce(
+      (acc, transfer) => acc + transfer.identifiedCount,
+      0,
+    ),
+  }
+
+  const tokenDataMap: Map<string, TokenInteropData> = new Map()
   for (const record of records) {
     for (const token of record.tokens) {
-      const current = result.get(token.abstractTokenId) ?? {
+      const current = tokenDataMap.get(token.abstractTokenId) ?? {
         ...INITIAL_COMMON_INTEROP_DATA,
         flows: new Map<string, TokenFlowData>(),
       }
 
-      result.set(token.abstractTokenId, {
+      tokenDataMap.set(token.abstractTokenId, {
         ...accumulateTokens(current, token),
         flows: current.flows,
       })
@@ -61,7 +72,7 @@ export function getSummaryTokensData(
     }
   }
 
-  return Array.from(result.entries())
+  const result: TokenData[] = Array.from(tokenDataMap.entries())
     .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
 
@@ -104,4 +115,24 @@ export function getSummaryTokensData(
     })
     .filter(notUndefined)
     .toSorted((a, b) => (b.volume ?? 0) - (a.volume ?? 0))
+
+  const unknownTransfersCount = counts.transferCount - counts.identifiedCount
+  if (unknownTransfersCount > 0) {
+    result.push({
+      id: 'unknown',
+      symbol: 'Unknown',
+      issuer: null,
+      iconUrl: manifest.getUrl('/images/token-placeholder.png'),
+      transferCount: unknownTransfersCount,
+      avgDuration: null,
+      avgValue: null,
+      volume: null,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
+      netMintedValue: undefined,
+      flows: [],
+    })
+  }
+
+  return result
 }
