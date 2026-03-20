@@ -32,16 +32,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
           />
         ))}
       </div>
-      <span
-        className={cn(
-          'whitespace-nowrap font-medium text-2xs uppercase leading-none',
-          uptimePercentage >= 95
-            ? 'text-blue-500'
-            : uptimePercentage >= 90
-              ? 'text-orange-400'
-              : 'text-negative',
-        )}
-      >
+      <span className="whitespace-nowrap font-medium text-2xs text-blue-500 uppercase leading-none">
         {uptimePercentage}% normal uptime
       </span>
     </div>
