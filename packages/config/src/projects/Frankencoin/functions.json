@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-16T08:35:14.177Z",
+  "lastModified": "2026-03-18T15:43:04.388Z",
   "contracts": {
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "functions": [
@@ -32,7 +32,25 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:36:05.779Z"
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Minting limit",
+              "mitigatedField": {
+                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "fieldName": "limit"
+              },
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              }
+            }
+          ],
+          "timestamp": "2026-03-18T15:43:04.388Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-18T15:43:04.388Z"
+          }
         },
         {
           "functionName": "burnFrom",

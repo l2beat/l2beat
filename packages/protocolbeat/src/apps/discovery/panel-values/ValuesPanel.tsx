@@ -154,7 +154,8 @@ function Display({
       setAiDetectionStatus(`✓ Cleared permissions for ${selected.name}`)
       // Invalidate queries to refresh the UI
       queryClient.invalidateQueries({ queryKey: ['functions', project] })
-      queryClient.invalidateQueries({ queryKey: ['v2-score', project] })
+      queryClient.invalidateQueries({ queryKey: ['admins', project] })
+      queryClient.invalidateQueries({ queryKey: ['dependencies', project] })
       // Clear status after 3 seconds
       setTimeout(() => setAiDetectionStatus(''), 3000)
     },

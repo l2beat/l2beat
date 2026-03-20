@@ -9,6 +9,7 @@ import { getProject } from '../getProject'
 import {
   addressesEqual,
   buildImplementationToProxyMap,
+  filterMitigationsForOwner,
   normalizeChainAddress,
   stripChainPrefix,
 } from './addressUtils'
@@ -481,10 +482,10 @@ class AdminInventoryModule {
                   'Unknown Contract',
                 functionName: func.functionName,
                 impact: funcImpact,
-                mitigations: buildMergedMitigations(
-                  func,
-                  data.paths,
-                  data.projectName,
+                mitigations: filterMitigationsForOwner(
+                  buildMergedMitigations(func, data.paths, data.projectName),
+                  adminAddr,
+                  'admin',
                 ),
               })
             })

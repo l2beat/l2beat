@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-17T15:11:57.437Z",
+  "lastModified": "2026-03-19T09:51:00.883Z",
   "contracts": {
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "functions": [
@@ -118,14 +118,19 @@
           "functionName": "upgradeToAndCall",
           "isPermissioned": true,
           "checked": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
           "delay": {
             "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
             "fieldName": "delay"
           },
-          "timestamp": "2026-03-16T19:12:54.306Z",
+          "timestamp": "2026-03-19T09:51:00.883Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-16T19:12:54.306Z"
+            "date": "2026-03-19T09:51:00.883Z"
           }
         },
         {
@@ -160,24 +165,33 @@
           "isPermissioned": true,
           "checked": true,
           "score": "critical",
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
           "delay": {
             "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
             "fieldName": "delay"
           },
-          "timestamp": "2026-03-16T18:33:43.404Z",
+          "timestamp": "2026-03-19T09:50:25.506Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-16T18:33:43.404Z"
+            "date": "2026-03-19T09:50:25.506Z"
           }
         },
         {
           "functionName": "admin",
           "isPermissioned": true,
-          "timestamp": "2025-10-01T19:01:59.563Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "This function is a simple getter on the current admin address.",
-          "ownerDefinitions": []
+          "ownerDefinitions": [],
+          "timestamp": "2026-03-19T09:48:57.290Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-19T09:48:57.290Z"
+          }
         }
       ]
     },

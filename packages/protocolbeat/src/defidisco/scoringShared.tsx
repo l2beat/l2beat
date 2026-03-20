@@ -4,9 +4,9 @@
  */
 import { useMemo, useState } from 'react'
 import type {
-  AdminDetailWithCapital,
+  AdminEntry,
+  AdminFunctionEntry,
   ApiAddressType,
-  FunctionCapitalAnalysis,
 } from '../api/types'
 import { stripChainPrefix } from '../apps/discovery/defidisco/addressUtils'
 import { ProxyTypeTag } from '../apps/discovery/defidisco/ProxyTypeTag'
@@ -52,7 +52,7 @@ export function formatDelay(seconds: number): string {
   return `${seconds}s`
 }
 
-export function hasCapitalData(admin: any): admin is AdminDetailWithCapital {
+export function hasCapitalData(admin: any): admin is AdminEntry {
   return (
     'totalReachableCapital' in admin &&
     typeof admin.totalReachableCapital === 'number'
@@ -147,24 +147,24 @@ export function hasTokenValueData(admin: any): boolean {
  * Compute deduplicated capital totals across multiple admins.
  * Avoids double-counting when the same contract is reachable by multiple admins.
  */
-export function computeDeduplicatedCapital(admins: AdminDetailWithCapital[]): {
+export function computeDeduplicatedCapital(admins: AdminEntry[]): {
   totalFunds: number
   totalTokenValue: number
 } {
   const contractMap = new Map<string, { funds: number; tokenValue: number }>()
 
   for (const admin of admins) {
-    for (const funcAnalysis of admin.functionsWithCapital) {
+    for (const func of admin.functions) {
       // Direct contract
-      const directAddr = funcAnalysis.contractAddress.toLowerCase()
+      const directAddr = func.contractAddress.toLowerCase()
       if (!contractMap.has(directAddr)) {
         contractMap.set(directAddr, {
-          funds: funcAnalysis.directFundsUsd,
-          tokenValue: funcAnalysis.directTokenValueUsd,
+          funds: func.directFundsUsd,
+          tokenValue: func.directTokenValueUsd,
         })
       }
       // Reachable contracts (only those with fundsAtRisk)
-      for (const rc of funcAnalysis.reachableContracts) {
+      for (const rc of func.reachableContracts) {
         if (!rc.fundsAtRisk) continue
         const addr = rc.contractAddress.toLowerCase()
         if (!contractMap.has(addr)) {
@@ -192,7 +192,7 @@ export function FunctionCapitalBreakdown({
   isLastFunction,
   parentPrefix,
 }: {
-  analysis: FunctionCapitalAnalysis
+  analysis: AdminFunctionEntry
   isLastFunction: boolean
   parentPrefix: string
 }) {
@@ -331,13 +331,11 @@ export function OwnerSection({
 }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
-  const isRevoked = isZeroAddress(admin.adminAddress)
+  const isRevoked = isZeroAddress(admin.address)
 
   const capitalMap = useMemo(() => {
-    if (!hasCapitalData(admin))
-      return new Map<string, FunctionCapitalAnalysis>()
     return new Map(
-      admin.functionsWithCapital.map((fc: FunctionCapitalAnalysis) => [
+      admin.functions.map((fc: AdminFunctionEntry) => [
         `${fc.contractAddress}:${fc.functionName}`,
         fc,
       ]),
@@ -368,11 +366,11 @@ export function OwnerSection({
           <span
             className="inline-block rounded border px-1.5 py-0.5 text-xs capitalize"
             style={{
-              color: getAdminTypeColor(admin.adminType),
-              borderColor: getAdminTypeColor(admin.adminType) + '40',
+              color: getAdminTypeColor(admin.type),
+              borderColor: getAdminTypeColor(admin.type) + '40',
             }}
           >
-            {admin.adminType}
+            {admin.type}
           </span>
         )}
         {isGovernance && (
@@ -391,11 +389,11 @@ export function OwnerSection({
         <button
           onClick={(e) => {
             e.stopPropagation()
-            if (!isRevoked) selectGlobal(admin.adminAddress)
+            if (!isRevoked) selectGlobal(admin.address)
           }}
           className={`font-medium text-sm ${isRevoked ? 'cursor-default text-coffee-400' : 'cursor-pointer text-coffee-200 transition-colors hover:text-blue-400'}`}
         >
-          {isRevoked ? '0x0000...0000' : admin.adminName}
+          {isRevoked ? '0x0000...0000' : admin.name}
         </button>
         <span className="ml-2 text-coffee-400 text-xs">
           ({admin.functions.length} function

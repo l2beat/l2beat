@@ -11,7 +11,7 @@
         "contractCount": 24,
         "permissionedFunctionCount": 73,
         "scoredFunctionCount": 1,
-        "adminCount": 0,
+        "adminCount": 1,
         "dependencyCount": 3,
         "totalCapitalAtRisk": 83050119.92069063,
         "totalTokenValueAtRisk": 25724637.771031145,
@@ -30,7 +30,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 193073153.28789482,
+        "totalCapitalAtRisk": 169519102.78369424,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
@@ -81,8 +81,8 @@
         "scoredFunctionCount": 17,
         "adminCount": 0,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 105809266.04027124,
-        "totalTokenValueAtRisk": 0,
+        "totalCapitalAtRisk": 113360174.895542,
+        "totalTokenValueAtRisk": 31325385.25346636,
         "totalTokenValue": 31325385.25346636
       }
     },
@@ -105,7 +105,7 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 2168203411.7077293,
+    "totalCapitalAtRisk": 2152200270.0587993,
     "totalTokenValueAtRisk": 254803451.70080653,
     "totalTokenValue": 311853474.72530407,
     "protocolsReviewed": 6
@@ -152,18 +152,6 @@
       ]
     },
     {
-      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-      "name": "Morpho Blue",
-      "entity": "Morpho",
-      "totalFundsAtRisk": 193073153.28789482,
-      "protocols": [
-        {
-          "slug": "Steakhouse-USDC",
-          "name": "Steakhouse USDC"
-        }
-      ]
-    },
-    {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
@@ -172,6 +160,18 @@
         {
           "slug": "liquity-v1",
           "name": "Liquity V1"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 169519102.78369424,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
         }
       ]
     },

@@ -4,13 +4,10 @@ import {
   type DiscoveryPaths,
   TemplateService,
 } from '@l2beat/discovery'
-import { calculateV2Score, type V2ScoreResult } from './v2Scoring'
 import type {
-  AdminDetailWithCapital,
   ApiContractTagsResponse,
   ApiFunctionsResponse,
   ContractFundsData,
-  ApiFunctionAnalysisResponse,
   ApiFundsDataResponse,
   Impact,
   Mitigation,
@@ -18,16 +15,21 @@ import type {
   ReviewConfig,
 } from './types'
 import { getFunctions, resolveDelayFromDiscovered } from './functions'
-import { computeFunctionAnalysis } from './functionAnalysis'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
 import {
   normalizeChainAddress,
   addressesEqual,
+  filterMitigationsForOwner,
   getFromAddressRecord,
   buildImplementationToProxyMap,
 } from './addressUtils'
 import { getProject } from '../getProject'
+import {
+  ProjectAnalysis,
+  type ApiAdminsResponse,
+  type ApiDependenciesResponse,
+} from './projectAnalysis'
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -259,15 +261,17 @@ export class ReviewCompiler {
         fs.readFileSync(reviewConfigPath, 'utf8'),
       ) as ReviewConfig
 
-      // 2. Calculate V2 score
+      // 2. Build unified analysis via ProjectAnalysis
       const configReader = new ConfigReader(this.paths.discovery)
       const templateService = new TemplateService(this.paths.discovery)
-      const v2Score = calculateV2Score(
+      const analysis = new ProjectAnalysis(
         this.paths,
         configReader,
         templateService,
         project,
       )
+      const adminsResult = analysis.getAdmins()
+      const depsResult = analysis.getDependencies()
 
       // 3. Read funds data
       const fundsData = getFundsData(this.paths, project)
@@ -275,16 +279,8 @@ export class ReviewCompiler {
       // 4. Read contract tags
       const contractTags = getContractTags(this.paths, project)
 
-      // 5. Read functions data (for mitigations + passed to function analysis)
+      // 5. Read functions data (for mitigations)
       const functionsData = getFunctions(this.paths, project)
-
-      // 6. Compute function analysis (rich dependency data with viewOnlyPath)
-      // Pass pre-loaded data to avoid redundant file I/O
-      const functionAnalysis = computeFunctionAnalysis(this.paths, project, {
-        functionsData,
-        fundsData,
-        contractTagsData: contractTags,
-      })
 
       // 6. Load project data for contract names (applies config name overrides + multisig formatting)
       const projectData = getProject(configReader, templateService, project)
@@ -321,12 +317,10 @@ export class ReviewCompiler {
         }
       }
 
-      // 8. Collect admin addresses from v2 scoring
+      // 8. Collect admin addresses from admins result
       const adminAddresses = new Set<string>()
-      if (v2Score.inventory.admins.breakdown) {
-        for (const admin of v2Score.inventory.admins.breakdown) {
-          adminAddresses.add(normalizeChainAddress(admin.adminAddress))
-        }
+      for (const admin of adminsResult.admins) {
+        adminAddresses.add(normalizeChainAddress(admin.address))
       }
 
       // 9. Filter out non-admin EOAs
@@ -340,10 +334,10 @@ export class ReviewCompiler {
       const compiled = this.buildCompiledReview(
         project,
         reviewConfig,
-        v2Score,
+        adminsResult,
+        depsResult,
         fundsData,
         contractTags,
-        functionAnalysis,
         functionsData,
         discoveryEntries,
         discovery,
@@ -351,7 +345,7 @@ export class ReviewCompiler {
 
       // 11. Resolve template variables in all description fields
       this.resolveTemplateVariables(compiled, reviewConfig.dataKeys, {
-        v2Score,
+        adminsResult,
         fundsData,
       })
 
@@ -378,10 +372,10 @@ export class ReviewCompiler {
   private buildCompiledReview(
     project: string,
     reviewConfig: ReviewConfig,
-    v2Score: V2ScoreResult,
+    adminsResult: ApiAdminsResponse,
+    depsResult: ApiDependenciesResponse,
     fundsData: ApiFundsDataResponse,
     contractTags: ApiContractTagsResponse,
-    functionAnalysis: ApiFunctionAnalysisResponse,
     functionsData: ApiFunctionsResponse,
     discoveryEntries: { name?: string; address: string; proxyType?: string }[],
     discovery: DiscoveryOutput,
@@ -445,76 +439,46 @@ export class ReviewCompiler {
       fundsLookup.set(normalizeChainAddress(addr), data)
     }
 
-    // Build admins from v2 scoring breakdown
+    // Build admins from ProjectAnalysis admins result
     const admins: CompiledAdmin[] = []
-    if (v2Score.inventory.admins.breakdown) {
-      for (const admin of v2Score.inventory.admins.breakdown) {
-        const tag = tagsByAddress.get(normalizeChainAddress(admin.adminAddress))
+    for (const admin of adminsResult.admins) {
+      // Skip admins that are tagged as external — they belong to
+      // external dependencies and are not protocol admins
+      if (admin.isExternal) continue
 
-        // Skip admins that are tagged as external — they belong to
-        // external dependencies and are not protocol admins
-        if (tag?.isExternal) continue
+      const desc = getFromAddressRecord(reviewConfig.admins, admin.address)
 
-        const desc = getFromAddressRecord(
-          reviewConfig.admins,
-          admin.adminAddress,
-        )
-
-        const withCapital = admin as AdminDetailWithCapital
-        const hasCapital = 'totalDirectCapital' in withCapital
-
-        admins.push({
-          address: admin.adminAddress,
-          name: desc?.name ?? admin.adminName,
-          description: desc?.description ?? '',
-          adminType: admin.adminType,
-          isGovernance: tag?.isGovernance ?? false,
-          functions: hasCapital
-            ? (withCapital.functionsWithCapital ?? []).map((f) => ({
-                contractAddress: f.contractAddress,
-                contractName: f.contractName,
-                functionName: f.functionName,
-                impact: f.impact,
-                directFundsUsd: f.directFundsUsd,
-                directTokenValueUsd: f.directTokenValueUsd,
-                reachableContracts: (f.reachableContracts ?? []).map((r) => ({
-                  address: r.contractAddress,
-                  name: r.contractName,
-                  viewOnlyPath: r.viewOnlyPath,
-                  calledFunctions: r.calledFunctions,
-                  fundsUsd: r.fundsUsd,
-                  tokenValueUsd: r.tokenValueUsd,
-                  fundsAtRisk: r.fundsAtRisk,
-                })),
-                mitigations:
-                  f.mitigations ??
-                  getMitigationsForFunction(f.contractAddress, f.functionName),
-              }))
-            : admin.functions.map((f) => ({
-                contractAddress: f.contractAddress,
-                contractName: f.contractName,
-                functionName: f.functionName,
-                impact: f.impact,
-                directFundsUsd: 0,
-                directTokenValueUsd: 0,
-                reachableContracts: [],
-                mitigations: getMitigationsForFunction(
-                  f.contractAddress,
-                  f.functionName,
-                ),
-              })),
-          totalDirectCapital: hasCapital ? withCapital.totalDirectCapital : 0,
-          totalDirectTokenValue: hasCapital
-            ? withCapital.totalDirectTokenValue
-            : 0,
-          totalReachableCapital: hasCapital
-            ? withCapital.totalReachableCapital
-            : 0,
-          totalReachableTokenValue: hasCapital
-            ? withCapital.totalReachableTokenValue
-            : 0,
-        })
-      }
+      admins.push({
+        address: admin.address,
+        name: desc?.name ?? admin.name,
+        description: desc?.description ?? '',
+        adminType: admin.type,
+        isGovernance: admin.isGovernance,
+        functions: admin.functions.map((f) => ({
+          contractAddress: f.contractAddress,
+          contractName: f.contractName,
+          functionName: f.functionName,
+          impact: f.impact,
+          directFundsUsd: f.directFundsUsd,
+          directTokenValueUsd: f.directTokenValueUsd,
+          reachableContracts: (f.reachableContracts ?? []).map((r) => ({
+            address: r.contractAddress,
+            name: r.contractName,
+            viewOnlyPath: r.viewOnlyPath,
+            calledFunctions: r.calledFunctions,
+            fundsUsd: r.fundsUsd,
+            tokenValueUsd: r.tokenValueUsd,
+            fundsAtRisk: r.fundsAtRisk,
+          })),
+          mitigations:
+            f.mitigations ??
+            getMitigationsForFunction(f.contractAddress, f.functionName),
+        })),
+        totalDirectCapital: admin.totalDirectCapital,
+        totalDirectTokenValue: admin.totalDirectTokenValue,
+        totalReachableCapital: admin.totalReachableCapital,
+        totalReachableTokenValue: admin.totalReachableTokenValue,
+      })
     }
 
     // Build contract name lookup from discovery entries (covers all contracts)
@@ -537,127 +501,10 @@ export class ReviewCompiler {
       }
     }
 
-    // Build dependencies from function analysis (richer data than v2Score)
-    const depMap = new Map<
-      string,
-      {
-        address: string
-        name: string
-        entity: string | undefined
-        isAutoDetected: boolean
-        dependencyType: 'callgraph' | 'write' | undefined
-        calledFunctions: Set<string>
-        functions: CompiledDependencyFunction[]
-      }
-    >()
-
-    for (const [contractAddr, contractFuncs] of Object.entries(
-      functionAnalysis.contracts,
-    )) {
-      for (const [funcName, analysis] of Object.entries(contractFuncs)) {
-        for (const dep of analysis.dependencies.entries) {
-          const key = normalizeChainAddress(dep.contractAddress)
-          let existing = depMap.get(key)
-          if (!existing) {
-            existing = {
-              address: dep.contractAddress,
-              name: dep.contractName,
-              entity: dep.entity,
-              isAutoDetected: dep.isAutoDetected,
-              dependencyType: dep.dependencyType,
-              calledFunctions: new Set(dep.calledFunctions),
-              functions: [],
-            }
-            depMap.set(key, existing)
-          }
-          // Merge: auto-detected if ANY path is auto
-          if (dep.isAutoDetected) existing.isAutoDetected = true
-          // Keep entity if first entry was undefined but a later one has a value
-          if (!existing.entity && dep.entity) existing.entity = dep.entity
-          for (const cf of dep.calledFunctions) existing.calledFunctions.add(cf)
-          // Add caller function (deduplicate)
-          const alreadyAdded = existing.functions.some(
-            (f) =>
-              addressesEqual(f.contractAddress, contractAddr) &&
-              f.functionName === funcName,
-          )
-          if (!alreadyAdded) {
-            // Build per-function impact data from functionAnalysis
-            const impact = analysis.impact
-            const directFunds = impact
-              ? getContractFundsFromLookup(fundsLookup, contractAddr)
-              : 0
-            const directTokenValue = impact
-              ? getContractTokenValueFromLookup(fundsLookup, contractAddr)
-              : 0
-
-            existing.functions.push({
-              contractAddress: contractAddr,
-              contractName:
-                contractNameMap.get(normalizeChainAddress(contractAddr)) ??
-                'Unknown Contract',
-              functionName: funcName,
-              viewOnlyPath: dep.viewOnlyPath,
-              directFundsUsd: directFunds,
-              directTokenValueUsd: directTokenValue,
-              reachableContracts: (impact?.reachableContracts ?? []).map(
-                (r) => ({
-                  address: r.contractAddress,
-                  name: r.contractName,
-                  viewOnlyPath: r.viewOnlyPath,
-                  calledFunctions: r.calledFunctions,
-                  fundsUsd: r.fundsUsd,
-                  tokenValueUsd: r.tokenValueUsd,
-                  fundsAtRisk: r.fundsUsd > 0 || r.tokenValueUsd > 0,
-                }),
-              ),
-              mitigations: getMitigationsForFunction(contractAddr, funcName),
-            })
-          }
-        }
-      }
-    }
-
-    // Build final CompiledDependency[] with review-config descriptions
+    // Build dependencies from ProjectAnalysis dependencies result
     const dependencies: CompiledDependency[] = []
-    for (const dep of depMap.values()) {
+    for (const dep of depsResult.dependencies) {
       const desc = getFromAddressRecord(reviewConfig.dependencies, dep.address)
-
-      // Compute aggregated funds at risk (deduplicated by reachable contract)
-      const mergedContracts = new Map<
-        string,
-        { funds: number; tokenValue: number }
-      >()
-      for (const fn of dep.functions) {
-        // Direct funds on the function's contract
-        if (fn.directFundsUsd > 0 || fn.directTokenValueUsd > 0) {
-          const addr = normalizeChainAddress(fn.contractAddress)
-          const existing = mergedContracts.get(addr)
-          mergedContracts.set(addr, {
-            funds: Math.max(existing?.funds ?? 0, fn.directFundsUsd),
-            tokenValue: Math.max(
-              existing?.tokenValue ?? 0,
-              fn.directTokenValueUsd,
-            ),
-          })
-        }
-        // Reachable contracts
-        for (const rc of fn.reachableContracts) {
-          if (rc.fundsUsd <= 0 && rc.tokenValueUsd <= 0) continue
-          const addr = normalizeChainAddress(rc.address)
-          const existing = mergedContracts.get(addr)
-          mergedContracts.set(addr, {
-            funds: Math.max(existing?.funds ?? 0, rc.fundsUsd),
-            tokenValue: Math.max(existing?.tokenValue ?? 0, rc.tokenValueUsd),
-          })
-        }
-      }
-      let totalFundsAtRisk = 0
-      let totalTokenValueAtRisk = 0
-      for (const { funds, tokenValue } of mergedContracts.values()) {
-        totalFundsAtRisk += funds
-        totalTokenValueAtRisk += tokenValue
-      }
 
       dependencies.push({
         address: dep.address,
@@ -665,13 +512,30 @@ export class ReviewCompiler {
         description: desc?.description ?? '',
         entity: dep.entity ?? null,
         isAutoDetected: dep.isAutoDetected,
-        viewOnlyPath:
-          dep.functions.length > 0 &&
-          dep.functions.every((f) => f.viewOnlyPath),
-        calledFunctions: Array.from(dep.calledFunctions),
-        functions: dep.functions,
-        totalFundsAtRisk,
-        totalTokenValueAtRisk,
+        viewOnlyPath: dep.viewOnlyPath,
+        calledFunctions: dep.calledFunctions,
+        functions: dep.functions.map((f) => ({
+          contractAddress: f.contractAddress,
+          contractName: f.contractName,
+          functionName: f.functionName,
+          viewOnlyPath: f.viewOnlyPath,
+          directFundsUsd: f.directFundsUsd,
+          directTokenValueUsd: f.directTokenValueUsd,
+          reachableContracts: (f.reachableContracts ?? []).map((r) => ({
+            address: r.contractAddress,
+            name: r.contractName,
+            viewOnlyPath: r.viewOnlyPath,
+            calledFunctions: r.calledFunctions,
+            fundsUsd: r.fundsUsd,
+            tokenValueUsd: r.tokenValueUsd,
+            fundsAtRisk: r.fundsAtRisk,
+          })),
+          mitigations:
+            f.mitigations ??
+            getMitigationsForFunction(f.contractAddress, f.functionName),
+        })),
+        totalFundsAtRisk: dep.totalFundsAtRisk,
+        totalTokenValueAtRisk: dep.totalTokenValueAtRisk,
         dependencyType: dep.dependencyType,
       })
     }
@@ -875,16 +739,16 @@ export class ReviewCompiler {
       },
 
       totals: {
-        contractCount: v2Score.inventory.contracts.inventory,
-        permissionedFunctionCount: v2Score.inventory.functions.inventory,
-        scoredFunctionCount: v2Score.inventory.functions.breakdown?.length ?? 0,
-        adminCount: v2Score.inventory.admins.inventory,
-        dependencyCount: v2Score.inventory.dependencies.inventory,
+        contractCount: this.countContracts(discoveryEntries),
+        permissionedFunctionCount:
+          this.countPermissionedFunctions(functionsData),
+        scoredFunctionCount: this.countScoredFunctions(functionsData),
+        adminCount: adminsResult.totals.adminCount,
+        dependencyCount: depsResult.totals.dependencyCount,
         totalCapitalAtRisk:
-          (v2Score.inventory.admins.totalCapitalAtRisk ?? 0) +
+          (adminsResult.totals.totalCapitalAtRisk ?? 0) +
           funds.reduce((sum, f) => sum + (f.aggregate?.totalUsdValue ?? 0), 0),
-        totalTokenValueAtRisk:
-          v2Score.inventory.admins.totalTokenValueAtRisk ?? 0,
+        totalTokenValueAtRisk: adminsResult.totals.totalTokenValueAtRisk ?? 0,
         totalTokenValue: funds.reduce(
           (sum, f) => sum + (f.tokenInfo?.tokenValue ?? 0),
           0,
@@ -912,7 +776,10 @@ export class ReviewCompiler {
   private resolveTemplateVariables(
     compiled: CompiledReview,
     dataKeys: Record<string, string>,
-    sources: { v2Score: V2ScoreResult; fundsData: ApiFundsDataResponse },
+    sources: {
+      adminsResult: ApiAdminsResponse
+      fundsData: ApiFundsDataResponse
+    },
   ): void {
     if (!dataKeys || Object.keys(dataKeys).length === 0) return
 
@@ -969,21 +836,18 @@ export class ReviewCompiler {
    */
   private resolveDataPath(
     dataPath: string,
-    sources: { v2Score: V2ScoreResult; fundsData: ApiFundsDataResponse },
+    sources: {
+      adminsResult: ApiAdminsResponse
+      fundsData: ApiFundsDataResponse
+    },
   ): number | null {
     try {
       let root: any
       let remainingPath: string
 
       if (dataPath.startsWith('v2score.')) {
-        root = { inventory: sources.v2Score.inventory }
-        remainingPath = dataPath.slice('v2score.'.length)
-
-        // Special handling: admin breakdown is an array, dataKeys reference by address
-        // e.g., v2score.inventory.admins.breakdown["eth:0x..."].totalDirectCapital
-        if (remainingPath.includes('breakdown[')) {
-          return this.resolveBreakdownPath(root, remainingPath)
-        }
+        // Backward compatibility: map v2score.* paths to adminsResult
+        return this.resolveV2ScorePath(dataPath, sources.adminsResult)
       } else if (dataPath.startsWith('fundsdata.')) {
         // Normalize contract address keys for case-insensitive matching
         const fundsData = { ...sources.fundsData }
@@ -1006,24 +870,81 @@ export class ReviewCompiler {
     }
   }
 
-  private resolveBreakdownPath(root: any, pathStr: string): number | null {
-    // Parse: inventory.admins.breakdown["eth:0x..."].totalDirectCapital
-    const match = pathStr.match(
-      /inventory\.admins\.breakdown\["([^"]+)"\]\.(\w+)/,
+  /**
+   * Maps v2score.* template variable paths to the new adminsResult data.
+   * Supports:
+   *   v2score.inventory.admins.totalCapitalAtRisk
+   *   v2score.inventory.admins.totalTokenValueAtRisk
+   *   v2score.inventory.admins.breakdown["eth:0x..."].totalDirectCapital
+   *   v2score.inventory.admins.breakdown["eth:0x..."].totalReachableCapital
+   */
+  private resolveV2ScorePath(
+    dataPath: string,
+    adminsResult: ApiAdminsResponse,
+  ): number | null {
+    // v2score.inventory.admins.totalCapitalAtRisk
+    if (dataPath === 'v2score.inventory.admins.totalCapitalAtRisk') {
+      return adminsResult.totals.totalCapitalAtRisk
+    }
+    // v2score.inventory.admins.totalTokenValueAtRisk
+    if (dataPath === 'v2score.inventory.admins.totalTokenValueAtRisk') {
+      return adminsResult.totals.totalTokenValueAtRisk
+    }
+
+    // v2score.inventory.admins.breakdown["eth:0x..."].field
+    const match = dataPath.match(
+      /v2score\.inventory\.admins\.breakdown\["([^"]+)"\]\.(\w+)/,
     )
     if (!match) return null
 
     const [, address, field] = match
-    const breakdown = root.inventory?.admins?.breakdown
-    if (!Array.isArray(breakdown)) return null
-
-    const admin = breakdown.find(
-      (a: any) => a.adminAddress && addressesEqual(a.adminAddress, address),
+    const admin = adminsResult.admins.find((a) =>
+      addressesEqual(a.address, address),
     )
     if (!admin) return null
 
-    const value = admin[field]
+    // Map field names from v2Score admin shape to AdminEntry shape
+    const fieldMap: Record<string, number | undefined> = {
+      totalDirectCapital: admin.totalDirectCapital,
+      totalDirectTokenValue: admin.totalDirectTokenValue,
+      totalReachableCapital: admin.totalReachableCapital,
+      totalReachableTokenValue: admin.totalReachableTokenValue,
+    }
+    const value = fieldMap[field]
     return typeof value === 'number' ? value : null
+  }
+
+  private countContracts(
+    discoveryEntries: { name?: string; address: string; proxyType?: string }[],
+  ): number {
+    return discoveryEntries.filter((e) => e.proxyType !== 'EOA').length
+  }
+
+  private countPermissionedFunctions(
+    functionsData: ApiFunctionsResponse,
+  ): number {
+    let count = 0
+    if (functionsData?.contracts) {
+      for (const contractData of Object.values(functionsData.contracts)) {
+        for (const func of contractData.functions) {
+          if (func.isPermissioned) count++
+        }
+      }
+    }
+    return count
+  }
+
+  private countScoredFunctions(functionsData: ApiFunctionsResponse): number {
+    let count = 0
+    if (functionsData?.contracts) {
+      for (const contractData of Object.values(functionsData.contracts)) {
+        for (const func of contractData.functions) {
+          if (func.isPermissioned && func.score && func.score !== 'unscored')
+            count++
+        }
+      }
+    }
+    return count
   }
 
   private navigatePath(obj: any, pathStr: string): number | null {
@@ -1061,30 +982,6 @@ export class ReviewCompiler {
 
     return typeof value === 'number' ? value : null
   }
-}
-
-// ============================================================================
-// Funds Lookup Helpers
-// ============================================================================
-
-function getContractFundsFromLookup(
-  fundsLookup: Map<string, ContractFundsData>,
-  contractAddress: string,
-): number {
-  const data = fundsLookup.get(normalizeChainAddress(contractAddress))
-  if (!data) return 0
-  return (
-    (data.balances?.totalUsdValue ?? 0) + (data.positions?.totalUsdValue ?? 0)
-  )
-}
-
-function getContractTokenValueFromLookup(
-  fundsLookup: Map<string, ContractFundsData>,
-  contractAddress: string,
-): number {
-  const data = fundsLookup.get(normalizeChainAddress(contractAddress))
-  if (!data) return 0
-  return data.tokenInfo?.tokenValue ?? 0
 }
 
 // ============================================================================

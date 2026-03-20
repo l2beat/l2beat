@@ -386,9 +386,12 @@ export function PermissionsDisplay({
         queryKey: ['functions', project],
       })
 
-      // Invalidate V2 score since function changes affect scoring
+      // Invalidate admins/dependencies since function changes affect scoring
       await queryClient.invalidateQueries({
-        queryKey: ['v2-score', project],
+        queryKey: ['admins', project],
+      })
+      await queryClient.invalidateQueries({
+        queryKey: ['dependencies', project],
       })
 
       // Clear local functions since we now have fresh server data

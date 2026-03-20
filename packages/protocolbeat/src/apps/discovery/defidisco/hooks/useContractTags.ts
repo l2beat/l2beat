@@ -23,9 +23,12 @@ export function useUpdateContractTag(project: string) {
       await queryClient.invalidateQueries({
         queryKey: ['contractTags', project],
       })
-      // Invalidate V2 scores since external contracts affect scoring
+      // Invalidate admins/dependencies since external contracts affect scoring
       await queryClient.invalidateQueries({
-        queryKey: ['v2-score', project],
+        queryKey: ['admins', project],
+      })
+      await queryClient.invalidateQueries({
+        queryKey: ['dependencies', project],
       })
     },
   })

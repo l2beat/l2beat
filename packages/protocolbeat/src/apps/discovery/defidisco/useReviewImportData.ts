@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import {
+  getAdmins,
   getContractTags,
+  getDependencies,
   getFundsData,
   getFunctions,
   getProject,
-  getV2Score,
 } from '../../../api/api'
 import type { ImportDataBundle } from './reviewDataSources'
 
@@ -42,9 +43,16 @@ export function useReviewImportData(project: string) {
     staleTime: 60_000,
   })
 
-  const v2ScoreQuery = useQuery({
-    queryKey: ['v2-score', project],
-    queryFn: () => getV2Score(project),
+  const adminsQuery = useQuery({
+    queryKey: ['admins', project],
+    queryFn: () => getAdmins(project),
+    staleTime: 60_000,
+    retry: false,
+  })
+
+  const depsQuery = useQuery({
+    queryKey: ['dependencies', project],
+    queryFn: () => getDependencies(project),
     staleTime: 60_000,
     retry: false,
   })
@@ -54,14 +62,16 @@ export function useReviewImportData(project: string) {
     functionsQuery.isLoading ||
     fundsQuery.isLoading ||
     contractTagsQuery.isLoading ||
-    v2ScoreQuery.isLoading
+    adminsQuery.isLoading ||
+    depsQuery.isLoading
 
   const data: ImportDataBundle = {
     projectData: projectQuery.data,
     functionsData: functionsQuery.data,
     fundsData: fundsQuery.data,
     contractTags: contractTagsQuery.data,
-    v2Score: v2ScoreQuery.data,
+    adminsData: adminsQuery.data,
+    depsData: depsQuery.data,
   }
 
   return { data, isLoading }

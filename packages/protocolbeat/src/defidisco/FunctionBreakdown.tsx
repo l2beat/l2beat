@@ -1,32 +1,92 @@
-import { useState } from 'react'
-import type { FunctionDetail, FunctionModuleScore } from '../api/types'
+import { useQuery } from '@tanstack/react-query'
+import { useMemo, useState } from 'react'
+import { getFunctions, getProject } from '../api/api'
+import type { Impact } from '../api/types'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
+import { normalizeForLookup } from '../apps/discovery/defidisco/addressUtils'
 import { getImpactColor } from './scoringShared'
 
 interface FunctionBreakdownProps {
-  score: FunctionModuleScore
+  project: string
+}
+
+interface ScoredFunction {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  impact: Impact
 }
 
 /**
  * Function Breakdown Component
  * Displays flat list of permissioned functions with impact scores
  */
-export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
+export function FunctionBreakdown({ project }: FunctionBreakdownProps) {
   const [isExpanded, setIsExpanded] = useState(true)
 
-  const functions = score.breakdown || []
+  const { data: functionsData } = useQuery({
+    queryKey: ['functions', project],
+    queryFn: () => getFunctions(project),
+  })
+
+  const { data: projectData } = useQuery({
+    queryKey: ['projects', project],
+    queryFn: () => getProject(project),
+  })
+
+  const contractNameMap = useMemo(() => {
+    const map = new Map<string, string>()
+    if (!projectData?.entries) return map
+    for (const chain of projectData.entries) {
+      for (const c of [
+        ...chain.initialContracts,
+        ...chain.discoveredContracts,
+      ]) {
+        if (c.name) {
+          map.set(normalizeForLookup(c.address), c.name)
+        }
+      }
+    }
+    return map
+  }, [projectData])
+
+  // Count permissioned functions and build scored list
+  let permissionedCount = 0
+  const scoredFunctions: ScoredFunction[] = []
+
+  if (functionsData?.contracts) {
+    for (const [contractAddress, contractData] of Object.entries(
+      functionsData.contracts,
+    )) {
+      for (const func of contractData.functions) {
+        if (func.isPermissioned) {
+          permissionedCount++
+          if (func.score && func.score !== 'unscored') {
+            scoredFunctions.push({
+              contractAddress,
+              contractName:
+                contractNameMap.get(normalizeForLookup(contractAddress)) ??
+                contractAddress,
+              functionName: func.functionName,
+              impact: func.score === 'no-impact' ? 'no-impact' : 'critical',
+            })
+          }
+        }
+      }
+    }
+  }
 
   return (
     <div className="text-coffee-300">
       {/* Main header */}
       <div className="flex items-center justify-between">
         <span className="font-medium">Functions:</span>
-        <span>{score.inventory}</span>
+        <span>{permissionedCount}</span>
       </div>
 
       {/* Function list */}
       <div className="mt-3 ml-2">
-        {functions.length === 0 ? (
+        {scoredFunctions.length === 0 ? (
           <p className="ml-4 text-coffee-400 text-xs">
             No functions with impact scores
           </p>
@@ -38,13 +98,13 @@ export function FunctionBreakdown({ score }: FunctionBreakdownProps) {
             >
               <span>{isExpanded ? '▼' : '▶'}</span>
               <span>
-                {functions.length} scored function
-                {functions.length !== 1 ? 's' : ''}
+                {scoredFunctions.length} scored function
+                {scoredFunctions.length !== 1 ? 's' : ''}
               </span>
             </button>
             {isExpanded && (
               <ul className="ml-8 space-y-1.5">
-                {functions.map((func: FunctionDetail, idx: number) => (
+                {scoredFunctions.map((func, idx) => (
                   <li key={idx} className="text-coffee-300 text-xs">
                     <button
                       onClick={() =>

@@ -96,6 +96,7 @@ export interface Mitigation {
   valueRange?: { min?: MitigationValue; max?: MitigationValue; unit?: string }
   relativeValue?: { maxChangePercent?: MitigationValue }
   mitigatedField?: { contractAddress: string; fieldName: string }
+  scopedTo?: { address: string; type: 'admin' | 'dependency' }
 }
 
 export type Impact = 'critical' | 'no-impact'

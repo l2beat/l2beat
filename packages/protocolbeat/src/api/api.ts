@@ -29,6 +29,8 @@ import type {
   ApiResearcherInfoResponse,
   ApiEnhancedTraversalResponse,
   ApiFunctionAnalysisResponse,
+  ApiAdminsResponse,
+  ApiDependenciesResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -418,6 +420,34 @@ export async function getV2Score(project: string): Promise<ApiV2ScoreResponse> {
   }
   const data = await res.json()
   return data as ApiV2ScoreResponse
+}
+
+export async function getAdmins(
+  project: string,
+  contract?: string,
+): Promise<ApiAdminsResponse> {
+  const url = contract
+    ? `/api/projects/${project}/admins?contract=${encodeURIComponent(contract)}`
+    : `/api/projects/${project}/admins`
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return (await res.json()) as ApiAdminsResponse
+}
+
+export async function getDependencies(
+  project: string,
+  contract?: string,
+): Promise<ApiDependenciesResponse> {
+  const url = contract
+    ? `/api/projects/${project}/dependencies?contract=${encodeURIComponent(contract)}`
+    : `/api/projects/${project}/dependencies`
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return (await res.json()) as ApiDependenciesResponse
 }
 
 export async function compileReview(

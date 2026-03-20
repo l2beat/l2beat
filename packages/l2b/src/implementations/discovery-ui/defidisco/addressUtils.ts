@@ -1,4 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import type { Mitigation } from './types'
 
 /**
  * Address utility functions for DeFiDisco.
@@ -105,6 +106,30 @@ export function isChainAddress(value: string): boolean {
   if (colonIdx === -1 || value.startsWith('0x')) return false
   const hex = value.slice(colonIdx + 1)
   return hex.startsWith('0x') && hex.length === 42
+}
+
+// ---------------------------------------------------------------------------
+// Mitigation scope filtering
+// ---------------------------------------------------------------------------
+
+/**
+ * Filter mitigations to only those relevant for a specific owner (admin or dependency).
+ * Global mitigations (no scopedTo) are always included.
+ * Scoped mitigations are included only if they match the given owner address.
+ * The scopedTo.type field is informational (for UI display) — filtering matches
+ * by address only, because the same address can appear as both admin and dependency.
+ */
+export function filterMitigationsForOwner(
+  mitigations: Mitigation[] | undefined,
+  ownerAddress: string,
+  _ownerType: 'admin' | 'dependency',
+): Mitigation[] | undefined {
+  if (!mitigations) return undefined
+  const filtered = mitigations.filter((m) => {
+    if (!m.scopedTo) return true
+    return addressesEqual(m.scopedTo.address, ownerAddress)
+  })
+  return filtered.length > 0 ? filtered : undefined
 }
 
 // ---------------------------------------------------------------------------

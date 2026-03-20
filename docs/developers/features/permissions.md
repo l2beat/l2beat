@@ -185,6 +185,9 @@
   - `description`: Human-readable explanation of the constraint
   - `valueRange.min/max` and `relativeValue.maxChangePercent`: Use `MitigationValue` type — either `{ mode: 'hardcoded', value: string }` or `{ mode: 'fieldRef', fieldPath: string }` (same path syntax as owner definitions)
   - `mitigatedField`: Optional `{ contractAddress, fieldName }` — links the mitigation to a specific contract field. When set, `configSeverity.ts` auto-writes `severity: "HIGH"` to `config.jsonc` so the monitoring service sends priority Discord alerts on field changes
+  - `scopedTo`: Optional `{ address: string, type: 'admin' | 'dependency' }` — scopes the mitigation to a specific admin or dependency. When absent, the mitigation is global (applies to all callers). When present, the mitigation only appears under the matching admin/dependency in scoring breakdowns and compiled reviews. The `delay` field on `FunctionEntry` is always global.
+  - **Scope filtering**: `filterMitigationsForOwner()` in `addressUtils.ts` filters mitigations for a specific owner — returns global mitigations plus those scoped to the given address/type. Used in `v2Scoring.ts` (AdminInventoryModule) and `reviewCompiler.ts` (admin + dependency function compilation).
+  - **UI**: Scope dropdown in `FunctionFolder.tsx` mitigation form — populated from resolved owners (Admins optgroup) and manual dependencies (Dependencies optgroup). Scoped mitigations display a purple badge showing the admin/dependency name.
   - **Backend**: `configSeverity.ts` — `ensureFieldSeverity()` validates field exists in `discovered.json` before writing; `removeFieldSeverityIfAutoOnly()` cleans up when mitigated field is unlinked (only removes severity if no other field config properties exist)
   - **Frontend**: `resolveFieldValue()` in `ownerResolution.ts` resolves field-referenced values at display time
-  - **Backward compat**: `normalizeMitigationValue()` converts old plain-string values to `MitigationValue` objects
+  - **Backward compat**: `normalizeMitigationValue()` converts old plain-string values to `MitigationValue` objects. Mitigations without `scopedTo` are treated as global (backward compatible).

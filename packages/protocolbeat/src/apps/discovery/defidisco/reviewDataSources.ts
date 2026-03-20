@@ -1,11 +1,10 @@
 import type {
-  AdminDetail,
-  AdminDetailWithCapital,
+  ApiAdminsResponse,
   ApiContractTagsResponse,
+  ApiDependenciesResponse,
   ApiFundsDataResponse,
   ApiFunctionsResponse,
   ApiProjectResponse,
-  ApiV2ScoreResponse,
   DataColumnFormat,
   DataTableColumn,
 } from '../../../api/types'
@@ -22,7 +21,8 @@ export interface ImportDataBundle {
   functionsData?: ApiFunctionsResponse
   fundsData?: ApiFundsDataResponse
   contractTags?: ApiContractTagsResponse
-  v2Score?: ApiV2ScoreResponse
+  adminsData?: ApiAdminsResponse
+  depsData?: ApiDependenciesResponse
 }
 
 export interface DataSourceColumn {
@@ -102,10 +102,6 @@ function isTokenContract(
   )
 }
 
-function hasCapitalData(admin: AdminDetail): admin is AdminDetailWithCapital {
-  return 'functionsWithCapital' in admin
-}
-
 function shortenAddress(address: string): string {
   const addr = stripChainPrefix(address)
   if (addr.length <= 12) return addr
@@ -181,31 +177,25 @@ const projectContractsSource: DataSourceDefinition = {
 // Data Source: Protocol Actors (Admins/Owners)
 // ============================================================================
 
-const v2ScoreAdminsSource: DataSourceDefinition = {
-  id: 'v2score.admins',
+const adminsSource: DataSourceDefinition = {
+  id: 'admins.breakdown',
   label: 'Protocol Actors',
-  description: 'Admin and owner addresses from V2 scoring',
+  description: 'Admin and owner addresses',
   relevantSections: ['actors'],
-  requires: ['v2Score'],
+  requires: ['adminsData'],
   availableColumns: [
-    { field: 'adminName', header: 'Name', defaultSelected: true },
+    { field: 'name', header: 'Name', defaultSelected: true },
     {
-      field: 'adminAddress',
+      field: 'address',
       header: 'Address',
       format: 'address',
       defaultSelected: true,
     },
     {
-      field: 'adminType',
+      field: 'type',
       header: 'Type',
       format: 'badge',
       defaultSelected: true,
-    },
-    {
-      field: 'likelihood',
-      header: 'Likelihood',
-      format: 'badge',
-      defaultSelected: false,
     },
     {
       field: 'functionsCount',
@@ -233,41 +223,32 @@ const v2ScoreAdminsSource: DataSourceDefinition = {
     },
   ],
   getItems(data, filters) {
-    const breakdown = data.v2Score?.inventory?.admins?.breakdown
-    if (!breakdown) return []
+    const admins = data.adminsData?.admins
+    if (!admins) return []
 
-    return breakdown
+    return admins
       .filter((admin) => {
-        if (
-          filters.excludeExternal &&
-          isExternalContract(admin.adminAddress, data.contractTags)
-        )
-          return false
+        if (filters.excludeExternal && admin.isExternal) return false
         if (
           filters.excludeImmutable &&
-          admin.adminAddress.includes(
-            '0x0000000000000000000000000000000000000000',
-          )
+          admin.address.includes('0x0000000000000000000000000000000000000000')
         )
           return false
         return true
       })
       .map((admin) => ({
-        adminName: admin.adminName,
-        adminAddress: admin.adminAddress,
-        adminType: admin.adminType,
-        likelihood: admin.likelihood ?? 'unscored',
+        name: admin.name,
+        address: admin.address,
+        type: admin.type,
         functionsCount: admin.functions.length,
-        totalDirectCapital: hasCapitalData(admin)
-          ? admin.totalDirectCapital
-          : 0,
+        totalDirectCapital: admin.totalDirectCapital,
       }))
   },
   getMetricValue(data, field, filters) {
     const items = this.getItems(data, filters)
     if (field === 'count') return items.length
     if (field === 'totalCapitalAtRisk') {
-      return data.v2Score?.inventory?.admins?.totalCapitalAtRisk ?? 0
+      return data.adminsData?.totals?.totalCapitalAtRisk ?? 0
     }
     return undefined
   },
@@ -277,24 +258,18 @@ const v2ScoreAdminsSource: DataSourceDefinition = {
 // Data Source: Dependencies
 // ============================================================================
 
-const v2ScoreDependenciesSource: DataSourceDefinition = {
-  id: 'v2score.dependencies',
+const dependenciesSource: DataSourceDefinition = {
+  id: 'dependencies.breakdown',
   label: 'Dependencies',
-  description: 'External dependencies from V2 scoring',
+  description: 'External dependencies',
   relevantSections: ['dependencies'],
-  requires: ['v2Score'],
+  requires: ['depsData'],
   availableColumns: [
-    { field: 'dependencyName', header: 'Name', defaultSelected: true },
+    { field: 'name', header: 'Name', defaultSelected: true },
     {
-      field: 'dependencyAddress',
+      field: 'address',
       header: 'Address',
       format: 'address',
-      defaultSelected: true,
-    },
-    {
-      field: 'likelihood',
-      header: 'Likelihood',
-      format: 'badge',
       defaultSelected: true,
     },
     {
@@ -309,13 +284,12 @@ const v2ScoreDependenciesSource: DataSourceDefinition = {
     { field: 'count', label: 'Total Dependencies', format: 'number' },
   ],
   getItems(data) {
-    const breakdown = data.v2Score?.inventory?.dependencies?.breakdown
-    if (!breakdown) return []
+    const deps = data.depsData?.dependencies
+    if (!deps) return []
 
-    return breakdown.map((dep) => ({
-      dependencyName: dep.dependencyName,
-      dependencyAddress: dep.dependencyAddress,
-      likelihood: dep.likelihood ?? 'unscored',
+    return deps.map((dep) => ({
+      name: dep.name,
+      address: dep.address,
       functionsCount: dep.functions.length,
     }))
   },
@@ -522,8 +496,8 @@ function buildContractNameMap(
 
 export const DATA_SOURCES: DataSourceDefinition[] = [
   projectContractsSource,
-  v2ScoreAdminsSource,
-  v2ScoreDependenciesSource,
+  adminsSource,
+  dependenciesSource,
   fundsContractBalancesSource,
   permissionedFunctionsSource,
 ]

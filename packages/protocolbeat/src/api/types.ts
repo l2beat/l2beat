@@ -48,6 +48,9 @@ export interface Mitigation {
   relativeValue?: { maxChangePercent?: MitigationValue }
   // Which contract field this mitigation constrains (triggers auto HIGH severity)
   mitigatedField?: { contractAddress: string; fieldName: string }
+  // Scopes this mitigation to a specific admin or dependency.
+  // When absent, mitigation is global (applies to all callers).
+  scopedTo?: { address: string; type: 'admin' | 'dependency' }
 }
 
 // Function detail for scoring breakdown
@@ -574,6 +577,95 @@ export interface ApiV2ScoreResponse {
     dependencies: DependencyModuleScore
     admins: AdminModuleScore
   }
+}
+
+// ============================================================================
+// New Admin/Dependency Analysis Types (replaces V2 scoring)
+// ============================================================================
+
+export interface ApiAdminsResponse {
+  totals: {
+    adminCount: number
+    totalCapitalAtRisk: number
+    totalTokenValueAtRisk: number
+  }
+  admins: AdminEntry[]
+}
+
+export interface AdminEntry {
+  address: string
+  name: string
+  type: ApiAddressType
+  isExternal: boolean
+  isGovernance: boolean
+  entity: string | null
+  functions: AdminFunctionEntry[]
+  totalDirectCapital: number
+  totalDirectTokenValue: number
+  totalReachableCapital: number
+  totalReachableTokenValue: number
+  uniqueContractsAffected: number
+}
+
+export interface AdminFunctionEntry {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  impact: Impact
+  mitigations?: Mitigation[]
+  chains: CollapsedChain[]
+  directFundsUsd: number
+  directTokenValueUsd: number
+  reachableContracts: ReachableContract[]
+  totalReachableFundsUsd: number
+  totalReachableTokenValueUsd: number
+  unresolvedCallsCount: number
+}
+
+export interface CollapsedChain {
+  steps: CollapsedChainStep[]
+  hasPublicFunction: boolean
+}
+
+export interface CollapsedChainStep {
+  contractAddress: string
+  contractName: string
+  contractType: ApiAddressType
+  edgeType: 'permission' | 'callgraph'
+  functionNames: string[]
+}
+
+export interface ApiDependenciesResponse {
+  totals: {
+    dependencyCount: number
+  }
+  dependencies: DependencyEntry[]
+}
+
+export interface DependencyEntry {
+  address: string
+  name: string
+  entity: string | null
+  isAutoDetected: boolean
+  dependencyType: 'callgraph' | 'write' | undefined
+  viewOnlyPath: boolean
+  calledFunctions: string[]
+  functions: DependencyFunctionEntry[]
+  totalFundsAtRisk: number
+  totalTokenValueAtRisk: number
+}
+
+export interface DependencyFunctionEntry {
+  contractAddress: string
+  contractName: string
+  functionName: string
+  impact: Impact
+  viewOnlyPath: boolean
+  calledFunctions: string[]
+  mitigations?: Mitigation[]
+  directFundsUsd: number
+  directTokenValueUsd: number
+  reachableContracts: ReachableContract[]
 }
 
 // Funds data types

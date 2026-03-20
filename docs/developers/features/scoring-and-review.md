@@ -1,38 +1,123 @@
 # Scoring & Review System
 
-## V2 Scoring UI
+## ProjectAnalysis API
 
-**Scoring Dashboard**: V2 scoring breakdown in DeFiScan panel (`/defidisco/V2ScoringSection.tsx`)
+**Central computation class**: `ProjectAnalysis` in `projectAnalysis.ts` is the single backend authority for admin and dependency analysis. All consumers — the protocolbeat UI, FunctionFolder, and the review compiler — use this class (via HTTP endpoints or direct call).
 
+See [Architecture: Stage 1](../architecture.md#stage-1-projectanalysis) for the full computation pipeline and API reference.
+
+### HTTP Endpoints
+
+| Endpoint | Response Type | Primary Consumers |
+|----------|--------------|-------------------|
+| `GET /admins` | `ApiAdminsResponse` | V2ScoringSection, FunctionFolder, ReviewCompiler |
+| `GET /admins?contract=X` | `ApiAdminsResponse` (filtered) | FunctionFolder |
+| `GET /dependencies` | `ApiDependenciesResponse` | V2ScoringSection, FunctionFolder, ReviewCompiler |
+| `GET /dependencies?contract=X` | `ApiDependenciesResponse` (filtered) | FunctionFolder |
+
+### Key Types
+
+```typescript
+// --- Admins ---
+interface ApiAdminsResponse {
+  totals: { adminCount: number; totalCapitalAtRisk: number; totalTokenValueAtRisk: number }
+  admins: AdminEntry[]
+}
+
+interface AdminEntry {
+  address: string;  name: string;  type: ApiAddressType
+  isExternal: boolean;  isGovernance: boolean;  entity: string | null
+  functions: AdminFunctionEntry[]
+  totalDirectCapital: number;  totalDirectTokenValue: number
+  totalReachableCapital: number;  totalReachableTokenValue: number
+  uniqueContractsAffected: number
+}
+
+interface AdminFunctionEntry {
+  contractAddress: string;  contractName: string;  functionName: string
+  impact: Impact;  mitigations?: Mitigation[]
+  chains: CollapsedChain[]           // Pre-collapsed ownership chains (backward BFS)
+  directFundsUsd: number;  directTokenValueUsd: number
+  reachableContracts: ReachableContract[]
+  totalReachableFundsUsd: number;  totalReachableTokenValueUsd: number
+  unresolvedCallsCount: number
+}
+
+interface CollapsedChain { steps: CollapsedChainStep[]; hasPublicFunction: boolean }
+interface CollapsedChainStep {
+  contractAddress: string;  contractName: string;  contractType: ApiAddressType
+  edgeType: 'permission' | 'callgraph';  functionNames: string[]
+}
+
+// --- Dependencies ---
+interface ApiDependenciesResponse {
+  totals: { dependencyCount: number }
+  dependencies: DependencyEntry[]
+}
+
+interface DependencyEntry {
+  address: string;  name: string;  entity: string | null
+  isAutoDetected: boolean;  dependencyType: 'callgraph' | 'write' | undefined
+  viewOnlyPath: boolean;  calledFunctions: string[]
+  functions: DependencyFunctionEntry[]
+  totalFundsAtRisk: number;  totalTokenValueAtRisk: number
+}
+
+interface DependencyFunctionEntry {
+  contractAddress: string;  contractName: string;  functionName: string
+  impact: Impact;  viewOnlyPath: boolean;  calledFunctions: string[]
+  mitigations?: Mitigation[]
+  directFundsUsd: number;  directTokenValueUsd: number
+  reachableContracts: ReachableContract[]
+}
+```
+
+Types are defined in `projectAnalysis.ts` (backend) and mirrored in `packages/protocolbeat/src/api/types.ts` (frontend).
+
+### Design Principles
+
+1. **Single source of truth**: All admin/dependency computation happens in `ProjectAnalysis`. If data needs to change, change it there — not in the compiler or frontend.
+2. **Per-contract filtering via query param**: The backend builds the full graph (fast, sub-second) but filters the response. Same code path for project-wide and per-contract queries.
+3. **Pre-collapsed chains**: Ownership chains are collapsed server-side (chains with identical contract sequences merged, function names grouped per step). The frontend renders them directly.
+4. **Contract-tags enrichment is server-side**: `isExternal`, `isGovernance`, and `entity` are pre-resolved — consumers don't need to join contract-tags data themselves.
+
+### Admin Type Mapping
+
+`mapAdminType()` in `projectAnalysis.ts` maps raw discovery types to user-facing types:
+- Zero address → `Revoked`
+- Any type + `immutable` proxyType → `Immutable`
+- `Untemplatized`/`Unknown` + non-immutable proxyType → `Upgradeable`
+
+## Scoring UI
+
+**Scoring Dashboard**: Inventory breakdown in DeFiScan panel (`/defidisco/V2ScoringSection.tsx`)
+
+- **Entry point**: `V2ScoringSection.tsx` fetches `getAdmins(project)` and `getDependencies(project)` via React Query
 - **Inventory Sections**: Contracts, Functions, Dependencies, Owners — each with inventory count and breakdown
 - **Shared Scoring Module**: `/defidisco/scoringShared.tsx` — **single source of truth** for all scoring UI utilities and components
-- **Admin Type Mapping** (`mapAdminType` in `v2Scoring.ts`): Maps raw types to user-facing types based on proxy info:
-  - Zero address -> `Revoked`
-  - Any type + `immutable` proxyType -> `Immutable`
-  - `Untemplatized`/`Unknown` + non-immutable proxyType -> `Upgradeable`
 
 ### Shared Module (`scoringShared.tsx`) — DO NOT duplicate code from this file
 
 - **Utility Functions**: `formatUsdValue`, `formatDelay`, `hasCapitalData`, `hasTokenValueData`, `isZeroAddress`, `getAdminTypeColor`, `getImpactColor`, `computeDeduplicatedCapital`
 - **Display Components**: `TreeNode`, `FundsDisplay`, `TokenValueDisplay`, `FunctionCapitalBreakdown` — tree-structured capital breakdown
 - **`OwnerSection`**: Shared component used by **both** Owners and Dependencies sections to render an owner/admin with admin type badges, proxy type tags, capital-at-risk, and expandable function list with capital breakdown trees
+- **Type consumption**: Components consume `AdminEntry` and `AdminFunctionEntry` directly from the API response — no intermediate scoring types
 
 ### Section Architecture
 
-- **Owners** (`AdminsInventoryBreakdown.tsx`): Displays non-external permission owners
-  - Filters out external owners (shown in Dependencies instead)
+- **Owners** (`AdminsInventoryBreakdown.tsx`): Receives `adminsData: ApiAdminsResponse` prop
+  - Filters out external owners (shown in Dependencies instead) via `admin.isExternal`
   - By default shows only "key owners": EOAs, EOAPermissioned, Multisigs, and governance-tagged contracts
   - "Show all contracts" checkbox reveals all other contract-type admins
   - Uses `OwnerSection` from `scoringShared.tsx`
-- **Dependencies** (`DependencyInventoryBreakdown.tsx`): Displays call-graph dependencies + external owners
+- **Dependencies** (`DependencyInventoryBreakdown.tsx`): Receives `depsData: ApiDependenciesResponse` and `adminsData: ApiAdminsResponse` props
   - Regular dependencies: `DependencySection` (local component for call-graph entries)
-  - External owners: extracted from admin breakdown via `isExternal` contract tag, rendered with `OwnerSection`
+  - External owners: extracted from `adminsData.admins` where `admin.isExternal === true`, rendered with `OwnerSection`
   - "Show immutable" toggle (default: **on**) — for external owners only
-  - Receives `adminScore` prop from `V2ScoringSection` to access admin breakdown data
 
 ### Key Design Decisions
 
-- External owners (`isExternal: true` in contract-tags) appear in Dependencies, not Owners
+- External owners (`isExternal: true`) appear in Dependencies, not Owners — the API provides this flag directly
 - Governance contracts (`isGovernance: true`) are treated as "key owners" alongside EOAs and Multisigs
 - "Key owners" (shown by default): EOA, EOAPermissioned, Multisig, or governance-tagged contracts. All other contract types hidden unless "Show all contracts" is checked
 - `OwnerSection` is shared to avoid duplicating admin type badges, proxy type tags, funds display, and capital breakdown logic
@@ -41,7 +126,7 @@
 
 - Capital at risk (green, `text-green-400`) shows contract funds (balances + positions)
 - Token value (yellow, `text-aux-yellow`) shows protocol token market cap, displayed separately
-- Both computed in `capitalAnalysis.ts` via `getContractFunds()` and `getContractTokenValue()`
+- Both computed server-side in `capitalAnalysis.ts` via `getContractFunds()` and `getContractTokenValue()`
 - Token market cap is pre-computed during funds fetching (stored in `funds-data.json` under `tokenInfo.tokenValue`)
 - Header totals in Owners/Dependencies use `computeDeduplicatedCapital()` to avoid double-counting the same contract across multiple admins
 - Functions with `score: 'no-impact'` are excluded from capital calculations: `functionIsNoImpact()` in `capitalAnalysis.ts` zeros out direct funds and skips the contract from admin-level totals
@@ -53,7 +138,7 @@
 **Why not call-graph-only?** Generic admin functions like Timelock's `queueTransaction`/`executeTransaction` take arbitrary calldata — Slither can't statically resolve their targets. Without permission edges, these functions show $0 reachable capital. The enhanced graph adds permission edges (e.g., Timelock → CometProxyAdmin.changeAdmin) so capital propagates transitively through the ownership chain.
 
 **How it works:**
-1. `v2Scoring.ts` builds the enhanced graph via `buildEnhancedGraph()` + `buildIndices()` (exported from `enhancedTraversal.ts`)
+1. `ProjectAnalysis` builds the enhanced graph via `buildEnhancedGraph()` + `buildIndices()` (exported from `enhancedTraversal.ts`)
 2. Passes the graph to `CapitalAnalysisCalculator` along with funds data, functions data, and a contract name map
 3. For each admin function, `traverseForward()` does BFS through the enhanced graph's forward index:
    - **Call graph edges**: Follows edges where `sourceFunction` matches the current function
@@ -64,7 +149,7 @@
 **Key files:**
 - `capitalAnalysis.ts` — `CapitalAnalysisCalculator` with `traverseForward()` BFS
 - `enhancedTraversal.ts` — exports `buildEnhancedGraph()`, `buildIndices()`, `EnhancedGraph`, `EnhancedEdge`
-- `v2Scoring.ts` — builds the enhanced graph in `AdminInventoryModule.calculate()`
+- `projectAnalysis.ts` — builds the enhanced graph and orchestrates capital analysis
 
 ## Review Builder
 
@@ -164,7 +249,7 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 
 ### How It Works
 
-1. Fetches pre-processed data from l2b API endpoints (v2-score, enhanced-traversal, funds-data, contract-tags, functions, project data)
+1. Fetches pre-processed data from l2b API endpoints (admins, dependencies, enhanced-traversal, funds-data, contract-tags, functions, project data)
 2. Preprocesses large responses into compact summaries (python3 scripts); includes contract `description` fields from config for context
 3. Analyzes protocol structure, admin hierarchy, dependencies, and fund distribution
 4. Generates professional descriptions following built-in writing guidelines (neutral tone, data-driven, no marketing copy, no hardcoded USD values)
@@ -180,7 +265,7 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 
 ## Review Compiler
 
-**Compiles all project data into a self-contained review JSON**: Shared between l2b UI and the monitor.
+**Thin assembly layer**: Calls `ProjectAnalysis` internally, then overlays human-written descriptions, funds data, and activity feeds to produce a self-contained review JSON. Shared between l2b UI and the monitor.
 
 - **Location**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts`
 - **API Endpoint**: `POST /api/projects/:project/compile-review` (in `main.ts`)
@@ -189,10 +274,11 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 - **Output**: `compiled-review.json` written to `packages/defiscan-frontend/public/data/<slug>/`
 - **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
 - **Template Variables**: `{{variableName}}` resolved at compile time via `dataKeys` map
+- **Data source**: Instantiates `ProjectAnalysis` and calls `getAdmins()` + `getDependencies()` directly (same process, no HTTP). If admin/dependency data needs to change, modify `ProjectAnalysis`, not the compiler.
 - **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
-- **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds. These are computed server-side in the compiler, not client-side.
+- **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed by ProjectAnalysis, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds.
 - **Dependency type**: Each `CompiledDependency` has an optional `dependencyType?: 'callgraph' | 'write'` field indicating how it was detected. `'callgraph'` = found via code-level call graph traversal; `'write'` = external contract that owns/controls a permissioned function (detected from `ownerDefinitions`). See [Call Graph Analysis](call-graph-analysis.md#function-analysis-functionanalysists) for details.
-- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. The compiler populates this from `functions.json` via `getMitigationsForFunction()`, which builds a lookup map keyed by `normalizedAddress|functionName`. Mitigations defined in `functions.json` (see `permissions.md`) flow through to the frontend unchanged.
+- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are pre-populated by ProjectAnalysis from `functions.json` with scope filtering via `filterMitigationsForOwner()`.
 - **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields
 
 ### Mitigations Display (defiscan-frontend)

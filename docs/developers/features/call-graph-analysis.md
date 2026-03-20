@@ -68,7 +68,7 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 
 ### Shared Traversal Helpers
 
-Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
+Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `projectAnalysis.ts`:
 
 - `traverseWithPaths(callGraphData, startContract, startFunction)` — BFS traversal with path tracking, returns reachable contracts + shortest paths
 - `findContractGraph(callGraphData, contract)` — case-insensitive contract graph lookup
@@ -93,7 +93,7 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
 - **Forward BFS** through the same graph — used by `capitalAnalysis.ts` for capital computation (see [Scoring & Review: Capital Analysis](scoring-and-review.md#capital-analysis--enhanced-graph-forward-traversal))
 - Response: `ApiEnhancedTraversalResponse` — `contracts[address][functionName] -> FunctionTraversalResult`
 
-**Exported utilities** (used by `capitalAnalysis.ts` and `v2Scoring.ts`):
+**Exported utilities** (used by `capitalAnalysis.ts` and `projectAnalysis.ts`):
 - `buildEnhancedGraph(callGraphData, functionsData, dataAccess)` — builds unified edge array from call graph + permission resolution
 - `buildIndices(edges)` — creates `EnhancedGraph` with `forwardIndex` and `backwardIndex` (both keyed by normalized contract address)
 - `EnhancedEdge` — edge with `sourceContract`, `sourceFunction?`, `targetContract`, `targetFunction`, `edgeType: 'permission' | 'callgraph'`, `isViewCall?`
@@ -108,7 +108,7 @@ Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `v2Scoring.ts`:
   2. **Write** (`dependencyType: 'write'`): External contracts that are permission-owners of permissioned functions, detected via `buildWriteDependencyLookup()`. Resolves `ownerDefinitions` from `functions.json` and filters to `isExternal` addresses. Has empty `callPath` (authority relationship, not code execution).
   3. **Manual**: Dependencies explicitly listed in `functions.json`. `isAutoDetected: false`.
   - Deduplication: call-graph deps are preferred over write-deps for the same address (richer path info). Manual deps always preserved.
-- **Pre-loaded data**: Accepts optional `FunctionAnalysisPreloadedData` to avoid redundant file I/O when callers (e.g., `v2Scoring.ts`, `reviewCompiler.ts`) have already loaded functions, call graph, funds, or contract tags data
+- **Pre-loaded data**: Accepts optional `FunctionAnalysisPreloadedData` to avoid redundant file I/O when callers (e.g., `projectAnalysis.ts`) have already loaded functions, call graph, funds, or contract tags data
 - Response: `ApiFunctionAnalysisResponse` — `contracts[address][functionName] -> FunctionAnalysis`
 
 ### Key Types (in both backend and frontend `types.ts`)

@@ -54,7 +54,8 @@ fi
 
 ```bash
 curl -s localhost:2021/api/projects/$0 > /tmp/review-project-raw.json
-curl -s localhost:2021/api/projects/$0/v2-score > /tmp/review-v2score-raw.json
+curl -s localhost:2021/api/projects/$0/admins > /tmp/review-admins.json
+curl -s localhost:2021/api/projects/$0/dependencies > /tmp/review-dependencies.json
 curl -s localhost:2021/api/projects/$0/contract-tags > /tmp/review-tags.json
 curl -s localhost:2021/api/projects/$0/funds-data > /tmp/review-funds.json
 curl -s localhost:2021/api/projects/$0/functions > /tmp/review-functions.json
@@ -63,19 +64,37 @@ curl -s localhost:2021/api/projects/$0/enhanced-traversal > /tmp/review-traversa
 
 ### 1b. Preprocess large files into compact summaries
 
-**Compact v2-score** (strips per-function capital details, keeps summaries):
+**Compact admins** (strips per-function capital details, keeps summaries):
 
 ```bash
 python3 -c "
 import json, sys
-with open('/tmp/review-v2score-raw.json') as f:
+with open('/tmp/review-admins.json') as f:
     d = json.load(f)
-inv = d['inventory']
-for a in inv.get('admins',{}).get('breakdown',[]):
-    a.pop('functionsWithCapital', None)
-with open('/tmp/review-v2score.json','w') as f:
+# Strip per-function reachableContracts and chains to reduce size
+for a in d.get('admins', []):
+    for fn in a.get('functions', []):
+        fn.pop('reachableContracts', None)
+        fn.pop('chains', None)
+with open('/tmp/review-admins-compact.json','w') as f:
     json.dump(d, f, indent=2)
-print(f'v2-score: {inv[\"admins\"][\"inventory\"]} admins, {inv[\"dependencies\"][\"inventory\"]} deps, {inv[\"functions\"][\"inventory\"]} functions, {inv[\"contracts\"][\"inventory\"]} contracts')
+print(f'Admins: {d[\"totals\"][\"adminCount\"]} admins, capital at risk: {d[\"totals\"][\"totalCapitalAtRisk\"]}')
+"
+```
+
+**Compact dependencies** (strips per-function reachableContracts):
+
+```bash
+python3 -c "
+import json, sys
+with open('/tmp/review-dependencies.json') as f:
+    d = json.load(f)
+for dep in d.get('dependencies', []):
+    for fn in dep.get('functions', []):
+        fn.pop('reachableContracts', None)
+with open('/tmp/review-dependencies-compact.json','w') as f:
+    json.dump(d, f, indent=2)
+print(f'Dependencies: {d[\"totals\"][\"dependencyCount\"]} dependencies')
 "
 ```
 
@@ -137,25 +156,29 @@ except Exception as e:
 ### 1c. Read all prepared files
 
 Read these files using the Read tool:
-1. `/tmp/review-v2score.json` — admin/dependency/function breakdowns (primary source)
-2. `/tmp/review-project.json` — contract summaries with multisig/timelock details
-3. `/tmp/review-tags.json` — external/governance/token tags
-4. `/tmp/review-funds.json` — token balances and positions
-5. `/tmp/review-functions.json` — permissioned functions with descriptions
-6. `/tmp/review-traversal.json` — terminal owners per function (enrichment, may be empty)
+1. `/tmp/review-admins-compact.json` — admin breakdown with capital (primary source for admins)
+2. `/tmp/review-dependencies-compact.json` — dependency breakdown (primary source for dependencies)
+3. `/tmp/review-project.json` — contract summaries with multisig/timelock details
+4. `/tmp/review-tags.json` — external/governance/token tags
+5. `/tmp/review-funds.json` — token balances and positions
+6. `/tmp/review-functions.json` — permissioned functions with descriptions
+7. `/tmp/review-traversal.json` — terminal owners per function (enrichment, may be empty)
 
-If any core file (v2-score, project, tags, funds, functions) is empty or contains an error, stop and report which data is missing.
+If any core file (admins, dependencies, project, tags, funds, functions) is empty or contains an error, stop and report which data is missing.
 
 ---
 
 ## Step 2: Understand the Data
 
-### From v2-score (primary source for admins & dependencies)
-- `inventory.admins.breakdown[]`: Each admin has `adminAddress`, `adminName`, `adminType` (EOA, Multisig, Timelock, Contract, Untemplatized, Unknown), `functions[]` listing what they control, and capital fields (`totalDirectCapital`, `totalReachableCapital`, `totalDirectTokenValue`, `totalReachableTokenValue`, `uniqueContractsAffected`)
-- `inventory.admins.totalCapitalAtRisk`: Total capital across all admins
-- `inventory.dependencies.breakdown[]`: Each dependency has `dependencyAddress`, `dependencyName`, `functions[]`
-- `inventory.functions.breakdown[]`: Permissioned functions with impact scores
-- `inventory.contracts.inventory`: Total contract count
+### From admins (primary source for owners)
+- `totals.adminCount`: Number of admins
+- `totals.totalCapitalAtRisk`: Total capital across all admins
+- `totals.totalTokenValueAtRisk`: Total token value across all admins
+- `admins[]`: Each admin has `address`, `name`, `type` (EOA, Multisig, Timelock, Contract, Immutable, Revoked, etc.), `isExternal`, `isGovernance`, `entity`, `functions[]` listing what they control, and capital fields (`totalDirectCapital`, `totalReachableCapital`, `totalDirectTokenValue`, `totalReachableTokenValue`, `uniqueContractsAffected`)
+
+### From dependencies (primary source for external deps)
+- `totals.dependencyCount`: Number of dependencies
+- `dependencies[]`: Each dependency has `address`, `name`, `entity`, `isAutoDetected`, `dependencyType`, `viewOnlyPath`, `calledFunctions[]`, `functions[]`, `totalFundsAtRisk`, `totalTokenValueAtRisk`
 
 ### From project (contract details)
 - `contracts[]`: Each has `name`, `address`, `type`, `proxyType`, `template`
@@ -224,26 +247,26 @@ Base this on contract names, token info, dependencies, and the overall architect
 
 ### Admins (`admins`)
 
-For each admin in v2-score `inventory.admins.breakdown[]`:
+For each admin in `admins[]` (skip those with `isExternal: true` — they belong to dependencies):
 
 **Generate a human-readable `name`:**
 - **Multisig**: Find the contract in project data, look at `keyFields.multisigThreshold` (e.g., "3 of 5 (60%)"). Format: `"{Protocol} Team {N}/{M} Multisig"` or `"Governance {N}/{M} Multisig"`
 - **EOA**: Format: `"EOA (0x{first4}...{last4})"`
 - **Timelock**: Find delay in `keyFields`. Format: `"Governance Timelock ({delay})"` where delay is human-readable (e.g., "48h", "7d")
-- **Zero address** (0x0000...0000): `"Zero Address (Renounced)"`
+- **Revoked** (type is "Revoked" or zero address): `"Zero Address (Renounced)"`
 - **Internal contract** (type is Contract/Untemplatized with no external admin): Use the contract name directly. If it's an internal protocol contract that isn't externally controlled, explain it's a protocol-level permission (contract-to-contract call restriction, not a human admin)
 
 **Generate `description`:**
 - List what permissioned functions this admin controls, grouped thematically (e.g., "Can pause deposits and withdrawals", "Can upgrade the price oracle")
 - Include capital exposure using `{{keyName}}` template variables (e.g., "Controls 19 contracts with {{wethBorrowerOpsCapital}} in direct capital exposure"). Create a dataKey mapping to `v2score.inventory.admins.breakdown["eth:0x..."].totalDirectCapital`
-- If the admin is the zero address, note the permission is effectively renounced
+- If the admin is revoked, note the permission is effectively renounced
 - If the admin is an internal contract and the traversal shows no EOA/Multisig terminals, explain this is an internal access control mechanism (not a human-controlled permission)
 
 **Address format**: Always use `eth:0x...` prefix with lowercase hex.
 
 ### Dependencies (`dependencies`)
 
-For each dependency in v2-score `inventory.dependencies.breakdown[]`, PLUS any contract tagged `isExternal: true` in contract-tags that isn't already in the v2-score dependencies:
+For each dependency in `dependencies[]`, PLUS any contract tagged `isExternal: true` in contract-tags that isn't already in the dependencies list:
 
 **Generate `name`:** Use the contract name from project data. If it has an `entity` tag (e.g., "Chainlink"), include it. If it's a known oracle, add the asset pair if detectable.
 
@@ -326,7 +349,7 @@ with open('$CONFIG_PATH', 'w') as f:
 print(f'Restored {len(cfg[\"resources\"])} resources into review-config.json')
 "
 fi
-rm -f /tmp/review-project-raw.json /tmp/review-v2score-raw.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-v2score.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json /tmp/review-config-backup-$0.json /tmp/review-preserved-resources-$0.json
+rm -f /tmp/review-project-raw.json /tmp/review-admins.json /tmp/review-admins-compact.json /tmp/review-dependencies.json /tmp/review-dependencies-compact.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json /tmp/review-config-backup-$0.json /tmp/review-preserved-resources-$0.json
 ```
 
 Report what was generated:
@@ -366,8 +389,8 @@ When generating section content, you may reference these data source IDs:
 | Data Source ID | Description | Available Columns |
 |---|---|---|
 | `project.contracts` | All discovered contracts | `name`, `address` (address), `type`, `proxyType` (badge) |
-| `v2score.admins` | Protocol admins with capital | `adminName`, `adminAddress` (address), `adminType` (badge), `functionsCount`, `totalDirectCapital` (usd) |
-| `v2score.dependencies` | External dependencies | `dependencyName`, `dependencyAddress` (address), `likelihood` (badge), `functionsCount` |
+| `admins.breakdown` | Protocol admins with capital | `name`, `address` (address), `type` (badge), `functionsCount`, `totalDirectCapital` (usd) |
+| `dependencies.breakdown` | External dependencies | `name`, `address` (address), `dependencyType` (badge), `functionsCount` |
 | `funds.contractBalances` | Contract balances | `contractName`, `address` (address), `balancesTotal` (usd), `positionsTotal` (usd) |
 | `functions.permissioned` | Permissioned functions | `contractName`, `contractAddress` (address), `functionName`, `score` (badge) |
 
@@ -375,7 +398,7 @@ Column `format` values: `text` (default), `address`, `usd`, `number`, `percent`,
 
 Filter options per source:
 - `project.contracts`: `excludeExternal`
-- `v2score.admins`: `excludeExternal`, `excludeImmutable`
+- `admins.breakdown`: `excludeExternal`, `excludeImmutable`
 - `funds.contractBalances`: `excludeExternal`, `excludeTokens`
 - `functions.permissioned`: `excludeExternal`, `onlyChecked`
 
@@ -419,13 +442,15 @@ Each entry in `dataKeys` maps a key name to a **raw API response path** — the 
 | `fundsdata.contracts["eth:0x..."].positions.totalUsdValue` | Total USD value of DeFi positions (lending, yield, etc.) |
 | `fundsdata.contracts["eth:0x..."].tokenInfo.tokenValue` | Protocol token market capitalization |
 
-**V2 scoring** (from `/api/projects/:project/v2-score`):
+**V2 scoring** (backward-compatible paths, resolved from `/api/projects/:project/admins`):
 
 | Path | Description |
 |------|-------------|
 | `v2score.inventory.admins.totalCapitalAtRisk` | Total capital at risk across all admins |
 | `v2score.inventory.admins.breakdown["eth:0x..."].totalDirectCapital` | Capital in contracts directly controlled by an admin |
 | `v2score.inventory.admins.breakdown["eth:0x..."].totalReachableCapital` | Capital in all contracts reachable via call graph from admin |
+| `v2score.inventory.admins.breakdown["eth:0x..."].totalDirectTokenValue` | Token value in contracts directly controlled by an admin |
+| `v2score.inventory.admins.breakdown["eth:0x..."].totalReachableTokenValue` | Token value in all reachable contracts from admin |
 
 ### When to Use Template Variables
 

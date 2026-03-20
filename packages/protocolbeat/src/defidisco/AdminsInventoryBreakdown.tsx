@@ -2,22 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import type { AdminModuleScore } from '../api/types'
-import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
+import type { AdminEntry, ApiAdminsResponse } from '../api/types'
+import { normalizeForLookup } from '../apps/discovery/defidisco/addressUtils'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
-import {
-  addressesEqual,
-  normalizeForLookup,
-} from '../apps/discovery/defidisco/addressUtils'
 import {
   computeDeduplicatedCapital,
   formatUsdValue,
-  hasCapitalData,
   OwnerSection,
 } from './scoringShared'
 
 interface AdminsInventoryBreakdownProps {
-  score: AdminModuleScore
+  adminsData: ApiAdminsResponse
 }
 
 /**
@@ -25,10 +20,9 @@ interface AdminsInventoryBreakdownProps {
  * Displays breakdown of owners by address
  */
 export function AdminsInventoryBreakdown({
-  score,
+  adminsData,
 }: AdminsInventoryBreakdownProps) {
   const { project } = useParams()
-  const { data: contractTags } = useContractTags(project!)
 
   // Fetch project data for proxy type information
   const { data: projectData } = useQuery({
@@ -46,36 +40,15 @@ export function AdminsInventoryBreakdown({
   // Toggle for showing all contract owners (not just governance/EOA/multisig)
   const [showAllContracts, setShowAllContracts] = useState(false)
 
-  // Filter helpers
-  const isExternalOwner = (admin: any) => {
-    if (!contractTags?.tags) return false
-    return contractTags.tags.some(
-      (tag) =>
-        addressesEqual(tag.contractAddress, admin.adminAddress) &&
-        tag.isExternal,
-    )
-  }
-
-  const isGovernanceOwner = (admin: any) => {
-    if (!contractTags?.tags) return false
-    return contractTags.tags.some(
-      (tag) =>
-        addressesEqual(tag.contractAddress, admin.adminAddress) &&
-        tag.isGovernance,
-    )
-  }
-
-  const isKeyOwner = (admin: any) =>
-    admin.adminType === 'EOA' ||
-    admin.adminType === 'EOAPermissioned' ||
-    admin.adminType === 'Multisig' ||
-    isGovernanceOwner(admin)
+  const isKeyOwner = (admin: AdminEntry) =>
+    admin.type === 'EOA' ||
+    admin.type === 'EOAPermissioned' ||
+    admin.type === 'Multisig' ||
+    admin.isGovernance
 
   const displayedAdmins = useMemo(() => {
-    if (!score.breakdown) return []
-
     // Always exclude external owners (they appear in Dependencies)
-    const nonExternal = score.breakdown.filter((a) => !isExternalOwner(a))
+    const nonExternal = adminsData.admins.filter((a) => !a.isExternal)
 
     // Filter by key owners (governance/EOA/multisig) unless showing all
     if (!showAllContracts) {
@@ -83,7 +56,7 @@ export function AdminsInventoryBreakdown({
     }
 
     return nonExternal
-  }, [score.breakdown, showAllContracts, contractTags])
+  }, [adminsData.admins, showAllContracts])
 
   // Recalculate displayed values from visible admins only
   const displayedFunctionCount = displayedAdmins.reduce(
@@ -94,18 +67,15 @@ export function AdminsInventoryBreakdown({
     totalFunds: displayedCapitalAtRisk,
     totalTokenValue: displayedTokenValueAtRisk,
   } = useMemo(() => {
-    const adminsWithCapital = displayedAdmins.filter(hasCapitalData)
-    return computeDeduplicatedCapital(adminsWithCapital)
+    return computeDeduplicatedCapital(displayedAdmins)
   }, [displayedAdmins])
 
-  const hasAnyCapital =
-    score.totalCapitalAtRisk !== undefined && score.totalCapitalAtRisk > 0
+  const hasAnyCapital = adminsData.totals.totalCapitalAtRisk > 0
 
   const hasHiddenContractOwners = useMemo(() => {
-    if (!score.breakdown) return false
-    const nonExternal = score.breakdown.filter((a) => !isExternalOwner(a))
+    const nonExternal = adminsData.admins.filter((a) => !a.isExternal)
     return nonExternal.some((a) => !isKeyOwner(a))
-  }, [score.breakdown, contractTags])
+  }, [adminsData.admins])
 
   return (
     <div className="text-coffee-300">
@@ -136,13 +106,13 @@ export function AdminsInventoryBreakdown({
               Show all contracts
             </label>
           )}
-          <span>{score.inventory}</span>
+          <span>{adminsData.totals.adminCount}</span>
         </span>
       </div>
 
       {/* Owner breakdown - always shown */}
       <div className="mt-3 ml-2">
-        {!score.breakdown || score.breakdown.length === 0 ? (
+        {adminsData.admins.length === 0 ? (
           <p className="ml-4 text-coffee-400 text-xs">
             No permission owners found
           </p>
@@ -156,10 +126,10 @@ export function AdminsInventoryBreakdown({
             </p>
             {displayedAdmins.map((admin) => (
               <OwnerSection
-                key={admin.adminAddress}
+                key={admin.address}
                 admin={admin}
-                proxyType={proxyTypeMap.get(normalizeForLookup(admin.adminAddress))}
-                isGovernance={isGovernanceOwner(admin)}
+                proxyType={proxyTypeMap.get(normalizeForLookup(admin.address))}
+                isGovernance={admin.isGovernance}
               />
             ))}
           </>

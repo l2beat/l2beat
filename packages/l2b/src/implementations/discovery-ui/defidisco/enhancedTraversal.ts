@@ -185,7 +185,7 @@ function isTerminalType(type: ApiAddressType): boolean {
 // Traversal Context & Result
 // ============================================================================
 
-interface TraversalContext {
+export interface TraversalContext {
   functionsData: ApiFunctionsResponse
   graph: EnhancedGraph
   contractNameMap: Map<string, string>
@@ -196,7 +196,7 @@ interface TraversalContext {
   memo: Map<string, TraversalResult>
 }
 
-interface TraversalResult {
+export interface TraversalResult {
   terminals: TraversalTerminal[]
   errors: string[]
   depthLimitReached: boolean
@@ -212,7 +212,7 @@ interface TraversalResult {
  *
  * @param functionName - specific function to trace, or null = all functions on contract
  */
-function traverse(
+export function traverse(
   ctx: TraversalContext,
   contractAddress: string,
   functionName: string | null,
@@ -526,7 +526,7 @@ function lookupName(nameMap: Map<string, string>, address: string): string {
 }
 
 /** Deduplicate terminals by address + chain signature */
-function deduplicateTerminals(
+export function deduplicateTerminals(
   terminals: TraversalTerminal[],
 ): TraversalTerminal[] {
   const seen = new Set<string>()

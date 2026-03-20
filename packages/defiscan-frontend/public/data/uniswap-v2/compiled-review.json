@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-20T07:52:25.319Z",
+  "compiledAt": "2026-03-20T09:34:07.680Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -8,31 +8,54 @@
     "chain": "Ethereum",
     "projectType": "dex",
     "tokenName": "UNI",
-    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $769.41M."
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $748.60M."
   },
   "totals": {
     "contractCount": 9,
     "permissionedFunctionCount": 0,
     "scoredFunctionCount": 0,
-    "adminCount": 0,
+    "adminCount": 1,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 769407571.8413925,
+    "totalCapitalAtRisk": 748597271.7224443,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0
   },
-  "admins": [],
+  "admins": [
+    {
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "name": "GovernorBravo Governance",
+      "description": "On-chain governance contract (GovernorBravoDelegator) that proposes and votes on changes to the Timelock. UNI token holders vote on proposals that, if passed, are queued in the 48-hour Timelock. In practice, the only meaningful action available is controlling the protocol fee switch — all core contracts are immutable.",
+      "adminType": "Immutable",
+      "isGovernance": false,
+      "functions": [
+        {
+          "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "contractName": "Timelock",
+          "functionName": "executeTransaction",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
+    }
+  ],
   "dependencies": [],
   "funds": [
     {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "name": "UniswapV2Factory (All Pairs)",
-      "description": "Factory contract that has deployed 491769 liquidity pair contracts holding $769.41M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "description": "Factory contract that has deployed 491241 liquidity pair contracts holding $748.60M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 769407571.8413925,
-        "contractCount": 491769,
+        "totalUsdValue": 748597271.7224443,
+        "contractCount": 491241,
         "handlerName": "uniswap-v2-factory",
         "label": "All Uniswap-v2 Pairs"
       }

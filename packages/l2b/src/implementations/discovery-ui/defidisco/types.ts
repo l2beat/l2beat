@@ -40,6 +40,9 @@ export interface Mitigation {
   relativeValue?: { maxChangePercent?: MitigationValue }
   // Which contract field this mitigation constrains (triggers auto HIGH severity)
   mitigatedField?: { contractAddress: string; fieldName: string }
+  // Scopes this mitigation to a specific admin or dependency.
+  // When absent, mitigation is global (applies to all callers).
+  scopedTo?: { address: string; type: 'admin' | 'dependency' }
 }
 
 // Function detail for scoring breakdown

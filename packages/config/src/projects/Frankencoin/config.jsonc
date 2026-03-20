@@ -51,7 +51,14 @@
       "ignoreInWatchMode": ["minted"]
     },
     "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
-      "ignoreInWatchMode": ["minted"]
+      "ignoreInWatchMode": [
+        "minted"
+      ],
+      "fields": {
+        "limit": {
+          "severity": "HIGH"
+        }
+      }
     },
     "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": {
       "ignoreInWatchMode": ["totalSupply"]

@@ -50,6 +50,8 @@ import {
 } from './defidisco/callGraph'
 import { filterDefiProjects } from './defidisco/defiProjectFilter'
 import { detectPermissionsWithAI, combineSourceFiles } from './defidisco/aiPermissionDetection'
+import { compareScoring } from './defidisco/compareScoring'
+import { ProjectAnalysis } from './defidisco/projectAnalysis'
 import { calculateV2Score } from './defidisco/v2Scoring'
 import { resolveEnhancedTraversal } from './defidisco/enhancedTraversal'
 import { computeFunctionAnalysis } from './defidisco/functionAnalysis'
@@ -693,6 +695,62 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error calculating V2 score:', error)
       res.status(500).json({ error: 'Failed to calculate V2 score' })
+    }
+  })
+
+  // Admins endpoint (new unified admin analysis)
+  app.get('/api/projects/:project/admins', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+    const contractFilter = req.query.contract as string | undefined
+
+    try {
+      const analysis = new ProjectAnalysis(paths, configReader, templateService, project)
+      res.json(analysis.getAdmins(contractFilter))
+    } catch (error) {
+      console.error('Error computing admins:', error)
+      res.status(500).json({ error: 'Failed to compute admins' })
+    }
+  })
+
+  // Dependencies endpoint (new unified dependency analysis)
+  app.get('/api/projects/:project/dependencies', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+    const contractFilter = req.query.contract as string | undefined
+
+    try {
+      const analysis = new ProjectAnalysis(paths, configReader, templateService, project)
+      res.json(analysis.getDependencies(contractFilter))
+    } catch (error) {
+      console.error('Error computing dependencies:', error)
+      res.status(500).json({ error: 'Failed to compute dependencies' })
+    }
+  })
+
+  // Compare scoring endpoint (A/B validation: v2Score vs ProjectAnalysis)
+  app.get('/api/projects/:project/compare-scoring', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const result = compareScoring(paths, configReader, templateService, project)
+      res.json(result)
+    } catch (error) {
+      console.error('Error comparing scoring:', error)
+      res.status(500).json({ error: 'Failed to compare scoring' })
     }
   })
 

@@ -95,10 +95,11 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Shared traversal helpers (`traverseWithPaths`, `findContractGraph`, `extractChainAddresses`)
 
 ### Scoring & Review — `docs/developers/features/scoring-and-review.md`
-- V2 Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
+- ProjectAnalysis API (`/admins`, `/dependencies` endpoints — single source of truth for admin/dependency computation)
+- Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
 - Review Builder (`review-config.json`, entity descriptions, resources, templates)
 - Review Generation Agent (`/generate-review` Claude Code skill)
-- Review Compiler (`compiled-review.json`, template variable resolution)
+- Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
 
 ### Infrastructure — `docs/developers/features/infrastructure.md`
@@ -152,6 +153,8 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - ❌ Using `??` instead of `!== undefined` for optional fields that can be explicitly cleared
 - ❌ Forgetting to rebuild both `protocolbeat` AND `l2b` after backend changes
 - ❌ Duplicating scoring utilities — use `scoringShared.tsx` (`OwnerSection`, capital display)
+- ❌ Computing admin/dependency data in the compiler or frontend — change `ProjectAnalysis` instead
+- ❌ Joining contract-tags client-side for isExternal/isGovernance — these are in the `/admins` response
 
 **Proxy/Implementation Pattern:**
 
@@ -165,8 +168,10 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 **API Access**: For new components, follow existing patterns:
 
+- **Admins Data**: Use `useQuery` with `getAdmins(project)` or `getAdmins(project, contractAddress)` for per-contract filtering
+- **Dependencies Data**: Use `useQuery` with `getDependencies(project)` or `getDependencies(project, contractAddress)` for per-contract filtering
 - **Project Data**: Use `useQuery` with `getProject(project)` from `api.ts`
-- **Contract Tags**: Use `useContractTags(project)` hook for external address marking
+- **Contract Tags**: Use `useContractTags(project)` hook — note: `isExternal`/`isGovernance`/`entity` are already included in admin/dependency API responses, so new components rarely need this hook directly
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
@@ -206,7 +211,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 ### Key Data Structures
 
-**Permission Overrides** (`permission-overrides.json`): Contract-grouped format with `contracts[address].functions[]`. Each function has `functionName`, `userClassification`, `checked`, `score` (`'unscored' | 'critical' | 'no-impact'`), `description`, `ownerDefinitions`, `delay`, `aiClassification`, `timestamp`. `'no-impact'` means the researcher confirmed the function has no fund impact — its capital is zeroed in analysis and scoring. Full schema in `docs/developers/features/permissions.md`.
+**Permission Overrides** (`permission-overrides.json`): Contract-grouped format with `contracts[address].functions[]`. Each function has `functionName`, `userClassification`, `checked`, `score` (`'unscored' | 'critical' | 'no-impact'`), `description`, `ownerDefinitions`, `delay`, `aiClassification`, `timestamp`. `'no-impact'` means the researcher confirmed the function has no fund impact — its capital is zeroed in analysis and scoring. Each mitigation in `mitigations[]` can have `scopedTo?: { address: string, type: 'admin' | 'dependency' }` to limit it to a specific caller — mitigations without `scopedTo` are global. `filterMitigationsForOwner()` in `addressUtils.ts` handles scope filtering. Full schema in `docs/developers/features/permissions.md`.
 
 **Owner Path Format**: `<contractRef>.<valuePath>` where contractRef is `$self`, `@fieldName`, or `eth:0xAddress`. Examples:
 - `{ "path": "$self.owner" }` - owner field in current contract
@@ -242,10 +247,10 @@ packages/
 │   ├── ExternalButton.tsx
 │   ├── GovernanceButton.tsx            # Toggle governance tag in node controls
 │   ├── GovernanceIndicator.tsx         # Inline governance label + toggle in Values panel
-│   ├── V2ScoringSection.tsx          # V2 scoring entry point
+│   ├── V2ScoringSection.tsx          # Scoring entry point (fetches /admins + /dependencies)
 │   ├── scoringShared.tsx             # Shared scoring utilities & components (DO NOT DUPLICATE)
-│   ├── AdminsInventoryBreakdown.tsx  # Owners section (imports from scoringShared)
-│   ├── DependencyInventoryBreakdown.tsx  # Dependencies section (imports from scoringShared)
+│   ├── AdminsInventoryBreakdown.tsx  # Owners section (receives ApiAdminsResponse, imports from scoringShared)
+│   ├── DependencyInventoryBreakdown.tsx  # Dependencies section (receives ApiDependenciesResponse + ApiAdminsResponse)
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
@@ -257,12 +262,13 @@ packages/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
 │   ├── contractTags.ts
+│   ├── projectAnalysis.ts            # Central computation class (getAdmins, getDependencies, getSummary)
 │   ├── reviewConfig.ts              # Review config CRUD
-│   ├── reviewCompiler.ts            # Compiled review builder (shared with monitor)
+│   ├── reviewCompiler.ts            # Compiled review builder (thin layer over ProjectAnalysis)
 │   ├── generatePermissionsReport.ts
 │   ├── callGraph.ts                  # Slither-based external call detection
 │   ├── callGraphHeuristics.ts        # Heuristic engine for variable-to-address resolution
-│   ├── enhancedTraversal.ts          # Enhanced graph (call graph + permission edges), backward BFS governance chains, exports graph builders for capital analysis
+│   ├── enhancedTraversal.ts          # Enhanced graph (call graph + permission edges), backward BFS governance chains
 │   ├── capitalAnalysis.ts            # Capital computation via enhanced graph forward BFS
 │   ├── functionAnalysis.ts           # Forward BFS impact & dependencies
 │   ├── configSeverity.ts            # Auto-severity for mitigated fields in config.jsonc

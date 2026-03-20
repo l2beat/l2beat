@@ -3,35 +3,31 @@ import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type {
-  AdminModuleScore,
-  DependencyDetail,
-  DependencyModuleScore,
+  AdminEntry,
+  ApiAdminsResponse,
+  ApiDependenciesResponse,
+  DependencyEntry,
 } from '../api/types'
-import {
-  addressesEqual,
-  normalizeForLookup,
-} from '../apps/discovery/defidisco/addressUtils'
-import { useContractTags } from '../apps/discovery/defidisco/hooks/useContractTags'
+import { normalizeForLookup } from '../apps/discovery/defidisco/addressUtils'
 import { buildProxyTypeMap } from '../apps/discovery/defidisco/proxyTypeUtils'
 import { usePanelStore } from '../apps/discovery/store/panel-store'
 import {
   computeDeduplicatedCapital,
   formatUsdValue,
   getImpactColor,
-  hasCapitalData,
   isZeroAddress,
   OwnerSection,
 } from './scoringShared'
 
 interface DependencyInventoryBreakdownProps {
-  score: DependencyModuleScore
-  adminScore?: AdminModuleScore
+  depsData: ApiDependenciesResponse
+  adminsData: ApiAdminsResponse
 }
 
 /**
  * Dependency section component - displays functions for a single external contract
  */
-function DependencySection({ dependency }: { dependency: any }) {
+function DependencySection({ dependency }: { dependency: DependencyEntry }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const selectGlobal = usePanelStore((state) => state.select)
 
@@ -47,11 +43,11 @@ function DependencySection({ dependency }: { dependency: any }) {
         <button
           onClick={(e) => {
             e.stopPropagation()
-            selectGlobal(dependency.dependencyAddress)
+            selectGlobal(dependency.address)
           }}
           className="cursor-pointer font-medium text-coffee-200 text-sm transition-colors hover:text-blue-400"
         >
-          {dependency.dependencyName}
+          {dependency.name}
         </button>
         <span className="ml-2 text-coffee-400 text-xs">
           ({dependency.functions.length} function
@@ -98,7 +94,7 @@ function EntityGroup({
   deps,
 }: {
   entity: string
-  deps: DependencyDetail[]
+  deps: DependencyEntry[]
 }) {
   const [isExpanded, setIsExpanded] = useState(true)
 
@@ -124,7 +120,7 @@ function EntityGroup({
       </button>
       {isExpanded &&
         deps.map((dep) => (
-          <DependencySection key={dep.dependencyAddress} dependency={dep} />
+          <DependencySection key={dep.address} dependency={dep} />
         ))}
     </div>
   )
@@ -136,11 +132,10 @@ function EntityGroup({
  * including external owners from the admin breakdown.
  */
 export function DependencyInventoryBreakdown({
-  score,
-  adminScore,
+  depsData,
+  adminsData,
 }: DependencyInventoryBreakdownProps) {
   const { project } = useParams()
-  const { data: contractTags } = useContractTags(project!)
 
   // Fetch project data for proxy type information (needed for external owners)
   const { data: projectData } = useQuery({
@@ -158,13 +153,13 @@ export function DependencyInventoryBreakdown({
   const [showImmutable, setShowImmutable] = useState(true)
 
   // Regular dependencies (from call graph / function dependencies)
-  const regularDeps = score.breakdown || []
+  const regularDeps = depsData.dependencies
 
   // Addresses already covered by write-dependencies in the regular dep breakdown
   const depAddresses = useMemo(() => {
     const set = new Set<string>()
     for (const dep of regularDeps) {
-      set.add(normalizeForLookup(dep.dependencyAddress))
+      set.add(normalizeForLookup(dep.address))
     }
     return set
   }, [regularDeps])
@@ -172,24 +167,18 @@ export function DependencyInventoryBreakdown({
   // Extract external owners from admin breakdown, excluding those already
   // covered by write-dependencies in the regular dependency pipeline
   const allExternalOwners = useMemo(() => {
-    if (!adminScore?.breakdown || !contractTags?.tags) return []
-
-    return adminScore.breakdown.filter((admin) => {
+    return adminsData.admins.filter((admin) => {
+      if (!admin.isExternal) return false
       // Skip if already shown as a write-dependency
-      if (depAddresses.has(normalizeForLookup(admin.adminAddress))) return false
-
-      return contractTags.tags.some(
-        (tag) =>
-          addressesEqual(tag.contractAddress, admin.adminAddress) &&
-          tag.isExternal,
-      )
+      if (depAddresses.has(normalizeForLookup(admin.address))) return false
+      return true
     })
-  }, [adminScore, contractTags, depAddresses])
+  }, [adminsData, depAddresses])
 
   // Filter immutable/revoked external owners based on toggle
-  const isImmutableOrRevoked = (admin: any) =>
-    proxyTypeMap.get(normalizeForLookup(admin.adminAddress)) === 'immutable' ||
-    isZeroAddress(admin.adminAddress)
+  const isImmutableOrRevoked = (admin: AdminEntry) =>
+    proxyTypeMap.get(normalizeForLookup(admin.address)) === 'immutable' ||
+    isZeroAddress(admin.address)
 
   const displayedExternalOwners = useMemo(() => {
     if (showImmutable) {
@@ -207,8 +196,8 @@ export function DependencyInventoryBreakdown({
 
   // Group regular deps by entity
   const { entityGroups, ungroupedDeps, sortedEntities } = useMemo(() => {
-    const groups = new Map<string, DependencyDetail[]>()
-    const noEntity: DependencyDetail[] = []
+    const groups = new Map<string, DependencyEntry[]>()
+    const noEntity: DependencyEntry[] = []
 
     for (const dep of regularDeps) {
       if (dep.entity) {
@@ -244,8 +233,7 @@ export function DependencyInventoryBreakdown({
     totalFunds: displayedCapitalAtRisk,
     totalTokenValue: displayedTokenValueAtRisk,
   } = useMemo(() => {
-    const adminsWithCapital = displayedExternalOwners.filter(hasCapitalData)
-    return computeDeduplicatedCapital(adminsWithCapital)
+    return computeDeduplicatedCapital(displayedExternalOwners)
   }, [displayedExternalOwners])
 
   const totalFunctionCount = depFunctionCount + extOwnerFunctionCount
@@ -281,7 +269,7 @@ export function DependencyInventoryBreakdown({
               Show immutable
             </label>
           )}
-          <span>{score.inventory}</span>
+          <span>{depsData.totals.dependencyCount}</span>
         </span>
       </div>
 
@@ -309,15 +297,15 @@ export function DependencyInventoryBreakdown({
               />
             ))}
             {ungroupedDeps.map((dep) => (
-              <DependencySection key={dep.dependencyAddress} dependency={dep} />
+              <DependencySection key={dep.address} dependency={dep} />
             ))}
 
             {/* External owners (rendered with OwnerSection for full tags/funds) */}
             {displayedExternalOwners.map((admin) => (
               <OwnerSection
-                key={admin.adminAddress}
+                key={admin.address}
                 admin={admin}
-                proxyType={proxyTypeMap.get(normalizeForLookup(admin.adminAddress))}
+                proxyType={proxyTypeMap.get(normalizeForLookup(admin.address))}
               />
             ))}
           </>
