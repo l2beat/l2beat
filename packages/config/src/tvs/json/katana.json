@@ -561,7 +561,7 @@
         ]
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -615,7 +615,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -669,7 +669,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -723,7 +723,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -777,7 +777,7 @@
         ]
       },
       "category": "other",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
