@@ -38,6 +38,12 @@ const governanceConfiguration = discovery.getContractValue<{
   minimumVotes: string
 }>('Governance', 'getConfiguration')
 
+// const exitWindowObject = RISK_VIEW.EXIT_WINDOW(governanceConfiguration.executionDelay,20 * UnixTime.DAY,) // TODO: formalize the inclusion delay and use onchain gov delay when launched
+const exitWindowObject = RISK_VIEW.EXIT_WINDOW(
+  40 * UnixTime.DAY,
+  20 * UnixTime.DAY,
+)
+
 const activeSequencerCount = discovery.getContractValue<number>(
   'Rollup',
   'getActiveAttesterCount',
@@ -307,15 +313,9 @@ export const aztecnetwork: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(
-        governanceConfiguration.executionDelay,
-        20 * UnixTime.DAY,
-      ), // from crsim, to be formalized
+      ...exitWindowObject,
       description:
-        RISK_VIEW.EXIT_WINDOW(
-          governanceConfiguration.executionDelay,
-          20 * UnixTime.DAY,
-        ).description +
+        exitWindowObject.description +
         `Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an 'upgrade' for the exit window.`,
     },
     sequencerFailure: {
