@@ -15,7 +15,7 @@ interface Props {
 
 export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
-  const uptimePercentage = calculateUptimePercentage(anomalies)
+  const uptimePercentage = calculateUptimePercentage(anomalies, indicators.length)
   const hasOngoing = anomalies.some((a) => a.end === undefined)
 
   const content = (
@@ -82,15 +82,18 @@ export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   }
 }
 
-function calculateUptimePercentage(anomalies: LivenessAnomaly[]) {
+function calculateUptimePercentage(
+  anomalies: LivenessAnomaly[],
+  days: number,
+) {
   const now = UnixTime.now()
-  const thirtyDaysAgo = now - 30 * UnixTime.DAY
-  const totalHours = 30 * 24
+  const windowStart = now - days * UnixTime.DAY
+  const totalHours = days * 24
 
-  // clamp intervals to the 30-day window
+  // clamp intervals to the window
   const intervals = anomalies
     .map((a) => ({
-      start: Math.max(a.start, thirtyDaysAgo),
+      start: Math.max(a.start, windowStart),
       end: a.end ? Math.min(a.end, now) : now,
     }))
     .filter((i) => i.end > i.start)
