@@ -114,7 +114,9 @@ export function VerifierRowDetails({
         )}
       </div>
       {(verifierHash.knownDeployments.length > 0 ||
-        verifierHash.verificationSteps) && <HorizontalSeparator className="my-4" />}
+        verifierHash.verificationSteps) && (
+        <HorizontalSeparator className="my-4" />
+      )}
       {verifierHash.knownDeployments.length > 0 && (
         <div className="space-y-3 px-3 md:px-4">
           <div className="font-bold text-label-value-16">Known deployments</div>
