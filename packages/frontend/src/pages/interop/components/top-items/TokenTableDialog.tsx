@@ -28,7 +28,7 @@ interface TokenTableModalProps {
   showNetMintedValueColumn?: boolean
 }
 
-export function TokenTableModal({
+export function TokenTableDialog({
   data,
   isLoading,
   isOpen,

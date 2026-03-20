@@ -6,7 +6,7 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { api } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import { TokenTableModal } from '../../components/top-items/TokenTableModal'
+import { TokenTableDialog } from '../../components/top-items/TokenTableDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
@@ -103,7 +103,7 @@ function TokenCountContent({
   )
 
   return (
-    <TokenTableModal
+    <TokenTableDialog
       data={data}
       isLoading={isLoading}
       isOpen={isOpen}

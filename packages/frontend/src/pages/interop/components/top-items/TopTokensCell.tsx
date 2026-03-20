@@ -4,7 +4,7 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { TokenTableModal } from './TokenTableModal'
+import { TokenTableDialog } from './TokenTableDialog'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -96,7 +96,7 @@ function TopTokensContent({
   )
 
   return (
-    <TokenTableModal
+    <TokenTableDialog
       data={data}
       isLoading={isLoading}
       isOpen={isOpen}
