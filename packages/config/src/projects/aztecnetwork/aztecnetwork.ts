@@ -76,10 +76,6 @@ const governanceSignalRoundSize = discovery.getContractValue<number>(
   'GovernanceProposer',
   'ROUND_SIZE',
 )
-const gseActivationThreshold = discovery.getContractValueBigInt(
-  'GSE',
-  'ACTIVATION_THRESHOLD',
-)
 const bonusInstanceAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'GSE',
@@ -151,7 +147,6 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
-const gseActivationThresholdString = formatAztecAmount(gseActivationThreshold)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -400,7 +395,7 @@ export const aztecnetwork: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
-      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      description: `Joining the sequecer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
@@ -492,10 +487,7 @@ export const aztecnetwork: ScalingProject = {
 Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
 ## 1. The Signaling Phase (\`GovernanceProposer\`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. 
-*   A voting round consists of ${governanceSignalRoundSizeString} slots
-*   To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots.
-*   Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
+Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of ${governanceSignalRoundSizeString} slots. To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots. Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
 
 ## 2. The Voting Phase (\`Governance\`)
 Once submitted, the proposal enters a delay and voting flow:
@@ -512,12 +504,8 @@ If the L2 sequencer set is offline, censoring, or acting maliciously, the \`Gove
 *   These funds are locked for an extended ${governanceLockDelayString}.
 *   Once proposed, the payload enters the exact same ${governanceTotalDelayString} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
 
-### Sequencer Governance & The GSE (Governance Staking Escrow)
-The system relies on the \`GSE.sol\` contract to bridge L2 network security with L1 governance.
-*   To become an L2 sequencer, an entity deposits **${gseActivationThresholdString}** into the GSE.
-*   The GSE takes all sequencer deposits and stakes them directly into the L1 \`Governance\` contract, aggregating the voting power.
-*   When a proposal is Active on L1, sequencers call \`vote()\` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
-*   If a proposal upgrades the system to a new canonical rollup, sequencers do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active sequencers to the new rollup version if they staked to the special address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup.
+### Rollup Immutability
+The smart contract code of \`Rollup\`, its verifier and its canonical messaging contracts cannot be changed. However, \`Governance\` owns critical permissions for configuration parameters that can freeze the L2 indefinitely. 'Upgrading' a Rollup contract involves a \`Governance\` action that designates a new \`Rollup\` contract address as canonical. The \`GSE\` (Governance Staking Escrow) automatically migrates the voting power and stake of all active sequencers to the new rollup version if they staked to the default magic address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup. Importantly, \`Governance\` retains ownership of the old rollup, with the permissions to freeze it in the same or any future governance proposal. In summary and practice, the current Aztec rollup system is not immutable and prone to governance changes with the configured ${governanceExecutionDelayString} delay.
 
 ### Slashing and the SlashVeto Council
 Aztec features onchain slashing for equivocation or missing attestations, managed by \`Slasher\` and \`TallySlashingProposer\`. 
