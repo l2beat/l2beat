@@ -1,19 +1,9 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type {
-  AggregatedInteropTransferWithTokens,
-  CommonInteropData,
-  TokenData,
-  TokenFlowData,
-} from '../types'
-import { accumulateTokens, INITIAL_COMMON_INTEROP_DATA } from './accumulate'
+import type { AggregatedInteropTransferWithTokens, TokenData } from '../types'
+import { buildTokensDataMap } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import { getInteropChains } from './getInteropChains'
-
-type TokenInteropData = CommonInteropData & {
-  flows: Map<string, TokenFlowData>
-}
 
 const logger = getLogger().for('getSummaryTokensData')
 
@@ -21,13 +11,6 @@ export function getSummaryTokensData(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
 ): TokenData[] {
-  const chainIconMap = new Map(
-    getInteropChains().map((chain) => [
-      chain.id,
-      manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-    ]),
-  )
-
   const counts = {
     transferCount: records.reduce(
       (acc, transfer) => acc + transfer.transferCount,
@@ -39,38 +22,7 @@ export function getSummaryTokensData(
     ),
   }
 
-  const tokenDataMap: Map<string, TokenInteropData> = new Map()
-  for (const record of records) {
-    for (const token of record.tokens) {
-      const current = tokenDataMap.get(token.abstractTokenId) ?? {
-        ...INITIAL_COMMON_INTEROP_DATA,
-        flows: new Map<string, TokenFlowData>(),
-      }
-
-      tokenDataMap.set(token.abstractTokenId, {
-        ...accumulateTokens(current, token),
-        flows: current.flows,
-      })
-
-      const flowKey = `${record.srcChain}::${record.dstChain}`
-      const currentFlow = current.flows.get(flowKey)
-      if (currentFlow) {
-        currentFlow.volume += token.volume
-      } else {
-        current.flows.set(flowKey, {
-          srcChain: {
-            id: record.srcChain,
-            iconUrl: chainIconMap.get(record.srcChain),
-          },
-          dstChain: {
-            id: record.dstChain,
-            iconUrl: chainIconMap.get(record.dstChain),
-          },
-          volume: token.volume,
-        })
-      }
-    }
-  }
+  const tokenDataMap = buildTokensDataMap(records)
 
   const result: TokenData[] = Array.from(tokenDataMap.entries())
     .map(([tokenId, token]) => {
