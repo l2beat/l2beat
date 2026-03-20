@@ -40,7 +40,7 @@ const governanceConfiguration = discovery.getContractValue<{
 
 // const exitWindowObject = RISK_VIEW.EXIT_WINDOW(governanceConfiguration.executionDelay,20 * UnixTime.DAY,) // TODO: formalize the inclusion delay and use onchain gov delay when launched
 const exitWindowObject = RISK_VIEW.EXIT_WINDOW(
-  40 * UnixTime.DAY,
+  30 * UnixTime.DAY,
   20 * UnixTime.DAY,
 )
 
