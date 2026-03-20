@@ -15,7 +15,10 @@ interface Props {
 
 export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
-  const uptimePercentage = calculateUptimePercentage(anomalies, indicators.length)
+  const uptimePercentage = calculateUptimePercentage(
+    anomalies,
+    indicators.length,
+  )
   const hasOngoing = anomalies.some((a) => a.end === undefined)
 
   const content = (
@@ -52,9 +55,7 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
       </TooltipTrigger>
       <TooltipContent>
         {hasOngoing ? (
-          <div>
-            There is an ongoing anomaly. Click to learn more.
-          </div>
+          <div>There is an ongoing anomaly. Click to learn more.</div>
         ) : anomalies.length === 0 ? (
           <div>No anomalies detected in the last 30 days</div>
         ) : (
@@ -82,12 +83,9 @@ export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   }
 }
 
-function calculateUptimePercentage(
-  anomalies: LivenessAnomaly[],
-  days: number,
-) {
+function calculateUptimePercentage(anomalies: LivenessAnomaly[], days: number) {
   const now = UnixTime.now()
-  const windowStart = now - days * UnixTime.DAY
+  const windowStart = now - (days - 1) * UnixTime.DAY
   const totalHours = days * 24
 
   // clamp intervals to the window
