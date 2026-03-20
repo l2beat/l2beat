@@ -66,13 +66,7 @@ export function TokenCount({
                   })),
                   remainingCount: topItems.remainingCount,
                 }}
-                className="mt-4 flex items-center gap-2"
-                iconClassName="size-7 min-w-7 rounded-full border border-divider bg-white shadow-sm"
-                renderRemainingCount={(remainingCount) => (
-                  <span className="font-bold text-label-value-15">
-                    +{remainingCount} more
-                  </span>
-                )}
+                className="mt-4"
                 onMouseEnter={() =>
                   utils.interop.summaryTokens.prefetch(selectionForApi)
                 }

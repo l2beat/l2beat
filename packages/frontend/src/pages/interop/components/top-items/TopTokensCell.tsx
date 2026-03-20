@@ -57,6 +57,7 @@ export function TopTokensCell({
             type: resolvedType,
           })
         }
+        type="cell"
         setIsOpen={setIsOpen}
       />
       <TopTokensContent

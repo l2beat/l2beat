@@ -1,3 +1,4 @@
+import { cva, type VariantProps } from 'class-variance-authority'
 import {
   Tooltip,
   TooltipContent,
@@ -5,31 +6,66 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { TopItem } from './columns'
 
 type InteropTopItemsCellProps = {
   topItems: TopItems<TopItem>
   setIsOpen: (isOpen: boolean) => void
-  iconClassName?: string
-  renderRemainingCount?: (remainingCount: number) => React.ReactNode
 }
+
+const buttonVariants = cva('group/dialog-trigger', {
+  variants: {
+    type: {
+      default: 'flex items-center gap-2',
+      cell: 'grid grid-cols-[46px_30px] items-center gap-1',
+    },
+  },
+  defaultVariants: {
+    type: 'default',
+  },
+})
+
+const remainingCountVariants = cva(
+  'font-bold group-hover/dialog-trigger:underline',
+  {
+    variants: {
+      type: {
+        default: 'text-label-value-13',
+        cell: 'text-label-value-15',
+      },
+    },
+    defaultVariants: {
+      type: 'default',
+    },
+  },
+)
+
+const iconVariants = cva('rounded-full bg-white', {
+  variants: {
+    type: {
+      default: 'size-7 min-w-7 border border-divider shadow-sm',
+      cell: 'relative size-5 min-w-5 shadow',
+    },
+  },
+  defaultVariants: {
+    type: 'default',
+  },
+})
 
 export function InteropTopItems({
   topItems,
   setIsOpen,
-  iconClassName,
-  renderRemainingCount,
   className,
+  type,
   ...rest
-}: InteropTopItemsCellProps & React.ComponentProps<'button'>) {
+}: InteropTopItemsCellProps &
+  Omit<React.ComponentProps<'button'>, 'type'> &
+  VariantProps<typeof buttonVariants>) {
   return (
     <button
-      className={cn(
-        'group/dialog-trigger grid grid-cols-[46px_30px] items-center gap-1',
-        className,
-      )}
+      type="button"
+      className={buttonVariants({ type, className })}
       onClick={() => setIsOpen(true)}
       {...rest}
     >
@@ -39,29 +75,39 @@ export function InteropTopItems({
             key={item.id}
             item={item}
             index={i}
-            className={iconClassName}
+            type={type}
           />
         ))}
       </div>
-      {topItems.remainingCount > 0 &&
-        (renderRemainingCount?.(topItems.remainingCount) ?? (
-          <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
-            +{topItems.remainingCount}
-          </span>
-        ))}
+      {topItems.remainingCount > 0 && (
+        <RemainingCount topItems={topItems} type={type} />
+      )}
     </button>
+  )
+}
+
+function RemainingCount({
+  topItems,
+  type,
+}: {
+  topItems: TopItems<TopItem>
+} & VariantProps<typeof remainingCountVariants>) {
+  return (
+    <span className={remainingCountVariants({ type })}>
+      +{topItems.remainingCount}
+      {type === 'default' ? ' more' : ''}
+    </span>
   )
 }
 
 function ItemIconWithTooltip({
   item,
   index,
-  className,
+  type,
 }: {
   item: TopItem
   index: number
-  className?: string
-}) {
+} & VariantProps<typeof iconVariants>) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -69,10 +115,7 @@ function ItemIconWithTooltip({
           key={item.id}
           src={item.iconUrl}
           alt={item.displayName}
-          className={cn(
-            'relative size-5 min-w-5 rounded-full bg-white shadow',
-            className,
-          )}
+          className={iconVariants({ type })}
           style={{ zIndex: 5 - index }}
         />
       </TooltipTrigger>
