@@ -91,13 +91,24 @@ function calculateUptimePercentage(anomalies: LivenessAnomaly[]) {
   const thirtyDaysAgo = now - 30 * UnixTime.DAY
   const totalHours = 30 * 24
 
+  // clamp intervals to the 30-day window
+  const intervals = anomalies
+    .map((a) => ({
+      start: Math.max(a.start, thirtyDaysAgo),
+      end: a.end ? Math.min(a.end, now) : now,
+    }))
+    .filter((i) => i.end > i.start)
+    .sort((a, b) => a.start - b.start)
+
   let anomalyHours = 0
-  for (const anomaly of anomalies) {
-    const start = Math.max(anomaly.start, thirtyDaysAgo)
-    const end = anomaly.end ? Math.min(anomaly.end, now) : now
-    if (end > start) {
-      anomalyHours += (end - start) / UnixTime.HOUR
+  // merge overlapping intervals
+  let mergedEnd = 0
+  for (const interval of intervals) {
+    const start = Math.max(interval.start, mergedEnd)
+    if (interval.end > start) {
+      anomalyHours += (interval.end - start) / UnixTime.HOUR
     }
+    mergedEnd = Math.max(mergedEnd, interval.end)
   }
 
   const percentage = ((totalHours - anomalyHours) / totalHours) * 100
