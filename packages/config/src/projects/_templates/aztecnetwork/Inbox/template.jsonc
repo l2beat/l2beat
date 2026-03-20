@@ -17,5 +17,6 @@
     "ROLLUP": {
       "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
     }
-  }
+  },
+  "category": "bridge-canonical"
 }

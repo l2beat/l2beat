@@ -1,10 +1,10 @@
 import {
   ChainSpecificAddress,
+  formatLargeNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { formatEther } from 'ethers/lib/utils'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -37,6 +37,12 @@ const governanceConfiguration = discovery.getContractValue<{
   requiredYeaMargin: string
   minimumVotes: string
 }>('Governance', 'getConfiguration')
+
+// const exitWindowObject = RISK_VIEW.EXIT_WINDOW(governanceConfiguration.executionDelay,20 * UnixTime.DAY,) // TODO: formalize the inclusion delay and use onchain gov delay when launched
+const exitWindowObject = RISK_VIEW.EXIT_WINDOW(
+  30 * UnixTime.DAY,
+  20 * UnixTime.DAY,
+)
 
 const activeSequencerCount = discovery.getContractValue<number>(
   'Rollup',
@@ -76,10 +82,6 @@ const governanceSignalRoundSize = discovery.getContractValue<number>(
   'GovernanceProposer',
   'ROUND_SIZE',
 )
-const gseActivationThreshold = discovery.getContractValueBigInt(
-  'GSE',
-  'ACTIVATION_THRESHOLD',
-)
 const bonusInstanceAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'GSE',
@@ -103,12 +105,9 @@ const aztecTotalSupply = discovery.getContractValueBigInt(
   'totalSupply',
 )
 
-const executionDelay = governanceConfiguration.executionDelay
-
 const feeJuicePortal = discovery.getContract('FeeJuicePortal')
 const governance = discovery.getContract('Governance')
 const honkVerifier = discovery.getContract('HonkVerifier')
-const inbox = discovery.getContract('Inbox')
 const outbox = discovery.getContract('Outbox')
 const registry = discovery.getContract('Registry')
 const rollup = discovery.getContract('Rollup')
@@ -116,7 +115,6 @@ const escapeHatch = discovery.getContract('EscapeHatch')
 
 const rollupAddress = ChainSpecificAddress.address(rollup.address)
 const verifierAddress = ChainSpecificAddress.address(honkVerifier.address)
-const inboxAddress = ChainSpecificAddress.address(inbox.address)
 const outboxAddress = ChainSpecificAddress.address(outbox.address)
 const governanceAddress = ChainSpecificAddress.address(governance.address)
 const registryAddress = ChainSpecificAddress.address(registry.address)
@@ -125,7 +123,7 @@ const escapeHatchAddress = ChainSpecificAddress.address(escapeHatch.address)
 const alphaGenesisTimestamp = UnixTime(1774839144) // Monday, 30 March 2026 04:52 GMT+2
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatEther(amount)} AZTEC`
+  return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
 }
 
 function formatPercentage(value: string): string {
@@ -155,7 +153,6 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
-const gseActivationThresholdString = formatAztecAmount(gseActivationThreshold)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -207,7 +204,7 @@ export const aztecnetwork: ScalingProject = {
   id: ProjectId('aztecnetwork'),
   capability: 'universal',
   addedAt: UnixTime(1773405732),
-  badges: [BADGES.VM.AztecVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance],
+  badges: [BADGES.VM.AztecVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance], // TODO: redesign AVM badge and add native pricate tx badge
   display: {
     name: 'Aztec Network',
     shortName: 'Aztec',
@@ -245,8 +242,8 @@ export const aztecnetwork: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    name: 'Honk',
-    // zkCatalogId: // TODO Sergey
+    name: 'Barretenberg',
+    // zkCatalogId: ProjectId('barretenberg') // TODO Sergey
   },
   scopeOfAssessment: {
     inScope: [
@@ -316,23 +313,21 @@ export const aztecnetwork: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: {
-      value: formatSeconds(executionDelay),
-      sentiment: 'good',
-      orderHint: executionDelay,
-      description: `Any upgrade is delayed by ${formatSeconds(
-        executionDelay,
-      )} before being executed. During that time, users can exit through 1) regular withdrawals initiated privately on L2 via the decentralized, permissionless sequencer set and 2) proposing and proving their own withdrawal via the escape hatch.`,
+      ...exitWindowObject,
+      description:
+        exitWindowObject.description +
+        `Although core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system, counting as an 'upgrade' for the exit window.`,
     },
     sequencerFailure: {
       value: 'Decentralized Sequencer Set',
       sentiment: 'good',
-      description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the committees censor, anyone can bond ${escapeHatchBondString} to join the escape hatch candidate set, which opens every ${escapeHatchFrequencyString}.`,
+      description: `Users can permissionlessly become a sequencer by staking ${activationThresholdString} to join the queue and wait to obtain committee-based block production rights. If the pseudo-randomly sampled committees censor proposals, anyone who bonds ${escapeHatchBondString} will join the escape hatch candidate set. Every ${escapeHatchFrequencyString}, a candidate is pseudo-randomly selected to propose and prove checkpoints fully autonomously. A candidate remains in the set until they are selected or leave voluntarily.`,
     },
     proposerFailure: {
       value: 'Self Propose',
       sentiment: 'good',
       description:
-        'Anyone can submit epoch root proofs for pending checkpoints. Checkpoint proposals themselves come from the open sequencer set, with the escape hatch providing a bonded fallback if the committees are censoring or unavailable.',
+        'Checkpoint proposals come from the open sequencer set, with the escape hatch providing a bonded fallback if the sampled committees are censoring or unavailable. Anyone with access to the required hardware can submit epoch root proofs which finalize the proven checkpoints.',
     },
   },
   stage: getStage(
@@ -346,19 +341,19 @@ export const aztecnetwork: ScalingProject = {
         fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
-        principle: true,
+        principle: true, // assuming the probabilistic inclusion provides the 7d exit window, also there is no SC
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
+        securityCouncilProperlySetUp: null, // TODO: does it count as an SC?
         noRedTrustedSetups: true, // TODO: ?
         programHashesReproducible: true, // TODO: ?
         proverSourcePublished: true,
         verifierContractsReproducible: true, // TODO: ?
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: true,
+        proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: true,
+        delayWith30DExitWindow: false, // 30d gov delay means <30d exit window due to inclusion delay
       },
     },
     {
@@ -396,10 +391,11 @@ export const aztecnetwork: ScalingProject = {
           url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
         },
       ],
+      risks: [],
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
-      description: `For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      description: `Joining the sequecer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
@@ -412,31 +408,12 @@ export const aztecnetwork: ScalingProject = {
       ],
       risks: [],
     },
-    forceTransactions: {
-      name: 'Decentralized Sequencers, Escape Hatch',
-      description: `Aztec does not expose an L1 forced-transaction queue for arbitrary L2 transactions. Instead, users can permissionlessly join the sequencer set by staking ${activationThresholdString}. Transactions can be submitted for the private execution environment, preventing potential censorship based on transaction content. To circumvent the committees formed from the active sequencer set, anyone can join the escape hatch candidate set by bonding ${escapeHatchBondString}.`,
-      references: [
-        {
-          title: 'Inbox.sol - sendL2Message() on Etherscan',
-          url: `https://etherscan.io/address/${inboxAddress.toString()}#code`,
-        },
-        {
-          title: 'Rollup.sol - deposit() on Etherscan',
-          url: `https://etherscan.io/address/${rollupAddress.toString()}#code`,
-        },
-        {
-          title: 'EscapeHatch.sol - joinCandidateSet() on Etherscan',
-          url: `https://etherscan.io/address/${escapeHatchAddress.toString()}#code`,
-        },
-      ],
-      risks: [],
-    },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
         description:
           EXITS.REGULAR_MESSAGING('zk').description +
-          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum.',
+          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be triggered privately on L2, revealing only the L1 part of the withdrawal.',
         references: [
           {
             title: 'Rollup.sol - submitEpochRootProof() on Etherscan',
@@ -454,7 +431,7 @@ export const aztecnetwork: ScalingProject = {
       {
         name: 'Upgrades replace the canonical rollup',
         description:
-          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay.',
+          'The core contracts are immutable, but Governance owns the Registry and GSE and can register a new rollup version as canonical after the governance delay. Governance also owns critical config parameters that can freeze or compromise the Rollup system.',
         references: [
           {
             title: 'Registry.sol - addRollup() on Etherscan',
@@ -502,18 +479,15 @@ export const aztecnetwork: ScalingProject = {
   },
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [], // 30d delay for the canonical rollup pointer but main contracts are immutable
+    risks: [], // 30d delay for the canonical rollup pointer and config but main contracts are immutable
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   upgradesAndGovernance: `
 # Standard Path (Signaling)
-Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum.
+Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
 ## 1. The Signaling Phase (\`GovernanceProposer\`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. 
-*   A voting round consists of ${governanceSignalRoundSizeString} slots
-*   To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots.
-*   Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
+Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of ${governanceSignalRoundSizeString} slots. To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots. Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
 
 ## 2. The Voting Phase (\`Governance\`)
 Once submitted, the proposal enters a delay and voting flow:
@@ -530,12 +504,8 @@ If the L2 sequencer set is offline, censoring, or acting maliciously, the \`Gove
 *   These funds are locked for an extended ${governanceLockDelayString}.
 *   Once proposed, the payload enters the exact same ${governanceTotalDelayString} Voting Phase (Pending -> Active -> Queued -> Executable) as the standard path.
 
-### Sequencer Governance & The GSE (Governance Staking Escrow)
-The system relies on the \`GSE.sol\` contract to bridge L2 network security with L1 governance.
-*   To become an L2 sequencer, an entity deposits **${gseActivationThresholdString}** into the GSE.
-*   The GSE takes all sequencer deposits and stakes them directly into the L1 \`Governance\` contract, aggregating the voting power.
-*   When a proposal is Active on L1, sequencers call \`vote()\` on the GSE, which calculates their specific share of the staked power and forwards the vote to the main Governance contract.
-*   If a proposal upgrades the system to a new canonical rollup, sequencers do not need to manually unstake and restake. The GSE can automatically migrate the voting power and stake of all active sequencers to the new rollup version if they staked to the special address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup.
+### Rollup Immutability
+The smart contract code of \`Rollup\`, its verifier and its canonical messaging contracts cannot be changed. However, \`Governance\` owns critical permissions for configuration parameters that can freeze the L2 indefinitely. 'Upgrading' a Rollup contract involves a \`Governance\` action that designates a new \`Rollup\` contract address as canonical. The \`GSE\` (Governance Staking Escrow) automatically migrates the voting power and stake of all active sequencers to the new rollup version if they staked to the default magic address \`${bonusInstanceAddress.toString()}\` instead of a specific immutable rollup. Importantly, \`Governance\` retains ownership of the old rollup, with the permissions to freeze it in the same or any future governance proposal. In summary and practice, the current Aztec rollup system is not immutable and prone to governance changes with the configured ${governanceExecutionDelayString} delay.
 
 ### Slashing and the SlashVeto Council
 Aztec features onchain slashing for equivocation or missing attestations, managed by \`Slasher\` and \`TallySlashingProposer\`. 

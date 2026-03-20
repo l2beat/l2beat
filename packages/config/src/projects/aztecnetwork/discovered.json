@@ -1,7 +1,7 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1773403504,
-  "configHash": "0x0e5fa191dac31844a16cf041bb64d84e6d2ad6f3b8342494122b2c70383a93f5",
+  "timestamp": 1773840653,
+  "configHash": "0x3e95cc46fbdd1bf089c2978556e82a8b4f8cf5a04c4078733569a762df21ebcf",
   "entries": [
     {
       "name": "CoinIssuer",
@@ -54,7 +54,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 144,
+        "getCurrentRound": 150,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -66,7 +66,8 @@
       },
       "implementationNames": {
         "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": "GovernanceProposer"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
@@ -105,12 +106,13 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 3,
-        "totalPowerNow": "798816535025595724030502163",
-        "withdrawalCount": 2445
+        "totalPowerNow": "800798100636901014525246337",
+        "withdrawalCount": 2461
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "RewardBooster",
@@ -183,7 +185,8 @@
       },
       "implementationNames": {
         "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617": "FeeJuicePortal"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
@@ -214,7 +217,8 @@
       },
       "implementationNames": {
         "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298": "Registry"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "RewardDistributor",
@@ -285,7 +289,7 @@
         "ATP_REGISTRY": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
         "blockOfLastMarkNext": 0,
         "GATED_UNTIL": 1794578400,
-        "getActivationTimestamp": 1799366400,
+        "getActivationTimestamp": 1795150800,
         "GOVERNANCE": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "markedProposalsCount": 0,
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e"
@@ -309,7 +313,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348": "HonkVerifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
@@ -341,7 +346,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 2,
+        "getCurrentHatch": 4,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -395,7 +400,8 @@
       "implementationNames": {
         "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B": "EscapeHatch"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Inbox",
@@ -442,7 +448,8 @@
       },
       "implementationNames": {
         "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578": "Inbox"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x9064Fb41156D300196d5Eb95E0B3c1f08eBc39a8",
@@ -524,7 +531,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 81,
+        "getCurrentRound": 128,
         "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -569,11 +576,12 @@
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "796678000000000000000000000"
+        "totalSupply": "798490000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "SlashPayloadCloneable",
@@ -640,9 +648,9 @@
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
         "getCurrentBlobCommitmentsHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentEpoch": 325,
-        "getCurrentSampleSeed": "105277448197968051028328111489102447734860675553795695355069664931928803014006",
-        "getCurrentSlot": 10407,
+        "getCurrentEpoch": 514,
+        "getCurrentSampleSeed": "109764262221985660349284468949109837425024077380738655069336839702687873729532",
+        "getCurrentSlot": 16479,
         "getEarliestRewardsClaimableTimestamp": 0,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 0,
@@ -709,7 +717,8 @@
       },
       "implementationNames": {
         "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962": "Rollup"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xB216FcaF63c6C0f73a557B342e1Da9710C95DA81",
@@ -732,7 +741,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "SlashVeto Council",
       "address": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -798,7 +807,8 @@
       },
       "implementationNames": {
         "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0": "Outbox"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "AztecTokenPositionRegistry_ProtocolTreasury",
@@ -814,20 +824,20 @@
       "sinceBlock": 23282209,
       "values": {
         "$immutable": true,
-        "getExecuteAllowedAt": 1798761600,
+        "getExecuteAllowedAt": 1794546000,
         "getGlobalLockParams": {
-          "startTime": 1798761600,
+          "startTime": 1794546000,
           "cliffDuration": 0,
           "lockDuration": 63072000
         },
         "getNextMilestoneId": 3,
         "getNextStakerVersion": 1,
-        "getRevoker": "eth:0x0000000000000000000000000000000000000000",
+        "getRevoker": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
         "getRevokerOperator": "eth:0x0000000000000000000000000000000000000000",
         "getStakerImplementation": [
           "eth:0x79075C8E314Ab4A84d54F90b1c7032Dc5469082d"
         ],
-        "getUnlockStartTime": 1798761600,
+        "getUnlockStartTime": 1794546000,
         "owner": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
@@ -1645,6 +1655,6 @@
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24648428 },
-  "permissionsConfigHash": "0xd62c2e8188acba1c07c65773b2493a2770e2682add8d47126632d602a34d3307"
+  "usedBlockNumbers": { "ethereum": 24684680 },
+  "permissionsConfigHash": "0xe90f7482d22c9e19d245263eb9466922dc591c6d63dd21e0cc8b79dbaa3cb015"
 }

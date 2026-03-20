@@ -71,5 +71,6 @@
       "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
     },
     "getRollup": { "description": "The address of the core Rollup contract." }
-  }
+  },
+  "category": "core"
 }
