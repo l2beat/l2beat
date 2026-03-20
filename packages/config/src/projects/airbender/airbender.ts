@@ -125,7 +125,7 @@ export const airbender: BaseProject = {
         // Is a dummy to show adi as using airbender proof system. Verifier
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
-        hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -137,10 +137,8 @@ export const airbender: BaseProject = {
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
+        verificationStatus: 'notVerified',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        description:
-          'Verifier smart contract sources are not available on Etherscan, hash value is set to 0x0 to indicate that it is not known.',
       },
     ],
   },
