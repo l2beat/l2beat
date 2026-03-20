@@ -18,12 +18,12 @@ describe(OpStackPlugin.name, () => {
         .getDataRequests()
         .find(
           (request) =>
-            request.type === 'derivedTransaction' &&
+            request.type === 'txFromEvent' &&
             request.creatorEvent === TransactionDeposited,
         )
 
       expect(derivedRequest).not.toEqual(undefined)
-      if (!derivedRequest || derivedRequest.type !== 'derivedTransaction') {
+      if (!derivedRequest || derivedRequest.type !== 'txFromEvent') {
         return
       }
 

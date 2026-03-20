@@ -1,8 +1,8 @@
 import { UpsertMap } from '@l2beat/shared'
 import type {
-  DerivedTxDataRequest,
   InteropEvent,
   InteropPluginResyncable,
+  TxFromEventRequest,
 } from '../../plugins/types'
 
 export interface DerivedTxEntry {
@@ -14,7 +14,7 @@ export interface DerivedTxEntry {
 export class DerivedTxStore {
   private readonly requestsByPlugin = new Map<
     string,
-    Map<string, DerivedTxDataRequest>
+    Map<string, TxFromEventRequest>
   >()
   private readonly pendingTxHashesByChain = new UpsertMap<string, Set<string>>()
   private readonly entriesByChain = new UpsertMap<
@@ -24,9 +24,9 @@ export class DerivedTxStore {
 
   constructor(plugins: InteropPluginResyncable[] = []) {
     for (const plugin of plugins) {
-      const requestsByEventType = new Map<string, DerivedTxDataRequest>()
+      const requestsByEventType = new Map<string, TxFromEventRequest>()
       for (const request of plugin.getDataRequests()) {
-        if (request.type !== 'derivedTransaction') {
+        if (request.type !== 'txFromEvent') {
           continue
         }
         if (requestsByEventType.has(request.creatorEvent.type)) {
@@ -93,7 +93,7 @@ export class DerivedTxStore {
     return count
   }
 
-  private addEntry(event: InteropEvent, request: DerivedTxDataRequest) {
+  private addEntry(event: InteropEvent, request: TxFromEventRequest) {
     const { chain, txHash } = this.getEntryKey(event, request)
     const entriesByTxHash = this.entriesByChain.getOrInsertComputed(
       chain,
@@ -108,7 +108,7 @@ export class DerivedTxStore {
     this.requeuePendingTxHash(chain, txHash)
   }
 
-  private removeEntry(event: InteropEvent, request: DerivedTxDataRequest) {
+  private removeEntry(event: InteropEvent, request: TxFromEventRequest) {
     const { chain, txHash } = this.getEntryKey(event, request)
     const entriesByTxHash = this.entriesByChain.get(chain)
     const entries = entriesByTxHash?.get(txHash)
@@ -133,7 +133,7 @@ export class DerivedTxStore {
     entriesByTxHash.set(txHash, filtered)
   }
 
-  private getEntryKey(event: InteropEvent, request: DerivedTxDataRequest) {
+  private getEntryKey(event: InteropEvent, request: TxFromEventRequest) {
     const args = event.args as Record<string, unknown>
     const txHash = args[request.txHashArg]
     const chain = args[request.chainArg]

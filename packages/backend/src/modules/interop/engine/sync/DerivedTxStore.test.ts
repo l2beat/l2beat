@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 import {
-  createDerivedTxRequest,
   createInteropEventType,
   type InteropPluginResyncable,
+  txFromEvent,
 } from '../../plugins/types'
 import { DerivedTxStore } from './DerivedTxStore'
 
@@ -16,7 +16,7 @@ describe(DerivedTxStore.name, () => {
       name: 'across',
       capture: () => undefined,
       getDataRequests: () => [
-        createDerivedTxRequest({
+        txFromEvent({
           creatorEvent: CreatorEvent,
           chainArg: 'chain',
           txHashArg: 'txHash',
@@ -55,12 +55,12 @@ describe(DerivedTxStore.name, () => {
       name: 'across',
       capture: () => undefined,
       getDataRequests: () => [
-        createDerivedTxRequest({
+        txFromEvent({
           creatorEvent: CreatorEvent,
           chainArg: 'chain',
           txHashArg: 'txHash',
         }),
-        createDerivedTxRequest({
+        txFromEvent({
           creatorEvent: CreatorEvent,
           chainArg: 'chain',
           txHashArg: 'altTxHash',
@@ -81,7 +81,7 @@ describe(DerivedTxStore.name, () => {
       name: 'across',
       capture: () => undefined,
       getDataRequests: () => [
-        createDerivedTxRequest({
+        txFromEvent({
           creatorEvent: CreatorEvent,
           chainArg: 'chain',
           txHashArg: 'txHash',
@@ -113,7 +113,7 @@ describe(DerivedTxStore.name, () => {
       name: 'across',
       capture: () => undefined,
       getDataRequests: () => [
-        createDerivedTxRequest({
+        txFromEvent({
           creatorEvent: CreatorEvent,
           chainArg: 'chain',
           txHashArg: 'txHash',

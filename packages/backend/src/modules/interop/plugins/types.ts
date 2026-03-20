@@ -213,7 +213,7 @@ export interface InteropEventDb {
   ): InteropEvent<T>[]
 }
 
-export type DataRequest = EventDataRequest | DerivedTxDataRequest
+export type DataRequest = EventDataRequest | TxFromEventRequest
 
 interface EventDataRequest {
   type: 'event'
@@ -223,20 +223,20 @@ interface EventDataRequest {
   addresses: ChainSpecificAddress[] | '*'
 }
 
-export interface DerivedTxDataRequest<
+export interface TxFromEventRequest<
   TArgs extends Record<string, unknown> = Record<string, unknown>,
 > {
-  type: 'derivedTransaction'
+  type: 'txFromEvent'
   creatorEvent: InteropEventType<TArgs>
   txHashArg: Extract<keyof TArgs, string>
   chainArg: Extract<keyof TArgs, string>
 }
 
-export function createDerivedTxRequest<TArgs extends Record<string, unknown>>(
-  request: Omit<DerivedTxDataRequest<TArgs>, 'type'>,
-): DerivedTxDataRequest<TArgs> {
+export function txFromEvent<TArgs extends Record<string, unknown>>(
+  request: Omit<TxFromEventRequest<TArgs>, 'type'>,
+): TxFromEventRequest<TArgs> {
   return {
-    type: 'derivedTransaction',
+    type: 'txFromEvent',
     ...request,
   }
 }

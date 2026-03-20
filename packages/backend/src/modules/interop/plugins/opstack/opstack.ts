@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
-  createDerivedTxRequest,
   createEventParser,
   createInteropEventType,
   type DataRequest,
@@ -18,6 +17,7 @@ import {
   type MatchResult,
   Result,
   type TxToCapture,
+  txFromEvent,
 } from '../types'
 import { derivePortalDeposit } from './derivePortalDeposit'
 
@@ -279,7 +279,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
         signature: failedRelayedMessageLog,
         addresses: OPSTACK_NETWORKS.map((n) => n.l2CrossDomainMessenger),
       },
-      createDerivedTxRequest({
+      txFromEvent({
         creatorEvent: TransactionDeposited,
         txHashArg: 'l2TxHash',
         chainArg: 'chain',

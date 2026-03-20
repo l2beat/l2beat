@@ -2,11 +2,11 @@ import type { Database, InteropEventRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import {
-  createDerivedTxRequest,
   createInteropEventType,
   type InteropEvent,
   type InteropEventType,
   type InteropPluginResyncable,
+  txFromEvent,
 } from '../../plugins/types'
 import { InteropEventStore } from './InteropEventStore'
 
@@ -192,7 +192,7 @@ function makePlugin(
     name: 'across',
     capture: () => undefined,
     getDataRequests: () => [
-      createDerivedTxRequest({
+      txFromEvent({
         creatorEvent,
         chainArg: 'chain',
         txHashArg: 'txHash',
