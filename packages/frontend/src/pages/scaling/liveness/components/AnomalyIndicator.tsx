@@ -16,6 +16,7 @@ interface Props {
 export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
   const uptimePercentage = calculateUptimePercentage(anomalies)
+  const hasOngoing = anomalies.some((a) => a.end === undefined)
 
   const content = (
     <div className="flex flex-col items-center gap-0.5">
@@ -50,7 +51,11 @@ export function AnomalyIndicator({ anomalies, href }: Props) {
         </a>
       </TooltipTrigger>
       <TooltipContent>
-        {anomalies.length === 0 ? (
+        {hasOngoing ? (
+          <div>
+            There is an ongoing anomaly. Click to learn more.
+          </div>
+        ) : anomalies.length === 0 ? (
           <div>No anomalies detected in the last 30 days</div>
         ) : (
           <div>
