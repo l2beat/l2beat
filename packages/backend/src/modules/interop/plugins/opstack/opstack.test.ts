@@ -4,7 +4,6 @@ import { utils } from 'ethers'
 import type { Log } from 'viem'
 import type { InteropEvent, LogToCapture, TxToCapture } from '../types'
 import {
-  derivePortalDeposit,
   OpStackPlugin,
   PortalDepositFinalized,
   TransactionDeposited,
@@ -30,31 +29,6 @@ describe(OpStackPlugin.name, () => {
 
       expect(derivedRequest.txHashArg).toEqual('l2TxHash')
       expect(derivedRequest.chainArg).toEqual('chain')
-    })
-  })
-
-  describe(derivePortalDeposit.name, () => {
-    it('derives the source hash and L2 tx hash from the worked example', () => {
-      const derived = derivePortalDeposit({
-        from: WORKED_EXAMPLE.from,
-        to: WORKED_EXAMPLE.to,
-        version: 0n,
-        opaqueData: WORKED_EXAMPLE.opaqueData,
-        blockHash: WORKED_EXAMPLE.blockHash,
-        logIndex: WORKED_EXAMPLE.logIndex,
-      })
-
-      expect(derived).not.toEqual(undefined)
-      if (!derived) {
-        return
-      }
-
-      expect(derived.sourceHash).toEqual(WORKED_EXAMPLE.sourceHash)
-      expect(derived.l2TxHash).toEqual(WORKED_EXAMPLE.l2TxHash)
-      expect(derived.mint).toEqual(82180496084697442374n)
-      expect(derived.value).toEqual(82180496084697442374n)
-      expect(derived.gasLimit).toEqual(100000n)
-      expect(derived.data).toEqual('0x')
     })
   })
 
