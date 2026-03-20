@@ -21,9 +21,6 @@ const buttonVariants = cva('group/dialog-trigger', {
       cell: 'grid grid-cols-[46px_30px] items-center gap-1',
     },
   },
-  defaultVariants: {
-    type: 'default',
-  },
 })
 
 const remainingCountVariants = cva(
@@ -35,9 +32,6 @@ const remainingCountVariants = cva(
         cell: 'text-label-value-15',
       },
     },
-    defaultVariants: {
-      type: 'default',
-    },
   },
 )
 
@@ -48,16 +42,13 @@ const iconVariants = cva('rounded-full bg-white', {
       cell: 'relative size-5 min-w-5 shadow',
     },
   },
-  defaultVariants: {
-    type: 'default',
-  },
 })
 
 export function InteropTopItems({
   topItems,
   setIsOpen,
   className,
-  type,
+  type = 'default',
   ...rest
 }: InteropTopItemsCellProps &
   Omit<React.ComponentProps<'button'>, 'type'> &
