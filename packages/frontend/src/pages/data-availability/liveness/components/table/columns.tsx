@@ -169,7 +169,7 @@ export const publicColumns = () => [
             <AnomalyIndicator
               key={bridge.slug}
               anomalies={bridge.anomalies}
-              href={bridge.href ? `${bridge.href}#liveness` : undefined}
+              href={bridge.href}
             />
           )
         })
