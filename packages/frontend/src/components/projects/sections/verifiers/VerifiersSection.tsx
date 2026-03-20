@@ -80,9 +80,9 @@ export function VerifierRowDetails({
   verifierHash: VerifiersSectionProps['proofSystemVerifiers'][number]['verifierHashes'][number]
 }) {
   return (
-    <div className="p-4 pt-0">
+    <div className="min-w-0 pb-4">
       <HorizontalSeparator className="mb-4" />
-      <div className="space-y-3">
+      <div className="space-y-3 px-3 md:px-4">
         {verifierHash.description && (
           <div className="space-y-2">
             <div className="font-bold text-label-value-16">Description</div>
@@ -91,22 +91,22 @@ export function VerifierRowDetails({
             </p>
           </div>
         )}
-        <div className="flex items-start gap-1">
-          <span className="font-medium text-label-value-14 text-secondary">
+        <div className="flex min-w-0 items-start gap-1">
+          <span className="shrink-0 font-medium text-label-value-14 text-secondary">
             Verifier ID:
           </span>
-          <code className="break-all text-label-value-14">
+          <code className="min-w-0 break-all text-label-value-14">
             {verifierHash.hash}
           </code>
         </div>
         {verifierHash.sourceLink && (
-          <div className="flex items-start gap-1">
-            <span className="font-medium text-label-value-14 text-secondary">
+          <div className="flex min-w-0 items-start gap-1">
+            <span className="shrink-0 font-medium text-label-value-14 text-secondary">
               Source:
             </span>
             <CustomLink
               href={verifierHash.sourceLink}
-              className="break-all text-label-value-14"
+              className="min-w-0 break-all text-label-value-14"
             >
               {verifierHash.sourceLink}
             </CustomLink>
@@ -114,11 +114,9 @@ export function VerifierRowDetails({
         )}
       </div>
       {(verifierHash.knownDeployments.length > 0 ||
-        verifierHash.verificationSteps) && (
-        <HorizontalSeparator className="my-4" />
-      )}
+        verifierHash.verificationSteps) && <HorizontalSeparator className="my-4" />}
       {verifierHash.knownDeployments.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-3 px-3 md:px-4">
           <div className="font-bold text-label-value-16">Known deployments</div>
           <div className="space-y-3">
             {verifierHash.knownDeployments.map((deployment, index) => (
@@ -153,7 +151,7 @@ export function VerifierRowDetails({
           <HorizontalSeparator className="my-4" />
         )}
       {verifierHash.verificationSteps && (
-        <div className="space-y-3">
+        <div className="space-y-3 px-3 md:px-4">
           <div className="font-bold text-label-value-16">
             Verification steps
           </div>

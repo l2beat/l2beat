@@ -12,8 +12,11 @@ export const verifiersColumns = [
   columnHelper.accessor('name', {
     header: 'Verifier',
     cell: (ctx) => (
-      <div className="flex items-baseline gap-1.5">
-        <span className="font-medium text-label-value-14 md:text-label-value-15">
+      <div className="min-w-0">
+        <span
+          className="block max-w-48 truncate font-medium text-label-value-14 sm:max-w-72 md:max-w-96 md:text-label-value-15"
+          title={ctx.row.original.name}
+        >
           {ctx.row.original.name}
         </span>
       </div>
@@ -22,6 +25,10 @@ export const verifiersColumns = [
   columnHelper.display({
     id: 'verification',
     header: 'Verification',
+    meta: {
+      cellClassName: 'whitespace-nowrap',
+      headClassName: 'whitespace-nowrap',
+    },
     cell: (ctx) => (
       <div className="flex items-center gap-1">
         <CountWithAttesters
