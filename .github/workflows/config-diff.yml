@@ -2,12 +2,72 @@ name: Diff
 
 on:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   pull-requests: write # For commenting on PRs
 
 jobs:
+  probe:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe config diff upload contract
+        env:
+          AUTH: ${{ secrets.CONFIG_DIFF_AUTH }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          upload_dir="https://config-diff.l2beat.com/upload/debug-${RUN_ID}/"
+          upload_file="${upload_dir}index.html"
+          upload_flat="https://config-diff.l2beat.com/upload/debug-${RUN_ID}.html"
+          public_dir="https://config-diff.l2beat.com/debug-${RUN_ID}/"
+          public_file="${public_dir}index.html"
+          public_flat="https://config-diff.l2beat.com/debug-${RUN_ID}.html"
+
+          cat >/tmp/index.html <<EOF
+          <!doctype html>
+          <title>config-diff-debug</title>
+          <h1>config-diff-debug-${RUN_ID}</h1>
+          EOF
+
+          status() {
+            label="$1"
+            shift
+
+            code="$(curl -sS -o /tmp/curl-response -w '%{http_code}' "$@" || true)"
+            echo "${label}_code=${code}"
+
+            if [ -s /tmp/curl-response ]; then
+              body="$(tr '\n' ' ' </tmp/curl-response | head -c 200)"
+              echo "${label}_body=${body}"
+            fi
+          }
+
+          echo "upload_dir=${upload_dir}"
+          echo "upload_file=${upload_file}"
+          echo "upload_flat=${upload_flat}"
+          echo "public_dir=${public_dir}"
+          echo "public_file=${public_file}"
+          echo "public_flat=${public_flat}"
+
+          status mkcol -u "$AUTH" -X MKCOL "$upload_dir"
+          status put_nested -u "$AUTH" -T /tmp/index.html "$upload_file"
+          status put_flat -u "$AUTH" -T /tmp/index.html "$upload_flat"
+
+          sleep 2
+
+          status head_upload_dir -I "$upload_dir"
+          status head_upload_file -I "$upload_file"
+          status head_upload_flat -I "$upload_flat"
+          status head_public_dir -I "$public_dir"
+          status head_public_file -I "$public_file"
+          status head_public_flat -I "$public_flat"
+
   config-diff:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
