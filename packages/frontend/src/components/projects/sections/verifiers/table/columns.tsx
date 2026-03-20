@@ -14,7 +14,7 @@ export const verifiersColumns = [
     cell: (ctx) => (
       <div className="min-w-0">
         <span
-          className="block max-w-48 truncate font-medium text-label-value-14 sm:max-w-72 md:max-w-96 md:text-label-value-15"
+          className="block max-w-48 truncate font-medium text-label-value-14 sm:max-w-96 md:max-w-max md:text-label-value-15"
           title={ctx.row.original.name}
         >
           {ctx.row.original.name}
