@@ -64,14 +64,17 @@ export class FollowingState implements BlockProcessorState {
         ? await this.bootstrapSyncedRange(block)
         : decision.updatedSyncedRange
 
-    const interopEvents = await this.syncer.capturePendingHistoricalTxs(
+    const historical = await this.syncer.capturePendingHistoricalTxs(
       BigInt(block.number),
     )
+    const interopEvents = [...historical.events]
+    const fulfilledCreatorEvents = [...historical.fulfilledCreatorEvents]
     const toCapture = this.syncer.getItemsToCapture(block, logs)
     for (const txToCapture of toCapture.txsToCapture) {
-      const produced = this.syncer.captureTx(txToCapture)
-      if (produced) {
-        interopEvents.push(...produced)
+      const result = this.syncer.captureTx(txToCapture)
+      if (result) {
+        interopEvents.push(...result.events)
+        fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
       }
     }
     for (const logToCapture of toCapture.logsToCapture) {
@@ -84,6 +87,7 @@ export class FollowingState implements BlockProcessorState {
     await this.syncer.saveProducedInteropEvents(
       interopEvents,
       updatedSyncedRange,
+      fulfilledCreatorEvents,
     )
 
     this.syncer.clearChainSyncError()

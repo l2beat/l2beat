@@ -135,6 +135,11 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
+export interface TxCaptureResult {
+  events: InteropEvent[]
+  fulfilledCreatorEvents: InteropEvent[]
+}
+
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
@@ -218,7 +223,7 @@ export class InteropEventSyncer extends TimeLoop {
     }
   }
 
-  captureTx(txToCapture: TxToCapture) {
+  captureTx(txToCapture: TxToCapture): TxCaptureResult | undefined {
     for (const plugin of this.cluster.plugins) {
       if (!plugin.captureTx) {
         continue
@@ -232,14 +237,18 @@ export class InteropEventSyncer extends TimeLoop {
         : undefined
       const produced = plugin.captureTx(txToCapture, creatorEvents)
       if (produced) {
-        return produced.map((p) => ({ ...p, plugin: plugin.name }))
+        return {
+          events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+          fulfilledCreatorEvents: creatorEvents ?? [],
+        }
       }
     }
   }
 
   async capturePendingHistoricalTxs(beforeBlock: bigint) {
     const txHashes = this.store.derivedTxStore.takePendingTxHashes(this.chain)
-    const interopEvents = []
+    const interopEvents: InteropEvent[] = []
+    const fulfilledCreatorEvents: InteropEvent[] = []
     let index = 0
 
     try {
@@ -258,7 +267,7 @@ export class InteropEventSyncer extends TimeLoop {
         const block = await this.getBlockByNumber(tx.blockNumber)
         assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
 
-        const produced = this.captureTx({
+        const result = this.captureTx({
           chain: this.chain,
           tx: toTransaction(tx),
           block: toBlock(block),
@@ -266,8 +275,9 @@ export class InteropEventSyncer extends TimeLoop {
             .map((log) => logToViemLog(toEVMLog(log)))
             .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
         })
-        if (produced) {
-          interopEvents.push(...produced)
+        if (result) {
+          interopEvents.push(...result.events)
+          fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
         }
       }
     } catch (error) {
@@ -280,15 +290,20 @@ export class InteropEventSyncer extends TimeLoop {
       throw error
     }
 
-    return interopEvents
+    return {
+      events: interopEvents,
+      fulfilledCreatorEvents,
+    }
   }
 
   async saveProducedInteropEvents(
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
+    fulfilledCreatorEvents: InteropEvent[] = [],
   ) {
     await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+      await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,

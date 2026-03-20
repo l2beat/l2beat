@@ -353,7 +353,10 @@ describe(InteropEventSyncer.name, () => {
         txToCapture.tx.hash,
         'wormhole',
       )
-      expect(result).toEqual([{ ...event, plugin: 'wormhole' }])
+      expect(result).toEqual({
+        events: [{ ...event, plugin: 'wormhole' }],
+        fulfilledCreatorEvents: [creatorEvent],
+      })
     })
 
     it('stops at the first plugin that captures even if a later plugin has creator events', () => {
@@ -385,7 +388,10 @@ describe(InteropEventSyncer.name, () => {
       expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
       expect(secondCapture).not.toHaveBeenCalled()
       expect(getCreatorEvents).toHaveBeenCalledTimes(1)
-      expect(result).toEqual([{ ...event, plugin: 'across' }])
+      expect(result).toEqual({
+        events: [{ ...event, plugin: 'across' }],
+        fulfilledCreatorEvents: [],
+      })
     })
 
     it('returns early when no plugin has captureTx', () => {
@@ -440,7 +446,10 @@ describe(InteropEventSyncer.name, () => {
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
         expect(captureTx).toHaveBeenCalled()
-        expect(result).toEqual([{ ...event, plugin: 'across' }])
+        expect(result).toEqual({
+          events: [{ ...event, plugin: 'across' }],
+          fulfilledCreatorEvents: [makeInteropEvent()],
+        })
       })
 
       it('ignores pending txs from the current block or later', async () => {
@@ -470,7 +479,10 @@ describe(InteropEventSyncer.name, () => {
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
 
-        expect(result).toEqual([])
+        expect(result).toEqual({
+          events: [],
+          fulfilledCreatorEvents: [],
+        })
         expect(captureTx).not.toHaveBeenCalled()
         expect(getTransactionReceipt).not.toHaveBeenCalled()
         expect(getBlockByNumber).not.toHaveBeenCalled()
@@ -481,14 +493,19 @@ describe(InteropEventSyncer.name, () => {
   describe(InteropEventSyncer.prototype.saveProducedInteropEvents.name, () => {
     it('saves events and updates synced range in a transaction', async () => {
       const saveNewEvents = mockFn().resolvesTo(undefined)
+      const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
       const upsert = mockFn().resolvesTo(undefined)
       const setLastError = mockFn().resolvesTo(undefined)
+      const fulfilledCreatorEvent = makeInteropEvent()
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
-        store: mockObject<InteropEventStore>({ saveNewEvents }),
+        store: mockObject<InteropEventStore>({
+          saveNewEvents,
+          updateDerivedFulfilled,
+        }),
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
             InteropEventSyncer['db']['interopPluginSyncedRange']
@@ -506,10 +523,14 @@ describe(InteropEventSyncer.name, () => {
       await syncer.saveProducedInteropEvents(
         [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
+        [fulfilledCreatorEvent],
       )
 
       expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
+      expect(updateDerivedFulfilled).toHaveBeenCalledWith([
+        fulfilledCreatorEvent,
+      ])
       expect(upsert).toHaveBeenCalledWith({
         pluginName: 'clusterName',
         chain: 'ethereum',
@@ -1002,6 +1023,7 @@ function makeInteropEventRecord(
     },
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
     direction: undefined,
     ...overrides,
   }
@@ -1076,6 +1098,7 @@ function mockRpcClient(): InteropEventSyncer['rpcClient'] {
 function mockStore() {
   return mockObject<InteropEventStore>({
     saveNewEvents: mockFn().resolvesTo(undefined),
+    updateDerivedFulfilled: mockFn().resolvesTo(undefined),
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
     derivedTxStore: mockObject<DerivedTxStore>({
       getCreatorEvents: mockFn().returns(undefined),

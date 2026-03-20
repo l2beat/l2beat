@@ -32,7 +32,9 @@ export class InteropEventStore implements InteropEventDb {
       if (removed) {
         this.derivedTxStore.onEventsRemoved([removed])
       }
-      this.derivedTxStore.onEventCreated(event)
+      if (!record.derivedFulfilled) {
+        this.derivedTxStore.onEventCreated(event)
+      }
     }
   }
 
@@ -65,6 +67,16 @@ export class InteropEventStore implements InteropEventDb {
     this.derivedTxStore.onEventsRemoved(
       this.eventDb.removeEvents([...matched, ...unsupported]),
     )
+  }
+
+  async updateDerivedFulfilled(events: InteropEvent[]): Promise<void> {
+    if (events.length === 0) {
+      return
+    }
+    await this.db.interopEvent.updateDerivedFulfilled(
+      events.map((e) => e.eventId),
+    )
+    this.derivedTxStore.onEventsRemoved(events)
   }
 
   getEvents(type: string): InteropEvent[] {
@@ -142,6 +154,7 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     timestamp: event.ctx.timestamp,
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
     ctx: event.ctx,
     // Deprecated
     blockNumber: 0,

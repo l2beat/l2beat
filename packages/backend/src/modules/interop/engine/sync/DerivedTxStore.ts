@@ -14,7 +14,7 @@ export interface DerivedTxEntry {
 export class DerivedTxStore {
   private readonly requestsByPlugin = new Map<
     string,
-    Map<string, DerivedTxDataRequest[]>
+    Map<string, DerivedTxDataRequest>
   >()
   private readonly pendingTxHashesByChain = new UpsertMap<string, Set<string>>()
   private readonly entriesByChain = new UpsertMap<
@@ -24,15 +24,17 @@ export class DerivedTxStore {
 
   constructor(plugins: InteropPluginResyncable[] = []) {
     for (const plugin of plugins) {
-      const requestsByEventType = new Map<string, DerivedTxDataRequest[]>()
+      const requestsByEventType = new Map<string, DerivedTxDataRequest>()
       for (const request of plugin.getDataRequests()) {
         if (request.type !== 'derivedTransaction') {
           continue
         }
-        const requests =
-          requestsByEventType.get(request.creatorEvent.type) ?? []
-        requests.push(request)
-        requestsByEventType.set(request.creatorEvent.type, requests)
+        if (requestsByEventType.has(request.creatorEvent.type)) {
+          throw new Error(
+            `Multiple derived tx requests for ${plugin.name}:${request.creatorEvent.type}`,
+          )
+        }
+        requestsByEventType.set(request.creatorEvent.type, request)
       }
       if (requestsByEventType.size > 0) {
         this.requestsByPlugin.set(plugin.name, requestsByEventType)
@@ -41,24 +43,20 @@ export class DerivedTxStore {
   }
 
   onEventCreated(event: InteropEvent) {
-    const requests = this.requestsByPlugin.get(event.plugin)?.get(event.type)
-    if (!requests) {
+    const request = this.requestsByPlugin.get(event.plugin)?.get(event.type)
+    if (!request) {
       return
     }
-    for (const request of requests) {
-      this.addEntry(event, request)
-    }
+    this.addEntry(event, request)
   }
 
   onEventsRemoved(events: InteropEvent[]) {
     for (const event of events) {
-      const requests = this.requestsByPlugin.get(event.plugin)?.get(event.type)
-      if (!requests) {
+      const request = this.requestsByPlugin.get(event.plugin)?.get(event.type)
+      if (!request) {
         continue
       }
-      for (const request of requests) {
-        this.removeEntry(event, request)
-      }
+      this.removeEntry(event, request)
     }
   }
 

@@ -106,6 +106,7 @@ export class ExampleRunner {
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
       const newEvents: InteropEvent[] = []
+      const fulfilledCreatorEvents: InteropEvent[] = []
       const txToCapture = {
         chain: txEntry.chain,
         tx,
@@ -129,6 +130,7 @@ export class ExampleRunner {
           newEvents.push(
             ...captured.map((c) => ({ ...c, plugin: plugin.name })),
           )
+          fulfilledCreatorEvents.push(...(creatorEvents ?? []))
           break
         }
       }
@@ -156,6 +158,7 @@ export class ExampleRunner {
 
       events.push(...newEvents)
       await eventStore.saveNewEvents(newEvents)
+      await eventStore.updateDerivedFulfilled(fulfilledCreatorEvents)
     }
 
     const tokenMap = await this.getTokenMap()
@@ -328,6 +331,7 @@ function createExampleDb(): Database {
   return {
     interopEvent: {
       insertMany: async () => undefined,
+      updateDerivedFulfilled: async () => undefined,
     },
   } as unknown as Database
 }

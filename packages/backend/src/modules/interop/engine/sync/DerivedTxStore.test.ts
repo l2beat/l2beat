@@ -45,7 +45,7 @@ describe(DerivedTxStore.name, () => {
     expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
   })
 
-  it('indexes multiple derived tx requests for the same creator event type', () => {
+  it('throws when a creator event type defines multiple derived tx requests', () => {
     const CreatorEvent = createInteropEventType<{
       chain: string
       txHash: string
@@ -67,33 +67,9 @@ describe(DerivedTxStore.name, () => {
         }),
       ],
     }
-    const creatorEvent = {
-      ...CreatorEvent.mock({
-        chain: 'base',
-        txHash: '0xabc',
-        altTxHash: '0xdef',
-      }),
-      plugin: plugin.name,
-    }
-
-    const store = new DerivedTxStore([plugin])
-    store.onEventCreated(creatorEvent)
-
-    expect(store.getCount()).toEqual(2)
-    expect(store.get('base', '0xabc')).toEqual([
-      {
-        chain: 'base',
-        txHash: '0xabc',
-        creatorEvent,
-      },
-    ])
-    expect(store.get('base', '0xdef')).toEqual([
-      {
-        chain: 'base',
-        txHash: '0xdef',
-        creatorEvent,
-      },
-    ])
+    expect(() => new DerivedTxStore([plugin])).toThrow(
+      /Multiple derived tx requests/,
+    )
   })
 
   it('removes derived tx requests for removed creator events', () => {

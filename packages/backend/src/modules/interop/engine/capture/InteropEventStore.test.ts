@@ -56,6 +56,24 @@ describe(InteropEventStore.name, () => {
     ])
   })
 
+  it('does not rebuild fulfilled derived tx requests on start', async () => {
+    const plugin = makePlugin()
+    const event = makeEvent(plugin)
+    const store = makeStore(plugin, {
+      interopEvent: mockObject<Database['interopEvent']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getUnmatched: mockFn().resolvesTo([
+          toRecord(event, { derivedFulfilled: true }),
+        ]),
+      }),
+    })
+
+    await store.start()
+
+    expect(store.getEvents(CreatorEvent.type)).toEqual([event])
+    expect(store.derivedTxStore.getCount()).toEqual(0)
+  })
+
   it('removes derived tx requests for matched and unsupported events', async () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
@@ -138,6 +156,25 @@ describe(InteropEventStore.name, () => {
       },
     ])
   })
+
+  it('marks derived tx requests as fulfilled and removes them from memory', async () => {
+    const plugin = makePlugin()
+    const event = makeEvent(plugin)
+    const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
+    const store = makeStore(plugin, {
+      interopEvent: mockObject<Database['interopEvent']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getUnmatched: mockFn().resolvesTo([]),
+        updateDerivedFulfilled,
+      }),
+    })
+
+    await store.saveNewEvents([event])
+    await store.updateDerivedFulfilled([event])
+
+    expect(updateDerivedFulfilled).toHaveBeenCalledWith([event.eventId])
+    expect(store.derivedTxStore.getCount()).toEqual(0)
+  })
 })
 
 const CreatorEvent = createInteropEventType<{
@@ -188,7 +225,10 @@ function makeStore(
   return new InteropEventStore(mockDb(overrides), inMemoryLimit, [plugin])
 }
 
-function toRecord(event: InteropEvent): InteropEventRecord {
+function toRecord(
+  event: InteropEvent,
+  overrides: Partial<InteropEventRecord> = {},
+): InteropEventRecord {
   return {
     plugin: event.plugin,
     eventId: event.eventId,
@@ -200,8 +240,10 @@ function toRecord(event: InteropEvent): InteropEventRecord {
     timestamp: event.ctx.timestamp,
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
     ctx: event.ctx,
     blockNumber: 0,
+    ...overrides,
   }
 }
 

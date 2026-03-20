@@ -330,6 +330,7 @@ model InteropEvent {
 
   matched     Boolean
   unsupported Boolean
+  derivedFulfilled Boolean @default(false)
   direction   String?
 
   @@id([eventId])
