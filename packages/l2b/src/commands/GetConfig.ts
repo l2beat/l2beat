@@ -61,10 +61,7 @@ export const GetConfig = command({
   handler: async (args) => {
     const ps = new ProjectService()
     const [project, allProjects] = await Promise.all([
-      ps.getProject({
-        id: ProjectId(args.project),
-        optional: [...ALL_PROJECT_OPTIONAL_KEYS],
-      }),
+      getProjectByIdOrSlug(ps, args.project),
       ps.getProjects({ select: ['display'] }),
     ])
 
@@ -93,4 +90,19 @@ function getProjectNotFoundMessage(
   }
 
   return `Project "${projectName}" not found. Did you mean: ${suggestions.join(', ')}? ${buildCallout}`
+}
+
+async function getProjectByIdOrSlug(ps: ProjectService, projectName: string) {
+  const project = await ps.getProject({
+    id: ProjectId(projectName),
+    optional: [...ALL_PROJECT_OPTIONAL_KEYS],
+  })
+  if (project) {
+    return project
+  }
+
+  return await ps.getProject({
+    slug: projectName,
+    optional: [...ALL_PROJECT_OPTIONAL_KEYS],
+  })
 }
