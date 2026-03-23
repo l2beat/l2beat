@@ -102,13 +102,24 @@ export function AddDeployedToken() {
 
   useEffect(() => {
     if (!checks || checksLoading) return
-    if (checks.error) {
+    if (
+      checks.error?.type === 'already-exists' ||
+      checks.error?.type === 'not-found-on-coingecko'
+    ) {
       form.setError('address', {
-        type: 'custom',
+        type: checks.error.type,
         message: checks.error.message,
       })
     } else {
       form.clearErrors('address')
+    }
+    if (checks.error?.type === 'chain-not-found') {
+      form.setError('chain', {
+        type: 'chain-not-found',
+        message: checks.error.message,
+      })
+    } else {
+      form.clearErrors('chain')
     }
     if (checks.data?.decimals) {
       form.setValue('decimals', checks.data.decimals, { shouldDirty: true })
@@ -152,6 +163,13 @@ export function AddDeployedToken() {
     if (checksLoading) return
     if (checks?.error?.type === 'already-exists') {
       setDeployedTokenExistsError(form)
+      return
+    }
+    if (checks?.error?.type === 'chain-not-found') {
+      form.setError('chain', {
+        type: checks.error.type,
+        message: checks.error.message,
+      })
       return
     }
 

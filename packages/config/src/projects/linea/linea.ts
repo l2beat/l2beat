@@ -587,8 +587,8 @@ export const linea: ScalingProject = {
             url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code#F29#L432',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 3)',
-            url: 'https://etherscan.io/address/0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
+            url: 'https://etherscan.io/address/0xC83ed08E2262fBa264D528C749c051f8fC526897',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x94a7f197b9094036a5bf152ba0e4a34d2b78330e
+
+# Diff at Fri, 20 Mar 2026 15:55:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1772795190
+- current timestamp: 1774022071
+
+## Description
+
+Plonk verifier is verified on etherscan.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772795190 (main branch discovery), not current.
+
+```diff
+    contract ADI PlonkVerifier (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) {
+    +++ description: None
+      unverified:
+-        true
+      values.verificationKeyHash:
++        "0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337"
+      implementationNames.eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F:
+-        ""
++        "ZKsyncOSVerifierPlonk"
+      sourceHashes:
++        ["0x99ad2513d609d837d3fb8bd7fa2df0a4f37aea1065e9036c5796772f248f8d30"]
+    }
+```
+
 Generated with discovered.json: 0x610c8507a9d070b42c521cedcd0c2a858fcc384e
 
 # Diff at Fri, 06 Mar 2026 11:43:02 GMT:

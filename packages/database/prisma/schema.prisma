@@ -372,13 +372,13 @@ model InteropTransfer {
   bridgeType String?  @db.VarChar(32)
   timestamp  DateTime @db.Timestamp(6)
 
-  duration Int
+  duration Int?
 
-  srcTime         DateTime @db.Timestamp(6)
+  srcTime         DateTime? @db.Timestamp(6)
   srcChain        String   @db.VarChar(32)
-  srcTxHash       String   @db.VarChar(66)
-  srcLogIndex     Int
-  srcEventId      String   @db.VarChar(40)
+  srcTxHash       String?   @db.VarChar(66)
+  srcLogIndex     Int?
+  srcEventId      String?   @db.VarChar(40)
   srcTokenAddress String?  @db.VarChar(66)
   srcRawAmount    Decimal? @db.Decimal(80, 0)
 
@@ -389,11 +389,11 @@ model InteropTransfer {
   srcValueUsd        Float?   @db.Real
   srcWasBurned       Boolean?
 
-  dstTime         DateTime @db.Timestamp(6)
+  dstTime         DateTime? @db.Timestamp(6)
   dstChain        String   @db.VarChar(32)
-  dstTxHash       String   @db.VarChar(66)
-  dstLogIndex     Int
-  dstEventId      String   @db.VarChar(40)
+  dstTxHash       String?   @db.VarChar(66)
+  dstLogIndex     Int?
+  dstEventId      String?   @db.VarChar(40)
   dstTokenAddress String?  @db.VarChar(66)
   dstRawAmount    Decimal? @db.Decimal(80, 0)
 

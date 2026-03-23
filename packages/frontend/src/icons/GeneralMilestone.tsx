@@ -1,7 +1,7 @@
 import { cn } from '~/utils/cn'
 import type { SvgIconProps } from './SvgIcon'
 
-export function MilestoneIcon({ className, ...props }: SvgIconProps) {
+export function GeneralMilestoneIcon({ className, ...props }: SvgIconProps) {
   return (
     <svg
       width="20"

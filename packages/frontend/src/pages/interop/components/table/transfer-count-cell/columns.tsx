@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -86,11 +87,16 @@ export const columns = [
   columnHelper.accessor('duration', {
     header: 'Transfer time',
     enableSorting: false,
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-14 text-primary">
-        {formatSeconds(ctx.row.original.duration)}
-      </span>
-    ),
+    cell: (ctx) => {
+      const { duration } = ctx.row.original
+      if (duration === undefined) return <InteropNoDataBadge />
+
+      return (
+        <span className="font-medium text-label-value-14 text-primary">
+          {formatSeconds(duration)}
+        </span>
+      )
+    },
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
@@ -191,8 +197,20 @@ function shortenHash(hash: string): string {
   return `${hash.slice(0, 6)}...${hash.slice(-4)}`
 }
 
-function TxHashCell({ hash, href }: { hash: string; href: string }) {
+function TxHashCell({
+  hash,
+  href,
+}: {
+  hash: string | undefined
+  href: string | undefined
+}) {
+  if (!hash) return <InteropNoDataBadge />
+
   const content = shortenHash(hash)
+  if (!href) {
+    return <span className="font-medium text-label-value-14">{content}</span>
+  }
+
   return (
     <a
       href={href}
