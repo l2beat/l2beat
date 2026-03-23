@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -19,7 +20,6 @@ import {
   parseOutBoxTransactionExecuted,
   RedeemScheduled,
 } from './orbitstack'
-import { findParsedBefore } from '../logScan'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -135,7 +135,7 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
       if (withdrawalFinalized) {
         const outBoxTx = findParsedBefore(
           input.txLogs,
-          input.log.logIndex!,
+          input.log.logIndex ?? -1,
           (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
         )
 

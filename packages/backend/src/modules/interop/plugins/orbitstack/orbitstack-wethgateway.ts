@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -19,7 +20,6 @@ import {
   parseOutBoxTransactionExecuted,
   RedeemScheduled,
 } from './orbitstack'
-import { findParsedBefore } from '../logScan'
 
 // == L1 -> L2 WETH deposits ==
 
@@ -137,7 +137,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           // must pair with its own OutBoxTransactionExecuted (the nearest one before it).
           const outBoxTx = findParsedBefore(
             input.txLogs,
-            input.log.logIndex!,
+            input.log.logIndex ?? -1,
             (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
           )
 

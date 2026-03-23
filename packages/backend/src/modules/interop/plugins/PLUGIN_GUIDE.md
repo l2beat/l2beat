@@ -189,7 +189,7 @@ import { findParsedBefore } from '../logScan'
 
 const outBoxTx = findParsedBefore(
   input.txLogs,
-  input.log.logIndex!,
+  input.log.logIndex ?? -1,
   (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
 )
 ```

@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -9,7 +10,6 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { findParsedBefore } from '../logScan'
 import {
   L2ToL1Tx,
   MessageDelivered,
@@ -132,7 +132,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         // must pair with its own OutBoxTransactionExecuted (the nearest one before it).
         const outBoxTx = findParsedBefore(
           input.txLogs,
-          input.log.logIndex!,
+          input.log.logIndex ?? -1,
           (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
         )
 
@@ -164,7 +164,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         // immediately before it, so we must pick the nearest one.
         const mintTransfer = findParsedBefore(
           input.txLogs,
-          input.log.logIndex!,
+          input.log.logIndex ?? -1,
           (log) => {
             const parsed = parseTransfer(log, null)
             if (!parsed) return undefined
@@ -211,7 +211,7 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
             // immediately before it, so we must pick the nearest one.
             const burnTransfer = findParsedBefore(
               input.txLogs,
-              input.log.logIndex!,
+              input.log.logIndex ?? -1,
               (log) => {
                 const parsed = parseTransfer(log, null)
                 if (!parsed) return undefined
