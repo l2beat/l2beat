@@ -6,6 +6,7 @@ import type { Config } from '../../config/Config'
 import { getLogger } from '../../logger'
 import { createAppRouter } from '../../trpc/appRouter'
 import { createTRPCContext } from '../../trpc/trpc'
+import { logTrpcError } from './logTrpcError'
 
 const logger = getLogger().for('TrpcRouter')
 
@@ -38,12 +39,11 @@ export function createTrpcRouter(deps: CreateTrpcRouterDeps): express.Router {
           tokenDb,
         }),
       onError: (opts) => {
-        logger.error(opts.error.message, {
-          path: opts.path,
-          stack: opts.error.stack,
-          code: opts.error.code,
-          type: opts.type,
+        logTrpcError(logger, {
+          error: opts.error,
           input: opts.input,
+          path: opts.path,
+          type: opts.type,
         })
       },
     }),
