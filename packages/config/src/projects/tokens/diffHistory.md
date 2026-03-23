@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x8c6ca281740bb96fa32bbd952d7820078c9c34c4
+
+# Diff at Mon, 23 Mar 2026 10:57:12 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1772462270
+- current timestamp: 1772462270
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772462270 (main branch discovery), not current.
+
+```diff
+    contract TokenMessenger (base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962) {
+    +++ description: Part of CCTP
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (base:0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract GatewayMinter (base:0x2222222d7164433c4C09B0b0D809a9b52C04C205) {
+    +++ description: Entrypoint or minter of USDC on this chain for the Gateway protocol.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract TokenMessengerV2 (base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d) {
+    +++ description: Part of CCTP
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (base:0x3a66e6486E8dd044FC8D194e9EC19b0f80bf5018) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (base:0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract GatewayWallet (base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE) {
+    +++ description: Exit point or burner of USDC on this chain for the Gateway protocol.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract MessageTransmitterV2 (base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64) {
+    +++ description: Part of CCTP
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (base:0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract MessageTransmitter (base:0xAD09780d193884d503182aD4588450C416D6F9D4) {
+    +++ description: Part of CCTP
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (base:0xF1237f985D146D8AeC106c742Ec6D8C4A98bB788) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract Paxos Gold Token (eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78) {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x498c344e9c867f9c5a77a312b4c507a0ab7c7d76
 
 # Diff at Mon, 02 Mar 2026 14:39:33 GMT:

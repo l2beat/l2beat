@@ -12,7 +12,7 @@
       "address": "base:0x01F010a5e001fe9d6940758EA5e8c777885E351e",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -932,7 +932,7 @@
       "address": "base:0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

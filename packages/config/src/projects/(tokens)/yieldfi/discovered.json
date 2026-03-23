@@ -537,6 +537,7 @@
         "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
       ],
       "proxyType": "EIP7702 EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",

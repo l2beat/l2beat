@@ -528,7 +528,7 @@
       "address": "eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "guard",

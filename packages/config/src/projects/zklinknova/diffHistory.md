@@ -1,3 +1,189 @@
+Generated with discovered.json: 0xbb4baf8c0d6aff8ae42e0ccaea70557d12ecfaf4
+
+# Diff at Mon, 23 Mar 2026 10:57:14 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumL2Gateway (arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract BaseL2Gateway (base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    EOA  (base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract BlastL2Gateway (blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (eth:0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    EOA  (eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract BlastL1Gateway (eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract BaseL1Gateway (eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract MantaL1Gateway (eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract LineaL1Gateway (eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (eth:0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract MantleL1Gateway (eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract EraL1Gateway (eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract LineaL2Gateway (linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract MantaL2Gateway (manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract MantleL2Gateway (mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    EOA  (oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ScrollL2Gateway (scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7) {
+    +++ description: None
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0x94e0207fd47e2edc81a09d7ec295676165c1c03b
 
 # Diff at Tue, 04 Nov 2025 11:35:01 GMT:

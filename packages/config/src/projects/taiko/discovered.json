@@ -1199,7 +1199,8 @@
       "implementationNames": {
         "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "ERC1967Proxy",
         "eth:0xB8826B144eB895eFE2923b61b3b117B1298A9526": "ProverSet"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",

@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x5a7e2306d4d5cc7fc7326e175b9f7215e0c92e70
+
+# Diff at Mon, 23 Mar 2026 10:57:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1773160450
+- current timestamp: 1773160450
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773160450 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (eth:0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x476514734aad2706f87307396942309a909b724d
 
 # Diff at Mon, 23 Feb 2026 14:45:29 GMT:

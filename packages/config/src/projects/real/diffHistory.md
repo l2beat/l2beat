@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd4864458b176325cd4df5318edfc3b6cab64e4a0
+
+# Diff at Mon, 23 Mar 2026 10:57:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1754054742
+- current timestamp: 1754054742
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054742 (main branch discovery), not current.
+
+```diff
+    contract Bridger (eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) {
+    +++ description: A Routing contract to the standard orbit stack bridge of the L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    EOA  (eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x178c5a54b9d91676d3231ce77cb7cf747870a5a1
 
 # Diff at Fri, 26 Sep 2025 13:12:16 GMT:

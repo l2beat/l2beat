@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf398171971fd69ef0dadff905a31245d2c56417d
+
+# Diff at Mon, 23 Mar 2026 10:57:15 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1755162744
+- current timestamp: 1755162744
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1755162744 (main branch discovery), not current.
+
+```diff
+    contract USDC Token (zksync:0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4) {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x1045cccab1c0fbaa3aba61c030740230cb734eac
 
 # Diff at Tue, 04 Nov 2025 13:01:40 GMT:

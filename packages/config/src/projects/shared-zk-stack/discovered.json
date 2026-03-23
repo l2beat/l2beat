@@ -3162,7 +3162,6 @@
       "address": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

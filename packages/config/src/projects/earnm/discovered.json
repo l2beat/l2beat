@@ -853,7 +853,7 @@
       "address": "arb1:0xe5e3eEC4c5F443B04C5c883384674FD9e3eA93D9",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

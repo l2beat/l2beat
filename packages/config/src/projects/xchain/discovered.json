@@ -783,7 +783,7 @@
       "address": "eth:0x8af97264482B59c7AA11010907710DEe6d8D8c6C",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

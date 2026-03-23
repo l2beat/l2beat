@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc50302a729cd55d7078ff50c10b415a2e378c99e
+
+# Diff at Mon, 23 Mar 2026 10:57:12 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1773665926
+- current timestamp: 1773665926
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773665926 (main branch discovery), not current.
+
+```diff
+    contract ProverSet (eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0xe1f9e231fc4d7bf6770d1c22702e14ad84b9dcfe
 
 # Diff at Mon, 16 Mar 2026 13:00:22 GMT:

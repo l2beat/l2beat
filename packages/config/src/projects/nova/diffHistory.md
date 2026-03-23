@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xef7837c1fd71183d85fbc579494518b25d5ababe
+
+# Diff at Mon, 23 Mar 2026 10:57:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1768566203
+- current timestamp: 1768566203
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768566203 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0x5b1abdc6dea1e28ed7625a5840c5e44c9a0e33a01b15db9b8604c9e587986e85"
++        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3:
+-        "SafeProxy"
++        "GnosisSafeProxy"
+    }
+```
+
+```diff
+    EOA L1Timelock (arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x46866dea72dee3d45f5e904a9866a31caa551d1d
 
 # Diff at Fri, 16 Jan 2026 12:24:31 GMT:

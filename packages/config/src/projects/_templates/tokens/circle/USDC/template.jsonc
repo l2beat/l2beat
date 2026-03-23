@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "USDC",
+  "category": "non-critical",
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "owner": {

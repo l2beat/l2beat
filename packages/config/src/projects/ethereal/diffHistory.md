@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xed75e19070f3090d6f8027caebd549ea262b8c5d
+
+# Diff at Mon, 23 Mar 2026 10:57:00 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1770823999
+- current timestamp: 1770823999
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770823999 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) {
+    +++ description: Used to verify offchain signed oracle data.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf8fd33dc19f3d548ab5707d20cf8c15a9ec38370
 
 # Diff at Wed, 11 Feb 2026 15:34:28 GMT:

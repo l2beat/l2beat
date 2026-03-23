@@ -59,7 +59,8 @@
       "implementationNames": {
         "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": "AxelarGasServiceProxy",
         "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": "AxelarGasService"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",

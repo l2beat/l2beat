@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8cf944b23c11181c0421f573f64f27653fec376b
+
+# Diff at Mon, 23 Mar 2026 10:57:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1772198389
+- current timestamp: 1772198389
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772198389 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (oeth:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (oeth:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (oeth:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract OperatorFeeVault (oeth:0x420000000000000000000000000000000000001b) {
+    +++ description: Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA SuperchainProxyAdminOwner - L2 Alias (oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x561e6f520ebc73930dc04203bfff3d3cc197932e
 
 # Diff at Fri, 27 Feb 2026 13:57:06 GMT:

@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x6c810485c5135aba5841ebe78ec73651c9d628fc
+
+# Diff at Mon, 23 Mar 2026 10:56:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1773160404
+- current timestamp: 1773160404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773160404 (main branch discovery), not current.
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (base:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (base:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (base:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA Base Governance Multisig - L2 Alias (base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x29f8c3eeca9cab5e3e253c55ad66a37fa4b5dd30
 
 # Diff at Wed, 04 Mar 2026 20:35:16 GMT:

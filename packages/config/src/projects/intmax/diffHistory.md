@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x13836d575bdcf316bde5eb9595126160c7a80f48
+
+# Diff at Mon, 23 Mar 2026 10:57:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1771280072
+- current timestamp: 1771280072
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771280072 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract Contribution (eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2) {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA  (eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    EOA  (eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract Contribution (scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af) {
+    +++ description: Records a set of 'contribution' actions by saving addresses with a tag of their action (e.g. propose blocks, claim withdrawals, deposit...).
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
 Generated with discovered.json: 0x7d911154dc2400adf1b818af5e0bceb9d34a635b
 
 # Diff at Mon, 23 Feb 2026 13:58:21 GMT:

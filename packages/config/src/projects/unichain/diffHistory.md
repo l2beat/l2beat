@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf14859010e42e3973139d91ee37209e4bec39f22
+
+# Diff at Mon, 23 Mar 2026 10:57:13 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1772198394
+- current timestamp: 1772198394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772198394 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x20dcd7ff3e66826b0427fd3e41d5d003e27107d8
 
 # Diff at Fri, 27 Feb 2026 13:29:34 GMT:

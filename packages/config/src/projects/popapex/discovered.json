@@ -1166,7 +1166,7 @@
       "address": "arb1:0xF57362969fe0d5fcaeB8a3Cf2d185eF39A5b3BD6",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

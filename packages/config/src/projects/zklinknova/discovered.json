@@ -91,7 +91,8 @@
       "implementationNames": {
         "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a": "ERC1967Proxy",
         "arb1:0x413552461b0b2c13f117d885b52AaA2f23374B1D": "ArbitrumL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ArbitrumOwner",
@@ -323,7 +324,8 @@
       "implementationNames": {
         "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011": "ERC1967Proxy",
         "base:0x7f00134427437b2883F59EF3880597FDc836E356": "OptimismL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "base:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -339,6 +341,7 @@
       "address": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -691,7 +694,8 @@
       "implementationNames": {
         "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1": "ERC1967Proxy",
         "blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD": "OptimismL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "blastmainnet:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -946,7 +950,8 @@
       "implementationNames": {
         "eth:0x273D59aed2d793167c162E64b9162154B07583C0": "ERC1967Proxy",
         "eth:0xF69302b6fF21116F9266bFA2fbE4ee23f6292875": "ArbitrumL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EthereumProxyAdmin",
@@ -979,6 +984,7 @@
       "address": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1028,7 +1034,8 @@
       "implementationNames": {
         "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158": "ERC1967Proxy",
         "eth:0x01334Df58feE28db184ae9D11467F38F7437FD80": "OptimismL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -1066,7 +1073,8 @@
       "implementationNames": {
         "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E": "ERC1967Proxy",
         "eth:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "OptimismL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EthereumzkLink",
@@ -1176,7 +1184,8 @@
       "implementationNames": {
         "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D": "ERC1967Proxy",
         "eth:0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962": "OptimismL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "OptimismL1Gateway",
@@ -1209,7 +1218,8 @@
       "implementationNames": {
         "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026": "ERC1967Proxy",
         "eth:0x2e8AD1434663b209EE59eF1a6612114239F4a190": "OptimismL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -1252,7 +1262,8 @@
       "implementationNames": {
         "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b": "ERC1967Proxy",
         "eth:0xD2ED3FA35be899fe850075946Fc7320bB4c18C29": "LineaL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EthereumL1Gateway",
@@ -1295,7 +1306,8 @@
       "implementationNames": {
         "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c": "ERC1967Proxy",
         "eth:0x65c7B3E1B877131986247B49474834b0347eF332": "EthereumGateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ScrollL1Gateway",
@@ -1328,7 +1340,8 @@
       "implementationNames": {
         "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92": "ERC1967Proxy",
         "eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB": "ScrollL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EthereumL1ERC20Bridge",
@@ -1528,7 +1541,8 @@
       "implementationNames": {
         "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269": "ERC1967Proxy",
         "eth:0xe98EDDAd1f49abc7586eE516d019D834FBDc2951": "OptimismL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EraL1Gateway",
@@ -1576,7 +1590,8 @@
       "implementationNames": {
         "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab": "ERC1967Proxy",
         "eth:0x59Ad3580c9e0992D474954327f5879AF5B3e4a22": "ZkSyncL1Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -2001,7 +2016,8 @@
       "implementationNames": {
         "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "ERC1967Proxy",
         "linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "LineaL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Verifier",
@@ -2366,7 +2382,8 @@
       "implementationNames": {
         "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
         "manta:0x50efC7f1290479cb879473512D89fDC80B726211": "OptimismL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "manta:0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -2639,7 +2656,8 @@
       "implementationNames": {
         "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
         "mantle:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": "MantleL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "MantleProxyAdmin",
@@ -2743,6 +2761,7 @@
       "address": "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2932,7 +2951,8 @@
       "implementationNames": {
         "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "ERC1967Proxy",
         "oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": "OptimismL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "oeth:0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
@@ -3151,7 +3171,8 @@
       "implementationNames": {
         "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "ERC1967Proxy",
         "scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F": "ScrollL2Gateway"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "scr:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",

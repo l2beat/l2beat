@@ -300,6 +300,7 @@
       "ignoreDiscovery": true
     },
     "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2": {
+      "ignoreRelatives": ["l1USDC"],
       "ignoreInWatchMode": ["totalBridgedUSDC"]
     }
   }

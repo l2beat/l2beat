@@ -222,7 +222,8 @@
       },
       "implementationNames": {
         "base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962": "TokenMessenger"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "base:0x17aBc3F085fb4B7eAf5002785DE22867f964D273",
@@ -233,7 +234,6 @@
       "address": "base:0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -313,7 +313,8 @@
       "implementationNames": {
         "base:0x2222222d7164433c4C09B0b0D809a9b52C04C205": "ERC1967Proxy",
         "base:0xc2ff68068362AEa1ca22a3896d05B2B812ce51B1": "GatewayMinter"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MasterMinter",
@@ -388,7 +389,8 @@
       "implementationNames": {
         "base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": "AdminUpgradableProxy",
         "base:0x555E272506C06e7E559d57418563742AFE363ec8": "TokenMessengerV2"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "base:0x2f86c55c0557788c8b1AbC2685f14ED6be68F3A5",
@@ -419,7 +421,6 @@
       "address": "base:0x3a66e6486E8dd044FC8D194e9EC19b0f80bf5018",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -485,7 +486,6 @@
       "address": "base:0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -680,7 +680,8 @@
       "implementationNames": {
         "base:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": "ERC1967Proxy",
         "base:0x899a4f5f5422cC5E8183280182e7096Fb923C762": "GatewayWallet"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MessageTransmitterV2",
@@ -730,7 +731,8 @@
       "implementationNames": {
         "base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": "AdminUpgradableProxy",
         "base:0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3": "MessageTransmitterV2"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "USD Coin Token",
@@ -801,7 +803,8 @@
       "implementationNames": {
         "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": "FiatTokenProxy",
         "base:0x2Ce6311ddAE708829bc0784C967b7d77D19FD779": "FiatTokenV2_2"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "base:0x880AD1D79c50f9FA0050CDdAd139E52e06B9C725",
@@ -812,7 +815,6 @@
       "address": "base:0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -970,7 +972,8 @@
       },
       "implementationNames": {
         "base:0xAD09780d193884d503182aD4588450C416D6F9D4": "MessageTransmitter"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "base:0xaD72249C80699ABc2eAeD5c66B0300F8631Fca96",
@@ -1110,7 +1113,6 @@
       "address": "base:0xF1237f985D146D8AeC106c742Ec6D8C4A98bB788",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2174,7 +2176,8 @@
       "implementationNames": {
         "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78": "AdminUpgradeabilityProxy",
         "eth:0x74271F2282eD7eE35c166122A60c9830354be42a": "PAXGImplementation"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x46E38dAA42aD10d333118D76A56068d0f25FB217",

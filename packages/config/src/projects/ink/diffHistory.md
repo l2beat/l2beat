@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xb0db198444f68055e1f6bcb46bdc84108227b3d3
+
+# Diff at Mon, 23 Mar 2026 10:57:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79c8d09002c573459ff3a2b1b9f07ec4cc530fa9 block: 1772198385
+- current timestamp: 1772198385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772198385 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (ink:0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (ink:0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (ink:0x420000000000000000000000000000000000001A) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA SuperchainProxyAdminOwner_L2Alias (ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x2678474c912c819a4a2e64930333a94fe5bfe23f
 
 # Diff at Fri, 27 Feb 2026 13:20:54 GMT:

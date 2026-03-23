@@ -924,6 +924,7 @@
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3361,6 +3362,7 @@
       "address": "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b",
       "type": "EOA",
       "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",

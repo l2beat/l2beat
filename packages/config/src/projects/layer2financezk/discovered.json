@@ -7,7 +7,7 @@
       "address": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
