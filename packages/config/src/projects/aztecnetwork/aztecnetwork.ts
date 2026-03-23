@@ -447,13 +447,12 @@ export const aztecnetwork: ScalingProject = {
     ],
   },
   stateValidation: {
-    description:
-      'Each epoch root proof is verified on Ethereum before the proven checkpoint number is advanced and the epoch outbox root is inserted into the Outbox.',
+    description: `Each epoch root proof is verified by the HonkVerifier smart contract on Ethereum before the proven checkpoint number is advanced and the epoch outbox state root is inserted into the Outbox. Proving is permissionless, and a single proof can cover one Checkpoint (${formatSeconds(slotDuration)}) to one epoch (${formatSeconds(epochDuration)}). Unproven checkpoints are pruned after the proof submission window of ${proofWindowString} expires.`,
     categories: [
       {
         title: 'State root proposals',
         description:
-          'The rollup only advances the proven chain after submitEpochRootProof() succeeds. That call verifies the epoch proof and then inserts the epoch outbox root for L2->L1 messaging.',
+          'The rollup only advances the proven chain after submitEpochRootProof() succeeds. That call verifies the epoch proof and then inserts the epoch outbox state root for L2->L1 messaging.',
         references: [
           {
             title: 'Rollup.sol - submitEpochRootProof() on Etherscan',
