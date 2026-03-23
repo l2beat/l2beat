@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1773840653,
+  "timestamp": 1774257283,
   "configHash": "0x3e95cc46fbdd1bf089c2978556e82a8b4f8cf5a04c4078733569a762df21ebcf",
   "entries": [
     {
@@ -38,7 +38,7 @@
         "0xf5d24826d1f40e6e4796bdde6cee8f8b3fa9bc6f2a859fdb79c591cd8c6bbfb6"
       ],
       "proxyType": "immutable",
-      "description": "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.",
+      "description": "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.",
       "ignoreInWatchMode": ["getCurrentRound"],
       "sinceTimestamp": 1762995059,
       "sinceBlock": 23786828,
@@ -54,7 +54,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 150,
+        "getCurrentRound": 156,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -106,8 +106,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 3,
-        "totalPowerNow": "800798100636901014525246337",
-        "withdrawalCount": 2461
+        "totalPowerNow": "802598100636901014525244837",
+        "withdrawalCount": 2475
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
@@ -346,7 +346,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 4,
+        "getCurrentHatch": 6,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -531,7 +531,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 128,
+        "getCurrentRound": 173,
         "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -576,7 +576,7 @@
         "getLatestRollup": "eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "798490000000000000000000000"
+        "totalSupply": "800290000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -648,9 +648,9 @@
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
         "getCurrentBlobCommitmentsHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentEpoch": 514,
-        "getCurrentSampleSeed": "109764262221985660349284468949109837425024077380738655069336839702687873729532",
-        "getCurrentSlot": 16479,
+        "getCurrentEpoch": 695,
+        "getCurrentSampleSeed": "92527720592767671974169210583172584833346688989380686943432111788296861102158",
+        "getCurrentSlot": 22265,
         "getEarliestRewardsClaimableTimestamp": 0,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 0,
@@ -1655,6 +1655,6 @@
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24684680 },
+  "usedBlockNumbers": { "ethereum": 24719255 },
   "permissionsConfigHash": "0xe90f7482d22c9e19d245263eb9466922dc591c6d63dd21e0cc8b79dbaa3cb015"
 }

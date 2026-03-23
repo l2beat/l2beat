@@ -1473,5 +1473,7 @@
   "static/icons/aztecnetwork.png": "028dabf67b61964fd33e998d45b13807",
   "static/meta-images/scaling/projects/aztecnetwork/opengraph-image.png": "578aa7e5056e2059a83e0c200c5b19f8",
   "static/icons/barretenberg.png": "76f7968ebfa28a3fb8b5543a15a3e456",
-  "static/meta-images/zk-catalog/projects/barretenberg/opengraph-image.png": "a6dc7d80929034a26fcfe35de06f16a4"
+  "static/meta-images/zk-catalog/projects/barretenberg/opengraph-image.png": "a6dc7d80929034a26fcfe35de06f16a4",
+  "static/images/architecture/aztecnetwork.png": "e28e14b00559a9cfc1eb5625850575a3",
+  "static/images/upgrades-and-governance/aztecnetwork.png": "c1238b1d7027f962f5ef98de802f848b"
 }

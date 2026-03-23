@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd07560ab710baedede9c1fb51457a8b9bf7259f8
+Generated with discovered.json: 0x048c7c47904b0ff73f85d0a3b971e3deab0850b2
 
-# Diff at Wed, 18 Mar 2026 13:32:02 GMT:
+# Diff at Mon, 23 Mar 2026 09:15:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6efe4272895cd940e6f11b02230b048063c0fc22 block: 1771254730
-- current timestamp: 1773840653
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1771254730
+- current timestamp: 1774257283
 
 ## Description
 
@@ -52,7 +52,7 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       sinceBlock:
 +        24586323
       values:
-+        {"$immutable":true,"getActiveDuration":2,"getBondSize":"332000000000000000000000000","getBondSizeFmt":"332,000,000","getBondToken":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getCandidateCount":0,"getCurrentHatch":4,"getFailedHatchPunishment":"9600000000000000000000000","getFailedHatchPunishmentFmt":"9,600,000","getFrequency":112,"getLagInHatches":1,"getProposingExitDelay":2592000,"getRollup":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","getWithdrawalTax":"1660000000000000000000000","getWithdrawalTaxFmt":"1,660,000","LAG_IN_EPOCHS_FOR_RANDAO":1,"LAG_IN_EPOCHS_FOR_SET_SIZE":2}
++        {"$immutable":true,"getActiveDuration":2,"getBondSize":"332000000000000000000000000","getBondSizeFmt":"332,000,000","getBondToken":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","getCandidateCount":0,"getCurrentHatch":6,"getFailedHatchPunishment":"9600000000000000000000000","getFailedHatchPunishmentFmt":"9,600,000","getFrequency":112,"getLagInHatches":1,"getProposingExitDelay":2592000,"getRollup":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","getWithdrawalTax":"1660000000000000000000000","getWithdrawalTaxFmt":"1,660,000","LAG_IN_EPOCHS_FOR_RANDAO":1,"LAG_IN_EPOCHS_FOR_SET_SIZE":2}
       fieldMeta:
 +        {"getBondSizeFmt":{"description":"The amount of tokens required to join the candidate set."},"getWithdrawalTaxFmt":{"description":"The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented."},"getCandidateCount":{"severity":"HIGH","description":"Hatch proposer candidates who posted the bond."},"getBondToken":{"description":"The ERC20 token used for candidate bonds."},"getFailedHatchPunishmentFmt":{"description":"The amount deducted from the bond if the designated proposer fails to fulfill their duties."},"getFrequency":{"description":"The number of epochs between escape hatch windows."},"getActiveDuration":{"description":"The number of epochs an escape hatch remains open."},"getLagInHatches":{"description":"The number of hatches ahead for which candidates are deterministically selected."},"getProposingExitDelay":{"description":"The additional time (in seconds) a proposer must wait after their hatch ends before they can exit."},"LAG_IN_EPOCHS_FOR_RANDAO":{"description":"The number of epochs to look back from the start of the hatch for a stable RANDAO seed."},"LAG_IN_EPOCHS_FOR_SET_SIZE":{"description":"The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."},"getRollup":{"description":"The address of the core Rollup contract."}}
       implementationNames:
@@ -86,7 +86,7 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       sinceBlock:
 +        24586322
       values:
-+        {"$immutable":true,"COMMITTEE_SIZE":48,"eip712Domain":{"fields":"0x0f","name":"TallySlashingProposer","version":"1","chainId":1,"verifyingContract":"eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"EXECUTION_DELAY_IN_ROUNDS":28,"getCurrentRound":128,"INSTANCE":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","LIFETIME_IN_ROUNDS":34,"MAX_ROUND_SIZE":1024,"QUORUM":65,"ROUND_SIZE":128,"ROUND_SIZE_IN_EPOCHS":4,"ROUNDABOUT_SIZE":128,"SLASH_AMOUNT_LARGE":"2000000000000000000000","SLASH_AMOUNT_MEDIUM":"2000000000000000000000","SLASH_AMOUNT_SMALL":"2000000000000000000000","SLASH_OFFSET_IN_ROUNDS":2,"SLASH_PAYLOAD_IMPLEMENTATION":"eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445","SLASHER":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","SLASHING_PROPOSER_TYPE":1,"VOTE_TYPEHASH":"0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"}
++        {"$immutable":true,"COMMITTEE_SIZE":48,"eip712Domain":{"fields":"0x0f","name":"TallySlashingProposer","version":"1","chainId":1,"verifyingContract":"eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"EXECUTION_DELAY_IN_ROUNDS":28,"getCurrentRound":173,"INSTANCE":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","LIFETIME_IN_ROUNDS":34,"MAX_ROUND_SIZE":1024,"QUORUM":65,"ROUND_SIZE":128,"ROUND_SIZE_IN_EPOCHS":4,"ROUNDABOUT_SIZE":128,"SLASH_AMOUNT_LARGE":"2000000000000000000000","SLASH_AMOUNT_MEDIUM":"2000000000000000000000","SLASH_AMOUNT_SMALL":"2000000000000000000000","SLASH_OFFSET_IN_ROUNDS":2,"SLASH_PAYLOAD_IMPLEMENTATION":"eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445","SLASHER":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","SLASHING_PROPOSER_TYPE":1,"VOTE_TYPEHASH":"0x18b6b90f234e6d028d4c9800043cedef34624eedddd14e60eba01934728014fe"}
       implementationNames:
 +        {"eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958":"TallySlashingProposer"}
     }
@@ -191,7 +191,10 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
 
 ```diff
     contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) {
-    +++ description: Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.
+    +++ description: Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.
+      description:
+-        "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract."
++        "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals."
       category:
 +        {"name":"Governance","priority":3}
     }
