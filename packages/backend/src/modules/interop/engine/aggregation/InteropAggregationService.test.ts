@@ -101,7 +101,8 @@ describe(InteropAggregationService.name, () => {
         id: 'config1',
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
-        tokenPair: 'eth::eth',
+        tokenA: 'eth',
+        tokenB: 'eth',
         transferTypeStats: {
           deposit: { transferCount: 2, totalDurationSum: 11000 },
         },

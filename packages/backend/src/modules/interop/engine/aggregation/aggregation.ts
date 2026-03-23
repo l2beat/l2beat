@@ -370,6 +370,8 @@ export function getAggregatedPairs(
   const pairs: Record<
     string,
     {
+      tokenA: string
+      tokenB: string
       transferCount: number
       totalDurationSum: number
       transfersWithDurationCount: number
@@ -382,14 +384,20 @@ export function getAggregatedPairs(
 
   for (const transfer of group) {
     let pairKey: string
+    let tokenA: string
+    let tokenB: string
     if (!transfer.srcAbstractTokenId || !transfer.dstAbstractTokenId) {
       pairKey = 'unknown'
+      tokenA = 'unknown'
+      tokenB = 'unknown'
     } else {
       const [a, b] = [
         transfer.srcAbstractTokenId,
         transfer.dstAbstractTokenId,
       ].sort()
       pairKey = `${a}::${b}`
+      tokenA = a
+      tokenB = b
     }
 
     const duration = transfer.duration
@@ -397,6 +405,8 @@ export function getAggregatedPairs(
 
     const current = pairs[pairKey]
     pairs[pairKey] = {
+      tokenA,
+      tokenB,
       transferCount: (current?.transferCount ?? 0) + 1,
       totalDurationSum: (current?.totalDurationSum ?? 0) + (duration ?? 0),
       transfersWithDurationCount:
@@ -428,10 +438,11 @@ export function getAggregatedPairs(
     }
   }
 
-  return Object.entries(pairs).map(([tokenPair, data]) => ({
+  return Object.values(pairs).map((data) => ({
     srcChain: first.srcChain,
     dstChain: first.dstChain,
-    tokenPair,
+    tokenA: data.tokenA,
+    tokenB: data.tokenB,
     transferTypeStats: data.transferTypeStats,
     transferCount: data.transferCount,
     transfersWithDurationCount: data.transfersWithDurationCount,

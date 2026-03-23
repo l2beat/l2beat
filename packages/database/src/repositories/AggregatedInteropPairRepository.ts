@@ -10,7 +10,8 @@ export interface AggregatedInteropPairRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
-  tokenPair: string
+  tokenA: string
+  tokenB: string
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   transfersWithDurationCount: number
@@ -29,7 +30,8 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
-    tokenPair: row.tokenPair,
+    tokenA: row.tokenA,
+    tokenB: row.tokenB,
     transferTypeStats:
       (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
       undefined,
@@ -51,7 +53,8 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
-    tokenPair: record.tokenPair,
+    tokenA: record.tokenA,
+    tokenB: record.tokenB,
     transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     transfersWithDurationCount: record.transfersWithDurationCount,

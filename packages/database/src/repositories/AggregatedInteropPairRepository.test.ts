@@ -26,7 +26,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferTypeStats: {
             taxi: { transferCount: 2, totalDurationSum: 90 },
           },
@@ -39,7 +40,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(200),
           srcChain: 'arbitrum',
           dstChain: 'ethereum',
-          tokenPair: 'btc___::eth___',
+          tokenA: 'btc___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -49,10 +51,22 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(300),
           srcChain: 'polygon',
           dstChain: 'ethereum',
-          tokenPair: 'eth___::eth___',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
           transferCount: 7,
           totalDurationSum: 3000,
           volume: 7000,
+        }),
+        record({
+          id: 'id4',
+          timestamp: UnixTime(400),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'unknown',
+          tokenB: 'unknown',
+          transferCount: 2,
+          totalDurationSum: 500,
+          volume: 1000,
         }),
       ]
 
@@ -79,7 +93,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: day1Early,
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -89,7 +104,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: day1Mid,
           srcChain: 'arbitrum',
           dstChain: 'ethereum',
-          tokenPair: 'btc___::eth___',
+          tokenA: 'btc___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -99,7 +115,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: day1Late,
           srcChain: 'polygon',
           dstChain: 'ethereum',
-          tokenPair: 'eth___::eth___',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
           transferCount: 7,
           totalDurationSum: 3000,
           volume: 7000,
@@ -109,7 +126,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: day2Early,
           srcChain: 'ethereum',
           dstChain: 'polygon',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 2,
           totalDurationSum: 4000,
           volume: 8000,
@@ -119,7 +137,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: day2Mid,
           srcChain: 'arbitrum',
           dstChain: 'polygon',
-          tokenPair: 'btc___::usdc__',
+          tokenA: 'btc___',
+          tokenB: 'usdc__',
           transferCount: 4,
           totalDurationSum: 5000,
           volume: 9000,
@@ -155,7 +174,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -165,7 +185,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(200),
           srcChain: 'arbitrum',
           dstChain: 'ethereum',
-          tokenPair: 'btc___::eth___',
+          tokenA: 'btc___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -175,7 +196,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(200),
           srcChain: 'polygon',
           dstChain: 'ethereum',
-          tokenPair: 'eth___::eth___',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
           transferCount: 7,
           totalDurationSum: 3000,
           volume: 7000,
@@ -198,7 +220,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
             timestamp: UnixTime(100),
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
-            tokenPair: 'eth___::usdc__',
+            tokenA: 'eth___',
+          tokenB: 'usdc__',
             transferCount: 5,
             totalDurationSum: 1000,
             volume: 5000,
@@ -225,7 +248,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -236,7 +260,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'btc___::eth___',
+          tokenA: 'btc___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -261,7 +286,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -272,7 +298,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'ethereum',
-          tokenPair: 'eth___::eth___',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -297,7 +324,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'arbitrum',
-          tokenPair: 'eth___::usdc__',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
           transferCount: 5,
           totalDurationSum: 1000,
           volume: 5000,
@@ -308,7 +336,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
           timestamp: UnixTime(100),
           srcChain: 'ethereum',
           dstChain: 'ethereum',
-          tokenPair: 'eth___::eth___',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
           transferCount: 3,
           totalDurationSum: 2000,
           volume: 6000,
@@ -327,6 +356,44 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
 
         expect(result).toEqualUnsorted([crossChain, sameChain])
       })
+
+      it('returns unknown pair records alongside known pairs', async () => {
+        const knownPair = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+          bridgeType: 'lockAndMint',
+        })
+        const unknownPair = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'unknown',
+          tokenB: 'unknown',
+          transferCount: 2,
+          totalDurationSum: 500,
+          volume: 1000,
+          bridgeType: 'lockAndMint',
+        })
+        await repository.insertMany([knownPair, unknownPair])
+
+        const result = await repository.getByChainsIdAndTimestamp(
+          UnixTime(100),
+          'protocol1',
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+          'lockAndMint',
+        )
+
+        expect(result).toEqualUnsorted([knownPair, unknownPair])
+      })
     },
   )
 })
@@ -336,7 +403,8 @@ function record({
   timestamp,
   srcChain,
   dstChain,
-  tokenPair,
+  tokenA,
+  tokenB,
   transferTypeStats,
   transferCount = 1,
   transfersWithDurationCount = transferCount,
@@ -350,7 +418,8 @@ function record({
   timestamp: UnixTime
   srcChain: string
   dstChain: string
-  tokenPair: string
+  tokenA: string
+  tokenB: string
   transferTypeStats?: AggregatedInteropPairRecord['transferTypeStats']
   transferCount?: number
   transfersWithDurationCount?: number
@@ -366,7 +435,8 @@ function record({
     bridgeType,
     srcChain,
     dstChain,
-    tokenPair,
+    tokenA,
+    tokenB,
     transferTypeStats,
     transferCount,
     transfersWithDurationCount,
