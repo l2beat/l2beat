@@ -1,4 +1,16 @@
-import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+/*
+WETH gateway plugin. Handles WETH-specific deposit/withdrawal tracking.
+
+Must run before the core plugin in the cluster so it can capture L2ToL1Tx
+events for WETH withdrawals, preventing them from being misclassified as
+plain ETH withdrawals.
+*/
+
+import {
+  Address32,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -20,9 +32,10 @@ import {
   RedeemScheduled,
 } from './orbitstack'
 
-// == L1 -> L2 WETH deposits ==
+const addr = ChainSpecificAddress.address
 
-// L1 initiation of L1->L2 WETH deposit
+// --- L1→L2 WETH deposits ---
+
 const WethDepositInitiatedMessageDelivered = createInteropEventType<{
   chain: string
   messageNum: string
@@ -33,7 +46,6 @@ const parseDepositInitiated = createEventParser(
   'event DepositInitiated(address _l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)',
 )
 
-// L2 finalization of L1->L2 WETH deposit
 const WethDepositFinalized = createInteropEventType<{
   chain: string
   amount: bigint
@@ -47,9 +59,8 @@ const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-// == L2 -> L1 WETH withdrawals ==
+// --- L2→L1 WETH withdrawals ---
 
-// L2 initiation of L2->L1 WETH withdrawal
 const WethWithdrawalInitiatedL2ToL1Tx = createInteropEventType<{
   chain: string
   position: number
@@ -60,7 +71,6 @@ const parseWithdrawalInitiated = createEventParser(
   'event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)',
 )
 
-// L1 finalization of L2->L1 WETH withdrawal
 const WethWithdrawalFinalizedOutBoxTransactionExecuted =
   createInteropEventType<{
     chain: string
@@ -76,25 +86,31 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
   readonly name = 'orbitstack-wethgateway'
 
   capture(input: LogToCapture) {
-    if (input.chain === 'ethereum') {
-      // L1 -> L2 WETH deposit initiated
+    const isParentChain = ORBITSTACK_NETWORKS.some(
+      (n) => n.parentChain === input.chain,
+    )
+    if (isParentChain) {
+      const logAddress = EthereumAddress(input.log.address)
       const network = ORBITSTACK_NETWORKS.find(
-        (n) => EthereumAddress(input.log.address) === n.l1WethGateway,
+        (n) =>
+          n.parentChain === input.chain &&
+          n.l1WethGateway &&
+          logAddress === addr(n.l1WethGateway),
       )
-      if (network) {
+      const l1WethGateway = network?.l1WethGateway
+      const l1Weth = network?.l1Weth
+      if (network && l1WethGateway && l1Weth) {
         const depositInitiated = parseDepositInitiated(input.log, [
-          network.l1WethGateway,
+          addr(l1WethGateway),
         ])
         if (depositInitiated) {
-          // Verify this is for WETH
-          if (EthereumAddress(depositInitiated._l1Token) !== network.l1Weth) {
+          if (EthereumAddress(depositInitiated._l1Token) !== addr(l1Weth)) {
             return
           }
 
-          // Find MessageDelivered in the same transaction
+          // sequenceNumber in DepositInitiated == messageIndex in MessageDelivered
           const messageDeliveredLog = input.txLogs.find((log) => {
-            const parsed = parseMessageDelivered(log, [network.bridge])
-            // The sequenceNumber in DepositInitiated equals the messageIndex in MessageDelivered
+            const parsed = parseMessageDelivered(log, [addr(network.bridge)])
             return (
               parsed !== undefined &&
               parsed.messageIndex === depositInitiated._sequenceNumber
@@ -104,7 +120,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           if (messageDeliveredLog) {
             const messageDelivered = parseMessageDelivered(
               messageDeliveredLog,
-              [network.bridge],
+              [addr(network.bridge)],
             )
             if (messageDelivered) {
               return [
@@ -118,28 +134,27 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           }
         }
 
-        // L1 finalization of L2->L1 WETH withdrawal
         const wethWithdrawalFinalized = parseWethWithdrawalFinalized(
           input.log,
-          [network.l1WethGateway],
+          [addr(l1WethGateway)],
         )
         if (wethWithdrawalFinalized) {
-          // Verify this is for WETH
           if (
-            EthereumAddress(wethWithdrawalFinalized.l1Token) !== network.l1Weth
+            EthereumAddress(wethWithdrawalFinalized.l1Token) !== addr(l1Weth)
           ) {
             return
           }
 
-          // Find OutBoxTransactionExecuted in the same transaction
           const outBoxTxLog = input.txLogs.find((log) => {
-            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
+            const parsed = parseOutBoxTransactionExecuted(log, [
+              addr(network.outbox),
+            ])
             return parsed !== undefined
           })
 
           if (outBoxTxLog) {
             const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-              network.outbox,
+              addr(network.outbox),
             ])
             if (outBoxTx) {
               return [
@@ -153,116 +168,125 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
           }
         }
       }
-    } else {
-      // L2 operations
-      const network = ORBITSTACK_NETWORKS.find((n) => n.chain === input.chain)
-      if (!network) return
+    }
 
-      // First, check if this is an L2ToL1Tx event from ArbSys (for WETH withdrawals)
-      // This needs to run BEFORE the base plugin to prevent misclassification
-      const l2ToL1Tx = parseL2ToL1Tx(input.log, [network.arbsys])
-      if (l2ToL1Tx) {
-        // Check if this L2ToL1Tx is part of a WETH withdrawal
-        // by looking for a WithdrawalInitiated event in the same transaction
-        const wethWithdrawalLog = input.txLogs.find((log) => {
-          if (EthereumAddress(log.address) !== network.l2WethGateway) {
-            return false
-          }
-          const parsed = parseWithdrawalInitiated(log, [network.l2WethGateway])
-          return (
-            parsed !== undefined &&
-            EthereumAddress(parsed.l1Token) === network.l1Weth &&
-            Number(parsed._l2ToL1Id) === Number(l2ToL1Tx.position)
-          )
-        })
+    // A chain can be both parent and child (e.g. Arbitrum is parent for ApeChain)
+    const childNetwork = ORBITSTACK_NETWORKS.find(
+      (n) => n.chain === input.chain,
+    )
+    if (!childNetwork) return
 
-        if (wethWithdrawalLog) {
-          // This is a WETH withdrawal! Capture it to prevent base plugin from seeing it
-          // Note: no ETH amount for WETH withdrawals as the value is in the token transfer
-          return [
-            L2ToL1Tx.create(input, {
-              chain: network.chain,
-              position: Number(l2ToL1Tx.position),
-            }),
-          ]
+    // Capture L2ToL1Tx for WETH withdrawals before the base plugin can claim it
+    const l2ToL1Tx = parseL2ToL1Tx(input.log, [addr(childNetwork.arbsys)])
+    if (l2ToL1Tx) {
+      const wethWithdrawalLog = input.txLogs.find((log) => {
+        if (
+          !childNetwork.l2WethGateway ||
+          EthereumAddress(log.address) !== addr(childNetwork.l2WethGateway)
+        ) {
+          return false
         }
-      }
+        const parsed = parseWithdrawalInitiated(log, [
+          addr(childNetwork.l2WethGateway),
+        ])
+        return (
+          parsed !== undefined &&
+          childNetwork.l1Weth &&
+          EthereumAddress(parsed.l1Token) === addr(childNetwork.l1Weth) &&
+          Number(parsed._l2ToL1Id) === Number(l2ToL1Tx.position)
+        )
+      })
 
-      // Check if this is from the L2 WETH gateway
-      if (EthereumAddress(input.log.address) !== network.l2WethGateway) return
-
-      // L2 finalization of L1->L2 WETH deposit
-      const depositFinalized = parseDepositFinalized(input.log, [
-        network.l2WethGateway,
-      ])
-      if (depositFinalized) {
-        // Verify this is for WETH
-        if (EthereumAddress(depositFinalized.l1Token) !== network.l1Weth) {
-          return
-        }
-
-        // Find the Transfer event (minting) in the same transaction to verify L2 WETH
-        const transferLog = input.txLogs.find((log) => {
-          if (EthereumAddress(log.address) !== network.l2Weth) {
-            return false
-          }
-          const parsed = parseTransfer(log, [network.l2Weth])
-          // Look for mint (from == 0x0 or from == gateway) to the recipient
-          return (
-            parsed !== undefined &&
-            (parsed.from === '0x0000000000000000000000000000000000000000' ||
-              EthereumAddress(parsed.from) === network.l2WethGateway) &&
-            parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
-          )
-        })
-
-        if (transferLog) {
-          return [
-            WethDepositFinalized.create(input, {
-              chain: network.chain,
-              amount: depositFinalized.amount,
-            }),
-          ]
-        }
-      }
-
-      // L2 initiation of L2->L1 WETH withdrawal
-      const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
-        network.l2WethGateway,
-      ])
-      if (withdrawalInitiated) {
-        // Verify this is for WETH
-        if (EthereumAddress(withdrawalInitiated.l1Token) !== network.l1Weth) {
-          return
-        }
-
-        // Find the Transfer event (burning) to verify L2 WETH
-        const transferLog = input.txLogs.find((log) => {
-          if (EthereumAddress(log.address) !== network.l2Weth) {
-            return false
-          }
-          const parsed = parseTransfer(log, [network.l2Weth])
-          // Look for burn (to == 0x0)
-          return (
-            parsed !== undefined &&
-            parsed.to === '0x0000000000000000000000000000000000000000' &&
-            parsed.from.toLowerCase() ===
-              withdrawalInitiated._from.toLowerCase()
-          )
-        })
-
-        if (!transferLog) return
-
-        // Return the WETH-specific withdrawal initiated event
-        // The L2ToL1Tx event is captured separately above
+      if (wethWithdrawalLog) {
         return [
-          WethWithdrawalInitiatedL2ToL1Tx.create(input, {
-            chain: network.chain,
-            position: Number(withdrawalInitiated._l2ToL1Id),
-            amount: withdrawalInitiated._amount,
+          L2ToL1Tx.create(input, {
+            chain: childNetwork.chain,
+            position: Number(l2ToL1Tx.position),
           }),
         ]
       }
+    }
+
+    if (
+      !childNetwork.l2WethGateway ||
+      EthereumAddress(input.log.address) !== addr(childNetwork.l2WethGateway)
+    )
+      return
+
+    const depositFinalized = parseDepositFinalized(input.log, [
+      addr(childNetwork.l2WethGateway),
+    ])
+    if (depositFinalized) {
+      if (
+        !childNetwork.l1Weth ||
+        EthereumAddress(depositFinalized.l1Token) !== addr(childNetwork.l1Weth)
+      ) {
+        return
+      }
+
+      const transferLog = input.txLogs.find((log) => {
+        if (
+          !childNetwork.l2Weth ||
+          EthereumAddress(log.address) !== addr(childNetwork.l2Weth)
+        ) {
+          return false
+        }
+        const parsed = parseTransfer(log, [addr(childNetwork.l2Weth)])
+        return (
+          parsed !== undefined &&
+          (parsed.from === '0x0000000000000000000000000000000000000000' ||
+            EthereumAddress(parsed.from) ===
+              addr(childNetwork.l2WethGateway)) &&
+          parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
+        )
+      })
+
+      if (transferLog) {
+        return [
+          WethDepositFinalized.create(input, {
+            chain: childNetwork.chain,
+            amount: depositFinalized.amount,
+          }),
+        ]
+      }
+    }
+
+    const withdrawalInitiated = parseWithdrawalInitiated(input.log, [
+      addr(childNetwork.l2WethGateway),
+    ])
+    if (withdrawalInitiated) {
+      if (
+        !childNetwork.l1Weth ||
+        EthereumAddress(withdrawalInitiated.l1Token) !==
+          addr(childNetwork.l1Weth)
+      ) {
+        return
+      }
+
+      const transferLog = input.txLogs.find((log) => {
+        if (
+          !childNetwork.l2Weth ||
+          EthereumAddress(log.address) !== addr(childNetwork.l2Weth)
+        ) {
+          return false
+        }
+        const parsed = parseTransfer(log, [addr(childNetwork.l2Weth)])
+        return (
+          parsed !== undefined &&
+          parsed.to === '0x0000000000000000000000000000000000000000' &&
+          parsed.from.toLowerCase() === withdrawalInitiated._from.toLowerCase()
+        )
+      })
+
+      if (!transferLog) return
+
+      return [
+        WethWithdrawalInitiatedL2ToL1Tx.create(input, {
+          chain: childNetwork.chain,
+          position: Number(withdrawalInitiated._l2ToL1Id),
+          amount: withdrawalInitiated._amount,
+        }),
+      ]
     }
   }
 
@@ -272,9 +296,7 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
   ]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    // Match L1->L2 WETH deposits
     if (WethDepositFinalized.checkType(event)) {
-      // Find RedeemScheduled that references this transaction via retryTxHash
       const redeemScheduled = db.find(RedeemScheduled, {
         retryTxHash: event.ctx.txHash,
         chain: event.ctx.chain,
@@ -287,18 +309,16 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
       })
       if (!messageDelivered) return
 
-      // Find the L1 WethDepositInitiated event with token details
       const depositInitiated = db.find(WethDepositInitiatedMessageDelivered, {
         messageNum: redeemScheduled.args.messageNum,
         chain: event.ctx.chain,
       })
       if (!depositInitiated) return
 
-      // Look up WETH addresses from network config
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.chain === event.args.chain,
       )
-      if (!network) return
+      if (!network?.l1Weth || !network.l2Weth) return
 
       return [
         Result.Message('orbitstack.L1ToL2Message', {
@@ -309,45 +329,39 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         Result.Transfer('orbitstack.L1ToL2Transfer', {
           srcEvent: depositInitiated,
           srcAmount: depositInitiated.args.amount,
-          srcTokenAddress: Address32.from(network.l1Weth),
+          srcTokenAddress: Address32.from(addr(network.l1Weth)),
           srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
-          dstTokenAddress: Address32.from(network.l2Weth),
+          dstTokenAddress: Address32.from(addr(network.l2Weth)),
           dstWasMinted: true,
         }),
       ]
     }
 
-    // Match L2->L1 WETH withdrawals
     if (WethWithdrawalFinalizedOutBoxTransactionExecuted.checkType(event)) {
-      // Find the L2ToL1Tx event for this position
-      // We capture this ourselves before the base plugin sees it
       const l2ToL1Tx = db.find(L2ToL1Tx, {
         position: event.args.position,
         chain: event.args.chain,
       })
       if (!l2ToL1Tx) return
 
-      // Find the OutBoxTransactionExecuted event
       const outBoxTransactionExecuted = db.find(OutBoxTransactionExecuted, {
         position: event.args.position,
         chain: event.args.chain,
       })
       if (!outBoxTransactionExecuted) return
 
-      // Find the L2 withdrawal initiation event with token details
       const withdrawalInitiated = db.find(WethWithdrawalInitiatedL2ToL1Tx, {
         position: event.args.position,
         chain: event.args.chain,
       })
       if (!withdrawalInitiated) return
 
-      // Look up WETH addresses from network config
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.chain === event.args.chain,
       )
-      if (!network) return
+      if (!network?.l1Weth || !network.l2Weth) return
 
       return [
         Result.Message('orbitstack.L2ToL1Message', {
@@ -358,11 +372,11 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
         Result.Transfer('orbitstack.L2ToL1Transfer', {
           srcEvent: withdrawalInitiated,
           srcAmount: withdrawalInitiated.args.amount,
-          srcTokenAddress: Address32.from(network.l2Weth),
+          srcTokenAddress: Address32.from(addr(network.l2Weth)),
           srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
-          dstTokenAddress: Address32.from(network.l1Weth),
+          dstTokenAddress: Address32.from(addr(network.l1Weth)),
           dstWasMinted: false,
         }),
       ]
