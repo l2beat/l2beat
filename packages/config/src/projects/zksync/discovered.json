@@ -1,6 +1,6 @@
 {
   "name": "zksync",
-  "timestamp": 1767007984,
+  "timestamp": 1774020135,
   "configHash": "0x624070f84d32564193d229c0cb17f1701a2a589695e7dcfc040d889a516fb0bd",
   "entries": [
     {
@@ -139,7 +139,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 439,
+        "nonce": 441,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -207,11 +207,6 @@
       "implementationNames": {
         "eth:0x35cc31f63deef017c38d51B038891bAE7d614e86": "TokenGovernance"
       }
-    },
-    {
-      "address": "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeGatekeeper",
@@ -346,7 +341,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18851
+        "totalSupply": 18873
       },
       "implementationNames": {
         "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D": "ZkSyncNFTFactory"
@@ -498,7 +493,7 @@
         "$members": [
           "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
           "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
-          "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908",
+          "eth:0xeF4CcBDf8f91A001164149558106737A568e4912",
           "eth:0xC9474de11503D63D892cEDD12d6B93f6A25a9cbF",
           "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415",
           "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
@@ -511,7 +506,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
         "NAME": "Gnosis Safe",
-        "nonce": 125,
+        "nonce": 126,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -531,6 +526,11 @@
     },
     {
       "address": "eth:0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xeF4CcBDf8f91A001164149558106737A568e4912",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -900,6 +900,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24118027 },
-  "permissionsConfigHash": "0x8024868228a5c66576f2d9f40983d30f5cb74580abf325382a25aafbffa5386d"
+  "usedBlockNumbers": { "ethereum": 24699580 },
+  "permissionsConfigHash": "0xd47e278f277e688b1014acc16dd6496d5c5d7f0571c2f91092a167403f2f5160"
 }

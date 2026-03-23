@@ -161,4 +161,11 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'HYPER',
     explorerUrl: 'https://hyperevmscan.io',
   },
+  {
+    id: 'tempo',
+    name: 'Tempo',
+    type: 'evm',
+    display: 'TMP',
+    explorerUrl: 'https://explore.tempo.xyz',
+  },
 ]

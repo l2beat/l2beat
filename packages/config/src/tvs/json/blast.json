@@ -121,12 +121,12 @@
         "sinceTimestamp": 1708812935
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Custom escrow"
+            "name": "Canonical + additional trust assumptions"
           }
         ]
       }
@@ -173,6 +173,26 @@
         "sinceTimestamp": 1708812911
       },
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "blast-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     },
@@ -327,12 +347,12 @@
         ]
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Custom escrow"
+            "name": "Canonical + additional trust assumptions"
           }
         ]
       }
@@ -362,6 +382,26 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "blast-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
