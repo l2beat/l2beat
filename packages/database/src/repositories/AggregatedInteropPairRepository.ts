@@ -82,43 +82,6 @@ export class AggregatedInteropPairRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByChainsAndTimestamp(
-    timestamp: UnixTime,
-    sourceChains: string[],
-    destinationChains: string[],
-    type?: InteropBridgeType,
-    protocolId?: string,
-    options?: {
-      includeSameChainTransfers?: boolean
-    },
-  ): Promise<AggregatedInteropPairRecord[]> {
-    if (sourceChains.length === 0 || destinationChains.length === 0) {
-      return []
-    }
-
-    let query = this.db
-      .selectFrom('AggregatedInteropPair')
-      .selectAll()
-      .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', sourceChains)
-      .where('dstChain', 'in', destinationChains)
-
-    if (protocolId) {
-      query = query.where('id', '=', protocolId)
-    }
-
-    if (!options?.includeSameChainTransfers) {
-      query = query.whereRef('srcChain', '!=', 'dstChain')
-    }
-
-    if (type) {
-      query = query.where('bridgeType', '=', type)
-    }
-
-    const rows = await query.execute()
-    return rows.map(toRecord)
-  }
-
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     id: string,
