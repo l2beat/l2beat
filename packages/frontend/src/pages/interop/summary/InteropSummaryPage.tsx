@@ -20,12 +20,15 @@ import {
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
 import type { InteropMode, InteropSelection } from '../utils/types'
+import { BreakdownByTransferType } from './components/BreakdownByTransferType'
 import { InteropEmptyState } from './components/InteropEmptyState'
+import { TokenCount } from './components/TokenCount'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
+import { getTransferTypeBreakdown } from './utils/getTransferTypeBreakdown'
 
 interface Props extends AppLayoutProps {
   mode: InteropMode
@@ -127,6 +130,7 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
     data?.entries ?? [],
   )
+  const breakdown = getTransferTypeBreakdown(data?.entries ?? [])
 
   return (
     <div
@@ -159,6 +163,14 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] min-md:gap-5">
+        <BreakdownByTransferType isLoading={isLoading} breakdown={breakdown} />
+        <TokenCount
+          isLoading={isLoading}
+          tokenCount={data?.tokenCount}
+          topItems={data?.topTokens}
+        />
+      </div>
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />

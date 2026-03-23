@@ -156,20 +156,17 @@ export const lineaprover: BaseProject = {
       //     'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       // },
       {
-        hash: '0xb0444511433f868a05ccdd4ca0e2d1d8749c74b8f4b5bd630f2700cde7f41b46',
+        hash: '0x4434516bbfeb1e4fca34d295be3926880f0a918360f218ce78bbecbd6095eb6f',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: EthereumAddress(
-              '0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+              '0xC83ed08E2262fBa264D528C749c051f8fC526897',
             ),
             chain: 'ethereum',
           },
         ],
-        verificationStatus: 'unsuccessful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `The steps provided by the Linea team [here](https://github.com/Consensys/linea-monorepo/blob/94d0554912ab9f570b8b60e985a788ac7f78f96d/prover/prover-assets/Readme.md) do 
-        not produce the same verifier smart contract as deployed onchain. According to the Linea team, this is caused by nondeterminism in one of the optimization routine that is used for the vanishing constraints verifier of Vortex.`,
+        verificationStatus: 'notVerified',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

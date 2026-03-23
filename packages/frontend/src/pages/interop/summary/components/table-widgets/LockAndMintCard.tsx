@@ -2,7 +2,7 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
-import { interopDescriptions } from '~/pages/interop/descriptions'
+import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
@@ -20,10 +20,10 @@ export function LockAndMintCard({
   const viewAllUrl = buildUrl('/interop/lock-and-mint')
 
   return (
-    <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-yellow-700">
+    <PrimaryCard className="flex flex-col max-md:border-b max-md:border-b-divider md:border-t-4 md:border-t-lock-and-mint">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-yellow-700 underline-offset-6 max-md:underline md:text-heading-24">
+          <h2 className="font-bold text-heading-20 decoration-lock-and-mint underline-offset-6 max-md:underline md:text-heading-24">
             Lock & Mint
           </h2>
           <TopNBadge n={5} />
@@ -40,7 +40,7 @@ export function LockAndMintCard({
       </div>
       <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
-        {interopDescriptions.lockAndMint}
+        {TRANSFER_TYPE_DISPLAY.lockAndMint.description}
       </div>
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />

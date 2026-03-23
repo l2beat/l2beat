@@ -2,8 +2,10 @@ import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
+  TokenFlowData,
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
+import type { TokenInteropData } from './buildTokensDataMap'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
@@ -16,7 +18,7 @@ export interface ProtocolDataByBridgeType {
 
 type ProtocolDataByBridgeTypeCommon = {
   volume: number
-  tokens: Map<string, CommonInteropData>
+  tokens: Map<string, TokenInteropData>
   flows: Map<string, number>
   transferCount: number
   identifiedTransferCount: number
@@ -26,7 +28,7 @@ type ProtocolDataByBridgeTypeCommon = {
 
 export interface ProtocolData extends CommonInteropData {
   volume: number
-  tokens: Map<string, CommonInteropData>
+  tokens: Map<string, TokenInteropData>
   chains: Map<string, CommonInteropData>
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
@@ -71,10 +73,7 @@ export function getProtocolsDataMapByBridgeType(
           volume:
             (bridgeTypeMap.lockAndMint?.volume ?? 0) +
             (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(
-            bridgeTypeMap.lockAndMint?.tokens,
-            record.tokens,
-          ),
+          tokens: mergeTokensData(bridgeTypeMap.lockAndMint?.tokens, record),
           flows: mergeFlowsData(bridgeTypeMap.lockAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
@@ -122,10 +121,7 @@ export function getProtocolsDataMapByBridgeType(
           volume:
             (bridgeTypeMap.nonMinting?.volume ?? 0) +
             (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(
-            bridgeTypeMap.nonMinting?.tokens,
-            record.tokens,
-          ),
+          tokens: mergeTokensData(bridgeTypeMap.nonMinting?.tokens, record),
           flows: mergeFlowsData(bridgeTypeMap.nonMinting?.flows, record),
           transferCount:
             (bridgeTypeMap.nonMinting?.transferCount ?? 0) +
@@ -159,10 +155,7 @@ export function getProtocolsDataMapByBridgeType(
           volume:
             (bridgeTypeMap.burnAndMint?.volume ?? 0) +
             (getInteropTransferValue(record) ?? 0),
-          tokens: mergeTokensData(
-            bridgeTypeMap.burnAndMint?.tokens,
-            record.tokens,
-          ),
+          tokens: mergeTokensData(bridgeTypeMap.burnAndMint?.tokens, record),
           flows: mergeFlowsData(bridgeTypeMap.burnAndMint?.flows, record),
           transferCount:
             (bridgeTypeMap.burnAndMint?.transferCount ?? 0) +
@@ -211,7 +204,7 @@ export function getProtocolsDataMap(
       protocolsDataMap.get(record.id) ?? createInitialProtocolData()
     protocolsDataMap.set(record.id, {
       volume: current.volume + (getInteropTransferValue(record) ?? 0),
-      tokens: mergeTokensData(current.tokens, record.tokens),
+      tokens: mergeTokensData(current.tokens, record),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
       transfersWithDurationCount:
@@ -258,7 +251,7 @@ export function getProtocolsDataMap(
 function createInitialProtocolData(): ProtocolData {
   return {
     volume: 0,
-    tokens: new Map<string, CommonInteropData>(),
+    tokens: new Map<string, TokenInteropData>(),
     chains: new Map<string, CommonInteropData>(),
     transferCount: 0,
     transfersWithDurationCount: 0,
@@ -274,15 +267,23 @@ function createInitialProtocolData(): ProtocolData {
 }
 
 function mergeTokensData(
-  currentTokens: Map<string, CommonInteropData> | undefined,
-  recordTokens: AggregatedInteropTransferWithTokens['tokens'],
-): Map<string, CommonInteropData> {
+  currentTokens: Map<string, TokenInteropData> | undefined,
+  record: AggregatedInteropTransferWithTokens,
+): Map<string, TokenInteropData> {
   const result = new Map(currentTokens)
 
-  for (const token of recordTokens) {
-    const current =
-      result.get(token.abstractTokenId) ?? INITIAL_COMMON_INTEROP_DATA
-    result.set(token.abstractTokenId, accumulateTokens(current, token))
+  for (const token of record.tokens) {
+    const current = result.get(token.abstractTokenId) ?? {
+      ...INITIAL_COMMON_INTEROP_DATA,
+      flows: new Map<string, TokenFlowData>(),
+    }
+    result.set(
+      token.abstractTokenId,
+      accumulateTokens(current, token, {
+        srcChain: record.srcChain,
+        dstChain: record.dstChain,
+      }),
+    )
   }
 
   return result

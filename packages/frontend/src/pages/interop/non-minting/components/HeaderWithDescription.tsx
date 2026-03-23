@@ -1,9 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { interopDescriptions } from '~/pages/interop/descriptions'
+import { TRANSFER_TYPE_DISPLAY } from '../../utils/display'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader description={interopDescriptions.nonMinting}>
+    <MainPageHeader description={TRANSFER_TYPE_DISPLAY.nonMinting.description}>
       Non-minting Protocols
     </MainPageHeader>
   )

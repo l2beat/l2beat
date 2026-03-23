@@ -2,11 +2,13 @@ import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams, ProtocolEntry } from './types'
+import type { InteropDashboardParams, ProtocolEntry, TokenData } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getFlows, type InteropFlowData } from './utils/getFlows'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getProtocolEntries } from './utils/getProtocolEntries'
+import { getSummaryTokensData } from './utils/getSummaryTokensData'
+import { getTopItems, type TopItems } from './utils/getTopItems'
 import {
   getTopProtocols,
   type InteropProtocolData,
@@ -21,6 +23,8 @@ export type InteropDashboardData = {
   flows: InteropFlowData[]
   topProtocols: InteropProtocolData[]
   topToken: InteropTopTokenData | undefined
+  tokenCount: number
+  topTokens: TopItems<TokenData>
   transferSizeChartData: TransferSizeDataPoint[] | undefined
   entries: ProtocolEntry[]
   zeroTransferProtocols: { name: string; iconUrl: string }[]
@@ -44,6 +48,7 @@ export async function getInteropDashboardData(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+  const summaryTokens = getSummaryTokensData(records, tokensDetailsMap)
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(
@@ -59,6 +64,8 @@ export async function getInteropDashboardData(
       interopProjects,
       subgroupProjects,
     }),
+    tokenCount: summaryTokens.length,
+    topTokens: getTopItems(summaryTokens, 5),
     transferSizeChartData: getTransferSizeChartData(records, interopProjects),
     ...getProtocolEntries(
       records,
@@ -248,6 +255,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     flows,
     topProtocols,
     topToken,
+    tokenCount: mockTokens.length,
+    topTokens: getTopItems(mockTokens, 5),
     transferSizeChartData,
     entries,
     zeroTransferProtocols: [

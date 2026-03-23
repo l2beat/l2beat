@@ -16,6 +16,10 @@ export const PlausibleEvents = v.object({
     action: v.enum(['open', 'close']),
   }),
   chartRangeSelected: v.object({ name: v.string(), value: v.string() }),
+  interopChainsSelected: v.object({
+    chains: v.string(),
+    page: v.string(),
+  }),
 
   // Filters
   filtersOpened: v.undefined().optional(),
