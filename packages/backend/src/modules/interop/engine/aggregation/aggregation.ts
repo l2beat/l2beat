@@ -398,8 +398,7 @@ export function getAggregatedPairs(
     const current = pairs[pairKey]
     pairs[pairKey] = {
       transferCount: (current?.transferCount ?? 0) + 1,
-      totalDurationSum:
-        (current?.totalDurationSum ?? 0) + (duration ?? 0),
+      totalDurationSum: (current?.totalDurationSum ?? 0) + (duration ?? 0),
       transfersWithDurationCount:
         (current?.transfersWithDurationCount ?? 0) +
         (duration !== undefined ? 1 : 0),

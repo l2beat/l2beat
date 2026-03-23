@@ -18,4 +18,4 @@ CREATE TABLE "AggregatedInteropPair" (
 );
 
 -- CreateIndex
-CREATE INDEX "AggregatedInteropPair_timestamp_srcChain_dstChain_id_bridgeT_idx" ON "AggregatedInteropPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
+CREATE INDEX "AggregatedInteropPair_timestamp_srcChain_dstChain_id_bridge_idx" ON "AggregatedInteropPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
