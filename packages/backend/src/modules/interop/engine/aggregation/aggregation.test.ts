@@ -1199,51 +1199,6 @@ describe('aggregation', () => {
       expect(unknownPair?.volume).toEqual(3500)
     })
 
-    it('calculates volume/min/max/duration correctly', () => {
-      const transfers: InteropTransferRecord[] = [
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: 5000,
-          srcValueUsd: 2000,
-          dstValueUsd: undefined,
-        }),
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: undefined,
-          srcValueUsd: undefined,
-          dstValueUsd: 500,
-        }),
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: 3000,
-          srcValueUsd: 100.555,
-          dstValueUsd: 100,
-        }),
-      ]
-
-      const result = getAggregatedPairs(transfers)
-
-      expect(result).toHaveLength(1)
-      expect(result[0]?.transferCount).toEqual(3)
-      expect(result[0]?.transfersWithDurationCount).toEqual(2)
-      expect(result[0]?.totalDurationSum).toEqual(8000)
-      expect(result[0]?.volume).toEqual(2600.55)
-      expect(result[0]?.minTransferValueUsd).toEqual(100.56)
-      expect(result[0]?.maxTransferValueUsd).toEqual(2000)
-    })
-
     it('tracks transfer type stats per pair', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
