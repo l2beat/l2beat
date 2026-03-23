@@ -1,4 +1,5 @@
 import type {
+  AggregatedInteropPairRecord,
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
@@ -357,5 +358,93 @@ export function getAggregatedTokens(
         : undefined,
     mintedValueUsd: data.mintedValueUsd,
     burnedValueUsd: data.burnedValueUsd,
+  }))
+}
+
+export function getAggregatedPairs(
+  group: InteropTransferRecord[],
+): Omit<AggregatedInteropPairRecord, 'id' | 'timestamp' | 'bridgeType'>[] {
+  const first = group[0]
+  assert(first, 'Group is empty')
+
+  const pairs: Record<
+    string,
+    {
+      transferCount: number
+      totalDurationSum: number
+      transfersWithDurationCount: number
+      volume: number
+      minTransferValueUsd: number | undefined
+      maxTransferValueUsd: number | undefined
+      transferTypeStats: InteropTransferTypeStatsMap | undefined
+    }
+  > = {}
+
+  for (const transfer of group) {
+    let pairKey: string
+    if (!transfer.srcAbstractTokenId || !transfer.dstAbstractTokenId) {
+      pairKey = 'unknown'
+    } else {
+      const [a, b] = [
+        transfer.srcAbstractTokenId,
+        transfer.dstAbstractTokenId,
+      ].sort()
+      pairKey = `${a}::${b}`
+    }
+
+    const duration = transfer.duration
+    const transferValueUsd = getInteropTransferValue(transfer)
+
+    const current = pairs[pairKey]
+    pairs[pairKey] = {
+      transferCount: (current?.transferCount ?? 0) + 1,
+      totalDurationSum:
+        (current?.totalDurationSum ?? 0) + (duration ?? 0),
+      transfersWithDurationCount:
+        (current?.transfersWithDurationCount ?? 0) +
+        (duration !== undefined ? 1 : 0),
+      transferTypeStats:
+        duration !== undefined
+          ? addTransferTypeStats(
+              current?.transferTypeStats,
+              transfer.type,
+              duration,
+            )
+          : current?.transferTypeStats,
+      volume: (current?.volume ?? 0) + (transferValueUsd ?? 0),
+      minTransferValueUsd:
+        transferValueUsd !== undefined
+          ? Math.min(
+              current?.minTransferValueUsd ?? Number.POSITIVE_INFINITY,
+              transferValueUsd,
+            )
+          : current?.minTransferValueUsd,
+      maxTransferValueUsd:
+        transferValueUsd !== undefined
+          ? Math.max(
+              current?.maxTransferValueUsd ?? Number.NEGATIVE_INFINITY,
+              transferValueUsd,
+            )
+          : current?.maxTransferValueUsd,
+    }
+  }
+
+  return Object.entries(pairs).map(([tokenPair, data]) => ({
+    srcChain: first.srcChain,
+    dstChain: first.dstChain,
+    tokenPair,
+    transferTypeStats: data.transferTypeStats,
+    transferCount: data.transferCount,
+    transfersWithDurationCount: data.transfersWithDurationCount,
+    totalDurationSum: data.totalDurationSum,
+    volume: Math.round(data.volume * 100) / 100,
+    minTransferValueUsd:
+      data.minTransferValueUsd !== undefined
+        ? Math.round(data.minTransferValueUsd * 100) / 100
+        : undefined,
+    maxTransferValueUsd:
+      data.maxTransferValueUsd !== undefined
+        ? Math.round(data.maxTransferValueUsd * 100) / 100
+        : undefined,
   }))
 }

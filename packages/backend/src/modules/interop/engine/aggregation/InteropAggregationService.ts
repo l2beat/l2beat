@@ -1,4 +1,5 @@
 import type {
+  AggregatedInteropPairRecord,
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
@@ -7,11 +8,16 @@ import type { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
-import { getAggregatedTokens, getAggregatedTransfer } from './aggregation'
+import {
+  getAggregatedPairs,
+  getAggregatedTokens,
+  getAggregatedTransfer,
+} from './aggregation'
 
 export interface AggregationResult {
   aggregatedTransfers: AggregatedInteropTransferRecord[]
   aggregatedTokens: AggregatedInteropTokenRecord[]
+  aggregatedPairs: AggregatedInteropPairRecord[]
 }
 
 export class InteropAggregationService {
@@ -24,6 +30,7 @@ export class InteropAggregationService {
   ): AggregationResult {
     const aggregatedTransfers: AggregatedInteropTransferRecord[] = []
     const aggregatedTokens: AggregatedInteropTokenRecord[] = []
+    const aggregatedPairs: AggregatedInteropPairRecord[] = []
 
     for (const config of configs) {
       const classifiedTransfers = this.classifier.classifyTransfers(
@@ -57,6 +64,15 @@ export class InteropAggregationService {
               ...token,
             })),
           )
+
+          aggregatedPairs.push(
+            ...getAggregatedPairs(group).map((pair) => ({
+              timestamp,
+              id: config.id,
+              bridgeType,
+              ...pair,
+            })),
+          )
         }
       }
     }
@@ -64,6 +80,7 @@ export class InteropAggregationService {
     return {
       aggregatedTransfers,
       aggregatedTokens,
+      aggregatedPairs,
     }
   }
 }

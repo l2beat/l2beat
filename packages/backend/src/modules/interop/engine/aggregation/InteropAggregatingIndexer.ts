@@ -28,7 +28,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
 
-    const { aggregatedTransfers, aggregatedTokens } =
+    const { aggregatedTransfers, aggregatedTokens, aggregatedPairs } =
       this.$.aggregationService.aggregate(transfers, this.$.configs, to)
 
     await this.$.db.transaction(async () => {
@@ -38,14 +38,20 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       await this.$.db.aggregatedInteropToken.deleteAllButEarliestPerDayBefore(
         from,
       )
+      await this.$.db.aggregatedInteropPair.deleteAllButEarliestPerDayBefore(
+        from,
+      )
       await this.$.db.aggregatedInteropToken.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.deleteByTimestamp(to)
+      await this.$.db.aggregatedInteropPair.deleteByTimestamp(to)
       await this.$.db.aggregatedInteropTransfer.insertMany(aggregatedTransfers)
       await this.$.db.aggregatedInteropToken.insertMany(aggregatedTokens)
+      await this.$.db.aggregatedInteropPair.insertMany(aggregatedPairs)
     })
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
+      aggregatedPairs: aggregatedPairs.length,
     })
 
     return to
