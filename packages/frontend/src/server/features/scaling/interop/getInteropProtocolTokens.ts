@@ -5,7 +5,7 @@ import type { InteropProtocolTokensParams, TokenData } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
-import { buildDurationSplitMap } from './utils/getAverageDuration'
+import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
@@ -57,17 +57,15 @@ export async function getInteropProtocolTokens({
     ),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
-  const durationSplitMap = buildDurationSplitMap([interopProject])
   const relevantBridgeTypes = getRelevantBridgeTypes(interopProject, type)
+  const durationSplit = getDurationSplit(interopProject, relevantBridgeTypes)
   const tokenDataMap = buildTokensDataMap(records)
 
   return getTokensData({
-    projectId: id,
-    bridgeTypes: relevantBridgeTypes,
     tokens: tokenDataMap,
     tokensDetailsMap,
-    durationSplitMap,
     unknownTransfersCount: counts.transferCount - counts.identifiedCount,
     logger,
+    durationSplit,
   })
 }
