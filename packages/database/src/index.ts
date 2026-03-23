@@ -10,6 +10,7 @@ export type {
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
+export type { AggregatedInteropPairRecord } from './repositories/AggregatedInteropPairRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type {
   AggregatedInteropTransferRecord,
