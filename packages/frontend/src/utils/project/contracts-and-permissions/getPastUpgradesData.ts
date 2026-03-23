@@ -1,7 +1,7 @@
 import type { ProjectContract, ProjectContracts } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import mean from 'lodash/mean'
-import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
+import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
 
 type UpgradeContext = {
   explorerUrl: string
@@ -15,15 +15,6 @@ export interface PastUpgradeProxyContract {
   name?: string
   address: string
   href: string
-}
-
-export interface PastUpgradeLabels {
-  proxyContract: string
-  implementations: string
-}
-
-interface GetPastUpgradesDataOptions {
-  labels?: PastUpgradeLabels
 }
 
 type PastUpgradeWithContext = NonNullable<
@@ -61,52 +52,46 @@ export function getProjectPastUpgrades(
     }
   }
 
-  return allPastUpgrades.sort((a, b) => b.timestamp - a.timestamp)
+  return allPastUpgrades
 }
 
 export function getPastUpgradesData(
   contractPastUpgrades: PastUpgradeWithContext[] | undefined,
-  options?: GetPastUpgradesDataOptions,
-): TechnologyContract['pastUpgrades'] {
+): PastUpgradesData | undefined {
   const sortedUpgrades = [...(contractPastUpgrades ?? [])].sort(
     (a, b) => b.timestamp - a.timestamp,
   )
   const upgradesByProxy = getUpgradeHistoryByProxy(sortedUpgrades)
-  const upgradesByProxyIndex = new Map<string, number>()
+  const pastUpgrades = Array.from(upgradesByProxy.values())
+    .flatMap((proxyUpgrades) =>
+      proxyUpgrades.map((upgrade, index) => {
+        const previousUpgrade = proxyUpgrades[index + 1]
 
-  const pastUpgrades = sortedUpgrades.map((upgrade) => {
-    const proxyKey = getProxyKey(upgrade)
-    const currentProxyIndex = upgradesByProxyIndex.get(proxyKey) ?? 0
-    const previousUpgrade =
-      upgradesByProxy.get(proxyKey)?.[currentProxyIndex + 1]
-    upgradesByProxyIndex.set(proxyKey, currentProxyIndex + 1)
-    return {
-      isInitialDeployment: previousUpgrade === undefined,
-      timestamp: upgrade.timestamp,
-      transactionHash: {
-        hash: upgrade.transactionHash,
-        href: `${upgrade.explorerUrl}/tx/${upgrade.transactionHash}`,
-      },
-      implementations: getImplementations(
-        upgrade.explorerUrl,
-        upgrade.implementations,
-        previousUpgrade,
-      ),
-      proxyContract: {
-        name: upgrade.proxyContract.name,
-        address: upgrade.proxyContract.address,
-        href: `${upgrade.explorerUrl}/address/${upgrade.proxyContract.address}#code`,
-      },
-    }
-  })
+        return {
+          isInitialDeployment: previousUpgrade === undefined,
+          timestamp: upgrade.timestamp,
+          transactionHash: {
+            hash: upgrade.transactionHash,
+            href: `${upgrade.explorerUrl}/tx/${upgrade.transactionHash}`,
+          },
+          implementations: getImplementations(
+            upgrade.explorerUrl,
+            upgrade.implementations,
+            previousUpgrade,
+          ),
+          proxyContract: {
+            name: upgrade.proxyContract.name,
+            address: upgrade.proxyContract.address,
+            href: `${upgrade.explorerUrl}/address/${upgrade.proxyContract.address}#code`,
+          },
+        }
+      }),
+    )
+    .sort((a, b) => b.timestamp - a.timestamp)
   if (pastUpgrades.length === 0) return
   return {
     upgrades: pastUpgrades,
-    stats: getPastUpgradesStats(pastUpgrades),
-    labels: options?.labels ?? {
-      proxyContract: 'Proxy contract',
-      implementations: 'Implementation addresses',
-    },
+    stats: getPastUpgradesStats(upgradesByProxy),
   }
 }
 
@@ -114,7 +99,7 @@ function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
   const result = new Map<string, PastUpgradeWithContext[]>()
 
   for (const upgrade of upgrades) {
-    const key = getProxyKey(upgrade)
+    const key = upgrade.proxyContract.address
     const existing = result.get(key)
     if (existing) {
       existing.push(upgrade)
@@ -124,10 +109,6 @@ function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
   }
 
   return result
-}
-
-function getProxyKey(upgrade: { proxyContract: { address: string } }) {
-  return upgrade.proxyContract.address
 }
 
 function getImplementations(
@@ -150,26 +131,11 @@ function getImplementations(
 }
 
 function getPastUpgradesStats(
-  pastUpgrades: (NonNullable<
-    TechnologyContract['pastUpgrades']
-  >['upgrades'][number] & {
-    proxyContract: PastUpgradeProxyContract
-  })[],
+  upgradesByProxy: Map<string, PastUpgradeWithContext[]>,
 ) {
   const intervals: number[] = []
   let count = 0
-  let lastUpgrade: (typeof pastUpgrades)[number] | undefined
-
-  const upgradesByProxy = new Map<string, typeof pastUpgrades>()
-  for (const upgrade of pastUpgrades) {
-    const key = getProxyKey(upgrade)
-    const existing = upgradesByProxy.get(key)
-    if (existing) {
-      existing.push(upgrade)
-    } else {
-      upgradesByProxy.set(key, [upgrade])
-    }
-  }
+  let lastUpgrade: PastUpgradeWithContext | undefined
 
   for (const upgrades of upgradesByProxy.values()) {
     count += Math.max(0, upgrades.length - 1)

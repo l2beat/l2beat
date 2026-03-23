@@ -613,12 +613,7 @@ export async function getScalingProjectEntry(
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
 
-        pastUpgrades: getPastUpgradesData(allPastUpgrades, {
-          labels: {
-            proxyContract: 'Proxy contract',
-            implementations: 'Implementation addresses',
-          },
-        }),
+        pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
