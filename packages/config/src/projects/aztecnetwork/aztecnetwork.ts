@@ -242,8 +242,7 @@ export const aztecnetwork: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    name: 'Barretenberg',
-    // zkCatalogId: ProjectId('barretenberg') // TODO Sergey
+    zkCatalogId: ProjectId('barretenberg'),
   },
   scopeOfAssessment: {
     inScope: [
