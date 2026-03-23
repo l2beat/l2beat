@@ -155,10 +155,10 @@ function TransactionsCell({
   txs,
 }: {
   txs: {
-    srcTxHash: string
+    srcTxHash: string | undefined
     srcChain: string
     srcExplorerUrl: string | undefined
-    dstTxHash: string
+    dstTxHash: string | undefined
     dstChain: string
     dstExplorerUrl: string | undefined
     transferId: string
@@ -169,7 +169,7 @@ function TransactionsCell({
     return (
       <div key={tx.transferId} className="flex items-center gap-1">
         <span>{tx.plugin}:</span>
-        {tx.srcExplorerUrl ? (
+        {tx.srcExplorerUrl && tx.srcTxHash ? (
           <ExplorerLink
             explorerUrl={tx.srcExplorerUrl}
             value={tx.srcTxHash}
@@ -179,11 +179,11 @@ function TransactionsCell({
           </ExplorerLink>
         ) : (
           <span>
-            {tx.srcChain}:{tx.srcTxHash}
+            {tx.srcChain}:{tx.srcTxHash ?? '<no hash captured>'}
           </span>
         )}
         <ArrowRightIcon className="size-4" />{' '}
-        {tx.dstExplorerUrl ? (
+        {tx.dstExplorerUrl && tx.dstTxHash ? (
           <ExplorerLink
             explorerUrl={tx.dstExplorerUrl}
             value={tx.dstTxHash}
@@ -193,7 +193,7 @@ function TransactionsCell({
           </ExplorerLink>
         ) : (
           <span>
-            {tx.dstChain}:{tx.dstTxHash}
+            {tx.dstChain}:{tx.dstTxHash ?? '<no hash captured>'}
           </span>
         )}
       </div>

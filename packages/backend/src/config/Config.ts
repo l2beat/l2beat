@@ -314,6 +314,7 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {

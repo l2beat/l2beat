@@ -213,6 +213,35 @@ describe('validateResolver', () => {
         },
       })
     })
+
+    it('returns nested errors for optional arrays of objects', () => {
+      const schema = v.object({
+        aliases: v
+          .array(
+            v.object({
+              value: v
+                .string()
+                .check((value) => value.length > 0, 'Cannot be empty'),
+            }),
+          )
+          .optional(),
+      })
+      const result = validate(schema, {
+        aliases: [{ value: '' }, { value: 123 }],
+      })
+
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
+        'aliases.0.value': {
+          type: 'validation',
+          message: 'Cannot be empty',
+        },
+        'aliases.1.value': {
+          type: 'validation',
+          message: 'Expected string, got number.',
+        },
+      })
+    })
   })
 
   describe('complex validation scenarios', () => {
@@ -372,6 +401,23 @@ describe('validateResolver', () => {
       expect(result).toEqual({
         values: { age: 21 },
         errors: {},
+      })
+    })
+
+    it('keeps top-level errors for checked arrays', () => {
+      const schema = v.object({
+        aliases: v
+          .array(v.object({ value: v.string() }))
+          .check((value) => value.length > 0, 'At least one alias is required'),
+      })
+      const result = validate(schema, { aliases: [] })
+
+      expect(result.values).toEqual({})
+      expect(result.errors).toEqual({
+        aliases: {
+          type: 'validation',
+          message: 'At least one alias is required',
+        },
       })
     })
   })

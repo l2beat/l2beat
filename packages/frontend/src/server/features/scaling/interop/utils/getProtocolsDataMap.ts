@@ -41,6 +41,7 @@ export interface ProtocolData extends CommonInteropData {
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
   transferCount: 0,
+  transfersWithDurationCount: 0,
   totalDurationSum: 0,
   transferTypeStats: undefined,
   minTransferValueUsd: undefined,
@@ -77,6 +78,9 @@ export function getProtocolsDataMapByBridgeType(
           transferCount:
             (bridgeTypeMap.lockAndMint?.transferCount ?? 0) +
             record.transferCount,
+          transfersWithDurationCount:
+            (bridgeTypeMap.lockAndMint?.transfersWithDurationCount ?? 0) +
+            record.transfersWithDurationCount,
           identifiedTransferCount:
             (bridgeTypeMap.lockAndMint?.identifiedTransferCount ?? 0) +
             record.identifiedCount,
@@ -203,6 +207,9 @@ export function getProtocolsDataMap(
       tokens: mergeTokensData(current.tokens, record),
       chains: mergeChainsData(current.chains, record),
       transferCount: current.transferCount + (record.transferCount ?? 0),
+      transfersWithDurationCount:
+        current.transfersWithDurationCount +
+        (record.transfersWithDurationCount ?? 0),
       totalDurationSum:
         current.totalDurationSum + (record.totalDurationSum ?? 0),
       transferTypeStats: mergeTransferTypeStats(
@@ -247,6 +254,7 @@ function createInitialProtocolData(): ProtocolData {
     tokens: new Map<string, TokenInteropData>(),
     chains: new Map<string, CommonInteropData>(),
     transferCount: 0,
+    transfersWithDurationCount: 0,
     totalDurationSum: 0,
     transferTypeStats: undefined,
     minTransferValueUsd: undefined,

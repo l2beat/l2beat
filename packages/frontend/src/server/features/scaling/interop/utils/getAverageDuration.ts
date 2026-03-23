@@ -12,7 +12,7 @@ export function getAverageDuration(
   data: CommonInteropData,
   durationSplit: InteropDurationSplit | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
-  if (data.transferCount <= 0) return null
+  if (data.transfersWithDurationCount <= 0) return null
 
   if (
     durationSplit &&
@@ -29,7 +29,9 @@ export function getAverageDuration(
 
   return {
     type: 'single',
-    duration: Math.floor(data.totalDurationSum / data.transferCount),
+    duration: Math.floor(
+      data.totalDurationSum / data.transfersWithDurationCount,
+    ),
   }
 }
 
@@ -95,17 +97,17 @@ function getSplitDuration(
     .map((transferType) => transferTypeStats?.[transferType])
     .filter((stats) => stats !== undefined)
 
-  const transferCount = matchedStats.reduce(
+  const transfersWithDurationCount = matchedStats.reduce(
     (acc, stats) => acc + stats.transferCount,
     0,
   )
 
-  if (transferCount <= 0) return null
+  if (transfersWithDurationCount <= 0) return null
 
   const totalDurationSum = matchedStats.reduce(
     (acc, stats) => acc + stats.totalDurationSum,
     0,
   )
 
-  return Math.floor(totalDurationSum / transferCount)
+  return Math.floor(totalDurationSum / transfersWithDurationCount)
 }

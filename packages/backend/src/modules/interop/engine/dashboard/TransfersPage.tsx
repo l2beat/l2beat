@@ -76,7 +76,7 @@ export function TransfersTable(props: {
               </td>
               <td>{e.type}</td>
               <td data-order={e.duration} data-sort={e.duration}>
-                {e.duration && formatSeconds(e.duration)}
+                {e.duration !== undefined && formatSeconds(e.duration)}
               </td>
               <td>
                 {e.srcSymbol ? (
@@ -126,16 +126,7 @@ export function TransfersTable(props: {
               </td>
               <td>{e.srcChain}</td>
               <td>
-                {srcExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
-                  >
-                    <ShortenedHash hash={e.srcTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.srcTxHash} />
-                )}
+                <TxHash explorerUrl={srcExplorerUrl} hash={e.srcTxHash} />
               </td>
               <td>
                 <TokenAddress
@@ -145,16 +136,7 @@ export function TransfersTable(props: {
               </td>
               <td>{e.dstChain}</td>
               <td>
-                {dstExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
-                  >
-                    <ShortenedHash hash={e.dstTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.dstTxHash} />
-                )}
+                <TxHash explorerUrl={dstExplorerUrl} hash={e.dstTxHash} />
               </td>
               <td>
                 <TokenAddress
@@ -193,6 +175,32 @@ function TokenAddress({
   return (
     <a target="_blank" href={`${explorerUrl}/address/${ethAddress}`}>
       <ShortenedHash hash={ethAddress} />
+    </a>
+  )
+}
+
+function TxHash({
+  explorerUrl,
+  hash,
+}: {
+  explorerUrl: string | undefined
+  hash: string | undefined
+}) {
+  if (!hash) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+
+  if (!explorerUrl) {
+    return <ShortenedHash hash={hash} />
+  }
+
+  return (
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      href={`${explorerUrl}/tx/${hash}`}
+    >
+      <ShortenedHash hash={hash} />
     </a>
   )
 }
