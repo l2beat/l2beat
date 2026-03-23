@@ -105,6 +105,54 @@ const aztecTotalSupply = discovery.getContractValueBigInt(
   'totalSupply',
 )
 
+const epochsPerRound = discovery.getContractValue<number>(
+  'TallySlashingProposer',
+  'ROUND_SIZE_IN_EPOCHS',
+)
+
+const slotsPerRound = discovery.getContractValue<number>(
+  'TallySlashingProposer',
+  'ROUND_SIZE',
+)
+
+const slashOffsetRounds = discovery.getContractValue<number>(
+  'TallySlashingProposer',
+  'SLASH_OFFSET_IN_ROUNDS',
+)
+
+const slashPayloadExecutionDelayRounds = discovery.getContractValue<number>(
+  'TallySlashingProposer',
+  'EXECUTION_DELAY_IN_ROUNDS',
+)
+
+const tallySlashQuorum = discovery.getContractValue<number>(
+  'TallySlashingProposer',
+  'QUORUM',
+)
+
+const slashAmount = {
+  large: formatAztecAmount(
+    discovery.getContractValueBigInt(
+      'TallySlashingProposer',
+      'SLASH_AMOUNT_LARGE',
+    ),
+  ),
+  medium: formatAztecAmount(
+    discovery.getContractValueBigInt(
+      'TallySlashingProposer',
+      'SLASH_AMOUNT_MEDIUM',
+    ),
+  ),
+  small: formatAztecAmount(
+    discovery.getContractValueBigInt(
+      'TallySlashingProposer',
+      'SLASH_AMOUNT_SMALL',
+    ),
+  ),
+}
+
+const slashVetoStats = discovery.getMultisigStats('SlashVeto Council')
+
 const feeJuicePortal = discovery.getContract('FeeJuicePortal')
 const governance = discovery.getContract('Governance')
 const honkVerifier = discovery.getContract('HonkVerifier')
@@ -472,6 +520,40 @@ export const aztecnetwork: ScalingProject = {
             url: `https://etherscan.io/address/${verifierAddress.toString()}#code`,
           },
         ],
+      },
+      {
+        title: 'Slashing',
+        description: `
+Each stake of ${activationThresholdString} that is locked to join the sequencer set and vote in governance can be slashed under certain conditions. Slashing is voted on by sequencers each time they propose a checkpoint and is grouped in rounds that span ${epochsPerRound} epochs (${formatSeconds(epochsPerRound * epochDuration)}) each.
+
+Slashing conditions are programmed into each sequencer node and can be changed by node operators by updating or editing their node software. Nodes usually submit votes to slash automatically on L1. The \`TallySlashingProposer\` contract only enforces the formalities of the slashing system:
+* A given slashing round's votes always target the checkpoint proposals from ${slashOffsetRounds} rounds ago.
+* As soon as a round's votes have reached a quorum of ${tallySlashQuorum}/${slotsPerRound}, it enters an execution delay of ${slashPayloadExecutionDelayRounds} rounds (${formatSeconds(slashPayloadExecutionDelayRounds * epochsPerRound * epochDuration)})
+* An automatically generated slashing payload is executable by anyone on L1 after the execution delay, applying the slashing penalties defined by the sequencer votes.
+
+Slashing penalties are defined onchain in three levels: large (${slashAmount.large}), medium (${slashAmount.medium}), and small (${slashAmount.small}). Offenses that lead to slashing usually include:
+* Inactivity: A sequencer fails to attest or propose when selected.
+* Data Withholding: A sequencer proposes a checkpoint including state diff data availability on L1 but withholds the public transaction bodies and/or CHONK proofs required for permissionless proving.
+* Invalidity: A sequencer attests to invalid proposals, multiple conflicting proposals, with invalid signatures, or proposes a block that is not proven in time.
+
+The above offense list is not exhaustive and not defined onchain but usually in the software the sequencers decide to run. This is also where the mapping of offenses to the slashing penalty levels can be defined.
+
+The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific proposals and/or all slashing for ${slashingDisableDurationString} at a time.`,
+        references: [
+          {
+            title: 'Slashing - Aztec Docs',
+            url: 'https://docs.aztec.network/operate/operators/sequencer-management/slashing_and_offenses',
+          },
+          {
+            title: 'SlashVeto Council - Github',
+            url: 'https://github.com/aztec-slash-veto/council',
+          },
+          {
+            title: 'slashveto.me - Monitor Slashing',
+            url: 'https://slashveto.me',
+          },
+        ],
+        risks: [],
       },
     ],
   },
