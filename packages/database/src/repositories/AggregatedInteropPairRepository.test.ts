@@ -221,7 +221,7 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
             tokenA: 'eth___',
-          tokenB: 'usdc__',
+            tokenB: 'usdc__',
             transferCount: 5,
             totalDurationSum: 1000,
             volume: 5000,
