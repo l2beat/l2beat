@@ -5,7 +5,8 @@ CREATE TABLE "AggregatedInteropPair" (
     "srcChain" VARCHAR(255) NOT NULL,
     "dstChain" VARCHAR(255) NOT NULL,
     "bridgeType" VARCHAR(255) NOT NULL DEFAULT 'unknown',
-    "tokenPair" VARCHAR(14) NOT NULL,
+    "tokenA" VARCHAR(8) NOT NULL,
+    "tokenB" VARCHAR(8) NOT NULL,
     "transferTypeStats" JSONB,
     "transferCount" INTEGER NOT NULL,
     "transfersWithDurationCount" INTEGER NOT NULL DEFAULT 0,
@@ -14,8 +15,8 @@ CREATE TABLE "AggregatedInteropPair" (
     "minTransferValueUsd" REAL,
     "maxTransferValueUsd" REAL,
 
-    CONSTRAINT "AggregatedInteropPair_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","bridgeType","id","tokenPair")
+    CONSTRAINT "AggregatedInteropPair_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","bridgeType","id","tokenA","tokenB")
 );
 
 -- CreateIndex
-CREATE INDEX "AggregatedInteropPair_timestamp_srcChain_dstChain_id_bridgeT_idx" ON "AggregatedInteropPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
+CREATE INDEX "AggregatedInteropPair_timestamp_srcChain_dstChain_id_bridge_idx" ON "AggregatedInteropPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");

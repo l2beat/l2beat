@@ -10,7 +10,8 @@ export interface AggregatedInteropPairRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
-  tokenPair: string
+  tokenA: string
+  tokenB: string
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
   transfersWithDurationCount: number
@@ -29,7 +30,8 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
-    tokenPair: row.tokenPair,
+    tokenA: row.tokenA,
+    tokenB: row.tokenB,
     transferTypeStats:
       (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
       undefined,
@@ -51,7 +53,8 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
-    tokenPair: record.tokenPair,
+    tokenA: record.tokenA,
+    tokenB: record.tokenB,
     transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
     transfersWithDurationCount: record.transfersWithDurationCount,
@@ -79,43 +82,6 @@ export class AggregatedInteropPairRepository extends BaseRepository {
       .selectAll()
       .execute()
 
-    return rows.map(toRecord)
-  }
-
-  async getByChainsAndTimestamp(
-    timestamp: UnixTime,
-    sourceChains: string[],
-    destinationChains: string[],
-    type?: InteropBridgeType,
-    protocolId?: string,
-    options?: {
-      includeSameChainTransfers?: boolean
-    },
-  ): Promise<AggregatedInteropPairRecord[]> {
-    if (sourceChains.length === 0 || destinationChains.length === 0) {
-      return []
-    }
-
-    let query = this.db
-      .selectFrom('AggregatedInteropPair')
-      .selectAll()
-      .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', sourceChains)
-      .where('dstChain', 'in', destinationChains)
-
-    if (protocolId) {
-      query = query.where('id', '=', protocolId)
-    }
-
-    if (!options?.includeSameChainTransfers) {
-      query = query.whereRef('srcChain', '!=', 'dstChain')
-    }
-
-    if (type) {
-      query = query.where('bridgeType', '=', type)
-    }
-
-    const rows = await query.execute()
     return rows.map(toRecord)
   }
 

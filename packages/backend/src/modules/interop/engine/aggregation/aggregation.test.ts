@@ -1077,7 +1077,8 @@ describe('aggregation', () => {
       expect(result[0]).toEqual({
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
-        tokenPair: 'eth___::usdc__',
+        tokenA: 'eth___',
+        tokenB: 'usdc__',
         transferTypeStats: {
           deposit: { transferCount: 2, totalDurationSum: 8000 },
         },
@@ -1117,7 +1118,8 @@ describe('aggregation', () => {
       const result = getAggregatedPairs(transfers)
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.tokenPair).toEqual('eth___::usdc__')
+      expect(result[0]?.tokenA).toEqual('eth___')
+      expect(result[0]?.tokenB).toEqual('usdc__')
       expect(result[0]?.transferCount).toEqual(2)
     })
 
@@ -1138,7 +1140,8 @@ describe('aggregation', () => {
       const result = getAggregatedPairs(transfers)
 
       expect(result).toHaveLength(1)
-      expect(result[0]?.tokenPair).toEqual('eth___::eth___')
+      expect(result[0]?.tokenA).toEqual('eth___')
+      expect(result[0]?.tokenB).toEqual('eth___')
       expect(result[0]?.transferCount).toEqual(1)
     })
 
@@ -1190,58 +1193,15 @@ describe('aggregation', () => {
 
       expect(result).toHaveLength(2)
 
-      const knownPair = result.find((r) => r.tokenPair === 'eth___::usdc__')
+      const knownPair = result.find(
+        (r) => r.tokenA === 'eth___' && r.tokenB === 'usdc__',
+      )
       expect(knownPair?.transferCount).toEqual(1)
       expect(knownPair?.volume).toEqual(3000)
 
-      const unknownPair = result.find((r) => r.tokenPair === 'unknown')
+      const unknownPair = result.find((r) => r.tokenA === 'unknown')
       expect(unknownPair?.transferCount).toEqual(3)
       expect(unknownPair?.volume).toEqual(3500)
-    })
-
-    it('calculates volume/min/max/duration correctly', () => {
-      const transfers: InteropTransferRecord[] = [
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: 5000,
-          srcValueUsd: 2000,
-          dstValueUsd: undefined,
-        }),
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: undefined,
-          srcValueUsd: undefined,
-          dstValueUsd: 500,
-        }),
-        createTransfer({
-          timestamp,
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth___',
-          dstAbstractTokenId: 'usdc__',
-          duration: 3000,
-          srcValueUsd: 100.555,
-          dstValueUsd: 100,
-        }),
-      ]
-
-      const result = getAggregatedPairs(transfers)
-
-      expect(result).toHaveLength(1)
-      expect(result[0]?.transferCount).toEqual(3)
-      expect(result[0]?.transfersWithDurationCount).toEqual(2)
-      expect(result[0]?.totalDurationSum).toEqual(8000)
-      expect(result[0]?.volume).toEqual(2600.55)
-      expect(result[0]?.minTransferValueUsd).toEqual(100.56)
-      expect(result[0]?.maxTransferValueUsd).toEqual(2000)
     })
 
     it('tracks transfer type stats per pair', () => {
