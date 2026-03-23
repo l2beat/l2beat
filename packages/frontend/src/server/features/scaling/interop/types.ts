@@ -184,6 +184,20 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
+export type PairData = {
+  id: string
+  tokenA: { symbol: string; iconUrl: string }
+  tokenB: { symbol: string; iconUrl: string }
+  volume: number | null
+  transferCount: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  netMintedValue: number | undefined
+  flows: TokenFlowData[]
+}
+
 export type ChainData = {
   id: string
   name: string

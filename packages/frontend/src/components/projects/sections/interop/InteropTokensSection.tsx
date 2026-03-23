@@ -17,8 +17,8 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import {
-  getTopItemsColumns,
-  type TopItemRow,
+  getTopTokensColumns,
+  type TokenRow,
 } from '~/pages/interop/components/top-items/columns'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
@@ -58,20 +58,11 @@ export function InteropTokensSection({
     },
   )
 
-  const tableData = useMemo(
-    () =>
-      data?.map((token) => ({
-        ...token,
-        displayName: token.symbol,
-      })) ?? [],
-    [data],
-  )
-
-  const columns = useMemo(() => getTopItemsColumns('tokens'), [])
+  const columns = useMemo(() => getTopTokensColumns(), [])
   const isLoading = isProtocolLoading || isTokensLoading
 
-  const table = useTable<TopItemRow>({
-    data: tableData,
+  const table = useTable<TokenRow>({
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

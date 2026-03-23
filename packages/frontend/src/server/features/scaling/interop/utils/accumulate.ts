@@ -1,4 +1,7 @@
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import type {
+  AggregatedInteropPairRecord,
+  AggregatedInteropTransferRecord,
+} from '@l2beat/database'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
@@ -22,6 +25,17 @@ export function accumulateTokens(
   token: AggregatedInteropTransferWithTokens['tokens'][number],
 ) {
   return accumulate(current, token)
+}
+
+export function accumulatePairs(
+  current: CommonInteropData,
+  pair: AggregatedInteropPairRecord,
+) {
+  return accumulate(current, {
+    ...pair,
+    mintedValueUsd: undefined,
+    burnedValueUsd: undefined,
+  })
 }
 
 export function accumulateChains(

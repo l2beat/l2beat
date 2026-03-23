@@ -13,6 +13,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '~/components/core/Drawer'
+import { Tabs, TabsList, TabsTrigger } from '~/components/core/Tabs'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
@@ -21,7 +22,12 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
-import { getTopItemsColumns, type TopItemRow } from './columns'
+import {
+  getTopTokensColumns,
+  type PairRow,
+  type TokenRow,
+  topPairsColumns,
+} from './columns'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -53,17 +59,8 @@ export function TopTokensCell({
       <InteropTopItems
         topItems={{
           items: topItems.items.map((token) => ({
-            id: token.id,
+            ...token,
             displayName: token.symbol,
-            iconUrl: token.iconUrl,
-            volume: token.volume,
-            issuer: token.issuer,
-            transferCount: token.transferCount,
-            avgDuration: token.avgDuration,
-            avgValue: token.avgValue,
-            minTransferValueUsd: token.minTransferValueUsd,
-            maxTransferValueUsd: token.maxTransferValueUsd,
-            netMintedValue: token.netMintedValue,
           })),
           remainingCount: topItems.remainingCount,
         }}
@@ -87,6 +84,8 @@ export function TopTokensCell({
   )
 }
 
+type ActiveTab = 'tokens' | 'pairs'
+
 function TopTokensContent({
   type,
   protocol,
@@ -101,34 +100,34 @@ function TopTokensContent({
   showNetMintedValueColumn?: boolean
 }) {
   const breakpoint = useBreakpoint()
+  const utils = api.useUtils()
   const { selectionForApi } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.tokens.useQuery(
-    {
-      ...selectionForApi,
-      id: protocol.id,
-      type,
-    },
-    {
+  const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
+
+  const queryInput = {
+    ...selectionForApi,
+    id: protocol.id,
+    type,
+  }
+
+  const { data: tokensData, isLoading: isTokensLoading } =
+    api.interop.tokens.useQuery(queryInput, {
       enabled: isOpen,
-    },
+    })
+
+  const { data: pairsData, isLoading: isPairsLoading } =
+    api.interop.pairs.useQuery(queryInput, {
+      enabled: isOpen && activeTab === 'pairs',
+    })
+
+  const tokensColumns = useMemo(
+    () => getTopTokensColumns(showNetMintedValueColumn),
+    [showNetMintedValueColumn],
   )
 
-  const tableData = useMemo(
-    () =>
-      data?.map((token) => ({
-        ...token,
-        displayName: token.symbol,
-      })) ?? [],
-    [data],
-  )
-
-  const columns = useMemo(() => {
-    return getTopItemsColumns('tokens', showNetMintedValueColumn)
-  }, [showNetMintedValueColumn])
-
-  const table = useTable<TopItemRow>({
-    data: tableData,
-    columns,
+  const tokensTable = useTable<TokenRow>({
+    data: tokensData ?? [],
+    columns: tokensColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -145,13 +144,48 @@ function TopTokensContent({
     },
   })
 
+  const pairsTable = useTable<PairRow>({
+    data: pairsData ?? [],
+    columns: topPairsColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualFiltering: true,
+    initialState: {
+      sorting: [
+        {
+          id: 'volume',
+          desc: true,
+        },
+      ],
+    },
+  })
+
+  const tabs = (
+    <Tabs
+      value={activeTab}
+      onValueChange={(val) => setActiveTab(val as ActiveTab)}
+      variant="highlighted"
+      name="topItems"
+    >
+      <TabsList>
+        <TabsTrigger value="tokens">Top tokens</TabsTrigger>
+        <TabsTrigger
+          value="pairs"
+          onMouseEnter={() => utils.interop.pairs.prefetch(queryInput)}
+        >
+          Top pairs
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
+
   if (breakpoint === 'xs' || breakpoint === 'sm') {
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
           <DrawerHeader className="mb-2">
             <DrawerTitle className="mb-0 text-xl">
-              <span>Top tokens by volume for </span>
+              <span>Top items by volume for </span>
               <img
                 src={protocol.iconUrl}
                 alt={protocol.name}
@@ -160,14 +194,24 @@ function TopTokensContent({
               <span>{protocol.name}</span>
             </DrawerTitle>
             <BetweenChainsInfo />
+            <div className="mt-2">{tabs}</div>
           </DrawerHeader>
           <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
+            {activeTab === 'tokens' ? (
+              <BasicTable
+                skeletonCount={6}
+                table={tokensTable}
+                tableWrapperClassName="pb-0"
+                isLoading={isTokensLoading}
+              />
+            ) : (
+              <BasicTable
+                skeletonCount={6}
+                table={pairsTable}
+                tableWrapperClassName="pb-0"
+                isLoading={isPairsLoading}
+              />
+            )}
           </div>
         </DrawerContent>
       </Drawer>
@@ -179,7 +223,7 @@ function TopTokensContent({
       <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
-            <span>Top tokens by volume for </span>
+            <span>Top items by volume for </span>
             <img
               src={protocol.iconUrl}
               alt={protocol.name}
@@ -188,15 +232,25 @@ function TopTokensContent({
             <span>{protocol.name}</span>
           </DialogTitle>
           <BetweenChainsInfo className="mt-1" />
+          <div className="mt-2">{tabs}</div>
         </DialogHeader>
         <div className="overflow-x-auto">
           <div className="mx-6">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
+            {activeTab === 'tokens' ? (
+              <BasicTable
+                skeletonCount={6}
+                table={tokensTable}
+                tableWrapperClassName="pb-0"
+                isLoading={isTokensLoading}
+              />
+            ) : (
+              <BasicTable
+                skeletonCount={6}
+                table={pairsTable}
+                tableWrapperClassName="pb-0"
+                isLoading={isPairsLoading}
+              />
+            )}
           </div>
         </div>
       </DialogContent>
