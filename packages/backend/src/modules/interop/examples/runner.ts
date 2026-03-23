@@ -166,17 +166,17 @@ export class ExampleRunner {
       transfer: u,
       srcId: toDeployedId(
         INTEROP_CHAINS,
-        u.src.event.ctx.chain,
+        u.src.event?.ctx.chain ?? u.src.chain,
         u.src.tokenAddress,
       ),
       dstId: toDeployedId(
         INTEROP_CHAINS,
-        u.dst.event.ctx.chain,
+        u.dst.event?.ctx.chain ?? u.dst.chain,
         u.dst.tokenAddress,
       ),
       events: u.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-      src: { ...u.src, chain: u.src.event.ctx.chain },
-      dst: { ...u.dst, chain: u.dst.event.ctx.chain },
+      src: { ...u.src, chain: u.src.event?.ctx.chain ?? u.src.chain },
+      dst: { ...u.dst, chain: u.dst.event?.ctx.chain ?? u.dst.chain },
     }))
 
     return {

@@ -272,6 +272,23 @@
       ]
     }
   },
+  "ccip-hyperevm": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // HyperEVM → Ethereum (v1.5 Burned, burn & unlock)
+      {
+        "chain": "hyperevm",
+        "tx": "0xb3f0ac69eefddd774f8a59a16e02b4222acc859af2f1cdeaf3d9c313aad0273a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc5449f032e5cf58943b620131b36df835f100783140c969a3fbb69fbcdae6171"
+      }
+    ],
+    "expects": {
+      "transfers": [{ "type": "ccip.Transfer" }]
+    }
+  },
   "ccip-batched": {
     "loadConfigs": ["ccip"],
     "txs": [
