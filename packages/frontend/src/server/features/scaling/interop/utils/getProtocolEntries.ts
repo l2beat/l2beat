@@ -87,10 +87,14 @@ export function getProtocolEntries(
       tokens: data.tokens,
       tokensDetailsMap,
       unknownTransfersCount: data.transferCount - data.identifiedTransferCount,
+      // No duration split map for aggregated view
+      durationSplit: undefined,
       logger,
     })
     const chains = getChainsData({
       chains: data.chains,
+      // No duration split map for aggregated view
+      durationSplit: undefined,
       logger,
     })
 

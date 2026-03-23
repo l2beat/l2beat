@@ -8,8 +8,8 @@ import { getInteropChains } from './getInteropChains'
 
 type Params = {
   chains: Map<string, CommonInteropData>
+  durationSplit: InteropDurationSplit | undefined
   logger: Logger
-  durationSplit?: InteropDurationSplit
 }
 
 export function getChainsData({

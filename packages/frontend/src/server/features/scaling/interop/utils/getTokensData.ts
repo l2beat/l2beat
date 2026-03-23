@@ -12,7 +12,7 @@ type Params = {
   tokensDetailsMap: TokensDetailsMap
   unknownTransfersCount: number
   logger: Logger
-  durationSplit?: InteropDurationSplit
+  durationSplit: InteropDurationSplit | undefined
 }
 
 export function getTokensData({

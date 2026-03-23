@@ -28,5 +28,7 @@ export function getSummaryTokensData(
     tokensDetailsMap,
     unknownTransfersCount: counts.transferCount - counts.identifiedCount,
     logger,
+    // No duration split map for tokens summary view
+    durationSplit: undefined,
   })
 }
