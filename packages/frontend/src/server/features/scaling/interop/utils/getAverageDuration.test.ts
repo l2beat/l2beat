@@ -67,8 +67,6 @@ describe(getAverageDuration.name, () => {
 
   it('uses only transfers with known duration in single mode', () => {
     const result = getAverageDuration(
-      'canonical',
-      ['lockAndMint'],
       commonInteropData({
         transferCount: 6,
         transfersWithDurationCount: 3,
@@ -85,9 +83,16 @@ describe(getAverageDuration.name, () => {
   })
 
   it('uses only transfers with known duration in split mode', () => {
-    const result = getAverageDuration(
-      'stargate',
+    const durationSplit = getDurationSplit(
+      interopProject('stargate', {
+        nonMinting: [
+          { label: 'Bus', transferTypes: ['bus'] },
+          { label: 'Taxi', transferTypes: ['taxi'] },
+        ],
+      }),
       ['nonMinting'],
+    )
+    const result = getAverageDuration(
       commonInteropData({
         transferCount: 10,
         transfersWithDurationCount: 4,
@@ -97,20 +102,7 @@ describe(getAverageDuration.name, () => {
           taxi: { transferCount: 3, totalDurationSum: 150 },
         },
       }),
-      new Map([
-        [
-          'stargate',
-          new Map([
-            [
-              'nonMinting',
-              [
-                { label: 'Bus', transferTypes: ['bus'] },
-                { label: 'Taxi', transferTypes: ['taxi'] },
-              ],
-            ],
-          ]),
-        ],
-      ]) satisfies DurationSplitMap,
+      durationSplit,
     )
 
     expect(result).toEqual({
@@ -124,8 +116,6 @@ describe(getAverageDuration.name, () => {
 
   it('returns null in single mode when no transfer has duration', () => {
     const result = getAverageDuration(
-      'canonical',
-      ['lockAndMint'],
       commonInteropData({
         transferCount: 3,
         transfersWithDurationCount: 0,
