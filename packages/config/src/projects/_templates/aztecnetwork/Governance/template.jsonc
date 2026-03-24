@@ -8,5 +8,16 @@
     "totalPowerAt"
   ],
   "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
-  "category": "gov"
+  "category": "gov",
+  "fields": {
+    "governanceProposer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create proposals.",
+          "condition": "the proposal payload passed the sequencer signalling round."
+        }
+      ]
+    }
+  }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x048c7c47904b0ff73f85d0a3b971e3deab0850b2
+Generated with discovered.json: 0x41cd836ad62aa77bdaf189e6fc331b250f1d79ac
 
-# Diff at Mon, 23 Mar 2026 09:15:51 GMT:
+# Diff at Tue, 24 Mar 2026 06:50:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1771254730
+- comparing to: main@bbbdbb0dd14a703b0e04f6763790717b4648cae0 block: 1771254730
 - current timestamp: 1774257283
 
 ## Description
@@ -18,6 +18,8 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       values.proposalCount:
 -        2
 +        3
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","description":"change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.","role":".owner"}
     }
 ```
 
@@ -197,6 +199,8 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
 +        "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals."
       category:
 +        {"name":"Governance","priority":3}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e","description":"create proposals.","role":".governanceProposer","condition":"the proposal payload passed the sequencer signalling round."}]
     }
 ```
 
@@ -205,6 +209,10 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
     +++ description: DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.
       category:
 +        {"name":"Governance","priority":3}
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps.","role":".owner","via":[{"address":"eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a","condition":"the GATED_UNTIL timestamp has passed."}]},{"permission":"interact","from":"eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f","description":"add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.","role":".owner"}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a","role":".GOVERNANCE","condition":"the GATED_UNTIL timestamp has passed."}]
     }
 ```
 
@@ -226,6 +234,14 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
 -   Status: DELETED
     contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12)
     +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+```
+
+```diff
+    contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) {
+    +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps.","role":".owner"}]
+    }
 ```
 
 ```diff

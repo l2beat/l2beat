@@ -50,6 +50,14 @@
         "value": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348"
       }
     },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations."
+        }
+      ]
+    },
     "getManaLimit": { "description": "gas limit" },
     "getEntryQueueFlushSize": {
       "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"

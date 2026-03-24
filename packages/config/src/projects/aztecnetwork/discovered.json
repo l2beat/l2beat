@@ -39,6 +39,15 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+          "description": "create proposals.",
+          "role": ".governanceProposer",
+          "condition": "the proposal payload passed the sequencer signalling round."
+        }
+      ],
       "ignoreInWatchMode": ["getCurrentRound"],
       "sinceTimestamp": 1762995059,
       "sinceBlock": 23786828,
@@ -84,6 +93,40 @@
       ],
       "proxyType": "immutable",
       "description": "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
+          "description": "mint new AZTEC in the bounds of the minting caps.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+              "condition": "the GATED_UNTIL timestamp has passed."
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
+          "description": "change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.",
+          "role": ".owner"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+          "role": ".GOVERNANCE",
+          "condition": "the GATED_UNTIL timestamp has passed."
+        }
+      ],
       "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
       "sinceTimestamp": 1762995071,
       "sinceBlock": 23786829,
@@ -265,6 +308,7 @@
         "isSlashingEnabled": true,
         "PROPOSER": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
         "SLASHING_DISABLE_DURATION": 259200,
+        "SLASHING_DISABLE_DURATION_fmt": "3d",
         "slashingDisabledUntil": 0,
         "VETOER": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
       },
@@ -282,6 +326,14 @@
       ],
       "proxyType": "immutable",
       "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
+          "description": "mint new AZTEC in the bounds of the minting caps.",
+          "role": ".owner"
+        }
+      ],
       "sinceTimestamp": 1762995107,
       "sinceBlock": 23786832,
       "values": {
@@ -750,6 +802,14 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
+          "description": "veto specific slashing payloads and/or disable all slashing for 3d at a time.",
+          "role": ".VETOER"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1762176359,
       "sinceBlock": 23719087,
@@ -1636,25 +1696,25 @@
   "usedTemplates": {
     "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "aztecnetwork/AztecTokenPositionRegistry": "0x59976ab5bef1becfde3f9417e435b12d9d791e7ce50906b3a6af408bad767a3e",
-    "aztecnetwork/CoinIssuer": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/CoinIssuer": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
     "aztecnetwork/FeeJuicePortal": "0x6f147ef34633afd5e35a1aa0eb062b016a58f73357ef821d912ba19733398d9e",
-    "aztecnetwork/Governance": "0xda08ff2623a515362905771f5aad21b6e8d84a57d8038332ba62ff0bf5163627",
+    "aztecnetwork/Governance": "0x5ab50b472ba1f5486356e16564ebed2a0ee5bb9bf7c959201de352721e6b397f",
     "aztecnetwork/GovernanceProposer": "0xd251e17ac927ecce11d82c021b46b918e12f5e9be00219536a2945ce7ff509ac",
-    "aztecnetwork/GSE": "0xec9f7ba5d907b32bd920bea78fa1b71cf91c320d24fe89f74ef1b91ca411668d",
+    "aztecnetwork/GSE": "0x6f5dd647e0ed32ed1adde569ae57fc571d8e446e7d015f908f04f6f908a600ab",
     "aztecnetwork/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Inbox": "0x244f5e1cb5a02f605bb45a135c9a4a4d0d33f0623c42258988c05ae3ff74e62a",
     "aztecnetwork/Outbox": "0x8d7e24fc272f6667c39e1f22ffa7564cd1314b29a1ccaa6f5ddbfd54a7af285b",
-    "aztecnetwork/ProtocolTreasury": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/ProtocolTreasury": "0x7b3d25750c9ea2e92807657049546ba3b26899152a56e8d2f3c0dcaebafabb85",
     "aztecnetwork/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "aztecnetwork/Rollup": "0x904cedeeeeaea11a7b866d25b70b49f3b759a116b09c68e9f13b45ead5847a53",
-    "aztecnetwork/Slasher": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "aztecnetwork/Rollup": "0xac23dafc21837e3008e967973110c0f4980243276caba203964c50e90b43e9b2",
+    "aztecnetwork/Slasher": "0xb6adc2e9ef040cc45adae5aaa8d90703697518e09df268b15641cb65bbd78f23",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24719255 },
-  "permissionsConfigHash": "0xe90f7482d22c9e19d245263eb9466922dc591c6d63dd21e0cc8b79dbaa3cb015"
+  "permissionsConfigHash": "0x6b0c89c6e76ae76e9bad436a341e725b47f8432ec89fcd68a4b675d275f92206"
 }
