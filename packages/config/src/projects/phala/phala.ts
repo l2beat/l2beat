@@ -1,5 +1,6 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -48,10 +49,11 @@ export const phala: ScalingProject = opStackL2({
       },
     ],
   },
-  nonTemplateProofSystem: {
-    type: 'Validity',
-    zkCatalogId: ProjectId('sp1hypercube'),
-  },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  // nonTemplateProofSystem: {
+  //   type: 'Validity',
+  //   zkCatalogId: ProjectId('sp1hypercube'),
+  // },
   nonTemplateTrackedTxs: [
     {
       uses: [
