@@ -45,12 +45,12 @@ export async function getInteropPairs({
     return []
   }
 
-  const pairs = await db.aggregatedInteropTokensPair.getByChainsAndTimestamp(
+  const pairs = await db.aggregatedInteropTokensPair.getByChainsIdAndTimestamp(
     snapshotTimestamp,
     from,
     to,
     id,
-    { type },
+    type,
   )
 
   const abstractTokenIds = unique(

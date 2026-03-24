@@ -272,13 +272,49 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'protocol1',
-          ['ethereum', 'arbitrum'],
-          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
         expect(result).toEqualUnsorted([record1])
+      })
+
+      it('returns records across all protocols when id is omitted', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'usdc__',
+          transferCount: 5,
+          totalDurationSum: 1000,
+          volume: 5000,
+          bridgeType: 'lockAndMint',
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(100),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'btc___',
+          tokenB: 'eth___',
+          transferCount: 3,
+          totalDurationSum: 2000,
+          volume: 6000,
+          bridgeType: 'lockAndMint',
+        })
+        await repository.insertMany([record1, record2])
+
+        const result = await repository.getByChainsIdAndTimestamp(
+          UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+        )
+
+        expect(result).toEqualUnsorted([record1, record2])
       })
 
       it('excludes same-chain transfers by default', async () => {
@@ -310,9 +346,9 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'protocol1',
-          ['ethereum', 'arbitrum'],
-          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 
@@ -348,9 +384,9 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'protocol1',
-          ['ethereum', 'arbitrum'],
-          ['ethereum', 'arbitrum'],
           'lockAndMint',
           { includeSameChainTransfers: true },
         )
@@ -387,9 +423,9 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
 
         const result = await repository.getByChainsIdAndTimestamp(
           UnixTime(100),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
           'protocol1',
-          ['ethereum', 'arbitrum'],
-          ['ethereum', 'arbitrum'],
           'lockAndMint',
         )
 

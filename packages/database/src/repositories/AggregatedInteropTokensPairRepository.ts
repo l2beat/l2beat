@@ -90,13 +90,13 @@ export class AggregatedInteropTokensPairRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByChainsAndTimestamp(
+  async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
     sourceChains: string[],
     destinationChains: string[],
     id?: string,
+    type?: InteropBridgeType,
     options?: {
-      type?: InteropBridgeType
       includeSameChainTransfers?: boolean
     },
   ): Promise<AggregatedInteropTokensPairRecord[]> {
@@ -119,8 +119,8 @@ export class AggregatedInteropTokensPairRepository extends BaseRepository {
       query = query.whereRef('srcChain', '!=', 'dstChain')
     }
 
-    if (options?.type) {
-      query = query.where('bridgeType', '=', options.type)
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()
