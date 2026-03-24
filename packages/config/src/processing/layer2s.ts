@@ -1,3 +1,4 @@
+import { mova } from '../projects/mova/mova'
 import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
@@ -472,6 +473,7 @@ export const layer2s: ScalingProject[] = [
   zksync2,
   zksync,
   zora,
-]
+mova ，
+] 
 
 export const milestonesLayer2s = HOMEPAGE_MILESTONES
