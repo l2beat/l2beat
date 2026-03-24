@@ -188,7 +188,6 @@ export interface UpdateMonitorConfig {
 
 export interface DiscordConfig {
   readonly token: string
-  readonly publicChannelId?: string
   readonly internalChannelId: string
   readonly callsPerMinute: number
 }
@@ -213,6 +212,7 @@ export interface InteropFeatureConfig {
   }
   matching: boolean
   cleaner: boolean
+  dangerousOperationsEnabled: boolean
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
@@ -236,6 +236,9 @@ export interface InteropFeatureConfig {
         discordWebhookUrl: string
       }
     | false
+
+  /** List of chains plugins are allowed to create partial from/to transfers for  */
+  oneSidedChains: string[]
 }
 
 export interface DaBeatConfig {
@@ -246,6 +249,7 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {
@@ -312,6 +316,7 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {

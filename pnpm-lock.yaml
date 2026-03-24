@@ -72,6 +72,9 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
+      '@l2beat/interop-backoffice':
+        specifier: workspace:*
+        version: link:../interop-backoffice
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -582,9 +585,6 @@ importers:
       image-size:
         specifier: ^2.0.1
         version: 2.0.1
-      kysely:
-        specifier: ^0.27.3
-        version: 0.27.4
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -688,6 +688,43 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
+
+  packages/interop-backoffice:
+    dependencies:
+      '@l2beat/database':
+        specifier: workspace:*
+        version: link:../database
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@trpc/server':
+        specifier: ^11.0.0-rc.446
+        version: 11.0.0-rc.599
+      superjson:
+        specifier: ^2.2.6
+        version: 2.2.6
+    devDependencies:
+      '@types/express':
+        specifier: ^5.0.0
+        version: 5.0.0
+      '@types/koa':
+        specifier: ^2.13.5
+        version: 2.15.0
+      '@types/mocha':
+        specifier: ^10.0.6
+        version: 10.0.9
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      earl:
+        specifier: ^1.1.0
+        version: 1.3.0
+      koa:
+        specifier: ^2.14.1
+        version: 2.16.0
+      mocha:
+        specifier: ^10.2.0
+        version: 10.7.3
 
   packages/l2b:
     dependencies:
@@ -5195,6 +5232,10 @@ packages:
     resolution: {integrity: sha512-TG2hpqe4ELx54QER/S3HQ9SRVnQnGBtKUz5bLQWtYAQ+o6GpgMs6sYUvaiJjVxb+UXwhRhAEP3m7LbsIZ77Hmw==}
     engines: {node: '>= 0.8'}
 
+  copy-anything@4.0.5:
+    resolution: {integrity: sha512-7Vv6asjS4gMOuILabD3l739tsaxFQmC+a7pLZm02zyvs8p977bL3zEgq3yDk5rn9B0PbYgIv++jmHcuUab4RhA==}
+    engines: {node: '>=18'}
+
   copy-to@2.0.1:
     resolution: {integrity: sha512-3DdaFaU/Zf1AnpLiFDeNCD4TOWe3Zl2RZaTzUvWiIk5ERzcCodOE20Vqq4fzCbNoHURFHT4/us/Lfq+S2zyY4w==}
 
@@ -6249,6 +6290,10 @@ packages:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
 
+  is-what@5.5.0:
+    resolution: {integrity: sha512-oG7cgbmg5kLYae2N5IVd3jm2s+vldjxJzK1pcu9LfpGuQ93MQSzo0okvRna+7y5ifrD+20FE8FvjusyGaz14fw==}
+    engines: {node: '>=18'}
+
   is-windows@1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
     engines: {node: '>=0.10.0'}
@@ -6324,7 +6369,6 @@ packages:
   keygrip@1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
     engines: {node: '>= 0.6'}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   kind-of@6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
@@ -8011,6 +8055,10 @@ packages:
     resolution: {integrity: sha512-6WTxW1EB6yCxV5VFOIPQruWGHqc3yI7hEmZK6h+pyk69Lk/Ut7rLUY6W/ONF2MjBuGjvmMiIpsrVJ2vjrHlslA==}
     engines: {node: '>=6.4.0 <13 || >=14'}
     deprecated: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+
+  superjson@2.2.6:
+    resolution: {integrity: sha512-H+ue8Zo4vJmV2nRjpx86P35lzwDT3nItnIsocgumgr0hHMQ+ZGq5vrERg9kJBo5AWGmxZDhzDo+WVIJqkB0cGA==}
+    engines: {node: '>=16'}
 
   supertest@6.3.4:
     resolution: {integrity: sha512-erY3HFDG0dPnhw4U+udPfrzXa4xhSG+n4rxfRuZWCUvjFWwKl+OxWf/7zk50s84/fAAs7vf5QAb9uRa0cCykxw==}
@@ -12637,6 +12685,10 @@ snapshots:
       depd: 2.0.0
       keygrip: 1.1.0
 
+  copy-anything@4.0.5:
+    dependencies:
+      is-what: 5.5.0
+
   copy-to@2.0.1: {}
 
   core-util-is@1.0.3: {}
@@ -13934,6 +13986,8 @@ snapshots:
       better-path-resolve: 1.0.0
 
   is-unicode-supported@0.1.0: {}
+
+  is-what@5.5.0: {}
 
   is-windows@1.0.2: {}
 
@@ -15827,6 +15881,10 @@ snapshots:
       semver: 7.7.1
     transitivePeerDependencies:
       - supports-color
+
+  superjson@2.2.6:
+    dependencies:
+      copy-anything: 4.0.5
 
   supertest@6.3.4:
     dependencies:

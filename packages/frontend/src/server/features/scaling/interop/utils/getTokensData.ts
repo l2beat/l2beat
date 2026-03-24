@@ -1,37 +1,26 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
+import type { InteropDurationSplit } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
-import type {
-  CommonInteropData,
-  DurationSplitMap,
-  TokenData,
-  TokenFlowData,
-} from '../types'
+import type { TokenData } from '../types'
+import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
-  projectId: string
-  bridgeTypes: KnownInteropBridgeType[] | undefined
-  tokens: Map<
-    string,
-    CommonInteropData & { flows?: Map<string, TokenFlowData> }
-  >
+  tokens: Map<string, TokenInteropData>
   tokensDetailsMap: TokensDetailsMap
-  durationSplitMap: DurationSplitMap | undefined
   unknownTransfersCount: number
   logger: Logger
+  durationSplit: InteropDurationSplit | undefined
 }
 
 export function getTokensData({
-  projectId,
-  bridgeTypes,
   tokens,
   tokensDetailsMap,
-  durationSplitMap,
   unknownTransfersCount,
   logger,
+  durationSplit,
 }: Params): TokenData[] {
   const tokensData: TokenData[] = Array.from(tokens.entries())
     .map(([tokenId, token]) => {
@@ -42,12 +31,7 @@ export function getTokensData({
         return undefined
       }
 
-      const avgDuration = getAverageDuration(
-        projectId,
-        bridgeTypes,
-        token,
-        durationSplitMap,
-      )
+      const avgDuration = getAverageDuration(token, durationSplit)
 
       return {
         id: tokenId,

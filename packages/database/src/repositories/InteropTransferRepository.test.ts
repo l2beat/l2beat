@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { Selectable } from 'kysely'
 import type { InteropTransfer } from '../kysely/generated/types'
@@ -274,6 +274,124 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result).toEqual([])
     })
   })
+
+  describe(
+    InteropTransferRepository.prototype.getValueMismatchTransfers.name,
+    () => {
+      it('returns transfers above mismatch threshold ordered by mismatch desc', async () => {
+        const lowMismatch = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+          5000,
+        )
+        lowMismatch.srcValueUsd = 100
+        lowMismatch.dstValueUsd = 94 // 6%
+
+        const thresholdEdge = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+          5000,
+        )
+        thresholdEdge.srcValueUsd = 100
+        thresholdEdge.dstValueUsd = 95 // 5%
+
+        const mediumMismatch = transfer(
+          'plugin2',
+          'msg3',
+          'withdraw',
+          UnixTime(300),
+          'arbitrum',
+          'ethereum',
+          5000,
+        )
+        mediumMismatch.srcValueUsd = 100
+        mediumMismatch.dstValueUsd = 60 // 40%
+
+        const highMismatch = transfer(
+          'plugin2',
+          'msg4',
+          'withdraw',
+          UnixTime(400),
+          'base',
+          'ethereum',
+          5000,
+        )
+        highMismatch.srcValueUsd = 200
+        highMismatch.dstValueUsd = 100 // 50%
+
+        const belowValueThreshold = transfer(
+          'plugin2',
+          'msg7',
+          'withdraw',
+          UnixTime(450),
+          'base',
+          'ethereum',
+          5000,
+        )
+        belowValueThreshold.srcValueUsd = 100
+        belowValueThreshold.dstValueUsd = 40 // below value threshold
+
+        const missingSrcValue = transfer(
+          'plugin3',
+          'msg5',
+          'deposit',
+          UnixTime(500),
+          'polygon',
+          'ethereum',
+          5000,
+        )
+        missingSrcValue.srcValueUsd = undefined
+        missingSrcValue.dstValueUsd = 10
+
+        const zeroValues = transfer(
+          'plugin3',
+          'msg6',
+          'deposit',
+          UnixTime(600),
+          'polygon',
+          'ethereum',
+          5000,
+        )
+        zeroValues.srcValueUsd = 0
+        zeroValues.dstValueUsd = 0
+
+        await repository.insertMany([
+          lowMismatch,
+          thresholdEdge,
+          mediumMismatch,
+          highMismatch,
+          belowValueThreshold,
+          missingSrcValue,
+          zeroValues,
+        ])
+
+        const result = await repository.getValueMismatchTransfers(5, 50)
+
+        expect(result.map((x) => x.transferId)).toEqual([
+          'msg4',
+          'msg3',
+          'msg1',
+        ])
+        expect(result.map((x) => x.valueDifferencePercent)).toEqual([50, 40, 6])
+      })
+
+      it('throws for negative thresholds', async () => {
+        await expect(repository.getValueMismatchTransfers(-1)).toBeRejected()
+      })
+
+      it('throws for negative value threshold', async () => {
+        await expect(repository.getValueMismatchTransfers(5, -1)).toBeRejected()
+      })
+    },
+  )
 
   describe(InteropTransferRepository.prototype.deleteBefore.name, () => {
     it('deletes transfers before specified timestamp', async () => {
@@ -761,6 +879,186 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(emptyChains).toEqual([])
     })
   })
+
+  describe(
+    InteropTransferRepository.prototype.getWithPartialAbstractTokenIds.name,
+    () => {
+      it('returns transfers where abstract token ID exists on only one side', async () => {
+        const srcNullDstSet = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+        )
+        srcNullDstSet.srcAbstractTokenId = undefined
+        srcNullDstSet.dstAbstractTokenId = 'token-1'
+
+        const srcSetDstNull = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+        )
+        srcSetDstNull.srcAbstractTokenId = 'token-2'
+        srcSetDstNull.dstAbstractTokenId = undefined
+
+        const bothNull = transfer(
+          'plugin1',
+          'msg3',
+          'deposit',
+          UnixTime(300),
+          'arbitrum',
+          'ethereum',
+        )
+        bothNull.srcAbstractTokenId = undefined
+        bothNull.dstAbstractTokenId = undefined
+
+        const bothSet = transfer(
+          'plugin1',
+          'msg4',
+          'deposit',
+          UnixTime(400),
+          'base',
+          'ethereum',
+        )
+        bothSet.srcAbstractTokenId = 'token-4'
+        bothSet.dstAbstractTokenId = 'token-4'
+
+        await repository.insertMany([
+          srcNullDstSet,
+          srcSetDstNull,
+          bothNull,
+          bothSet,
+        ])
+
+        const result = await repository.getWithPartialAbstractTokenIds()
+
+        expect(result).toHaveLength(2)
+        expect(result.map((r) => r.transferId)).toEqualUnsorted([
+          'msg1',
+          'msg2',
+        ])
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.srcAbstractTokenId,
+        ).toEqual(undefined)
+        expect(
+          result.find((r) => r.transferId === 'msg1')?.dstAbstractTokenId,
+        ).toEqual('token-1')
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.srcAbstractTokenId,
+        ).toEqual('token-2')
+        expect(
+          result.find((r) => r.transferId === 'msg2')?.dstAbstractTokenId,
+        ).toEqual(undefined)
+      })
+
+      it('returns results ordered by timestamp desc', async () => {
+        const older = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+        )
+        older.srcAbstractTokenId = undefined
+        older.dstAbstractTokenId = 'token-1'
+
+        const newer = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+        )
+        newer.srcAbstractTokenId = 'token-2'
+        newer.dstAbstractTokenId = undefined
+
+        await repository.insertMany([older, newer])
+
+        const result = await repository.getWithPartialAbstractTokenIds()
+
+        expect(result.map((r) => r.transferId)).toEqual(['msg2', 'msg1'])
+      })
+
+      it('returns empty array when no transfers have partial abstract token IDs', async () => {
+        await repository.insertMany([
+          transfer('plugin1', 'msg1', 'deposit', UnixTime(100)),
+          transfer('plugin1', 'msg2', 'deposit', UnixTime(200)),
+        ])
+
+        const result = await repository.getWithPartialAbstractTokenIds()
+
+        expect(result).toEqual([])
+      })
+
+      it('returns empty array when no transfers exist', async () => {
+        const result = await repository.getWithPartialAbstractTokenIds()
+
+        expect(result).toEqual([])
+      })
+    },
+  )
+
+  describe(
+    InteropTransferRepository.prototype.getWithPartialAbstractTokenIdsForToken
+      .name,
+    () => {
+      it('filters partial transfers to a specific chain and token address', async () => {
+        const target = transfer(
+          'plugin1',
+          'msg1',
+          'deposit',
+          UnixTime(100),
+          'ethereum',
+          'arbitrum',
+        )
+        target.srcAbstractTokenId = undefined
+        target.dstAbstractTokenId = 'token-1'
+        target.srcTokenAddress =
+          '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+        const differentAddress = transfer(
+          'plugin1',
+          'msg2',
+          'deposit',
+          UnixTime(200),
+          'ethereum',
+          'optimism',
+        )
+        differentAddress.srcAbstractTokenId = undefined
+        differentAddress.dstAbstractTokenId = 'token-2'
+        differentAddress.srcTokenAddress = EthereumAddress.random()
+
+        const differentChain = transfer(
+          'plugin1',
+          'msg3',
+          'deposit',
+          UnixTime(300),
+          'base',
+          'ethereum',
+        )
+        differentChain.srcAbstractTokenId = undefined
+        differentChain.dstAbstractTokenId = 'token-3'
+        differentChain.srcTokenAddress =
+          '0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+
+        await repository.insertMany([target, differentAddress, differentChain])
+
+        const result = await repository.getWithPartialAbstractTokenIdsForToken({
+          chain: 'ethereum',
+          address: Address32.from('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+        })
+
+        expect(result.map((r) => r.transferId)).toEqual(['msg1'])
+      })
+    },
+  )
 
   afterEach(async () => {
     await repository.deleteAll()

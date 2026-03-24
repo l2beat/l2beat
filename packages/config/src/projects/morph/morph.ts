@@ -12,7 +12,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   EXITS,
-  FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -29,6 +28,11 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('morph')
+
+const rollupDelayPeriod = discovery.getContractValue<number>(
+  'Rollup',
+  'rollupDelayPeriod',
+)
 
 const challengeWindow = discovery.getContractValue<number>(
   'Rollup',
@@ -180,7 +184,12 @@ export const morph: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    sequencerFailure: {
+      value: 'Enqueue via L1',
+      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors for ${formatSeconds(rollupDelayPeriod)}, any new proposal must include at least 1 transaction from the queue. Self-proposing is not possible if the sequencer is down.`,
+      sentiment: 'warning',
+      orderHint: rollupDelayPeriod,
+    },
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   chainConfig: {
@@ -246,7 +255,7 @@ export const morph: ScalingProject = {
       ],
     },
     operator: {
-      name: 'Morph uses decentralised sequencer network',
+      name: 'Morph uses a decentralised sequencer network',
       description: `The system uses a decentralised sequencer/proposer network. At the moment all sequencers are run by Morph and - from the point of Ethereum - they don't need \
         to reach consensus on a block as any one of them can propose a block with an L2 state root on Ethereum. There is a plan to use tendermint with BLS signatures to verify \
         consensus after Petra upgrade.`,
@@ -260,7 +269,14 @@ export const morph: ScalingProject = {
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      name: 'Users can enqueue transactions',
+      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors for ${formatSeconds(rollupDelayPeriod)}, any new proposal must include at least 1 transaction from the queue. Self-proposing is not possible if the sequencer is down.`,
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the operator is offline.',
+        },
+      ],
       references: [
         {
           title: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',

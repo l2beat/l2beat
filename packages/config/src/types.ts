@@ -212,13 +212,32 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
-export interface Milestone {
+interface BaseMilestone {
   title: string
   url: string
+  linkLabel?: string
   date: string
   description?: string
-  type: 'general' | 'incident'
 }
+
+interface GeneralMilestone extends BaseMilestone {
+  type: 'general'
+}
+
+interface IncidentMilestone extends BaseMilestone {
+  type: 'incident'
+}
+
+interface ProjectIconMilestone extends BaseMilestone {
+  projectId: ProjectId
+  projectIcon: string
+  type: 'project'
+}
+
+export type Milestone =
+  | ProjectIconMilestone
+  | GeneralMilestone
+  | IncidentMilestone
 
 export interface ChainConfig {
   /**
@@ -777,6 +796,8 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string
+    sourceLink?: string
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
@@ -820,7 +841,11 @@ export interface ProjectAssociatedToken {
   icon: string | undefined
 }
 
-export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
+export type ProjectEscrowSource =
+  | 'canonical'
+  | 'custom-canonical'
+  | 'external'
+  | 'native'
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
@@ -1094,6 +1119,9 @@ export interface ProjectUpgradeableActor {
   name: string
   /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
   delay: string
+  /** Actor is not reachable from discovery entrypoints (probably due to depth limit)
+   * and is therefore not listed in permissions. */
+  unreachable?: boolean
 }
 
 export interface ProjectEscrow {
@@ -1401,7 +1429,7 @@ export const TvsTokenSchema = v.object({
     'rwaPublic',
     'other',
   ]),
-  source: v.enum(['canonical', 'external', 'native']),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v
     .object({

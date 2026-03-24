@@ -128,6 +128,7 @@ export const risc0: BaseProject = {
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
         hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        name: 'RiscZero Soon verifier',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -146,6 +147,7 @@ export const risc0: BaseProject = {
       },
       {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
+        name: 'RiscZero v2.2.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -167,6 +169,7 @@ export const risc0: BaseProject = {
       },
       {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
+        name: 'RiscZero v3.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {

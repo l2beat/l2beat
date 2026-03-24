@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xe1f9e231fc4d7bf6770d1c22702e14ad84b9dcfe
+
+# Diff at Mon, 16 Mar 2026 13:00:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1772790015
+- current timestamp: 1773665926
+
+## Description
+
+shasta proposal proceeds to public veto phase
+
+proposal: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/26
+
+review: https://gist.github.com/sekuba/63e456c08ef9b36bce08546957324662
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        26
++        27
+      values.proposalIds.26:
++        "603470345479562597234986338918793351448504565786"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0xb1e7d44a9235de4aa70e4b6924570a5bad84cecd
 
 # Diff at Fri, 06 Mar 2026 09:41:48 GMT:

@@ -1,12 +1,12 @@
 import type { Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
 import { ChevronIcon } from '~/icons/Chevron'
-import { IncidentIcon } from '~/icons/Incident'
-import { MilestoneIcon } from '~/icons/Milestone'
+import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
+import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
 import { Button } from '../Button'
@@ -21,11 +21,6 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { useChart } from './Chart'
 import { useChartLegendOnboarding } from './ChartLegendOnboardingContext'
-
-type TimestampedMilestone = {
-  timestamp: number
-  milestone: Milestone | undefined
-}
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
@@ -54,27 +49,20 @@ export function ChartMilestones<T extends { timestamp: number }>({
     setWidth(ref.current.getBoundingClientRect().width)
   })
 
-  if (!timestampedMilestones || width === undefined) return null
-
-  const sortedMilestones = [...milestones].sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime()
-  })
+  if (width === undefined || timestampedMilestones.length < 2) return null
 
   return (
     <div data-role="milestones">
-      {timestampedMilestones?.map((data, index) => {
-        if (!data.milestone) return null
+      {timestampedMilestones.map((data, index) => {
+        if (data.milestones.length === 0) return null
         const x = index / (timestampedMilestones.length - 1)
-        const milestoneIndex = sortedMilestones.findIndex(
-          (m) => m.date === data.milestone?.date,
-        )
 
         return (
           <ChartMilestone
-            key={data.milestone.date}
+            key={data.timestamp}
             left={x * width - 10}
-            milestoneIndex={milestoneIndex}
-            allMilestones={sortedMilestones}
+            milestonesAtPoint={data.milestones}
+            allMilestones={milestones}
           />
         )
       })}
@@ -84,24 +72,23 @@ export function ChartMilestones<T extends { timestamp: number }>({
 
 function ChartMilestone({
   left,
-  milestoneIndex,
+  milestonesAtPoint,
   allMilestones,
 }: {
   left: number
-  milestoneIndex: number
+  milestonesAtPoint: Milestone[]
   allMilestones: Milestone[]
 }) {
   const { isDesktop } = useDevice()
-  const triggerMilestone = allMilestones[milestoneIndex]
+  const triggerMilestone = milestonesAtPoint[0]
   assert(triggerMilestone)
+  const milestoneIndex = allMilestones.indexOf(triggerMilestone)
+  assert(milestoneIndex !== -1)
   const { interactiveLegend } = useChart()
   const { hasFinishedOnboardingInitial } = useChartLegendOnboarding()
 
-  const Icon =
-    triggerMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
-
   const common = cn(
-    'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-[34px]',
+    'absolute bottom-5 flex items-center justify-center group-has-[.recharts-legend-wrapper]:bottom-[34px]',
     !hasFinishedOnboardingInitial &&
       interactiveLegend &&
       !interactiveLegend.disableOnboarding &&
@@ -109,31 +96,14 @@ function ChartMilestone({
   )
   if (isDesktop) {
     return (
-      <Tooltip delayDuration={0}>
+      <Tooltip delayDuration={0} disableHoverableContent={false}>
         <TooltipTrigger asChild>
-          <a
-            className={common}
-            href={triggerMilestone.url}
-            style={{ left }}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icon />
-          </a>
+          <div className={cn(common, 'cursor-pointer')} style={{ left }}>
+            <MilestoneMarker milestones={milestonesAtPoint} />
+          </div>
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          <div className="mb-1 whitespace-nowrap">
-            {formatDate(triggerMilestone.date.slice(0, 10))}
-          </div>
-          <div className="flex max-w-[216px] font-bold">
-            <Icon className="mt-px size-3.5 shrink-0" />
-            <span className="ml-1.5 text-left">{triggerMilestone.title}</span>
-          </div>
-          {triggerMilestone.description && (
-            <div className="mt-2 max-w-[216px] text-left">
-              {triggerMilestone.description}
-            </div>
-          )}
+          <MilestoneTooltipContent milestones={milestonesAtPoint} />
         </TooltipContent>
       </Tooltip>
     )
@@ -142,7 +112,9 @@ function ChartMilestone({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Icon className={cn(common, 'scale-75')} style={{ left }} />
+        <div className={cn(common, 'scale-75 cursor-pointer')} style={{ left }}>
+          <MilestoneMarker milestones={milestonesAtPoint} />
+        </div>
       </DrawerTrigger>
       <DrawerContent>
         <MilestoneDrawerContent
@@ -154,33 +126,86 @@ function ChartMilestone({
   )
 }
 
+function MilestoneMarker({ milestones }: { milestones: Milestone[] }) {
+  if (milestones.length > 1) {
+    return (
+      <div className="flex size-5 items-center justify-center rounded-full bg-brand font-bold text-[10px] text-primary-invert">
+        {milestones.length > 9 ? '9+' : milestones.length.toString()}
+      </div>
+    )
+  }
+
+  const milestone = milestones[0]
+  assert(milestone)
+  return <SingleMilestoneIcon milestone={milestone} />
+}
+
+function MilestoneTooltipContent({ milestones }: { milestones: Milestone[] }) {
+  const firstMilestone = milestones[0]
+  assert(firstMilestone)
+
+  return (
+    <>
+      <div className="mb-1 whitespace-nowrap">
+        {formatDate(firstMilestone.date.slice(0, 10))}
+      </div>
+      <div className="flex max-w-[216px] flex-col gap-2 text-left">
+        {milestones.map((milestone) => (
+          <div key={`${milestone.date}-${milestone.title}`}>
+            <div className="flex font-bold">
+              <MilestoneListIcon milestone={milestone} />
+              <span className="ml-1.5">{milestone.title}</span>
+            </div>
+            {milestone.description && (
+              <div className="mt-1 max-w-[216px]">{milestone.description}</div>
+            )}
+            <CustomLink
+              href={milestone.url}
+              className="ml-auto block w-fit text-[12px]"
+            >
+              {getMilestoneLinkLabel(milestone)}
+            </CustomLink>
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+
+function MilestoneListIcon({ milestone }: { milestone: Milestone }) {
+  return (
+    <SingleMilestoneIcon
+      milestone={milestone}
+      className="mt-px size-3.5 shrink-0"
+    />
+  )
+}
+
 export function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: (Milestone & { projectName?: string })[]
+  allMilestones: Milestone[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
   const tooltipMilestone = allMilestones[selectedMilestoneIndex]
   assert(tooltipMilestone)
-
-  const Icon =
-    tooltipMilestone.type === 'general' ? MilestoneIcon : IncidentIcon
+  const hasNavigation = allMilestones.length > 1
 
   return (
     <>
       <DrawerHeader>
         <DialogTitle className="flex gap-1.5 font-bold">
-          <Icon className="size-[18px] shrink-0" />
+          <SingleMilestoneIcon
+            milestone={tooltipMilestone}
+            className="size-[18px] shrink-0"
+          />
           <span>{tooltipMilestone.title}</span>
         </DialogTitle>
         <p className="ml-6 text-secondary text-xs">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
-          {tooltipMilestone.projectName
-            ? ` • ${tooltipMilestone.projectName}`
-            : ''}
         </p>
         {tooltipMilestone.description && (
           <p className="text-sm leading-[140%]">
@@ -188,56 +213,109 @@ export function MilestoneDrawerContent({
           </p>
         )}
         <CustomLink href={tooltipMilestone.url} className="mt-2">
-          Learn more
+          {getMilestoneLinkLabel(tooltipMilestone)}
         </CustomLink>
       </DrawerHeader>
-      <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
-        <Button
-          size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
-          onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
-          aria-label="Previous milestone"
-          disabled={selectedMilestoneIndex === 0}
-        >
-          <ChevronIcon className="mr-1 size-3 rotate-90" />
-          Previous
-        </Button>
-        <div className="text-[13px] text-secondary">
-          {selectedMilestoneIndex + 1} of {allMilestones.length}
-        </div>
-        <Button
-          size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
-          onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
-          aria-label="Next milestone"
-          disabled={selectedMilestoneIndex === allMilestones.length - 1}
-        >
-          Next
-          <ChevronIcon className="-rotate-90 ml-1 size-3" />
-        </Button>
-      </DrawerFooter>
+      {hasNavigation && (
+        <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
+          <Button
+            size="sm"
+            className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
+            onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
+            aria-label="Previous milestone"
+            disabled={selectedMilestoneIndex === 0}
+          >
+            <ChevronIcon className="mr-1 size-3 rotate-90" />
+            Previous
+          </Button>
+          <div className="text-[13px] text-secondary">
+            {selectedMilestoneIndex + 1} of {allMilestones.length}
+          </div>
+          <Button
+            size="sm"
+            className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
+            onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
+            aria-label="Next milestone"
+            disabled={selectedMilestoneIndex === allMilestones.length - 1}
+          >
+            Next
+            <ChevronIcon className="-rotate-90 ml-1 size-3" />
+          </Button>
+        </DrawerFooter>
+      )}
     </>
   )
+}
+
+type TimestampedMilestone = {
+  timestamp: number
+  milestones: Milestone[]
+}
+
+function ProjectMilestoneIcon({
+  projectIcon,
+  className,
+}: {
+  projectIcon: string
+  className?: string
+}) {
+  return (
+    <img src={projectIcon} className={cn('size-5 rounded-full', className)} />
+  )
+}
+
+function SingleMilestoneIcon({
+  milestone,
+  className,
+}: {
+  milestone: Milestone
+  className?: string
+}) {
+  switch (milestone.type) {
+    case 'project':
+      return (
+        <ProjectMilestoneIcon
+          projectIcon={milestone.projectIcon}
+          className={className}
+        />
+      )
+    case 'general':
+      return <GeneralMilestoneIcon className={className} />
+    case 'incident':
+      return <IncidentMilestoneIcon className={className} />
+    default:
+      assertUnreachable(milestone)
+  }
 }
 
 function getTimestampedMilestones<T extends { timestamp: number }>(
   data: T[] | undefined,
   milestones: Milestone[],
 ): TimestampedMilestone[] {
+  if (!data || data.length < 2) return []
+
   const mappedMilestones = mapMilestones(milestones)
-  return (
-    data?.map((point) => ({
-      timestamp: point.timestamp,
-      milestone: mappedMilestones[point.timestamp],
-    })) ?? []
-  )
+  return data.map((point) => ({
+    timestamp: point.timestamp,
+    milestones: mappedMilestones[point.timestamp] ?? [],
+  }))
 }
 
-function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
+function mapMilestones(milestones: Milestone[]): Record<number, Milestone[]> {
+  const result: Record<number, Milestone[]> = {}
+
   for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
+    const timestamp = UnixTime.toStartOf(
+      UnixTime.fromDate(new Date(milestone.date)),
+      'day',
+    )
+    result[timestamp] ??= []
+    result[timestamp].push(milestone)
   }
+
   return result
+}
+
+function getMilestoneLinkLabel(milestone: { linkLabel?: string }) {
+  return milestone.linkLabel ?? 'Learn more'
 }

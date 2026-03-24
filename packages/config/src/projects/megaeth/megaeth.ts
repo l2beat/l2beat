@@ -12,7 +12,13 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('megaeth')
+const discovery = new ProjectDiscovery('megaeth', undefined, {
+  reachableEntries: {
+    use: true,
+    // Only directly referenced eigen-da contracts
+    maxDepth: 0,
+  },
+})
 
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),

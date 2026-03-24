@@ -1,6 +1,6 @@
 {
   "name": "fuel",
-  "timestamp": 1767971446,
+  "timestamp": 1773319393,
   "configHash": "0xb6d6727829e7245bc4444784756e2b3de12a753724a568d8ade284b5840f018f",
   "entries": [
     {
@@ -36,7 +36,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "7 of 10 (70%)",
-        "nonce": 48,
+        "nonce": 49,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -80,7 +80,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -276,15 +276,15 @@
             "members": ["eth:0x32da601374b38154f05904B16F44A1911Aa6f314"]
           }
         },
-        "currentPeriodAmount": "268649919000000000",
-        "currentPeriodEnd": 1768400771,
+        "currentPeriodAmount": "475099316000000000",
+        "currentPeriodEnd": 1773732155,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositLimitGlobal": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "ETH_DECIMALS": 18,
         "FUEL_BASE_ASSET_DECIMALS": 9,
         "fuelBaseAssetDecimals": 9,
         "fuelChainStateContract": "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130",
-        "getNextOutgoingMessageNonce": 249702,
+        "getNextOutgoingMessageNonce": 249865,
         "limitAmount": "7829000000000000000000",
         "MAX_MESSAGE_DATA_SIZE": 65536,
         "paused": false,
@@ -293,7 +293,7 @@
         "RATE_LIMIT_DURATION": 604800,
         "rateLimitEnabled": true,
         "SET_RATE_LIMITER_ROLE": "0x7e5b1c957d4df4bad29cdaceffe50f28f282a0d5096601b958917550d4b2e016",
-        "totalDeposited": "1637207904230000000000",
+        "totalDeposited": "1587155546914000000000",
         "withdrawalsPaused": false
       },
       "implementationNames": {
@@ -376,7 +376,10 @@
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"]
+            "members": [
+              "eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF",
+              "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+            ]
           }
         },
         "BLOCKS_PER_COMMIT_INTERVAL": 10800,
@@ -713,6 +716,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24197931 },
+  "usedBlockNumbers": { "ethereum": 24641460 },
   "permissionsConfigHash": "0xf4eceed8c1d8ff189154fbbd3d50d56873c10d71e60a7d4d5f7825d86d3aa99d"
 }

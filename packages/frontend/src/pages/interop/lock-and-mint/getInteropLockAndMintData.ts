@@ -62,6 +62,9 @@ export async function getInteropLockAndMintData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Interoperability - L2BEAT',
+        description:
+          'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/interop/lock-&-mint/opengraph-image.png',

@@ -9,8 +9,8 @@ import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { ChevronIcon } from '~/icons/Chevron'
-import { IncidentIcon } from '~/icons/Incident'
-import { MilestoneIcon } from '~/icons/Milestone'
+import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
+import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { cn } from '~/utils/cn'
@@ -174,7 +174,8 @@ function MilestoneItem({
   style: React.CSSProperties
 }) {
   const breakpoint = useBreakpoint()
-  const Icon = milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
+  const Icon =
+    milestone.type === 'incident' ? IncidentMilestoneIcon : GeneralMilestoneIcon
   const isSelected = milestone.index === selectedMilestoneIndex
 
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {

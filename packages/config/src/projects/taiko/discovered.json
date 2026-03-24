@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1772790015,
+  "timestamp": 1773665926,
   "configHash": "0xe869c77f0093bb83388bf037849f2b814cec9ec6af1ee04cf96578e233d686b1",
   "entries": [
     {
@@ -265,40 +265,40 @@
         "$upgradeCount": 30,
         "bondToken": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
         "getLastSyncedTransition": {
-          "batchId_": 1358912,
-          "blockId_": 4661409,
+          "batchId_": 1360632,
+          "blockId_": 4787866,
           "ts_": {
-            "parentHash": "0x1d42d6ac300fec66b8005acfb972655d8904c59570e6bfce9563c8b30b691dbe",
-            "blockHash": "0x2cd6cfa900976780f5b0242e2bc7590ebd26e2bd9b1e6ad5297f97a6a4ab4df5",
-            "stateRoot": "0xfbf1f5fae94ddd058a77e4222a1c24172145b226631edc5b0f53a29813732854",
-            "prover": "eth:0x9B17fdA35eD7EB7bB11a73AB69D0462045364514",
-            "inProvingWindow": false,
-            "createdAt": 1772781839
+            "parentHash": "0x32f124ac61d780ea3ca133fde267244efd7b0aad6986b3519373929a99f2c91e",
+            "blockHash": "0x3ad0d64a8c3cb73684f4aabe8f8c3ea8bcee60722563ceae582f76d5c6e81a99",
+            "stateRoot": "0x3b8b98bfe96a689744d0032552ac1ff92e044979e54967241d7af4e9772d7550",
+            "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+            "inProvingWindow": true,
+            "createdAt": 1773654311
           }
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1358914,
-          "blockId_": 4661525,
+          "batchId_": 1360632,
+          "blockId_": 4787866,
           "ts_": {
-            "parentHash": "0x6700a02caf7cf0d04c5fb671dee472aab9d162c6d43e9ed3df446ff2283a4386",
-            "blockHash": "0x93f29db7bfd0342c845171edce43e58aeb42be5e08380eb40c369af4ca11b6bc",
-            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "parentHash": "0x32f124ac61d780ea3ca133fde267244efd7b0aad6986b3519373929a99f2c91e",
+            "blockHash": "0x3ad0d64a8c3cb73684f4aabe8f8c3ea8bcee60722563ceae582f76d5c6e81a99",
+            "stateRoot": "0x3b8b98bfe96a689744d0032552ac1ff92e044979e54967241d7af4e9772d7550",
             "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1772777699
+            "createdAt": 1773654311
           }
         },
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1358912,
-          "lastSyncedAt": 1772789123
+          "lastSyncedBatchId": 1360632,
+          "lastSyncedAt": 1773665399
         },
         "getStats2": {
-          "numBatches": 1358944,
-          "lastVerifiedBatchId": 1358914,
+          "numBatches": 1360659,
+          "lastVerifiedBatchId": 1360632,
           "paused": false,
-          "lastProposedIn": 24597539,
+          "lastProposedIn": 24670201,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0xB0600e011e02eD35A142B45B506B16A35493c3F5",
@@ -343,14 +343,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1358912,
-            "lastSyncedAt": 1772789123
+            "lastSyncedBatchId": 1360632,
+            "lastSyncedAt": 1773665399
           },
           "stats2": {
-            "numBatches": 1358944,
-            "lastVerifiedBatchId": 1358914,
+            "numBatches": 1360659,
+            "lastVerifiedBatchId": 1360632,
             "paused": false,
-            "lastProposedIn": 24597539,
+            "lastProposedIn": 24670201,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -571,7 +571,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1772790011,
+        "clock": 1773665915,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1863,7 +1863,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 26,
+        "proposalCount": 27,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1890,7 +1890,8 @@
           "600503437133673611609410939840991465998794096662",
           "601076267109018851735115853749277719853690519575",
           "601724541768498866969402779460601617583941091352",
-          "602381146540321106777275740158610369409831665689"
+          "602381146540321106777275740158610369409831665689",
+          "603470345479562597234986338918793351448504565786"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -2917,7 +2918,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 38768,
+        "nextMessageId": 38812,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2964,7 +2965,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 17,
+        "proposalCount": 18,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -3247,7 +3248,7 @@
           "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
         ],
         "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "havingPerfectOperators": false,
         "impl": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
         "inNonReentrant": false,
@@ -5960,6 +5961,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24597581, "taiko": 4663694 },
+  "usedBlockNumbers": { "ethereum": 24670211, "taiko": 4789876 },
   "permissionsConfigHash": "0x5741d243fe180d0c8f2a2c6ffa04f3ef09b18082306902d31850c9e30d584805"
 }

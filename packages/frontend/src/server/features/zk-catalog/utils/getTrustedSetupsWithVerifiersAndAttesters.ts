@@ -27,6 +27,11 @@ export type TrustedSetupsByProofSystem = Record<
       notVerified?: TrustedSetupVerifierData
     }
     projectsUsedIn: UsedInProjectWithIcon[]
+    projectsUsedInByStatus: {
+      successful?: UsedInProjectWithIcon[]
+      unsuccessful?: UsedInProjectWithIcon[]
+      notVerified?: UsedInProjectWithIcon[]
+    }
   }
 >
 
@@ -57,15 +62,14 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
           )
         : verifiersWithUsedIn
 
-      const verifiersGroupedByStatus = groupBy(
+      const verifiersByStatus = groupBy(
         filteredVerifiers.map((v) => v.verifier),
         (v) => v.verificationStatus,
       )
-
-      const sortedProjectsUsedIn = uniqBy(
-        filteredVerifiers.flatMap((v) => v.usedIn),
-        (u) => u.id,
-      ).sort(tvsComparatorWithDaBridges(allProjects, tvs))
+      const usedInByStatus = groupBy(
+        filteredVerifiers,
+        (v) => v.verifier.verificationStatus,
+      )
 
       return [
         key,
@@ -73,22 +77,56 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
           trustedSetups,
           verifiers: {
             successful: getVerifiersWithAttesters(
-              verifiersGroupedByStatus,
+              verifiersByStatus,
               'successful',
             ),
             unsuccessful: getVerifiersWithAttesters(
-              verifiersGroupedByStatus,
+              verifiersByStatus,
               'unsuccessful',
             ),
             notVerified: getVerifiersWithAttesters(
-              verifiersGroupedByStatus,
+              verifiersByStatus,
               'notVerified',
             ),
           },
-          projectsUsedIn: sortedProjectsUsedIn,
+          projectsUsedIn:
+            uniqAndSortProjectsUsedIn(
+              filteredVerifiers.flatMap((v) => v.usedIn),
+              allProjects,
+              tvs,
+            ) ?? [],
+          projectsUsedInByStatus: {
+            successful: uniqAndSortProjectsUsedIn(
+              usedInByStatus.successful?.flatMap((v) => v.usedIn),
+              allProjects,
+              tvs,
+            ),
+            unsuccessful: uniqAndSortProjectsUsedIn(
+              usedInByStatus.unsuccessful?.flatMap((v) => v.usedIn),
+              allProjects,
+              tvs,
+            ),
+            notVerified: uniqAndSortProjectsUsedIn(
+              usedInByStatus.notVerified?.flatMap((v) => v.usedIn),
+              allProjects,
+              tvs,
+            ),
+          },
         },
       ]
     }),
+  )
+}
+
+function uniqAndSortProjectsUsedIn(
+  usedIn: UsedInProjectWithIcon[] | undefined,
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  tvs: SevenDayTvsBreakdown,
+) {
+  if (!usedIn) return undefined
+
+  return uniqBy(usedIn, (project) => project.id).sort(
+    tvsComparatorWithDaBridges(allProjects, tvs),
   )
 }
 

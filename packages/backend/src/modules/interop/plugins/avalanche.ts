@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { findParsedAround } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,

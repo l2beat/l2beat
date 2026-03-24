@@ -27,7 +27,7 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-2">
         <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
-        <TechStackTag tag={proofSystem} withoutTooltip />
+        <TechStackTag tag={proofSystem} withoutTooltip displayType="type" />
       </TooltipTrigger>
       <TooltipContent>
         <div className="mb-3 text-paragraph-14">
@@ -36,6 +36,7 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
             tag={proofSystem}
             className="inline-block"
             withoutTooltip
+            displayType="type"
           />
         </div>
         {trustedSetups.map((trustedSetup) => {

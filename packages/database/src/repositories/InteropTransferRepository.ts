@@ -1,11 +1,12 @@
 import {
+  type Address32,
   assert,
   type InteropBridgeType,
   InteropBridgeTypeValues,
   type KnownInteropBridgeType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { Insertable, Selectable } from 'kysely'
+import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropTransfer } from '../kysely/generated/types'
 
@@ -30,13 +31,13 @@ export interface InteropTransferRecord {
   bridgeType: KnownInteropBridgeType | undefined
   transferId: string
   type: string
-  duration: number
+  duration: number | undefined
   timestamp: UnixTime
-  srcTime: UnixTime
+  srcTime: UnixTime | undefined
   srcChain: string
-  srcTxHash: string
-  srcLogIndex: number
-  srcEventId: string
+  srcTxHash: string | undefined
+  srcLogIndex: number | undefined
+  srcEventId: string | undefined
   srcTokenAddress: string | undefined
   srcRawAmount: bigint | undefined
   srcWasBurned: boolean | undefined
@@ -45,11 +46,11 @@ export interface InteropTransferRecord {
   srcAmount: number | undefined
   srcPrice: number | undefined
   srcValueUsd: number | undefined
-  dstTime: UnixTime
+  dstTime: UnixTime | undefined
   dstChain: string
-  dstTxHash: string
-  dstLogIndex: number
-  dstEventId: string
+  dstTxHash: string | undefined
+  dstLogIndex: number | undefined
+  dstEventId: string | undefined
   dstTokenAddress: string | undefined
   dstRawAmount: bigint | undefined
   dstWasMinted: boolean | undefined
@@ -81,6 +82,11 @@ export interface InteropMissingTokenInfo {
   plugins: string[]
 }
 
+interface PartialAbstractTokenFilter {
+  chain: string
+  address: Address32
+}
+
 export function toRecord(
   row: Selectable<InteropTransfer>,
 ): InteropTransferRecord {
@@ -98,13 +104,13 @@ export function toRecord(
       row.bridgeType === null
         ? undefined
         : (row.bridgeType as KnownInteropBridgeType),
-    duration: row.duration,
+    duration: row.duration ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
-    srcTime: UnixTime.fromDate(row.srcTime),
+    srcTime: row.srcTime ? UnixTime.fromDate(row.srcTime) : undefined,
     srcChain: row.srcChain,
-    srcTxHash: row.srcTxHash,
-    srcLogIndex: row.srcLogIndex,
-    srcEventId: row.srcEventId,
+    srcTxHash: row.srcTxHash ?? undefined,
+    srcLogIndex: row.srcLogIndex ?? undefined,
+    srcEventId: row.srcEventId ?? undefined,
     srcTokenAddress: row.srcTokenAddress ?? undefined,
     srcRawAmount: row.srcRawAmount ? BigInt(row.srcRawAmount) : undefined,
     srcWasBurned: row.srcWasBurned ?? undefined,
@@ -113,11 +119,11 @@ export function toRecord(
     srcAmount: row.srcAmount ?? undefined,
     srcPrice: row.srcPrice ?? undefined,
     srcValueUsd: row.srcValueUsd ?? undefined,
-    dstTime: UnixTime.fromDate(row.dstTime),
+    dstTime: row.dstTime ? UnixTime.fromDate(row.dstTime) : undefined,
     dstChain: row.dstChain,
-    dstTxHash: row.dstTxHash,
-    dstLogIndex: row.dstLogIndex,
-    dstEventId: row.dstEventId,
+    dstTxHash: row.dstTxHash ?? undefined,
+    dstLogIndex: row.dstLogIndex ?? undefined,
+    dstEventId: row.dstEventId ?? undefined,
     dstTokenAddress: row.dstTokenAddress ?? undefined,
     dstRawAmount: row.dstRawAmount ? BigInt(row.dstRawAmount) : undefined,
     dstWasMinted: row.dstWasMinted ?? undefined,
@@ -138,13 +144,13 @@ export function toRow(
     transferId: record.transferId,
     type: record.type,
     bridgeType: record.bridgeType,
-    duration: record.duration,
+    duration: record.duration ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
-    srcTime: UnixTime.toDate(record.srcTime),
-    srcChain: record.srcChain,
-    srcTxHash: record.srcTxHash?.toLowerCase(),
-    srcLogIndex: record.srcLogIndex,
-    srcEventId: record.srcEventId,
+    srcTime: record.srcTime ? UnixTime.toDate(record.srcTime) : null,
+    srcChain: record.srcChain ?? null,
+    srcTxHash: record.srcTxHash?.toLowerCase() ?? null,
+    srcLogIndex: record.srcLogIndex ?? null,
+    srcEventId: record.srcEventId ?? null,
     srcTokenAddress: record.srcTokenAddress,
     srcRawAmount: record.srcRawAmount?.toString(),
     srcWasBurned: record.srcWasBurned,
@@ -153,11 +159,11 @@ export function toRow(
     srcAmount: record.srcAmount,
     srcPrice: record.srcPrice,
     srcValueUsd: record.srcValueUsd,
-    dstTime: UnixTime.toDate(record.dstTime),
-    dstChain: record.dstChain,
-    dstTxHash: record.dstTxHash?.toLowerCase(),
-    dstLogIndex: record.dstLogIndex,
-    dstEventId: record.dstEventId,
+    dstTime: record.dstTime ? UnixTime.toDate(record.dstTime) : null,
+    dstChain: record.dstChain ?? null,
+    dstTxHash: record.dstTxHash?.toLowerCase() ?? null,
+    dstLogIndex: record.dstLogIndex ?? null,
+    dstEventId: record.dstEventId ?? null,
     dstTokenAddress: record.dstTokenAddress,
     dstRawAmount: record.dstRawAmount?.toString(),
     dstWasMinted: record.dstWasMinted,
@@ -188,6 +194,10 @@ export interface InteropTransfersDetailedStatsRecord {
   avgDuration: number
   srcValueSum: number
   dstValueSum: number
+}
+
+export interface InteropSuspiciousTransferRecord extends InteropTransferRecord {
+  valueDifferencePercent: number
 }
 
 export class InteropTransferRepository extends BaseRepository {
@@ -246,6 +256,57 @@ export class InteropTransferRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getValueMismatchTransfers(
+    valueDifferencePercentThreshold: number,
+    minimumSideValueUsdThreshold = 0,
+  ): Promise<InteropSuspiciousTransferRecord[]> {
+    assert(
+      valueDifferencePercentThreshold > 0,
+      'valueDifferencePercentThreshold must be a positive number',
+    )
+    assert(
+      minimumSideValueUsdThreshold >= 0,
+      'minimumSideValueUsdThreshold must be a non-negative number',
+    )
+
+    const maxSideValueUsd = sql<number>`
+      GREATEST(ABS("srcValueUsd"::numeric), ABS("dstValueUsd"::numeric))
+    `
+    const absoluteValueDifferenceUsd = sql<number>`
+      ABS("srcValueUsd"::numeric - "dstValueUsd"::numeric)
+    `
+    const valueDifferencePercent = sql<number>`
+      CASE
+        WHEN ${maxSideValueUsd} = 0 THEN 0
+        ELSE (${absoluteValueDifferenceUsd} / ${maxSideValueUsd}) * 100
+      END
+    `
+
+    const rows = await this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .select(valueDifferencePercent.as('valueDifferencePercent'))
+      .where('srcValueUsd', 'is not', null)
+      .where('dstValueUsd', 'is not', null)
+      .where(sql<boolean>`ABS("srcValueUsd") > ${minimumSideValueUsdThreshold}`)
+      .where(sql<boolean>`ABS("dstValueUsd") > ${minimumSideValueUsdThreshold}`)
+      .where(
+        sql<boolean>`
+          ${maxSideValueUsd} > 0
+          AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
+        `,
+      )
+      .orderBy(valueDifferencePercent, 'desc')
+      .orderBy('timestamp', 'desc')
+      .orderBy('transferId', 'desc')
+      .execute()
+
+    return rows.map((row) => ({
+      ...toRecord(row),
+      valueDifferencePercent: Number(row.valueDifferencePercent ?? 0),
+    }))
+  }
+
   async getProjectTransfers(options: {
     plugins: string[]
     snapshotTimestamp: UnixTime
@@ -285,6 +346,54 @@ export class InteropTransferRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getWithPartialAbstractTokenIds(): Promise<InteropTransferRecord[]> {
+    const rows = await this.getPartialAbstractTokenIdsQuery()
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getWithPartialAbstractTokenIdsForToken(
+    filter: PartialAbstractTokenFilter,
+  ): Promise<InteropTransferRecord[]> {
+    const rows = await this.getPartialAbstractTokenIdsQuery()
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('srcChain', '=', filter.chain),
+            eb('srcTokenAddress', '=', filter.address),
+          ]),
+          eb.and([
+            eb('dstChain', '=', filter.chain),
+            eb('dstTokenAddress', '=', filter.address),
+          ]),
+        ]),
+      )
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  private getPartialAbstractTokenIdsQuery() {
+    return this.db
+      .selectFrom('InteropTransfer')
+      .selectAll()
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('srcAbstractTokenId', 'is', null),
+            eb('dstAbstractTokenId', 'is not', null),
+          ]),
+          eb.and([
+            eb('srcAbstractTokenId', 'is not', null),
+            eb('dstAbstractTokenId', 'is', null),
+          ]),
+        ]),
+      )
   }
 
   async updateFinancials(

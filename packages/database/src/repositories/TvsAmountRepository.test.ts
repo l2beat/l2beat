@@ -130,6 +130,18 @@ describeDatabase(TvsAmountRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('returns empty array when configurationIds is empty', async () => {
+      await repository.upsertMany([tvsAmount('a', UnixTime(100), 1n)])
+
+      const result = await repository.getAmountsInRange(
+        [],
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
   })
 
   describe(TvsAmountRepository.prototype.getLatestAmountBefore.name, () => {

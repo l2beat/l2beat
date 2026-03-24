@@ -2,6 +2,7 @@ import type { InteropPluginName } from '@l2beat/config'
 import type { AbstractTokenRecord, InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
+  assert,
   type Block,
   type ChainSpecificAddress,
   EthereumAddress,
@@ -41,15 +42,24 @@ export interface InteropMessage {
   dst: InteropEvent
 }
 
-export interface TransferSide {
-  event: InteropEvent
+type TransferSideSource =
+  | {
+      event: InteropEvent
+      chain: undefined
+    }
+  | {
+      event: undefined
+      chain: string
+    }
+
+export type TransferSide = TransferSideSource & {
   tokenAddress?: Address32
   tokenAmount?: bigint
   wasBurned?: boolean
   wasMinted?: boolean
 }
 
-export interface InteropTransfer {
+export type InteropTransfer = {
   kind: 'InteropTransfer'
   plugin: string
   type: string
@@ -335,20 +345,31 @@ function Message(
   }
 }
 
-export interface InteropTransferOptions {
-  srcEvent: InteropEvent
+export type InteropTransferOptions = {
   srcTokenAddress?: Address32
   srcAmount?: bigint
   srcWasBurned?: boolean
 
-  dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: bigint
   dstWasMinted?: boolean
 
   bridgeType?: KnownInteropBridgeType
   extraEvents?: InteropEvent[]
-}
+} & (
+  | {
+      srcEvent: InteropEvent
+      dstEvent: InteropEvent
+    }
+  | {
+      srcEvent: InteropEvent
+      dstChain: string
+    }
+  | {
+      srcChain: string
+      dstEvent: InteropEvent
+    }
+)
 
 function Transfer(
   type: string,
@@ -359,27 +380,51 @@ function Transfer(
       'InteropTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
     )
   }
+
+  const src = {
+    tokenAddress: options.srcTokenAddress,
+    tokenAmount: options.srcAmount,
+    wasBurned: options.srcWasBurned,
+    ...('srcEvent' in options
+      ? { event: options.srcEvent, chain: undefined }
+      : { event: undefined, chain: options.srcChain }),
+  } satisfies TransferSide
+
+  const dst = {
+    tokenAddress: options.dstTokenAddress,
+    tokenAmount: options.dstAmount,
+    wasMinted: options.dstWasMinted,
+    ...('dstEvent' in options
+      ? { event: options.dstEvent, chain: undefined }
+      : { event: undefined, chain: options.dstChain }),
+  } satisfies TransferSide
+
+  const events = [
+    ...(src.event ? [src.event] : []),
+    ...(dst.event ? [dst.event] : []),
+    ...(options.extraEvents ?? []),
+  ]
+
+  assert(
+    src.event !== undefined || src.chain !== undefined,
+    'Transfer requires either srcEvent or srcChain',
+  )
+  assert(
+    dst.event !== undefined || dst.chain !== undefined,
+    'Transfer requires either dstEvent or dstChain',
+  )
+  assert(
+    events.length > 0,
+    'Transfer requires at least single event - either srcEvent or dstEvent',
+  )
+
   return {
     kind: 'InteropTransfer',
     type,
     bridgeType: options.bridgeType,
-    events: [
-      options.srcEvent,
-      options.dstEvent,
-      ...(options.extraEvents ?? []),
-    ],
-    src: {
-      event: options.srcEvent,
-      tokenAddress: options.srcTokenAddress,
-      tokenAmount: options.srcAmount,
-      wasBurned: options.srcWasBurned,
-    },
-    dst: {
-      event: options.dstEvent,
-      tokenAddress: options.dstTokenAddress,
-      tokenAmount: options.dstAmount,
-      wasMinted: options.dstWasMinted,
-    },
+    events,
+    src,
+    dst,
   }
 }
 

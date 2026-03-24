@@ -8,9 +8,10 @@ import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropTokensSection } from './sections/interop/InteropTokensSection'
+import { InteropTransfersSection } from './sections/interop/InteropTransfersSection'
 import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
-import { LivenessSection } from './sections/LivenessSection'
+import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
@@ -28,7 +29,8 @@ import { ScalingTvsSection } from './sections/tvs/ScalingTvsSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
-import { VerifiersSection } from './sections/VerifiersSection'
+import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
+import { VerifiersSection } from './sections/verifiers/VerifiersSection'
 
 interface ProjectDetailsProps {
   nested?: boolean
@@ -207,6 +209,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
+          case 'InteropTransfersSection':
+            return (
+              <InteropTransfersSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           case 'TrustedSetupSection':
             return (
               <TrustedSetupSection
@@ -268,6 +278,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'GrissiniRiskAnalysisSection':
             return (
               <GrissiniRiskAnalysisSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'UpgradesAndGovernanceSection':
+            return (
+              <UpgradesAndGovernanceSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

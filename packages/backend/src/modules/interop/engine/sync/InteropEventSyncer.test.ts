@@ -348,8 +348,8 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
-  describe(InteropEventSyncer.prototype.isResyncRequestedFrom.name, () => {
-    it('returns undefined when no resync requested', async () => {
+  describe(InteropEventSyncer.prototype.getResyncState.name, () => {
+    it('returns empty resync state when no resync requested', async () => {
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncState: mockObject<
@@ -360,12 +360,15 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncState()
 
-      expect(result).toEqual(undefined)
+      expect(result).toEqual({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
     })
 
-    it('returns resync timestamp when present', async () => {
+    it('returns resync state when present', async () => {
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncState: mockObject<
@@ -373,15 +376,18 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
-              wipeRequired: false,
+              wipeRequired: true,
             }),
           }),
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncState()
 
-      expect(result).toEqual(UnixTime(123))
+      expect(result).toEqual({
+        resyncFrom: UnixTime(123),
+        wipeRequired: true,
+      })
     })
   })
 

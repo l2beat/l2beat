@@ -42,7 +42,7 @@ function ChainView({ chain }: { chain: ChainRecord }) {
       name: chain.name,
       chainId: chain.chainId,
       explorerUrl: chain.explorerUrl ?? undefined,
-      aliases: chain.aliases ?? undefined,
+      aliases: chain.aliases?.map((a) => ({ value: a })) ?? undefined,
       apis: chain.apis ?? undefined,
     },
   })
@@ -94,7 +94,7 @@ function ChainView({ chain }: { chain: ChainRecord }) {
                   name: values.name,
                   chainId: values.chainId,
                   explorerUrl: values.explorerUrl || null,
-                  aliases: values.aliases || null,
+                  aliases: values.aliases?.map((a) => a.value) || null,
                   apis: values.apis || null,
                 },
               })
