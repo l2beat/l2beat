@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
