@@ -5,7 +5,7 @@ export interface InteropRawTransaction extends Transaction {
   calls?: EVMTransactionSubCall[]
 }
 
-export class InteropTransactionDTO implements Transaction {
+export class InteropTransactionDTO {
   readonly hash?: string
   readonly from?: string
   readonly to?: string
