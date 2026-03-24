@@ -1,5 +1,5 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import {
   groupByDaTabs,
   type TabbedDaEntries,
@@ -110,13 +110,16 @@ function getDaArchivedEntry(
     })
   }
 
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
       .map((x) => x.id),
   ).latest
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     risks: getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
     bridges: daBridges,
   }

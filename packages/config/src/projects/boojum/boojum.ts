@@ -128,6 +128,9 @@ export const boojum: BaseProject = {
     verifierHashes: [
       {
         hash: '0xe4503cf38485e3d728a7362155d53d3d63293e2fa48dca4f5588aa4625de251f',
+        name: 'Boojum Fflonk Lens verifier',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
@@ -235,6 +238,9 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
       },
       {
         hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        name: 'Boojum Fflonk core-v29.1.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.1.0/prover',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
@@ -366,6 +372,9 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
       // },
       {
         hash: '0x93e83aa1ec05a2ac4de1f0b241394efb9f94a4e7c1784a5a9bf6b85eb930c62a',
+        name: 'Boojum Plonk Lens verifier',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/f57999997f581b557cf8e36e3a9be5650d992022/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -473,6 +482,9 @@ The output of the last command will contain the required \`snark_wrapper\` value
       },
       {
         hash: '0x64b347c642ea60114c98b3976124ea8a7e0bb778bd7e479aedc02f994486c8a1',
+        name: 'Boojum Plonk prover-v22.0.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/prover-v22.0.0/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -613,6 +625,7 @@ The output of the last command will contain the required \`snark_wrapper\` value
       // },
       {
         hash: '0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f',
+        name: 'Boojum Plonk zkLinkNova verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -626,6 +639,9 @@ The output of the last command will contain the required \`snark_wrapper\` value
       },
       {
         hash: '0x49eae0bf5c7ea580f4979b366e52b386adc5f42e2ce50fc1d3c4de9a86052bff',
+        name: 'Boojum Fflonk core-v29.4.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.4.0/prover',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
@@ -733,6 +749,9 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
       },
       {
         hash: '0x1ffc56111a5cfaf5db387f6a31408ad20217e9bc1f31f2f5c1bd38b0d6d7968b',
+        name: 'Boojum Plonk prover-v23.2.0',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/prover-v23.2.0/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -840,6 +859,9 @@ The output of the last command will contain the required \`snark_wrapper\` value
       },
       {
         hash: '0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84',
+        name: 'Boojum Plonk core-v29.11.1',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.11.1/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -941,6 +963,9 @@ The output of the last command will contain the required \`snark_wrapper\` value
       },
       {
         hash: '0xc8cd705a0db89577146137de78eba6bd1f1c9c3f66dc52f7627e7c2df30895b2',
+        name: 'Boojum Fflonk core-v29.11.1',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-era/tree/core-v29.11.1/prover',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {

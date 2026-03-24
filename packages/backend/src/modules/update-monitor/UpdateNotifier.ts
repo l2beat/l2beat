@@ -2,11 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
-import {
-  DISCORD_MAX_MESSAGE_LENGTH,
-  type DiscordChannelType,
-  type DiscordClient,
-} from '@l2beat/shared'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import {
   assert,
   type ChainSpecificAddress,
@@ -90,7 +86,7 @@ export class UpdateNotifier {
       nonce,
       trackedTxsAffected,
     )
-    await this.notify(message, 'INTERNAL')
+    await this.notify(message)
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
       amount: countDiff(throttled),
@@ -101,15 +97,6 @@ export class UpdateNotifier {
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessage = diffToMessage(
-      name,
-      filteredDiff,
-      timestamp,
-      dependents,
-      undefined,
-    )
-    await this.notify(filteredMessage, 'PUBLIC')
-
     const filteredWebMessage = discoveryDiffToMarkdown(filteredDiff)
 
     await this.updateMessagesService.storeAndPrune({
@@ -118,7 +105,7 @@ export class UpdateNotifier {
       timestamp,
     })
 
-    this.logger.info('Updates detected, notification sent [PUBLIC]', {
+    this.logger.info('Updates detected, message stored for web', {
       name,
       amount: countDiff(filteredDiff),
     })
@@ -134,10 +121,7 @@ export class UpdateNotifier {
     return latestId + 1
   }
 
-  private async notify(
-    messages: string | string[],
-    channel: DiscordChannelType,
-  ) {
+  private async notify(messages: string | string[]) {
     if (!this.discordClient) {
       if (!this.loggedDiscordClientMissing) {
         this.logger.info(
@@ -150,7 +134,7 @@ export class UpdateNotifier {
 
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      await this.discordClient.sendMessage(message, channel).then(
+      await this.discordClient.sendMessage(message).then(
         () => this.logger.debug('Notification to Discord has been sent'),
         (e) => this.logger.error('Discord API error', e),
       )
@@ -158,8 +142,7 @@ export class UpdateNotifier {
   }
 
   async handleStart() {
-    await this.notify('UpdateMonitor started.', 'INTERNAL')
-    await this.notify('UpdateMonitor started.', 'PUBLIC')
+    await this.notify('UpdateMonitor started.')
     this.logger.info('Initial notifications sent')
   }
 
@@ -204,7 +187,7 @@ export class UpdateNotifier {
       failedProjects,
     )}\n${internals}\n`
 
-    await this.notify(notifyMessage, 'INTERNAL')
+    await this.notify(notifyMessage)
     this.logger.info('Daily reminder sent', { reminders })
   }
 }

@@ -1,27 +1,10 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '~/components/core/Dialog'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-} from '~/components/core/Drawer'
-import { BasicTable } from '~/components/table/BasicTable'
-import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { useTable } from '~/hooks/useTable'
+import { useState } from 'react'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { BetweenChainsInfo } from '../BetweenChainsInfo'
-import { getTopItemsColumns, type TopItemRow } from './columns'
+import { TokenTableDialog } from './TokenTableDialog'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -74,6 +57,7 @@ export function TopTokensCell({
             type: resolvedType,
           })
         }
+        type="cell"
         setIsOpen={setIsOpen}
       />
       <TopTokensContent
@@ -100,7 +84,6 @@ function TopTokensContent({
   setIsOpen: (isOpen: boolean) => void
   showNetMintedValueColumn?: boolean
 }) {
-  const breakpoint = useBreakpoint()
   const { selectionForApi } = useInteropSelectedChains()
   const { data, isLoading } = api.interop.tokens.useQuery(
     {
@@ -113,93 +96,24 @@ function TopTokensContent({
     },
   )
 
-  const tableData = useMemo(
-    () =>
-      data?.map((token) => ({
-        ...token,
-        displayName: token.symbol,
-      })) ?? [],
-    [data],
-  )
-
-  const columns = useMemo(() => {
-    return getTopItemsColumns('tokens', showNetMintedValueColumn)
-  }, [showNetMintedValueColumn])
-
-  const table = useTable<TopItemRow>({
-    data: tableData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    manualFiltering: true,
-    initialState: {
-      columnPinning: {
-        left: ['icon'],
-      },
-      sorting: [
-        {
-          id: 'volume',
-          desc: true,
-        },
-      ],
-    },
-  })
-
-  if (breakpoint === 'xs' || breakpoint === 'sm') {
-    return (
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
-        <DrawerContent>
-          <DrawerHeader className="mb-2">
-            <DrawerTitle className="mb-0 text-xl">
-              <span>Top tokens by volume for </span>
-              <img
-                src={protocol.iconUrl}
-                alt={protocol.name}
-                className="relative bottom-px mx-1 inline-block size-6"
-              />
-              <span>{protocol.name}</span>
-            </DrawerTitle>
-            <BetweenChainsInfo />
-          </DrawerHeader>
-          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
-          </div>
-        </DrawerContent>
-      </Drawer>
-    )
-  }
-
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
-        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
-          <DialogTitle>
-            <span>Top tokens by volume for </span>
-            <img
-              src={protocol.iconUrl}
-              alt={protocol.name}
-              className="relative bottom-0.5 mx-1 inline-block size-6"
-            />
-            <span>{protocol.name}</span>
-          </DialogTitle>
-          <BetweenChainsInfo className="mt-1" />
-        </DialogHeader>
-        <div className="overflow-x-auto">
-          <div className="mx-6">
-            <BasicTable
-              skeletonCount={6}
-              table={table}
-              tableWrapperClassName="pb-0"
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <TokenTableDialog
+      data={data}
+      isLoading={isLoading}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title={
+        <>
+          <span>Top tokens by volume for </span>
+          <img
+            src={protocol.iconUrl}
+            alt={protocol.name}
+            className="relative bottom-px mx-1 inline-block size-6"
+          />
+          <span>{protocol.name}</span>
+        </>
+      }
+      showNetMintedValueColumn={showNetMintedValueColumn}
+    />
   )
 }

@@ -61,6 +61,27 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
     expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
   })
+
+  it('keeps transfer item valid when tx hashes are missing', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer({
+        srcTxHash: undefined,
+        dstTxHash: undefined,
+        duration: undefined,
+      }),
+      new Map([
+        ['ethereum', 'https://etherscan.io'],
+        ['arbitrum', 'https://arbiscan.io'],
+      ]),
+      new Map(),
+    )
+
+    expect(result.srcTxHash).toEqual(undefined)
+    expect(result.srcTxHashHref).toEqual(undefined)
+    expect(result.dstTxHash).toEqual(undefined)
+    expect(result.dstTxHashHref).toEqual(undefined)
+    expect(result.duration).toEqual(undefined)
+  })
 })
 
 function transfer(

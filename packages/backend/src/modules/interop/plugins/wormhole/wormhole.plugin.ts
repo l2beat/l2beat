@@ -5,6 +5,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findParsedAfter, findTransferLogBefore } from '../logScan'
 import {
   findMayanCircleDestinationChain,
   isMayanCircleSender,
@@ -136,18 +137,15 @@ export class WormholePlugin implements InteropPluginResyncable {
       senderAddress === network.tokenBridge &&
       logIndex !== null
     ) {
-      // Find the Transfer event to the token bridge, searching backwards from current log
-      for (let i = logIndex - 1; i >= 0; i--) {
-        const candidateLog = input.txLogs.find((log) => log.logIndex === i)
-        if (!candidateLog) continue
-
-        const transfer = parseTransfer(candidateLog, null)
-        if (transfer && EthereumAddress(transfer.to) === network.tokenBridge) {
-          srcTokenAddress = Address32.from(candidateLog.address)
-          srcAmount = transfer.value
-          break
-        }
-      }
+      const tokenBridgeAddress = network.tokenBridge
+      const transferMatch = findTransferLogBefore(
+        input.txLogs,
+        logIndex,
+        (log) => parseTransfer(log, null),
+        (transfer) => transfer.to === Address32.from(tokenBridgeAddress),
+      )
+      srcTokenAddress = transferMatch.transfer?.logAddress
+      srcAmount = transferMatch.transfer?.value
     }
 
     // Try to find destination chain
@@ -168,24 +166,20 @@ export class WormholePlugin implements InteropPluginResyncable {
 
     // Folks Finance: find SendMessage event after LogMessagePublished
     if (!$dstChain) {
-      for (const candidateLog of input.txLogs) {
-        if (
-          candidateLog.logIndex === null ||
-          logIndex === null ||
-          candidateLog.logIndex <= logIndex
-        ) {
-          continue
-        }
-        const folksSendMessage = parseFolksSendMessage(candidateLog, null)
-        if (folksSendMessage) {
-          // message tuple: ((params), sender, destinationChainId, handler, payload, finalityLevel, extraArgs)
-          // destinationChainId is at index 2, using Folks Finance's own chain ID system
-          const folksChainId = Number(folksSendMessage.message[2])
-          $dstChain =
-            FOLKS_CHAIN_ID_TO_CHAIN[folksChainId] ?? `Unknown_${folksChainId}`
-          break
-        }
-      }
+      $dstChain =
+        logIndex === null
+          ? undefined
+          : findParsedAfter(input.txLogs, logIndex, (candidateLog) => {
+              const folksSendMessage = parseFolksSendMessage(candidateLog, null)
+              if (!folksSendMessage) return
+              // message tuple: ((params), sender, destinationChainId, handler, payload, finalityLevel, extraArgs)
+              // destinationChainId is at index 2, using Folks Finance's own chain ID system
+              const folksChainId = Number(folksSendMessage.message[2])
+              return (
+                FOLKS_CHAIN_ID_TO_CHAIN[folksChainId] ??
+                `Unknown_${folksChainId}`
+              )
+            })
     }
 
     return [

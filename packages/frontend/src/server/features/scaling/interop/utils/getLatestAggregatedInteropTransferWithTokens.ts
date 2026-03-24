@@ -59,6 +59,7 @@ export async function getLatestAggregatedInteropTransferWithTokens(
         abstractTokenId: token.abstractTokenId,
         transferCount: token.transferCount,
         totalDurationSum: token.totalDurationSum,
+        transfersWithDurationCount: token.transfersWithDurationCount,
         volume: token.volume,
         minTransferValueUsd: token.minTransferValueUsd,
         maxTransferValueUsd: token.maxTransferValueUsd,

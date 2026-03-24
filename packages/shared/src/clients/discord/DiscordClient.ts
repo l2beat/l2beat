@@ -9,11 +9,8 @@ import type { HttpClient } from '../http/HttpClient'
 
 export const DISCORD_MAX_MESSAGE_LENGTH = 2000
 
-export type DiscordChannelType = 'PUBLIC' | 'INTERNAL'
-
 interface DiscordConfig {
   readonly token: string
-  readonly publicChannelId?: string
   readonly internalChannelId: string
   readonly callsPerMinute: number
 }
@@ -31,16 +28,11 @@ export class DiscordClient {
     }
   }
 
-  async sendMessage(message: string, channel: DiscordChannelType) {
+  async sendMessage(message: string) {
     if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
-    if (channel === 'PUBLIC' && this.config.publicChannelId) {
-      return await this.send(message, this.config.publicChannelId)
-    }
-    if (channel === 'INTERNAL') {
-      return await this.send(message, this.config.internalChannelId)
-    }
+    return await this.send(message, this.config.internalChannelId)
   }
 
   private async send(message: string, channelId: string) {

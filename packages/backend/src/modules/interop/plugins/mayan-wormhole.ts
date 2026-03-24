@@ -7,7 +7,7 @@ import {
   swapAndForwardedERC20Log,
   swapAndForwardedEthLog,
 } from './mayan-forwarder'
-import { MAYAN_CIRCLE, MAYAN_SWIFT } from './mayan-shared'
+import { MAYAN_PROTOCOLS } from './mayan-shared'
 import type {
   InteropEvent,
   InteropEventDb,
@@ -29,11 +29,11 @@ const MAYAN_CIRCLE_WORMHOLE_EMITTING_METHODS = new Set([
 ])
 
 export function isMayanSwiftSender(sender: EthereumAddress): boolean {
-  return sender === MAYAN_SWIFT
+  return sender === MAYAN_PROTOCOLS.mayanSwift
 }
 
 export function isMayanCircleSender(sender: EthereumAddress): boolean {
-  return sender === MAYAN_CIRCLE
+  return sender === MAYAN_PROTOCOLS.mayanCircle
 }
 
 export function findMayanCircleDestinationChain(
@@ -63,7 +63,7 @@ export function findWrappedMayanWormholeLog<
 
   const candidates = db
     .findAll(logMessagePublishedType, {
-      sender: MAYAN_CIRCLE,
+      sender: MAYAN_PROTOCOLS.mayanCircle,
       ctx: { txHash: mayanForwarded.ctx.txHash },
     } as InteropEventQuery<T>)
     .filter((event) => event.ctx.chain === mayanForwarded.ctx.chain)

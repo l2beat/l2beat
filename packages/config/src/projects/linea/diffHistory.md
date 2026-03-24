@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x3b9ccf6c03d08728a84fc2e798e0a72c008af0d2
+
+# Diff at Mon, 23 Mar 2026 09:21:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1772786430
+- current timestamp: 1774257638
+
+## Description
+
+Updated the verifier (disabled old, added new).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
++        "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.3:
+-        "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0xC83ed08E2262fBa264D528C749c051f8fC526897)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xC83ed08E2262fBa264D528C749c051f8fC526897.sol} | 53 +++++++++++-----------
+ 1 file changed, 26 insertions(+), 27 deletions(-)
+```
+
 Generated with discovered.json: 0xe547286be9afb53810d664f1fc9defc8b98128c1
 
 # Diff at Fri, 06 Mar 2026 08:41:36 GMT:

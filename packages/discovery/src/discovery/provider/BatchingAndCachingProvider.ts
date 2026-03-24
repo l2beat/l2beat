@@ -421,15 +421,18 @@ export class BatchingAndCachingProvider {
     const entry = await this.cache.entry('getBlock', [blockNumber], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
-      duration += performance.now()
-      this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
       // This recovers BigNumber instances from the cache
       // BigNumbers are saved in JSON as { type: 'BigNumber', hex: '0x123' }
-      return parseCacheEntry(cached)
+      const parsed = parseCacheEntry(cached) as providers.Block | null
+      if (parsed !== null && parsed !== undefined) {
+        duration += performance.now()
+        this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
+        return parsed
+      }
     }
 
     const block = await this.provider.getBlock(blockNumber)
-    if (block === undefined) {
+    if (block === undefined || block === null) {
       return undefined
     }
 

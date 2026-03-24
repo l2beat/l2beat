@@ -1,6 +1,11 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import {
+  createInteropTrpcRouter,
+  createKoaMiddleware,
+  createTRPCContext,
+} from '@l2beat/interop-backoffice'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -27,6 +32,50 @@ export function createInteropRouter(
 ) {
   const router = new Router()
   let coveragePiesCache: string | undefined
+  const dangerousOperationsDisabledResponse = {
+    error: 'Interop resync and restart operations are disabled',
+  }
+
+  const ensureDangerousOperationsEnabled = (
+    ctx: Router.RouterContext,
+  ): boolean => {
+    if (config.dangerousOperationsEnabled) {
+      return true
+    }
+
+    ctx.status = 403
+    ctx.body = dangerousOperationsDisabledResponse
+    return false
+  }
+
+  // Example server side implementation
+
+  const trpcMiddleware = createKoaMiddleware({
+    router: createInteropTrpcRouter({
+      status: {
+        memory: () => {
+          const memoryUsage = process.memoryUsage()
+
+          return Promise.resolve({
+            rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
+            heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
+            heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
+            external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`,
+            arrayBuffers: `${(memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2)} MB`,
+          })
+        },
+      },
+    }),
+    prefix: '/interop/trpc',
+    allowMethodOverride: true,
+    createContext: ({ req }) =>
+      createTRPCContext({
+        headers: new Headers(req.headers as Record<string, string>),
+        db,
+      }),
+  })
+
+  router.all(['/interop/trpc', '/interop/trpc/(.*)'], trpcMiddleware)
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -68,7 +117,8 @@ export function createInteropRouter(
 
   router.get('/interop/status', async (ctx) => {
     const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
-    const showResyncControls = ctx.query.showResync !== undefined
+    const showResyncControls =
+      config.dangerousOperationsEnabled && ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
   })
@@ -275,17 +325,19 @@ export function createInteropRouter(
   })
 
   router.post('/interop/resync', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
     const payload = ResyncRequest.validate(ctx.request.body)
     const { pluginName, resyncRequestedFrom } = payload
 
     const defaultFrom = resyncRequestedFrom['*']
-    const existingChains = (
-      await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const chains = syncersManager.getChainsForPlugin(pluginName)
 
     const updatedChains = new Set<string>()
     await db.transaction(async () => {
-      for (const chain of existingChains) {
+      for (const chain of chains) {
         const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
         if (resyncFrom) {
           await db.interopPluginSyncState.setResyncRequestedFrom(
@@ -301,6 +353,33 @@ export function createInteropRouter(
     ctx.body = {
       updatedChains: Array.from(updatedChains),
     }
+  })
+
+  router.post('/interop/restart-from-now', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
+    const payload = v
+      .object({ pluginName: v.string() })
+      .validate(ctx.request.body)
+    const { pluginName } = payload
+
+    const chains = syncersManager.getChainsForPlugin(pluginName)
+
+    await db.transaction(async () => {
+      for (const chain of chains) {
+        await db.interopPluginSyncState.upsert({
+          pluginName,
+          chain,
+          lastError: null,
+          resyncRequestedFrom: null,
+          wipeRequired: true,
+        })
+      }
+    })
+
+    ctx.body = { updatedChains: chains }
   })
 
   router.post('/interop/refresh-financials', async (ctx) => {

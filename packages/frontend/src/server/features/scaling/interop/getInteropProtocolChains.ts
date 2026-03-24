@@ -8,7 +8,7 @@ import type {
 } from './types'
 import { accumulateChains } from './utils/accumulate'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
-import { buildDurationSplitMap } from './utils/getAverageDuration'
+import { getDurationSplit } from './utils/getAverageDuration'
 import { getChainsData } from './utils/getChainsData'
 import { INITIAL_COMMON_INTEROP_DATA } from './utils/getProtocolsDataMap'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
@@ -35,8 +35,8 @@ export async function getInteropProtocolChains({
     return []
   }
 
-  const durationSplitMap = buildDurationSplitMap([interopProject])
   const relevantBridgeTypes = getRelevantBridgeTypes(interopProject, type)
+  const durationSplit = getDurationSplit(interopProject, relevantBridgeTypes)
   const transfers =
     await db.aggregatedInteropTransfer.getByChainsIdAndTimestamp(
       snapshotTimestamp,
@@ -67,10 +67,8 @@ export async function getInteropProtocolChains({
   }
 
   return getChainsData({
-    projectId: id,
-    bridgeTypes: relevantBridgeTypes,
     chains: chainsMap,
-    durationSplitMap,
     logger,
+    durationSplit,
   })
 }

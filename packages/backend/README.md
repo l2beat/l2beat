@@ -155,7 +155,6 @@ The updateMonitor feature is configured via the following environment variables:
 - `UPDATE_MONITOR_RUN_ON_START` - Optional. Defaults to true
 - `DISCORD_TOKEN` - Optional. Discord bot token
 - `INTERNAL_DISCORD_CHANNEL_ID` - Optional. Discord channel id for internal messages
-- `PUBLIC_DISCORD_CHANNEL_ID` - Optional. Discord channel id for public messages
 
 **Feature flags:**
 
