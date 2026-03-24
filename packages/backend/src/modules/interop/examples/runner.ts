@@ -1,5 +1,9 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  INTEROP_ONE_SIDED_CHAINS,
+  ProjectService,
+} from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
   type HttpClient,
@@ -77,6 +81,7 @@ export class ExampleRunner {
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
+      oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
       configs: this.store,
       httpClient: this.$.http,
       logger: this.$.logger,
@@ -187,17 +192,17 @@ export class ExampleRunner {
       transfer: u,
       srcId: toDeployedId(
         INTEROP_CHAINS,
-        u.src.event.ctx.chain,
+        u.src.event?.ctx.chain ?? u.src.chain,
         u.src.tokenAddress,
       ),
       dstId: toDeployedId(
         INTEROP_CHAINS,
-        u.dst.event.ctx.chain,
+        u.dst.event?.ctx.chain ?? u.dst.chain,
         u.dst.tokenAddress,
       ),
       events: u.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-      src: { ...u.src, chain: u.src.event.ctx.chain },
-      dst: { ...u.dst, chain: u.dst.event.ctx.chain },
+      src: { ...u.src, chain: u.src.event?.ctx.chain ?? u.src.chain },
+      dst: { ...u.dst, chain: u.dst.event?.ctx.chain ?? u.dst.chain },
     }))
 
     return {

@@ -4,7 +4,7 @@ const Metadata = v.object({
   tvs: v
     .object({
       includeInCalculations: v.boolean(),
-      source: v.enum(['canonical', 'external', 'native']),
+      source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
       supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
       bridgedUsing: v.array(
         v.object({ name: v.string(), slug: v.string().optional() }),

@@ -46,7 +46,7 @@ export function getUpdateMonitorConfig(
       ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
       : undefined,
     updateDifferEnabled: flags.isEnabled('updateMonitor', 'updateDiffer'),
-    discord: getDiscordConfig(env, isLocal),
+    discord: getDiscordConfig(env),
     chains: enabledChains.map((chain) =>
       getChainDiscoveryConfig(env, chain, chains),
     ),
@@ -72,18 +72,15 @@ export function getUpdateMonitorConfig(
   }
 }
 
-function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
+function getDiscordConfig(env: Env): DiscordConfig | false {
   const token = env.optionalString('DISCORD_TOKEN')
   const internalChannelId = env.optionalString('INTERNAL_DISCORD_CHANNEL_ID')
-  const publicChannelId = env.optionalString('PUBLIC_DISCORD_CHANNEL_ID')
 
-  const discordEnabled =
-    !!token && !!internalChannelId && (isLocal || !!publicChannelId)
+  const discordEnabled = !!token && !!internalChannelId
 
   return (
     discordEnabled && {
       token,
-      publicChannelId,
       internalChannelId,
       callsPerMinute: 3000,
     }

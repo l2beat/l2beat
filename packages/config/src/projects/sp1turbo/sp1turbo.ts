@@ -229,6 +229,9 @@ export const sp1turbo: BaseProject = {
     verifierHashes: [
       {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
+        name: 'SP1 Turbo Plonk v5.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v5.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -283,6 +286,7 @@ The script will generate Plonk verifier smart contract with verification keys an
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
+        name: 'SP1 Turbo Plonk Morph verifier',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
@@ -335,6 +339,9 @@ make build-circuits
       },
       {
         hash: '0xffea2d2e12ed24da258af874d77eee7ee91a1e050ee197052908089e57681e67',
+        name: 'SP1 Turbo Groth16 v5.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v5.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {

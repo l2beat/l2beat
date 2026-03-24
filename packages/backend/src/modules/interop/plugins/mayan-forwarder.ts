@@ -13,6 +13,7 @@ import {
 } from 'viem'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
+import { findParsedBefore } from './logScan'
 import {
   MAYAN_EVM_CHAINS,
   MAYAN_FORWARDER,
@@ -185,15 +186,10 @@ function findWrappedNativeWithdrawalBefore(
   wrappedNative: EthereumAddress,
 ): bigint | undefined {
   if (targetLogIndex === null) return
-  for (let i = logs.length - 1; i >= 0; i--) {
-    const candidate = logs[i]
-    if (candidate.logIndex === null || candidate.logIndex >= targetLogIndex) {
-      continue
-    }
-    if (EthereumAddress(candidate.address) !== wrappedNative) continue
-    const withdrawal = parseWethWithdrawal(candidate, null)
-    if (withdrawal) return withdrawal.wad
-  }
+  return findParsedBefore(logs, targetLogIndex, (candidate) => {
+    if (EthereumAddress(candidate.address) !== wrappedNative) return
+    return parseWethWithdrawal(candidate, null)?.wad
+  })
 }
 
 // CALLDATA decoding for AA support

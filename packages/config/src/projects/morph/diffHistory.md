@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xca99e6f0b6da64033345b6c25166312e537b8896
+
+# Diff at Mon, 16 Mar 2026 13:46:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1772790459
+- current timestamp: 1773666062
+
+## Description
+
+enforced tx gateway is unpaused
+
+morph incomplete CR  / self-proposing:
+- EnforcedTxGateway works if unpaused and Rollup.rollupDelayPeriod has passed since you queued: it forces any sequencer to execute at least 1 msg (very low) per proposal (FIFO)
+- `commitBatchWithProof()` reverts on `getStakerBitmap(_msgSender())`, so no permissionless proposing
+- to propose you need the prover source
+- successfully challenged batches need to be reverted, which is `onlyOwner()` (liveness fail)
+- no forced txes by non-EOAs
+- the rollup does `BatchHeaderCodecV0.storeSequencerSetVerifyHash(_batchPtr, keccak256(batchSignatureInput.sequencerSets));` which seems to store some sequencer set hash and feed it into the zk proof via `_publicInputHash`. morph had the famous `return true` BLS verification for their decentralized sequencer set, and this might be a remnant that prevents permissionless proving?
+
+tldr you can force, sequencer cannot skip after 7d, but can stop proposing (liveness fail)
+
+morph has commited to improve this in the next updates, for now i have changed the sequencer risk slice to yellow since enqueuing is possible and changed the technology.forcedTransactions.
+
+## Watched changes
+
+```diff
+    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.
+      description:
+-        "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: true."
++        "Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false."
+      values.paused:
+-        true
++        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772790459 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors."
++++ description: commitBatchWithProof() can be called if any:
+1. last committed batch + rollupDelayPeriod < now
+2. oldest enqueued msg + rollupDelayPeriod < now
+      values.getMinDelayFormatted:
++        "7d"
+      fieldMeta.rollupDelayPeriod:
+-        {"description":"commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"}
+      fieldMeta.getMinDelayFormatted:
++        {"description":"commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"}
+    }
+```
+
 Generated with discovered.json: 0xf8e748ef79c3e06354d352b5b8943f4c2722f894
 
 # Diff at Wed, 04 Mar 2026 10:30:35 GMT:

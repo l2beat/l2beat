@@ -18,6 +18,7 @@ describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
   const plugins = createInteropPlugins({
     chains: [],
+    oneSidedChains: [],
     configs: mockObject<InteropConfigStore>(),
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,

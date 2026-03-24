@@ -1,45 +1,110 @@
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type {
+  AbstractTokenRecord,
+  Database,
+  DeployedTokenRecord,
+  InteropTransferRecord,
+  TokenDatabase,
+} from '@l2beat/database'
 import { Address32, assert } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../../../shared/build'
+import type { ChainRecord } from '../../../schemas/Chain'
 
-type TransferSuggestion = {
+export type TransferSuggestion = {
   chain: string
   address: string
-  abstractTokenId: string
+  explorerUrl: string | undefined
+  abstractToken: AbstractTokenRecord
   txs: {
-    srcTxHash: string
+    srcTxHash: string | undefined
     srcChain: string
-    dstTxHash: string
+    srcExplorerUrl: string | undefined
+    dstTxHash: string | undefined
     dstChain: string
+    dstExplorerUrl: string | undefined
     transferId: string
+    plugin: string
   }[]
 }
 
 export async function getSuggestionsByPartialTransfers(
   db: Database,
+  tokenDb: TokenDatabase,
 ): Promise<TransferSuggestion[]> {
   const partialTransfers =
     await db.interopTransfer.getWithPartialAbstractTokenIds()
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const [abstractTokens, deployedTokens, chains] = await Promise.all([
+    tokenDb.abstractToken.getAll(),
+    tokenDb.deployedToken.getAll(),
+    tokenDb.chain.getAll(),
+  ])
+
+  return buildTransferSuggestionMap(
+    transfersForSuggestions,
+    abstractTokens,
+    deployedTokens,
+    chains,
+  )
+}
+
+export async function getSuggestionsByPartialTransfersForToken(
+  db: Database,
+  tokenDb: TokenDatabase,
+  token: { chain: string; address: Address32 },
+): Promise<TransferSuggestion[]> {
+  const partialTransfers =
+    await db.interopTransfer.getWithPartialAbstractTokenIdsForToken(token)
+  const transfersForSuggestions =
+    getEligibleTransfersForSuggestions(partialTransfers)
+  if (transfersForSuggestions.length === 0) {
+    return []
+  }
+
+  const abstractTokens = await tokenDb.abstractToken.getAll()
+
+  return buildTransferSuggestionMap(
+    transfersForSuggestions,
+    abstractTokens,
+    [],
+    [],
+  )
+}
+
+function getEligibleTransfersForSuggestions(
+  transfers: InteropTransferRecord[],
+) {
   const classifier = new InteropTransferClassifier()
-  const classified = classifier.groupByBridgeType(partialTransfers)
-  const transfersForSuggestions = [
-    ...classified.lockAndMint,
-    ...classified.burnAndMint,
-  ]
-  return buildTransferSuggestionMap(transfersForSuggestions)
+  const classified = classifier.groupByBridgeType(transfers)
+  return [...classified.lockAndMint, ...classified.burnAndMint]
 }
 
 function buildTransferSuggestionMap(
   transfers: InteropTransferRecord[],
+  abstractTokens: AbstractTokenRecord[],
+  deployedTokens: DeployedTokenRecord[],
+  chains: ChainRecord[],
 ): TransferSuggestion[] {
   const map = new Map<string, TransferSuggestion>()
-
+  const abstractTokenMap = Object.fromEntries(
+    abstractTokens.map((t) => [t.id, t]),
+  )
+  const deployedTokenMap = Object.fromEntries(
+    deployedTokens.map((t) => [`${t.chain}:${t.address.toLowerCase()}`, t]),
+  )
+  const chainMap = Object.fromEntries(chains.map((c) => [c.name, c]))
   const txInfo = (t: InteropTransferRecord) => ({
     srcTxHash: t.srcTxHash,
     srcChain: t.srcChain,
     dstTxHash: t.dstTxHash,
     dstChain: t.dstChain,
     transferId: t.transferId,
+    plugin: t.plugin,
   })
 
   const addSuggestion = (
@@ -48,17 +113,41 @@ function buildTransferSuggestionMap(
     abstractTokenId: string,
     tx: ReturnType<typeof txInfo>,
   ) => {
-    const key = `${chain}:${tokenAddress}:${abstractTokenId}`
+    const key = `${chain}:${tokenAddress.toLowerCase()}:${abstractTokenId}`
+    const abstractToken = abstractTokenMap[abstractTokenId]
+    if (!abstractToken) {
+      return
+    }
+
+    const address = tokenAddress.startsWith('0x')
+      ? Address32.cropToEthereumAddress(Address32(tokenAddress))
+      : tokenAddress
+    const deployedToken = deployedTokenMap[`${chain}:${address.toLowerCase()}`]
+
+    if (deployedToken) {
+      return
+    }
+
     const current = map.get(key)
-    const address = Address32.cropToEthereumAddress(Address32(tokenAddress))
     if (current) {
-      current.txs.push(tx)
+      current.txs.push({
+        ...tx,
+        srcExplorerUrl: chainMap[tx.srcChain]?.explorerUrl ?? undefined,
+        dstExplorerUrl: chainMap[tx.dstChain]?.explorerUrl ?? undefined,
+      })
     } else {
       map.set(key, {
         chain,
         address,
-        abstractTokenId,
-        txs: [tx],
+        explorerUrl: chainMap[chain]?.explorerUrl ?? undefined,
+        abstractToken,
+        txs: [
+          {
+            ...tx,
+            srcExplorerUrl: chainMap[tx.srcChain]?.explorerUrl ?? undefined,
+            dstExplorerUrl: chainMap[tx.dstChain]?.explorerUrl ?? undefined,
+          },
+        ],
       })
     }
   }

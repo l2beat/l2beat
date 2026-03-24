@@ -5,23 +5,14 @@ import isEqual from 'lodash/isEqual'
 import type {
   AverageDuration,
   CommonInteropData,
-  DurationSplitMap,
   UnknownAverageDuration,
 } from '../types'
 
 export function getAverageDuration(
-  projectId: string,
-  bridgeTypes: KnownInteropBridgeType[] | undefined,
   data: CommonInteropData,
-  durationSplitMap: DurationSplitMap | undefined,
+  durationSplit: InteropDurationSplit | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
-  const durationSplit = getDurationSplit(
-    projectId,
-    bridgeTypes,
-    durationSplitMap,
-  )
-
-  if (data.transferCount <= 0) return null
+  if (data.transfersWithDurationCount <= 0) return null
 
   if (
     durationSplit &&
@@ -38,26 +29,40 @@ export function getAverageDuration(
 
   return {
     type: 'single',
-    duration: Math.floor(data.totalDurationSum / data.transferCount),
+    duration: Math.floor(
+      data.totalDurationSum / data.transfersWithDurationCount,
+    ),
   }
 }
 
-function getDurationSplit(
-  projectId: string,
-  bridgeTypes: KnownInteropBridgeType[] | undefined,
-  durationSplitMap: DurationSplitMap | undefined,
+export function getDurationSplit(
+  project: Project<'interopConfig'>,
+  bridgeTypes: KnownInteropBridgeType[],
 ): InteropDurationSplit | undefined {
-  const [firstBridgeType, ...restBridgeTypes] = bridgeTypes ?? []
+  const projectDurationSplits = project.interopConfig.durationSplit
+  if (!projectDurationSplits) return undefined
+
+  const bridgeTypeMap = new Map<
+    KnownInteropBridgeType,
+    NonNullable<InteropDurationSplit>
+  >()
+
+  for (const [bridgeType, durationSplit] of Object.entries(
+    projectDurationSplits,
+  )) {
+    bridgeTypeMap.set(bridgeType as KnownInteropBridgeType, durationSplit)
+  }
+
+  const [firstBridgeType, ...restBridgeTypes] = bridgeTypes
   if (!firstBridgeType) return undefined
 
-  const projectDurationSplits = durationSplitMap?.get(projectId)
-  const firstDurationSplit = projectDurationSplits?.get(firstBridgeType)
+  const firstDurationSplit = bridgeTypeMap.get(firstBridgeType)
   if (!firstDurationSplit) return undefined
 
   const normalizedFirstDurationSplit =
     normalizeDurationSplit(firstDurationSplit)
   const hasSameDurationSplit = restBridgeTypes.every((bridgeType) => {
-    const durationSplit = projectDurationSplits?.get(bridgeType)
+    const durationSplit = bridgeTypeMap.get(bridgeType)
     return durationSplit !== undefined
       ? isEqual(
           normalizedFirstDurationSplit,
@@ -92,43 +97,17 @@ function getSplitDuration(
     .map((transferType) => transferTypeStats?.[transferType])
     .filter((stats) => stats !== undefined)
 
-  const transferCount = matchedStats.reduce(
+  const transfersWithDurationCount = matchedStats.reduce(
     (acc, stats) => acc + stats.transferCount,
     0,
   )
 
-  if (transferCount <= 0) return null
+  if (transfersWithDurationCount <= 0) return null
 
   const totalDurationSum = matchedStats.reduce(
     (acc, stats) => acc + stats.totalDurationSum,
     0,
   )
 
-  return Math.floor(totalDurationSum / transferCount)
-}
-
-export function buildDurationSplitMap(
-  interopProjects: Project<'interopConfig'>[],
-): DurationSplitMap {
-  const durationSplitMap: DurationSplitMap = new Map()
-
-  for (const project of interopProjects) {
-    const projectDurationSplits = project.interopConfig.durationSplit
-    if (!projectDurationSplits) continue
-
-    const bridgeTypeMap = new Map<
-      KnownInteropBridgeType,
-      NonNullable<InteropDurationSplit>
-    >()
-
-    for (const [bridgeType, durationSplit] of Object.entries(
-      projectDurationSplits,
-    )) {
-      bridgeTypeMap.set(bridgeType as KnownInteropBridgeType, durationSplit)
-    }
-
-    durationSplitMap.set(project.id, bridgeTypeMap)
-  }
-
-  return durationSplitMap
+  return Math.floor(totalDurationSum / transfersWithDurationCount)
 }

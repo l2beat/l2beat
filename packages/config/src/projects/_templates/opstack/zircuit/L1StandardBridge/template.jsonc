@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1StandardBridge",
   "description": "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge"],

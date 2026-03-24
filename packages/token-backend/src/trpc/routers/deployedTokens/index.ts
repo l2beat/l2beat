@@ -32,7 +32,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
 
     checks: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
-      .query(({ ctx, input }) => checkDeployedToken(deps, ctx.tokenDb, input)),
+      .query(({ ctx, input }) =>
+        checkDeployedToken(deps, ctx.db, ctx.tokenDb, input),
+      ),
 
     getSuggestionsByCoingeckoId: readOnlyProcedure
       .input(v.string())
@@ -41,6 +43,6 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       ),
 
     getSuggestionsByPartialTransfers: readOnlyProcedure.query(({ ctx }) =>
-      getSuggestionsByPartialTransfers(ctx.db),
+      getSuggestionsByPartialTransfers(ctx.db, ctx.tokenDb),
     ),
   })
