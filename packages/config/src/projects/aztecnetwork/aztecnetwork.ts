@@ -38,6 +38,8 @@ const governanceConfiguration = discovery.getContractValue<{
   minimumVotes: string
 }>('Governance', 'getConfiguration')
 
+governanceConfiguration.executionDelay = 30 * UnixTime.DAY // TODO: remove this override
+
 // const exitWindowObject = RISK_VIEW.EXIT_WINDOW(governanceConfiguration.executionDelay,20 * UnixTime.DAY,) // TODO: formalize the inclusion delay and use onchain gov delay when launched
 const exitWindowObject = RISK_VIEW.EXIT_WINDOW(
   30 * UnixTime.DAY,
