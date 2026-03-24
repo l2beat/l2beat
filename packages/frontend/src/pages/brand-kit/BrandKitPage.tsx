@@ -4,7 +4,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { cn } from '~/utils/cn'
+import { ColorSwatch } from './components/ColorSwatch'
 import { LogoPreviewCard } from './components/LogoPreviewCard'
 
 export function BrandKitPage(props: AppLayoutProps) {
@@ -80,38 +80,9 @@ function LogoSection({
   )
 }
 
-function ColorSwatch({
-  color,
-  label,
-  darkText,
-}: {
-  color: string
-  label: string
-  darkText?: boolean
-}) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <div
-        className="flex h-20 items-end rounded-lg p-3"
-        style={{ backgroundColor: color }}
-      >
-        <span
-          className={cn(
-            'font-mono font-semibold text-sm',
-            darkText ? 'text-black' : 'text-white',
-          )}
-        >
-          {color}
-        </span>
-      </div>
-      <span className="text-secondary text-xs">{label}</span>
-    </div>
-  )
-}
-
 function ColorsSection() {
   return (
-    <PrimaryCard>
+    <PrimaryCard className="border-divider max-md:border-t">
       <h2 className="mb-4 font-bold text-xl">Colors</h2>
       <div className="grid gap-6 md:grid-cols-2">
         <div>
@@ -141,7 +112,7 @@ const nameContent = `The name should always be written in uppercase as **L2BEAT*
 
 function NameSection() {
   return (
-    <PrimaryCard>
+    <PrimaryCard className="border-divider max-md:border-t">
       <h2 className="mb-4 font-bold text-xl">Name</h2>
       <Markdown
         className="text-paragraph-15 md:text-paragraph-16"
