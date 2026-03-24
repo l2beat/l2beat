@@ -68,7 +68,7 @@ export function TokenCount({
                 }}
                 className="mt-4"
                 onMouseEnter={() =>
-                  utils.interop.summaryTokens.prefetch(selectionForApi)
+                  utils.interop.tokens.prefetch(selectionForApi)
                 }
                 setIsOpen={setIsOpen}
               />
@@ -76,38 +76,12 @@ export function TokenCount({
           </>
         )}
       </div>
-      <TokenCountContent isOpen={isOpen} setIsOpen={setIsOpen} />
+      <TopItemsDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="All tokens & pairs by volume"
+      />
     </PrimaryCard>
-  )
-}
-
-function TokenCountContent({
-  isOpen,
-  setIsOpen,
-}: {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}) {
-  const { selectionForApi } = useInteropSelectedChains()
-  const { data: tokensData, isLoading: isTokensLoading } =
-    api.interop.summaryTokens.useQuery(selectionForApi, {
-      enabled: isOpen,
-    })
-  const { data: pairsData, isLoading: isPairsLoading } =
-    api.interop.pairs.useQuery(selectionForApi, {
-      enabled: isOpen,
-    })
-
-  return (
-    <TopItemsDialog
-      tokensData={tokensData ?? []}
-      isTokensLoading={isTokensLoading}
-      pairsData={pairsData ?? []}
-      isPairsLoading={isPairsLoading}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="All tokens & pairs by volume"
-    />
   )
 }
 

@@ -4,7 +4,7 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import type {
   CommonInteropData,
-  InteropPairsParams,
+  InteropTopItemsParams,
   PairData,
   TokenFlowData,
 } from './types'
@@ -30,7 +30,7 @@ export async function getInteropPairs({
   from,
   to,
   type,
-}: InteropPairsParams): Promise<PairData[]> {
+}: InteropTopItemsParams): Promise<PairData[]> {
   const db = getDb()
 
   const interopProject = id

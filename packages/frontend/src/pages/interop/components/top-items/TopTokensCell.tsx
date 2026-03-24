@@ -51,68 +51,24 @@ export function TopTokensCell({
         type="cell"
         setIsOpen={setIsOpen}
       />
-      <TopItemsContent
+      <TopItemsDialog
+        id={protocol.id}
         type={resolvedType}
-        protocol={protocol}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        title={
+          <>
+            <span>Top tokens & pairs by volume for </span>
+            <img
+              src={protocol.iconUrl}
+              alt={protocol.name}
+              className="relative bottom-px mx-1 inline-block size-6"
+            />
+            <span>{protocol.name}</span>
+          </>
+        }
         showNetMintedValueColumn={showNetMintedValueColumn}
       />
     </>
-  )
-}
-
-function TopItemsContent({
-  type,
-  protocol,
-  isOpen,
-  setIsOpen,
-  showNetMintedValueColumn,
-}: {
-  type: KnownInteropBridgeType | undefined
-  protocol: { id: ProjectId; name: string; iconUrl: string }
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-  showNetMintedValueColumn?: boolean
-}) {
-  const { selectionForApi } = useInteropSelectedChains()
-
-  const queryInput = {
-    ...selectionForApi,
-    id: protocol.id,
-    type,
-  }
-
-  const { data: tokensData, isLoading: isTokensLoading } =
-    api.interop.tokens.useQuery(queryInput, {
-      enabled: isOpen,
-    })
-
-  const { data: pairsData, isLoading: isPairsLoading } =
-    api.interop.pairs.useQuery(queryInput, {
-      enabled: isOpen,
-    })
-
-  return (
-    <TopItemsDialog
-      tokensData={tokensData ?? []}
-      isTokensLoading={isTokensLoading}
-      pairsData={pairsData ?? []}
-      isPairsLoading={isPairsLoading}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title={
-        <>
-          <span>Top tokens & pairs by volume for </span>
-          <img
-            src={protocol.iconUrl}
-            alt={protocol.name}
-            className="relative bottom-px mx-1 inline-block size-6"
-          />
-          <span>{protocol.name}</span>
-        </>
-      }
-      showNetMintedValueColumn={showNetMintedValueColumn}
-    />
   )
 }

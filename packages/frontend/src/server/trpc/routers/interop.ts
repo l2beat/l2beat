@@ -2,15 +2,13 @@ import { getInteropDashboardData } from '~/server/features/scaling/interop/getIn
 import { getInteropProtocolChains } from '~/server/features/scaling/interop/getInteropProtocolChains'
 import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
 import { getInteropPairs } from '~/server/features/scaling/interop/getInteropProtocolPairs'
-import { getInteropProtocolTokens } from '~/server/features/scaling/interop/getInteropProtocolTokens'
+import { getInteropTokens } from '~/server/features/scaling/interop/getInteropProtocolTokens'
 import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
-import { getInteropSummaryTokens } from '~/server/features/scaling/interop/getInteropSummaryTokens'
 import {
   InteropDashboardParams,
-  InteropPairsParams,
   InteropProtocolTokensParams,
   InteropProtocolTransfersParams,
-  InteropSelectionInput,
+  InteropTopItemsParams,
 } from '~/server/features/scaling/interop/types'
 import { procedure, router } from '../trpc'
 
@@ -22,14 +20,11 @@ export const interopRouter = router({
     .input(InteropProtocolTokensParams)
     .query(({ input }) => getInteropProtocolData(input)),
   tokens: procedure
-    .input(InteropProtocolTokensParams)
-    .query(({ input }) => getInteropProtocolTokens(input)),
+    .input(InteropTopItemsParams)
+    .query(({ input }) => getInteropTokens(input)),
   pairs: procedure
-    .input(InteropPairsParams)
+    .input(InteropTopItemsParams)
     .query(({ input }) => getInteropPairs(input)),
-  summaryTokens: procedure
-    .input(InteropSelectionInput)
-    .query(({ input }) => getInteropSummaryTokens(input)),
   chains: procedure
     .input(InteropProtocolTokensParams)
     .query(({ input }) => getInteropProtocolChains(input)),

@@ -1,3 +1,4 @@
+import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { type ReactNode, useMemo, useState } from 'react'
 import {
@@ -21,10 +22,8 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import type {
-  PairData,
-  TokenData,
-} from '~/server/features/scaling/interop/types'
+import { api } from '~/trpc/React'
+import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
 import {
   getTopTokensColumns,
@@ -36,10 +35,8 @@ import {
 type ActiveTab = 'tokens' | 'pairs'
 
 interface TopItemsDialogProps {
-  tokensData: TokenData[]
-  isTokensLoading: boolean
-  pairsData: PairData[]
-  isPairsLoading: boolean
+  id?: ProjectId
+  type?: KnownInteropBridgeType
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   title: ReactNode
@@ -47,17 +44,28 @@ interface TopItemsDialogProps {
 }
 
 export function TopItemsDialog({
-  tokensData,
-  isTokensLoading,
-  pairsData,
-  isPairsLoading,
+  id,
+  type,
   isOpen,
   setIsOpen,
   title,
   showNetMintedValueColumn,
 }: TopItemsDialogProps) {
   const breakpoint = useBreakpoint()
+  const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
+
+  const queryInput = { ...selectionForApi, id, type }
+
+  const { data: tokensData, isLoading: isTokensLoading } =
+    api.interop.tokens.useQuery(queryInput, {
+      enabled: isOpen,
+    })
+
+  const { data: pairsData, isLoading: isPairsLoading } =
+    api.interop.pairs.useQuery(queryInput, {
+      enabled: isOpen && activeTab === 'pairs',
+    })
 
   const tokensColumns = useMemo(
     () => getTopTokensColumns(showNetMintedValueColumn),
@@ -65,7 +73,7 @@ export function TopItemsDialog({
   )
 
   const tokensTable = useTable<TokenRow>({
-    data: tokensData,
+    data: tokensData ?? [],
     columns: tokensColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -77,7 +85,7 @@ export function TopItemsDialog({
   })
 
   const pairsTable = useTable<PairRow>({
-    data: pairsData,
+    data: pairsData ?? [],
     columns: topPairsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
