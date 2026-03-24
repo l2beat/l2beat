@@ -45,6 +45,7 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
+import { tempo } from '../projects/tempo/tempo'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -88,6 +89,7 @@ export const refactored: BaseProject[] = [
   gnosis,
   gateway,
   avalanche,
+  tempo,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,

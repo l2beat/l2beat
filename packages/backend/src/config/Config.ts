@@ -236,6 +236,9 @@ export interface InteropFeatureConfig {
         discordWebhookUrl: string
       }
     | false
+
+  /** List of chains plugins are allowed to create partial from/to transfers for  */
+  oneSidedChains: string[]
 }
 
 export interface DaBeatConfig {

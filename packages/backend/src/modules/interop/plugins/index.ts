@@ -86,6 +86,7 @@ export interface InteropPlugins {
 
 export interface InteropPluginDependencies {
   chains: { name: string; id: number }[]
+  oneSidedChains: string[]
   httpClient: HttpClient
   rpcClients: IRpcClient[]
   logger: Logger
