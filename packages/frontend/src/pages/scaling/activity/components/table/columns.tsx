@@ -55,7 +55,7 @@ export const getScalingActivityColumns = (
       columnHelper,
       (row) =>
         row.id === ProjectId.ETHEREUM
-          ? undefined
+          ? '/data-availability/projects/ethereum/ethereum#activity'
           : `/scaling/projects/${row.slug}#activity`,
       opts,
     ),

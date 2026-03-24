@@ -102,6 +102,12 @@ export class InteropSyncersManager {
     return this.syncers.get(plugin)?.get(chain)
   }
 
+  getChainsForPlugin(pluginName: string): LongChainName[] {
+    const chainMap = this.syncers.get(pluginName)
+    if (!chainMap) return []
+    return Array.from(chainMap.keys())
+  }
+
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
     for (const v of this.syncers.values()) {
       const syncer = v.get(chain)

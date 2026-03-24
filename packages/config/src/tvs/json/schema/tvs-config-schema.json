@@ -718,7 +718,7 @@
             ]
           },
           "source": {
-            "enum": ["canonical", "external", "native"]
+            "enum": ["canonical", "custom-canonical", "external", "native"]
           },
           "isAssociated": {
             "type": "boolean"

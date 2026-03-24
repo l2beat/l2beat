@@ -573,7 +573,7 @@ Verify:
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: `
-Prepare:
+Prepare: 
 
 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
 2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
@@ -658,6 +658,11 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
     `,
   },
+  '0x00987c64e3710bc9ab5f3a93f3f1249be821b1a6eedb14dbc1ae2d6fc4fd9337': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
+  },
   '0x4b8234c47685b3361b22399702416a8010783b1b701b279073b4f0831e55da63': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     proverSystemProject: ProjectId('sp1turbo'),
@@ -687,6 +692,11 @@ Verify:
 2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes.
     `,
+  },
+  '0x05f486d43f4066c24b8652cd52e122df59f0ea4c33c0df8155dc58de37f93330': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    proverSystemProject: ProjectId('sp1'),
+    verificationStatus: 'notVerified',
   },
   '0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0': {
     title: 'SP1 Helios program',
@@ -873,7 +883,9 @@ git checkout 56407b69f3f19f69302a8623baa8c5f71f967eed
   '3035974089339935040143966034750116008615662951603253398063766337728525196711':
     {
       ...SIMPLE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_11'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'unsuccessful',
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '160268921359133235574810995023520895391777547407923205700393332203861498631':
     {
@@ -908,7 +920,9 @@ git checkout v0.13.5
   '3585039955034622347908243360088523999417661979601115750324841620224559981237':
     {
       ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_11'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'unsuccessful',
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '1104316318711847786071125527957082259001554753246760931396914052122269757907':
     {
@@ -943,7 +957,9 @@ git checkout v0.13.5
   '3480185788024326007166778030599498673382667448173974782477620863541158415714':
     {
       ...APPLICATIVE_BOOTLOADER('StarkWare_GpsStatementVerifier_2025_12'),
-      verificationStatus: 'notVerified',
+      verificationStatus: 'unsuccessful',
+      verificationSteps:
+        'We were not able to identify the sources of this program.',
     },
   '1701025211190912681772481128523426351562426117847395998223683709327746845867':
     {
@@ -1445,7 +1461,9 @@ Also replace line 98 of Dockerfile with \`cargo install --force --locked cbindge
   },
   '0x5b82aa008989d331bf6f3cf75b85a04c9ee809447c19b85fecaf3b7d749a6576': {
     ...WASM_MODULE_ROOT('Apechain'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'notVerified', // Apechain has closed challengers, so I think it doesn't make sense to mark them red for non reproducible program
+    verificationSteps:
+      'The sources for this program are located in a private repository, shared with L2BEAT to independently regenerate the wasm module root. This value is not reproducible by members of public, but we attest that it can be obtained from sources.',
   },
   '0x2c9a9d645ae56304c483709fc710a58a0935ed43893179fe4b275e1400503ea7': {
     ...WASM_MODULE_ROOT('Syndicate'),
@@ -1568,11 +1586,11 @@ Steps are based on [this guide](https://docs.optimism.io/chain-operators/tutoria
   },
   '0x03ddcb9294fef6dd477b4e911fd777fda0832fdd10aa594ac941540ea62a2aa0': {
     ...ABSOLUTE_PRESTATE('Boba'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
   },
   '0x03c7ae758795765c6664a5d39bf63841c71ff191e9189522bad8ebff5d4eca98': {
     ...ABSOLUTE_PRESTATE('Cyber'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'unsuccessful',
   },
   '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c': {
     ...ABSOLUTE_PRESTATE('v1.3.1'),

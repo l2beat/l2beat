@@ -27,13 +27,14 @@ import { Checkbox } from '../core/Checkbox'
 import { ExternalLink } from '../ExternalLink'
 
 const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
+const EMPTY_CATEGORY_VALUE = '__none__'
 
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
 export const AbstractTokenSchema = v.object({
   id: v.string(),
   issuer: v.string().optional(),
   symbol: v.string().check(minLengthCheck(1)),
-  category: v.enum(categoryValues),
+  category: v.union([v.enum(categoryValues), v.null()]),
   coingeckoId: v.string().optional(),
   coingeckoListingTimestamp: v.string().optional(),
   iconUrl: v
@@ -222,8 +223,12 @@ export function AbstractTokenForm({
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(
+                      value === EMPTY_CATEGORY_VALUE ? null : value,
+                    )
+                  }}
+                  value={field.value ?? EMPTY_CATEGORY_VALUE}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -231,6 +236,9 @@ export function AbstractTokenForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
+                    <SelectItem value={EMPTY_CATEGORY_VALUE}>
+                      No category
+                    </SelectItem>
                     {categoryValues.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}

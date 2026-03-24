@@ -1,7 +1,7 @@
-import { CustomLink } from '~/components/link/CustomLink'
+import { formatAddress } from '@l2beat/shared-pure'
 
+import { CustomLink } from '~/components/link/CustomLink'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import { formatAddress } from '~/utils/formatAddress'
 
 interface Props {
   address: string

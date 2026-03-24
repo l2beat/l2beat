@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1772795190,
+  "timestamp": 1774022071,
   "configHash": "0x2ca17ca2e46fa2a6d8c6a1f96a830688ef32554ea3200a672b3ac95f6318a201",
   "entries": [
     {
@@ -228,7 +228,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 88,
+        "getFirstUnprocessedPriorityTx": 93,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -237,7 +237,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x243ec7237ded7b6d409b9e0e28c7b27f53e5605893adcf1c1d7531b437a6588f",
+        "getPriorityTreeRoot": "0x93af827ef86260e3e245ebd289551c9bbd421ffc7823aa883917e970729cdb9d",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -245,13 +245,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 438,
-        "getTotalBatchesExecuted": 438,
-        "getTotalBatchesVerified": 438,
-        "getTotalBlocksCommitted": 438,
-        "getTotalBlocksExecuted": 438,
-        "getTotalBlocksVerified": 438,
-        "getTotalPriorityTxs": 88,
+        "getTotalBatchesCommitted": 756,
+        "getTotalBatchesExecuted": 756,
+        "getTotalBatchesVerified": 756,
+        "getTotalBlocksCommitted": 756,
+        "getTotalBlocksExecuted": 756,
+        "getTotalBlocksVerified": 756,
+        "getTotalPriorityTxs": 93,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
         "getVerifierParams": {
@@ -319,13 +319,18 @@
       "name": "ADI PlonkVerifier",
       "address": "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x99ad2513d609d837d3fb8bd7fa2df0a4f37aea1065e9036c5796772f248f8d30"
+      ],
       "proxyType": "immutable",
       "sinceTimestamp": 1770282227,
       "sinceBlock": 24389613,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337"
+      },
       "implementationNames": {
-        "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F": ""
+        "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F": "ZKsyncOSVerifierPlonk"
       }
     },
     {
@@ -1592,6 +1597,10 @@
       "error UndefinedDiamondCutAction()",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
+    "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
     "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2742,6 +2751,6 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24598008 },
+  "usedBlockNumbers": { "ethereum": 24699739 },
   "permissionsConfigHash": "0xb7ba2597ac3f335c0d4afa237493b92a5e535c4c3c124919fcf5f1510987ed99"
 }

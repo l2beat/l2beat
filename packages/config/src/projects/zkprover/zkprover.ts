@@ -115,6 +115,9 @@ export const zkprover: BaseProject = {
       // },
       {
         hash: '0x237bc5d6efad6d844534c4a45f5f19fa86344615ac00054821915c219e9abd81',
+        name: 'zkProver Fflonk v8.0.0-fork.12',
+        sourceLink:
+          'https://github.com/0xPolygon/zkevm-proverjs/tree/v8.0.0-fork.12',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
         knownDeployments: [
           {

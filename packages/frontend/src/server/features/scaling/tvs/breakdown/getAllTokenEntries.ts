@@ -11,7 +11,6 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import capitalize from 'lodash/capitalize'
 import { env } from '~/env'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import { getDb } from '~/server/database'
@@ -19,6 +18,7 @@ import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
 import { manifest } from '~/utils/Manifest'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
+import { sourceToLabel } from '../utils/sourceToLabel'
 import {
   type Address,
   extractAddressesFromTokenConfig,
@@ -124,7 +124,7 @@ function getEntries(
           },
           {
             id: 'bridgingType',
-            value: capitalize(token.source),
+            value: sourceToLabel(token.source),
           },
           ...(token.bridgedUsing?.bridges.map(
             (b) =>
