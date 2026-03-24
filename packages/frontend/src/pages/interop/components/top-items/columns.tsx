@@ -160,7 +160,6 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
 }
 
 const tokenColumnHelper = createColumnHelper<TokenRow>()
-
 export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
   compact([
     tokenColumnHelper.display({
@@ -219,10 +218,7 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
       }),
   ])
 
-// --- Top Pairs columns ---
-
 const pairColumnHelper = createColumnHelper<PairRow>()
-
 export const topPairsColumns = [
   pairColumnHelper.accessor(
     (row) =>

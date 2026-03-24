@@ -23,15 +23,12 @@ export const interopRouter = router({
   tokens: procedure
     .input(InteropProtocolTokensParams)
     .query(({ input }) => getInteropProtocolTokens(input)),
-<<<<<<< HEAD
   pairs: procedure
     .input(InteropProtocolTokensParams)
     .query(({ input }) => getInteropProtocolPairs(input)),
-=======
   summaryTokens: procedure
     .input(InteropSelectionInput)
     .query(({ input }) => getInteropSummaryTokens(input)),
->>>>>>> main
   chains: procedure
     .input(InteropProtocolTokensParams)
     .query(({ input }) => getInteropProtocolChains(input)),
