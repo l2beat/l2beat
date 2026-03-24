@@ -19,8 +19,8 @@ import {
   type ParseAbiItem,
   parseAbi,
 } from 'viem'
+import type { InteropTransaction } from '../dto/interopTransaction'
 import type { TokenMap } from '../engine/match/TokenMap'
-import type { InteropTransaction } from './interopTransaction'
 
 export interface InteropEvent<T = unknown> {
   plugin: string

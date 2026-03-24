@@ -1,11 +1,12 @@
 import type { EVMTransactionSubCall } from '@l2beat/shared'
 import type { Transaction } from '@l2beat/shared-pure'
+
 export interface InteropRawTransaction extends Transaction {
   // shadow extensions
   calls?: EVMTransactionSubCall[]
 }
 
-export class InteropTransactionDTO {
+export class InteropTransaction {
   readonly hash?: string
   readonly from?: string
   readonly to?: string
@@ -59,13 +60,11 @@ export class InteropTransactionDTO {
   }
 }
 
-export type InteropTransaction = InteropTransactionDTO
-
 export function toInteropTransaction(
   tx: InteropRawTransaction,
-): InteropTransactionDTO {
-  if (tx instanceof InteropTransactionDTO) {
+): InteropTransaction {
+  if (tx instanceof InteropTransaction) {
     return tx
   }
-  return new InteropTransactionDTO(tx)
+  return new InteropTransaction(tx)
 }

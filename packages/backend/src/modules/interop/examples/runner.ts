@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared'
 import { assert, unique } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { toInteropTransaction } from '../dto/interopTransaction'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
 import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -18,7 +19,6 @@ import {
   flattenClusters,
   type InteropPlugins,
 } from '../plugins'
-import { toInteropTransaction } from '../plugins/interopTransaction'
 import type { InteropEvent } from '../plugins/types'
 import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'

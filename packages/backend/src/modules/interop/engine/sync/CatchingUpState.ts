@@ -11,7 +11,7 @@ import {
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
-import { toInteropTransaction } from '../../plugins/interopTransaction'
+import { toInteropTransaction } from '../../dto/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
