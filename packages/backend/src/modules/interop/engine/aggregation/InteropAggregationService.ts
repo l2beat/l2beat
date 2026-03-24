@@ -8,7 +8,11 @@ import type { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
-import { getAggregatedTokens, getAggregatedTokensPairs, getAggregatedTransfer } from './aggregation'
+import {
+  getAggregatedTokens,
+  getAggregatedTokensPairs,
+  getAggregatedTransfer,
+} from './aggregation'
 
 export interface AggregationResult {
   aggregatedTransfers: AggregatedInteropTransferRecord[]
