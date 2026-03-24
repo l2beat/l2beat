@@ -93,6 +93,14 @@ export function getCommonScalingEntry({
         id: 'vm' as const,
         value: vm,
       })),
+      {
+        id: 'ProofSystem' as const,
+        value: project.scalingInfo.proofSystem
+          ? project.scalingInfo.proofSystem.type === 'Optimistic'
+            ? 'Optimistic'
+            : 'Validity'
+          : 'No proofs',
+      },
       ...project.display.badges
         .filter((badge) => badge.type === 'Other')
         .map((badge) => ({
