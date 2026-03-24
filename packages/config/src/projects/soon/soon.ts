@@ -19,6 +19,7 @@ export const soon: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+
   display: {
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',

@@ -300,6 +300,7 @@ export const lighter: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [],
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),

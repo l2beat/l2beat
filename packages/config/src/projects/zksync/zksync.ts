@@ -394,6 +394,7 @@ export const zksync: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [],
   },
   stateDerivation: {
     nodeSoftware:

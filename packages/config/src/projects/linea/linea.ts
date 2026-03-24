@@ -548,6 +548,7 @@ export const linea: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
+    zkVerifiers: [],
   },
   stateDerivation: {
     nodeSoftware:

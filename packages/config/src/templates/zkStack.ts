@@ -2,7 +2,7 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
+  EthereumAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
@@ -559,6 +559,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         ),
       ],
       programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
+      zkVerifiers: getVerifiers(templateVars.discovery),
     },
     stateDerivation:
       daProvider !== undefined
@@ -678,4 +679,66 @@ function programHashesReproducible(l2BootloaderHash: string): boolean | null {
   if (vStatus === 'unsuccessful') return false
   if (vStatus === 'successful') return true
   return null
+}
+
+// get all verifiers that can prove STF of an L2
+// export because adi is not currently set up as a template but should get verifiers by this logic
+export function getVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  const result: ChainSpecificAddress[] = []
+  if (discovery.hasContract('DualVerifier')) {
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'FFLONK_VERIFIER',
+      ),
+    )
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'PLONK_VERIFIER',
+      ),
+    )
+  } else if (discovery.hasContract('Verifier')) {
+    // currently only Treasury has this setup
+    result.push(discovery.getContract('Verifier').address)
+  } else if (discovery.hasContract('ZKsyncOSDualVerifier')) {
+    // probably all aibender-based chains will fall under this case
+    const fflonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(fflonk0) !== EthereumAddress.ZERO) {
+      result.push(fflonk0)
+    }
+    const plonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(plonk0) !== EthereumAddress.ZERO) {
+      result.push(plonk0)
+    }
+    const fflonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier1',
+    )
+    const plonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier1',
+    )
+    if (
+      ChainSpecificAddress.address(fflonk1) !== EthereumAddress.ZERO ||
+      ChainSpecificAddress.address(plonk1) !== EthereumAddress.ZERO
+    ) {
+      throw new Error(
+        `Verifier discovery for ${discovery.projectName} is misconfigured: both plonk1 and fflonk1 are expected to be zero addresses. Manually review and setup verifiers for zk catalog.`,
+      )
+    }
+  } else {
+    throw new Error(
+      `Cannot configure ZK Stack project verifiers (${discovery.projectName}), edit template file`,
+    )
+  }
+  return result
 }

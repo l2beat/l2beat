@@ -159,6 +159,7 @@ export const brine: ScalingProject = {
       ),
     ],
     programHashes: tanxProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

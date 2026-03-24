@@ -158,6 +158,7 @@ export const sorare: ScalingProject = {
       ),
     ],
     programHashes: sorareProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

@@ -371,6 +371,7 @@ export const zircuit: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {

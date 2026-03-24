@@ -441,6 +441,7 @@ export const degate3: ScalingProject = {
       ],
     },
     risks: [],
+    zkVerifiers: [],
   },
   milestones: [
     {

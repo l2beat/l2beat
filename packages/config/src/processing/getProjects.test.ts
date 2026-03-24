@@ -228,8 +228,7 @@ describe('getProjects', () => {
         const usedInVerifiers = uniq(
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
             v.knownDeployments.flatMap(
-              (d) =>
-                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
             ),
           ),
         ).filter((p) => p !== undefined)
@@ -756,10 +755,10 @@ describe('getProjects', () => {
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {
-  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+  const usageMap = new Map<`${ChainSpecificAddress}`, ProjectId[]>()
 
-  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
-    const key = `${chain}-${address}` as const
+  function addUsage(address: ChainSpecificAddress, usage: ProjectId) {
+    const key = `${address}` as const
     const uses = usageMap.get(key)
     if (!uses) {
       usageMap.set(key, [usage])
@@ -778,12 +777,11 @@ function getUsageMap(projects: BaseProject[]) {
     )) {
       for (const contract of contracts) {
         addUsage(
-          chain,
-          ChainSpecificAddress.address(contract.address),
+          ChainSpecificAddress.fromLong(chain, contract.address),
           project.id,
         )
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+          addUsage(ChainSpecificAddress.fromLong(chain, impl), project.id)
         }
       }
     }

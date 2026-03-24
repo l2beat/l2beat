@@ -52,6 +52,7 @@ export const phala: ScalingProject = opStackL2({
     type: 'Validity',
     zkCatalogId: ProjectId('sp1hypercube'),
   },
+
   nonTemplateTrackedTxs: [
     {
       uses: [

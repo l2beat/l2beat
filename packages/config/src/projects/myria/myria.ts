@@ -161,6 +161,7 @@ export const myria: ScalingProject = {
       ),
     ],
     programHashes: myriaProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

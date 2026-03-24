@@ -141,6 +141,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
       },
     ],
     programHashes: [PROGRAM_HASHES(vectorProgramHash)],
+    zkVerifiers: [],
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -141,10 +141,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',
@@ -191,10 +191,10 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',

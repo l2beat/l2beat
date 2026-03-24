@@ -685,6 +685,7 @@ export const zklinknova: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [],
   },
   permissions: {
     linea: {

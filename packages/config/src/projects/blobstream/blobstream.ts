@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaRelayerFailureRisk,
@@ -148,6 +153,7 @@ export const blobstream: BaseProject = {
       },
     ],
     programHashes: getBlobstreamVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   milestones: [
     {
@@ -187,4 +193,17 @@ function getBlobstreamVKeys(): string[] {
     ),
   )
   return Array.from(blobstreamProgramHashes)
+}
+
+// gets all active blobstream verifiers on Ethereum
+// we ignore other chains in zk catalog to avoid unnecessary duplication
+function getVerifiers(): ChainSpecificAddress[] {
+  const gatewayContract = discovery.getContractValue<ChainSpecificAddress>(
+    'EthereumBlobstream',
+    'verifier',
+  )
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >(gatewayContract, 'activeVerifiers')
+  return activeVerifiers.map((el) => el.verifier)
 }

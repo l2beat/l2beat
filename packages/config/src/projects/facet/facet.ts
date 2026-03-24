@@ -361,6 +361,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: facetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

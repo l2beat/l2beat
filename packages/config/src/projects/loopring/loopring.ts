@@ -375,6 +375,7 @@ export const loopring: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [],
   },
   stateValidation: {
     description:

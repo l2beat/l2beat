@@ -27,6 +27,8 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
+type ProgramHashDict = Record<string, Record<string, string>[]>
+
 const discovery = new ProjectDiscovery('katana')
 const upgradeDelayString = formatSeconds(
   discovery.getContractValue<number>('Timelock', 'getMinDelay'),
@@ -360,6 +362,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       },
     ],
     programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -382,7 +385,6 @@ function getKatanaVKeys(): string[] {
   vKeys.push(opSuccinctConfig['rangeVkeyCommitment'])
   // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
   // Otherwise they are taken from AggchainFEP itself
-  type ProgramHashDict = Record<string, Record<string, string>[]>
   const useDefaultVkeys = discovery.getContractValue<boolean>(
     'AggchainFEP',
     'useDefaultVkeys',
@@ -409,4 +411,20 @@ function getKatanaVKeys(): string[] {
     arr.map((el) => el['pessimisticVKey']),
   )
   return vKeys.concat(aggchainVKeys).concat(pessimisticVKeys)
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  const routesDict = discovery.getContractValue<ProgramHashDict>(
+    'AgglayerGateway',
+    'routes',
+  )
+  for (const routes of Object.values(routesDict)) {
+    for (const route of routes) {
+      if (route['verifier']) {
+        uniqueVerifierAddresses.add(ChainSpecificAddress(route['verifier']))
+      }
+    }
+  }
+  return Array.from(uniqueVerifierAddresses)
 }

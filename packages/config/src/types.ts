@@ -799,8 +799,7 @@ export interface ProjectZkCatalogInfo {
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: EthereumAddress
-      chain: string
+      address: ChainSpecificAddress
       overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
@@ -1063,6 +1062,7 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  zkVerifiers?: ChainSpecificAddress[]
 }
 
 export interface ProjectContract {

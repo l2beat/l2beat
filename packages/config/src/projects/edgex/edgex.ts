@@ -166,6 +166,7 @@ export const edgex: ScalingProject = {
       ),
     ],
     programHashes: edgexProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

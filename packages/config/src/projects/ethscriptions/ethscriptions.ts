@@ -294,6 +294,7 @@ export const ethscriptions: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: ethscriptionsProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {
