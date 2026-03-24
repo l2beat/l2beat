@@ -3,6 +3,7 @@ import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
+import { AggregatedInteropTokensPairRepository } from './repositories/AggregatedInteropTokensPairRepository'
 import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
 import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepository'
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
@@ -64,6 +65,7 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    aggregatedInteropTokensPair: new AggregatedInteropTokensPairRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
     interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),

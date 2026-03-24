@@ -5,7 +5,7 @@ import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 
 export interface CommonDaEntry extends CommonProjectEntry {
   tab: 'public' | 'custom'
-  href: string | undefined
+  href: string
 }
 
 export function getCommonDaEntry({
@@ -14,7 +14,7 @@ export function getCommonDaEntry({
   syncWarning,
 }: {
   project: Project<'daLayer' | 'statuses'>
-  href: string | undefined
+  href: string
   syncWarning?: string
 }): CommonDaEntry {
   const statuses = {

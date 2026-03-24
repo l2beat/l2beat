@@ -188,7 +188,6 @@ export interface UpdateMonitorConfig {
 
 export interface DiscordConfig {
   readonly token: string
-  readonly publicChannelId?: string
   readonly internalChannelId: string
   readonly callsPerMinute: number
 }

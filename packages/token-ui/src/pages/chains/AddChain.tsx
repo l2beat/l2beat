@@ -49,7 +49,7 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
         )
         return
       }
-      form.reset()
+      form.reset({ chainId: 0, aliases: [] })
     },
     onError: (error: { message?: string }) => {
       toast.error(error.message || 'Failed to add chain')
@@ -61,7 +61,7 @@ export function AddChain({ defaultValues }: { defaultValues?: ChainSchema }) {
       name: values.name,
       chainId: values.chainId,
       explorerUrl: values.explorerUrl || null,
-      aliases: values.aliases || null,
+      aliases: values.aliases?.map((a) => a.value) || null,
       apis: values.apis || null,
     })
   }

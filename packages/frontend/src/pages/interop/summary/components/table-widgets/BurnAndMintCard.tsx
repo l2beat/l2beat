@@ -2,7 +2,7 @@ import { Button } from '~/components/core/Button'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
-import { interopDescriptions } from '~/pages/interop/descriptions'
+import { TRANSFER_TYPE_DISPLAY } from '~/pages/interop/utils/display'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { NoResultsInfo } from '../NoResultsInfo'
 import { TopNBadge } from '../TopNBadge'
@@ -20,10 +20,10 @@ export function BurnAndMintCard({
   const viewAllUrl = buildUrl('/interop/burn-and-mint')
 
   return (
-    <PrimaryCard className="flex flex-col border-t-teal-500 max-md:border-b max-md:border-b-divider md:border-t-4">
+    <PrimaryCard className="flex flex-col border-t-burn-and-mint max-md:border-b max-md:border-b-divider md:border-t-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="font-bold text-heading-20 decoration-teal-500 underline-offset-6 max-md:underline md:text-heading-24">
+          <h2 className="font-bold text-heading-20 decoration-burn-and-mint underline-offset-6 max-md:underline md:text-heading-24">
             Burn & Mint
           </h2>
           <TopNBadge n={5} />
@@ -40,7 +40,7 @@ export function BurnAndMintCard({
       </div>
       <BetweenChainsInfo className="mt-1" />
       <div className="mt-2.5 text-paragraph-12 text-secondary md:text-paragraph-13">
-        {interopDescriptions.burnAndMint}
+        {TRANSFER_TYPE_DISPLAY.burnAndMint.description}
       </div>
       {isLoading ? (
         <Skeleton className="mt-2 h-62 w-full rounded-sm" />

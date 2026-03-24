@@ -1,4 +1,3 @@
-import type { InteropDurationSplit } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -218,9 +217,3 @@ export type AverageDuration =
   | SingleAverageDuration
   | SplitAverageDuration
   | UnknownAverageDuration
-/** Two-level map: projectId -> bridgeType -> durationSplit config */
-
-export type DurationSplitMap = Map<
-  string,
-  Map<KnownInteropBridgeType, NonNullable<InteropDurationSplit>>
->
