@@ -46,20 +46,7 @@ const EVMTransactionSubcall = z
     data: call.input ?? call.data,
   }))
 
-type EVMTransactionSubcall = z.infer<typeof EVMTransactionSubcall>
-
-export interface EVMTransaction {
-  hash: string
-  value: bigint | undefined
-  from: string
-  to: string | undefined
-  data: string | undefined
-  type: string | undefined
-  calls: EVMTransactionSubcall[] | undefined
-  blobVersionedHashes: string[] | undefined
-  blockNumber: number | null
-}
-
+export type EVMTransaction = z.infer<typeof EVMTransaction>
 export const EVMTransaction = z
   .object({
     hash: z.string(),
@@ -88,7 +75,7 @@ export const EVMTransaction = z
       z.null(),
     ]),
   })
-  .transform((raw): EVMTransaction => ({
+  .transform((raw) => ({
     hash: raw.hash,
     value: raw.value,
     from: raw.from,
