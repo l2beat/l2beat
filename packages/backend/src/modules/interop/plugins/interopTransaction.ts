@@ -7,9 +7,6 @@ export interface TransactionCall {
   data?: string
 }
 
-export type InteropTransactionKind = 'canonical' | 'bundle' | 'unknown'
-export const INTEROP_BUNDLE_TX_TYPE = '118'
-
 export interface InteropRawTransaction extends Transaction {
   // shadow extensions
   calls?: unknown
@@ -47,7 +44,6 @@ export class InteropTransactionDTO implements Transaction {
   readonly type?: string
   readonly value?: bigint
   readonly calls?: TransactionCall[]
-  readonly kind: InteropTransactionKind
 
   constructor(tx: InteropRawTransaction) {
     this.hash = tx.hash
@@ -57,12 +53,6 @@ export class InteropTransactionDTO implements Transaction {
     this.type = tx.type
     this.value = tx.value
     this.calls = normalizeInteropTransactionCalls(tx.calls)
-    this.kind = classifyInteropTransactionKind({
-      type: tx.type,
-      data: this.data,
-      value: this.value,
-      calls: this.calls ?? [],
-    })
   }
 
   getDataCandidates(): string[] {
@@ -109,21 +99,6 @@ export function toInteropTransaction(
     return tx
   }
   return new InteropTransactionDTO(tx)
-}
-
-function classifyInteropTransactionKind(params: {
-  type?: string
-  data?: string | string[]
-  value?: bigint
-  calls: unknown[]
-}): InteropTransactionKind {
-  if (params.type === INTEROP_BUNDLE_TX_TYPE) {
-    return params.calls.length > 0 ? 'bundle' : 'unknown'
-  }
-  if (params.data !== undefined && params.value !== undefined) {
-    return 'canonical'
-  }
-  return 'unknown'
 }
 
 function normalizeInteropTransactionCalls(

@@ -427,7 +427,6 @@ describe(CatchingUpState.name, () => {
       expect(captured?.tx.value).toEqual(transaction.value)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
-      expect(captured?.tx.kind).toEqual('canonical')
     })
 
     it('maps call-only bundle transaction fields for includeTx', async () => {
@@ -491,7 +490,6 @@ describe(CatchingUpState.name, () => {
       expect(captured?.tx.value).toEqual(undefined)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(undefined)
-      expect(captured?.tx.kind).toEqual('bundle')
       expect(captured?.tx.calls).toEqual([
         {
           to: callTo,
