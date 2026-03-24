@@ -16,7 +16,10 @@ export class DerivedTxStore {
     string,
     Map<string, TxFromEventRequest>
   >()
-  private readonly pendingTxHashesByChain = new UpsertMap<string, Set<string>>()
+  private readonly hashesToCheckInHistoryByChain = new UpsertMap<
+    string,
+    Set<string>
+  >()
   private readonly entriesByChain = new UpsertMap<
     string,
     UpsertMap<string, DerivedTxEntry[]>
@@ -64,14 +67,14 @@ export class DerivedTxStore {
     return this.entriesByChain.get(chain)?.get(txHash) ?? []
   }
 
-  takePendingTxHashes(chain: string) {
-    const pending = [...(this.pendingTxHashesByChain.get(chain) ?? [])]
-    this.pendingTxHashesByChain.delete(chain)
+  getAndClearHashesForHistoryCheck(chain: string) {
+    const pending = [...(this.hashesToCheckInHistoryByChain.get(chain) ?? [])]
+    this.hashesToCheckInHistoryByChain.delete(chain)
     return pending
   }
 
-  requeuePendingTxHash(chain: string, txHash: string) {
-    this.pendingTxHashesByChain
+  queueTxForCheckInHistory(chain: string, txHash: string) {
+    this.hashesToCheckInHistoryByChain
       .getOrInsertComputed(chain, () => new Set())
       .add(txHash)
   }
@@ -105,7 +108,7 @@ export class DerivedTxStore {
       txHash,
       creatorEvent: event,
     })
-    this.requeuePendingTxHash(chain, txHash)
+    this.queueTxForCheckInHistory(chain, txHash)
   }
 
   private removeEntry(event: InteropEvent, request: TxFromEventRequest) {
@@ -121,9 +124,9 @@ export class DerivedTxStore {
     )
     if (filtered.length === 0) {
       entriesByTxHash.delete(txHash)
-      this.pendingTxHashesByChain.get(chain)?.delete(txHash)
-      if (this.pendingTxHashesByChain.get(chain)?.size === 0) {
-        this.pendingTxHashesByChain.delete(chain)
+      this.hashesToCheckInHistoryByChain.get(chain)?.delete(txHash)
+      if (this.hashesToCheckInHistoryByChain.get(chain)?.size === 0) {
+        this.hashesToCheckInHistoryByChain.delete(chain)
       }
       if (entriesByTxHash.size === 0) {
         this.entriesByChain.delete(chain)

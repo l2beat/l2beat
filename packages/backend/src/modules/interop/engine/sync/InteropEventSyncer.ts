@@ -246,7 +246,9 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async capturePendingHistoricalTxs(beforeBlock: bigint) {
-    const txHashes = this.store.derivedTxStore.takePendingTxHashes(this.chain)
+    const txHashes = this.store.derivedTxStore.getAndClearHashesForHistoryCheck(
+      this.chain,
+    )
     const interopEvents: InteropEvent[] = []
     const fulfilledCreatorEvents: InteropEvent[] = []
     let index = 0
@@ -284,7 +286,7 @@ export class InteropEventSyncer extends TimeLoop {
       for (; index < txHashes.length; index++) {
         const txHash = txHashes[index]
         if (txHash) {
-          this.store.derivedTxStore.requeuePendingTxHash(this.chain, txHash)
+          this.store.derivedTxStore.queueTxForCheckInHistory(this.chain, txHash)
         }
       }
       throw error

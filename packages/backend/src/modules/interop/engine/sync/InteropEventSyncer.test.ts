@@ -429,9 +429,9 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              takePendingTxHashes: mockFn().returns([txHash]),
+              getAndClearHashesForHistoryCheck: mockFn().returns([txHash]),
               getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              requeuePendingTxHash: mockFn().returns(undefined),
+              queueTxForCheckInHistory: mockFn().returns(undefined),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
@@ -463,9 +463,9 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              takePendingTxHashes: mockFn().returns(['0x123']),
+              getAndClearHashesForHistoryCheck: mockFn().returns(['0x123']),
               getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              requeuePendingTxHash: mockFn().returns(undefined),
+              queueTxForCheckInHistory: mockFn().returns(undefined),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
@@ -1102,8 +1102,8 @@ function mockStore() {
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
     derivedTxStore: mockObject<DerivedTxStore>({
       getCreatorEvents: mockFn().returns(undefined),
-      takePendingTxHashes: mockFn().returns([]),
-      requeuePendingTxHash: mockFn().returns(undefined),
+      getAndClearHashesForHistoryCheck: mockFn().returns([]),
+      queueTxForCheckInHistory: mockFn().returns(undefined),
     }),
   })
 }

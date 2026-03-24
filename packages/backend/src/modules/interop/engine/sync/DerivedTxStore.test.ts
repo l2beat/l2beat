@@ -42,7 +42,7 @@ describe(DerivedTxStore.name, () => {
         creatorEvent,
       },
     ])
-    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
+    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
   })
 
   it('throws when a creator event type defines multiple derived tx requests', () => {
@@ -137,10 +137,10 @@ describe(DerivedTxStore.name, () => {
 
     const store = new DerivedTxStore([plugin])
     store.onEventCreated(firstEvent)
-    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
+    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
 
     store.onEventCreated(secondEvent)
 
-    expect(store.takePendingTxHashes('base')).toEqual(['0xabc'])
+    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
   })
 })
