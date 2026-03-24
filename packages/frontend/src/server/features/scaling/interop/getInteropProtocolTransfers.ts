@@ -1,6 +1,9 @@
 import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
-import { InteropTransferClassifier } from '@l2beat/shared'
+import {
+  InteropTransferClassifier,
+  type InteropTransferPluginMatcher,
+} from '@l2beat/shared'
 import {
   getInteropTransferValue,
   InMemoryCache,
@@ -25,6 +28,34 @@ interface TransfersWithStats {
   tokensDetailsMap: TokensDetailsMap
 }
 
+type InteropPluginMatcherConfig = InteropTransferPluginMatcher
+
+type InteropProjectWithConfig = {
+  interopConfig?: {
+    plugins: InteropPluginMatcherConfig[]
+  }
+}
+
+type TransfersCache = {
+  get<T>(
+    options: {
+      key: (string | null | undefined)[]
+      ttl: number
+      staleWhileRevalidate?: number
+    },
+    fallback: () => Promise<T>,
+  ): Promise<T>
+}
+
+type GetInteropProtocolTransfersDeps = {
+  getProject: (params: {
+    id: InteropProtocolTransfersParams['id']
+    select: ['interopConfig']
+  }) => Promise<InteropProjectWithConfig | null | undefined>
+  cache: TransfersCache
+  getFilteredTransfersWithStats: typeof getFilteredTransfersWithStats
+}
+
 const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const PAGE_SIZE = 100
@@ -33,17 +64,25 @@ const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
 )
 const interopTransfersCache = new InMemoryCache({})
+const DEFAULT_DEPS: GetInteropProtocolTransfersDeps = {
+  getProject: (params) => ps.getProject(params),
+  cache: interopTransfersCache,
+  getFilteredTransfersWithStats,
+}
 
-export async function getInteropProtocolTransfers({
-  id,
-  from,
-  to,
-  type,
-  expectedTransferCount,
-  expectedVolume,
-  snapshotTimestamp,
-  cursor,
-}: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
+export async function getInteropProtocolTransfers(
+  {
+    id,
+    from,
+    to,
+    type,
+    expectedTransferCount,
+    expectedVolume,
+    snapshotTimestamp,
+    cursor,
+  }: InteropProtocolTransfersParams,
+  deps: GetInteropProtocolTransfersDeps = DEFAULT_DEPS,
+): Promise<InteropProtocolTransfersResponse> {
   if (from.length === 0 || to.length === 0) {
     return {
       items: [],
@@ -52,7 +91,7 @@ export async function getInteropProtocolTransfers({
     }
   }
 
-  const interopProject = await ps.getProject({
+  const interopProject = await deps.getProject({
     id,
     select: ['interopConfig'],
   })
@@ -80,7 +119,7 @@ export async function getInteropProtocolTransfers({
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
   const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
-  const result = await interopTransfersCache.get(
+  const result = await deps.cache.get(
     {
       key: [
         'interop-transfers',
@@ -95,7 +134,7 @@ export async function getInteropProtocolTransfers({
       staleWhileRevalidate: 60 * 15,
     },
     () =>
-      getFilteredTransfersWithStats({
+      deps.getFilteredTransfersWithStats({
         snapshotTimestamp,
         sourceChains: from,
         destinationChains: to,
@@ -269,13 +308,7 @@ function getTxHashHref(
 }
 
 function toPluginMatcherCacheKey(
-  plugins: {
-    plugin: string
-    bridgeType: string
-    chain?: string
-    abstractTokenId?: string
-    transferType?: string
-  }[],
+  plugins: InteropPluginMatcherConfig[],
 ): string {
   return plugins
     .map((plugin) => Object.values(plugin).join(':'))
