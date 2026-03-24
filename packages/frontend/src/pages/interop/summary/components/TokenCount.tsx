@@ -6,8 +6,8 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { api } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import { TokenTableDialog } from '../../components/top-items/TokenTableDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
+import { TopItemsDialog } from '../../components/top-items/TopItemsDialog'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
 export function TokenCount({
@@ -89,20 +89,24 @@ function TokenCountContent({
   setIsOpen: (isOpen: boolean) => void
 }) {
   const { selectionForApi } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.summaryTokens.useQuery(
-    selectionForApi,
-    {
+  const { data: tokensData, isLoading: isTokensLoading } =
+    api.interop.summaryTokens.useQuery(selectionForApi, {
       enabled: isOpen,
-    },
-  )
+    })
+  const { data: pairsData, isLoading: isPairsLoading } =
+    api.interop.pairs.useQuery(selectionForApi, {
+      enabled: isOpen,
+    })
 
   return (
-    <TokenTableDialog
-      data={data}
-      isLoading={isLoading}
+    <TopItemsDialog
+      tokensData={tokensData ?? []}
+      isTokensLoading={isTokensLoading}
+      pairsData={pairsData ?? []}
+      isPairsLoading={isPairsLoading}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title="All tokens by volume"
+      title="All tokens & pairs by volume"
     />
   )
 }

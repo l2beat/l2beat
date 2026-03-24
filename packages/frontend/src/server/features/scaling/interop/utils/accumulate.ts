@@ -1,5 +1,5 @@
 import type {
-  AggregatedInteropPairRecord,
+  AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
 } from '@l2beat/database'
 import { manifest } from '~/utils/Manifest'
@@ -63,7 +63,7 @@ export function accumulateTokens(
 
 export function accumulatePairs(
   current: CommonInteropData,
-  pair: AggregatedInteropPairRecord,
+  pair: AggregatedInteropTokensPairRecord,
 ) {
   return accumulate(current, {
     ...pair,

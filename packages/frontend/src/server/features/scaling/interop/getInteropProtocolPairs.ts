@@ -4,7 +4,7 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import type {
   CommonInteropData,
-  InteropProtocolTokensParams,
+  InteropPairsParams,
   PairData,
   TokenFlowData,
 } from './types'
@@ -15,8 +15,8 @@ import {
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import {
-  buildDurationSplitMap,
   getAverageDuration,
+  getDurationSplit,
 } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
@@ -25,19 +25,18 @@ type PairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
 }
 
-export async function getInteropProtocolPairs({
+export async function getInteropPairs({
   id,
   from,
   to,
   type,
-}: InteropProtocolTokensParams): Promise<PairData[]> {
+}: InteropPairsParams): Promise<PairData[]> {
   const db = getDb()
 
-  const interopProject = await ps.getProject({
-    id,
-    select: ['interopConfig'],
-  })
-  if (!interopProject) {
+  const interopProject = id
+    ? await ps.getProject({ id, select: ['interopConfig'] })
+    : undefined
+  if (id && !interopProject) {
     return []
   }
 
@@ -46,22 +45,29 @@ export async function getInteropProtocolPairs({
     return []
   }
 
-  const pairs = await db.aggregatedInteropPair.getByChainsIdAndTimestamp(
+  const pairs = await db.aggregatedInteropTokensPair.getByChainsAndTimestamp(
     snapshotTimestamp,
-    id,
     from,
     to,
-    type,
+    id,
+    { type },
   )
 
   const abstractTokenIds = unique(
     pairs
-      .filter((p) => p.tokenPair !== 'unknown')
-      .flatMap((p) => p.tokenPair.split('::')),
+      .map((p) => [p.tokenA, p.tokenB])
+      .flat()
+      .filter((t) => t !== 'unknown'),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
-  const durationSplitMap = buildDurationSplitMap([interopProject])
-  const relevantBridgeTypes = getRelevantBridgeTypes(interopProject, type)
+
+  const relevantBridgeTypes = interopProject
+    ? getRelevantBridgeTypes(interopProject, type)
+    : []
+  const durationSplit = interopProject
+    ? getDurationSplit(interopProject, relevantBridgeTypes)
+    : undefined
+
   const chainIconMap = new Map(
     getInteropChains().map((chain) => [
       chain.id,
@@ -71,12 +77,16 @@ export async function getInteropProtocolPairs({
 
   const result: Map<string, PairInteropData> = new Map()
   for (const pair of pairs) {
-    const current = result.get(pair.tokenPair) ?? {
+    const pairKey =
+      pair.tokenA === 'unknown' && pair.tokenB === 'unknown'
+        ? 'unknown'
+        : `${pair.tokenA}::${pair.tokenB}`
+    const current = result.get(pairKey) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
     }
 
-    result.set(pair.tokenPair, {
+    result.set(pairKey, {
       ...accumulatePairs(current, pair),
       flows: current.flows,
     })
@@ -102,7 +112,7 @@ export async function getInteropProtocolPairs({
 
   const placeholder = manifest.getUrl('/images/token-placeholder.png')
 
-  const pairsData: PairData[] = Array.from(result.entries())
+  return Array.from(result.entries())
     .map(([pairId, data]) => {
       if (pairId === 'unknown') {
         return {
@@ -126,12 +136,7 @@ export async function getInteropProtocolPairs({
 
       assert(tokenA && tokenB, `Tokens not found: ${pairId}`)
 
-      const avgDuration = getAverageDuration(
-        id,
-        relevantBridgeTypes,
-        data,
-        durationSplitMap,
-      )
+      const avgDuration = getAverageDuration(data, durationSplit)
 
       return {
         id: pairId,
@@ -158,6 +163,4 @@ export async function getInteropProtocolPairs({
       }
       return (b.volume ?? 0) - (a.volume ?? 0)
     })
-
-  return pairsData
 }

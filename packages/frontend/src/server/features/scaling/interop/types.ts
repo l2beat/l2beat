@@ -93,6 +93,16 @@ export const InteropProtocolTokensParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropPairsParams = v.infer<typeof InteropPairsParams>
+export const InteropPairsParams = v.object({
+  id: v
+    .string()
+    .transform((value) => ProjectId(value))
+    .optional(),
+  ...InteropSelectionInputShape,
+  type: KnownInteropBridgeType.optional(),
+})
+
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >

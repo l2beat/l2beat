@@ -1,0 +1,149 @@
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { type ReactNode, useMemo, useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from '~/components/core/Drawer'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '~/components/core/Tabs'
+import { BasicTable } from '~/components/table/BasicTable'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
+import { useTable } from '~/hooks/useTable'
+import type {
+  PairData,
+  TokenData,
+} from '~/server/features/scaling/interop/types'
+import { BetweenChainsInfo } from '../BetweenChainsInfo'
+import {
+  getTopTokensColumns,
+  type PairRow,
+  type TokenRow,
+  topPairsColumns,
+} from './columns'
+
+type ActiveTab = 'tokens' | 'pairs'
+
+interface TopItemsDialogProps {
+  tokensData: TokenData[]
+  isTokensLoading: boolean
+  pairsData: PairData[]
+  isPairsLoading: boolean
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  title: ReactNode
+  showNetMintedValueColumn?: boolean
+}
+
+export function TopItemsDialog({
+  tokensData,
+  isTokensLoading,
+  pairsData,
+  isPairsLoading,
+  isOpen,
+  setIsOpen,
+  title,
+  showNetMintedValueColumn,
+}: TopItemsDialogProps) {
+  const breakpoint = useBreakpoint()
+  const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
+
+  const tokensColumns = useMemo(
+    () => getTopTokensColumns(showNetMintedValueColumn),
+    [showNetMintedValueColumn],
+  )
+
+  const tokensTable = useTable<TokenRow>({
+    data: tokensData,
+    columns: tokensColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualFiltering: true,
+    initialState: {
+      columnPinning: { left: ['icon'] },
+      sorting: [{ id: 'volume', desc: true }],
+    },
+  })
+
+  const pairsTable = useTable<PairRow>({
+    data: pairsData,
+    columns: topPairsColumns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualFiltering: true,
+    initialState: {
+      sorting: [{ id: 'volume', desc: true }],
+    },
+  })
+
+  const content = (
+    <Tabs
+      name="top-items"
+      value={activeTab}
+      onValueChange={(v) => setActiveTab(v as ActiveTab)}
+      variant="highlighted"
+    >
+      <TabsList>
+        <TabsTrigger value="tokens">Tokens</TabsTrigger>
+        <TabsTrigger value="pairs">Pairs</TabsTrigger>
+      </TabsList>
+      <TabsContent value="tokens">
+        <BasicTable
+          skeletonCount={6}
+          table={tokensTable}
+          tableWrapperClassName="pb-0"
+          isLoading={isTokensLoading}
+        />
+      </TabsContent>
+      <TabsContent value="pairs">
+        <BasicTable
+          skeletonCount={6}
+          table={pairsTable}
+          tableWrapperClassName="pb-0"
+          isLoading={isPairsLoading}
+        />
+      </TabsContent>
+    </Tabs>
+  )
+
+  if (breakpoint === 'xs' || breakpoint === 'sm') {
+    return (
+      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+        <DrawerContent>
+          <DrawerHeader className="mb-2">
+            <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
+            <BetweenChainsInfo />
+          </DrawerHeader>
+          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
+            {content}
+          </div>
+        </DrawerContent>
+      </Drawer>
+    )
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="max-h-[450px] w-[960px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
+          <DialogTitle>{title}</DialogTitle>
+          <BetweenChainsInfo className="mt-1" />
+        </DialogHeader>
+        <div className="overflow-x-auto">
+          <div className="mx-6">{content}</div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
