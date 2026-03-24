@@ -13,9 +13,7 @@ describe(DiscordClient.name, () => {
     it('sends to the configured webhook', async () => {
       const httpClient = mockObject<HttpClient>({
         fetchRaw: async (url) => {
-          expect(url).toEqual(
-            `${config.webhookUrl}?wait=true`,
-          )
+          expect(url).toEqual(`${config.webhookUrl}?wait=true`)
           return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })

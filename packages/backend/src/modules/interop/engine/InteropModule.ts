@@ -46,7 +46,11 @@ export function createInteropModule({
 
   let notificationClient: InteropNotifier | undefined
 
-  if (config.interop.notifications && interopWebhookUrl && providers.clients.discord) {
+  if (
+    config.interop.notifications &&
+    interopWebhookUrl &&
+    providers.clients.discord
+  ) {
     notificationClient = new InteropNotifier(
       providers.clients.discord,
       logger,

@@ -272,7 +272,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           assertUnreachable(layer.type)
       }
     }
-
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {

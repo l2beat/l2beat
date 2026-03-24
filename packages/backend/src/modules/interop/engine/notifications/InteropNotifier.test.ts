@@ -14,8 +14,7 @@ describe(InteropNotifier.name, () => {
     await notifier._TEST_ONLY_waitTillEmpty()
 
     expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessage.calls[0]
-      ?.args[0] as string
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
 
     expect(message.includes('**ccip** config change')).toEqual(true)
     expect(message.includes('```diff')).toEqual(true)

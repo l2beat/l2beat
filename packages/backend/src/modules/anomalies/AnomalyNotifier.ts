@@ -244,7 +244,10 @@ export class AnomalyNotifier {
 
   async sendDiscordNotification(message: string): Promise<string | undefined> {
     try {
-      return await this.discordClient.sendMessage(message, this.discordWebhookUrl)
+      return await this.discordClient.sendMessage(
+        message,
+        this.discordWebhookUrl,
+      )
     } catch (error) {
       this.logger.error('Failed to send Discord notification', {
         error,
