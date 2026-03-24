@@ -1,10 +1,15 @@
 import type {
   Project,
+  ProjectContracts,
   ProjectZkCatalogInfo,
   TrustedSetup,
   ZkCatalogTag,
 } from '@l2beat/config'
-import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  notUndefined,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -39,19 +44,24 @@ export type TrustedSetupsByProofSystem = Record<
   }
 >
 
+interface TargetProject {
+  id: ProjectId
+  contracts: ProjectContracts | undefined
+}
+
 export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
   allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
-  projectId?: ProjectId, // target project id for which we want to get verifiers, used only in this project
+  targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
     project.zkCatalogInfo.trustedSetups,
     (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
   )
   return Object.fromEntries(
-    Object.entries(grouped).map(([key, trustedSetups]) => {
+    Object.entries(grouped).flatMap(([key, trustedSetups]) => {
       const verifiersWithUsedIn = getVerifiersWithProcessedUsedIn(
         project,
         key,
@@ -59,12 +69,12 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
         allProjects,
       )
 
-      // When projectId is provided, filter verifiers to only those used by this project
-      const filteredVerifiers = projectId
+      const filteredVerifiers = targetProject
         ? verifiersWithUsedIn.filter((v) =>
-            v.usedIn.some((u) => u.id === projectId),
+            v.usedIn.some((u) => u.id === targetProject.id),
           )
         : verifiersWithUsedIn
+      if (targetProject && filteredVerifiers.length === 0) return []
 
       const verifiersByStatus = groupBy(
         filteredVerifiers.map((v) => v.verifier),
@@ -76,47 +86,68 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
       )
 
       return [
-        key,
-        {
-          trustedSetups,
-          verifiers: {
-            successful: getVerifiersWithAttesters(
-              verifiersByStatus,
-              'successful',
-            ),
-            unsuccessful: getVerifiersWithAttesters(
-              verifiersByStatus,
-              'unsuccessful',
-            ),
-            notVerified: getVerifiersWithAttesters(
-              verifiersByStatus,
-              'notVerified',
-            ),
+        [
+          key,
+          {
+            onchainVerifiers: targetProject
+              ? uniqBy(
+                  filteredVerifiers.flatMap((v) =>
+                    v.deployments
+                      .filter((d) =>
+                        d.usedIn.some((u) => u.id === targetProject.id),
+                      )
+                      .map((d) =>
+                        getOnchainVerifier(
+                          d.deployment.chain,
+                          d.deployment.address,
+                          targetProject.contracts,
+                        ),
+                      )
+                      .filter(notUndefined),
+                  ),
+                  (v) => v.href,
+                )
+              : undefined,
+            trustedSetups,
+            verifiers: {
+              successful: getVerifiersWithAttesters(
+                verifiersByStatus,
+                'successful',
+              ),
+              unsuccessful: getVerifiersWithAttesters(
+                verifiersByStatus,
+                'unsuccessful',
+              ),
+              notVerified: getVerifiersWithAttesters(
+                verifiersByStatus,
+                'notVerified',
+              ),
+            },
+            projectsUsedIn:
+              uniqAndSortProjectsUsedIn(
+                filteredVerifiers.flatMap((v) => v.usedIn),
+                allProjects,
+                tvs,
+              ) ?? [],
+            projectsUsedInByStatus: {
+              successful: uniqAndSortProjectsUsedIn(
+                usedInByStatus.successful?.flatMap((v) => v.usedIn),
+                allProjects,
+                tvs,
+              ),
+              unsuccessful: uniqAndSortProjectsUsedIn(
+                usedInByStatus.unsuccessful?.flatMap((v) => v.usedIn),
+                allProjects,
+                tvs,
+              ),
+              notVerified: uniqAndSortProjectsUsedIn(
+                usedInByStatus.notVerified?.flatMap((v) => v.usedIn),
+                allProjects,
+                tvs,
+              ),
+            },
           },
-          projectsUsedIn:
-            uniqAndSortProjectsUsedIn(
-              filteredVerifiers.flatMap((v) => v.usedIn),
-              allProjects,
-              tvs,
-            ) ?? [],
-          projectsUsedInByStatus: {
-            successful: uniqAndSortProjectsUsedIn(
-              usedInByStatus.successful?.flatMap((v) => v.usedIn),
-              allProjects,
-              tvs,
-            ),
-            unsuccessful: uniqAndSortProjectsUsedIn(
-              usedInByStatus.unsuccessful?.flatMap((v) => v.usedIn),
-              allProjects,
-              tvs,
-            ),
-            notVerified: uniqAndSortProjectsUsedIn(
-              usedInByStatus.notVerified?.flatMap((v) => v.usedIn),
-              allProjects,
-              tvs,
-            ),
-          },
-        },
+        ] as const,
       ]
     }),
   )
@@ -142,14 +173,41 @@ function getVerifiersWithProcessedUsedIn(
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
-    .map((v) => ({
-      verifier: v,
-      usedIn: v.knownDeployments.flatMap((d) =>
-        d.overrideUsedIn
-          ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(project.id, d.chain, d.address),
-      ),
-    }))
+    .map((verifier) => {
+      const deployments = verifier.knownDeployments.map((deployment) => ({
+        deployment,
+        usedIn: deployment.overrideUsedIn
+          ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
+          : contractUtils.getUsedIn(
+              project.id,
+              deployment.chain,
+              deployment.address,
+            ),
+      }))
+
+      return {
+        verifier,
+        deployments,
+        usedIn: deployments.flatMap((d) => d.usedIn),
+      }
+    })
+}
+
+function getOnchainVerifier(
+  chain: string,
+  address: string,
+  contracts: ProjectContracts | undefined,
+) {
+  const contract = contracts?.addresses[chain]?.find(
+    (contract) => ChainSpecificAddress.address(contract.address) === address,
+  )
+
+  if (!contract?.url) return undefined
+
+  return {
+    name: contract.name,
+    href: contract.url,
+  }
 }
 
 export function getVerifiersWithAttesters(

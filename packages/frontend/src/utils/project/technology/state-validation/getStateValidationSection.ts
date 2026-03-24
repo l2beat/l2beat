@@ -31,10 +31,8 @@ export function getStateValidationSection(
       !!project.statuses.reviewStatus ||
       !!project.scalingTechnology.stateValidation.isUnderReview,
     proverInfo: getProverInfo(
-      project.id,
-      project.scalingInfo.proofSystem?.zkCatalogId,
+      project,
       zkCatalogProjects,
-      project.contracts,
       contractUtils,
       tvs,
       allProjects,
