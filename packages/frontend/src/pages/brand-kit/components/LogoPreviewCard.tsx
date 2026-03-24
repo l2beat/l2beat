@@ -15,10 +15,8 @@ export function LogoPreviewCard({
     <div className="flex flex-col gap-3">
       <div
         className={cn(
-          'flex items-center justify-center rounded-lg p-8',
-          background === 'dark'
-            ? 'border border-gray-300 bg-black'
-            : 'border border-gray-300 bg-white',
+          'flex items-center justify-center rounded-lg border border-divider p-8',
+          background === 'dark' ? 'bg-black' : 'bg-white',
         )}
       >
         {children}
