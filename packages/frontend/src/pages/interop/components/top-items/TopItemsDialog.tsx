@@ -55,6 +55,7 @@ export function TopItemsDialog({
   const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
 
+  const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
 
   const { data: tokensData, isLoading: isTokensLoading } =
@@ -104,7 +105,12 @@ export function TopItemsDialog({
     >
       <TabsList>
         <TabsTrigger value="tokens">Tokens</TabsTrigger>
-        <TabsTrigger value="pairs">Pairs</TabsTrigger>
+        <TabsTrigger
+          value="pairs"
+          onMouseEnter={() => utils.interop.pairs.prefetch(queryInput)}
+        >
+          Pairs
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="tokens">
         <BasicTable
