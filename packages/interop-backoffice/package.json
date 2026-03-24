@@ -18,8 +18,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",
-    "build:dependencies": "cd ../.. && pnpm build:dependencies:interop-backoffice",
-    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:interop-backoffice",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -37,7 +35,6 @@
     "koa": "^2.14.1",
     "@types/koa": "^2.13.5",
     "@l2beat/typescript-config": "workspace:*",
-    "@trpc/client": "^11.0.0-rc.446",
     "@types/express": "^5.0.0",
     "@types/mocha": "^10.0.6",
     "dotenv": "^17.2.3",
