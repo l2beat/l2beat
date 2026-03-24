@@ -390,7 +390,6 @@ export const dydx: ScalingProject = {
           )}.`,
       },
     ],
-    zkVerifiers: [],
   },
   permissions: {
     ethereum: {

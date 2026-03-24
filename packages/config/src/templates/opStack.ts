@@ -2429,3 +2429,15 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     badge: DABadge,
   }
 }
+
+// returns addresses of all active verifiers on SP1VerifierGateway in a given discovery
+export function getSP1Verifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGateway', 'activeVerifiers')
+  console.log(discovery.projectName) // todo: remove
+  console.log(activeVerifiers.map((el) => el.verifier)) // todo: remove
+  return activeVerifiers.map((el) => el.verifier)
+}

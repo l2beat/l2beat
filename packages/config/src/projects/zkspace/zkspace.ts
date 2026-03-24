@@ -206,7 +206,6 @@ export const zkspace: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
-    zkVerifiers: [],
   },
   permissions: {
     ethereum: {

@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -685,7 +686,12 @@ export const zklinknova: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    zkVerifiers: [],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'LineazkLink',
+        'getVerifier',
+      ),
+    ],
   },
   permissions: {
     linea: {

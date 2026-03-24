@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
-  ChainSpecificAddress,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
 } from '@l2beat/shared-pure'
@@ -772,16 +772,11 @@ function getUsageMap(projects: BaseProject[]) {
   for (const project of projects) {
     if (!(project.isScaling || project.daBridge) || !project.contracts) continue
 
-    for (const [chain, contracts] of Object.entries(
-      project.contracts.addresses,
-    )) {
+    for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {
-        addUsage(
-          ChainSpecificAddress.fromLong(chain, contract.address),
-          project.id,
-        )
+        addUsage(contract.address, project.id)
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(ChainSpecificAddress.fromLong(chain, impl), project.id)
+          addUsage(impl, project.id)
         }
       }
     }

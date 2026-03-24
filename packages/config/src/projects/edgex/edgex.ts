@@ -166,7 +166,8 @@ export const edgex: ScalingProject = {
       ),
     ],
     programHashes: edgexProgramHashes.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: [],
+    // stone verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

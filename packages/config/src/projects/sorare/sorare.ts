@@ -158,7 +158,8 @@ export const sorare: ScalingProject = {
       ),
     ],
     programHashes: sorareProgramHashes.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: [],
+    // stone verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

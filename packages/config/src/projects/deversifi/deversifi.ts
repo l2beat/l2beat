@@ -176,7 +176,6 @@ export const deversifi: ScalingProject = {
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
-    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

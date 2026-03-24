@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import {
   explorerReferences,
   safeGetImplementation,
@@ -371,7 +372,7 @@ export const zircuit: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: [],
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {
