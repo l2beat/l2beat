@@ -1,3 +1,4 @@
+import { cva, type VariantProps } from 'class-variance-authority'
 import {
   Tooltip,
   TooltipContent,
@@ -13,38 +14,91 @@ type InteropTopItemsCellProps = {
   setIsOpen: (isOpen: boolean) => void
 }
 
+const buttonVariants = cva('group/dialog-trigger', {
+  variants: {
+    type: {
+      default: 'flex items-center gap-2',
+      cell: 'grid grid-cols-[46px_30px] items-center gap-1',
+    },
+  },
+})
+
+const remainingCountVariants = cva(
+  'font-bold group-hover/dialog-trigger:underline',
+  {
+    variants: {
+      type: {
+        default: 'text-label-value-13',
+        cell: 'text-label-value-15',
+      },
+    },
+  },
+)
+
+const iconVariants = cva('rounded-full bg-white', {
+  variants: {
+    type: {
+      default: 'size-7 min-w-7 border border-divider shadow-sm',
+      cell: 'relative size-5 min-w-5 shadow',
+    },
+  },
+})
+
 export function InteropTopItems({
   topItems,
   setIsOpen,
+  className,
+  type = 'default',
   ...rest
-}: InteropTopItemsCellProps & React.ComponentProps<'button'>) {
+}: InteropTopItemsCellProps &
+  Omit<React.ComponentProps<'button'>, 'type'> &
+  VariantProps<typeof buttonVariants>) {
   return (
     <button
-      className="group/dialog-trigger grid grid-cols-[46px_30px] items-center gap-1"
+      type="button"
+      className={buttonVariants({ type, className })}
       onClick={() => setIsOpen(true)}
       {...rest}
     >
       <div className="-space-x-1.5 flex items-center">
         {topItems.items.map((item, i) => (
-          <ItemIconWithTooltip key={item.id} item={item} index={i} />
+          <ItemIconWithTooltip
+            key={item.id}
+            item={item}
+            index={i}
+            type={type}
+          />
         ))}
       </div>
       {topItems.remainingCount > 0 && (
-        <span className="font-bold text-label-value-13 group-hover/dialog-trigger:underline">
-          +{topItems.remainingCount}
-        </span>
+        <RemainingCount topItems={topItems} type={type} />
       )}
     </button>
+  )
+}
+
+function RemainingCount({
+  topItems,
+  type,
+}: {
+  topItems: TopItems<TopItem>
+} & VariantProps<typeof remainingCountVariants>) {
+  return (
+    <span className={remainingCountVariants({ type })}>
+      +{topItems.remainingCount}
+      {type === 'default' ? ' more' : ''}
+    </span>
   )
 }
 
 function ItemIconWithTooltip({
   item,
   index,
+  type,
 }: {
   item: TopItem
   index: number
-}) {
+} & VariantProps<typeof iconVariants>) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -52,7 +106,7 @@ function ItemIconWithTooltip({
           key={item.id}
           src={item.iconUrl}
           alt={item.displayName}
-          className="relative size-5 min-w-5 rounded-full bg-white shadow"
+          className={iconVariants({ type })}
           style={{ zIndex: 5 - index }}
         />
       </TooltipTrigger>

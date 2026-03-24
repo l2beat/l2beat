@@ -64,6 +64,9 @@ export const loopringprover: BaseProject = {
     verifierHashes: [
       {
         hash: '0x4c18cccb70be9bd6c438cc6d558d3451114af2fcd2e45a4286afecf2f327b80d',
+        name: 'Loopring verifier block size 16',
+        sourceLink:
+          'https://github.com/Loopring/protocols/tree/master/packages/loopring_v3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
@@ -79,6 +82,9 @@ export const loopringprover: BaseProject = {
       },
       {
         hash: '0xf29dd53bbc041a71ed0ce5812b2795151a93d233f0b3d73205eaf1e3b5ebbb18',
+        name: 'Loopring verifier block size 32',
+        sourceLink:
+          'https://github.com/Loopring/protocols/tree/master/packages/loopring_v3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
@@ -94,6 +100,9 @@ export const loopringprover: BaseProject = {
       },
       {
         hash: '0xc1b762cee5cb2d339e88e5fc7ef9b3ab62887b150929f6e3599fef289838bae0',
+        name: 'Loopring verifier block size 64',
+        sourceLink:
+          'https://github.com/Loopring/protocols/tree/master/packages/loopring_v3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
@@ -109,6 +118,9 @@ export const loopringprover: BaseProject = {
       },
       {
         hash: '0x998a7b6031386f1ce64bbbfc9375b341ee4385289c1d4f121a62f1e3c73d3efb',
+        name: 'Loopring verifier block size 128',
+        sourceLink:
+          'https://github.com/Loopring/protocols/tree/master/packages/loopring_v3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {
@@ -124,6 +136,9 @@ export const loopringprover: BaseProject = {
       },
       {
         hash: '0x765eff9d78d1abfe496040f999714d58df54c49753db801633762dd48b74f9ae',
+        name: 'Loopring verifier block size 256',
+        sourceLink:
+          'https://github.com/Loopring/protocols/tree/master/packages/loopring_v3',
         proofSystem: ZK_CATALOG_TAGS.Groth16.EthSnarks,
         knownDeployments: [
           {

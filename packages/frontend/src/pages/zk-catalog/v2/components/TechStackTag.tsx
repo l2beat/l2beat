@@ -15,7 +15,7 @@ export function TechStackTag({
 }: {
   tag: ZkCatalogTag
   withoutTooltip?: boolean
-  displayType?: 'name' | 'type'
+  displayType?: 'name' | 'type' | 'typeAndName'
   className?: string
 }) {
   return (
@@ -28,7 +28,9 @@ export function TechStackTag({
             className,
           )}
         >
-          {tag[displayType]}
+          {displayType === 'typeAndName'
+            ? `${tag.type}: ${tag.name}`
+            : tag[displayType]}
         </div>
       </TooltipTrigger>
       <TooltipContent>

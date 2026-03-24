@@ -10,7 +10,7 @@ import {
   processIdLog,
   processLog,
 } from './hyperlane'
-import { findParsedAround } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,

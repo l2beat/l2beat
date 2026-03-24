@@ -13,11 +13,8 @@ import {
   parseDispatch,
   parseDispatchId,
 } from './hyperlane'
-import {
-  findParsedAround,
-  parseSentTransferRemote,
-  sentTransferRemoteLog,
-} from './hyperlane-hwr'
+import { parseSentTransferRemote, sentTransferRemoteLog } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createInteropEventType,
   type DataRequest,

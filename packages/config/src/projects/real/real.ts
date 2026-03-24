@@ -85,7 +85,7 @@ export const real: ScalingProject = orbitStackL2({
         'eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6',
       ),
       tokens: ['stETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       description:
         'This contract escrows the stETH that was deposited to mint reETH.',
     }),

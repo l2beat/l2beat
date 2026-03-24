@@ -10,6 +10,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -497,6 +498,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         sinceTimestamp: UnixTime(1657137600),
         untilTimestamp: UnixTime(1768848455),
         tokens: ['WBTC'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for WBTC. The bridge is halted and WBTC migrated to external OFT bridging.',
       }),
@@ -511,6 +513,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_USDT_ADDRESS),
         sinceTimestamp: UnixTime(1657137615),
         tokens: ['USDT'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
       }),
@@ -518,6 +521,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_WSTETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['wstETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for wstETH.' +
           ' ' +
@@ -527,24 +531,28 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_RETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['rETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_UNI_ADDRESS),
         tokens: ['UNI'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_FRAX_ADDRESS),
         tokens: ['FRAX.legacy'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FRAX'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for FRAX (prev. FXS).' +
           ' ' +
@@ -553,6 +561,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
         tokens: ['sfrxETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for sfrxETH.' +
           ' ' +
@@ -561,6 +570,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LUSD_ADDRESS),
         tokens: ['LUSD'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
       }),
@@ -578,6 +588,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
       }),
