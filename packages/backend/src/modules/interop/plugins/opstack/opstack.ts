@@ -16,10 +16,7 @@ import {
   type LogToCapture,
   type MatchResult,
   Result,
-  type TxToCapture,
-  txFromEvent,
 } from '../types'
-import { derivePortalDeposit } from './derivePortalDeposit'
 
 // == Event signatures ==
 
@@ -243,12 +240,13 @@ export class OpStackPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     return [
-      // L1: TransactionDeposited from OptimismPortal
-      {
-        type: 'event',
-        signature: transactionDepositedLog,
-        addresses: OPSTACK_NETWORKS.map((n) => n.optimismPortal),
-      },
+      // // Example event to trigger tx from event functionality
+      // // L1: TransactionDeposited from OptimismPortal
+      // {
+      //   type: 'event',
+      //   signature: transactionDepositedLog,
+      //   addresses: OPSTACK_NETWORKS.map((n) => n.optimismPortal),
+      // },
       // L1: WithdrawalFinalized from OptimismPortal
       {
         type: 'event',
@@ -279,31 +277,33 @@ export class OpStackPlugin implements InteropPluginResyncable {
         signature: failedRelayedMessageLog,
         addresses: OPSTACK_NETWORKS.map((n) => n.l2CrossDomainMessenger),
       },
-      txFromEvent({
-        creatorEvent: TransactionDeposited,
-        txHashArg: 'l2TxHash',
-        chainArg: 'chain',
-      }),
+      // // Example of txFromEvent
+      // txFromEvent({
+      //   creatorEvent: TransactionDeposited,
+      //   txHashArg: 'l2TxHash',
+      //   chainArg: 'chain',
+      // }),
     ]
   }
 
-  captureTx(input: TxToCapture, creatorEvents?: InteropEvent[]) {
-    for (const creatorEvent of creatorEvents ?? []) {
-      if (!TransactionDeposited.checkType(creatorEvent)) {
-        continue
-      }
+  // // Example parsing of tx from event
+  // captureTx(input: TxToCapture, creatorEvents?: InteropEvent[]) {
+  //   for (const creatorEvent of creatorEvents ?? []) {
+  //     if (!TransactionDeposited.checkType(creatorEvent)) {
+  //       continue
+  //     }
 
-      return [
-        PortalDepositFinalized.createTx(input, {
-          chain: creatorEvent.args.chain,
-          from: creatorEvent.args.from,
-          ...(creatorEvent.args.to ? { to: creatorEvent.args.to } : {}),
-          value: creatorEvent.args.value,
-          sourceHash: creatorEvent.args.sourceHash,
-        }),
-      ]
-    }
-  }
+  //     return [
+  //       PortalDepositFinalized.createTx(input, {
+  //         chain: creatorEvent.args.chain,
+  //         from: creatorEvent.args.from,
+  //         ...(creatorEvent.args.to ? { to: creatorEvent.args.to } : {}),
+  //         value: creatorEvent.args.value,
+  //         sourceHash: creatorEvent.args.sourceHash,
+  //       }),
+  //     ]
+  //   }
+  // }
 
   capture(input: LogToCapture) {
     // get L1 side events
@@ -316,39 +316,40 @@ export class OpStackPlugin implements InteropPluginResyncable {
       )
       if (!network) return
 
-      const transactionDeposited = parseTransactionDeposited(input.log, [
-        ChainSpecificAddress.address(network.optimismPortal),
-      ])
-      if (transactionDeposited) {
-        const blockHash = input.log.blockHash
-        const logIndex = input.log.logIndex
-        if (!blockHash || logIndex === null) {
-          return
-        }
+      // // Example event to trigger tx from event functionality
+      // const transactionDeposited = parseTransactionDeposited(input.log, [
+      //   ChainSpecificAddress.address(network.optimismPortal),
+      // ])
+      // if (transactionDeposited) {
+      //   const blockHash = input.log.blockHash
+      //   const logIndex = input.log.logIndex
+      //   if (!blockHash || logIndex === null) {
+      //     return
+      //   }
 
-        const derivedDeposit = derivePortalDeposit({
-          ...transactionDeposited,
-          blockHash,
-          logIndex,
-        })
-        if (!derivedDeposit) return
+      //   const derivedDeposit = derivePortalDeposit({
+      //     ...transactionDeposited,
+      //     blockHash,
+      //     logIndex,
+      //   })
+      //   if (!derivedDeposit) return
 
-        return [
-          TransactionDeposited.create(input, {
-            chain: network.chain,
-            from: Address32.from(transactionDeposited.from),
-            ...(derivedDeposit.isCreation
-              ? {}
-              : { to: Address32.from(transactionDeposited.to) }),
-            sourceHash: derivedDeposit.sourceHash,
-            l2TxHash: derivedDeposit.l2TxHash,
-            mint: derivedDeposit.mint,
-            value: derivedDeposit.value,
-            gasLimit: derivedDeposit.gasLimit,
-            data: derivedDeposit.data,
-          }),
-        ]
-      }
+      //   return [
+      //     TransactionDeposited.create(input, {
+      //       chain: network.chain,
+      //       from: Address32.from(transactionDeposited.from),
+      //       ...(derivedDeposit.isCreation
+      //         ? {}
+      //         : { to: Address32.from(transactionDeposited.to) }),
+      //       sourceHash: derivedDeposit.sourceHash,
+      //       l2TxHash: derivedDeposit.l2TxHash,
+      //       mint: derivedDeposit.mint,
+      //       value: derivedDeposit.value,
+      //       gasLimit: derivedDeposit.gasLimit,
+      //       data: derivedDeposit.data,
+      //     }),
+      //   ]
+      // }
 
       // check if this is an L2->*L1* message
       const withdrawalFinalized = parseWithdrawalFinalized(input.log, [
