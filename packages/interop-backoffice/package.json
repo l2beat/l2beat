@@ -19,6 +19,8 @@
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build",
     "format:fix": "biome format --write .",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:interop-backoffice",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:interop-backoffice",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
