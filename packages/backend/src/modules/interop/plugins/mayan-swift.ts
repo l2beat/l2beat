@@ -113,19 +113,22 @@ function findOrderData(
   input: LogToCapture,
   wormholeNetworks: WormholeNetwork[],
 ) {
-  const txData =
-    typeof input.tx.data === 'string'
-      ? (input.tx.data as `0x${string}`)
-      : undefined
-
-  return (
-    (input.log.logIndex !== null
+  const fromTxLogs =
+    input.log.logIndex !== null
       ? findParsedAround(input.txLogs, input.log.logIndex, (log) =>
           logToProtocolData(log, wormholeNetworks),
         )
-      : undefined) ??
-    (txData ? decodeMayanData(txData, wormholeNetworks, []) : undefined)
-  )
+      : undefined
+  if (fromTxLogs) return fromTxLogs
+
+  for (const txData of input.tx.getDataCandidates()) {
+    const decoded = decodeMayanData(
+      txData as `0x${string}`,
+      wormholeNetworks,
+      [],
+    )
+    if (decoded) return decoded
+  }
 }
 
 function captureOrderFulfilled(
@@ -141,12 +144,12 @@ function captureOrderFulfilled(
     orderFulfilled.key,
     orderFulfilled.sequence,
   )
-  const txData =
-    typeof input.tx.data === 'string'
-      ? (input.tx.data as `0x${string}`)
-      : undefined
-  const fulfilledSrcChainId =
-    extractMayanSwiftFulfillSourceChainFromTxData(txData)
+  const fulfilledSrcChainId = input.tx
+    .getDataCandidates()
+    .map((txData) =>
+      extractMayanSwiftFulfillSourceChainFromTxData(txData as `0x${string}`),
+    )
+    .find((srcChainId): srcChainId is number => srcChainId !== undefined)
   const $srcChain =
     settlementSent?.args.$dstChain ??
     (fulfilledSrcChainId === undefined || wormholeNetworks.length === 0

@@ -427,6 +427,78 @@ describe(CatchingUpState.name, () => {
       expect(captured?.tx.value).toEqual(transaction.value)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
+      expect(captured?.tx.kind).toEqual('canonical')
+    })
+
+    it('maps call-only bundle transaction fields for includeTx', async () => {
+      const baseTopic0 = '0xaaa'
+      const txHash = `0x${'23'.repeat(32)}`
+
+      const captureLog = mockFn().returns(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const logQuery = new LogQuery()
+      addAddress(logQuery, EthereumAddress.random())
+      logQuery.topic0s.add(baseTopic0)
+      logQuery.topic0sWithTx.add(baseTopic0)
+
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+      ])
+
+      const callTo = EthereumAddress.random()
+      const transaction = makeRpcTransaction({
+        hash: txHash,
+        type: 118n,
+        to: null,
+        input: undefined,
+        value: undefined,
+        calls: [
+          {
+            to: callTo,
+            value: 321n,
+            input: '0xabc',
+          },
+        ],
+      })
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        getTransactionByHash,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
+      const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.data).toEqual(undefined)
+      expect(captured?.tx.value).toEqual(undefined)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.to).toEqual(undefined)
+      expect(captured?.tx.kind).toEqual('bundle')
+      expect(captured?.tx.calls).toEqual([
+        {
+          to: callTo,
+          value: 321n,
+          data: '0xabc',
+        },
+      ])
     })
 
     it('retries with smaller ranges after log response size exceeded', async () => {

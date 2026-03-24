@@ -7,7 +7,6 @@ import {
   type ChainSpecificAddress,
   EthereumAddress,
   type KnownInteropBridgeType,
-  type Transaction,
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
@@ -21,6 +20,7 @@ import {
   parseAbi,
 } from 'viem'
 import type { TokenMap } from '../engine/match/TokenMap'
+import type { InteropTransaction } from './interopTransaction'
 
 export interface InteropEvent<T = unknown> {
   plugin: string
@@ -170,14 +170,14 @@ export function createInteropEventType<T>(
 export interface LogToCapture {
   log: Log
   txLogs: Log[]
-  tx: Transaction
+  tx: InteropTransaction
   block: Block
   chain: string
 }
 
 export interface TxToCapture {
   txLogs: Log[]
-  tx: Transaction
+  tx: InteropTransaction
   block: Block
   chain: string
 }

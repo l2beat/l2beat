@@ -209,13 +209,17 @@ export function findNativeAmountInTx(
   const txValue = input.tx.value
   if (txValue !== undefined && txValue > 0n) return txValue
 
-  const nestedValue = findExecuteCallValue(
-    typeof input.tx.data === 'string'
-      ? (input.tx.data as `0x${string}`)
-      : undefined,
-    targets,
-  )
-  if (nestedValue !== undefined && nestedValue > 0n) return nestedValue
+  const directCallValue = input.tx.getTargetCallValue(targets)
+  if (directCallValue !== undefined && directCallValue > 0n) {
+    return directCallValue
+  }
+
+  for (const txData of input.tx.getDataCandidates()) {
+    const nestedValue = findExecuteCallValue(txData as `0x${string}`, targets)
+    if (nestedValue !== undefined && nestedValue > 0n) {
+      return nestedValue
+    }
+  }
 
   const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
   if (!wrappedNative) return undefined

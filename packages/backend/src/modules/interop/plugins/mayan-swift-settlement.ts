@@ -98,9 +98,13 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
     if (orderUnlocked) {
       // Extract emitter chain from the Wormhole VAA in transaction input
       // This tells us which chain the settlement message came from
-      const txData =
-        typeof input.tx.data === 'string' ? input.tx.data : undefined
-      const emitterChainId = extractWormholeEmitterChainFromTxData(txData)
+      const emitterChainId = input.tx
+        .getDataCandidates()
+        .map((txData) => extractWormholeEmitterChainFromTxData(txData))
+        .find(
+          (maybeEmitterChainId): maybeEmitterChainId is number =>
+            maybeEmitterChainId !== undefined,
+        )
       const $srcChain = emitterChainId
         ? findChain(wormholeNetworks, (x) => x.wormholeChainId, emitterChainId)
         : undefined

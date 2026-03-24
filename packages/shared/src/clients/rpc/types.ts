@@ -21,35 +21,88 @@ export const Quantity = {
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
 
-export type EVMTransaction = z.infer<typeof EVMTransaction>
-export const EVMTransaction = z
+const EVMTransactionSubcall = z
   .object({
-    hash: z.string(),
-    value: z.string().transform(BigInt),
-    from: z.string(),
-    /** Address of the receiver, null when it's a contract creation transaction. */
     to: z
       .union([z.string(), z.null()])
-      .transform((to) => (to === null ? undefined : to))
+      .transform((to) => to ?? undefined)
       .optional(),
-    input: z.string(),
-    type: Quantity.decode.transform((n) => String(n)).optional(),
-    blobVersionedHashes: z.array(z.string()).optional(),
-    blockNumber: z.union([
-      Quantity.decode.transform((n) => Number(n)),
-      z.null(),
-    ]),
+    value: z
+      .union([z.string().transform(BigInt), z.null()])
+      .transform((value) => value ?? undefined)
+      .optional(),
+    input: z
+      .union([z.string(), z.null()])
+      .transform((input) => input ?? undefined)
+      .optional(),
+    data: z
+      .union([z.string(), z.null()])
+      .transform((data) => data ?? undefined)
+      .optional(),
   })
-  .transform((tx) => ({
-    hash: tx.hash,
-    value: tx.value,
-    from: tx.from,
-    to: tx.to,
-    data: tx.input,
-    type: tx.type,
-    blobVersionedHashes: tx.blobVersionedHashes,
-    blockNumber: tx.blockNumber,
+  .transform((call) => ({
+    to: call.to,
+    value: call.value,
+    data: call.input ?? call.data,
   }))
+
+type EVMTransactionSubcall = z.infer<typeof EVMTransactionSubcall>
+
+export interface EVMTransaction {
+  hash: string
+  value: bigint | undefined
+  from: string
+  to: string | undefined
+  data: string | undefined
+  type: string | undefined
+  calls: EVMTransactionSubcall[] | undefined
+  blobVersionedHashes: string[] | undefined
+  blockNumber: number | null
+}
+
+const RawEVMTransaction = z.object({
+  hash: z.string(),
+  value: z
+    .union([z.string().transform(BigInt), z.null()])
+    .transform((value) => value ?? undefined)
+    .optional(),
+  from: z.string(),
+  /** Address of the receiver, null when it's a contract creation transaction. */
+  to: z
+    .union([z.string(), z.null()])
+    .transform((to) => (to === null ? undefined : to))
+    .optional(),
+  input: z
+    .union([z.string(), z.null()])
+    .transform((input) => input ?? undefined)
+    .optional(),
+  type: Quantity.decode.transform((n) => String(n)).optional(),
+  calls: z
+    .union([z.array(EVMTransactionSubcall), z.null()])
+    .transform((calls) => calls ?? undefined)
+    .optional(),
+  blobVersionedHashes: z.array(z.string()).optional(),
+  blockNumber: z.union([Quantity.decode.transform((n) => Number(n)), z.null()]),
+})
+type RawEVMTransaction = z.infer<typeof RawEVMTransaction>
+
+export function parseRawEVMTransaction(raw: RawEVMTransaction): EVMTransaction {
+  return {
+    hash: raw.hash,
+    value: raw.value,
+    from: raw.from,
+    to: raw.to,
+    data: raw.input,
+    type: raw.type,
+    calls: raw.calls,
+    blobVersionedHashes: raw.blobVersionedHashes,
+    blockNumber: raw.blockNumber,
+  }
+}
+
+export const EVMTransaction = RawEVMTransaction.transform(
+  parseRawEVMTransaction,
+)
 
 export const EVMTransactionResponse = z.object({
   result: EVMTransaction,

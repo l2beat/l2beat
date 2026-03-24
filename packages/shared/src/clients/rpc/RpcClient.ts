@@ -5,6 +5,7 @@ import {
   type json,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { writeFileSync } from 'fs'
 import type { IRpcClient } from '../../clients2'
 import { generateId } from '../../tools/generateId'
 import {
@@ -94,6 +95,7 @@ export class RpcClient extends ClientCore implements IRpcClient {
       ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
       : EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
+      writeFileSync(`block-${blockNumber}.json`, JSON.stringify(blockResponse))
       this.$.logger.warn('Invalid response', {
         blockNumber,
         includeTxs,

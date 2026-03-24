@@ -11,6 +11,7 @@ import {
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
+import { toInteropTransaction } from '../../plugins/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
@@ -237,7 +238,9 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: txsByHash.get(log.transactionHash) ?? { hash: log.transactionHash },
+        tx:
+          txsByHash.get(log.transactionHash) ??
+          toInteropTransaction({ hash: log.transactionHash }),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -388,12 +391,18 @@ export class CatchingUpState implements TimeloopState {
 }
 
 function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  return {
+  const rawTx = {
     hash: tx.hash,
     from: tx.from,
     to: tx.to ?? undefined,
     data: tx.input,
     type: tx.type?.toString(),
     value: tx.value,
+    calls: tx.calls?.map((call) => ({
+      to: call.to?.toString(),
+      data: call.input ?? call.data,
+      value: call.value,
+    })),
   }
+  return toInteropTransaction(rawTx)
 }

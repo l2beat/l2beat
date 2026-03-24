@@ -385,6 +385,22 @@ const RpcBlock = v.passthroughObject({
 })
 
 export type RpcTransaction = v.infer<typeof RpcTransaction>
+const vNullableAddress = v
+  .union([vAddress, v.null()])
+  .transform((value) => value ?? undefined)
+const vNullableQuantity = v
+  .union([vQuantity, v.null()])
+  .transform((value) => value ?? undefined)
+const vNullableData = v
+  .union([vData(), v.null()])
+  .transform((value) => value ?? undefined)
+const RpcTransactionCall = v.passthroughObject({
+  to: vNullableAddress.optional(),
+  value: vNullableQuantity.optional(),
+  input: vNullableData.optional(),
+  data: vNullableData.optional(),
+})
+
 const RpcTransaction = v.passthroughObject({
   blockHash: v.union([v.null(), vData(32)]),
   blockNumber: v.union([v.null(), vQuantity]),
@@ -393,12 +409,14 @@ const RpcTransaction = v.passthroughObject({
   // nullable on celo, optional on filecoin
   gasPrice: v.union([v.null(), vQuantity]).optional(),
   hash: vData(32),
-  input: vData(),
+  // optional on custom transaction types
+  input: vNullableData.optional(),
   // optional on base
   nonce: vQuantity.optional(),
   to: v.union([v.null(), vAddress]),
   transactionIndex: v.union([v.null(), vQuantity]),
-  value: vQuantity,
+  // optional on custom transaction types
+  value: vNullableQuantity.optional(),
   // optional on zksync
   v: vQuantity.optional(),
   // optional on zksync
@@ -440,6 +458,8 @@ const RpcTransaction = v.passthroughObject({
       }),
     )
     .optional(),
+  // optional on custom tx types
+  calls: v.array(RpcTransactionCall).optional(),
 })
 
 export type RpcBlockWithTransactions = v.infer<typeof RpcBlockWithTransactions>

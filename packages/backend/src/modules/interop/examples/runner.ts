@@ -18,6 +18,7 @@ import {
   flattenClusters,
   type InteropPlugins,
 } from '../plugins'
+import { toInteropTransaction } from '../plugins/interopTransaction'
 import type { InteropEvent } from '../plugins/types'
 import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'
@@ -105,7 +106,7 @@ export class ExampleRunner {
         }
         const captured = plugin.captureTx({
           chain: txEntry.chain,
-          tx,
+          tx: toInteropTransaction(tx),
           block,
           txLogs,
         })
@@ -123,7 +124,7 @@ export class ExampleRunner {
           const captured = plugin.capture({
             chain: txEntry.chain,
             log: log,
-            tx,
+            tx: toInteropTransaction(tx),
             block,
             txLogs,
           })
