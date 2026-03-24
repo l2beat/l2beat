@@ -88,6 +88,9 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
     verifierHashes: [
       {
         hash: '0xf16d320ba0d2087a99ffd465041960fd0aedf5e723c0fb877533876c531191d3',
+        name: 'Stwo verifier 2025_11',
+        sourceLink:
+          'https://etherscan.io/address/0x13e120F6c8E747983F7aaF0f7731796bfcb0D934#code',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
         knownDeployments: [
           {

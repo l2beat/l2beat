@@ -1,118 +1,72 @@
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, pluralize, UnixTime } from '@l2beat/shared-pure'
 
-import { Callout } from '~/components/Callout'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { LiveIndicator } from '~/components/LiveIndicator'
-import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { AnomalyText } from './AnomalyText'
-
-const SHOWN_ANOMALIES = 4
 
 interface Props {
   anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
+  href?: string
 }
 
-export function AnomalyIndicator({
-  anomalies,
-  hasTrackedContractsChanged,
-}: Props) {
+export function AnomalyIndicator({ anomalies, href }: Props) {
   const indicators = toAnomalyIndicatorEntries(anomalies)
+  const uptimePercentage = calculateUptimePercentage(
+    anomalies,
+    indicators.length,
+  )
+  const hasOngoing = anomalies.some((a) => a.end === undefined)
+
+  const content = (
+    <div className="flex flex-col items-center gap-0.5">
+      <div className="flex h-6 w-min gap-x-0.5">
+        {indicators.map((indicator, i) => (
+          <div
+            key={i}
+            className={cn(
+              'w-0.5 rounded-full',
+              indicator === 'none' && 'bg-blue-500',
+              indicator === 'recovered' && 'bg-orange-400',
+              indicator === 'ongoing' && 'bg-negative',
+            )}
+          />
+        ))}
+      </div>
+      <span className="whitespace-nowrap font-medium text-2xs text-blue-500 uppercase leading-none">
+        {uptimePercentage}% normal uptime
+      </span>
+    </div>
+  )
+
+  if (!href) {
+    return content
+  }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div className="flex h-6 w-min cursor-pointer gap-x-0.5">
-          {indicators.map((indicator, i) => (
-            <div
-              key={i}
-              className={cn(
-                'w-0.5 rounded-full',
-                indicator === 'none' && 'bg-blue-500',
-                indicator === 'recovered' && 'bg-orange-400',
-                indicator === 'ongoing' && 'bg-negative',
-              )}
-            />
-          ))}
-        </div>
+        <a href={href} className="cursor-pointer">
+          {content}
+        </a>
       </TooltipTrigger>
-      <TooltipContent className="max-xs:max-w-[300px]">
-        <AnomalyTooltipContent
-          anomalies={anomalies}
-          hasTrackedContractsChanged={hasTrackedContractsChanged}
-        />
+      <TooltipContent>
+        {hasOngoing ? (
+          <div>There is an ongoing anomaly. Click to learn more.</div>
+        ) : anomalies.length === 0 ? (
+          <div>No anomalies detected in the last 30 days</div>
+        ) : (
+          <div>
+            There {anomalies.length === 1 ? 'was' : 'were'} {anomalies.length}{' '}
+            {pluralize(anomalies.length, 'anomaly', 'anomalies')} over the past
+            30 days. Click to learn more.
+          </div>
+        )}
       </TooltipContent>
     </Tooltip>
-  )
-}
-
-function AnomalyTooltipContent(props: {
-  anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
-}) {
-  if (props.anomalies.length === 0) {
-    return <div>No anomalies detected in the last 30 days</div>
-  }
-
-  return (
-    <>
-      <span>Anomalies from last 30 days:</span>
-      <div className="-mx-4 mt-2 list-disc">
-        {props.anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
-          return (
-            <div
-              className="space-y-0.5 border-divider border-t px-4 py-2"
-              key={anomaly.start}
-            >
-              {anomaly.end === undefined ? (
-                <div className="mb-1 flex items-center gap-1">
-                  <LiveIndicator />
-                  <span className="text-negative text-subtitle-12 uppercase leading-none">
-                    Ongoing anomaly
-                  </span>
-                </div>
-              ) : (
-                <span className="text-secondary text-subtitle-12 uppercase leading-none">
-                  Resolved
-                </span>
-              )}
-              {anomaly.end === undefined &&
-                props.hasTrackedContractsChanged && (
-                  <Callout
-                    className="rounded px-3 py-2 text-[13px] leading-[130%]"
-                    color="yellow"
-                    small
-                    icon={
-                      <RoundedWarningIcon
-                        className="size-4"
-                        sentiment="warning"
-                      />
-                    }
-                    body={
-                      <>
-                        There are implementation changes, data might be
-                        incorrect.
-                      </>
-                    }
-                  />
-                )}
-              <AnomalyText anomaly={anomaly} />
-            </div>
-          )
-        })}
-      </div>
-      {props.anomalies.length > 4 && (
-        <div className="-mx-4 border-divider border-t px-4 pt-2">
-          And {props.anomalies.length - SHOWN_ANOMALIES} more
-        </div>
-      )}
-    </>
   )
 }
 
@@ -127,6 +81,35 @@ export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
     default:
       assertUnreachable(type)
   }
+}
+
+function calculateUptimePercentage(anomalies: LivenessAnomaly[], days: number) {
+  const now = UnixTime.now()
+  const windowStart = now - (days - 1) * UnixTime.DAY
+  const totalHours = days * 24
+
+  // clamp intervals to the window
+  const intervals = anomalies
+    .map((a) => ({
+      start: Math.max(a.start, windowStart),
+      end: a.end ? Math.min(a.end, now) : now,
+    }))
+    .filter((i) => i.end > i.start)
+    .sort((a, b) => a.start - b.start)
+
+  let anomalyHours = 0
+  // merge overlapping intervals
+  let mergedEnd = 0
+  for (const interval of intervals) {
+    const start = Math.max(interval.start, mergedEnd)
+    if (interval.end > start) {
+      anomalyHours += (interval.end - start) / UnixTime.HOUR
+    }
+    mergedEnd = Math.max(mergedEnd, interval.end)
+  }
+
+  const percentage = ((totalHours - anomalyHours) / totalHours) * 100
+  return Math.floor(percentage)
 }
 
 function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {

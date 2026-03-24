@@ -1,9 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { interopDescriptions } from '~/pages/interop/descriptions'
+import { TRANSFER_TYPE_DISPLAY } from '../../utils/display'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader description={interopDescriptions.burnAndMint}>
+    <MainPageHeader description={TRANSFER_TYPE_DISPLAY.burnAndMint.description}>
       Burn & Mint Protocols
     </MainPageHeader>
   )

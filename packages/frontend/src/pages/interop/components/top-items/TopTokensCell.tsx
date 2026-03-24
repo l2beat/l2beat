@@ -1,5 +1,4 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import {
   Dialog,
@@ -16,18 +15,13 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '~/components/core/Tabs'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { useTable } from '~/hooks/useTable'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
-import {
-  getTopTokensColumns,
-  type PairRow,
-  type TokenRow,
-  topPairsColumns,
-} from './columns'
+import { getTopTokensColumns } from './columns'
+import { TokenTableDialog } from './TokenTableDialog'
 import { InteropTopItems } from './TopItems'
 
 export function TopTokensCell({
@@ -71,6 +65,7 @@ export function TopTokensCell({
             type: resolvedType,
           })
         }
+        type="cell"
         setIsOpen={setIsOpen}
       />
       <TopTokensContent
@@ -99,8 +94,11 @@ function TopTokensContent({
   setIsOpen: (isOpen: boolean) => void
   showNetMintedValueColumn?: boolean
 }) {
+<<<<<<< HEAD
   const breakpoint = useBreakpoint()
   const utils = api.useUtils()
+=======
+>>>>>>> main
   const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
 
@@ -125,6 +123,7 @@ function TopTokensContent({
     [showNetMintedValueColumn],
   )
 
+<<<<<<< HEAD
   const tokensTable = useTable<TokenRow>({
     data: tokensData ?? [],
     columns: tokensColumns,
@@ -255,5 +254,26 @@ function TopTokensContent({
         </div>
       </DialogContent>
     </Dialog>
+=======
+  return (
+    <TokenTableDialog
+      data={data}
+      isLoading={isLoading}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      title={
+        <>
+          <span>Top tokens by volume for </span>
+          <img
+            src={protocol.iconUrl}
+            alt={protocol.name}
+            className="relative bottom-px mx-1 inline-block size-6"
+          />
+          <span>{protocol.name}</span>
+        </>
+      }
+      showNetMintedValueColumn={showNetMintedValueColumn}
+    />
+>>>>>>> main
   )
 }

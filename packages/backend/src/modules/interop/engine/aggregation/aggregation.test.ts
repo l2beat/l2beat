@@ -2,8 +2,8 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  getAggregatedPairs,
   getAggregatedTokens,
+  getAggregatedTokensPairs,
   getAggregatedTransfer,
 } from './aggregation'
 
@@ -1046,7 +1046,7 @@ describe('aggregation', () => {
     })
   })
 
-  describe(getAggregatedPairs.name, () => {
+  describe(getAggregatedTokensPairs.name, () => {
     it('aggregates two transfers with same pair', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer({
@@ -1071,7 +1071,7 @@ describe('aggregation', () => {
         }),
       ]
 
-      const result = getAggregatedPairs(transfers)
+      const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(1)
       expect(result[0]).toEqual({
@@ -1115,7 +1115,7 @@ describe('aggregation', () => {
         }),
       ]
 
-      const result = getAggregatedPairs(transfers)
+      const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(1)
       expect(result[0]?.tokenA).toEqual('eth___')
@@ -1137,7 +1137,7 @@ describe('aggregation', () => {
         }),
       ]
 
-      const result = getAggregatedPairs(transfers)
+      const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(1)
       expect(result[0]?.tokenA).toEqual('eth___')
@@ -1189,7 +1189,7 @@ describe('aggregation', () => {
         }),
       ]
 
-      const result = getAggregatedPairs(transfers)
+      const result = getAggregatedTokensPairs(transfers)
 
       expect(result).toHaveLength(2)
 
@@ -1230,7 +1230,7 @@ describe('aggregation', () => {
         }),
       ]
 
-      const result = getAggregatedPairs(transfers)
+      const result = getAggregatedTokensPairs(transfers)
 
       expect(result[0]?.transferTypeStats).toEqual({
         taxi: { transferCount: 1, totalDurationSum: 2000 },
@@ -1241,7 +1241,9 @@ describe('aggregation', () => {
     it('throws error when group is empty', () => {
       const transfers: InteropTransferRecord[] = []
 
-      expect(() => getAggregatedPairs(transfers)).toThrow('Group is empty')
+      expect(() => getAggregatedTokensPairs(transfers)).toThrow(
+        'Group is empty',
+      )
     })
   })
 })

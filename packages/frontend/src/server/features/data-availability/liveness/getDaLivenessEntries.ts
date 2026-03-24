@@ -1,5 +1,5 @@
 import type { Project, TableReadyValue } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
@@ -142,6 +142,9 @@ function getDaLivenessEntry(
     return undefined
   }
 
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
@@ -149,7 +152,7 @@ function getDaLivenessEntry(
   ).latest
 
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     bridges: daBridges,
     tvs,
   }

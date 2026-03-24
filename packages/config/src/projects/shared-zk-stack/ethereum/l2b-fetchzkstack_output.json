@@ -9,8 +9,8 @@
     "pubdataPricingMode": 0,
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
-    "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "501260",
+    "protocolVersion": "0.29.4",
+    "totalBlocksExecuted": "508285",
     "txFilterer": "No"
   },
   {
@@ -24,7 +24,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "698",
+    "totalBlocksExecuted": "760",
     "txFilterer": "Yes"
   },
   {
@@ -37,8 +37,8 @@
     "pubdataPricingMode": 1,
     "pubdataModeName": "validium",
     "daValidatorType": "Unknown",
-    "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "37567",
+    "protocolVersion": "0.29.4",
+    "totalBlocksExecuted": "38043",
     "txFilterer": "Yes"
   },
   {
@@ -52,7 +52,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "1793",
+    "totalBlocksExecuted": "1969",
     "txFilterer": "No"
   },
   {
@@ -65,8 +65,8 @@
     "pubdataPricingMode": 0,
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
-    "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "47994",
+    "protocolVersion": "0.29.4",
+    "totalBlocksExecuted": "53176",
     "txFilterer": "No"
   },
   {
@@ -80,7 +80,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "39157",
+    "totalBlocksExecuted": "54827",
     "txFilterer": "Yes"
   },
   {
@@ -108,7 +108,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "573",
+    "totalBlocksExecuted": "605",
     "txFilterer": "No"
   },
   {
@@ -135,8 +135,8 @@
     "pubdataPricingMode": 1,
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
-    "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "4835",
+    "protocolVersion": "0.29.2",
+    "totalBlocksExecuted": "4927",
     "txFilterer": "No"
   },
   {
@@ -149,8 +149,8 @@
     "pubdataPricingMode": 1,
     "pubdataModeName": "validium",
     "daValidatorType": "Unknown",
-    "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "8344",
+    "protocolVersion": "0.29.3",
+    "totalBlocksExecuted": "8523",
     "txFilterer": "No"
   },
   {
@@ -164,7 +164,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "357",
+    "totalBlocksExecuted": "535",
     "txFilterer": "No"
   },
   {
@@ -205,8 +205,8 @@
     "pubdataPricingMode": 1,
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
-    "protocolVersion": "0.28.0",
-    "totalBlocksExecuted": "440",
+    "protocolVersion": "0.29.2",
+    "totalBlocksExecuted": "614",
     "txFilterer": "Yes"
   },
   {
@@ -219,8 +219,8 @@
     "pubdataPricingMode": 0,
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
-    "protocolVersion": "0.29.2",
-    "totalBlocksExecuted": "2545",
+    "protocolVersion": "0.29.4",
+    "totalBlocksExecuted": "3324",
     "txFilterer": "Yes"
   },
   {
@@ -234,7 +234,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.30.1",
-    "totalBlocksExecuted": "1451",
+    "totalBlocksExecuted": "2820",
     "txFilterer": "No"
   },
   {
@@ -262,7 +262,21 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Unknown",
     "protocolVersion": "0.30.1",
-    "totalBlocksExecuted": "0",
+    "totalBlocksExecuted": "1064",
+    "txFilterer": "No"
+  },
+  {
+    "chainAddress": "0x2dba7c0321510f9561D86813D261fA2f74f6D586",
+    "chainID": "30716",
+    "name": "chain 30716",
+    "chainAdmin": "0xFd559ADe548f7c7493D8B9355d2Ca9aA021D6561",
+    "baseToken": "0x0000000000000000000000000000000000000001",
+    "baseTokenName": "ETH",
+    "pubdataPricingMode": 1,
+    "pubdataModeName": "validium",
+    "daValidatorType": "Unknown",
+    "protocolVersion": "0.30.1",
+    "totalBlocksExecuted": "9",
     "txFilterer": "No"
   }
 ]

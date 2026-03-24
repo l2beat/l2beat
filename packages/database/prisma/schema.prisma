@@ -579,7 +579,7 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
-model AggregatedInteropPair {
+model AggregatedInteropTokensPair {
   timestamp                  DateTime @db.Timestamp(6)
   id                         String   @db.VarChar(255)
   srcChain                   String   @db.VarChar(255)
