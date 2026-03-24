@@ -2,18 +2,18 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
 import {
-  type AggregatedInteropPairRecord,
-  AggregatedInteropPairRepository,
-} from './AggregatedInteropPairRepository'
+  type AggregatedInteropTokensPairRecord,
+  AggregatedInteropTokensPairRepository,
+} from './AggregatedInteropTokensPairRepository'
 
-describeDatabase(AggregatedInteropPairRepository.name, (db) => {
-  const repository = db.aggregatedInteropPair
+describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
+  const repository = db.aggregatedInteropTokensPair
 
   beforeEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(AggregatedInteropPairRepository.prototype.getAll.name, () => {
+  describe(AggregatedInteropTokensPairRepository.prototype.getAll.name, () => {
     it('returns empty array when no records exist', async () => {
       const result = await repository.getAll()
       expect(result).toEqual([])
@@ -78,8 +78,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
   })
 
   describe(
-    AggregatedInteropPairRepository.prototype.deleteAllButEarliestPerDayBefore
-      .name,
+    AggregatedInteropTokensPairRepository.prototype
+      .deleteAllButEarliestPerDayBefore.name,
     () => {
       it('keeps earliest record per day and deletes others before timestamp', async () => {
         const day1Early = UnixTime(100)
@@ -166,7 +166,7 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
   )
 
   describe(
-    AggregatedInteropPairRepository.prototype.deleteByTimestamp.name,
+    AggregatedInteropTokensPairRepository.prototype.deleteByTimestamp.name,
     () => {
       it('deletes records with matching timestamp and returns count', async () => {
         const record1 = record({
@@ -240,7 +240,8 @@ describeDatabase(AggregatedInteropPairRepository.name, (db) => {
   )
 
   describe(
-    AggregatedInteropPairRepository.prototype.getByChainsIdAndTimestamp.name,
+    AggregatedInteropTokensPairRepository.prototype.getByChainsIdAndTimestamp
+      .name,
     () => {
       it('returns records matching timestamp, id, srcChains, dstChains, and bridgeType', async () => {
         const record1 = record({
@@ -420,7 +421,7 @@ function record({
   dstChain: string
   tokenA: string
   tokenB: string
-  transferTypeStats?: AggregatedInteropPairRecord['transferTypeStats']
+  transferTypeStats?: AggregatedInteropTokensPairRecord['transferTypeStats']
   transferCount?: number
   transfersWithDurationCount?: number
   totalDurationSum?: number
@@ -428,7 +429,7 @@ function record({
   volume?: number
   minTransferValueUsd?: number
   maxTransferValueUsd?: number
-}): AggregatedInteropPairRecord {
+}): AggregatedInteropTokensPairRecord {
   return {
     timestamp,
     id,

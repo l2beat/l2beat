@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "AggregatedInteropPair" (
+CREATE TABLE "AggregatedInteropTokensPair" (
     "timestamp" TIMESTAMP(6) NOT NULL,
     "id" VARCHAR(255) NOT NULL,
     "srcChain" VARCHAR(255) NOT NULL,
@@ -15,8 +15,8 @@ CREATE TABLE "AggregatedInteropPair" (
     "minTransferValueUsd" REAL,
     "maxTransferValueUsd" REAL,
 
-    CONSTRAINT "AggregatedInteropPair_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","bridgeType","id","tokenA","tokenB")
+    CONSTRAINT "AggregatedInteropTokensPair_pkey" PRIMARY KEY ("timestamp","srcChain","dstChain","bridgeType","id","tokenA","tokenB")
 );
 
 -- CreateIndex
-CREATE INDEX "AggregatedInteropPair_timestamp_srcChain_dstChain_id_bridge_idx" ON "AggregatedInteropPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");
+CREATE INDEX "AggregatedInteropTokensPair_timestamp_srcChain_dstChain_id__idx" ON "AggregatedInteropTokensPair"("timestamp", "srcChain", "dstChain", "id", "bridgeType");

@@ -1,10 +1,10 @@
 import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
-import type { AggregatedInteropPair } from '../kysely/generated/types'
+import type { AggregatedInteropTokensPair } from '../kysely/generated/types'
 import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
-export interface AggregatedInteropPairRecord {
+export interface AggregatedInteropTokensPairRecord {
   timestamp: UnixTime
   id: string
   bridgeType: InteropBridgeType
@@ -22,8 +22,8 @@ export interface AggregatedInteropPairRecord {
 }
 
 export function toRecord(
-  row: Selectable<AggregatedInteropPair>,
-): AggregatedInteropPairRecord {
+  row: Selectable<AggregatedInteropTokensPair>,
+): AggregatedInteropTokensPairRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
@@ -45,8 +45,8 @@ export function toRecord(
 }
 
 export function toRow(
-  record: AggregatedInteropPairRecord,
-): Insertable<AggregatedInteropPair> {
+  record: AggregatedInteropTokensPairRecord,
+): Insertable<AggregatedInteropTokensPair> {
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
@@ -65,20 +65,25 @@ export function toRow(
   }
 }
 
-export class AggregatedInteropPairRepository extends BaseRepository {
-  async insertMany(records: AggregatedInteropPairRecord[]): Promise<number> {
+export class AggregatedInteropTokensPairRepository extends BaseRepository {
+  async insertMany(
+    records: AggregatedInteropTokensPairRecord[],
+  ): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
-      await this.db.insertInto('AggregatedInteropPair').values(batch).execute()
+      await this.db
+        .insertInto('AggregatedInteropTokensPair')
+        .values(batch)
+        .execute()
     })
     return rows.length
   }
 
-  async getAll(): Promise<AggregatedInteropPairRecord[]> {
+  async getAll(): Promise<AggregatedInteropTokensPairRecord[]> {
     const rows = await this.db
-      .selectFrom('AggregatedInteropPair')
+      .selectFrom('AggregatedInteropTokensPair')
       .selectAll()
       .execute()
 
@@ -94,13 +99,13 @@ export class AggregatedInteropPairRepository extends BaseRepository {
     options?: {
       includeSameChainTransfers?: boolean
     },
-  ): Promise<AggregatedInteropPairRecord[]> {
+  ): Promise<AggregatedInteropTokensPairRecord[]> {
     if (sourceChains.length === 0 || destinationChains.length === 0) {
       return []
     }
 
     let query = this.db
-      .selectFrom('AggregatedInteropPair')
+      .selectFrom('AggregatedInteropTokensPair')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', sourceChains)
@@ -123,11 +128,11 @@ export class AggregatedInteropPairRepository extends BaseRepository {
     const query = this.db
       .with('earliest_timestamp_by_day', (eb) =>
         eb
-          .selectFrom('AggregatedInteropPair')
+          .selectFrom('AggregatedInteropTokensPair')
           .select((eb) => eb.fn.min('timestamp').as('min_timestamp'))
           .groupBy(sql`date_trunc('day', timestamp)`),
       )
-      .deleteFrom('AggregatedInteropPair')
+      .deleteFrom('AggregatedInteropTokensPair')
       .where('timestamp', '<', UnixTime.toDate(timestamp))
       .where('timestamp', 'not in', (eb) =>
         eb.selectFrom('earliest_timestamp_by_day').select('min_timestamp'),
@@ -140,7 +145,7 @@ export class AggregatedInteropPairRepository extends BaseRepository {
 
   async deleteByTimestamp(timestamp: UnixTime): Promise<number> {
     const result = await this.db
-      .deleteFrom('AggregatedInteropPair')
+      .deleteFrom('AggregatedInteropTokensPair')
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -148,7 +153,7 @@ export class AggregatedInteropPairRepository extends BaseRepository {
 
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('AggregatedInteropPair')
+      .deleteFrom('AggregatedInteropTokensPair')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

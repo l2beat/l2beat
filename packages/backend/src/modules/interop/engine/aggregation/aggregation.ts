@@ -1,6 +1,6 @@
 import type {
-  AggregatedInteropPairRecord,
   AggregatedInteropTokenRecord,
+  AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
   InteropTransferRecord,
   InteropTransferTypeStatsMap,
@@ -361,9 +361,12 @@ export function getAggregatedTokens(
   }))
 }
 
-export function getAggregatedPairs(
+export function getAggregatedTokensPairs(
   group: InteropTransferRecord[],
-): Omit<AggregatedInteropPairRecord, 'id' | 'timestamp' | 'bridgeType'>[] {
+): Omit<
+  AggregatedInteropTokensPairRecord,
+  'id' | 'timestamp' | 'bridgeType'
+>[] {
   const first = group[0]
   assert(first, 'Group is empty')
 

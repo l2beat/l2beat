@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type {
-  AggregatedInteropPairRecord,
   AggregatedInteropTokenRecord,
+  AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
   Database,
   InteropTransferRecord,
@@ -91,7 +91,7 @@ describe(InteropAggregatingIndexer.name, () => {
         },
       ]
 
-      const aggregatedPairs: AggregatedInteropPairRecord[] = [
+      const aggregatedTokensPairs: AggregatedInteropTokensPairRecord[] = [
         {
           timestamp: to,
           id: 'config1',
@@ -128,8 +128,8 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
-      const aggregatedInteropPair = mockObject<
-        Database['aggregatedInteropPair']
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
@@ -143,14 +143,14 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
-        aggregatedInteropPair,
+        aggregatedInteropTokensPair,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers,
           aggregatedTokens,
-          aggregatedPairs,
+          aggregatedTokensPairs,
           warnings: [],
         }),
       })
@@ -193,13 +193,15 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
-      expect(aggregatedInteropPair.insertMany).toHaveBeenCalledWith(
-        aggregatedPairs,
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith(
+        aggregatedTokensPairs,
       )
       expect(
-        aggregatedInteropPair.deleteAllButEarliestPerDayBefore,
+        aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
-      expect(aggregatedInteropPair.deleteByTimestamp).toHaveBeenCalledWith(to)
+      expect(
+        aggregatedInteropTokensPair.deleteByTimestamp,
+      ).toHaveBeenCalledWith(to)
     })
 
     it('handles empty transfers correctly', async () => {
@@ -231,8 +233,8 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
-      const aggregatedInteropPair = mockObject<
-        Database['aggregatedInteropPair']
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
@@ -246,14 +248,14 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
-        aggregatedInteropPair,
+        aggregatedInteropTokensPair,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
-          aggregatedPairs: [],
+          aggregatedTokensPairs: [],
           warnings: [],
         }),
       })
@@ -280,7 +282,7 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
-      expect(aggregatedInteropPair.insertMany).toHaveBeenCalledWith([])
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
   })
 })
