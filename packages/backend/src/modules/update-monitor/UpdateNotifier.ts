@@ -37,6 +37,7 @@ export class UpdateNotifier {
     private readonly logger: Logger,
     private readonly updateMessagesService: UpdateMessagesService,
     private readonly projectService: ProjectService,
+    private readonly discordWebhookUrl?: string,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -122,7 +123,7 @@ export class UpdateNotifier {
   }
 
   private async notify(messages: string | string[]) {
-    if (!this.discordClient) {
+    if (!this.discordClient || !this.discordWebhookUrl) {
       if (!this.loggedDiscordClientMissing) {
         this.logger.info(
           'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',
@@ -134,7 +135,7 @@ export class UpdateNotifier {
 
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      await this.discordClient.sendMessage(message).then(
+      await this.discordClient.sendMessage(message, this.discordWebhookUrl).then(
         () => this.logger.debug('Notification to Discord has been sent'),
         (e) => this.logger.error('Discord API error', e),
       )

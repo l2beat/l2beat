@@ -18,6 +18,7 @@ import {
 } from './UpdateNotifier'
 
 const TIMESTAMP = UnixTime.now()
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/test/test'
 
 describe(UpdateNotifier.name, () => {
   const projectService = mockObject<ProjectService>({
@@ -27,7 +28,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -50,6 +51,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -85,6 +87,7 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -96,7 +99,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notifications about the changes with meta', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -119,6 +122,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -164,6 +168,7 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -175,7 +180,7 @@ describe(UpdateNotifier.name, () => {
 
     it('truncates and sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -198,6 +203,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -239,6 +245,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         internalMessage,
+        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -250,7 +257,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends errors only to internal channel', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -272,6 +279,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -306,6 +314,7 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -317,7 +326,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notification about tracked transactions being affected', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -359,6 +368,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -402,12 +412,13 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        DISCORD_WEBHOOK_URL,
       )
     })
 
     it('does not include tracked transactions message when contract is not in trackedTxsConfig', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -449,6 +460,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -492,6 +504,7 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
+        DISCORD_WEBHOOK_URL,
       )
     })
   })
@@ -507,7 +520,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -516,6 +529,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {
@@ -546,6 +560,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n:warning: Disabled projects: \`project-aaa\`\n:warning: Failed projects: \`project-bbb\`\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
+        DISCORD_WEBHOOK_URL,
       )
     })
 
@@ -565,6 +580,7 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async (msg: string) => {
           expect(msg.length <= DISCORD_MAX_MESSAGE_LENGTH)
+          return 'message-id'
         },
       })
 
@@ -574,6 +590,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {
@@ -596,7 +613,7 @@ describe(UpdateNotifier.name, () => {
 
     it('does not send daily reminder at other hour', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
@@ -611,6 +628,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {}
@@ -629,7 +647,7 @@ describe(UpdateNotifier.name, () => {
 
     it('includes disabled projects and failed projects in daily reminder', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
@@ -644,6 +662,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
+        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {}

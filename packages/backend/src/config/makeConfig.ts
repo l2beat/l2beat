@@ -87,6 +87,7 @@ export async function makeConfig(
           },
           isReadonly,
         },
+    discord: getDiscordConfig(env),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -150,7 +151,6 @@ export async function makeConfig(
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
-      anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
@@ -199,15 +199,31 @@ export async function makeConfig(
         ),
       },
       inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-      notifications: flags.isEnabled('interop', 'notifications') && {
-        discordWebhookUrl: env.string(
-          'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
-        ),
-      },
+      notifications: flags.isEnabled('interop', 'notifications'),
     },
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
+  }
+}
+
+function getDiscordConfig(env: Env): Config['discord'] {
+  const webhooks = {
+    updateMonitor: env.optionalString('UPDATE_MONITOR_DISCORD_WEBHOOK_URL'),
+    anomalies: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
+    interop: env.optionalString('INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL'),
+    ethereumBlobNotifier: env.optionalString(
+      'ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL',
+    ),
+  }
+
+  if (Object.values(webhooks).every((value) => value === undefined)) {
+    return false
+  }
+
+  return {
+    callsPerMinute: 3000,
+    webhooks,
   }
 }
 

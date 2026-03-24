@@ -35,8 +35,18 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
+  const ethereumBlobNotifierWebhookUrl = config.discord
+    ? config.discord.webhooks.ethereumBlobNotifier
+    : undefined
   const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
-    createIndexers(config.da, clock, db, logger, providers)
+    createIndexers(
+      config.da,
+      ethereumBlobNotifierWebhookUrl,
+      clock,
+      db,
+      logger,
+      providers,
+    )
 
   return {
     start: async () => {
@@ -88,6 +98,7 @@ export function initDataAvailabilityModule({
 
 function createIndexers(
   config: DataAvailabilityTrackingConfig,
+  ethereumBlobNotifierWebhookUrl: string | undefined,
   clock: Clock,
   database: Database,
   logger: Logger,
@@ -150,7 +161,7 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      if (providers.clients.blobNotifierDiscord) {
+      if (providers.clients.discord && ethereumBlobNotifierWebhookUrl) {
         const hourlyIndexer = new HourlyIndexer(logger, clock)
         notificationIndexers.push(hourlyIndexer)
 
@@ -158,7 +169,8 @@ function createIndexers(
           {
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
-            discordClient: providers.clients.blobNotifierDiscord,
+            discordClient: providers.clients.discord,
+            discordWebhookUrl: ethereumBlobNotifierWebhookUrl,
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],

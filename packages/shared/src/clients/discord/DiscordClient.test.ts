@@ -5,18 +5,18 @@ import { DiscordClient } from './DiscordClient'
 
 describe(DiscordClient.name, () => {
   const config = {
-    token: '<discord-token>',
-    internalChannelId: '<channel-id>',
     callsPerMinute: 3000,
+    webhookUrl: 'https://discord.com/api/webhooks/123/token',
   }
+
   describe(DiscordClient.prototype.sendMessage.name, () => {
-    it('sends to internal channel', async () => {
+    it('sends to the configured webhook', async () => {
       const httpClient = mockObject<HttpClient>({
-        fetch: async (url) => {
+        fetchRaw: async (url) => {
           expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${config.internalChannelId}/messages`,
+            `${config.webhookUrl}?wait=true`,
           )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+          return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
 
@@ -25,27 +25,26 @@ describe(DiscordClient.name, () => {
       await discord.sendMessage('')
     })
 
-    it('constructs a correct url', async () => {
+    it('accepts an explicit webhook url override', async () => {
+      const webhookUrl = 'https://discord.com/api/webhooks/456/token'
       const httpClient = mockObject<HttpClient>({
-        fetch: async (url) => {
-          expect(url).toEqual(
-            `https://discord.com/api/v10/channels/${config.internalChannelId}/messages`,
-          )
-          return new Response(JSON.stringify({ status: '1', message: 'OK' }))
+        fetchRaw: async (url) => {
+          expect(url).toEqual(`${webhookUrl}?wait=true`)
+          return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
 
       const discord = new DiscordClient(httpClient, config)
 
-      await discord.sendMessage('')
+      await discord.sendMessage('', webhookUrl)
     })
 
     it('includes message in the body', async () => {
       const message = 'Example message'
       const httpClient = mockObject<HttpClient>({
-        async fetch(_, init) {
+        async fetchRaw(_, init) {
           expect(init?.body).toEqual(JSON.stringify({ content: message }))
-          return new Response('{}', { status: 200 })
+          return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
       const discord = new DiscordClient(httpClient, config)
@@ -55,12 +54,11 @@ describe(DiscordClient.name, () => {
 
     it('adds headers', async () => {
       const httpClient = mockObject<HttpClient>({
-        async fetch(_, init) {
+        async fetchRaw(_, init) {
           expect(init?.headers).toEqual({
-            Authorization: `Bot ${config.token}`,
             'Content-Type': 'application/json; charset=UTF-8',
           })
-          return new Response('{}', { status: 200 })
+          return new Response(JSON.stringify({ id: '1' }), { status: 200 })
         },
       })
       const discord = new DiscordClient(httpClient, config)
@@ -75,6 +73,15 @@ describe(DiscordClient.name, () => {
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message)).toBeRejectedWith(
         'Discord error: Message size exceeded (2000 characters)',
+      )
+    })
+
+    it('throws when webhook url is missing', async () => {
+      const httpClient = mockObject<HttpClient>({})
+      const discord = new DiscordClient(httpClient)
+
+      await expect(discord.sendMessage('message')).toBeRejectedWith(
+        'Discord error: Webhook URL not provided',
       )
     })
   })

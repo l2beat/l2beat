@@ -26,6 +26,7 @@ export interface Config {
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
+  readonly discord: DiscordConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -177,7 +178,6 @@ export interface UpdateMonitorConfig {
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
-  readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
     readonly workerCount: number
@@ -187,13 +187,16 @@ export interface UpdateMonitorConfig {
 }
 
 export interface DiscordConfig {
-  readonly token: string
-  readonly internalChannelId: string
   readonly callsPerMinute: number
+  readonly webhooks: {
+    readonly updateMonitor?: string
+    readonly anomalies?: string
+    readonly interop?: string
+    readonly ethereumBlobNotifier?: string
+  }
 }
 
 export interface AnomaliesConfig {
-  readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
 
@@ -231,11 +234,7 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
-  notifications:
-    | {
-        discordWebhookUrl: string
-      }
-    | false
+  notifications: boolean
 }
 
 export interface DaBeatConfig {
@@ -313,7 +312,6 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
-  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {

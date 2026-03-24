@@ -1,4 +1,3 @@
-import { DiscordClient, HttpClient } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { AnomalyNotifier } from './AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
@@ -8,6 +7,7 @@ export function createAnomaliesModule({
   clock,
   logger,
   db,
+  providers,
   blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.anomalies) {
@@ -16,20 +16,17 @@ export function createAnomaliesModule({
   }
   logger = logger.tag({ feature: 'anomalies', module: 'anomalies' })
 
+  const anomaliesWebhookUrl = config.discord && config.discord.webhooks.anomalies
   const anomaliesNotifier =
-    config.anomalies.anomaliesWebhookUrl && config.trackedTxsConfig
+    anomaliesWebhookUrl && config.trackedTxsConfig && providers.clients.discord
       ? new AnomalyNotifier(
           logger,
           clock,
-          new DiscordClient(new HttpClient(), {
-            token: 'unused',
-            internalChannelId: 'unused',
-            callsPerMinute: 3000,
-            webhookUrl: config.anomalies.anomaliesWebhookUrl,
-          }),
+          providers.clients.discord,
           db,
           config.anomalies.anomaliesMinDuration,
           config.trackedTxsConfig,
+          anomaliesWebhookUrl,
         )
       : undefined
 

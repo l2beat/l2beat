@@ -1,8 +1,4 @@
-import {
-  DiscordClient,
-  HttpClient,
-  InteropTransferClassifier,
-} from '@l2beat/shared'
+import { HttpClient, InteropTransferClassifier } from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
@@ -46,17 +42,16 @@ export function createInteropModule({
 
   const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   let configStore = new InteropConfigStore(db)
+  const interopWebhookUrl = config.discord && config.discord.webhooks.interop
 
   let notificationClient: InteropNotifier | undefined
 
-  if (config.interop.notifications) {
-    const discordClient = new DiscordClient(new HttpClient(), {
-      token: 'unused',
-      internalChannelId: 'unused',
-      callsPerMinute: 3000,
-      webhookUrl: config.interop.notifications.discordWebhookUrl,
-    })
-    notificationClient = new InteropNotifier(discordClient, logger)
+  if (config.interop.notifications && interopWebhookUrl && providers.clients.discord) {
+    notificationClient = new InteropNotifier(
+      providers.clients.discord,
+      logger,
+      interopWebhookUrl,
+    )
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,
       notificationClient,

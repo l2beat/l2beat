@@ -36,6 +36,9 @@ export function createUpdateMonitorModule({
 
   const discoveryOutputCache = new DiscoveryOutputCache()
   const projectService = new ProjectService()
+  const updateMonitorWebhookUrl = config.discord
+    ? config.discord.webhooks.updateMonitor
+    : undefined
 
   const updateNotifier = new UpdateNotifier(
     db,
@@ -43,6 +46,7 @@ export function createUpdateMonitorModule({
     logger,
     updateMessagesService,
     projectService,
+    updateMonitorWebhookUrl,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
     ? new UpdateDiffer(configReader, db, discoveryOutputCache, logger)

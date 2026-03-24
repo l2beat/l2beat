@@ -6,15 +6,15 @@ import { InteropNotifier } from './InteropNotifier'
 describe(InteropNotifier.name, () => {
   it('queues and sends a markdown diff message', async () => {
     const webhookClient = mockObject<DiscordClient>({
-      sendMessageToWebhook: async () => '1',
+      sendMessage: async () => '1',
     })
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.handleConfigChange('ccip', { version: 1 }, { version: 2 })
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    expect(webhookClient.sendMessageToWebhook).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessageToWebhook.calls[0]
+    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
+    const message = webhookClient.sendMessage.calls[0]
       ?.args[0] as string
 
     expect(message.includes('**ccip** config change')).toEqual(true)
@@ -26,7 +26,7 @@ describe(InteropNotifier.name, () => {
 
   it('does not send message when diff is empty after undefined normalization', async () => {
     const webhookClient = mockObject<DiscordClient>({
-      sendMessageToWebhook: async () => '1',
+      sendMessage: async () => '1',
     })
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
@@ -37,13 +37,13 @@ describe(InteropNotifier.name, () => {
     )
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    expect(webhookClient.sendMessageToWebhook).toHaveBeenCalledTimes(0)
+    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(0)
   })
 
   it('preserves message order in queue', async () => {
     const sent: string[] = []
     const webhookClient = mockObject<DiscordClient>({
-      sendMessageToWebhook: async (message) => {
+      sendMessage: async (message) => {
         sent.push(message)
         return `${sent.length}`
       },
