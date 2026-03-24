@@ -21,7 +21,7 @@ export const Quantity = {
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
 
-const EVMTransactionSubcall = z
+export const EVMTransactionSubCall = z
   .object({
     to: z
       .union([z.string(), z.null()])
@@ -45,6 +45,7 @@ const EVMTransactionSubcall = z
     value: call.value,
     data: call.input ?? call.data,
   }))
+export type EVMTransactionSubCall = z.infer<typeof EVMTransactionSubCall>
 
 export type EVMTransaction = z.infer<typeof EVMTransaction>
 export const EVMTransaction = z
@@ -66,7 +67,7 @@ export const EVMTransaction = z
       .optional(),
     type: Quantity.decode.transform((n) => String(n)).optional(),
     calls: z
-      .union([z.array(EVMTransactionSubcall), z.null()])
+      .union([z.array(EVMTransactionSubCall), z.null()])
       .transform((calls) => calls ?? undefined)
       .optional(),
     blobVersionedHashes: z.array(z.string()).optional(),

@@ -1,40 +1,9 @@
+import type { EVMTransactionSubCall } from '@l2beat/shared'
 import type { Transaction } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
-
-export interface TransactionCall {
-  to?: string
-  value?: bigint
-  data?: string
-}
-
 export interface InteropRawTransaction extends Transaction {
   // shadow extensions
-  calls?: unknown
+  calls?: EVMTransactionSubCall[]
 }
-
-const TransactionCall = v
-  .passthroughObject({
-    to: v.string().optional(),
-    value: v.bigint().optional(),
-    input: v.string().optional(),
-    data: v.string().optional(),
-  })
-  .transform((call): TransactionCall | undefined => {
-    const normalized: TransactionCall = {
-      to: call.to,
-      value: call.value,
-      data: call.input ?? call.data,
-    }
-
-    if (
-      normalized.to === undefined &&
-      normalized.value === undefined &&
-      normalized.data === undefined
-    ) {
-      return undefined
-    }
-    return normalized
-  })
 
 export class InteropTransactionDTO implements Transaction {
   readonly hash?: string
@@ -43,7 +12,7 @@ export class InteropTransactionDTO implements Transaction {
   readonly data?: string | string[]
   readonly type?: string
   readonly value?: bigint
-  readonly calls?: TransactionCall[]
+  readonly calls?: EVMTransactionSubCall[]
 
   constructor(tx: InteropRawTransaction) {
     this.hash = tx.hash
@@ -52,7 +21,7 @@ export class InteropTransactionDTO implements Transaction {
     this.data = tx.data
     this.type = tx.type
     this.value = tx.value
-    this.calls = normalizeInteropTransactionCalls(tx.calls)
+    this.calls = tx.calls
   }
 
   getDataCandidates(): string[] {
@@ -99,21 +68,4 @@ export function toInteropTransaction(
     return tx
   }
   return new InteropTransactionDTO(tx)
-}
-
-function normalizeInteropTransactionCalls(
-  calls: unknown,
-): TransactionCall[] | undefined {
-  if (!Array.isArray(calls)) return
-
-  const normalized: TransactionCall[] = []
-  for (const call of calls) {
-    const parsedCall = TransactionCall.safeParse(call)
-    if (!parsedCall.success || parsedCall.data === undefined) {
-      continue
-    }
-    normalized.push(parsedCall.data)
-  }
-
-  return normalized.length > 0 ? normalized : undefined
 }
