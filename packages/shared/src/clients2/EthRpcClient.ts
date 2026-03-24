@@ -400,6 +400,9 @@ const RpcTransactionCall = v.passthroughObject({
   input: vNullableData.optional(),
   data: vNullableData.optional(),
 })
+const vNullableCalls = v
+  .union([v.array(RpcTransactionCall), v.null()])
+  .transform((value) => value ?? undefined)
 
 const RpcTransaction = v.passthroughObject({
   blockHash: v.union([v.null(), vData(32)]),
@@ -459,7 +462,7 @@ const RpcTransaction = v.passthroughObject({
     )
     .optional(),
   // optional on custom tx types
-  calls: v.array(RpcTransactionCall).optional(),
+  calls: vNullableCalls.optional(),
 })
 
 export type RpcBlockWithTransactions = v.infer<typeof RpcBlockWithTransactions>
