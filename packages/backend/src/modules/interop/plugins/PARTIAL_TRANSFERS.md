@@ -52,54 +52,44 @@ Use this quick matrix:
 | `srcChain` | `dstEvent` | partial |
 | `srcChain` | `dstChain` | invalid |
 
-## Super short `layerzero-v2-ofts` example
+## Combined `layerzero-v2-ofts` + `matchTypes` example
 
 ```ts
-// full match (current OFT flow)
-const sent = db.find(OFTSentPacketSent, { guid })
-if (!sent) return
-return [
-  Result.Transfer('oftv2.Transfer', {
-    srcEvent: sent,
-    dstEvent: oftReceivedPacketDelivered,
-    srcAmount: sent.args.amountSentLD,
-    dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
-  }),
-]
-```
+// Injected policy list (for example from deps/config).
+private readonly oneSidedChains: string[] = ['solana']
 
-```ts
-// one-sided variant (if destination event is missing, but chain is known)
-// so << if $dstChain in oneSidedChains and we could not find counter-party event then: >>
-return [
-  Result.Transfer('oftv2.Transfer', {
-    srcEvent: sent,
-    dstChain: sent.args.$dstChain,
-  }),
-]
-```
-
-## `matchTypes` (trigger array) pattern
-
-If you add a new event type to matching, do both:
-
-1. Extend `matchTypes`
-2. Handle that type in `match()`
-
-```ts
 matchTypes = [OFTReceivedPacketDelivered, OFTSentPacketSent]
 
 match(event, db) {
+  // 1) Full transfer path: destination-side event arrived.
   if (OFTReceivedPacketDelivered.checkType(event)) {
-    // existing full-match path
+    const sent = db.find(OFTSentPacketSent, { guid: event.args.guid })
+    if (!sent) return
+
+    return [
+      Result.Transfer('oftv2.Transfer', {
+        srcEvent: sent,
+        dstEvent: event,
+        srcAmount: sent.args.amountSentLD,
+        dstAmount: event.args.amountReceivedLD,
+      }),
+    ]
   }
 
+  // 2) Fallback one-sided path: source-side event arrived, destination event missing.
   if (OFTSentPacketSent.checkType(event)) {
-    // fallback one-sided path
+    const dstChain = event.args.$dstChain
+    if (!dstChain || !this.oneSidedChains.includes(dstChain)) return
+
+    const hasCounterparty = db.find(OFTReceivedPacketDelivered, {
+      guid: event.args.guid,
+    })
+    if (hasCounterparty) return
+
     return [
       Result.Transfer('oftv2.Transfer', {
         srcEvent: event,
-        dstChain: event.args.$dstChain,
+        dstChain,
       }),
     ]
   }
@@ -108,7 +98,7 @@ match(event, db) {
 
 Note:
 
-- The actual plugin field name is `matchTypes` (sometimes called "matched types" informally).
+- The field is `matchTypes`
 
 ## Mental model (step-by-step)
 
