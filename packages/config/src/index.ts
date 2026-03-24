@@ -5,6 +5,7 @@
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {
   INTEROP_CHAINS,
+  INTEROP_ONE_SIDED_CHAINS,
   type InteropChain,
 } from './global/interopChains'
 export { HOMEPAGE_MILESTONES } from './global/milestones'

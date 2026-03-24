@@ -235,6 +235,7 @@ export interface InteropFeatureConfig {
   }
   inMemoryEventCap: number
   notifications: boolean
+  oneSidedChains: string[]
 }
 
 export interface DaBeatConfig {

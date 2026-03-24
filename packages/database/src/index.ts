@@ -11,6 +11,7 @@ export type {
 } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
+export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,

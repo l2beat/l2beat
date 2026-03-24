@@ -168,4 +168,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'TMP',
     explorerUrl: 'https://explore.tempo.xyz',
   },
-]
+] as const
+
+export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const
