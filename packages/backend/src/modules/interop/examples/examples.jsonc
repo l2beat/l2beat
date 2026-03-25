@@ -2336,36 +2336,145 @@
       {
         "chain": "arbitrum",
         "tx": "0xbb37befbb0b6a3935dca843c7e5d344bcd488df9650b8af755e50cc284174cbf"
+      },
+      // arbitrum -> ethereum (batch withdrawal: 3 ERC20s, 2 finalized in first tx, 1 in second)
+      {
+        "chain": "arbitrum",
+        "tx": "0xb8dfa0f4fa976bc2d4605707b144a7622e0186968c4f7dfe5e2ac722f0c65f84"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa3d09a8874ff55654c69e98e6d9dc9d79505dffee7ca7bd45bbc4421cc16ba9b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9a463f4602f065af48f4621d0f1428cc87fbb697fc1ea9dd572f51152a43ffc7"
       }
     ],
-    "events": [
-      "orbitstack.L2ToL1Tx",
-      "orbitstack.L2ToL1Tx",
-      "orbitstack.OutBoxTransactionExecuted",
-      "orbitstack.OutBoxTransactionExecuted",
-      "orbitstack.MessageDelivered",
-      "orbitstack.MessageDelivered",
-      "orbitstack.MessageDelivered",
-      "orbitstack.RedeemScheduled",
-      "orbitstack.RedeemScheduled",
-      "orbitstack.RedeemScheduled"
-    ],
-    "messages": [
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-standardgateway"
-      },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
-      { "type": "orbitstack.L1ToL2Message", "app": "unknown" },
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" }
-    ],
-    "transfers": [
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer"
-    ]
+    "expects": {
+      "events": [
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        // batch withdrawal: 3 L2ToL1Tx + 3 OutBoxTransactionExecuted
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted"
+      ],
+      "messages": [
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "unknown" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        // batch withdrawal: 3 standardgateway messages
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        }
+      ],
+      "transfers": [
+        // ERC20 withdrawal (~143.9 tokens, pre-existing pair)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": { "tokenAmount": "143889600000000000000" },
+          "dst": { "tokenAmount": "143889600000000000000" }
+        },
+        // batch withdrawal: AAVE (~20.4)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "20398996319898153414",
+            "financials": { "symbol": "AAVE" }
+          },
+          "dst": {
+            "tokenAmount": "20398996319898153414",
+            "financials": { "symbol": "AAVE" }
+          }
+        },
+        // batch withdrawal: LINK (~721.6)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "721637591964946688931",
+            "financials": { "symbol": "LINK" }
+          },
+          "dst": {
+            "tokenAmount": "721637591964946688931",
+            "financials": { "symbol": "LINK" }
+          }
+        },
+        // batch withdrawal: WBTC (~0.2)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "20242269",
+            "financials": { "symbol": "WBTC" }
+          },
+          "dst": {
+            "tokenAmount": "20242269",
+            "financials": { "symbol": "WBTC" }
+          }
+        },
+        // ETH-only withdrawal (~1.18 ETH)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1180000000000000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1180000000000000000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH-only deposit (~4.1 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "4095649445030424000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "4095649445030424000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH deposit via LiFi (~1.2 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "1208543441872000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1208543441872000000",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
   },
   "orbitstack-contract-deposit": {
     "description": "ETH deposits via contract (tx.value != callvalue)",
@@ -2588,7 +2697,53 @@
         "chain": "arbitrum",
         "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        // ERC20 deposit: LINK (~425.4)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "425376209999999983616",
+            "financials": { "symbol": "LINK" }
+          },
+          "dst": {
+            "tokenAmount": "425376209999999983616",
+            "financials": { "symbol": "LINK" }
+          }
+        },
+        // ETH withdrawal via standardgateway
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": { "tokenAmount": "833465700000" },
+          "dst": { "tokenAmount": "833465700000" }
+        },
+        // ETH withdrawal (~10000 ETH)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "10000000000000000000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "10000000000000000000000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH deposit (~1.98 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "1978210989309931500",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1978210989309931500",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
   },
   "orbitstack-customgateway": {
     "txs": [
@@ -2681,76 +2836,166 @@
         "tx": "0x5b3b56b8ec3e0fc60583e4c1dba1b25b0019bf348a423880a1d5c4b429eff2af"
       }
     ],
-    "events": [
-      // dai deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // dai withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // lpt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // lpt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // grt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // grt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // wsteth deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // wsteth withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized"
-    ],
-    "messages": [
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-dai"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-lpt"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-grt"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-wsteth"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-dai"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-lpt"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-grt"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-wsteth"
-      }
-    ],
-    "transfers": [
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer"
-    ]
+    "expects": {
+      "events": [
+        // dai deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // dai withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // lpt deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // lpt withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // grt deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // grt withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // wsteth deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // wsteth withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized"
+      ],
+      "messages": [
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-dai"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-lpt"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-grt"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-wsteth"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-dai"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-lpt"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-grt"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-wsteth"
+        }
+      ],
+      "transfers": [
+        // DAI deposit (~100)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "100000000000000000000",
+            "financials": { "symbol": "DAI" }
+          },
+          "dst": {
+            "tokenAmount": "100000000000000000000",
+            "financials": { "symbol": "DAI" }
+          }
+        },
+        // LPT deposit (~8500)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "8500000000000000000000",
+            "financials": { "symbol": "LPT" }
+          },
+          "dst": {
+            "tokenAmount": "8500000000000000000000",
+            "financials": { "symbol": "LPT" }
+          }
+        },
+        // GRT deposit (~4235.5)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "4235507018590850589075",
+            "financials": { "symbol": "GRT" }
+          },
+          "dst": {
+            "tokenAmount": "4235507018590850589075",
+            "financials": { "symbol": "GRT" }
+          }
+        },
+        // wstETH deposit (~32.7)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "32671608000000000000",
+            "financials": { "symbol": "wstETH" }
+          },
+          "dst": {
+            "tokenAmount": "32671608000000000000",
+            "financials": { "symbol": "wstETH" }
+          }
+        },
+        // DAI withdrawal (~382183.4)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "382183383839361344983387",
+            "financials": { "symbol": "DAI" }
+          },
+          "dst": {
+            "tokenAmount": "382183383839361344983387",
+            "financials": { "symbol": "DAI" }
+          }
+        },
+        // LPT withdrawal (~187)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "187000000000000000000",
+            "financials": { "symbol": "LPT" }
+          },
+          "dst": {
+            "tokenAmount": "187000000000000000000",
+            "financials": { "symbol": "LPT" }
+          }
+        },
+        // GRT withdrawal (~1000)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1000000000000000000000",
+            "financials": { "symbol": "GRT" }
+          },
+          "dst": {
+            "tokenAmount": "1000000000000000000000",
+            "financials": { "symbol": "GRT" }
+          }
+        },
+        // wstETH withdrawal (~4.25)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "4248954738283870331",
+            "financials": { "symbol": "wstETH" }
+          },
+          "dst": {
+            "tokenAmount": "4248954738283870331",
+            "financials": { "symbol": "wstETH" }
+          }
+        }
+      ]
+    }
   },
   "orbitstack-wethgateway": {
     "txs": [
@@ -2776,7 +3021,35 @@
         "chain": "ethereum",
         "tx": "0x21aa860c4921be68811f449b8163385c5e4b859e17636d22e43ec40c2d06a64d"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        // WETH deposit (~0.026)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "26034215081344613",
+            "financials": { "symbol": "WETH" }
+          },
+          "dst": {
+            "tokenAmount": "26034215081344613",
+            "financials": { "symbol": "WETH" }
+          }
+        },
+        // WETH withdrawal (~0.00148)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1480000000000000",
+            "financials": { "symbol": "WETH" }
+          },
+          "dst": {
+            "tokenAmount": "1480000000000000",
+            "financials": { "symbol": "WETH" }
+          }
+        }
+      ]
+    }
   },
   "hyperlane": {
     "txs": [
