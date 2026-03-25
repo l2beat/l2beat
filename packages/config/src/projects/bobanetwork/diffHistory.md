@@ -8,7 +8,7 @@ Generated with discovered.json: 0x720cb402a09b5accf300887df5474b402d182dc5
 
 ## Description
 
-Upgrade to op-contracts/v2.0.0 (Upgrade 13: OPCM and Incident Response Improvements, https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739) executed on 2026-03-16. All core contracts upgraded from op-contracts/v1.8.0. Key changes: OptimismPortal2 (3.10.0 → 3.13.0) now verifies a game "was" the respected type at creation rather than "currently is", improving incident response. AnchorStateRegistry (→ 2.2.2) unifies anchor state across game types. PermissionedDisputeGame (→ 1.4.1) adds automatic bond refunding on invalidation. DelayedWETH (1.1.0 → 1.3.0) delay reduced from 7d to 3.5d (302400s). SystemConfig (2.3.0 → 2.4.0) adds consolidated `getAddresses` getter, removes gasPayingToken fields. Also upgraded: L1CrossDomainMessenger (→ 2.5.0), L1StandardBridge (→ 2.2.2), L1ERC721Bridge (→ 2.3.1), OptimismMintableERC20Factory (→ 1.10.1), DisputeGameFactory (→ 1.0.1), SuperchainConfig (→ 1.2.0), MIPS (→ 1.3.0), PreimageOracle (→ 1.1.4).
+Upgrade 13: OPCM and Incident Response Improvements. https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739
 
 ## Watched changes
 

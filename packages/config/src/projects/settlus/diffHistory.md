@@ -8,7 +8,9 @@ Generated with discovered.json: 0x8e0cbedaba24cacaa0c7de1c655da87b2231c636
 
 ## Description
 
-Upgrade to op-contracts/v2.0.0 (Upgrade 13: OPCM and Incident Response Improvements), same release as bobanetwork but executed on 2026-03-24. Identical implementation addresses. All core contracts upgraded: SystemConfig (2.3.0 → 2.4.0), OptimismPortal2 (3.10.0 → 3.13.0), L1CrossDomainMessenger (2.3.0 → 2.5.0), L1StandardBridge (2.1.0 → 2.2.2), L1ERC721Bridge (2.1.0 → 2.3.1), OptimismMintableERC20Factory (1.9.0 → 1.10.1), DisputeGameFactory (1.0.0 → 1.0.1), DelayedWETH (1.1.0 → 1.3.0, delay reduced from 7d to 3.5d). New dispute game infra deployed: MIPS (→ 1.3.0), PreimageOracle (→ 1.1.4), PermissionedDisputeGame (→ 1.4.1), AnchorStateRegistry (→ 2.2.2). Also includes the shared OpFoundation signer rotation (3 signers rotated on OpFoundationUpgradeSafe).
+Upgrade 13: OPCM and Incident Response Improvements. https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739
+
+Also includes the shared OpFoundation signer rotation (3 signers rotated on OpFoundationUpgradeSafe).
 
 ## Watched changes
 
