@@ -40,7 +40,7 @@ export class AnomalyNotifier {
     private readonly db: Database,
     private readonly minDuration: number,
     private readonly trackedTxsConfig: TrackedTxsConfig,
-    private readonly discordWebhookUrl?: string,
+    private readonly discordWebhookUrl: string,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
