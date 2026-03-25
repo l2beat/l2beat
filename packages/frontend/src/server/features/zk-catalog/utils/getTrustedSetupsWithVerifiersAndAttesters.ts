@@ -20,6 +20,17 @@ import type { TrustedSetupVerifierData } from '../getZkCatalogEntries'
 import { getZkCatalogLogo } from '../getZkCatalogLogo'
 import { tvsComparatorWithDaBridges } from './tvsComparatorWithDaBridges'
 
+function toPlainAddress(address: string) {
+  return ChainSpecificAddress.check(address)
+    ? ChainSpecificAddress.address(address)
+    : address
+}
+
+function explorerAddressPageUrl(contractUrl: string, plainEthAddress: string) {
+  const parsed = new URL(contractUrl)
+  return `${parsed.origin}/address/${plainEthAddress}#code`
+}
+
 export type TrustedSetupsByProofSystem = Record<
   string,
   {
@@ -71,8 +82,8 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
       const filteredVerifiers = targetProject
         ? verifiersWithUsedIn.filter((v) =>
-            v.usedIn.some((u) => u.id === targetProject.id),
-          )
+          v.usedIn.some((u) => u.id === targetProject.id),
+        )
         : verifiersWithUsedIn
       if (targetProject && filteredVerifiers.length === 0) return []
 
@@ -91,22 +102,22 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
           {
             onchainVerifiers: targetProject
               ? uniqBy(
-                  filteredVerifiers.flatMap((v) =>
-                    v.deployments
-                      .filter((d) =>
-                        d.usedIn.some((u) => u.id === targetProject.id),
-                      )
-                      .map((d) =>
-                        getOnchainVerifier(
-                          d.deployment.chain,
-                          d.deployment.address,
-                          targetProject.contracts,
-                        ),
-                      )
-                      .filter(notUndefined),
-                  ),
-                  (v) => v.href,
-                )
+                filteredVerifiers.flatMap((v) =>
+                  v.deployments
+                    .filter((d) =>
+                      d.usedIn.some((u) => u.id === targetProject.id),
+                    )
+                    .map((d) =>
+                      getOnchainVerifier(
+                        d.deployment.chain,
+                        d.deployment.address,
+                        targetProject.contracts,
+                      ),
+                    )
+                    .filter(notUndefined),
+                ),
+                (v) => v.href,
+              )
               : undefined,
             trustedSetups,
             verifiers: {
@@ -179,10 +190,10 @@ function getVerifiersWithProcessedUsedIn(
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
-              project.id,
-              deployment.chain,
-              deployment.address,
-            ),
+            project.id,
+            deployment.chain,
+              toPlainAddress(deployment.address),
+          ),
       }))
 
       return {
@@ -198,15 +209,19 @@ function getOnchainVerifier(
   address: string,
   contracts: ProjectContracts | undefined,
 ) {
+  const addressKey = toPlainAddress(address)
+
   const contract = contracts?.addresses[chain]?.find(
-    (contract) => ChainSpecificAddress.address(contract.address) === address,
+    (c) => ChainSpecificAddress.address(c.address) === addressKey,
   )
 
   if (!contract?.url) return undefined
 
+  const plainEthAddress = ChainSpecificAddress.address(contract.address)
+
   return {
     name: contract.name,
-    href: contract.url,
+    href: explorerAddressPageUrl(contract.url, plainEthAddress),
   }
 }
 

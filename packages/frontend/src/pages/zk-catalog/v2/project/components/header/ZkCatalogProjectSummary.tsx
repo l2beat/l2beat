@@ -321,12 +321,13 @@ function MergedOnchainVerifierBlock({
           </TooltipContent>
         </Tooltip>
       </div>
-      <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-label-value-14">
-        {hasOnchain && <OnchainVerifiers onchainVerifiers={onchainVerifiers} />}
-        {totalVerifiers > 0 && (
+      {hasOnchain && <OnchainVerifiers onchainVerifiers={onchainVerifiers} />}
+      {totalVerifiers > 0 && (
+        <div className="flex items-center gap-2 text-label-value-12 text-secondary">
+          <p className="font-medium">Verification</p>
           <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
