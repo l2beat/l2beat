@@ -117,9 +117,15 @@ export function TrustedSetupsByProofSystemSection({
                 return (
                   <tr
                     key={key}
-                    className={variant === 'scaling' ? 'align-top' : 'h-8 align-middle'}
+                    className={
+                      variant === 'scaling' ? 'align-top' : 'h-8 align-middle'
+                    }
                   >
-                    <td className={variant === 'scaling' ? 'align-top' : undefined}>
+                    <td
+                      className={
+                        variant === 'scaling' ? 'align-top' : undefined
+                      }
+                    >
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
@@ -345,7 +351,9 @@ function MergedOnchainVerifierBlock({
           ))}
         </div>
       ) : (
-        totalVerifiers > 0 && <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
+        totalVerifiers > 0 && (
+          <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
+        )
       )}
     </div>
   )

@@ -10,7 +10,9 @@ import { ps } from '~/server/projects'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
 
-function plainDeploymentAddress(address: EthereumAddress | string): EthereumAddress {
+function plainDeploymentAddress(
+  address: EthereumAddress | string,
+): EthereumAddress {
   return ChainSpecificAddress.check(address)
     ? ChainSpecificAddress.address(address)
     : (address as EthereumAddress)

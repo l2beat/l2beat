@@ -87,8 +87,8 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
       const filteredVerifiers = targetProject
         ? verifiersWithUsedIn.filter((v) =>
-          v.usedIn.some((u) => u.id === targetProject.id),
-        )
+            v.usedIn.some((u) => u.id === targetProject.id),
+          )
         : verifiersWithUsedIn
       if (targetProject && filteredVerifiers.length === 0) return []
 
@@ -170,10 +170,10 @@ function getVerifiersWithProcessedUsedIn(
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
-            project.id,
-            deployment.chain,
+              project.id,
+              deployment.chain,
               toPlainAddress(deployment.address),
-          ),
+            ),
       }))
 
       return {
@@ -189,24 +189,25 @@ function getOnchainVerifiersForProject(
   targetProjectId: ProjectId,
   contracts: ProjectContracts | undefined,
 ) {
-  const onchainVerifiers = filteredVerifiers.flatMap(({ verifier, deployments }) =>
-    deployments
-      .filter((d) => d.usedIn.some((u) => u.id === targetProjectId))
-      .map((d) => {
-        const onchainVerifier = getOnchainVerifier(
-          d.deployment.chain,
-          d.deployment.address,
-          contracts,
-        )
+  const onchainVerifiers = filteredVerifiers.flatMap(
+    ({ verifier, deployments }) =>
+      deployments
+        .filter((d) => d.usedIn.some((u) => u.id === targetProjectId))
+        .map((d) => {
+          const onchainVerifier = getOnchainVerifier(
+            d.deployment.chain,
+            d.deployment.address,
+            contracts,
+          )
 
-        if (!onchainVerifier) return undefined
+          if (!onchainVerifier) return undefined
 
-        return {
-          ...onchainVerifier,
-          verifier,
-        }
-      })
-      .filter(notUndefined),
+          return {
+            ...onchainVerifier,
+            verifier,
+          }
+        })
+        .filter(notUndefined),
   )
 
   return Object.values(groupBy(onchainVerifiers, (v) => v.href)).flatMap(
