@@ -1,5 +1,4 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { createColumnHelper } from '@tanstack/react-table'
+import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -11,73 +10,34 @@ import {
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
-import type { AverageDuration } from '~/server/features/scaling/interop/types'
+import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
+import type {
+  AverageDuration,
+  TokenData,
+  TokenFlowData,
+  TokensPairData,
+} from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
-import { type TokenFlowDisplayData, TokenFlowsCell } from './TokenFlowsCell'
+import { TokenFlowsCell } from './TokenFlowsCell'
 
-export type TopItem = {
-  id?: string
-  displayName: string
-  issuer?: string | null
-  iconUrl: string
+export type TokenRow = TokenData & BasicTableRow
+export type TokensPairRow = TokensPairData & BasicTableRow
+
+type CommonRow = {
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
   avgValue: number | null
   minTransferValueUsd?: number
   maxTransferValueUsd?: number
-  netMintedValue?: number
-  flows?: TokenFlowDisplayData[]
+  flows: TokenFlowData[]
 }
-export type TopItemType = 'tokens' | 'chains'
 
-export type TopItemRow = TopItem & BasicTableRow
-const columnHelper = createColumnHelper<TopItemRow>()
-
-export const getTopItemsColumns = (
-  itemType: TopItemType,
-  showNetMintedValueColumn?: boolean,
-) =>
-  compact([
-    columnHelper.display({
-      id: 'icon',
-      cell: (ctx) => (
-        <img
-          className="min-h-[20px] min-w-[20px] rounded-full bg-white shadow"
-          src={ctx.row.original.iconUrl}
-          width={20}
-          height={20}
-          alt={`${ctx.row.original.displayName} icon`}
-        />
-      ),
-      meta: {
-        headClassName: 'w-[32px]',
-      },
-      size: 28,
-      enableHiding: false,
-    }),
-    columnHelper.accessor('displayName', {
-      header: itemTypeToHeader(itemType),
-      cell: (ctx) => (
-        <TwoRowCell>
-          <TwoRowCell.First className="font-bold leading-none!">
-            {ctx.row.original.displayName}
-          </TwoRowCell.First>
-          {ctx.row.original.issuer && (
-            <TwoRowCell.Second>
-              Issued by{' '}
-              <span className="capitalize">{ctx.row.original.issuer}</span>
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      ),
-      meta: {
-        headClassName: 'pl-0!',
-        cellClassName: 'pl-0!',
-      },
-    }),
-    columnHelper.accessor('volume', {
+function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
+  return [
+    columnHelper.accessor((row) => row.volume, {
+      id: 'volume',
       header: 'Last 24h\nVolume',
       cell: (ctx) => {
         if (ctx.row.original.volume === null) return EM_DASH
@@ -91,7 +51,7 @@ export const getTopItemsColumns = (
         align: 'right',
       },
     }),
-    columnHelper.accessor('transferCount', {
+    columnHelper.accessor((row) => row.transferCount, {
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
         <div className="font-medium text-label-value-15">
@@ -126,7 +86,7 @@ export const getTopItemsColumns = (
         },
       },
     ),
-    columnHelper.accessor('avgValue', {
+    columnHelper.accessor((row) => row.avgValue, {
       header: 'Last 24h avg.\ntransfer value',
       cell: (ctx) => {
         if (ctx.row.original.avgValue === null) return EM_DASH
@@ -184,22 +144,65 @@ export const getTopItemsColumns = (
         )
       },
     }),
-    itemType === 'tokens' &&
-      columnHelper.accessor(
-        (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
-        {
-          id: 'flows',
-          header: 'Flows',
-          cell: (ctx) => {
-            const flows = ctx.row.original.flows
-            if (!flows || flows.length === 0) return EM_DASH
+    columnHelper.accessor(
+      (row) => row.flows?.reduce((acc, flow) => acc + flow.volume, 0) ?? 0,
+      {
+        id: 'flows',
+        header: 'Flows',
+        cell: (ctx) => {
+          const flows = ctx.row.original.flows
+          if (!flows || flows.length === 0) return EM_DASH
 
-            return <TokenFlowsCell flows={flows} />
-          },
+          return <TokenFlowsCell flows={flows} />
         },
+      },
+    ),
+  ]
+}
+
+const tokenColumnHelper = createColumnHelper<TokenRow>()
+export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
+  compact([
+    tokenColumnHelper.display({
+      id: 'icon',
+      cell: (ctx) => (
+        <img
+          className="min-h-[20px] min-w-[20px] rounded-full bg-white shadow"
+          src={ctx.row.original.iconUrl}
+          width={20}
+          height={20}
+          alt={`${ctx.row.original.symbol} icon`}
+        />
       ),
+      meta: {
+        headClassName: 'w-[32px]',
+      },
+      size: 28,
+      enableHiding: false,
+    }),
+    tokenColumnHelper.accessor('symbol', {
+      header: 'Symbol',
+      cell: (ctx) => (
+        <TwoRowCell>
+          <TwoRowCell.First className="font-bold leading-none!">
+            {ctx.row.original.symbol}
+          </TwoRowCell.First>
+          {ctx.row.original.issuer && (
+            <TwoRowCell.Second>
+              Issued by{' '}
+              <span className="capitalize">{ctx.row.original.issuer}</span>
+            </TwoRowCell.Second>
+          )}
+        </TwoRowCell>
+      ),
+      meta: {
+        headClassName: 'pl-0!',
+        cellClassName: 'pl-0!',
+      },
+    }),
+    ...getCommonColumns(tokenColumnHelper),
     showNetMintedValueColumn &&
-      columnHelper.accessor('netMintedValue', {
+      tokenColumnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',
         meta: {
           align: 'right',
@@ -216,13 +219,48 @@ export const getTopItemsColumns = (
       }),
   ])
 
-const itemTypeToHeader = (itemType: TopItemType) => {
-  switch (itemType) {
-    case 'tokens':
-      return 'Symbol'
-    case 'chains':
-      return 'Chain'
-    default:
-      assertUnreachable(itemType)
-  }
-}
+const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
+export const topTokensPairsColumns = [
+  tokensPairColumnHelper.accessor(
+    (row) =>
+      row.id === 'unknown'
+        ? 'Unknown pairs'
+        : `${row.tokenA.symbol} ${row.tokenB.symbol}`,
+    {
+      id: 'pair',
+      header: 'Pair',
+      cell: (ctx) => {
+        const { id, tokenA, tokenB } = ctx.row.original
+        if (id === 'unknown') {
+          return <span className="font-bold">Unknown pairs</span>
+        }
+        return (
+          <div className="flex items-center gap-1 font-bold">
+            <img
+              className="size-[20px] rounded-full bg-white shadow"
+              src={tokenA.iconUrl}
+              width={20}
+              height={20}
+              alt={`${tokenA.symbol} icon`}
+            />
+            <span>{tokenA.symbol}</span>
+            <BidirectionalArrowIcon className="size-4 fill-brand" />
+            <img
+              className="size-[20px] rounded-full bg-white shadow"
+              src={tokenB.iconUrl}
+              width={20}
+              height={20}
+              alt={`${tokenB.symbol} icon`}
+            />
+            <span>{tokenB.symbol}</span>
+          </div>
+        )
+      },
+      meta: {
+        cellClassName: 'pl-3!',
+        headClassName: 'pl-3!',
+      },
+    },
+  ),
+  ...getCommonColumns(tokensPairColumnHelper),
+]
