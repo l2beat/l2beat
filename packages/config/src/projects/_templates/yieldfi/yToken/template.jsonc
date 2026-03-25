@@ -22,5 +22,6 @@
     "$minters": {
       "handler": { "type": "YieldFiMinters", "permissionlessMinting": true }
     }
-  }
+  },
+  "ignoreRelatives": ["asset"]
 }

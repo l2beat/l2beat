@@ -1,6 +1,6 @@
 {
   "name": "phala",
-  "timestamp": 1774433034,
+  "timestamp": 1774387529,
   "configHash": "0xd1fa79dbca1deaf58eb68a2d4fd42b2ecf5b7bedaaed6de2d7a65dce1154f07b",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -304,7 +304,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 407,
+        "gameCount": 406,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824",
@@ -319,7 +319,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 39,
+        "permissionedGamesTotal": 38,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1174,13 +1174,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0x58Be93E5C8eEcb28Cf5DFFDB653419D99E2d60aD",
+        "anchorGame": "eth:0xAdEc2028c64fFe7bc671aCc28F365DBAd4cEf317",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x868c98e1328fdada0fc110c441b48f0c43e30f0005ea779362a193806492d1c0",
-          3940212
+          "0x64cb19b7901c058e7e3eeb394fd391dc9738be7946d7c008211ee0ebd44f9da5",
+          3935941
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -2339,6 +2339,6 @@
     "succinct/OPSuccinct/OPSuccinctDisputeGame": "0x405a65bfa65673c1ee3d040cdeb0ac4bd18c8b092ad1271c30f4781759b27c1b",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_phala": "0x4342677410b67fb7bc701eb3f57360f9f6a8eaac289a8b2fd9b756b172358ef1"
   },
-  "usedBlockNumbers": { "ethereum": 24733850 },
+  "usedBlockNumbers": { "ethereum": 24730068 },
   "permissionsConfigHash": "0xf1f85eafacd641e5ae243e1172e0307bd993c34f853eabbc04efa749021d1654"
 }

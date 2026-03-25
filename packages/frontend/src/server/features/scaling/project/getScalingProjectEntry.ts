@@ -8,8 +8,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -26,6 +25,10 @@ import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import {
+  getPastUpgradesData,
+  getProjectPastUpgrades,
+} from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
@@ -587,21 +590,30 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.upgradesAndGovernance) {
+  const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+
+  if (
+    project.scalingTechnology.upgradesAndGovernance ||
+    allPastUpgrades.length > 0
+  ) {
     sections.push({
-      type: 'MarkdownSection',
+      type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: linkAddresses(
-          project.scalingTechnology.upgradesAndGovernance,
-          project.contracts,
-          project.permissions,
-        ),
+        content: project.scalingTechnology.upgradesAndGovernance
+          ? linkAddresses(
+              project.scalingTechnology.upgradesAndGovernance,
+              project.contracts,
+              project.permissions,
+            )
+          : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
+
+        pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })

@@ -8,8 +8,6 @@ export const externalLinks = {
   jobs: 'https://jobs.l2beat.com/',
   tools: 'https://tools.l2beat.com/',
   substackSubscribe: 'https://l2beatgov.substack.com/subscribe',
-  brandKit:
-    'https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b',
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',

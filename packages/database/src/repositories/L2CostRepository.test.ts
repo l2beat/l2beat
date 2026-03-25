@@ -158,6 +158,16 @@ describeDatabase(L2CostRepository.name, (db) => {
           },
         ])
       })
+
+      it('returns empty array when configIds is empty', async () => {
+        const result = await repository.getGasSumByTimeRangeAndConfigId(
+          [],
+          START - 1 * UnixTime.HOUR,
+          START,
+        )
+
+        expect(result).toEqual([])
+      })
     },
   )
 

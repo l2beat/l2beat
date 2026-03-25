@@ -75,6 +75,8 @@ export const espressoprover: BaseProject = {
       // },
       {
         hash: '0x060faa7957cb2ffdc75de8ea20d1eb50277c7fb0d2f48ecb7e2db7956d0bdad4',
+        name: 'Espresso verifier v3',
+        sourceLink: 'https://github.com/EspressoSystems/jellyfish',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {

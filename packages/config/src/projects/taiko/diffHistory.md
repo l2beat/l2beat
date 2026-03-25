@@ -1,3 +1,64 @@
+Generated with discovered.json: 0x7b187bd74c038c221e2ad9d6c5a2716ba39ff7ab
+
+# Diff at Tue, 24 Mar 2026 11:59:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eea8d762719901a50aabccb689d291326ce8830c block: 1773665926
+- current timestamp: 1774353478
+
+## Description
+
+operator changes.
+
+## Watched changes
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered.
+      description:
+-        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 3 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
+    }
+```
+
+Generated with discovered.json: 0xe1f9e231fc4d7bf6770d1c22702e14ad84b9dcfe
+
+# Diff at Mon, 16 Mar 2026 13:00:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1772790015
+- current timestamp: 1773665926
+
+## Description
+
+shasta proposal proceeds to public veto phase
+
+proposal: https://dao.taiko.xyz/plugins/community-proposals/#/proposals/26
+
+review: https://gist.github.com/sekuba/63e456c08ef9b36bce08546957324662
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        26
++        27
+      values.proposalIds.26:
++        "603470345479562597234986338918793351448504565786"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0xb1e7d44a9235de4aa70e4b6924570a5bad84cecd
 
 # Diff at Fri, 06 Mar 2026 09:41:48 GMT:

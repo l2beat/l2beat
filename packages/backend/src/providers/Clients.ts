@@ -9,6 +9,7 @@ import {
   DiscordClient,
   DuneClient,
   EigenApiClient,
+  EspressoClient,
   FuelClient,
   HttpClient,
   type IRpcClient,
@@ -31,6 +32,7 @@ import {
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
+import { DiscordWebhookClient } from '../modules/anomalies/clients/DiscordWebhookClient'
 
 export interface Clients {
   block: BlockClient[]
@@ -54,8 +56,10 @@ export interface Clients {
   rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
+  espresso: EspressoClient | undefined
   dune: DuneClient | undefined
   discord: DiscordClient | undefined
+  blobNotifierDiscord: DiscordWebhookClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -72,9 +76,11 @@ export function initClients(config: Config, logger: Logger): Clients {
   let avail: PolkadotRpcClient | undefined
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
+  let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
   let discord: DiscordClient | undefined
+  let blobNotifierDiscord: DiscordWebhookClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -269,6 +275,12 @@ export function initClients(config: Config, logger: Logger): Clients {
           assertUnreachable(layer.type)
       }
     }
+
+    if (config.da.ethereumNotifierDiscordWebhookUrl) {
+      blobNotifierDiscord = new DiscordWebhookClient(
+        config.da.ethereumNotifierDiscordWebhookUrl,
+      )
+    }
   }
 
   if (config.trackedTxsConfig && config.trackedTxsConfig.duneApiKey) {
@@ -345,6 +357,14 @@ export function initClients(config: Config, logger: Logger): Clients {
       http,
     })
     availWs = new AvailWsClient(config.daBeat.availWsUrl)
+    espresso = new EspressoClient({
+      sourceName: 'espresso',
+      apiUrl: config.daBeat.espressoApiUrl,
+      http,
+      retryStrategy: 'RELIABLE',
+      logger,
+      callsPerMinute: 100,
+    })
   }
 
   const getRpcClient = (chain: string) => {
@@ -379,6 +399,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     avail,
     availWs,
     near,
+    espresso,
     getStarknetClient,
     getRpcClient,
     rpcClients,
@@ -387,5 +408,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     lighter: lighterClient,
     dune,
     discord,
+    blobNotifierDiscord,
   }
 }

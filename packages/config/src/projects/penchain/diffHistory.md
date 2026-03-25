@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb4c44f747f46f13e7cf43819849938fca921c337
+
+# Diff at Tue, 24 Mar 2026 11:55:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eea8d762719901a50aabccb689d291326ce8830c block: 1762264391
+- current timestamp: 1774353270
+
+## Description
+
+dac url change.
+
+## Watched changes
+
+```diff
+    contract PolygonDataCommittee (eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      values.members.0.url:
+-        "https://dac.pentagon.games"
++        "http://10.30.33.163:8444"
+    }
+```
+
 Generated with discovered.json: 0x98589f32e78d7357bab32a10ad5017831af795ac
 
 # Diff at Tue, 04 Nov 2025 11:33:51 GMT:

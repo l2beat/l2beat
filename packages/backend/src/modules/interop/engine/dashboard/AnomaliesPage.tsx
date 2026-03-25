@@ -505,9 +505,13 @@ function SuspiciousTransfersTable(props: {
 
 function TransferTxHash(props: {
   chain: string
-  txHash: string
+  txHash: string | undefined
   getExplorerUrl: (chain: string) => string | undefined
 }) {
+  if (!props.txHash) {
+    return <>-</>
+  }
+
   const explorerUrl = props.getExplorerUrl(props.chain)
   if (!explorerUrl) {
     return <>{props.txHash}</>

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x11f72395cf9058cf8b040235095fb8b2b4445ce6
+Generated with discovered.json: 0x5591a3365d8cc9d0d9e1d61949f341ce62f8e615
 
-# Diff at Wed, 25 Mar 2026 10:03:24 GMT:
+# Diff at Tue, 24 Mar 2026 21:28:34 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160404
-- current timestamp: 1774432938
+- current timestamp: 1774387648
 
 ## Description
 
-FeeDisburser implementation upgraded (base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75 → base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6). The only code change is the version string from `1.0.0` to `1.0.0+fee-vault-withdraw-compat`, indicating compatibility with a new FeeVault withdrawal interface. No functional changes to the contract logic.
+FeeDisburser implementation upgraded (base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75 → base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6). The only code change is the version string from `1.0.0` to `1.0.0+fee-vault-withdraw-compat`, indicating compatibility with a new FeeVault withdrawal interface. No functional changes to the contract logic. [Diff](https://disco.l2beat.com/diff/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75/base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6)
 
 ## Watched changes
 

@@ -2,7 +2,6 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import {
-  assert,
   getInteropTransferValue,
   InMemoryCache,
   type UnixTime,
@@ -255,10 +254,16 @@ function getTokenIconUrl(
 function getTxHashHref(
   chainExplorerUrlsById: Map<string, string>,
   chainId: string,
-  txHash: string,
-): string {
+  txHash: string | undefined,
+): string | undefined {
+  if (!txHash) {
+    return undefined
+  }
+
   const explorerUrl = chainExplorerUrlsById.get(chainId)
-  assert(explorerUrl, `Missing explorer URL for chain: ${chainId}`)
+  if (!explorerUrl) {
+    return undefined
+  }
 
   return `${explorerUrl}/tx/${txHash}`
 }

@@ -183,6 +183,9 @@ function getDaSummaryEntry(
 
   daBridges.sort((a, b) => b.tvs.latest - a.tvs.latest)
 
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
@@ -190,7 +193,7 @@ function getDaSummaryEntry(
   )
 
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
       getDaLayerRisks(layer.daLayer, tvs.latest, economicSecurity),

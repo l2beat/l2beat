@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xda214a6650e7be81a7d46bb789cec668f790ec75
+Generated with discovered.json: 0x6bb77fab70893ab26a893a8d73e3ec83ae5669ce
 
-# Diff at Wed, 25 Mar 2026 10:08:53 GMT:
+# Diff at Tue, 24 Mar 2026 21:28:43 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1768566202
-- current timestamp: 1774433265
+- current timestamp: 1774387655
 
 ## Description
 
-Security Council nominee election progressed: electionCount incremented from 5 to 6, and the active cohort switched from 0 to 1.
+Security Council elections have started (election #6, cohort 1).
 
 ## Watched changes
 

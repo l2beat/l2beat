@@ -1,12 +1,19 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { CustomLink } from '~/components/link/CustomLink'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
+import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -55,8 +62,10 @@ export function ProjectZkCatalogSummary({ project }: Props) {
 
 export function TrustedSetupsByProofSystemSection({
   trustedSetupsByProofSystem,
+  variant = 'zkCatalog',
 }: {
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
+  variant?: 'zkCatalog' | 'scaling'
 }) {
   return (
     <div className="flex flex-col gap-2 md:gap-3">
@@ -66,32 +75,28 @@ export function TrustedSetupsByProofSystemSection({
       {/* Mobile */}
       <div className="space-y-4 md:hidden">
         {Object.entries(trustedSetupsByProofSystem).map(
-          ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
+          ([
+            key,
+            { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+          ]) => {
             const proofSystem = trustedSetups[0]?.proofSystem
             if (trustedSetups.length === 0 || !proofSystem) return null
 
             return (
               <div key={key} className="flex flex-col gap-3">
-                <TrustedSetupCell trustedSetups={trustedSetups} dotSize="lg" />
-                <div className="grid grid-cols-[200px_1fr] gap-1">
-                  {projectsUsedIn && (
-                    <div className="flex flex-col gap-2">
-                      <p className="font-medium text-label-value-12 text-secondary">
-                        Used in
-                      </p>
-                      <ProjectsUsedIn
-                        noL2ClassName="text-label-value-12 font-medium text-secondary"
-                        usedIn={projectsUsedIn}
-                      />
-                    </div>
-                  )}
-                  <div className="flex flex-col gap-1.5">
-                    <p className="font-medium text-label-value-12 text-secondary">
-                      Verifiers
-                    </p>
-                    <VerifiedCountWithDetails data={verifiers} horizontal />
-                  </div>
-                </div>
+                <TrustedSetupCell
+                  trustedSetups={trustedSetups}
+                  dotSize="lg"
+                  displayType={
+                    variant === 'scaling' ? 'typeAndName' : undefined
+                  }
+                />
+                <MobileTrustedSetupsDetails
+                  variant={variant}
+                  onchainVerifiers={onchainVerifiers}
+                  projectsUsedIn={projectsUsedIn}
+                  verifiers={verifiers}
+                />
               </div>
             )
           },
@@ -102,39 +107,39 @@ export function TrustedSetupsByProofSystemSection({
         <table className="w-full border-separate border-spacing-y-4">
           <tbody>
             {Object.entries(trustedSetupsByProofSystem).map(
-              ([key, { trustedSetups, projectsUsedIn, verifiers }]) => {
+              ([
+                key,
+                { trustedSetups, projectsUsedIn, verifiers, onchainVerifiers },
+              ]) => {
                 const proofSystem = trustedSetups[0]?.proofSystem
                 if (trustedSetups.length === 0 || !proofSystem) return null
 
                 return (
-                  <tr key={key} className="h-8 align-middle">
-                    <td>
+                  <tr
+                    key={key}
+                    className={
+                      variant === 'scaling' ? 'align-top' : 'h-8 align-middle'
+                    }
+                  >
+                    <td
+                      className={
+                        variant === 'scaling' ? 'align-top' : undefined
+                      }
+                    >
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
+                        displayType={
+                          variant === 'scaling' ? 'typeAndName' : undefined
+                        }
                       />
                     </td>
-                    <td>
-                      {projectsUsedIn && (
-                        <div className="flex items-center gap-1.5">
-                          <p className="font-medium text-label-value-12 text-secondary">
-                            Used in
-                          </p>
-                          <ProjectsUsedIn
-                            noL2ClassName="text-label-value-12 font-medium text-secondary"
-                            usedIn={projectsUsedIn}
-                          />
-                        </div>
-                      )}
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <p className="font-medium text-label-value-12 text-secondary">
-                          Verifiers
-                        </p>
-                        <VerifiedCountWithDetails data={verifiers} horizontal />
-                      </div>
-                    </td>
+                    <DesktopTrustedSetupsCells
+                      variant={variant}
+                      onchainVerifiers={onchainVerifiers}
+                      projectsUsedIn={projectsUsedIn}
+                      verifiers={verifiers}
+                    />
                   </tr>
                 )
               },
@@ -142,6 +147,235 @@ export function TrustedSetupsByProofSystemSection({
           </tbody>
         </table>
       </div>
+    </div>
+  )
+}
+
+function MobileTrustedSetupsDetails({
+  variant,
+  onchainVerifiers,
+  projectsUsedIn,
+  verifiers,
+}: {
+  variant: 'zkCatalog' | 'scaling'
+  onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
+  verifiers: TrustedSetupsByProofSystem[string]['verifiers']
+}) {
+  if (variant === 'scaling') {
+    return (
+      <>
+        <MergedOnchainVerifierBlock
+          onchainVerifiers={onchainVerifiers}
+          verifiers={verifiers}
+        />
+        <UsedInBlock projectsUsedIn={projectsUsedIn} />
+      </>
+    )
+  }
+
+  return (
+    <div className="grid grid-cols-[200px_1fr] gap-1">
+      <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} mobile />
+      <UsedInBlock projectsUsedIn={projectsUsedIn} mobile />
+      <VerifierStatusBlock verifiers={verifiers} mobile />
+    </div>
+  )
+}
+
+function DesktopTrustedSetupsCells({
+  variant,
+  onchainVerifiers,
+  projectsUsedIn,
+  verifiers,
+}: {
+  variant: 'zkCatalog' | 'scaling'
+  onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
+  verifiers: TrustedSetupsByProofSystem[string]['verifiers']
+}) {
+  if (variant === 'scaling') {
+    return (
+      <>
+        <td className="min-w-0 align-top">
+          <MergedOnchainVerifierBlock
+            onchainVerifiers={onchainVerifiers}
+            verifiers={verifiers}
+          />
+        </td>
+        <td className="align-top">
+          <UsedInBlock projectsUsedIn={projectsUsedIn} stacked />
+        </td>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <td>
+        <OnchainVerifierBlock onchainVerifiers={onchainVerifiers} />
+      </td>
+      <td>
+        <UsedInBlock projectsUsedIn={projectsUsedIn} />
+      </td>
+      <td>
+        <VerifierStatusBlock verifiers={verifiers} />
+      </td>
+    </>
+  )
+}
+
+function OnchainVerifierBlock({
+  onchainVerifiers,
+  mobile = false,
+}: {
+  onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  mobile?: boolean
+}) {
+  if (!onchainVerifiers?.length) return null
+
+  return (
+    <div
+      className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
+    >
+      <p className="font-medium text-label-value-12 text-secondary">
+        Onchain verifier
+      </p>
+      <OnchainVerifiers onchainVerifiers={onchainVerifiers} />
+    </div>
+  )
+}
+
+function UsedInBlock({
+  projectsUsedIn,
+  mobile = false,
+  stacked = false,
+}: {
+  projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
+  mobile?: boolean
+  stacked?: boolean
+}) {
+  if (!projectsUsedIn.length) return null
+
+  return (
+    <div
+      className={
+        mobile || stacked ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'
+      }
+    >
+      <p className="font-medium text-label-value-12 text-secondary">Used in</p>
+      <ProjectsUsedIn
+        noL2ClassName="text-label-value-12 font-medium text-secondary"
+        usedIn={projectsUsedIn}
+      />
+    </div>
+  )
+}
+
+function VerifierStatusBlock({
+  verifiers,
+  mobile = false,
+}: {
+  verifiers: TrustedSetupsByProofSystem[string]['verifiers']
+  mobile?: boolean
+}) {
+  return (
+    <div
+      className={mobile ? 'flex flex-col gap-1.5' : 'flex items-center gap-2'}
+    >
+      <p className="font-medium text-label-value-12 text-secondary">
+        Verifiers
+      </p>
+      <VerifiedCountWithDetails data={verifiers} horizontal />
+    </div>
+  )
+}
+
+function verifierTotalCount(
+  verifiers: TrustedSetupsByProofSystem[string]['verifiers'],
+) {
+  return (
+    (verifiers.successful?.count ?? 0) +
+    (verifiers.unsuccessful?.count ?? 0) +
+    (verifiers.notVerified?.count ?? 0)
+  )
+}
+
+function MergedOnchainVerifierBlock({
+  onchainVerifiers,
+  verifiers,
+}: {
+  onchainVerifiers: TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  verifiers: TrustedSetupsByProofSystem[string]['verifiers']
+}) {
+  const hasOnchain = !!onchainVerifiers?.length
+  const totalVerifiers = verifierTotalCount(verifiers)
+
+  if (!hasOnchain && totalVerifiers === 0) {
+    return null
+  }
+
+  const title = hasOnchain ? 'Onchain verifier' : 'Verifiers'
+
+  return (
+    <div className="flex min-w-0 flex-col gap-1.5">
+      <div className="flex items-center gap-1">
+        <p className="font-medium text-label-value-12 text-secondary">
+          {title}
+        </p>
+        <Tooltip>
+          <TooltipTrigger type="button" className="text-secondary">
+            <InfoIcon className="size-3.5" variant="gray" />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-xs">
+            {hasOnchain
+              ? 'Onchain verifier contract links and attestation status for reported verifier hashes.'
+              : 'Attestation status for reported verifier hashes.'}
+          </TooltipContent>
+        </Tooltip>
+      </div>
+      {hasOnchain && onchainVerifiers ? (
+        <div className="flex min-w-0 flex-col gap-1.5">
+          {onchainVerifiers.map((verifier) => (
+            <div
+              key={verifier.href}
+              className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-label-value-14"
+            >
+              <CustomLink href={verifier.href}>{verifier.name}</CustomLink>
+              <VerifiedCountWithDetails
+                data={verifier.verifiers}
+                horizontal
+                hideCount
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        totalVerifiers > 0 && (
+          <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
+        )
+      )}
+    </div>
+  )
+}
+
+function OnchainVerifiers({
+  onchainVerifiers,
+}: {
+  onchainVerifiers: NonNullable<
+    TrustedSetupsByProofSystem[string]['onchainVerifiers']
+  >
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label-value-14">
+      {onchainVerifiers.map((verifier, index) => (
+        <span key={verifier.href}>
+          <CustomLink href={verifier.href}>{verifier.name}</CustomLink>
+          {index < onchainVerifiers.length - 1 && (
+            <span className="text-secondary">,</span>
+          )}
+        </span>
+      ))}
     </div>
   )
 }
