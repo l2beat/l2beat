@@ -51,22 +51,20 @@ export function TokensDialog({
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
 
-  const content = (
-    <Tabs
-      name="tokens"
-      value={activeTab}
-      onValueChange={(v) => setActiveTab(v as ActiveTab)}
-      variant="highlighted"
-    >
-      <TabsList>
-        <TabsTrigger value="tokens">Tokens</TabsTrigger>
-        <TabsTrigger
-          value="pairs"
-          onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
-        >
-          Pairs
-        </TabsTrigger>
-      </TabsList>
+  const tabsList = (
+    <TabsList>
+      <TabsTrigger value="tokens">Tokens</TabsTrigger>
+      <TabsTrigger
+        value="pairs"
+        onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
+      >
+        Pairs
+      </TabsTrigger>
+    </TabsList>
+  )
+
+  const tabsContent = (
+    <>
       <TabsContent value="tokens">
         <TokensTable
           queryInput={queryInput}
@@ -76,20 +74,28 @@ export function TokensDialog({
       <TabsContent value="pairs">
         <TokensPairsTable queryInput={queryInput} />
       </TabsContent>
-    </Tabs>
+    </>
   )
 
   if (breakpoint === 'xs' || breakpoint === 'sm') {
     return (
       <Drawer open={isOpen} onOpenChange={setIsOpen}>
         <DrawerContent>
-          <DrawerHeader className="mb-2">
-            <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
-            <BetweenChainsInfo />
-          </DrawerHeader>
-          <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
-            {content}
-          </div>
+          <Tabs
+            name="tokens"
+            value={activeTab}
+            onValueChange={(v) => setActiveTab(v as ActiveTab)}
+            variant="highlighted"
+          >
+            <DrawerHeader className="mb-2">
+              <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
+              <BetweenChainsInfo />
+              {tabsList}
+            </DrawerHeader>
+            <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
+              {tabsContent}
+            </div>
+          </Tabs>
         </DrawerContent>
       </Drawer>
     )
@@ -98,13 +104,21 @@ export function TokensDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[450px] w-[960px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
-        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
-          <DialogTitle>{title}</DialogTitle>
-          <BetweenChainsInfo className="mt-1" />
-        </DialogHeader>
-        <div className="overflow-x-auto">
-          <div className="mx-6">{content}</div>
-        </div>
+        <Tabs
+          name="tokens"
+          value={activeTab}
+          onValueChange={(v) => setActiveTab(v as ActiveTab)}
+          variant="highlighted"
+        >
+          <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
+            <DialogTitle>{title}</DialogTitle>
+            <BetweenChainsInfo className="mt-1" />
+            {tabsList}
+          </DialogHeader>
+          <div className="overflow-x-auto">
+            <div className="mx-6">{tabsContent}</div>
+          </div>
+        </Tabs>
       </DialogContent>
     </Dialog>
   )
