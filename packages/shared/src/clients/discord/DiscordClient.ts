@@ -4,21 +4,20 @@ import type { HttpClient } from '../http/HttpClient'
 export const DISCORD_MAX_MESSAGE_LENGTH = 2000
 
 interface DiscordClientConfig {
-  readonly callsPerMinute?: number
   readonly webhookUrl?: string
 }
+
+const CALLS_PER_MINUTE = 3000
 
 export class DiscordClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly config: DiscordClientConfig = {},
   ) {
-    if (config.callsPerMinute) {
-      const rateLimiter = new RateLimiter({
-        callsPerMinute: config.callsPerMinute,
-      })
-      this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
-    }
+    const rateLimiter = new RateLimiter({
+      callsPerMinute: CALLS_PER_MINUTE,
+    })
+    this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
   }
 
   async sendMessage(message: string, webhookUrl?: string) {

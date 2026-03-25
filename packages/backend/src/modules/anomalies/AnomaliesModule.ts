@@ -16,10 +16,10 @@ export function createAnomaliesModule({
   }
   logger = logger.tag({ feature: 'anomalies', module: 'anomalies' })
 
-  const anomaliesWebhookUrl =
-    config.discord && config.discord.webhooks.anomalies
   const anomaliesNotifier =
-    anomaliesWebhookUrl && config.trackedTxsConfig && providers.clients.discord
+    config.notifications &&
+    config.notifications.anomalies &&
+    config.trackedTxsConfig
       ? new AnomalyNotifier(
           logger,
           clock,
@@ -27,7 +27,7 @@ export function createAnomaliesModule({
           db,
           config.anomalies.anomaliesMinDuration,
           config.trackedTxsConfig,
-          anomaliesWebhookUrl,
+          config.notifications.anomalies.discordWebhookUrl,
         )
       : undefined
 

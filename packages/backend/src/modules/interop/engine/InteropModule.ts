@@ -42,19 +42,14 @@ export function createInteropModule({
 
   const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   let configStore = new InteropConfigStore(db)
-  const interopWebhookUrl = config.discord && config.discord.webhooks.interop
 
   let notificationClient: InteropNotifier | undefined
 
-  if (
-    config.interop.notifications &&
-    interopWebhookUrl &&
-    providers.clients.discord
-  ) {
+  if (config.notifications && config.notifications.interop) {
     notificationClient = new InteropNotifier(
       providers.clients.discord,
       logger,
-      interopWebhookUrl,
+      config.notifications.interop.discordWebhookUrl,
     )
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,

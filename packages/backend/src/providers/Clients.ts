@@ -57,12 +57,13 @@ export interface Clients {
   near: NearClient | undefined
   espresso: EspressoClient | undefined
   dune: DuneClient | undefined
-  discord: DiscordClient | undefined
+  discord: DiscordClient
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
 
+  const discord: DiscordClient = new DiscordClient(http)
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -77,7 +78,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
-  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -368,12 +368,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     const client = starknetClients.find((r) => r.chain === chain)
     assert(client, `${chain}: Starknet client not found`)
     return client
-  }
-
-  if (config.discord) {
-    discord = new DiscordClient(http, {
-      callsPerMinute: config.discord.callsPerMinute,
-    })
   }
 
   return {

@@ -3,7 +3,10 @@ import type { Database } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
-import type { DataAvailabilityTrackingConfig } from '../../config/Config'
+import type {
+  DataAvailabilityTrackingConfig,
+  NotificationsConfig,
+} from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -35,13 +38,10 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const ethereumBlobNotifierWebhookUrl = config.discord
-    ? config.discord.webhooks.ethereumBlobNotifier
-    : undefined
   const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
     createIndexers(
       config.da,
-      ethereumBlobNotifierWebhookUrl,
+      config.notifications,
       clock,
       db,
       logger,
@@ -98,7 +98,7 @@ export function initDataAvailabilityModule({
 
 function createIndexers(
   config: DataAvailabilityTrackingConfig,
-  ethereumBlobNotifierWebhookUrl: string | undefined,
+  notifications: NotificationsConfig | false,
   clock: Clock,
   database: Database,
   logger: Logger,
@@ -161,7 +161,7 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      if (providers.clients.discord && ethereumBlobNotifierWebhookUrl) {
+      if (notifications && notifications.ethereumBlobNotifier) {
         const hourlyIndexer = new HourlyIndexer(logger, clock)
         notificationIndexers.push(hourlyIndexer)
 
@@ -170,7 +170,8 @@ function createIndexers(
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
             discordClient: providers.clients.discord,
-            discordWebhookUrl: ethereumBlobNotifierWebhookUrl,
+            discordWebhookUrl:
+              notifications.ethereumBlobNotifier.discordWebhookUrl,
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],

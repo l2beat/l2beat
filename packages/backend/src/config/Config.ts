@@ -26,7 +26,7 @@ export interface Config {
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
-  readonly discord: DiscordConfig | false
+  readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -186,14 +186,27 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface DiscordConfig {
-  readonly callsPerMinute: number
-  readonly webhooks: {
-    readonly updateMonitor?: string
-    readonly anomalies?: string
-    readonly interop?: string
-    readonly ethereumBlobNotifier?: string
-  }
+export interface NotificationsConfig {
+  readonly updateMonitor:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly anomalies:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly interop:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly ethereumBlobNotifier:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
@@ -234,7 +247,6 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
-  notifications: boolean
   oneSidedChains: string[]
 }
 

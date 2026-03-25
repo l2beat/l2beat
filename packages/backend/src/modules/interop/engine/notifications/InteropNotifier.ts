@@ -17,7 +17,7 @@ export class InteropNotifier {
   constructor(
     private readonly client: DiscordClient,
     private readonly logger: Logger,
-    private readonly discordWebhookUrl?: string,
+    private readonly discordWebhookUrl: string,
   ) {
     this.logger = logger.for(this)
     this.messageQueue = new TaskQueue(
