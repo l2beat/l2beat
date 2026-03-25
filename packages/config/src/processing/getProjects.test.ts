@@ -262,6 +262,27 @@ describe('getProjects', () => {
     }
   })
 
+  describe('scaling project zkVerifiers are configured in zk catalog', () => {
+    const zkCatalogAddresses = new Set<ChainSpecificAddress>()
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+      for (const verifierHash of project.zkCatalogInfo.verifierHashes) {
+        for (const deployment of verifierHash.knownDeployments) {
+          zkCatalogAddresses.add(deployment.address)
+        }
+      }
+    }
+
+    for (const project of projects) {
+      if (!project.isScaling || !project.contracts?.zkVerifiers) continue
+      for (const verifier of project.contracts.zkVerifiers) {
+        it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
+          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+        })
+      }
+    }
+  })
+
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
