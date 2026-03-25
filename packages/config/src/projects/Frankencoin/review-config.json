@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-18T09:43:28.762Z",
+  "lastModified": "2026-03-20T15:38:57.123Z",
   "protocolSlug": "Frankencoin",
   "protocolName": "Frankencoin",
   "tokenName": "ZCHF",
@@ -92,7 +92,7 @@
     },
     "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
       "name": "Chainlink ARMProxy",
-      "description": "Chainlink Active Risk Management proxy used by the PositionRoller and MintingHub for cross-chain position operations. Owned by the Chainlink RBACTimelock."
+      "description": "Chainlink Active Risk Management proxy used by the PositionRoller and MintingHub for cross-chain position operations. Owned by the Chainlink RBACTimelock. "
     },
     "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e": {
       "name": "XCHF Owner 3/4 Multisig",
@@ -206,40 +206,5 @@
     "vchfBridgeBalance": "fundsdata.contracts[\"eth:0x3B71ba73299F925a837836160c3E1Fec74340403\"].balances.totalUsdValue",
     "legacyMintingHubCollateral": "fundsdata.contracts[\"eth:0x7546762fdb1a6d9146b33960545C3f6394265219\"].aggregate.totalUsdValue",
     "legacySavingsBalance": "fundsdata.contracts[\"eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE\"].balances.totalUsdValue"
-  },
-  "resources": [
-    {
-      "url": "https://frankencoin.com/",
-      "type": "website"
-    },
-    {
-      "url": "https://app.frankencoin.com/",
-      "type": "frontend",
-      "frontendSubtype": "official"
-    },
-    {
-      "url": "https://docs.frankencoin.com/",
-      "type": "docs"
-    },
-    {
-      "url": "https://github.com/Frankencoin-ZCHF/",
-      "type": "github"
-    },
-    {
-      "url": "https://x.com/frankencoinzchf",
-      "type": "x"
-    },
-    {
-      "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/LICENSE",
-      "type": "license",
-      "label": "MIT",
-      "licenseScope": "Contracts"
-    },
-    {
-      "url": "https://github.com/Frankencoin-ZCHF/frankencoin-dapp/blob/main/LICENSE",
-      "type": "license",
-      "label": "MIT",
-      "licenseScope": "Frontend"
-    }
-  ]
+  }
 }

@@ -1,0 +1,44 @@
+[
+  {
+    "type": "website",
+    "url": "https://www.ether.fi/"
+  },
+  {
+    "type": "frontend",
+    "url": "https://www.ether.fi/app/",
+    "frontendSubtype": "official"
+  },
+  {
+    "type": "docs",
+    "url": "https://etherfi.gitbook.io/etherfi"
+  },
+  {
+    "type": "github",
+    "url": "https://github.com/etherfi-protocol"
+  },
+  {
+    "type": "github",
+    "url": "https://github.com/etherfi-protocol/smart-contracts",
+    "label": "Smart Contracts"
+  },
+  {
+    "type": "x",
+    "url": "https://x.com/ether_fi"
+  },
+  {
+    "type": "license",
+    "url": "https://github.com/etherfi-protocol/smart-contracts/tree/master?tab=readme-ov-file#-license",
+    "label": "MIT",
+    "licenseScope": "Contracts"
+  },
+  {
+    "type": "other",
+    "url": "https://governance.ether.fi",
+    "label": "Governance Forum (Discourse)"
+  },
+  {
+    "type": "other",
+    "url": "https://snapshot.box/#/s:etherfi-dao.eth",
+    "label": "DAO Voting (Snapshot)"
+  }
+]

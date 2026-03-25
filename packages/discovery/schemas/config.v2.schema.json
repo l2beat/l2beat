@@ -697,10 +697,12 @@
                               "app": { "type": "string" },
                               "role": { "type": "string" }
                             },
+                            "additionalProperties": false,
                             "required": ["app", "role"]
                           }
                         }
                       },
+                      "additionalProperties": false,
                       "required": ["type"]
                     },
                     {
@@ -735,6 +737,34 @@
                         "sourceField": { "type": "string" },
                         "ignoreRelative": { "type": "boolean" }
                       },
+                      "additionalProperties": false,
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "addressMapping" },
+                        "method": { "type": "string" },
+                        "discoveredJson": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "enumerableRoles" },
+                        "roleNames": {
+                          "type": "object",
+                          "propertyNames": { "type": "string" },
+                          "additionalProperties": { "type": "string" }
+                        },
+                        "pickRoleMembers": { "type": "string" },
+                        "flatDir": { "type": "string" },
+                        "ignoreRelative": { "type": "boolean" }
+                      },
+                      "additionalProperties": false,
                       "required": ["type"]
                     }
                   ]

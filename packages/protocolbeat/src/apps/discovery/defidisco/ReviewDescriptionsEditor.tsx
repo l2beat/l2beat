@@ -6,7 +6,6 @@ import type {
   ReviewConfig,
   ReviewProjectType,
 } from '../../../api/types'
-import { ReviewResourcesEditor } from './ReviewResourcesEditor'
 import { ensureChainPrefix } from './addressUtils'
 
 const PROTOCOL_TYPES: ReviewProjectType[] = [
@@ -112,13 +111,6 @@ export function ReviewDescriptionsEditor({
         isSaving={entityMutation.isPending}
         onSave={(address, name, description) =>
           handleEntitySave('funds', address, name, description)
-        }
-      />
-
-      <ReviewResourcesEditor
-        resources={config.resources ?? []}
-        onUpdateResources={(resources) =>
-          onUpdateConfig((prev) => ({ ...prev, resources }))
         }
       />
     </div>

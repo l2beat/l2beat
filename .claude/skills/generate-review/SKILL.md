@@ -20,25 +20,13 @@ The l2b UI server must be running at `http://localhost:2021`. If not, tell the u
 
 ---
 
-## Step 0: Remove Existing Review (preserve human-specified resources)
+## Step 0: Remove Existing Review
 
-Extract the `resources` field from the existing config (if any) into a separate file, then move the config out of the way. **Do NOT read the backup or the resources file** — they are only used for automated restoration in Step 4.
+Move the existing config out of the way so the review is generated from scratch.
 
 ```bash
 CONFIG_PATH="packages/config/src/projects/$0/review-config.json"
 if [ -f "$CONFIG_PATH" ]; then
-  python3 -c "
-import json
-with open('$CONFIG_PATH') as f:
-    cfg = json.load(f)
-resources = cfg.get('resources', [])
-if resources:
-    with open('/tmp/review-preserved-resources-$0.json', 'w') as f:
-        json.dump(resources, f, indent=2)
-    print(f'Preserved {len(resources)} resources')
-else:
-    print('No resources to preserve')
-"
   mv "$CONFIG_PATH" "/tmp/review-config-backup-$0.json"
   echo "Moved existing review-config.json to /tmp/review-config-backup-$0.json"
 else
@@ -262,7 +250,7 @@ For each admin in `admins[]` (skip those with `isExternal: true` — they belong
 - If the admin is revoked, note the permission is effectively renounced
 - If the admin is an internal contract and the traversal shows no EOA/Multisig terminals, explain this is an internal access control mechanism (not a human-controlled permission)
 
-**Address format**: Always use `eth:0x...` prefix with lowercase hex.
+**Address format**: Always use `eth:0x...` prefix with ERC-55 checksummed hex (e.g., `eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2`).
 
 ### Dependencies (`dependencies`)
 
@@ -333,23 +321,10 @@ Write the final ReviewConfig JSON directly to the project file using the Write t
 packages/config/src/projects/$0/review-config.json
 ```
 
-Then restore preserved resources (if any) and clean up:
+Then clean up temporary files:
 
 ```bash
-CONFIG_PATH="packages/config/src/projects/$0/review-config.json"
-if [ -f "/tmp/review-preserved-resources-$0.json" ]; then
-  python3 -c "
-import json
-with open('$CONFIG_PATH') as f:
-    cfg = json.load(f)
-with open('/tmp/review-preserved-resources-$0.json') as f:
-    cfg['resources'] = json.load(f)
-with open('$CONFIG_PATH', 'w') as f:
-    json.dump(cfg, f, indent=2)
-print(f'Restored {len(cfg[\"resources\"])} resources into review-config.json')
-"
-fi
-rm -f /tmp/review-project-raw.json /tmp/review-admins.json /tmp/review-admins-compact.json /tmp/review-dependencies.json /tmp/review-dependencies-compact.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json /tmp/review-config-backup-$0.json /tmp/review-preserved-resources-$0.json
+rm -f /tmp/review-project-raw.json /tmp/review-admins.json /tmp/review-admins-compact.json /tmp/review-dependencies.json /tmp/review-dependencies-compact.json /tmp/review-traversal-raw.json /tmp/review-project.json /tmp/review-tags.json /tmp/review-funds.json /tmp/review-functions.json /tmp/review-traversal.json /tmp/review-config-backup-$0.json
 ```
 
 Report what was generated:

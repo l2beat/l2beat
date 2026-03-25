@@ -60,6 +60,7 @@ import {
   updateReviewConfig,
   updateEntityDescription,
 } from './defidisco/reviewConfig'
+import { getResources, updateResources } from './defidisco/resources'
 import { ReviewCompiler } from './defidisco/reviewCompiler'
 import {
   attachTemplateRouter,
@@ -654,6 +655,69 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating entity description:', error)
       res.status(500).json({ error: 'Failed to update entity description' })
+    }
+  })
+
+  // Resources endpoints
+  app.get('/api/projects/:project/resources', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const resources = getResources(paths, project)
+      res.json(resources)
+    } catch (error) {
+      console.error('Error loading resources:', error)
+      res.status(500).json({ error: 'Failed to load resources' })
+    }
+  })
+
+  app.put('/api/projects/:project/resources', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updateResources(paths, project, req.body)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating resources:', error)
+      res.status(500).json({ error: 'Failed to update resources' })
+    }
+  })
+
+  // Compile all reviews endpoint
+  app.post('/api/compile-all-reviews', (_req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+    try {
+      const allProjects = getProjects(configReader, readonly)
+      const defiProjects = filterDefiProjects(allProjects, 'name')
+      const compiler = new ReviewCompiler(paths)
+      const results = defiProjects
+        .map((p) => ({
+          project: p.name,
+          ...compiler.compile(p.name),
+        }))
+        .filter((r) => r.status !== 'skipped')
+      res.json({ results })
+    } catch (error) {
+      console.error('Error compiling all reviews:', error)
+      res.status(500).json({ error: 'Failed to compile reviews' })
     }
   })
 

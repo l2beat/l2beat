@@ -93,59 +93,6 @@
       ]
     }
   },
-  "resources": [
-    {
-      "url": "https://www.liquity.org/",
-      "type": "website"
-    },
-    {
-      "url": "https://github.com/liquity/dev",
-      "type": "github"
-    },
-    {
-      "url": "https://x.com/LiquityProtocol",
-      "type": "x"
-    },
-    {
-      "url": "https://docs.liquity.org/",
-      "type": "docs"
-    },
-    {
-      "url": "https://v1.liquity.app/",
-      "type": "frontend",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://app.defisaver.com/",
-      "type": "frontend",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://v1.lqty.io/",
-      "type": "frontend",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://defi.instadapp.io/liquity",
-      "type": "frontend",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://chickenbonds.net/",
-      "type": "frontend",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://github.com/liquity/dev/blob/main/LICENSE",
-      "type": "license",
-      "label": "GPL-3.0",
-      "licenseScope": "Contracts & UI"
-    },
-    {
-      "url": "https://www.defiscan.info/protocols/liquity-v1/ethereum",
-      "type": "defiscan-v1"
-    }
-  ],
   "dataKeys": {
     "totalProtocolCapital": "v2score.inventory.admins.totalCapitalAtRisk",
     "activePoolBalance": "fundsdata.contracts[\"eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F\"].balances.totalUsdValue",

@@ -1,0 +1,53 @@
+[
+  {
+    "url": "https://liquity.app/",
+    "type": "frontend",
+    "frontendSubtype": "third-party"
+  },
+  {
+    "url": "https://app.defisaver.com/liquityV2/",
+    "type": "frontend",
+    "frontendSubtype": "third-party"
+  },
+  {
+    "url": "https://app.lqty.io/",
+    "type": "frontend",
+    "frontendSubtype": "third-party"
+  },
+  {
+    "url": "https://app.trovezero.xyz/",
+    "type": "frontend",
+    "frontendSubtype": "third-party"
+  },
+  {
+    "url": "https://liquityv2.com/",
+    "type": "frontend",
+    "frontendSubtype": "third-party"
+  },
+  {
+    "url": "https://docs.liquity.org/",
+    "type": "docs"
+  },
+  {
+    "url": "https://github.com/liquity/bold",
+    "type": "github"
+  },
+  {
+    "url": "https://x.com/LiquityProtocol",
+    "type": "x"
+  },
+  {
+    "url": "https://www.liquity.org/",
+    "type": "website"
+  },
+  {
+    "url": "https://github.com/liquity/bold/blob/main/LICENSE",
+    "type": "license",
+    "label": "BUSL-1.1",
+    "licenseScope": "Contracts"
+  },
+  {
+    "url": "https://www.defiscan.info/protocols/liquity-v2/ethereum",
+    "type": "defiscan-v1"
+  }
+]

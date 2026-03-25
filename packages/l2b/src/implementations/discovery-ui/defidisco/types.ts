@@ -759,7 +759,6 @@ export interface ReviewConfig {
   admins: Record<string, EntityDescription>
   dependencies: Record<string, EntityDescription>
   funds: Record<string, EntityDescription>
-  resources?: ResourceEntry[]
   sections: {
     codeAndAudits: ReviewSection
   }

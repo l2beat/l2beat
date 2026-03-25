@@ -118,6 +118,14 @@ import {
   MorphoMarketsHandler,
   MorphoMarketsHandlerDefinition,
 } from '../defidisco/MorphoMarketsHandler'
+import {
+  AddressMappingHandler,
+  AddressMappingHandlerDefinition,
+} from '../defidisco/AddressMappingHandler'
+import {
+  EnumerableRolesHandler,
+  EnumerableRolesHandlerDefinition,
+} from '../defidisco/EnumerableRolesHandler'
 
 const DEFINITIONS = [
   StorageHandlerDefinition,
@@ -153,6 +161,8 @@ const DEFINITIONS = [
   LidoACLHandlerDefinition,
   CrossChainAccessControlHandlerDefinition,
   MorphoMarketsHandlerDefinition,
+  AddressMappingHandlerDefinition,
+  EnumerableRolesHandlerDefinition,
 ] as const
 
 type AvailableHandlers = (typeof DEFINITIONS)[number]
@@ -197,6 +207,8 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   crossChainAccessControl: CrossChainAccessControlHandlerDefinition,
   lidoACL: LidoACLHandlerDefinition,
   morphoMarkets: MorphoMarketsHandlerDefinition,
+  addressMapping: AddressMappingHandlerDefinition,
+  enumerableRoles: EnumerableRolesHandlerDefinition,
 }
 
 export function getUserHandler(
@@ -271,5 +283,9 @@ export function getUserHandler(
       return new CrossChainAccessControlHandler(field, definition, abi)
     case 'morphoMarkets':
       return new MorphoMarketsHandler(field, definition, abi)
+    case 'addressMapping':
+      return new AddressMappingHandler(field, definition)
+    case 'enumerableRoles':
+      return new EnumerableRolesHandler(field, definition, abi)
   }
 }

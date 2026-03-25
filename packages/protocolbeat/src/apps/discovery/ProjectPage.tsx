@@ -17,6 +17,7 @@ import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { DeFiScanPanel } from './defidisco/DeFiScanPanel'
 import { CallGraphPanel } from './defidisco/CallGraphPanel'
+import { ResourcesPanel } from './defidisco/ResourcesPanel'
 import { ReviewBuilderPanel } from './defidisco/ReviewBuilderPanel'
 import { usePanelStore } from './store/panel-store'
 
@@ -68,6 +69,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   defiscan: DeFiScanPanel,
   callgraph: CallGraphPanel,
   review: ReviewBuilderPanel,
+  resources: ResourcesPanel,
 }
 
 const READONLY_PANELS: Record<
@@ -84,6 +86,7 @@ const READONLY_PANELS: Record<
   defiscan: DeFiScanPanel,
   callgraph: CallGraphPanel,
   review: ReviewBuilderPanel,
+  resources: ResourcesPanel,
 }
 
 function Panel(props: { kind: PanelId }) {

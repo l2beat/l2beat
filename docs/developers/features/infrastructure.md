@@ -326,3 +326,61 @@ See `README.md` for full table. Key vars: `DATABASE_URL`, `DISCORD_TOKEN`, `DISC
 The monitor runs compiled JS, so imports use build output paths (not TypeScript source paths):
 - `@l2beat/defiscan-endpoints/build/...` (not `src/`)
 - `@l2beat/l2b/dist/...` (not `src/`)
+
+## Discovery Handlers
+
+Custom DeFiDisco handlers in `packages/discovery/src/discovery/handlers/defidisco/`. These extend the discovery engine with specialized analysis for DeFi-specific patterns.
+
+### AddressMappingHandler
+
+**Type name**: `addressMapping`
+
+**Purpose**: Maps addresses from `discovered.json` by calling a view/pure method that returns `bool`. Useful for discovering which known contracts are registered in a given contract (e.g., `isMember(address)`, `isWhitelisted(address)`).
+
+**Config parameters**:
+- `method` (optional) — method name to call; defaults to the field name
+- `discoveredJson` (optional) — path to `discovered.json`; defaults to `./discovered.json`
+- `ignoreRelative` (optional) — whether to ignore relative refs
+
+**How it works**:
+1. Loads all contract addresses from `discovered.json`
+2. For each candidate, calls `method(address) → bool`
+3. Returns addresses where the method returns `true` (chain-prefixed format)
+
+**Example config**:
+```json
+{ "handler": { "type": "addressMapping", "method": "isMember" } }
+```
+
+### EnumerableRolesHandler
+
+**Type name**: `enumerableRoles`
+
+**Purpose**: Enumerates roles and their holders in contracts using the EnumerableRoles pattern (OpenZeppelin AccessControl variant). Discovers role hashes from `RoleSet` events, maps them to human-readable names from source, and queries current members.
+
+**Config parameters**:
+- `roleNames` (optional) — manual `Record<hash, name>` mappings to supplement source-derived names
+- `pickRoleMembers` (optional) — return only this role's members array instead of the full role object
+- `flatDir` (optional) — path to `.flat/` source files; defaults to `./.flat`
+- `ignoreRelative` (optional) — whether to ignore relative refs
+
+**How it works**:
+1. Scans `.sol` files for `bytes32 public constant NAME = keccak256("NAME")` declarations
+2. Merges with user-provided `roleNames`
+3. Fetches all historical `RoleSet(holder, role, active)` events to discover role hashes
+4. Calls `roleHolders(roleHash)` for each role to get current members
+5. If `pickRoleMembers` is set, returns that role's members; otherwise returns all roles as an object
+
+**Example config**:
+```json
+{ "handler": { "type": "enumerableRoles", "pickRoleMembers": "ADMIN_ROLE" } }
+```
+
+### Discovery Agent Skill
+
+The `/run-discovery` Claude Code skill (`.claude/skills/run-discovery/SKILL.md`) automates iterative discovery for a project. It runs discovery, classifies new contracts, tags them as external/governance/funds, prunes external protocols, and optionally adds handlers.
+
+**Usage**: `/run-discovery <project-name> [--auto]`
+
+- Default mode pauses after each iteration for user review
+- `--auto` runs all iterations autonomously

@@ -158,8 +158,8 @@ Types are defined in `projectAnalysis.ts` (backend) and mirrored in `packages/pr
 - **File**: `review-config.json` per project in `packages/config/src/projects/{project}/`
 - **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts`
 - **Templates**: `packages/protocolbeat/src/apps/discovery/defidisco/reviewBuilderTemplates.ts`
-- **UI**: `ReviewBuilderPanel.tsx` (main panel), `ReviewDescriptionsEditor.tsx` (Descriptions tab), `ReviewResourcesEditor.tsx` (Resources section in Descriptions tab), `ReviewSectionEditor.tsx` (section tabs)
-- **Frontend API**: `getReviewConfig()`, `updateReviewConfig()`, `updateReviewConfigEntity()` in `api.ts`
+- **UI**: `ReviewBuilderPanel.tsx` (main panel), `ReviewDescriptionsEditor.tsx` (Descriptions tab), `ReviewResourcesEditor.tsx` (self-contained Resources section with auto-save), `ReviewSectionEditor.tsx` (section tabs)
+- **Frontend API**: `getReviewConfig()`, `updateReviewConfig()`, `updateReviewConfigEntity()`, `getResources()`, `updateResources()` in `api.ts`
 
 ### Data Structure (`review-config.json`)
 
@@ -191,10 +191,6 @@ Types are defined in `projectAnalysis.ts` (backend) and mirrored in `packages/pr
       "description": "Main protocol treasury holding reserves."
     }
   },
-  "resources": [
-    { "url": "https://app.example.com", "type": "frontend", "frontendSubtype": "official" },
-    { "url": "https://docs.example.com", "type": "docs" }
-  ],
   "sections": {
     "codeAndAudits": { "title": "Code & Audits", "subsections": [] }
   },
@@ -210,25 +206,32 @@ Types are defined in `projectAnalysis.ts` (backend) and mirrored in `packages/pr
 - `FrontendSubtype`: `'official' | 'third-party' | 'self-hosted'`
 - `ResourceEntry`: `{ url, type: ResourceType, label?, frontendSubtype?: FrontendSubtype, licenseScope?: string }`
 - `ApiUpdateEntityDescriptionRequest`: `{ section: 'admins' | 'dependencies' | 'funds', address, name?, description }`
-- `ReviewConfig`: Full config including metadata, descriptions, resources, sections, and dataKeys
+- `ReviewConfig`: Full config including metadata, descriptions, sections, and dataKeys
 
 ### API Endpoints
 
 - `GET /api/projects/:project/review-config` — full config (returns `{ config, availableTemplates }`)
 - `PUT /api/projects/:project/review-config` — full config save
 - `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
+- `GET /api/projects/:project/resources` — resources array
+- `PUT /api/projects/:project/resources` — resources save (auto-save from UI)
 
 ### Resources
 
-Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored as `resources: ResourceEntry[]`
+Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored in a separate `resources.json` file per project.
 
+- **File**: `resources.json` per project in `packages/config/src/projects/{project}/`
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/resources.ts`
 - **Types**: `frontend` (with subtype: official/third-party/self-hosted), `website`, `docs`, `source-code`, `github`, `x`, `license` (with `licenseScope`), `defiscan-v1`, `other`
 - **Compiler**: Pass-through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
-- **Preservation**: The `/generate-review` skill extracts and restores resources automatically (not AI-generated)
+- **Auto-save**: Each add/edit/delete triggers an immediate save (not tied to review config Save button)
+- **Legacy fallback**: If `resources.json` doesn't exist, reads from `review-config.json` `resources` field; on first save, migrates to `resources.json` and strips from review-config
+- **Gathering skill**: `/gather-resources <project> <url>` — Claude Code skill that web-searches for official resources (website, frontends, docs, GitHub, X, licenses, DeFiScan V1), verifies each URL, and saves via the resources API. Merges with existing entries (additive only). Defined in `.claude/skills/gather-resources/SKILL.md`.
 
 ### Design Decisions
 
-- Single unified file (protocol metadata + descriptions + resources + sections + data keys)
+- Single unified file for review config (protocol metadata + descriptions + sections + data keys)
+- Resources stored separately in `resources.json` (independent lifecycle from review config, not affected by `/generate-review`)
 - Three curated entity description records: `admins`, `dependencies`, `funds` — each keyed by address
 - Resources are a flat array (not address-keyed) — researcher-specified links to external URLs
 - Only `codeAndAudits` in sections (collaterals/dependencies/actors data comes from DeFiScan panel)
@@ -245,7 +248,7 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 - **Prerequisites**: l2b UI server running at `localhost:2021` (`cd packages/config && l2b ui`)
 - **Behavior**: Always replaces the entire review — every run generates fresh content
 - **Isolation**: Moves existing `review-config.json` aside before generation to prevent bias from prior output
-- **Resource Preservation**: Extracts `resources` field before moving config aside, restores it after generation (resources are human-specified, not AI-generated)
+- **Resources unaffected**: Resources live in a separate `resources.json` file, so regeneration doesn't touch them
 
 ### How It Works
 
@@ -270,7 +273,8 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 - **Location**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts`
 - **API Endpoint**: `POST /api/projects/:project/compile-review` (in `main.ts`)
 - **UI Button**: "Compile Review" in `TerminalExtensions.tsx`
-- **Frontend API**: `compileReview()` in `api.ts`
+- **Bulk Endpoint**: `POST /api/compile-all-reviews` — compiles all DeFi projects at once (used by HomePage button)
+- **Frontend API**: `compileReview()`, `compileAllReviews()` in `api.ts`
 - **Output**: `compiled-review.json` written to `packages/defiscan-frontend/public/data/<slug>/`
 - **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
 - **Template Variables**: `{{variableName}}` resolved at compile time via `dataKeys` map
@@ -278,7 +282,7 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 - **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
 - **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed by ProjectAnalysis, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds.
 - **Dependency type**: Each `CompiledDependency` has an optional `dependencyType?: 'callgraph' | 'write'` field indicating how it was detected. `'callgraph'` = found via code-level call graph traversal; `'write'` = external contract that owns/controls a permissioned function (detected from `ownerDefinitions`). See [Call Graph Analysis](call-graph-analysis.md#function-analysis-functionanalysists) for details.
-- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are pre-populated by ProjectAnalysis from `functions.json` with scope filtering via `filterMitigationsForOwner()`.
+- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are computed by `ProjectAnalysis.getMitigationsForOwner()` which merges direct mitigations (from `functions.json`, filtered per owner) with transitive mitigations (collected via forward BFS through the call graph — global and scoped mitigations from downstream functions). The compiler passes these through as-is (`f.mitigations`).
 - **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields
 
 ### Mitigations Display (defiscan-frontend)

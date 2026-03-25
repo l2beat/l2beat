@@ -1,0 +1,6860 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-24T10:31:09.815Z",
+  "contracts": {
+    "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T17:55:23.686Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:55:23.686Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T17:55:26.318Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:55:26.318Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T17:55:30.286Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:55:30.286Z"
+          }
+        }
+      ]
+    },
+    "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": {
+      "functions": [
+        {
+          "functionName": "schedule",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.080Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.080Z"
+          }
+        },
+        {
+          "functionName": "scheduleBatch",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.086Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.086Z"
+          }
+        },
+        {
+          "functionName": "cancel",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.093Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.093Z"
+          }
+        },
+        {
+          "functionName": "execute",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.097Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.097Z"
+          }
+        },
+        {
+          "functionName": "executeBatch",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.100Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.100Z"
+          }
+        },
+        {
+          "functionName": "updateDelay",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.107Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.107Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.111Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.111Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.115Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.115Z"
+          }
+        },
+        {
+          "functionName": "renounceRole",
+          "isPermissioned": true,
+          "timestamp": "2026-03-23T17:57:59.120Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T17:57:59.120Z"
+          }
+        }
+      ]
+    },
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:00:01.942Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:00:01.942Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:00:33.270Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:00:33.270Z"
+          }
+        }
+      ]
+    },
+    "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:00.780Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:00.780Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:00.784Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:00.784Z"
+          }
+        }
+      ]
+    },
+    "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:00.849Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:00.849Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:00.854Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:00.854Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.364Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.364Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.370Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.370Z"
+          }
+        },
+        {
+          "functionName": "registerLibrary",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.378Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.378Z"
+          }
+        },
+        {
+          "functionName": "setDefaultSendLibrary",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.383Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.383Z"
+          }
+        },
+        {
+          "functionName": "setDefaultReceiveLibrary",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.387Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.387Z"
+          }
+        },
+        {
+          "functionName": "setDefaultReceiveLibraryTimeout",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.393Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.393Z"
+          }
+        },
+        {
+          "functionName": "setLzToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.398Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.398Z"
+          }
+        },
+        {
+          "functionName": "recoverToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:13.402Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:13.402Z"
+          }
+        }
+      ]
+    },
+    "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:48.496Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:48.496Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:01:48.503Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:01:48.503Z"
+          }
+        }
+      ]
+    },
+    "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:01.622Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:01.622Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:01.631Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:01.631Z"
+          }
+        }
+      ]
+    },
+    "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6": {
+      "functions": [
+        {
+          "functionName": "ramp_A",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.464Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.464Z"
+          }
+        },
+        {
+          "functionName": "stop_ramp_A",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.471Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.471Z"
+          }
+        },
+        {
+          "functionName": "commit_new_fee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.478Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.478Z"
+          }
+        },
+        {
+          "functionName": "apply_new_fee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.483Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.483Z"
+          }
+        },
+        {
+          "functionName": "set_ma_exp_time",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.489Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.489Z"
+          }
+        }
+      ]
+    },
+    "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022": {
+      "functions": [
+        {
+          "functionName": "ramp_A",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.554Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.554Z"
+          }
+        },
+        {
+          "functionName": "stop_ramp_A",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.561Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.561Z"
+          }
+        },
+        {
+          "functionName": "commit_new_fee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.565Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.565Z"
+          }
+        },
+        {
+          "functionName": "apply_new_fee",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.571Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.571Z"
+          }
+        },
+        {
+          "functionName": "revert_new_parameters",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.580Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.580Z"
+          }
+        },
+        {
+          "functionName": "commit_transfer_ownership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.586Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.586Z"
+          }
+        },
+        {
+          "functionName": "apply_transfer_ownership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.597Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.597Z"
+          }
+        },
+        {
+          "functionName": "revert_transfer_ownership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.601Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.601Z"
+          }
+        },
+        {
+          "functionName": "withdraw_admin_fees",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.605Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.605Z"
+          }
+        },
+        {
+          "functionName": "donate_admin_fees",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.612Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.612Z"
+          }
+        },
+        {
+          "functionName": "kill_me",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.617Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.617Z"
+          }
+        },
+        {
+          "functionName": "unkill_me",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:25.622Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:25.622Z"
+          }
+        }
+      ]
+    },
+    "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": {
+      "functions": [
+        {
+          "functionName": "proxy__upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-23T18:02:39.934Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:02:39.934Z"
+          }
+        }
+      ]
+    },
+    "eth:0xA91F8a52F0C1b4D3fDC256fC5bEBCA4D627da392": {
+      "functions": [
+        {
+          "functionName": "createEigenPod",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.377Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.377Z"
+          }
+        },
+        {
+          "functionName": "setProofSubmitter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.382Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.382Z"
+          }
+        },
+        {
+          "functionName": "startCheckpoint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.387Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.387Z"
+          }
+        },
+        {
+          "functionName": "verifyCheckpointProofs",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.392Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.392Z"
+          }
+        },
+        {
+          "functionName": "queueETHWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.401Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.401Z"
+          }
+        },
+        {
+          "functionName": "completeQueuedETHWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.406Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.406Z"
+          }
+        },
+        {
+          "functionName": "queueWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.410Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.410Z"
+          }
+        },
+        {
+          "functionName": "completeQueuedWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.416Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.416Z"
+          }
+        },
+        {
+          "functionName": "sweepFunds",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.420Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.420Z"
+          }
+        },
+        {
+          "functionName": "requestExecutionLayerTriggeredWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.423Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.423Z"
+          }
+        },
+        {
+          "functionName": "requestConsolidation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.429Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.429Z"
+          }
+        },
+        {
+          "functionName": "forwardEigenPodCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.440Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.440Z"
+          }
+        },
+        {
+          "functionName": "forwardExternalCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.449Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.449Z"
+          }
+        }
+      ]
+    },
+    "eth:0x6329004E903B7F420245E7aF3f355186f2432466": {
+      "functions": [
+        {
+          "functionName": "withdraw",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:03:38.651Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:03:38.651Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:03:39.628Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:03:39.628Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-23T18:03:40.655Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-23T18:03:40.655Z"
+          }
+        }
+      ]
+    },
+    "eth:0x68FE80C6e97E0c8613e2FED344358c6635ba5366": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.428Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.428Z"
+          }
+        },
+        {
+          "functionName": "setStakingManagerContractAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.439Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.439Z"
+          }
+        },
+        {
+          "functionName": "updateWhitelistMinBidAmount",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.443Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.443Z"
+          }
+        },
+        {
+          "functionName": "updateNodeOperatorManager",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.448Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.448Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.459Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.459Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.466Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.466Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.476Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.476Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.487Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.487Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.496Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.496Z"
+          }
+        },
+        {
+          "functionName": "transferAccumulatedRevenue",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.503Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.503Z"
+          }
+        },
+        {
+          "functionName": "disableWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.508Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.508Z"
+          }
+        },
+        {
+          "functionName": "enableWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.513Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.513Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.525Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.525Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.532Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.532Z"
+          }
+        },
+        {
+          "functionName": "setMinBidPrice",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.546Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.546Z"
+          }
+        },
+        {
+          "functionName": "setMaxBidPrice",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.550Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.550Z"
+          }
+        },
+        {
+          "functionName": "setAccumulatedRevenueThreshold",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.556Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.556Z"
+          }
+        },
+        {
+          "functionName": "updateSelectedBidInformation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManagerContractAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.561Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.561Z"
+          }
+        },
+        {
+          "functionName": "reEnterAuction",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManagerContractAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.566Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.566Z"
+          }
+        },
+        {
+          "functionName": "processAuctionFeeTransfer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManagerContractAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.570Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.570Z"
+          }
+        }
+      ]
+    },
+    "eth:0x20E88508c7381CBc75521FE2BAE1A8A6f9b509ad": {
+      "functions": [
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MINTER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.419Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.419Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.427Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.427Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.433Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.433Z"
+          }
+        }
+      ]
+    },
+    "eth:0xd50f28485A75A1FdE432BA7d012d0E2543D2f20d": {
+      "functions": [
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_PAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.587Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.587Z"
+          }
+        },
+        {
+          "functionName": "unPause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UNPAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.593Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.593Z"
+          }
+        },
+        {
+          "functionName": "initializeRoleRegistry",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.597Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.597Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.600Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.600Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.604Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.604Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.610Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.610Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.614Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.614Z"
+          }
+        },
+        {
+          "functionName": "setValidatorTaskBatchSize",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.618Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.618Z"
+          }
+        },
+        {
+          "functionName": "invalidateValidatorApprovalTask",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.625Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.625Z"
+          }
+        },
+        {
+          "functionName": "updateAcceptableRebaseApr",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.631Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.631Z"
+          }
+        },
+        {
+          "functionName": "updatePostReportWaitTimeInSlots",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.635Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.635Z"
+          }
+        },
+        {
+          "functionName": "executeTasks",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.644Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.644Z"
+          }
+        },
+        {
+          "functionName": "executeValidatorApprovalTask",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.648Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.648Z"
+          }
+        }
+      ]
+    },
+    "eth:0x9D795b303B9dA3488FD3A4ca4702c872576BD0c6": {
+      "functions": [
+        {
+          "functionName": "stEthRequestWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.652Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.652Z"
+          }
+        },
+        {
+          "functionName": "stEthClaimWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.659Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.659Z"
+          }
+        },
+        {
+          "functionName": "withdrawEther",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.665Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.665Z"
+          }
+        },
+        {
+          "functionName": "setRewardsClaimer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.670Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.670Z"
+          }
+        },
+        {
+          "functionName": "delegateTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.678Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.678Z"
+          }
+        },
+        {
+          "functionName": "undelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.683Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.683Z"
+          }
+        },
+        {
+          "functionName": "depositIntoStrategy",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.688Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.688Z"
+          }
+        },
+        {
+          "functionName": "queueWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.695Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.695Z"
+          }
+        },
+        {
+          "functionName": "completeQueuedWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.699Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.699Z"
+          }
+        },
+        {
+          "functionName": "updatePauser",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.702Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.702Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.706Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.706Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.712Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.712Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.716Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.716Z"
+          }
+        },
+        {
+          "functionName": "transferStETH",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiRedemptionManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.722Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.722Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.728Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.728Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.733Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.733Z"
+          }
+        }
+      ]
+    },
+    "eth:0xd3985048Bf1Cb613F5E199713a86B2aD3954F82A": {
+      "functions": [
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.739Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.739Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.747Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.747Z"
+          }
+        },
+        {
+          "functionName": "invalidateRegisteredBeaconValidator",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.753Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.753Z"
+          }
+        },
+        {
+          "functionName": "createBeaconValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.758Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.758Z"
+          }
+        },
+        {
+          "functionName": "registerBeaconValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.765Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.765Z"
+          }
+        },
+        {
+          "functionName": "confirmAndFundBeaconValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.772Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.772Z"
+          }
+        },
+        {
+          "functionName": "upgradeEtherFiNode",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.779Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.779Z"
+          }
+        },
+        {
+          "functionName": "instantiateEtherFiNode",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.784Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.784Z"
+          }
+        },
+        {
+          "functionName": "backfillExistingEtherFiNodes",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.788Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.788Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.794Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.794Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.800Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.800Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.805Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.805Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.810Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.810Z"
+          }
+        }
+      ]
+    },
+    "eth:0x83bc649fCdb2c8DA146b2154a559ddEDf937eF12": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.818Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.818Z"
+          }
+        },
+        {
+          "functionName": "initializeVTwoDotFourNine",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.822Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.822Z"
+          }
+        },
+        {
+          "functionName": "setValidatorSizeWei",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.826Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.826Z"
+          }
+        },
+        {
+          "functionName": "registerValidatorSpawner",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.834Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.834Z"
+          }
+        },
+        {
+          "functionName": "unregisterValidatorSpawner",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.838Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.838Z"
+          }
+        },
+        {
+          "functionName": "DEPRECATED_sendExitRequests",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.842Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.842Z"
+          }
+        },
+        {
+          "functionName": "setFeeRecipient",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.847Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.847Z"
+          }
+        },
+        {
+          "functionName": "setRestakeBnftDeposits",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.855Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.855Z"
+          }
+        },
+        {
+          "functionName": "batchCreateBeaconValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.861Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.861Z"
+          }
+        },
+        {
+          "functionName": "batchApproveRegistration",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.868Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.868Z"
+          }
+        },
+        {
+          "functionName": "confirmAndFundBeaconValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.874Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.874Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_PAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.886Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.886Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UNPAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.892Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.892Z"
+          }
+        },
+        {
+          "functionName": "payProtocolFees",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiAdminContract"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.902Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.902Z"
+          }
+        },
+        {
+          "functionName": "addEthAmountLockedForWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiAdminContract"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.906Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.906Z"
+          }
+        },
+        {
+          "functionName": "rebase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.membershipManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.910Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.910Z"
+          }
+        },
+        {
+          "functionName": "requestMembershipNFTWithdraw",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.membershipManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.917Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.917Z"
+          }
+        },
+        {
+          "functionName": "depositToRecipient",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquifier"
+            },
+            {
+              "path": "$self.etherFiAdminContract"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.923Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.923Z"
+          }
+        },
+        {
+          "functionName": "withdraw",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.withdrawRequestNFT"
+            },
+            {
+              "path": "$self.membershipManager"
+            },
+            {
+              "path": "$self.etherFiRedemptionManager"
+            },
+            {
+              "path": "$self.priorityWithdrawalQueue"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.927Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.927Z"
+          }
+        },
+        {
+          "functionName": "burnEEthShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiRedemptionManager"
+            },
+            {
+              "path": "$self.withdrawRequestNFT"
+            },
+            {
+              "path": "$self.priorityWithdrawalQueue"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.933Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.933Z"
+          }
+        },
+        {
+          "functionName": "burnEEthSharesForNonETHWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiRedemptionManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.938Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.938Z"
+          }
+        },
+        {
+          "functionName": "batchRegister",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.942Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.942Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.948Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.948Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:03.954Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.954Z"
+          }
+        }
+      ]
+    },
+    "eth:0x554B2a0c78840bBD4fDB24e198cdD93f99E29456": {
+      "functions": [
+        {
+          "functionName": "requestWithdraw",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.958Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.958Z"
+          }
+        },
+        {
+          "functionName": "requestWithdrawWithPermit",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.962Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.962Z"
+          }
+        },
+        {
+          "functionName": "requestWithdrawWithWeETH",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.969Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.969Z"
+          }
+        },
+        {
+          "functionName": "requestWithdrawWithWeETHAndPermit",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.973Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.973Z"
+          }
+        },
+        {
+          "functionName": "cancelWithdraw",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.977Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.977Z"
+          }
+        },
+        {
+          "functionName": "fulfillRequests",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.981Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.981Z"
+          }
+        },
+        {
+          "functionName": "addToWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.987Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.987Z"
+          }
+        },
+        {
+          "functionName": "removeFromWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.991Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.991Z"
+          }
+        },
+        {
+          "functionName": "batchUpdateWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:03.996Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:03.996Z"
+          }
+        },
+        {
+          "functionName": "invalidateRequests",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.000Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.000Z"
+          }
+        },
+        {
+          "functionName": "handleRemainder",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.005Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.005Z"
+          }
+        },
+        {
+          "functionName": "updateShareRemainderSplitToTreasury",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.010Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.010Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.015Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.015Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.022Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.022Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.026Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.026Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.031Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.031Z"
+          }
+        }
+      ]
+    },
+    "eth:0xCB3D917A965A70214f430a135154Cd5ADdA2ad84": {
+      "functions": [
+        {
+          "functionName": "mintShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.039Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.039Z"
+          }
+        },
+        {
+          "functionName": "burnShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.044Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.044Z"
+          }
+        },
+        {
+          "functionName": "recoverETH",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.EETH_OPERATING_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.048Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.048Z"
+          }
+        },
+        {
+          "functionName": "recoverERC20",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.EETH_OPERATING_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.053Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.053Z"
+          }
+        },
+        {
+          "functionName": "recoverERC721",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.EETH_OPERATING_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.058Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.058Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.062Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.062Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.066Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.066Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.076Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.076Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.080Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.080Z"
+          }
+        }
+      ]
+    },
+    "eth:0xE7022a128Acd4C6cad7aFf6FA874D61f984BcE75": {
+      "functions": [
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.083Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.083Z"
+          }
+        },
+        {
+          "functionName": "pauseAll",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.090Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.090Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.095Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.095Z"
+          }
+        },
+        {
+          "functionName": "increaseDelegatedShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.strategyManager"
+            },
+            {
+              "path": "$self.eigenPodManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.099Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.099Z"
+          }
+        },
+        {
+          "functionName": "decreaseDelegatedShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.eigenPodManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.103Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.103Z"
+          }
+        },
+        {
+          "functionName": "slashOperatorShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.allocationManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.109Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.109Z"
+          }
+        }
+      ]
+    },
+    "eth:0x047A7749AD683C2Fd8A27C7904Ca8dD128F15889": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.114Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.114Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.118Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.118Z"
+          }
+        },
+        {
+          "functionName": "addNewTier",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.127Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.127Z"
+          }
+        },
+        {
+          "functionName": "updateTier",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.131Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.131Z"
+          }
+        },
+        {
+          "functionName": "setPoints",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.136Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.136Z"
+          }
+        },
+        {
+          "functionName": "updatePointsParams",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.143Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.143Z"
+          }
+        },
+        {
+          "functionName": "setWithdrawalLockBlocks",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.148Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.148Z"
+          }
+        },
+        {
+          "functionName": "setDepositAmountParams",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.152Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.152Z"
+          }
+        },
+        {
+          "functionName": "setTopUpCooltimePeriod",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.158Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.158Z"
+          }
+        },
+        {
+          "functionName": "setFeeAmounts",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.162Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.162Z"
+          }
+        },
+        {
+          "functionName": "setFanBoostThresholdEthAmount",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.169Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.169Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.177Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.177Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.182Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.182Z"
+          }
+        },
+        {
+          "functionName": "rebase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiAdmin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.188Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.188Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.194Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.194Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.198Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.198Z"
+          }
+        }
+      ]
+    },
+    "eth:0x5eefE6f65a280A6f1Eb1FdFf36Ab9e2af6f38462": {
+      "functions": [
+        {
+          "functionName": "addCommitteeMember",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.202Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.202Z"
+          }
+        },
+        {
+          "functionName": "removeCommitteeMember",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.210Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.210Z"
+          }
+        },
+        {
+          "functionName": "manageCommitteeMember",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.214Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.214Z"
+          }
+        },
+        {
+          "functionName": "setQuorumSize",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.217Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.217Z"
+          }
+        },
+        {
+          "functionName": "setEtherFiAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.221Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.221Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.228Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.228Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.232Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.232Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.236Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.236Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.240Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.240Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.248Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.248Z"
+          }
+        },
+        {
+          "functionName": "setReportStartSlot",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.252Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.252Z"
+          }
+        },
+        {
+          "functionName": "setOracleReportPeriod",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.256Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.256Z"
+          }
+        },
+        {
+          "functionName": "setConsensusVersion",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.262Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.262Z"
+          }
+        },
+        {
+          "functionName": "unpublishReport",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.266Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.266Z"
+          }
+        },
+        {
+          "functionName": "updateLastPublishedBlockStamps",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.270Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.270Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.276Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.276Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.280Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.280Z"
+          }
+        },
+        {
+          "functionName": "submitReport",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.285Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.285Z"
+          }
+        }
+      ]
+    },
+    "eth:0xa85461AFc2DEEC01bDA23b5cd267d51F765fba10": {
+      "functions": [
+        {
+          "functionName": "ramp_A_gamma",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.factory"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.288Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.288Z"
+          }
+        },
+        {
+          "functionName": "stop_ramp_A_gamma",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.factory"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.295Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.295Z"
+          }
+        },
+        {
+          "functionName": "commit_new_parameters",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.factory"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.299Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.299Z"
+          }
+        },
+        {
+          "functionName": "apply_new_parameters",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.factory"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.303Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.303Z"
+          }
+        },
+        {
+          "functionName": "revert_new_parameters",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.factory"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.307Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.307Z"
+          }
+        }
+      ]
+    },
+    "eth:0x3A75019F8b09c278D152279d446c97d009E064f3": {
+      "functions": [
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.325Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.325Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.331Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.331Z"
+          }
+        },
+        {
+          "functionName": "setRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.335Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.335Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.339Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.339Z"
+          }
+        },
+        {
+          "functionName": "acceptOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pendingOwner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.343Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.343Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.349Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.349Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.354Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.354Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.358Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.358Z"
+          }
+        }
+      ]
+    },
+    "eth:0x96a049493ACF81f92aF84149e0CA09ae13985cD0": {
+      "functions": [
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.MINTER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.364Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.364Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.368Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.368Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.372Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.372Z"
+          }
+        }
+      ]
+    },
+    "eth:0x1dd43C32f03f8A74b8160926D559d34358880A89": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.453Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.453Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.458Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.458Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_PAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.463Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.463Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UNPAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.468Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.468Z"
+          }
+        },
+        {
+          "functionName": "updateConsumers",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.474Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.474Z"
+          }
+        },
+        {
+          "functionName": "createNewLimiter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.478Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.478Z"
+          }
+        },
+        {
+          "functionName": "setCapacity",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.486Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.486Z"
+          }
+        },
+        {
+          "functionName": "setRefillRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.490Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.490Z"
+          }
+        },
+        {
+          "functionName": "setRemaining",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.494Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.494Z"
+          }
+        },
+        {
+          "functionName": "consume",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:04.501Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.501Z"
+          }
+        }
+      ]
+    },
+    "eth:0xa0673C53980665a706352412D2538bA005403C26": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.505Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.505Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.510Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.510Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.515Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.515Z"
+          }
+        },
+        {
+          "functionName": "pauseAll",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.522Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.522Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.526Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.526Z"
+          }
+        },
+        {
+          "functionName": "setActivationDelay",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.531Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.531Z"
+          }
+        },
+        {
+          "functionName": "setDefaultOperatorSplit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.537Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.537Z"
+          }
+        },
+        {
+          "functionName": "setFeeRecipient",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.541Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.541Z"
+          }
+        },
+        {
+          "functionName": "setRewardsUpdater",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.545Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.545Z"
+          }
+        },
+        {
+          "functionName": "setRewardsForAllSubmitter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.551Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.551Z"
+          }
+        },
+        {
+          "functionName": "submitRoot",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.rewardsUpdater"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.556Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.556Z"
+          }
+        },
+        {
+          "functionName": "disableRoot",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.rewardsUpdater"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.561Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.561Z"
+          }
+        },
+        {
+          "functionName": "createRewardsForAllSubmission",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.569Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.569Z"
+          }
+        },
+        {
+          "functionName": "createRewardsForAllEarners",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.575Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.575Z"
+          }
+        }
+      ]
+    },
+    "eth:0xafb82ce44fd8a3431a64742bCD3547EEDA1AFea7": {
+      "functions": [
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManagerAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.579Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.579Z"
+          }
+        },
+        {
+          "functionName": "burnFromWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManagerAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.585Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.585Z"
+          }
+        },
+        {
+          "functionName": "burnFromCancelBNftFlow",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManagerAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.591Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.591Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.595Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.595Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.600Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.600Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.605Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.605Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.609Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.609Z"
+          }
+        }
+      ]
+    },
+    "eth:0x2f4A5921FcAB46F1F3154e8b42Fc189e08fae3Ed": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.613Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.613Z"
+          }
+        },
+        {
+          "functionName": "requestWithdraw",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.liquidityPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.619Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.619Z"
+          }
+        },
+        {
+          "functionName": "seizeInvalidRequest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.623Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.623Z"
+          }
+        },
+        {
+          "functionName": "finalizeRequests",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.627Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.627Z"
+          }
+        },
+        {
+          "functionName": "invalidateRequest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.634Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.634Z"
+          }
+        },
+        {
+          "functionName": "validateRequest",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.640Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.640Z"
+          }
+        },
+        {
+          "functionName": "updateShareRemainderSplitToTreasuryInBps",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.644Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.644Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.653Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.653Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.658Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.658Z"
+          }
+        },
+        {
+          "functionName": "handleRemainder",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.663Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.663Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.667Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.667Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.673Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.673Z"
+          }
+        }
+      ]
+    },
+    "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.696Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.696Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.701Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.701Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.706Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.706Z"
+          }
+        },
+        {
+          "functionName": "pauseAll",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.713Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.713Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.721Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.721Z"
+          }
+        },
+        {
+          "functionName": "setStrategyWhitelister",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.726Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.726Z"
+          }
+        },
+        {
+          "functionName": "addStrategiesToDepositWhitelist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.strategyWhitelister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.767Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.767Z"
+          }
+        },
+        {
+          "functionName": "removeStrategiesFromDepositWhitelist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.strategyWhitelister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.776Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.776Z"
+          }
+        },
+        {
+          "functionName": "removeDepositShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegation"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.784Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.784Z"
+          }
+        },
+        {
+          "functionName": "addShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegation"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.789Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.789Z"
+          }
+        },
+        {
+          "functionName": "withdrawSharesAsTokens",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegation"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.795Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.795Z"
+          }
+        },
+        {
+          "functionName": "increaseBurnOrRedistributableShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegation"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.800Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.800Z"
+          }
+        }
+      ]
+    },
+    "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": {
+      "functions": [
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.804Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.804Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.810Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.810Z"
+          }
+        },
+        {
+          "functionName": "pauseFor",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.815Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.815Z"
+          }
+        },
+        {
+          "functionName": "pauseUntil",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.819Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.819Z"
+          }
+        },
+        {
+          "functionName": "resume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.824Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.824Z"
+          }
+        },
+        {
+          "functionName": "onOracleReport",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.829Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.829Z"
+          }
+        },
+        {
+          "functionName": "finalize",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.833Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.833Z"
+          }
+        },
+        {
+          "functionName": "setBaseURI",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.837Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.837Z"
+          }
+        },
+        {
+          "functionName": "setNFTDescriptorAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.841Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.841Z"
+          }
+        }
+      ]
+    },
+    "eth:0x789CbBe0739F1458905C9Ca6d6e74f7997622A9B": {
+      "functions": [
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.845Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.845Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.849Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.849Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_PAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.853Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.853Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UNPAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.858Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.858Z"
+          }
+        },
+        {
+          "functionName": "sweepFunds",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.863Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.863Z"
+          }
+        },
+        {
+          "functionName": "updateAllowedForwardedExternalCalls",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.867Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.867Z"
+          }
+        },
+        {
+          "functionName": "updateAllowedForwardedEigenpodCalls",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.871Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.871Z"
+          }
+        },
+        {
+          "functionName": "createEigenPod",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.877Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.877Z"
+          }
+        },
+        {
+          "functionName": "setProofSubmitter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.882Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.882Z"
+          }
+        },
+        {
+          "functionName": "queueETHWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.887Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.887Z"
+          }
+        },
+        {
+          "functionName": "completeQueuedETHWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.891Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.891Z"
+          }
+        },
+        {
+          "functionName": "queueWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.896Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.896Z"
+          }
+        },
+        {
+          "functionName": "completeQueuedWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.900Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.900Z"
+          }
+        },
+        {
+          "functionName": "startCheckpoint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_POD_PROVER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.905Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.905Z"
+          }
+        },
+        {
+          "functionName": "verifyCheckpointProofs",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_POD_PROVER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.913Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.913Z"
+          }
+        },
+        {
+          "functionName": "forwardExternalCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.919Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.919Z"
+          }
+        },
+        {
+          "functionName": "forwardEigenPodCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.923Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.923Z"
+          }
+        },
+        {
+          "functionName": "requestExecutionLayerTriggeredWithdrawal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EL_TRIGGER_EXIT_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.928Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.928Z"
+          }
+        },
+        {
+          "functionName": "requestConsolidation",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_EL_CONSOLIDATION_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.934Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.934Z"
+          }
+        },
+        {
+          "functionName": "linkLegacyValidatorIds",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_NODES_MANAGER_LEGACY_LINKER_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.940Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.940Z"
+          }
+        },
+        {
+          "functionName": "linkPubkeyToNode",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.stakingManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.946Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.946Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.951Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.951Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.956Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.956Z"
+          }
+        }
+      ]
+    },
+    "eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB": {
+      "functions": [
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.961Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.961Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.966Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.966Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.971Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.971Z"
+          }
+        },
+        {
+          "functionName": "pauseAll",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.976Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.976Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauserRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.982Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.982Z"
+          }
+        },
+        {
+          "functionName": "setProofTimestampSetter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.987Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.987Z"
+          }
+        },
+        {
+          "functionName": "setPectraForkTimestamp",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.proofTimestampSetter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.992Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.992Z"
+          }
+        },
+        {
+          "functionName": "recordBeaconChainETHBalanceUpdate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.eigenPodBeacon"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:04.998Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:04.998Z"
+          }
+        },
+        {
+          "functionName": "removeDepositShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegationManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.003Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.003Z"
+          }
+        },
+        {
+          "functionName": "addShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegationManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.007Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.007Z"
+          }
+        },
+        {
+          "functionName": "withdrawSharesAsTokens",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegationManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.012Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.012Z"
+          }
+        },
+        {
+          "functionName": "increaseBurnOrRedistributableShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.delegationManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.018Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.018Z"
+          }
+        }
+      ]
+    },
+    "eth:0x0E7489D32D34CCdC12d7092067bf53Aa38bf2BF6": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.022Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.022Z"
+          }
+        },
+        {
+          "functionName": "updateWhitelistedToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.027Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.027Z"
+          }
+        },
+        {
+          "functionName": "registerToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.033Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.033Z"
+          }
+        },
+        {
+          "functionName": "updateTimeBoundCapRefreshInterval",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.037Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.037Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.042Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.042Z"
+          }
+        },
+        {
+          "functionName": "withdrawEther",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.048Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.048Z"
+          }
+        },
+        {
+          "functionName": "sendToEtherFiRestaker",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.056Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.056Z"
+          }
+        },
+        {
+          "functionName": "updateDepositCap",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.061Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.061Z"
+          }
+        },
+        {
+          "functionName": "updatePauser",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.067Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.067Z"
+          }
+        },
+        {
+          "functionName": "updateDiscountInBasisPoints",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.073Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.073Z"
+          }
+        },
+        {
+          "functionName": "updateQuoteStEthWithCurve",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.078Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.078Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.084Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.084Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.089Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.089Z"
+          }
+        },
+        {
+          "functionName": "unwrapL2Eth",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.l1SyncPool"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.093Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.093Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.105Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.105Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.114Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.114Z"
+          }
+        }
+      ]
+    },
+    "eth:0x8D671a0Bc6664c2eF71Db4BBbACb2a455992920c": {
+      "functions": [
+        {
+          "functionName": "removeFromWhitelist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.119Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.119Z"
+          }
+        },
+        {
+          "functionName": "initializeNewWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.125Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.125Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.130Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.130Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.136Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.136Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.141Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.141Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.148Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.148Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.154Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.154Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.159Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.159Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.164Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.164Z"
+          }
+        }
+      ]
+    },
+    "eth:0x31724cA0C982A31fbb5C57f4217AB585271fc9a5": {
+      "functions": [
+        {
+          "functionName": "updatePauser",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.171Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.171Z"
+          }
+        },
+        {
+          "functionName": "updateBlacklister",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.176Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.176Z"
+          }
+        },
+        {
+          "functionName": "updateMasterMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.180Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.180Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.185Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.185Z"
+          }
+        },
+        {
+          "functionName": "updateRescuer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.191Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.191Z"
+          }
+        },
+        {
+          "functionName": "updateOracle",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.196Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.196Z"
+          }
+        },
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.201Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.201Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.207Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.207Z"
+          }
+        },
+        {
+          "functionName": "blacklist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.215Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.215Z"
+          }
+        },
+        {
+          "functionName": "unBlacklist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.223Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.223Z"
+          }
+        },
+        {
+          "functionName": "configureMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.229Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.229Z"
+          }
+        },
+        {
+          "functionName": "removeMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.240Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.240Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.247Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.247Z"
+          }
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.255Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.255Z"
+          }
+        },
+        {
+          "functionName": "updateExchangeRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.oracle"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.259Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.259Z"
+          }
+        },
+        {
+          "functionName": "rescueERC20",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.rescuer"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.264Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.264Z"
+          }
+        }
+      ]
+    },
+    "eth:0x2d10683E941275D502173053927AD6066e6aFd6B": {
+      "functions": [
+        {
+          "functionName": "recoverETH",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.268Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.268Z"
+          }
+        },
+        {
+          "functionName": "recoverERC20",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.276Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.276Z"
+          }
+        },
+        {
+          "functionName": "recoverERC721",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.282Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.282Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.288Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.288Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.roleRegistry"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.294Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.294Z"
+          }
+        }
+      ]
+    },
+    "eth:0x2c28AeD76D1fA85E1AfE42ed476593D6cEf50155": {
+      "functions": [
+        {
+          "functionName": "setLiquifier",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.299Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.299Z"
+          }
+        },
+        {
+          "functionName": "setEEth",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.304Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.304Z"
+          }
+        },
+        {
+          "functionName": "setDummyToken",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.310Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.310Z"
+          }
+        },
+        {
+          "functionName": "setTokenOut",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.315Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.315Z"
+          }
+        },
+        {
+          "functionName": "setLockBox",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.321Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.321Z"
+          }
+        },
+        {
+          "functionName": "setReceiver",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.328Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.328Z"
+          }
+        },
+        {
+          "functionName": "sweep",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.333Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.333Z"
+          }
+        },
+        {
+          "functionName": "setPeer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.339Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.339Z"
+          }
+        },
+        {
+          "functionName": "setDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.345Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.345Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.349Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.349Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.354Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.354Z"
+          }
+        }
+      ]
+    },
+    "eth:0x6BD191582F40012b2f2cdf66bD3D32bDe41191F7": {
+      "functions": [
+        {
+          "functionName": "initializeTokenParameters",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.360Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.360Z"
+          }
+        },
+        {
+          "functionName": "setCapacity",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.366Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.366Z"
+          }
+        },
+        {
+          "functionName": "setRefillRatePerSecond",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.373Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.373Z"
+          }
+        },
+        {
+          "functionName": "setExitFeeBasisPoints",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.379Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.379Z"
+          }
+        },
+        {
+          "functionName": "setLowWatermarkInBpsOfTvl",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.384Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.384Z"
+          }
+        },
+        {
+          "functionName": "setExitFeeSplitToTreasuryInBps",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.390Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.390Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_PAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.396Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.396Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@roleRegistry.roles.PROTOCOL_UNPAUSER"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.401Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.401Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.406Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.406Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.411Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.411Z"
+          }
+        }
+      ]
+    },
+    "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB": {
+      "functions": [
+        {
+          "functionName": "pause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.439Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.439Z"
+          }
+        },
+        {
+          "functionName": "unpause",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.pauser"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.445Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.445Z"
+          }
+        },
+        {
+          "functionName": "updatePauser",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.450Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.450Z"
+          }
+        },
+        {
+          "functionName": "blacklist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.457Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.457Z"
+          }
+        },
+        {
+          "functionName": "unBlacklist",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.blacklister"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.464Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.464Z"
+          }
+        },
+        {
+          "functionName": "updateBlacklister",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.468Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.468Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.473Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.473Z"
+          }
+        },
+        {
+          "functionName": "configureMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.479Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.479Z"
+          }
+        },
+        {
+          "functionName": "removeMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.484Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.484Z"
+          }
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.masterMinter"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.489Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.489Z"
+          }
+        },
+        {
+          "functionName": "updateMasterMinter",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.495Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.495Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.501Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.501Z"
+          }
+        },
+        {
+          "functionName": "rescueERC20",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.rescuer"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.515Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.515Z"
+          }
+        },
+        {
+          "functionName": "updateRescuer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.527Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.527Z"
+          }
+        },
+        {
+          "functionName": "updateOracle",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.546Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.546Z"
+          }
+        },
+        {
+          "functionName": "updateExchangeRate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.oracle"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.558Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.558Z"
+          }
+        },
+        {
+          "functionName": "updateEthReceiver",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.570Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.570Z"
+          }
+        },
+        {
+          "functionName": "updateOperator",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.583Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.583Z"
+          }
+        },
+        {
+          "functionName": "supplyEth",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.592Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.592Z"
+          }
+        },
+        {
+          "functionName": "moveToStakingAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.600Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.600Z"
+          }
+        },
+        {
+          "functionName": "moveToUnwrapAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.operator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.608Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.608Z"
+          }
+        }
+      ]
+    },
+    "eth:0x6ca84080381E43938476814be61B779A8bB6a600": {
+      "functions": [
+        {
+          "functionName": "pauseStaking",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.617Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.617Z"
+          }
+        },
+        {
+          "functionName": "resumeStaking",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.624Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.624Z"
+          }
+        },
+        {
+          "functionName": "setStakingLimit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.634Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.634Z"
+          }
+        },
+        {
+          "functionName": "removeStakingLimit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.643Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.643Z"
+          }
+        },
+        {
+          "functionName": "setMaxExternalRatioBP",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.653Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.653Z"
+          }
+        },
+        {
+          "functionName": "stop",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.660Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.660Z"
+          }
+        },
+        {
+          "functionName": "resume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.667Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.667Z"
+          }
+        },
+        {
+          "functionName": "unsafeChangeDepositedValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.kernel"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.674Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.674Z"
+          }
+        },
+        {
+          "functionName": "deposit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.686Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.686Z"
+          }
+        },
+        {
+          "functionName": "mintShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.700Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.700Z"
+          }
+        },
+        {
+          "functionName": "burnShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.713Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.713Z"
+          }
+        },
+        {
+          "functionName": "mintExternalShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.727Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.727Z"
+          }
+        },
+        {
+          "functionName": "burnExternalShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.739Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.739Z"
+          }
+        },
+        {
+          "functionName": "rebalanceExternalEtherToInternal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.751Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.751Z"
+          }
+        },
+        {
+          "functionName": "processClStateUpdate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.765Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.765Z"
+          }
+        },
+        {
+          "functionName": "internalizeExternalBadDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.783Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.783Z"
+          }
+        },
+        {
+          "functionName": "collectRewardsAndProcessWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.800Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.800Z"
+          }
+        },
+        {
+          "functionName": "emitTokenRebase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.817Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.817Z"
+          }
+        },
+        {
+          "functionName": "receiveELRewards",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.826Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.826Z"
+          }
+        },
+        {
+          "functionName": "receiveWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.getLidoLocator"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.833Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.833Z"
+          }
+        }
+      ]
+    },
+    "eth:0x290d981b41B713437265Cd7846806D7500307106": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.841Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.841Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.848Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.848Z"
+          }
+        },
+        {
+          "functionName": "setMaxTokenId",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.856Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.856Z"
+          }
+        },
+        {
+          "functionName": "setUpForEap",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.865Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.865Z"
+          }
+        },
+        {
+          "functionName": "setMintingPaused",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.873Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.873Z"
+          }
+        },
+        {
+          "functionName": "setContractMetadataURI",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.880Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.880Z"
+          }
+        },
+        {
+          "functionName": "setMetadataURI",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.886Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.886Z"
+          }
+        },
+        {
+          "functionName": "alertMetadataUpdate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.896Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.896Z"
+          }
+        },
+        {
+          "functionName": "alertBatchMetadataUpdate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.904Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.904Z"
+          }
+        },
+        {
+          "functionName": "mint",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.911Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.911Z"
+          }
+        },
+        {
+          "functionName": "burn",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.919Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.919Z"
+          }
+        },
+        {
+          "functionName": "incrementLock",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.927Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.927Z"
+          }
+        },
+        {
+          "functionName": "processDepositFromEapUser",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:05.932Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.932Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.937Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.937Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.953Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.953Z"
+          }
+        }
+      ]
+    },
+    "eth:0xA82cc578927058af14fD84d96a817Dc85Ac4F946": {
+      "functions": [
+        {
+          "functionName": "setOutboundRateLimits",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.961Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.961Z"
+          }
+        },
+        {
+          "functionName": "setInboundRateLimits",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.975Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.975Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.981Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.981Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.986Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.986Z"
+          }
+        },
+        {
+          "functionName": "setPeer",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.993Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.993Z"
+          }
+        },
+        {
+          "functionName": "setDelegate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:05.998Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:05.998Z"
+          }
+        },
+        {
+          "functionName": "setPreCrime",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.005Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.005Z"
+          }
+        },
+        {
+          "functionName": "setEnforcedOptions",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.012Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.012Z"
+          }
+        },
+        {
+          "functionName": "setMsgInspector",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.019Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.019Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.026Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.026Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.032Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.032Z"
+          }
+        },
+        {
+          "functionName": "pauseBridge",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.038Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.038Z"
+          }
+        },
+        {
+          "functionName": "unpauseBridge",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.046Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.046Z"
+          }
+        }
+      ]
+    },
+    "eth:0xfcC674Fc9A0602692D2a91905E7e978aE6EE2cAF": {
+      "functions": [
+        {
+          "functionName": "initializeOnUpgrade",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.053Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.053Z"
+          }
+        },
+        {
+          "functionName": "fetchNextKeyIndex",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.auctionManagerContractAddress"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.065Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.065Z"
+          }
+        },
+        {
+          "functionName": "batchUpdateOperatorsApprovedTags",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.075Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.075Z"
+          }
+        },
+        {
+          "functionName": "addToWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.085Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.085Z"
+          }
+        },
+        {
+          "functionName": "removeFromWhitelist",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.092Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.092Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.102Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.102Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "timestamp": "2026-03-24T10:31:06.111Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.111Z"
+          }
+        },
+        {
+          "functionName": "setAuctionContractAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.119Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.119Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.139Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.139Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.149Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.149Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.156Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.156Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.162Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.162Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.168Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.168Z"
+          }
+        }
+      ]
+    },
+    "eth:0xaF8749C3DC1Fc0592f21c2593204C45D3bE0d322": {
+      "functions": [
+        {
+          "functionName": "addAuctionRevenue",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.auctionManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.173Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.173Z"
+          }
+        },
+        {
+          "functionName": "distributeAuctionRevenue",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.etherFiNodesManager"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.182Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.182Z"
+          }
+        },
+        {
+          "functionName": "setEtherFiNodesManagerAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.188Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.188Z"
+          }
+        },
+        {
+          "functionName": "setAuctionManagerAddress",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.196Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.196Z"
+          }
+        },
+        {
+          "functionName": "setAuctionRewardVestingPeriod",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.203Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.203Z"
+          }
+        },
+        {
+          "functionName": "setAuctionRewardSplitForStakers",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.208Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.208Z"
+          }
+        },
+        {
+          "functionName": "pauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.215Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.215Z"
+          }
+        },
+        {
+          "functionName": "unPauseContract",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.admin"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.221Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.221Z"
+          }
+        },
+        {
+          "functionName": "updateAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.226Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.226Z"
+          }
+        },
+        {
+          "functionName": "upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.234Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.234Z"
+          }
+        },
+        {
+          "functionName": "upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.240Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.240Z"
+          }
+        },
+        {
+          "functionName": "renounceOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.245Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.245Z"
+          }
+        },
+        {
+          "functionName": "transferOwnership",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.owner"
+            }
+          ],
+          "timestamp": "2026-03-24T10:31:06.252Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-24T10:31:06.252Z"
+          }
+        }
+      ]
+    }
+  }
+}

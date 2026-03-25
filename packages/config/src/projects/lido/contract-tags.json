@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2025-12-22T11:11:07.519Z",
+  "lastModified": "2026-03-24T12:37:20.644Z",
   "tags": [
     {
       "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
@@ -16,7 +16,8 @@
     {
       "contractAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "isExternal": false,
-      "timestamp": "2025-11-10T18:29:54.333Z"
+      "isGovernance": true,
+      "timestamp": "2026-03-22T09:28:49.995Z"
     },
     {
       "contractAddress": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
@@ -124,8 +125,8 @@
       "contractAddress": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "isExternal": false,
       "fetchBalances": true,
-      "fetchPositions": true,
-      "timestamp": "2025-12-22T09:10:40.472Z"
+      "isToken": true,
+      "timestamp": "2026-03-24T12:37:20.644Z"
     },
     {
       "contractAddress": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
@@ -154,6 +155,12 @@
       "fetchBalances": true,
       "fetchPositions": true,
       "timestamp": "2025-12-22T11:11:07.519Z"
+    },
+    {
+      "contractAddress": "eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db",
+      "isExternal": false,
+      "isGovernance": true,
+      "timestamp": "2026-03-22T09:28:32.388Z"
     }
   ]
 }

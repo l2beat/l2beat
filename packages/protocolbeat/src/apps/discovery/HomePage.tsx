@@ -16,6 +16,7 @@ import { Title } from '../../components/Title'
 import { IS_READONLY } from '../../config/readonly'
 import { IconStarEmpty } from '../../icons/IconStarEmpty'
 import { IconStarFull } from '../../icons/IconStarFull'
+import { CompileAllButton } from './defidisco/CompileAllButton'
 
 export function HomePage() {
   const [search, setSearch] = useState('')
@@ -47,11 +48,14 @@ export function HomePage() {
             onChange={(e) => setSearch(e.target.value)}
           />
           {!IS_READONLY && (
-            <Link to="/ui/new">
-              <button className="items-center justify-center border border-coffee-600 px-4 py-2 text-coffee-400 transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600">
-                +
-              </button>
-            </Link>
+            <>
+              <Link to="/ui/new" className="flex self-stretch">
+                <button className="flex items-center justify-center border border-coffee-600 px-4 text-coffee-400 transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600">
+                  +
+                </button>
+              </Link>
+              <CompileAllButton />
+            </>
           )}
         </div>
         <AllProjects search={deferredSearch} />

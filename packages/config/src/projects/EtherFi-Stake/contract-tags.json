@@ -1,0 +1,150 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-24T10:41:15.945Z",
+  "tags": [
+    {
+      "contractAddress": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-23T11:18:55.728Z"
+    },
+    {
+      "contractAddress": "eth:0x6329004E903B7F420245E7aF3f355186f2432466",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-23T11:18:56.888Z"
+    },
+    {
+      "contractAddress": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-03-23T11:18:57.886Z"
+    },
+    {
+      "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+      "isExternal": false,
+      "fetchPositions": true,
+      "timestamp": "2026-03-23T11:19:04.066Z"
+    },
+    {
+      "contractAddress": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "isExternal": true,
+      "entity": "Coinbase cbETH",
+      "timestamp": "2026-03-24T08:26:43.990Z"
+    },
+    {
+      "contractAddress": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+      "isExternal": true,
+      "entity": "Lido stETH",
+      "timestamp": "2026-03-24T08:26:44.007Z"
+    },
+    {
+      "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
+      "isExternal": true,
+      "entity": "Ethereum",
+      "timestamp": "2026-03-24T08:26:44.028Z"
+    },
+    {
+      "contractAddress": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+      "isExternal": true,
+      "entity": "EigenLayer",
+      "timestamp": "2026-03-24T08:26:44.052Z"
+    },
+    {
+      "contractAddress": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+      "isExternal": true,
+      "entity": "EigenLayer",
+      "timestamp": "2026-03-24T08:26:44.076Z"
+    },
+    {
+      "contractAddress": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "isExternal": true,
+      "entity": "Curve",
+      "timestamp": "2026-03-24T08:26:44.102Z"
+    },
+    {
+      "contractAddress": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+      "isExternal": true,
+      "entity": "Lido",
+      "timestamp": "2026-03-24T08:26:44.124Z"
+    },
+    {
+      "contractAddress": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "isExternal": true,
+      "entity": "Curve",
+      "timestamp": "2026-03-24T08:26:44.149Z"
+    },
+    {
+      "contractAddress": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "isExternal": true,
+      "entity": "Curve",
+      "timestamp": "2026-03-24T08:26:44.172Z"
+    },
+    {
+      "contractAddress": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "isExternal": true,
+      "entity": "Curve",
+      "timestamp": "2026-03-24T08:26:44.194Z"
+    },
+    {
+      "contractAddress": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "isExternal": true,
+      "entity": "EigenLayer",
+      "timestamp": "2026-03-24T08:26:44.216Z"
+    },
+    {
+      "contractAddress": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "isExternal": true,
+      "entity": "EigenLayer",
+      "timestamp": "2026-03-24T08:26:44.239Z"
+    },
+    {
+      "contractAddress": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.256Z"
+    },
+    {
+      "contractAddress": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.272Z"
+    },
+    {
+      "contractAddress": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.291Z"
+    },
+    {
+      "contractAddress": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.314Z"
+    },
+    {
+      "contractAddress": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.339Z"
+    },
+    {
+      "contractAddress": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.357Z"
+    },
+    {
+      "contractAddress": "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc",
+      "isExternal": true,
+      "entity": "LayerZero",
+      "timestamp": "2026-03-24T08:26:44.379Z"
+    },
+    {
+      "contractAddress": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "isExternal": false,
+      "fetchBalances": true,
+      "timestamp": "2026-03-24T10:41:15.945Z"
+    }
+  ]
+}

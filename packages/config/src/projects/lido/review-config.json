@@ -1,0 +1,255 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-22T12:00:00.000Z",
+  "protocolSlug": "lido",
+  "protocolName": "Lido",
+  "tokenName": "stETH",
+  "chain": "Ethereum",
+  "projectType": "liquid-staking",
+  "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages {{totalCapitalAtRisk}} in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract.",
+  "admins": {
+    "eth:0x3e40d73eb977dc6a537af587d48316fee66e9c8c": {
+      "name": "Lido DAO Agent",
+      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls {{lidoDaoAgentCapital}} in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module."
+    },
+    "eth:0x2e59a20f205bb85a89c53f1936454680651e618e": {
+      "name": "Lido DAO Voting",
+      "description": "Aragon Voting contract where LDO token holders create and vote on proposals. Can grant, revoke, and manage permissions on the ACL contract, controlling role assignments across the entire DAO infrastructure including the Agent, Finance, and TokenManager apps."
+    },
+    "eth:0xc1db28b3301331277e307fdcff8de28242a4486e": {
+      "name": "DualGovernance",
+      "description": "Governance module that gives stETH holders veto power over DAO proposals. Submits proposals to and schedules execution on the EmergencyProtectedTimelock. Can cancel all non-executed proposals if the governance state enters a deadlock."
+    },
+    "eth:0xce0425301c85c5ea2a0873a2dee44d78e02d2316": {
+      "name": "EmergencyProtectedTimelock",
+      "description": "Timelock contract that gates all governance executions from DualGovernance. Executes proposals through the Executor contract after the required delay. Can transfer and renounce ownership of the Executor."
+    },
+    "eth:0x23e0b465633ff5178808f4a75186e2f2f9537021": {
+      "name": "Executor",
+      "description": "Immutable execution contract that forwards governance calls from the EmergencyProtectedTimelock to the Lido DAO Agent and DualGovernance configuration. Can configure governance parameters including submission delays, scheduling delays, and governance state transitions."
+    },
+    "eth:0x8b7854488fde088d686ea672b6ba1a5242515f45": {
+      "name": "Emergency 4/7 Multisig",
+      "description": "4-of-7 Safe multisig that can activate emergency mode on the EmergencyProtectedTimelock, execute proposals during emergency mode, and reset the governance system. This is the ultimate circuit breaker for the protocol's governance."
+    },
+    "eth:0xffe21561251c49adccfad065c94fb4931df49081": {
+      "name": "Reseal Committee 5/6 Multisig",
+      "description": "5-of-6 Safe multisig that can reseal sealable contracts through the DualGovernance module. This allows re-pausing protocol components that were previously sealed by the GateSeal mechanism."
+    },
+    "eth:0xc52fc3081123073078698f1eac2f1dc7bd71880f": {
+      "name": "Community Staking 4/6 Multisig",
+      "description": "4-of-6 GnosisSafe multisig that can set bond curves on the CSAccounting contract, controlling the collateral requirements for Community Staking Module node operators."
+    },
+    "eth:0x852ded011285fe67063a08005c71a85690503cee": {
+      "name": "AccountingOracle",
+      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls {{accountingOracleCapital}} in reachable capital."
+    },
+    "eth:0xffa96d84def2ea035c7ab153d8b991128e3d72fd": {
+      "name": "DepositSecurityModule",
+      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls {{depositSecurityCapital}} in reachable capital."
+    },
+    "eth:0x388c818ca8b9251b393131c08a736a67ccb19297": {
+      "name": "LidoExecutionLayerRewardsVault",
+      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls {{elRewardsVaultCapital}} in direct capital."
+    },
+    "eth:0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f": {
+      "name": "WithdrawalVault",
+      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls {{withdrawalVaultCapital}} in direct capital."
+    },
+    "eth:0xd624b08c83baecf0807dd2c6880c3154a5f0b288": {
+      "name": "HashConsensus (AccountingOracle)",
+      "description": "Immutable consensus contract for the AccountingOracle. Oracle committee members submit report hashes, and once quorum is reached, the consensus report is forwarded to the AccountingOracle for processing."
+    },
+    "eth:0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+      "name": "stETH Token Contract",
+      "description": "The Lido stETH token itself, which has permissioned functions to request share burns, commit shares to burn, and receive reward and withdrawal reports. These functions are called by other protocol contracts (Burner, AccountingOracle) as part of normal operations."
+    },
+    "eth:0xda7de2ecddfc6c3af10108db212acbbf9ea83f": {
+      "name": "CSModule",
+      "description": "Community Staking Module contract that manages community node operators. Can process exit delay reports, triggered exits, and manage deposits and bond operations on CSAccounting and CSExitPenalties."
+    },
+    "eth:0xaa328816027f2d32b9f56d190bc9fa4a5c07637f": {
+      "name": "CSStrikes",
+      "description": "Community Staking strikes reporter that can process strikes reports on CSExitPenalties, penalizing community node operators who fail to meet performance requirements."
+    },
+    "eth:0xdc00116a0d3e064427da2600449cfd2566b3037b": {
+      "name": "TriggerableWithdrawalsGateway",
+      "description": "Immutable contract that can add withdrawal requests and trigger validator exits on the StakingRouter. Part of the validator exit mechanism."
+    },
+    "eth:0x7914b5a1539b97bd0bbd155757f25fd79a522d24": {
+      "name": "ResealManager",
+      "description": "Immutable contract that can pause and resume CSAccounting. Acts as a mechanism to reseal protocol components without requiring full governance action."
+    },
+    "eth:0xe1686c2e90eb41a48356c1cc7faa17629af3adb3": {
+      "name": "GateSeal",
+      "description": "Immutable one-time-use contract that can pause CSAccounting for a predefined duration. Once triggered, it cannot be reused — a new GateSeal must be deployed by governance."
+    },
+    "eth:0xb314d4a76c457c93150d308787939063f4cc67e0": {
+      "name": "VettedGate",
+      "description": "Upgradeable contract that can set bond curves on CSAccounting, controlling collateral requirements for vetted community staking operators."
+    },
+    "eth:0xf73a1260d222f447210581ddf212d915c09a3249": {
+      "name": "TokenManager",
+      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls {{tokenManagerCapital}} in direct capital through the LDO token and Voting contract."
+    },
+    "eth:0xb9e5cbb9ca5b0d659238807e84d0176930753d86": {
+      "name": "Finance",
+      "description": "Aragon Finance app that can transfer tokens from the Lido DAO Agent treasury. Gated by ACL permissions managed through the DAO Voting contract."
+    },
+    "eth:0xf65614d73952be91ce0ae7dd9cff25ba15bee2f5": {
+      "name": "TiebreakerCoreCommittee",
+      "description": "Immutable committee contract that can break governance deadlocks by scheduling proposals and resuming sealed contracts through the DualGovernance module. Acts as a safety mechanism when governance enters an unresolvable state."
+    },
+    "eth:0x175742c3ddd88b0192df3ecf98f180a79cb259d0": {
+      "name": "TiebreakerCoreCommittee (Secondary)",
+      "description": "Secondary TiebreakerCoreCommittee instance that can schedule proposals and resume sealable contracts. Part of the tiebreaker mechanism for resolving governance deadlocks."
+    },
+    "eth:0xbdb567672c867db533119c2dcd4fb9d8b44ec82f": {
+      "name": "ValidatorExitDelayVerifier",
+      "description": "Immutable verifier contract that can report validator exit delays to the StakingRouter, triggering penalties for staking modules whose operators fail to exit validators promptly."
+    },
+    "eth:0x4d72bff1beac69925f8bd12526a39baab069e5da": {
+      "name": "CSAccounting",
+      "description": "Community Staking accounting contract that can request share burns on the Burner. Called by the CSModule when processing bond operations for community staking node operators."
+    },
+    "eth:0x55032650b14df07b85bf18a3a3ec8e0af2e028d5": {
+      "name": "Unknown (0x5503...28d5)",
+      "description": "Unidentified address that can request share burns (both for cover and regular) on the Burner contract."
+    },
+    "eth:0xf165148978fa3ce74d76043f833463c340cfb704": {
+      "name": "Legacy Voting Forwarder",
+      "description": "Unknown contract that can forward calls through the Voting contract. Likely a legacy integration point in the Aragon governance system."
+    },
+    "eth:0x226f9265cbc37231882b7409658c18bb7738173a": {
+      "name": "StakingRouter (Self-Admin)",
+      "description": "Internal StakingRouter permission for initialization and upgrade finalization. These are one-time-use functions."
+    },
+    "eth:0x5fd0ddbc3351d009eb3f88de7cd081a614c519f1": {
+      "name": "Deposit Guardian EOA (0x5fd0...9F1)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0x7912fa976bcde9c2cf728e213e892ad7588e6aaf": {
+      "name": "Deposit Guardian EOA (0x7912...AaF)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0xd4ef84b638b334699bcf5af4b0410b8ccd71943f": {
+      "name": "Deposit Guardian EOA (0xd4EF...43f)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0xf82d88217c249297c6037ba77ce34b3d8a90ab43": {
+      "name": "Deposit Guardian EOA (0xf82D...d43)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0xa56b128ea2ea237052b0fa2a96a387c0e43157d8": {
+      "name": "Deposit Guardian EOA (0xa56b...7d8)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0x6d22ae126eb2c37f67a1391b37ff4f2863e61389": {
+      "name": "Deposit Guardian EOA (0x6d22...389)",
+      "description": "One of six Deposit Security Module guardians. Can pause deposits, authorize deposit transactions via quorum signatures, and unvet node operator signing keys."
+    },
+    "eth:0x73181107c8d9ed4ce0bbef7a0b4ccf3320c41d12": {
+      "name": "Oracle Committee Member (0x7318...d12)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts. Quorum of these members is required to finalize oracle reports."
+    },
+    "eth:0x285f8537e1daeedaf617e96c742f2cf36d63ccfb": {
+      "name": "Oracle Committee Member (0x285f...cfB)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x404335bce530400a5814375e7ec1fb55faff3ea2": {
+      "name": "Oracle Committee Member (0x4043...eA2)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x946d3b081ed19173dc83cd974fc69e1e760b7d78": {
+      "name": "Oracle Committee Member (0x946D...d78)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x007de4a5f7bc37e2f26c0cb2e8a95006ee9b89b5": {
+      "name": "Oracle Committee Member (0x007D...9b5)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0xc79f702202e3a6b0b6310b537e786b9acaa19baf": {
+      "name": "Oracle Committee Member (0xc79F...BAf)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x61c91ecd902eb56e314bb2d5c5c07785444ea1c8": {
+      "name": "Oracle Committee Member (0x61c9...1c8)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0xe57b3792adcc5da47ef4ff588883f0ee0c9835c9": {
+      "name": "Oracle Committee Member (0xe57B...5c9)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    },
+    "eth:0x4118dad7f348a4063bd15786c299de2f3b1333f3": {
+      "name": "Oracle Committee Member (0x4118...3F3)",
+      "description": "One of nine oracle committee members. Submits consensus reports to the AccountingOracle, ValidatorsExitBusOracle, and CSFeeOracle HashConsensus contracts."
+    }
+  },
+  "dependencies": {
+    "eth:0x00000000219ab540356cbb839cbe05303d7705fa": {
+      "name": "Ethereum Beacon Chain DepositContract",
+      "description": "The canonical Ethereum 2.0 deposit contract used by Lido to stake ETH with validators. The DepositSecurityModule calls deposit() to stake buffered ETH and reads get_deposit_root() to verify deposit data integrity. This is an immutable Ethereum protocol contract — if it fails or is compromised, Lido cannot process new deposits."
+    }
+  },
+  "funds": {
+    "eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": {
+      "name": "wstETH (Wrapped stETH)",
+      "description": "The wrapped stETH contract that holds stETH on behalf of wstETH holders. Contains {{wstethBalance}} in stETH, making it the largest single concentration of protocol funds. wstETH provides a non-rebasing wrapper around stETH for DeFi integrations."
+    },
+    "eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1": {
+      "name": "WithdrawalQueueERC721 (stETH)",
+      "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds {{withdrawalQueueBalance}} in stETH and ETH balances, plus {{withdrawalQueuePositions}} in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals."
+    },
+    "eth:0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+      "name": "Lido stETH Token (ETH Buffer)",
+      "description": "The stETH token contract itself holds {{stethBufferBalance}} in ETH as a deposit buffer before it is staked on the Beacon Chain. This buffer provides immediate withdrawal liquidity for small requests."
+    },
+    "eth:0x5a98fcbea516cf06857215779fd812ca3bef1b32": {
+      "name": "Lido DAO Token (LDO)",
+      "description": "The LDO governance token contract. Holds {{ldoTokenBalance}} in miscellaneous token balances."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+              ],
+              "filters": { "excludeExternal": true }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            { "type": "text", "content": "" }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "totalCapitalAtRisk": "v2score.inventory.admins.totalCapitalAtRisk",
+    "lidoDaoAgentCapital": "v2score.inventory.admins.breakdown[\"eth:0x3e40d73eb977dc6a537af587d48316fee66e9c8c\"].totalDirectCapital",
+    "accountingOracleCapital": "v2score.inventory.admins.breakdown[\"eth:0x852ded011285fe67063a08005c71a85690503cee\"].totalReachableCapital",
+    "depositSecurityCapital": "v2score.inventory.admins.breakdown[\"eth:0xffa96d84def2ea035c7ab153d8b991128e3d72fd\"].totalReachableCapital",
+    "elRewardsVaultCapital": "v2score.inventory.admins.breakdown[\"eth:0x388c818ca8b9251b393131c08a736a67ccb19297\"].totalDirectCapital",
+    "withdrawalVaultCapital": "v2score.inventory.admins.breakdown[\"eth:0xb9d7934878b5fb9610b3fe8a5e441e8fad7e293f\"].totalDirectCapital",
+    "tokenManagerCapital": "v2score.inventory.admins.breakdown[\"eth:0xf73a1260d222f447210581ddf212d915c09a3249\"].totalDirectCapital",
+    "wstethBalance": "fundsdata.contracts[\"eth:0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0\"].balances.totalUsdValue",
+    "withdrawalQueueBalance": "fundsdata.contracts[\"eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1\"].balances.totalUsdValue",
+    "withdrawalQueuePositions": "fundsdata.contracts[\"eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1\"].positions.totalUsdValue",
+    "stethBufferBalance": "fundsdata.contracts[\"eth:0xae7ab96520de3a18e5e111b5eaab095312d7fe84\"].balances.totalUsdValue",
+    "ldoTokenBalance": "fundsdata.contracts[\"eth:0x5a98fcbea516cf06857215779fd812ca3bef1b32\"].balances.totalUsdValue"
+  }
+}

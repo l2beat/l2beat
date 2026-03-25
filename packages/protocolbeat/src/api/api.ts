@@ -31,6 +31,7 @@ import type {
   ApiFunctionAnalysisResponse,
   ApiAdminsResponse,
   ApiDependenciesResponse,
+  ResourceEntry,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -462,6 +463,21 @@ export async function compileReview(
   return await res.json()
 }
 
+export async function compileAllReviews(): Promise<{
+  results: Array<{
+    project: string
+    status: string
+    path?: string
+    reason?: string
+  }>
+}> {
+  const res = await fetch('/api/compile-all-reviews', { method: 'POST' })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return await res.json()
+}
+
 export async function getFundsData(project: string): Promise<ApiFundsDataResponse> {
   const res = await fetch(`/api/projects/${project}/funds-data`)
   if (!res.ok) {
@@ -601,6 +617,30 @@ export async function updateReviewConfigEntity(
       headers: { 'Content-Type': 'application/json' },
     },
   )
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
+export async function getResources(
+  project: string,
+): Promise<ResourceEntry[]> {
+  const res = await fetch(`/api/projects/${project}/resources`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function updateResources(
+  project: string,
+  resources: ResourceEntry[],
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/resources`, {
+    method: 'PUT',
+    body: JSON.stringify(resources),
+    headers: { 'Content-Type': 'application/json' },
+  })
   if (!res.ok) {
     throw new Error(res.statusText)
   }

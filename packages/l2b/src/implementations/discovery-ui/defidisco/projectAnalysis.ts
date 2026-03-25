@@ -313,6 +313,8 @@ export class ProjectAnalysis {
   private _tagsByAddress: Map<string, any> | null = null
   private _enhancedGraph: EnhancedGraph | null = null
   private _capitalCalculator: CapitalAnalysisCalculator | null = null
+  private _mitigationsLookup: Map<string, Mitigation[]> | null = null
+  private _transitiveMitigationsLookup: Map<string, Mitigation[]> | null = null
 
   constructor(
     paths: DiscoveryPaths,
@@ -474,6 +476,21 @@ export class ProjectAnalysis {
       )
     }
     return this._capitalCalculator
+  }
+
+  private get mitigationsLookup(): Map<string, Mitigation[]> {
+    if (!this._mitigationsLookup) {
+      this._mitigationsLookup = this.buildMitigationsLookup()
+    }
+    return this._mitigationsLookup
+  }
+
+  private get transitiveMitigationsLookup(): Map<string, Mitigation[]> {
+    if (!this._transitiveMitigationsLookup) {
+      this._transitiveMitigationsLookup =
+        this.buildTransitiveMitigationsLookup()
+    }
+    return this._transitiveMitigationsLookup
   }
 
   private buildLookupMaps(): void {
@@ -638,11 +655,6 @@ export class ProjectAnalysis {
           // Group by admin
           const funcImpact: Impact =
             func.score === 'no-impact' ? 'no-impact' : 'critical'
-          const mergedMitigations = buildMergedMitigations(
-            func,
-            this.paths,
-            this.projectName,
-          )
 
           for (const adminAddr of adminAddresses) {
             const normalizedAdmin = normalizeChainAddress(adminAddr)
@@ -671,8 +683,9 @@ export class ProjectAnalysis {
                 ) || 'Unknown Contract',
               functionName: func.functionName,
               impact: funcImpact,
-              mitigations: filterMitigationsForOwner(
-                mergedMitigations,
+              mitigations: this.getMitigationsForOwner(
+                contractAddress,
+                func.functionName,
                 normalizedAdmin,
                 'admin',
               ),
@@ -793,9 +806,6 @@ export class ProjectAnalysis {
   getDependencies(contractFilter?: string): ApiDependenciesResponse {
     const analysis = this.functionAnalysis
 
-    // Build mitigations lookup
-    const mitigationsLookup = this.buildMitigationsLookup()
-
     // Build funds lookup
     const fundsLookup = new Map<string, any>()
     for (const [addr, data] of Object.entries(this.fundsData.contracts ?? {})) {
@@ -878,10 +888,9 @@ export class ProjectAnalysis {
               impact: this.getFunctionImpact(contractAddr, funcName),
               viewOnlyPath: dep.viewOnlyPath,
               calledFunctions: dep.calledFunctions,
-              mitigations: filterMitigationsForOwner(
-                mitigationsLookup.get(
-                  `${normalizeChainAddress(contractAddr)}|${funcName}`,
-                ),
+              mitigations: this.getMitigationsForOwner(
+                contractAddr,
+                funcName,
                 dep.contractAddress,
                 'dependency',
               ),
@@ -1185,6 +1194,164 @@ export class ProjectAnalysis {
       }
     }
     return lookup
+  }
+
+  /**
+   * Build transitive mitigations lookup via forward BFS through call graph.
+   * For each function, follows call graph edges forward and collects scoped
+   * mitigations from downstream functions where scopedTo.address matches
+   * a contract on the call path.
+   */
+  private buildTransitiveMitigationsLookup(): Map<string, Mitigation[]> {
+    const transitiveLookup = new Map<string, Mitigation[]>()
+
+    // Collect all unique (contract, function) pairs that have outgoing
+    // call graph edges. We must iterate the enhanced graph — not just
+    // functionsData — because many caller contracts (e.g. StablecoinBridge)
+    // are not in functionsData but DO have call graph edges to downstream
+    // functions that carry scoped mitigations.
+    const seen = new Set<string>()
+    for (const [, edges] of this.enhancedGraph.forwardIndex) {
+      for (const edge of edges) {
+        if (edge.edgeType !== 'callgraph' || !edge.sourceFunction) continue
+        const key = `${normalizeChainAddress(edge.sourceContract)}|${edge.sourceFunction}`
+        if (seen.has(key)) continue
+        seen.add(key)
+
+        const transitiveMits = this.collectDownstreamScopedMitigations(
+          edge.sourceContract,
+          edge.sourceFunction,
+        )
+        if (transitiveMits.length > 0) {
+          transitiveLookup.set(key, transitiveMits)
+        }
+      }
+    }
+
+    return transitiveLookup
+  }
+
+  /**
+   * Forward BFS through call graph edges from (startContract, startFunction).
+   * At each downstream function, collects scoped mitigations where
+   * scopedTo.address matches any contract on the call path from the start.
+   *
+   * Example: StablecoinBridge.mint() -> Frankencoin.mint()
+   *   Frankencoin.mint() has mitigation scopedTo: StablecoinBridge
+   *   -> collected because StablecoinBridge is on the path
+   */
+  private collectDownstreamScopedMitigations(
+    startContract: string,
+    startFunction: string,
+  ): Mitigation[] {
+    const collected: Mitigation[] = []
+    const visited = new Set<string>()
+    const directLookup = this.mitigationsLookup
+
+    const queue: Array<{
+      contract: string
+      function: string
+      pathContracts: Set<string>
+    }> = [
+      {
+        contract: startContract,
+        function: startFunction,
+        pathContracts: new Set([normalizeChainAddress(startContract)]),
+      },
+    ]
+
+    while (queue.length > 0) {
+      const { contract, function: func, pathContracts } = queue.shift()!
+
+      const visitKey = `${normalizeChainAddress(contract)}:${func}`
+      if (visited.has(visitKey)) continue
+      visited.add(visitKey)
+
+      const normalizedContract = normalizeChainAddress(contract)
+      const edges = this.enhancedGraph.forwardIndex.get(normalizedContract)
+      if (!edges) continue
+
+      for (const edge of edges) {
+        // Only follow call graph edges, not permission edges
+        if (edge.edgeType !== 'callgraph') continue
+        // Only follow edges from the current function
+        if (edge.sourceFunction !== func) continue
+
+        const targetNorm = normalizeChainAddress(edge.targetContract)
+        const targetKey = `${targetNorm}|${edge.targetFunction}`
+
+        // Collect mitigations from downstream functions that are relevant
+        // to callers going through this path:
+        // - Global mitigations (no scopedTo): always propagate — a delay
+        //   or limit on a downstream function protects all upstream callers
+        // - Scoped mitigations: only if scopedTo.address matches a contract
+        //   on the call path from the start
+        const targetMitigations = directLookup.get(targetKey)
+        if (targetMitigations) {
+          for (const m of targetMitigations) {
+            if (!m.scopedTo) {
+              collected.push(m)
+            } else if (
+              pathContracts.has(normalizeChainAddress(m.scopedTo.address))
+            ) {
+              collected.push(m)
+            }
+          }
+        }
+
+        // Continue BFS with updated path
+        const newPathContracts = new Set(pathContracts)
+        newPathContracts.add(targetNorm)
+        queue.push({
+          contract: edge.targetContract,
+          function: edge.targetFunction,
+          pathContracts: newPathContracts,
+        })
+      }
+    }
+
+    // Deduplicate by (type, description, scopedTo.address)
+    const seen = new Set<string>()
+    const deduped: Mitigation[] = []
+    for (const m of collected) {
+      const key = `${m.type}:${m.description}:${m.scopedTo?.address ?? ''}`
+      if (!seen.has(key)) {
+        seen.add(key)
+        deduped.push(m)
+      }
+    }
+    return deduped
+  }
+
+  /**
+   * Get mitigations for a function (direct + transitive), filtered for a
+   * specific owner address. Single source of truth for mitigation resolution.
+   */
+  private getMitigationsForOwner(
+    contractAddress: string,
+    functionName: string,
+    ownerAddress: string,
+    ownerType: 'admin' | 'dependency',
+  ): Mitigation[] | undefined {
+    const key = `${normalizeChainAddress(contractAddress)}|${functionName}`
+    const direct = this.mitigationsLookup.get(key)
+    const transitive = this.transitiveMitigationsLookup.get(key)
+
+    // Filter direct mitigations by owner (global ones pass, scoped ones
+    // must match the owner address)
+    const filteredDirect = filterMitigationsForOwner(
+      direct,
+      ownerAddress,
+      ownerType,
+    )
+
+    // Transitive mitigations are NOT re-filtered: their scopedTo was already
+    // validated during BFS collection (scopedTo.address matched a contract
+    // on the call path). They apply to all callers going through that path.
+    if (!filteredDirect && !transitive) return undefined
+    if (!filteredDirect) return transitive
+    if (!transitive) return filteredDirect
+    return [...filteredDirect, ...transitive]
   }
 
   /**

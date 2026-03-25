@@ -1,0 +1,193 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-03-24T12:30:12.982Z",
+  "protocolSlug": "EtherFi-Stake",
+  "protocolName": "EtherFi Staking",
+  "tokenName": "eETH",
+  "chain": "Ethereum",
+  "projectType": "liquid-staking",
+  "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped form weETH) in exchange for ETH deposits, which are then staked on the Beacon Chain and restaked via EigenLayer. The protocol's core contracts are upgradeable through an immutable EtherFiTimelock with a 3-day delay, ultimately controlled by a 3/5 team multisig. EtherFi relies on EigenLayer for restaking, Lido's stETH for liquidity operations, Curve for price feeds, and LayerZero for cross-chain bridging. The protocol manages {{totalCapitalAtRisk}} in direct capital and {{eethMarketCap}} in eETH token value.",
+  "admins": {
+    "eth:0x9f26d4c958fd811a1f59b01b86be7dffc9d20761": {
+      "name": "EtherFi Timelock (3 days)",
+      "description": "Immutable timelock contract with a 3-day (72h) minimum delay. Controls 152 permissioned functions across virtually all core protocol contracts, including upgradeTo on LiquidityPool, WithdrawRequestNFT, StakingManager, EtherFiNodesManager, Liquifier, MembershipManager, and more. Can transfer ownership, update admin addresses, configure oracle committee members, and modify protocol parameters. Holds {{timelockDirectCapital}} in direct capital exposure and {{timelockTokenValue}} in token value at risk."
+    },
+    "eth:0x308861a430be4cce5502d0a12724771fc6daf216": {
+      "name": "LiquidityPool (Contract)",
+      "description": "Internal protocol contract that controls eETH minting and burning via mintShares and burnShares on the eETH token contract, processes withdrawal requests on WithdrawRequestNFT, and creates/registers/funds Beacon validators on StakingManager. This is a contract-to-contract permission, not a human admin — the LiquidityPool itself is upgradeable and owned by EtherFiTimelock."
+    },
+    "eth:0x62247d29b4b9becf4bb73e0c722cf6445cfc7ce9": {
+      "name": "RoleRegistry (Contract)",
+      "description": "Internal role-based access control contract that governs WithdrawRequestNFT operations (finalizeRequests, invalidateRequest, validateRequest, pause/unpause) and Wrapped eETH Token recovery and upgrades. Controls {{roleRegistryTokenValue}} in token value. The RoleRegistry itself is upgradeable and owned by EtherFiTimelock."
+    },
+    "eth:0x2aca71020de61bb532008049e1bd41e451ae8adc": {
+      "name": "EtherFi Team 3/5 Multisig",
+      "description": "A 3-of-5 Gnosis Safe multisig that controls the EtherfiOFTAdapterUpgradeable contract (LayerZero OFT bridge adapter) — can set rate limits, grant/revoke roles, and configure peers. Also manages roles on multiple DummyTokenUpgradeable contracts used for cross-chain sync. This multisig is the terminal owner identified in the governance traversal."
+    },
+    "eth:0xdadef1ffbfeaab4f68a9fd181395f68b4e4e7ae0": {
+      "name": "EtherFiRedemptionManager (Contract)",
+      "description": "Internal protocol contract that can transfer stETH from EtherFiRestaker and execute withdrawals and eETH share burns on LiquidityPool. Controls {{redemptionManagerCapital}} in direct capital. Upgradeable, with proxy admin set to the zero address (non-upgradeable proxy admin)."
+    },
+    "eth:0x0ef8fa4760db8f5cd4d993f3e3416f30f942d705": {
+      "name": "EtherFiAdmin (Contract)",
+      "description": "Internal admin contract that executes protocol fee payments, adds locked ETH amounts for withdrawals, and processes deposits on LiquidityPool. Also triggers rebase on MembershipManager. Controls {{etherFiAdminCapital}} in reachable capital. Owned by EtherFiTimelock."
+    },
+    "eth:0x3d320286e014c3e1ce99af6d6b00f0c1d63e3000": {
+      "name": "MembershipManager (Contract)",
+      "description": "Internal contract that triggers LiquidityPool rebase, requests membership NFT withdrawals, and executes LP withdrawals. Controls {{membershipManagerCapital}} in reachable capital. Upgradeable and owned by EtherFiTimelock."
+    },
+    "eth:0x25e821b7197b146f7713c3b89b6a4d83516b912d": {
+      "name": "StakingManager (Contract)",
+      "description": "Internal contract that manages validator lifecycle — updates auction bid information, links pubkeys to nodes, processes auction fee transfers, and controls the UpgradeableBeacon for EtherFiNode implementations. Also mints and burns TNFTs. Upgradeable and owned by EtherFiTimelock."
+    },
+    "eth:0x8b71140ad2e5d1e7018d2a7f8a288bd3cd38916f": {
+      "name": "EtherFiNodesManager (Contract)",
+      "description": "Internal contract that manages EtherFiNode operations across 28 permissioned functions — creates EigenPods, submits proofs, queues ETH withdrawals, delegates to EigenLayer operators, and distributes auction revenue. Also burns TNFTs on withdrawal. Upgradeable and owned by EtherFiTimelock."
+    },
+    "eth:0x0000000000000000000000000000000000000000": {
+      "name": "Zero Address (Renounced)",
+      "description": "The zero address holds renounced permissions: rescueERC20 on WrapTokenV3ETH and cbETH, acceptOwnership on RoleRegistry, and mint on DummyTokenUpgradeable. These functions are effectively unexercisable."
+    },
+    "eth:0xd789870bea40d056a4d26055d0befcc8755da146": {
+      "name": "EtherfiL1SyncPoolETH (Contract)",
+      "description": "Internal contract that handles cross-chain ETH sync via LayerZero. Can unwrap L2 ETH through the Liquifier and mint DummyTokenUpgradeable tokens for cross-chain accounting. Upgradeable, owned by EtherFiTimelock with a separate ProxyAdmin."
+    }
+  },
+  "dependencies": {
+    "eth:0x00000000219ab540356cbb839cbe05303d7705fa": {
+      "name": "Ethereum Beacon Chain Deposit Contract",
+      "description": "Immutable Ethereum deposit contract used by StakingManager and LiquidityPool to fund Beacon Chain validators via the deposit function. Essential for the protocol's core staking operation."
+    },
+    "eth:0x91e677b07f7af907ec9a428aafa9fc14a0d3a338": {
+      "name": "EigenLayer EigenPodManager",
+      "description": "EigenLayer's pod management contract used to create EigenPods, look up pod ownership, and track delegated share changes. Called by StakingManager during validator setup and by EtherFiNodesManager for restaking operations. Used by 32 functions."
+    },
+    "eth:0x39053d51b77dc0d36036fc1fcc8cb819df8ef37a": {
+      "name": "EigenLayer DelegationManager",
+      "description": "EigenLayer's delegation contract used for delegating to operators, queuing and completing withdrawals, and managing deposit shares. Central to EtherFi's restaking strategy — called by EtherFiNodesManager and EtherFiRestaker. {{delegationManagerFunds}} in funds at risk across 24 calling functions."
+    },
+    "eth:0x858646372cc42e1a627fce94aa7a7033e7cf075a": {
+      "name": "EigenLayer StrategyManager",
+      "description": "EigenLayer's strategy contract used to deposit stETH into restaking strategies via depositIntoStrategy. Called by EtherFiRestaker. {{strategyManagerFunds}} in funds at risk."
+    },
+    "eth:0x7750d328b314effa365a0402ccfd489b80b0adda": {
+      "name": "EigenLayer RewardsCoordinator",
+      "description": "EigenLayer's rewards distribution contract. EtherFiRestaker calls setClaimerFor to configure reward claiming. {{rewardsCoordinatorFunds}} in funds at risk."
+    },
+    "eth:0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+      "name": "Lido stETH Token",
+      "description": "Lido's liquid staking token used by Liquifier and EtherFiRestaker for allowance checks, balance queries, and approvals. Core to the protocol's stETH liquidity operations. {{stethFunds}} in funds at risk."
+    },
+    "eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1": {
+      "name": "Lido WithdrawalQueueERC721",
+      "description": "Lido's withdrawal queue used by EtherFiRestaker to request and claim stETH withdrawals. Called across 6 functions for managing stETH-to-ETH conversion."
+    },
+    "eth:0xa2e3356610840701bdf5611a53974510ae27e2e1": {
+      "name": "Curve WrapTokenV3ETH (wstETH/ETH)",
+      "description": "Curve's wrapped stETH token contract used by Liquifier for totalSupply, exchange rate queries, and permit operations. Provides pricing data for stETH wrapping/unwrapping."
+    },
+    "eth:0x5fae7e604fc3e24fd43a72867cebac94c65b404a": {
+      "name": "Curve Pool (view-only)",
+      "description": "Curve AMM pool used by Liquifier for get_dy price quotes. View-only dependency — no state-changing calls."
+    },
+    "eth:0xbe9895146f7af43049ca1c1ae358b0541ea49704": {
+      "name": "Coinbase cbETH Token",
+      "description": "Coinbase's wrapped staked ETH token. Liquifier reads its exchangeRate for cbETH pricing in the liquification process."
+    },
+    "eth:0x1a44076050125825900e736c501f859c50fe728c": {
+      "name": "LayerZero EndpointV2",
+      "description": "LayerZero's immutable messaging endpoint used by EtherfiOFTAdapterUpgradeable and EtherfiL1SyncPoolETH for cross-chain eETH/weETH bridging. Calls include setDelegate, send, sendCompose, and burn."
+    },
+    "eth:0xbe010a7e3686fdf65e93344ab664d065a0b02478": {
+      "name": "LayerZero Endpoint Owner",
+      "description": "External owner of the LayerZero EndpointV2 contract. Can register libraries, set default send/receive libraries, and transfer ownership. Not controlled by EtherFi."
+    }
+  },
+  "funds": {
+    "eth:0x308861a430be4cce5502d0a12724771fc6daf216": {
+      "name": "LiquidityPool (ETH)",
+      "description": "Core liquidity pool holding {{liquidityPoolBalance}} primarily in ETH from user deposits awaiting validator allocation or withdrawal processing. This is the main entry and exit point for ETH in the protocol."
+    },
+    "eth:0x1b7a4c3797236a1c37f8741c0be35c2c72736fff": {
+      "name": "EtherFiRestaker (EigenLayer Positions)",
+      "description": "Holds {{restakerPositions}} in EigenLayer restaking positions, split between stETH deposits on EigenLayer ({{restakerEigenlayerPositions}}) and Lido staking positions ({{restakerLidoPositions}}). This is the largest capital concentration in the protocol."
+    },
+    "eth:0x35fa164735182de50811e8e2e824cfb9b6118ac2": {
+      "name": "eETH Token",
+      "description": "The protocol's liquid staking receipt token with a market cap of {{eethMarketCap}}. Represents claims on staked ETH held by the protocol."
+    },
+    "eth:0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee": {
+      "name": "weETH Token (Wrapped eETH)",
+      "description": "Wrapped version of eETH with a market cap of {{weethMarketCap}}. An ERC-20 wrapper that accrues staking rewards by increasing its exchange rate against eETH."
+    },
+    "eth:0x6329004e903b7f420245e7af3f355186f2432466": {
+      "name": "Treasury (ETH)",
+      "description": "Protocol treasury holding {{treasuryBalance}} in ETH. Immutable contract owned by EtherFiTimelock, used for protocol revenue collection."
+    }
+  },
+  "sections": {
+    "codeAndAudits": {
+      "title": "Code & Audits",
+      "description": "Smart contract analysis and audit history",
+      "subsections": [
+        {
+          "title": "Contracts",
+          "content": [
+            {
+              "type": "dataTable",
+              "dataSource": "project.contracts",
+              "columns": [
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
+              ],
+              "filters": {
+                "excludeExternal": true
+              }
+            }
+          ]
+        },
+        {
+          "title": "Audits",
+          "content": [
+            {
+              "type": "text",
+              "content": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dataKeys": {
+    "totalCapitalAtRisk": "v2score.inventory.admins.totalCapitalAtRisk",
+    "eethMarketCap": "fundsdata.contracts[\"eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2\"].tokenInfo.tokenValue",
+    "weethMarketCap": "fundsdata.contracts[\"eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee\"].tokenInfo.tokenValue",
+    "timelockDirectCapital": "v2score.inventory.admins.breakdown[\"eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761\"].totalDirectCapital",
+    "timelockTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761\"].totalDirectTokenValue",
+    "roleRegistryTokenValue": "v2score.inventory.admins.breakdown[\"eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9\"].totalDirectTokenValue",
+    "redemptionManagerCapital": "v2score.inventory.admins.breakdown[\"eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0\"].totalDirectCapital",
+    "etherFiAdminCapital": "v2score.inventory.admins.breakdown[\"eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705\"].totalReachableCapital",
+    "membershipManagerCapital": "v2score.inventory.admins.breakdown[\"eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000\"].totalReachableCapital",
+    "liquidityPoolBalance": "fundsdata.contracts[\"eth:0x308861A430be4cce5502d0A12724771Fc6DaF216\"].balances.totalUsdValue",
+    "restakerPositions": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.totalUsdValue",
+    "restakerEigenlayerPositions": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.protocols[0].totalUsdValue",
+    "restakerLidoPositions": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.protocols[1].totalUsdValue",
+    "treasuryBalance": "fundsdata.contracts[\"eth:0x6329004E903B7F420245E7aF3f355186f2432466\"].balances.totalUsdValue",
+    "delegationManagerFunds": "v2score.inventory.admins.breakdown[\"eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0\"].totalReachableCapital",
+    "strategyManagerFunds": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.totalUsdValue",
+    "rewardsCoordinatorFunds": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.totalUsdValue",
+    "stethFunds": "v2score.inventory.admins.breakdown[\"eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0\"].totalDirectCapital"
+  }
+}

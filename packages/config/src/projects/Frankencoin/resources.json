@@ -1,0 +1,35 @@
+[
+  {
+    "url": "https://frankencoin.com/",
+    "type": "website"
+  },
+  {
+    "url": "https://app.frankencoin.com/",
+    "type": "frontend",
+    "frontendSubtype": "official"
+  },
+  {
+    "url": "https://docs.frankencoin.com/ ",
+    "type": "docs"
+  },
+  {
+    "url": "https://github.com/Frankencoin-ZCHF/",
+    "type": "github"
+  },
+  {
+    "url": "https://x.com/frankencoinzchf",
+    "type": "x"
+  },
+  {
+    "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/LICENSE",
+    "type": "license",
+    "label": "MIT",
+    "licenseScope": "Contracts"
+  },
+  {
+    "url": "https://github.com/Frankencoin-ZCHF/frankencoin-dapp/blob/main/LICENSE",
+    "type": "license",
+    "label": "MIT",
+    "licenseScope": "Frontend"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "type": "website",
+    "url": "https://lido.fi/"
+  },
+  {
+    "type": "frontend",
+    "url": "https://stake.lido.fi/",
+    "frontendSubtype": "official"
+  },
+  {
+    "type": "frontend",
+    "url": "https://github.com/lidofinance/ethereum-staking-widget",
+    "frontendSubtype": "self-hosted",
+    "label": "Ethereum Staking Widget"
+  },
+  {
+    "type": "docs",
+    "url": "https://docs.lido.fi/"
+  },
+  {
+    "type": "github",
+    "url": "https://github.com/lidofinance"
+  },
+  {
+    "type": "github",
+    "url": "https://github.com/lidofinance/core",
+    "label": "Core smart contracts"
+  },
+  {
+    "type": "x",
+    "url": "https://x.com/LidoFinance"
+  },
+  {
+    "type": "license",
+    "url": "https://github.com/lidofinance/core/blob/master/LICENSE",
+    "label": "GPL-3.0",
+    "licenseScope": "Contracts"
+  },
+  {
+    "type": "license",
+    "url": "https://github.com/lidofinance/ethereum-staking-widget/blob/master/LICENSE",
+    "label": "GPL-3.0",
+    "licenseScope": "Frontend"
+  },
+  {
+    "type": "other",
+    "url": "https://dao.lido.fi",
+    "label": "Governance Portal"
+  },
+  {
+    "type": "other",
+    "url": "https://research.lido.fi",
+    "label": "Research Forum"
+  }
+]

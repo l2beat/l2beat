@@ -118,36 +118,5 @@
     "cusdcv3Balance": "fundsdata.contracts[\"eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3\"].balances.totalUsdValue",
     "cusdtv3Balance": "fundsdata.contracts[\"eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94\"].balances.totalUsdValue",
     "compMarketCap": "fundsdata.contracts[\"eth:0xc00e94Cb662C3520282E6f5717214004A7f26888\"].tokenInfo.tokenValue"
-  },
-  "resources": [
-    {
-      "url": "https://github.com/compound-finance/palisade",
-      "type": "frontend",
-      "label": "IPFS Instructions",
-      "frontendSubtype": "third-party"
-    },
-    {
-      "url": "https://compound.finance/",
-      "type": "website"
-    },
-    {
-      "url": "https://docs.compound.finance/",
-      "type": "docs"
-    },
-    {
-      "url": "https://app.compound.finance/?market=usdc-mainnet",
-      "type": "frontend",
-      "frontendSubtype": "official"
-    },
-    {
-      "url": "https://github.com/compound-finance/comet/blob/main/LICENSE",
-      "type": "license",
-      "label": "BUSL-1.1",
-      "licenseScope": "Contracts"
-    },
-    {
-      "url": "https://www.defiscan.info/protocols/compound-v3/ethereum",
-      "type": "defiscan-v1"
-    }
-  ]
+  }
 }

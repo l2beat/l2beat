@@ -72,38 +72,5 @@
   "dataKeys": {
     "uniswapV2TotalLiquidity": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.totalUsdValue",
     "uniswapV2PairCount": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.contractCount"
-  },
-  "resources": [
-    {
-      "url": "https://app.uniswap.org/",
-      "type": "frontend",
-      "frontendSubtype": "official"
-    },
-    {
-      "url": "https://github.com/Uniswap/interface/releases",
-      "type": "frontend",
-      "frontendSubtype": "third-party",
-      "label": "IPFS Releases"
-    },
-    {
-      "url": "https://github.com/Uniswap/interface",
-      "type": "frontend",
-      "frontendSubtype": "self-hosted",
-      "label": "Open source Interface"
-    },
-    {
-      "url": "https://x.com/uniswap",
-      "type": "x"
-    },
-    {
-      "url": "https://github.com/Uniswap/v2-core/blob/master/LICENSE",
-      "type": "license",
-      "label": "GPL-3.0",
-      "licenseScope": "Contracts"
-    },
-    {
-      "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
-      "type": "defiscan-v1"
-    }
-  ]
+  }
 }

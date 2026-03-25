@@ -1,4 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
+import { getResources, updateResources } from '../../../api/api'
 import type {
   FrontendSubtype,
   ResourceEntry,
@@ -39,39 +41,67 @@ const LICENSE_PRESETS = [
 ]
 
 interface ReviewResourcesEditorProps {
-  resources: ResourceEntry[]
-  onUpdateResources: (resources: ResourceEntry[]) => void
+  project: string
 }
 
-export function ReviewResourcesEditor({
-  resources,
-  onUpdateResources,
-}: ReviewResourcesEditorProps) {
+export function ReviewResourcesEditor({ project }: ReviewResourcesEditorProps) {
   const [showAdd, setShowAdd] = useState(false)
+  const queryClient = useQueryClient()
+
+  const { data: resources = [], isLoading } = useQuery({
+    queryKey: ['resources', project],
+    queryFn: () => getResources(project),
+  })
+
+  const mutation = useMutation({
+    mutationFn: (newResources: ResourceEntry[]) =>
+      updateResources(project, newResources),
+    onMutate: async (newResources) => {
+      await queryClient.cancelQueries({ queryKey: ['resources', project] })
+      queryClient.setQueryData(['resources', project], newResources)
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ['resources', project] })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['resources', project] })
+    },
+  })
 
   const handleAdd = useCallback(
     (entry: ResourceEntry) => {
-      onUpdateResources([...resources, entry])
+      const newResources = [...resources, entry]
+      mutation.mutate(newResources)
       setShowAdd(false)
     },
-    [resources, onUpdateResources],
+    [resources, mutation],
   )
 
   const handleUpdate = useCallback(
     (index: number, entry: ResourceEntry) => {
       const updated = [...resources]
       updated[index] = entry
-      onUpdateResources(updated)
+      mutation.mutate(updated)
     },
-    [resources, onUpdateResources],
+    [resources, mutation],
   )
 
   const handleDelete = useCallback(
     (index: number) => {
-      onUpdateResources(resources.filter((_, i) => i !== index))
+      mutation.mutate(resources.filter((_, i) => i !== index))
     },
-    [resources, onUpdateResources],
+    [resources, mutation],
   )
+
+  if (isLoading) {
+    return (
+      <div className="rounded border border-coffee-600 p-2">
+        <p className="py-2 text-center text-xs text-coffee-400">
+          Loading resources...
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="rounded border border-coffee-600 p-2">
@@ -81,6 +111,12 @@ export function ReviewResourcesEditor({
           <span className="font-normal text-coffee-400">
             ({resources.length})
           </span>
+          {mutation.isPending && (
+            <span className="ml-2 font-normal text-coffee-400">Saving...</span>
+          )}
+          {mutation.isError && (
+            <span className="ml-2 font-normal text-red-400">Save failed</span>
+          )}
         </h3>
         <button
           onClick={() => setShowAdd(!showAdd)}

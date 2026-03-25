@@ -26,7 +26,6 @@ export function getReviewConfig(
       config.admins ??= {}
       config.dependencies ??= {}
       config.funds ??= {}
-      config.resources ??= []
       // Strip removed sections from old configs
       if (config.sections) {
         const { codeAndAudits } = config.sections as any
@@ -54,6 +53,8 @@ export function updateReviewConfig(
   config: ReviewConfig,
 ): void {
   config.lastModified = new Date().toISOString()
+  // Defensively strip resources (now stored in resources.json)
+  delete (config as any).resources
   writeReviewConfig(paths, project, config)
 }
 

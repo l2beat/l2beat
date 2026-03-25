@@ -38,7 +38,6 @@ const STABLECOIN_TEMPLATE: ReviewConfig = {
       ],
     },
   },
-  resources: [],
   dataKeys: {},
 }
 

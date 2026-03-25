@@ -13,6 +13,7 @@ export const PANEL_IDS = [
   'defiscan',
   'callgraph',
   'review',
+  'resources',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]

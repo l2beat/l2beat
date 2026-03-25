@@ -87,6 +87,10 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - AccessControl Role Support (OpenZeppelin handler, path expressions)
 - Continuous Permission Monitoring (automated change detection, Discord alerts)
 - Permission Overrides Data Structure (contract-grouped JSON, owner path syntax, resolution logic)
+- Permission Scan Agent (`/scan-permissions` Claude Code skill — source code analysis for permissioned functions, owner path construction, verification against discovered data)
+- Impact Analysis Agent (`/analyze-impact` Claude Code skill — traces storage writes through read sites to classify temporal fund impact: retroactive vs future-only)
+- Add Mitigation Agent (`/add-mitigation` Claude Code skill — finds on-chain constraints in source code, builds structured mitigation entries in functions.json)
+- Scoring Agent (`/score-contract` Claude Code skill — batch impact analysis + scoring + mitigation finding for all permissioned functions on a contract)
 
 ### Call Graph Analysis — `docs/developers/features/call-graph-analysis.md`
 - Slither-based external call detection (SlithIR parsing, heuristic resolution engine)
@@ -97,9 +101,11 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 ### Scoring & Review — `docs/developers/features/scoring-and-review.md`
 - ProjectAnalysis API (`/admins`, `/dependencies` endpoints — single source of truth for admin/dependency computation)
 - Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
-- Review Builder (`review-config.json`, entity descriptions, resources, templates)
+- Review Builder (`review-config.json`, entity descriptions, templates)
+- Resources (`resources.json` — separate per-project file, auto-saves independently)
+- Resource Gathering Agent (`/gather-resources` Claude Code skill — web search + verify for official links, licenses, socials)
 - Review Generation Agent (`/generate-review` Claude Code skill)
-- Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution)
+- Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
 
 ### Infrastructure — `docs/developers/features/infrastructure.md`
@@ -110,6 +116,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
 - Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
+- Discovery Agent (`/run-discovery` Claude Code skill — iterative contract discovery, external/governance/funds tagging, handler configuration, array overflow error fixing)
 
 ---
 
@@ -173,6 +180,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - **Project Data**: Use `useQuery` with `getProject(project)` from `api.ts`
 - **Contract Tags**: Use `useContractTags(project)` hook — note: `isExternal`/`isGovernance`/`entity` are already included in admin/dependency API responses, so new components rarely need this hook directly
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
+- **Resources**: Use `useQuery` with `getResources(project)` — auto-saves on mutation via `updateResources()`, no panel Save button needed. Stored in `resources.json` (separate from review-config)
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
 ### Address Handling
@@ -211,7 +219,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 
 ### Key Data Structures
 
-**Permission Overrides** (`permission-overrides.json`): Contract-grouped format with `contracts[address].functions[]`. Each function has `functionName`, `userClassification`, `checked`, `score` (`'unscored' | 'critical' | 'no-impact'`), `description`, `ownerDefinitions`, `delay`, `aiClassification`, `timestamp`. `'no-impact'` means the researcher confirmed the function has no fund impact — its capital is zeroed in analysis and scoring. Each mitigation in `mitigations[]` can have `scopedTo?: { address: string, type: 'admin' | 'dependency' }` to limit it to a specific caller — mitigations without `scopedTo` are global. `filterMitigationsForOwner()` in `addressUtils.ts` handles scope filtering. Full schema in `docs/developers/features/permissions.md`.
+**Permission Overrides** (`permission-overrides.json`): Contract-grouped format with `contracts[address].functions[]`. Each function has `functionName`, `userClassification`, `checked`, `score` (`'unscored' | 'critical' | 'no-impact'`), `description`, `ownerDefinitions`, `delay`, `aiClassification`, `timestamp`. `'no-impact'` means the researcher confirmed the function has no fund impact — its capital is zeroed in analysis and scoring. Each mitigation in `mitigations[]` can have `scopedTo?: { address: string, type: 'admin' | 'dependency' }` to limit it to a specific caller — mitigations without `scopedTo` are global. Mitigation resolution is centralized in `projectAnalysis.ts` `getMitigationsForOwner()` — computes direct mitigations (filtered by owner) plus transitive mitigations (collected via forward BFS through call graph, including global and scoped mitigations from downstream functions). `reviewCompiler.ts` uses the result directly (`f.mitigations`), it does NOT compute mitigations. Full schema in `docs/developers/features/permissions.md`.
 
 **Owner Path Format**: `<contractRef>.<valuePath>` where contractRef is `$self`, `@fieldName`, or `eth:0xAddress`. Examples:
 - `{ "path": "$self.owner" }` - owner field in current contract
@@ -237,7 +245,9 @@ To add new panels:
 ```
 packages/
 ├── discovery/src/discovery/handlers/defidisco/
-│   └── WriteFunctionPermissionHandler.ts
+│   ├── WriteFunctionPermissionHandler.ts
+│   ├── AddressMappingHandler.ts          # Maps addresses via method call against discovered.json candidates
+│   └── EnumerableRolesHandler.ts         # Enumerates roles and their holders via RoleSet events
 ├── protocolbeat/src/defidisco/
 │   ├── ValuesPanelExtensions.tsx
 │   ├── TerminalExtensions.tsx
@@ -254,6 +264,7 @@ packages/
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources editor (links, frontends, socials)
+│   ├── ResourcesPanel.tsx          # Standalone Resources panel (wraps ReviewResourcesEditor)
 │   ├── FundsTagsButton.tsx         # Funds fetching controls (balances, positions, token, aggregate)
 │   ├── FundsSection.tsx            # Funds display in DeFiScan panel (tokens, aggregate, contracts)
 │   ├── addressUtils.ts             # Frontend address utilities (stripChainPrefix, addressesEqual, normalizeForLookup, findByAddress)
@@ -262,8 +273,9 @@ packages/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts
 │   ├── contractTags.ts
-│   ├── projectAnalysis.ts            # Central computation class (getAdmins, getDependencies, getSummary)
+│   ├── projectAnalysis.ts            # Central computation class (getAdmins, getDependencies, getSummary, getMitigationsForOwner)
 │   ├── reviewConfig.ts              # Review config CRUD
+│   ├── resources.ts                  # Resources CRUD (resources.json, with legacy review-config fallback)
 │   ├── reviewCompiler.ts            # Compiled review builder (thin layer over ProjectAnalysis)
 │   ├── generatePermissionsReport.ts
 │   ├── callGraph.ts                  # Slither-based external call detection
@@ -292,6 +304,7 @@ packages/
 │           └── frankencoinMintinghub.ts  # Frankencoin API (no key needed)
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
+    ├── resources.json                # Per-project resources (links, licenses, socials)
     └── review-config.json            # Per-project review config
 ```
 

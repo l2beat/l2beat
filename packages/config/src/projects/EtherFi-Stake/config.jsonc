@@ -1,0 +1,145 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "EtherFi-Stake",
+  "import": ["../globalConfig.jsonc"],
+  "maxDepth": 7,
+  "initialAddresses": ["eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2"],
+  "overrides": {
+    // External: Coinbase cbETH
+    "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704": {
+      "ignoreRelatives": ["$admin","$implementation","admin","blacklister","CANCEL_AUTHORIZATION_TYPEHASH","DOMAIN_SEPARATOR","implementation","masterMinter","oracle","owner","pauser","PERMIT_TYPEHASH","RECEIVE_WITH_AUTHORIZATION_TYPEHASH","rescuer","TRANSFER_WITH_AUTHORIZATION_TYPEHASH"]
+    },
+    // External: Lido stETH
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      "ignoreRelatives": ["$implementation","appId","DOMAIN_SEPARATOR","eip712Domain","getEIP712StETH","getEVMScriptRegistry","getLidoLocator","getRecoveryVault","getTreasury","getWithdrawalCredentials","implementation","kernel","PAUSE_ROLE","RESUME_ROLE","STAKING_CONTROL_ROLE","STAKING_PAUSE_ROLE","UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE"]
+    },
+    // External: Ethereum DepositContract
+    "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": {
+      "ignoreRelatives": ["get_deposit_root"]
+    },
+    // External: EigenLayer StrategyManager
+    "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": {
+      "ignoreRelatives": ["$admin","$implementation","$pastUpgrades","allocationManager","DEFAULT_BURN_ADDRESS","delegation","DEPOSIT_TYPEHASH","domainSeparator","owner","pauserRegistry","strategyWhitelister"]
+    },
+    // External: EigenLayer DelegationManager
+    "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": {
+      "ignoreRelatives": ["$admin","$implementation","$pastUpgrades","allocationManager","beaconChainETHStrategy","DELEGATION_APPROVAL_TYPEHASH","domainSeparator","eigenPodManager","pauserRegistry","permissionController","strategyManager"]
+    },
+    // External: Curve stETH/ETH pool
+    "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022": {
+      "ignoreRelatives": ["coins","future_owner","lp_token","owner"]
+    },
+    // External: Lido WithdrawalQueueERC721
+    "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": {
+      "ignoreRelatives": ["$admin","$implementation","$pastUpgrades","DEFAULT_ADMIN_ROLE","FINALIZE_ROLE","getNFTDescriptorAddress","MANAGE_TOKEN_URI_ROLE","ORACLE_ROLE","PAUSE_ROLE","proxy__getAdmin","proxy__getImplementation","RESUME_ROLE","STETH","WSTETH"]
+    },
+    // External: Curve WrapTokenV3ETH
+    "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1": {
+      "ignoreRelatives": ["_UNWRAP_ETH_ADDRESS","$admin","$implementation","$pastUpgrades","admin","blacklister","CANCEL_AUTHORIZATION_TYPEHASH","DOMAIN_SEPARATOR","ethReceiver","implementation","masterMinter","operator","oracle","owner","pauser","PERMIT_TYPEHASH","RECEIVE_WITH_AUTHORIZATION_TYPEHASH","rescuer","TRANSFER_WITH_AUTHORIZATION_TYPEHASH"]
+    },
+    // External: Curve pool
+    "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6": {
+      "ignoreRelatives": ["admin_fee_receiver","coins","DOMAIN_SEPARATOR","factory","owner"]
+    },
+    // External: Curve cbETH pool
+    "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A": {
+      "ignoreRelatives": ["$implementation","coins","factory","token"]
+    },
+    // External: EigenLayer EigenPodManager
+    "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": {
+      "ignoreRelatives": ["$admin","$implementation","$pastUpgrades","beaconChainETHStrategy","delegationManager","eigenPodBeacon","ethPOS","owner","pauserRegistry","proofTimestampSetter"]
+    },
+    // External: EigenLayer RewardsCoordinator
+    "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": {
+      "ignoreRelatives": ["$admin","$implementation","$pastUpgrades","allocationManager","beaconChainETHStrategy","delegationManager","emissionsController","feeRecipient","getCurrentClaimableDistributionRoot","getCurrentDistributionRoot","getDistributionRootAtIndex","owner","pauserRegistry","permissionController","rewardsUpdater","strategyManager"]
+    },
+    // External: LayerZero EndpointV2
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": {
+      "ignoreRelatives": ["blockedLibrary","EMPTY_PAYLOAD_HASH","getRegisteredLibraries","getSendContext","lzToken","nativeToken","NIL_PAYLOAD_HASH","owner"]
+    },
+    // External: LayerZero SendUln302
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
+      "ignoreRelatives": ["owner","treasury"]
+    },
+    // External: LayerZero ReadLib1002
+    "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": {
+      "ignoreRelatives": ["getTreasuryAndNativeFeeCap","owner"]
+    },
+    // External: LayerZero ReceiveUln302
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
+      "ignoreRelatives": ["owner"]
+    },
+    // External: LayerZero OneSig
+    "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": {
+      "ignoreRelatives": ["$members","getExecutors","seed"]
+    },
+    // External: LayerZero BlockedMessageLib (no address fields)
+    "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": {
+      "ignoreRelatives": []
+    },
+    // External: LayerZero ProxyAdmin
+    "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc": {
+      "ignoreRelatives": ["owner"]
+    },
+    // EnumerableRoles: RoleRegistry
+    "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9": {
+      "fields": { "roles": { "handler": { "type": "enumerableRoles", "flatDir": "src/projects/EtherFi-Stake/.flat" } } }
+    },
+    // AccessControl: EtherfiOFTAdapterUpgradeable
+    "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    // AccessControl: EtherFiTimelock
+    "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    // AccessControl: DummyTokenUpgradeable (x5)
+    "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    "eth:0x83998e169026136760bE6AF93e776C2F352D4b28": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3": {
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
+    // AddressMapping: AuctionManager
+    "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: EtherFiOracle
+    "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: NodeOperatorManager
+    "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: RegulationsManager
+    "eth:0xBd23fF26197Eda06a930641Ac13ED5F3dB35f4DE": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: EtherFiRestaker
+    "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: Liquifier
+    "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: MembershipManager
+    "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // AddressMapping: MembershipNFT
+    "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": {
+      "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    }
+  }
+}

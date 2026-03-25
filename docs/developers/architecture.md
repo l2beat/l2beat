@@ -254,7 +254,7 @@ Three entity types have distinct compilation paths:
 ProjectAnalysis.getAdmins() → ApiAdminsResponse
   - filter out admins where isExternal === true
   + review-config.json admins descriptions (name overrides, descriptions)
-  + functions.json mitigations (MitigationValue: hardcoded or field-referenced)
+  + mitigations via getMitigationsForOwner() (direct from functions.json + transitive via call graph BFS)
   + configSeverity.ts auto-severity (mitigatedField → config.jsonc HIGH severity)
   → CompiledAdmin[]
 ```
