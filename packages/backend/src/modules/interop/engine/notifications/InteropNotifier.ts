@@ -17,7 +17,6 @@ export class InteropNotifier {
   constructor(
     private readonly client: DiscordClient,
     private readonly logger: Logger,
-    private readonly discordWebhookUrl: string,
   ) {
     this.logger = logger.for(this)
     this.messageQueue = new TaskQueue(
@@ -60,7 +59,7 @@ export class InteropNotifier {
 
   private async send(message: string): Promise<void> {
     const truncated = this.truncate(message)
-    await this.client.sendMessage(truncated, this.discordWebhookUrl)
+    await this.client.sendMessage(truncated)
     this.logger.debug('Notification sent', { message: truncated })
   }
 

@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { DiscordClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
@@ -169,8 +170,9 @@ function createIndexers(
           {
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
-            discordClient: providers.clients.discord,
-            discordWebhookUrl: notifications.ethereumBlobs.discordWebhookUrl,
+            discordClient: new DiscordClient(
+              notifications.ethereumBlobs.discordWebhookUrl,
+            ),
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],
@@ -227,12 +229,12 @@ function createIndexers(
           })),
           // We only sync projects data at 02:00:00
           ...(UnixTime.toStartOf(targetTimestamp, 'day') + 2 * UnixTime.HOUR ===
-          targetTimestamp
+            targetTimestamp
             ? uniqBy(projectConfigurations, (e) => e.projectId).map((c) => ({
-                feature: 'dataAvailability' as const,
-                id: c.projectId,
-                target: targetTimestamp,
-              }))
+              feature: 'dataAvailability' as const,
+              id: c.projectId,
+              target: targetTimestamp,
+            }))
             : []),
         ])
       },

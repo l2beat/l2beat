@@ -6,7 +6,6 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
-  DiscordClient,
   DuneClient,
   EigenApiClient,
   EspressoClient,
@@ -57,13 +56,10 @@ export interface Clients {
   near: NearClient | undefined
   espresso: EspressoClient | undefined
   dune: DuneClient | undefined
-  discord: DiscordClient
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-
-  const discord: DiscordClient = new DiscordClient(http)
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -104,32 +100,32 @@ export function initClients(config: Config, logger: Logger): Clients {
         case 'rpc': {
           const multicallClient = blockApi.multicallV3
             ? new MulticallV3Client(
-                blockApi.multicallV3.address,
-                blockApi.multicallV3.sinceBlock,
-                500,
-              )
+              blockApi.multicallV3.address,
+              blockApi.multicallV3.sinceBlock,
+              500,
+            )
             : undefined
           const rpcClient = config.newClientsEnabled
             ? RpcClientCompat.create({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger,
-                multicallClient,
-                timeout: blockApi.timeout,
-              })
+              chain: chain.name,
+              url: blockApi.url,
+              http,
+              callsPerMinute: blockApi.callsPerMinute,
+              retryStrategy: blockApi.retryStrategy,
+              logger,
+              multicallClient,
+              timeout: blockApi.timeout,
+            })
             : new RpcClient({
-                chain: chain.name,
-                url: blockApi.url,
-                http,
-                callsPerMinute: blockApi.callsPerMinute,
-                retryStrategy: blockApi.retryStrategy,
-                logger,
-                multicallClient,
-                timeout: blockApi.timeout,
-              })
+              chain: chain.name,
+              url: blockApi.url,
+              http,
+              callsPerMinute: blockApi.callsPerMinute,
+              retryStrategy: blockApi.retryStrategy,
+              logger,
+              multicallClient,
+              timeout: blockApi.timeout,
+            })
           blockClients.push(rpcClient)
           logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -394,6 +390,5 @@ export function initClients(config: Config, logger: Logger): Clients {
     voyager: voyagerClient,
     lighter: lighterClient,
     dune,
-    discord,
   }
 }

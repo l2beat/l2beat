@@ -1,3 +1,4 @@
+import { DiscordClient } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { AnomalyNotifier } from './AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
@@ -7,7 +8,6 @@ export function createAnomaliesModule({
   clock,
   logger,
   db,
-  providers,
   blockProcessors,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.anomalies) {
@@ -18,26 +18,25 @@ export function createAnomaliesModule({
 
   const anomaliesNotifier =
     config.notifications &&
-    config.notifications.anomalies &&
-    config.trackedTxsConfig
+      config.notifications.anomalies &&
+      config.trackedTxsConfig
       ? new AnomalyNotifier(
-          logger,
-          clock,
-          providers.clients.discord,
-          db,
-          config.anomalies.anomaliesMinDuration,
-          config.trackedTxsConfig,
-          config.notifications.anomalies.discordWebhookUrl,
-        )
+        logger,
+        clock,
+        new DiscordClient(config.notifications.anomalies.discordWebhookUrl),
+        db,
+        config.anomalies.anomaliesMinDuration,
+        config.trackedTxsConfig,
+      )
       : undefined
 
   const realTimeLivenessProcessor = config.trackedTxsConfig
     ? new RealTimeLivenessProcessor(
-        config.trackedTxsConfig,
-        logger,
-        db,
-        anomaliesNotifier,
-      )
+      config.trackedTxsConfig,
+      logger,
+      db,
+      anomaliesNotifier,
+    )
     : undefined
 
   const start = () => {

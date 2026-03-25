@@ -14,7 +14,6 @@ interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configurations: EthereumDaTrackingConfig[]
   discordClient: DiscordClient
-  discordWebhookUrl: string
 }
 
 export interface UnmatchedBlobPair {
@@ -65,7 +64,7 @@ export class EthereumBlobNotifierIndexer extends ManagedChildIndexer {
 
     const messages = this.formatDiscordMessages(unmatchedPairs, to)
     for (const message of messages) {
-      await this.$.discordClient.sendMessage(message, this.$.discordWebhookUrl)
+      await this.$.discordClient.sendMessage(message)
     }
     this.logger.info('Sent Discord notification')
 

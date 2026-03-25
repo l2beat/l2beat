@@ -1,4 +1,4 @@
-import { HttpClient, InteropTransferClassifier } from '@l2beat/shared'
+import { DiscordClient, HttpClient, InteropTransferClassifier } from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
@@ -47,9 +47,8 @@ export function createInteropModule({
 
   if (config.notifications && config.notifications.interop) {
     notificationClient = new InteropNotifier(
-      providers.clients.discord,
+      new DiscordClient(config.notifications.interop.discordWebhookUrl),
       logger,
-      config.notifications.interop.discordWebhookUrl,
     )
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,

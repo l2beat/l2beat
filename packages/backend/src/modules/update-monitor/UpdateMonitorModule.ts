@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { HttpClient } from '@l2beat/shared'
+import { DiscordClient, HttpClient } from '@l2beat/shared'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
@@ -17,7 +17,6 @@ export function createUpdateMonitorModule({
   logger,
   db,
   clock,
-  providers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.updateMonitor) {
     logger.info('UpdateMonitor module disabled')
@@ -41,13 +40,14 @@ export function createUpdateMonitorModule({
       ? config.notifications.updateMonitor.discordWebhookUrl
       : undefined
 
+  const discordClient = updateMonitorWebhookUrl ? new DiscordClient(updateMonitorWebhookUrl) : undefined
+
   const updateNotifier = new UpdateNotifier(
     db,
-    providers.clients.discord,
+    discordClient,
     logger,
     updateMessagesService,
     projectService,
-    updateMonitorWebhookUrl,
   )
   const updateDiffer = config.updateMonitor.updateDifferEnabled
     ? new UpdateDiffer(configReader, db, discoveryOutputCache, logger)

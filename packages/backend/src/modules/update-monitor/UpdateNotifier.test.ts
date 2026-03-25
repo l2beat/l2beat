@@ -18,7 +18,6 @@ import {
 } from './UpdateNotifier'
 
 const TIMESTAMP = UnixTime.now()
-const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/test/test'
 
 describe(UpdateNotifier.name, () => {
   const projectService = mockObject<ProjectService>({
@@ -40,7 +39,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -51,7 +50,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -87,7 +85,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -103,7 +100,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -122,7 +119,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -168,7 +164,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -184,7 +179,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -203,7 +198,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -245,7 +239,6 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         internalMessage,
-        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -261,7 +254,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -279,7 +272,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
+
       )
 
       const project = 'project-a'
@@ -314,7 +307,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        DISCORD_WEBHOOK_URL,
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -338,7 +330,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       // Mock project with trackedTxsConfig
@@ -368,7 +360,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -412,7 +403,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        DISCORD_WEBHOOK_URL,
       )
     })
 
@@ -430,7 +420,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       // Mock project with trackedTxsConfig that has a different address
@@ -460,7 +450,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         mockProjectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const project = 'project-a'
@@ -504,7 +493,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        DISCORD_WEBHOOK_URL,
       )
     })
   })
@@ -516,7 +504,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -529,7 +517,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {
@@ -560,7 +547,6 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n:warning: Disabled projects: \`project-aaa\`\n:warning: Failed projects: \`project-bbb\`\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
-        DISCORD_WEBHOOK_URL,
       )
     })
 
@@ -570,7 +556,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -590,7 +576,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {
@@ -620,7 +605,7 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
       })
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
@@ -628,7 +613,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {}
@@ -654,7 +638,7 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
       })
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
+        storeAndPrune: async () => { },
       })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
@@ -662,7 +646,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-        DISCORD_WEBHOOK_URL,
       )
 
       const reminders = {}

@@ -242,7 +242,6 @@ function createIndexer($?: {
       }),
       configurations: $?.configurations ?? [],
       discordClient: $?.discordClient ?? mockDiscordClient(),
-      discordWebhookUrl: 'https://discord.com/api/webhooks/test/test',
       parents: [],
       indexerService: mockObject<IndexerService>(),
       minHeight: 0,

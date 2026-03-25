@@ -23,7 +23,6 @@ function makeConfig(dangerousOperationsEnabled = false): InteropFeatureConfig {
       configIntervalMs: -1,
     },
     inMemoryEventCap: 0,
-    notifications: false,
     oneSidedChains: [],
   }
 }

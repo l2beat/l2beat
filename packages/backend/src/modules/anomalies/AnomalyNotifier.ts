@@ -40,7 +40,6 @@ export class AnomalyNotifier {
     private readonly db: Database,
     private readonly minDuration: number,
     private readonly trackedTxsConfig: TrackedTxsConfig,
-    private readonly discordWebhookUrl: string,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
@@ -246,7 +245,6 @@ export class AnomalyNotifier {
     try {
       return await this.discordClient.sendMessage(
         message,
-        this.discordWebhookUrl,
       )
     } catch (error) {
       this.logger.error('Failed to send Discord notification', {
@@ -303,7 +301,7 @@ export class AnomalyNotifier {
           diff.projectId === projectId &&
           diff.type === 'implementationChange' &&
           ChainSpecificAddress.chain(ChainSpecificAddress(diff.address)) ===
-            'eth',
+          'eth',
       )
       .map((diff) =>
         ChainSpecificAddress.address(ChainSpecificAddress(diff.address)),
