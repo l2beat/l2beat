@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x706e968903668fdbd57149d5c66da36eac3e7b33
+
+# Diff at Tue, 24 Mar 2026 12:03:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eea8d762719901a50aabccb689d291326ce8830c block: 1772462270
+- current timestamp: 1774353727
+
+## Description
+
+new usdc minters.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.5:
+-        "base:0xa96bD9c5D0b169f73c1c8570600aE0BAc9b2A7f4"
++        "base:0x9990C10ceb3c3d1E08060EAc7e977279Fd7A5920"
+      values.GnosisSafe_modules.0:
++        "base:0xf6B23291bF4993832b92A05c67d5f43eF3287C6a"
+    }
+```
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.14:
++        "base:0x0cDcEf3332783a146CEDB18b6c6F36Ff96c4F7a9"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.15:
++        "base:0x30fC84e2982F677da3542534484b27f720Ca61e5"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.16:
++        "base:0x1CB8E0A1041cB3488daC269C86A571b2d4f4015A"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.17:
++        "base:0xbC85992B71FBCB1BF447112652b99B6F8Ade1792"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) {
+    +++ description: None
+      values.accessControl.MANAGE_FRAME_CONFIG_ROLE.members.0:
+-        "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TwoPhaseFrameConfigUpdate (eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../TwoPhaseFrameConfigUpdate.sol => /dev/null     | 692 ---------------------
+ 1 file changed, 692 deletions(-)
+```
+
 Generated with discovered.json: 0x498c344e9c867f9c5a77a312b4c507a0ab7c7d76
 
 # Diff at Mon, 02 Mar 2026 14:39:33 GMT:
