@@ -4247,5 +4247,35 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  // Celo uses a custom gas token (CELO), so native withdrawals should track
+  // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
+  "opstack-celo-native-withdrawal": {
+    "tags": ["opstack"],
+    "description": "Celo native CELO token withdrawal (custom gas token)",
+    "txs": [
+      {
+        "chain": "celo",
+        "tx": "0x4bae06b998b57428a9affdc62318dccc80ab4a44c50b2b0965a15b31e09de033"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ac472f9dbdcc7699b237512337c17fda541e1978921a44291d0f788e12094c6"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
   }
 }
