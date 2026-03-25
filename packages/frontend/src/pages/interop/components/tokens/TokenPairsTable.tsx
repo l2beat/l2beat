@@ -1,5 +1,6 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
@@ -14,13 +15,21 @@ export type TokensPairsQueryInput = {
 
 export function TokensPairsTable({
   queryInput,
+  hideSameToken,
 }: {
   queryInput: TokensPairsQueryInput
+  hideSameToken?: boolean
 }) {
   const { data, isLoading } = api.interop.tokensPairs.useQuery(queryInput)
 
+  const filteredData = useMemo(() => {
+    const rows = data ?? []
+    if (!hideSameToken) return rows
+    return rows.filter((row) => row.tokenA.symbol !== row.tokenB.symbol)
+  }, [data, hideSameToken])
+
   const table = useTable<TokensPairRow>({
-    data: data ?? [],
+    data: filteredData,
     columns: topTokensPairsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

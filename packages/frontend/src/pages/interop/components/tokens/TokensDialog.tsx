@@ -1,5 +1,6 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { type ReactNode, useState } from 'react'
+import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
   DialogContent,
@@ -47,20 +48,32 @@ export function TokensDialog({
   const breakpoint = useBreakpoint()
   const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
+  const [hideSameToken, setHideSameToken] = useState(false)
 
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
 
   const tabsList = (
-    <TabsList>
-      <TabsTrigger value="tokens">Tokens</TabsTrigger>
-      <TabsTrigger
-        value="pairs"
-        onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
-      >
-        Pairs
-      </TabsTrigger>
-    </TabsList>
+    <>
+      <TabsList>
+        <TabsTrigger value="tokens">Tokens</TabsTrigger>
+        <TabsTrigger
+          value="pairs"
+          onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
+        >
+          Pairs
+        </TabsTrigger>
+      </TabsList>
+      {activeTab === 'pairs' && (
+        <Checkbox
+          name="hide-same-token-pairs"
+          checked={hideSameToken}
+          onCheckedChange={(checked) => setHideSameToken(checked === true)}
+        >
+          Hide pairs with same token
+        </Checkbox>
+      )}
+    </>
   )
 
   const tabsContent = (
@@ -72,7 +85,10 @@ export function TokensDialog({
         />
       </TabsContent>
       <TabsContent value="pairs">
-        <TokensPairsTable queryInput={queryInput} />
+        <TokensPairsTable
+          queryInput={queryInput}
+          hideSameToken={hideSameToken}
+        />
       </TabsContent>
     </>
   )
@@ -103,7 +119,7 @@ export function TokensDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[450px] w-[1040px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="primary-card max-h-[450px] w-[1040px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
         <Tabs
           name="tokens"
           value={activeTab}
