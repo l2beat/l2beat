@@ -37,6 +37,11 @@ export type TrustedSetupsByProofSystem = Record<
     onchainVerifiers?: {
       name: string
       href: string
+      verifiers: {
+        successful?: TrustedSetupVerifierData
+        unsuccessful?: TrustedSetupVerifierData
+        notVerified?: TrustedSetupVerifierData
+      }
     }[]
     trustedSetups: (TrustedSetup & {
       proofSystem: ZkCatalogTag
@@ -101,39 +106,14 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
           key,
           {
             onchainVerifiers: targetProject
-              ? uniqBy(
-                filteredVerifiers.flatMap((v) =>
-                  v.deployments
-                    .filter((d) =>
-                      d.usedIn.some((u) => u.id === targetProject.id),
-                    )
-                    .map((d) =>
-                      getOnchainVerifier(
-                        d.deployment.chain,
-                        d.deployment.address,
-                        targetProject.contracts,
-                      ),
-                    )
-                    .filter(notUndefined),
-                ),
-                (v) => v.href,
-              )
+              ? getOnchainVerifiersForProject(
+                  filteredVerifiers,
+                  targetProject.id,
+                  targetProject.contracts,
+                )
               : undefined,
             trustedSetups,
-            verifiers: {
-              successful: getVerifiersWithAttesters(
-                verifiersByStatus,
-                'successful',
-              ),
-              unsuccessful: getVerifiersWithAttesters(
-                verifiersByStatus,
-                'unsuccessful',
-              ),
-              notVerified: getVerifiersWithAttesters(
-                verifiersByStatus,
-                'notVerified',
-              ),
-            },
+            verifiers: getVerifierStatuses(verifiersByStatus),
             projectsUsedIn:
               uniqAndSortProjectsUsedIn(
                 filteredVerifiers.flatMap((v) => v.usedIn),
@@ -204,6 +184,53 @@ function getVerifiersWithProcessedUsedIn(
     })
 }
 
+function getOnchainVerifiersForProject(
+  filteredVerifiers: ReturnType<typeof getVerifiersWithProcessedUsedIn>,
+  targetProjectId: ProjectId,
+  contracts: ProjectContracts | undefined,
+) {
+  const onchainVerifiers = filteredVerifiers.flatMap(({ verifier, deployments }) =>
+    deployments
+      .filter((d) => d.usedIn.some((u) => u.id === targetProjectId))
+      .map((d) => {
+        const onchainVerifier = getOnchainVerifier(
+          d.deployment.chain,
+          d.deployment.address,
+          contracts,
+        )
+
+        if (!onchainVerifier) return undefined
+
+        return {
+          ...onchainVerifier,
+          verifier,
+        }
+      })
+      .filter(notUndefined),
+  )
+
+  return Object.values(groupBy(onchainVerifiers, (v) => v.href)).flatMap(
+    (entries) => {
+      const first = entries[0]
+      if (!first) return []
+
+      return {
+        name: first.name,
+        href: first.href,
+        verifiers: getVerifierStatuses(
+          groupBy(
+            uniqBy(
+              entries.map((entry) => entry.verifier),
+              (verifier) => verifier.hash,
+            ),
+            (verifier) => verifier.verificationStatus,
+          ),
+        ),
+      }
+    },
+  )
+}
+
 function getOnchainVerifier(
   chain: string,
   address: string,
@@ -245,6 +272,16 @@ export function getVerifiersWithAttesters(
         iconDark: icon.dark,
       }
     }),
+  }
+}
+
+function getVerifierStatuses(
+  verifiersByStatus: Record<string, ProjectZkCatalogInfo['verifierHashes']>,
+) {
+  return {
+    successful: getVerifiersWithAttesters(verifiersByStatus, 'successful'),
+    unsuccessful: getVerifiersWithAttesters(verifiersByStatus, 'unsuccessful'),
+    notVerified: getVerifiersWithAttesters(verifiersByStatus, 'notVerified'),
   }
 }
 

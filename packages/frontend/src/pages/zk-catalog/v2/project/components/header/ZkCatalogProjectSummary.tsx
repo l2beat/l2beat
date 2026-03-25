@@ -321,12 +321,24 @@ function MergedOnchainVerifierBlock({
           </TooltipContent>
         </Tooltip>
       </div>
-      {hasOnchain && <OnchainVerifiers onchainVerifiers={onchainVerifiers} />}
-      {totalVerifiers > 0 && (
-        <div className="flex items-center gap-2 text-label-value-12 text-secondary">
-          <p className="font-medium">Verification</p>
-          <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
+      {hasOnchain && onchainVerifiers ? (
+        <div className="flex min-w-0 flex-col gap-1.5">
+          {onchainVerifiers.map((verifier) => (
+            <div
+              key={verifier.href}
+              className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-label-value-14"
+            >
+              <CustomLink href={verifier.href}>{verifier.name}</CustomLink>
+              <VerifiedCountWithDetails
+                data={verifier.verifiers}
+                horizontal
+                hideCount
+              />
+            </div>
+          ))}
         </div>
+      ) : (
+        totalVerifiers > 0 && <VerifiedCountWithDetails data={verifiers} horizontal hideCount />
       )}
     </div>
   )
