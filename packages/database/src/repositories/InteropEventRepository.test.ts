@@ -504,6 +504,35 @@ describeDatabase(InteropEventRepository.name, (db) => {
     })
   })
 
+  describe(InteropEventRepository.prototype.updateDerivedFulfilled.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        event('plugin1', 'event1', 'deposit', UnixTime(100), UnixTime(200), {
+          derivedFulfilled: false,
+        }),
+        event('plugin1', 'event2', 'deposit', UnixTime(150), UnixTime(250), {
+          derivedFulfilled: false,
+        }),
+        event('plugin1', 'event3', 'withdraw', UnixTime(200), UnixTime(300), {
+          derivedFulfilled: false,
+        }),
+      ])
+    })
+
+    it('updates derivedFulfilled status for specified event IDs', async () => {
+      await repository.updateDerivedFulfilled(['event1', 'event3'])
+
+      const events = await repository.getAll()
+      const event1 = events.find((e) => e.eventId === 'event1')
+      const event2 = events.find((e) => e.eventId === 'event2')
+      const event3 = events.find((e) => e.eventId === 'event3')
+
+      expect(event1?.derivedFulfilled).toEqual(true)
+      expect(event2?.derivedFulfilled).toEqual(false)
+      expect(event3?.derivedFulfilled).toEqual(true)
+    })
+  })
+
   describe(InteropEventRepository.prototype.deleteExpired.name, () => {
     it('deletes events that have expired', async () => {
       await repository.insertMany([
@@ -634,6 +663,8 @@ function event(
     timestamp,
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     args: { amount: '1000000000000000000' },
     ctx: { chain: 'chain' } as InteropEventContext,
     chain: 'chain',
