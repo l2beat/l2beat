@@ -1,0 +1,129 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "syndicate",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
+  "initialAddresses": [
+    "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A", // RollupProxy
+    "eth:0x6CA109706c6EBe5379c45f20B3311441D50cb711" // L1 Standard Gateway (ERC20 escrow)
+  ],
+  "sharedModules": ["shared-eigenlayer"],
+  "names": {
+    "eth:0xABf2988264170a7f94E6Fa76ECA5965B906E229d": "ChallengeManager",
+    "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": "Bridge"
+  },
+  "overrides": {
+    "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "ignoreRelatives": ["reader4844"],
+      "fields": {
+        "sequencerVersion": {
+          "handler": {
+            "type": "arbitrumSequencerVersion"
+          }
+        },
+        "postsBlobs": {
+          "handler": {
+            "type": "orbitPostsBlobs"
+          }
+        },
+        "batchPosters": {
+          "permissions": [
+            {
+              "type": "sequence",
+              "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+            }
+          ],
+          "handler": {
+            "type": "arbitrumActors",
+            "actorType": "batchPoster"
+          }
+        },
+        "dacKeyset": {
+          "handler": {
+            "type": "arbitrumDACKeyset"
+          }
+        },
+        "keySetUpdates": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+            ]
+          }
+        }
+      }
+    },
+    "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": {
+      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"]
+    },
+    "eth:0x1bAB804803159aD84b8854581AA53AC72455614E": {
+      "ignoreMethods": ["getPastTotalSupply"]
+    },
+    "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated",
+        "lastStakeBlock"
+      ],
+      "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
+      "fields": {
+        "isPostBoLD": {
+          "handler": {
+            "type": "hardcoded",
+            "value": false
+          }
+        },
+        "currentRequiredStake": {
+          "handler": {
+            "type": "call",
+            "method": "baseStake",
+            "args": []
+          }
+        },
+        "validators": {
+          "permissions": [
+            {
+              "type": "validate",
+              "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+            }
+          ],
+          "handler": {
+            "type": "arbitrumActors",
+            "actorType": "validator"
+          }
+        },
+        "VALIDATOR_AFK_BLOCKS": {
+          "handler": {
+            "type": "hardcoded",
+            "value": 201600
+          }
+        },
+        "setValidatorCount": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+              "0x0000000000000000000000000000000000000000000000000000000000000006"
+            ]
+          }
+        },
+        "challenges": {
+          "handler": {
+            "type": "event",
+            "select": [
+              "challengeIndex",
+              "asserter",
+              "challenger",
+              "challengedNode"
+            ],
+            "add": { "event": "RollupChallengeStarted" }
+          }
+        }
+      }
+    }
+  }
+}

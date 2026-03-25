@@ -5743,6 +5743,20 @@
       "supply": "zero"
     },
     {
+      "name": "Syndicate",
+      "coingeckoId": "syndicate-3",
+      "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+      "symbol": "SYND",
+      "decimals": 18,
+      "deploymentTimestamp": 1752159095,
+      "coingeckoListingTimestamp": 1758153600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69122/large/synd.png?1757576144",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Synthetix Network Token",
       "coingeckoId": "havven",
       "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",

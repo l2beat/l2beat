@@ -1,5 +1,9 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  INTEROP_ONE_SIDED_CHAINS,
+  ProjectService,
+} from '@l2beat/config'
 import {
   type HttpClient,
   MulticallV3Client,
@@ -76,6 +80,7 @@ export class ExampleRunner {
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
+      oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
       configs: this.store,
       httpClient: this.$.http,
       logger: this.$.logger,
