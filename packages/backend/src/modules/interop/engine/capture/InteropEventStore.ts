@@ -127,6 +127,8 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     timestamp: event.ctx.timestamp,
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     ctx: event.ctx,
     // Deprecated
     blockNumber: 0,
