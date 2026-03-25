@@ -109,6 +109,7 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
       {
         projectId: ProjectId('galxegravity'),
         sinceTimestamp: UnixTime(1771445567),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('rari'),

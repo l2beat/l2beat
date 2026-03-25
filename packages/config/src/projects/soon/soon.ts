@@ -100,4 +100,10 @@ export const soon: ScalingProject = opStackL2({
       customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
     },
   ],
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'KailuaTreasury',
+      'RISC_ZERO_VERIFIER',
+    ),
+  ],
 })

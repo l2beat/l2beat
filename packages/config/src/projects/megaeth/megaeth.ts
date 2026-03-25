@@ -195,4 +195,10 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'RiscZeroVerifierRouter',
+      'verifier',
+    ),
+  ],
 })

@@ -54,6 +54,7 @@ import type {
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
+import { getSP1Verifiers } from './opStack'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -559,7 +560,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         ),
       ],
       programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
-      zkVerifiers: getVerifiers(templateVars.discovery),
+      zkVerifiers: getZKStackVerifiers(templateVars.discovery),
     },
     stateDerivation:
       daProvider !== undefined
@@ -683,7 +684,7 @@ function programHashesReproducible(l2BootloaderHash: string): boolean | null {
 
 // get all verifiers that can prove STF of an L2
 // export because adi is not currently set up as a template but should get verifiers by this logic
-export function getVerifiers(
+export function getZKStackVerifiers(
   discovery: ProjectDiscovery,
 ): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = []
@@ -739,6 +740,10 @@ export function getVerifiers(
     throw new Error(
       `Cannot configure ZK Stack project verifiers (${discovery.projectName}), edit template file`,
     )
+  }
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    // happens for vector projects
+    return result.concat(getSP1Verifiers(discovery))
   }
   return result
 }

@@ -21,6 +21,7 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getAgglayerVerifiers } from '../../templates/agglayer'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -362,7 +363,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       },
     ],
     programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: getVerifiers(),
+    zkVerifiers: getAgglayerVerifiers(discovery),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -411,20 +412,4 @@ function getKatanaVKeys(): string[] {
     arr.map((el) => el['pessimisticVKey']),
   )
   return vKeys.concat(aggchainVKeys).concat(pessimisticVKeys)
-}
-
-function getVerifiers(): ChainSpecificAddress[] {
-  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
-  const routesDict = discovery.getContractValue<ProgramHashDict>(
-    'AgglayerGateway',
-    'routes',
-  )
-  for (const routes of Object.values(routesDict)) {
-    for (const route of routes) {
-      if (route['verifier']) {
-        uniqueVerifierAddresses.add(ChainSpecificAddress(route['verifier']))
-      }
-    }
-  }
-  return Array.from(uniqueVerifierAddresses)
 }

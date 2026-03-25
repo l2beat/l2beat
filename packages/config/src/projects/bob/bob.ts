@@ -101,4 +101,28 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
+  nonTemplateZkVerifiers: getVerifiers(),
 })
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierNames = [
+    'verifier5Manual',
+    'verifier6Manual',
+    'verifier7Manual',
+  ]
+  const result: ChainSpecificAddress[] = []
+  for (const verifierName of verifierNames) {
+    const emergencyStopContract =
+      discovery.getContractValue<ChainSpecificAddress>(
+        'RiscZeroVerifierRouter',
+        verifierName,
+      )
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        emergencyStopContract,
+        'verifier',
+      ),
+    )
+  }
+  return result
+}

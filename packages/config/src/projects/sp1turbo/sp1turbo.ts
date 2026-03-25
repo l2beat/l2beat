@@ -131,6 +131,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('galxegravity'),
         sinceTimestamp: UnixTime(1745880540),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('rari'),
