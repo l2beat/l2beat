@@ -16,7 +16,7 @@ export function IconPreviewPage(props: AppLayoutProps) {
       <SideNavLayout maxWidth="wide">
         <MainPageHeader>Icon Preview</MainPageHeader>
         {entries.length === 0 ? (
-          <PrimaryCard className="mt-0 md:mt-6">
+          <PrimaryCard className="mt-6">
             <p className="font-bold text-lg text-primary">
               Icon preview is available only under the Vite development server.
             </p>
@@ -26,7 +26,7 @@ export function IconPreviewPage(props: AppLayoutProps) {
             </p>
           </PrimaryCard>
         ) : (
-          <div className="mt-0 space-y-6 md:mt-6">
+          <div className="mt-6 space-y-6">
             {ICON_PREVIEW_CATEGORIES.map((category) => {
               const categoryEntries = entries.filter(
                 (entry) => entry.category === category,
@@ -53,11 +53,10 @@ export function IconPreviewPage(props: AppLayoutProps) {
                       return (
                         <article
                           key={`${entry.sourcePath}:${entry.exportName}`}
-                          className="group flex min-h-[220px] flex-col bg-surface-primary p-4 transition-colors hover:bg-surface-secondary"
+                          className="group flex min-h-[280px] flex-col bg-surface-primary p-4 transition-colors hover:bg-surface-secondary"
                         >
-                          <div className="relative flex min-h-30 items-center justify-center overflow-hidden rounded-lg border border-divider bg-[linear-gradient(135deg,#ffffff_0%,#f4f4f5_46%,#09090b_100%)] p-4 shadow-inner">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.75),transparent_42%)]" />
-                            <div className="relative z-10 flex items-center justify-center text-primary">
+                          <div className="flex min-h-44 items-center justify-center rounded-lg border border-divider bg-surface-secondary p-6 transition-colors group-hover:bg-surface-tertiary">
+                            <div className="flex items-center justify-center text-primary [&>svg]:size-12">
                               <Icon aria-hidden />
                             </div>
                           </div>
