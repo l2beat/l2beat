@@ -1,6 +1,7 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { MissingIcon } from '~/icons/Missing'
+import { SatisfiedIcon } from '~/icons/Satisfied'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -103,22 +104,23 @@ function ColorsSection() {
   )
 }
 
-const nameContent = `The name should always be written in uppercase as **L2BEAT**
-
-✅ L2BEAT
-
-❌ L2 BEAT, L2Beat, L2beat, L2-beat, etc.`
-
 function NameSection() {
   return (
     <PrimaryCard className="border-divider max-md:border-t">
-      <h2 className="mb-4 font-bold text-xl">Name</h2>
-      <Markdown
-        className="text-paragraph-15 md:text-paragraph-16"
-        ignoreGlossary
-      >
-        {nameContent}
-      </Markdown>
+      <h2 className="mb-2 font-bold text-xl">Name</h2>
+      <div className="text-paragraph-15 md:text-paragraph-16">
+        <p>
+          The name should always be written in uppercase as{' '}
+          <strong>L2BEAT</strong>.
+        </p>
+        <div className="flex items-center gap-2">
+          <SatisfiedIcon className="size-5" /> L2BEAT
+        </div>
+        <div className="flex items-center gap-2">
+          <MissingIcon className="size-5" /> L2 BEAT, L2Beat, L2beat, L2-beat,
+          etc.
+        </div>
+      </div>
     </PrimaryCard>
   )
 }
