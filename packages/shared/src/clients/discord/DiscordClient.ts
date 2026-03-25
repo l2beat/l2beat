@@ -3,34 +3,20 @@ import type { HttpClient } from '../http/HttpClient'
 
 export const DISCORD_MAX_MESSAGE_LENGTH = 2000
 
-interface DiscordClientConfig {
-  readonly webhookUrl?: string
-}
-
-const CALLS_PER_MINUTE = 3000
-
 export class DiscordClient {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly config: DiscordClientConfig = {},
-  ) {
+  constructor(private readonly httpClient: HttpClient) {
     const rateLimiter = new RateLimiter({
-      callsPerMinute: CALLS_PER_MINUTE,
+      callsPerMinute: 3000,
     })
     this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
   }
 
-  async sendMessage(message: string, webhookUrl?: string) {
-    const url = webhookUrl ?? this.config.webhookUrl
-    if (!url) {
-      throw new Error('Discord error: Webhook URL not provided')
-    }
-
+  async sendMessage(message: string, webhookUrl: string) {
     if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 
-    const urlWithWait = `${url}?wait=true`
+    const urlWithWait = `${webhookUrl}?wait=true`
 
     const res = await this.httpClient.fetchRaw(urlWithWait, {
       method: 'POST',
@@ -48,13 +34,8 @@ export class DiscordClient {
     return body.id
   }
 
-  async deleteMessage(messageId: string, webhookUrl?: string) {
-    const url = webhookUrl ?? this.config.webhookUrl
-    if (!url) {
-      throw new Error('Discord error: Webhook URL not provided')
-    }
-
-    const deleteUrl = `${url}/messages/${messageId}`
+  async deleteMessage(messageId: string, webhookUrl: string) {
+    const deleteUrl = `${webhookUrl}/messages/${messageId}`
     const res = await this.httpClient.fetchRaw(deleteUrl, {
       method: 'DELETE',
     })
