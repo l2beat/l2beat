@@ -19,6 +19,7 @@ export interface InteropEventRecord {
   matched: boolean
   unsupported: boolean
   derivedFulfilled: boolean
+  derivedCheckedInHistory: boolean
   direction: string | undefined
 }
 
@@ -44,6 +45,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     matched: row.matched,
     unsupported: row.unsupported,
     derivedFulfilled: row.derivedFulfilled ?? false,
+    derivedCheckedInHistory: row.derivedCheckedInHistory ?? false,
   }
 }
 
@@ -60,6 +62,7 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     matched: record.matched,
     unsupported: record.unsupported,
     derivedFulfilled: record.derivedFulfilled,
+    derivedCheckedInHistory: record.derivedCheckedInHistory,
     args: JSON.stringify(record.args, (_, value) =>
       typeof value === 'bigint' ? `BigInt(${value})` : value,
     ),
@@ -270,6 +273,17 @@ export class InteropEventRepository extends BaseRepository {
       await this.db
         .updateTable('InteropEvent')
         .set({ derivedFulfilled: true })
+        .where('eventId', 'in', batch)
+        .execute()
+    })
+  }
+
+  async updateDerivedCheckedInHistory(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+    await this.batch(eventIds, 2_000, async (batch) => {
+      await this.db
+        .updateTable('InteropEvent')
+        .set({ derivedCheckedInHistory: true })
         .where('eventId', 'in', batch)
         .execute()
     })

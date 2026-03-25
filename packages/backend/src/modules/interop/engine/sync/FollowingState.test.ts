@@ -180,6 +180,7 @@ describe(FollowingState.name, () => {
           toTimestamp: UnixTime(1_000),
         },
         [],
+        [],
       )
       expect(clearChainSyncError).toHaveBeenCalled()
     })
@@ -209,6 +210,7 @@ describe(FollowingState.name, () => {
           toTimestamp: UnixTime(1_000),
         },
         [],
+        [],
       )
     })
 
@@ -231,6 +233,7 @@ describe(FollowingState.name, () => {
           toBlock: 100n,
           toTimestamp: UnixTime(1_000),
         },
+        [],
         [],
       )
     })
@@ -261,6 +264,7 @@ describe(FollowingState.name, () => {
           toBlock: 100n,
           toTimestamp: UnixTime(1_000),
         },
+        [],
         [],
       )
     })
@@ -301,6 +305,7 @@ describe(FollowingState.name, () => {
           toTimestamp: UnixTime(1_000),
         },
         [],
+        [],
       )
     })
 
@@ -312,10 +317,12 @@ describe(FollowingState.name, () => {
       })
       const txEvent = mockObject<InteropEvent>({})
       const historicalCreatorEvent = mockObject<InteropEvent>({})
+      const historicalCheckedEvent = mockObject<InteropEvent>({})
       const txCreatorEvent = mockObject<InteropEvent>({})
       const capturePendingHistoricalTxs = mockFn().resolvesTo({
         events: [historicalEvent],
         fulfilledCreatorEvents: [historicalCreatorEvent],
+        checkedInHistoryEvents: [historicalCheckedEvent],
       })
       const captureTx = mockFn().returnsOnce({
         events: [txEvent],
@@ -348,6 +355,7 @@ describe(FollowingState.name, () => {
           toTimestamp: UnixTime(1_000),
         },
         [historicalCreatorEvent, txCreatorEvent],
+        [historicalCheckedEvent],
       )
     })
   })
@@ -382,6 +390,7 @@ function createSyncer(
     capturePendingHistoricalTxs: mockFn().resolvesTo({
       events: [],
       fulfilledCreatorEvents: [],
+      checkedInHistoryEvents: [],
     }),
     captureTx: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
@@ -433,6 +442,7 @@ function makeInteropEventRecord(
     matched: false,
     unsupported: false,
     derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     direction: undefined,
     ...overrides,
   }

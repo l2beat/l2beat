@@ -429,9 +429,9 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              getAndClearHashesForHistoryCheck: mockFn().returns([txHash]),
+              getHashesPendingHistoryCheck: mockFn().returns([txHash]),
               getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              queueTxForCheckInHistory: mockFn().returns(undefined),
+              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
@@ -449,6 +449,7 @@ describe(InteropEventSyncer.name, () => {
         expect(result).toEqual({
           events: [{ ...event, plugin: 'across' }],
           fulfilledCreatorEvents: [makeInteropEvent()],
+          checkedInHistoryEvents: [makeInteropEvent()],
         })
       })
 
@@ -463,9 +464,9 @@ describe(InteropEventSyncer.name, () => {
           }),
           store: mockObject<InteropEventStore>({
             derivedTxStore: mockObject<DerivedTxStore>({
-              getAndClearHashesForHistoryCheck: mockFn().returns(['0x123']),
+              getHashesPendingHistoryCheck: mockFn().returns(['0x123']),
               getCreatorEvents: mockFn().returns([makeInteropEvent()]),
-              queueTxForCheckInHistory: mockFn().returns(undefined),
+              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
             }),
           }),
           rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
@@ -482,6 +483,7 @@ describe(InteropEventSyncer.name, () => {
         expect(result).toEqual({
           events: [],
           fulfilledCreatorEvents: [],
+          checkedInHistoryEvents: [makeInteropEvent()],
         })
         expect(captureTx).not.toHaveBeenCalled()
         expect(getTransactionReceipt).not.toHaveBeenCalled()
@@ -494,6 +496,7 @@ describe(InteropEventSyncer.name, () => {
     it('saves events and updates synced range in a transaction', async () => {
       const saveNewEvents = mockFn().resolvesTo(undefined)
       const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
+      const updateDerivedCheckedInHistory = mockFn().resolvesTo(undefined)
       const upsert = mockFn().resolvesTo(undefined)
       const setLastError = mockFn().resolvesTo(undefined)
       const fulfilledCreatorEvent = makeInteropEvent()
@@ -505,6 +508,7 @@ describe(InteropEventSyncer.name, () => {
         store: mockObject<InteropEventStore>({
           saveNewEvents,
           updateDerivedFulfilled,
+          updateDerivedCheckedInHistory,
         }),
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
@@ -531,6 +535,7 @@ describe(InteropEventSyncer.name, () => {
       expect(updateDerivedFulfilled).toHaveBeenCalledWith([
         fulfilledCreatorEvent,
       ])
+      expect(updateDerivedCheckedInHistory).toHaveBeenCalledWith([])
       expect(upsert).toHaveBeenCalledWith({
         pluginName: 'clusterName',
         chain: 'ethereum',
@@ -1024,6 +1029,7 @@ function makeInteropEventRecord(
     matched: false,
     unsupported: false,
     derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     direction: undefined,
     ...overrides,
   }
@@ -1099,11 +1105,12 @@ function mockStore() {
   return mockObject<InteropEventStore>({
     saveNewEvents: mockFn().resolvesTo(undefined),
     updateDerivedFulfilled: mockFn().resolvesTo(undefined),
+    updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
     derivedTxStore: mockObject<DerivedTxStore>({
       getCreatorEvents: mockFn().returns(undefined),
-      getAndClearHashesForHistoryCheck: mockFn().returns([]),
-      queueTxForCheckInHistory: mockFn().returns(undefined),
+      getHashesPendingHistoryCheck: mockFn().returns([]),
+      markCheckedInHistory: mockFn().returns([]),
     }),
   })
 }

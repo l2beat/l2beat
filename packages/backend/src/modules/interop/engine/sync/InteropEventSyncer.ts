@@ -246,55 +246,51 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async capturePendingHistoricalTxs(beforeBlock: bigint) {
-    const txHashes = this.store.derivedTxStore.getAndClearHashesForHistoryCheck(
+    const pluginNames = this.cluster.plugins.map((p) => p.name)
+    const txHashes = this.store.derivedTxStore.getHashesPendingHistoryCheck(
       this.chain,
+      pluginNames,
     )
     const interopEvents: InteropEvent[] = []
     const fulfilledCreatorEvents: InteropEvent[] = []
-    let index = 0
 
-    try {
-      for (; index < txHashes.length; index++) {
-        const txHash = txHashes[index]
-        assert(txHash)
-
-        const tx = await this.getTransactionByHash(txHash)
-        if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
-          continue
-        }
-
-        const receipt = await this.getTransactionReceipt(txHash)
-        assert(receipt, `Missing receipt for tx ${txHash}`)
-
-        const block = await this.getBlockByNumber(tx.blockNumber)
-        assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
-
-        const result = this.captureTx({
-          chain: this.chain,
-          tx: toTransaction(tx),
-          block: toBlock(block),
-          txLogs: receipt.logs
-            .map((log) => logToViemLog(toEVMLog(log)))
-            .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
-        })
-        if (result) {
-          interopEvents.push(...result.events)
-          fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
-        }
+    for (const txHash of txHashes) {
+      const tx = await this.getTransactionByHash(txHash)
+      if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+        continue
       }
-    } catch (error) {
-      for (; index < txHashes.length; index++) {
-        const txHash = txHashes[index]
-        if (txHash) {
-          this.store.derivedTxStore.queueTxForCheckInHistory(this.chain, txHash)
-        }
+
+      const receipt = await this.getTransactionReceipt(txHash)
+      assert(receipt, `Missing receipt for tx ${txHash}`)
+
+      const block = await this.getBlockByNumber(tx.blockNumber)
+      assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
+
+      const result = this.captureTx({
+        chain: this.chain,
+        tx: toTransaction(tx),
+        block: toBlock(block),
+        txLogs: receipt.logs
+          .map((log) => logToViemLog(toEVMLog(log)))
+          .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
+      })
+      if (result) {
+        interopEvents.push(...result.events)
+        fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
       }
-      throw error
     }
+
+    const checkedInHistoryEvents =
+      this.store.derivedTxStore.markCheckedInHistory(
+        this.chain,
+        txHashes,
+        pluginNames,
+      )
 
     return {
       events: interopEvents,
       fulfilledCreatorEvents,
+      checkedInHistoryEvents,
     }
   }
 
@@ -302,10 +298,12 @@ export class InteropEventSyncer extends TimeLoop {
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
     fulfilledCreatorEvents: InteropEvent[] = [],
+    checkedInHistoryEvents: InteropEvent[] = [],
   ) {
     await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
       await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
+      await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,

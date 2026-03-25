@@ -330,8 +330,9 @@ model InteropEvent {
 
   matched          Boolean
   unsupported      Boolean
-  derivedFulfilled Boolean?
-  direction        String?
+  derivedFulfilled        Boolean?
+  derivedCheckedInHistory Boolean?
+  direction               String?
 
   @@id([eventId])
   @@index([timestamp, plugin, chain])

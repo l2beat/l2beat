@@ -30,6 +30,7 @@ describe(InteropEventStore.name, () => {
         chain: 'base',
         txHash: '0xabc',
         creatorEvent: event,
+        checkedInHistory: false,
       },
     ])
   })
@@ -52,8 +53,36 @@ describe(InteropEventStore.name, () => {
         chain: 'base',
         txHash: '0xabc',
         creatorEvent: event,
+        checkedInHistory: false,
       },
     ])
+  })
+
+  it('preserves derivedCheckedInHistory flag on start', async () => {
+    const plugin = makePlugin()
+    const event = makeEvent(plugin)
+    const store = makeStore(plugin, {
+      interopEvent: mockObject<Database['interopEvent']>({
+        insertMany: mockFn().resolvesTo(undefined),
+        getUnmatched: mockFn().resolvesTo([
+          toRecord(event, { derivedCheckedInHistory: true }),
+        ]),
+      }),
+    })
+
+    await store.start()
+
+    expect(store.derivedTxStore.get('base', '0xabc')).toEqual([
+      {
+        chain: 'base',
+        txHash: '0xabc',
+        creatorEvent: event,
+        checkedInHistory: true,
+      },
+    ])
+    expect(
+      store.derivedTxStore.getHashesPendingHistoryCheck('base', [plugin.name]),
+    ).toEqual([])
   })
 
   it('does not rebuild fulfilled derived tx requests on start', async () => {
@@ -153,6 +182,7 @@ describe(InteropEventStore.name, () => {
         chain: 'base',
         txHash: '0xdef',
         creatorEvent: secondEvent,
+        checkedInHistory: false,
       },
     ])
   })
@@ -241,6 +271,7 @@ function toRecord(
     matched: false,
     unsupported: false,
     derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     ctx: event.ctx,
     blockNumber: 0,
     ...overrides,

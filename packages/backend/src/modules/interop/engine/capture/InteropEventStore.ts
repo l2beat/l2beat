@@ -33,7 +33,10 @@ export class InteropEventStore implements InteropEventDb {
         this.derivedTxStore.onEventsRemoved([removed])
       }
       if (!record.derivedFulfilled) {
-        this.derivedTxStore.onEventCreated(event)
+        this.derivedTxStore.onEventCreated(
+          event,
+          record.derivedCheckedInHistory,
+        )
       }
     }
   }
@@ -77,6 +80,15 @@ export class InteropEventStore implements InteropEventDb {
       events.map((e) => e.eventId),
     )
     this.derivedTxStore.onEventsRemoved(events)
+  }
+
+  async updateDerivedCheckedInHistory(events: InteropEvent[]): Promise<void> {
+    if (events.length === 0) {
+      return
+    }
+    await this.db.interopEvent.updateDerivedCheckedInHistory(
+      events.map((e) => e.eventId),
+    )
   }
 
   getEvents(type: string): InteropEvent[] {
@@ -155,6 +167,7 @@ function toDbRecord(event: InteropEvent): InteropEventRecord {
     matched: false,
     unsupported: false,
     derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     ctx: event.ctx,
     // Deprecated
     blockNumber: 0,

@@ -9,16 +9,13 @@ export interface DerivedTxEntry {
   chain: string
   txHash: string
   creatorEvent: InteropEvent
+  checkedInHistory: boolean
 }
 
 export class DerivedTxStore {
   private readonly requestsByPlugin = new Map<
     string,
     Map<string, TxFromEventRequest>
-  >()
-  private readonly hashesToCheckInHistoryByChain = new UpsertMap<
-    string,
-    Set<string>
   >()
   private readonly entriesByChain = new UpsertMap<
     string,
@@ -45,12 +42,12 @@ export class DerivedTxStore {
     }
   }
 
-  onEventCreated(event: InteropEvent) {
+  onEventCreated(event: InteropEvent, checkedInHistory = false) {
     const request = this.requestsByPlugin.get(event.plugin)?.get(event.type)
     if (!request) {
       return
     }
-    this.addEntry(event, request)
+    this.addEntry(event, request, checkedInHistory)
   }
 
   onEventsRemoved(events: InteropEvent[]) {
@@ -67,16 +64,43 @@ export class DerivedTxStore {
     return this.entriesByChain.get(chain)?.get(txHash) ?? []
   }
 
-  getAndClearHashesForHistoryCheck(chain: string) {
-    const pending = [...(this.hashesToCheckInHistoryByChain.get(chain) ?? [])]
-    this.hashesToCheckInHistoryByChain.delete(chain)
-    return pending
+  getHashesPendingHistoryCheck(chain: string, pluginNames: string[]): string[] {
+    const entriesByTxHash = this.entriesByChain.get(chain)
+    if (!entriesByTxHash) return []
+    const pluginSet = new Set(pluginNames)
+    const hashes: string[] = []
+    for (const [txHash, entries] of entriesByTxHash) {
+      const hasPending = entries.some(
+        (e) => !e.checkedInHistory && pluginSet.has(e.creatorEvent.plugin),
+      )
+      if (hasPending) {
+        hashes.push(txHash)
+      }
+    }
+    return hashes
   }
 
-  queueTxForCheckInHistory(chain: string, txHash: string) {
-    this.hashesToCheckInHistoryByChain
-      .getOrInsertComputed(chain, () => new Set())
-      .add(txHash)
+  markCheckedInHistory(
+    chain: string,
+    txHashes: string[],
+    pluginNames: string[],
+  ): InteropEvent[] {
+    const pluginSet = new Set(pluginNames)
+    const markedEvents: InteropEvent[] = []
+    for (const txHash of txHashes) {
+      const entries = this.entriesByChain.get(chain)?.get(txHash)
+      if (!entries) continue
+      for (const entry of entries) {
+        if (
+          !entry.checkedInHistory &&
+          pluginSet.has(entry.creatorEvent.plugin)
+        ) {
+          entry.checkedInHistory = true
+          markedEvents.push(entry.creatorEvent)
+        }
+      }
+    }
+    return markedEvents
   }
 
   getCreatorEvents(chain: string, txHash: string, plugin: string) {
@@ -96,7 +120,11 @@ export class DerivedTxStore {
     return count
   }
 
-  private addEntry(event: InteropEvent, request: TxFromEventRequest) {
+  private addEntry(
+    event: InteropEvent,
+    request: TxFromEventRequest,
+    checkedInHistory: boolean,
+  ) {
     const { chain, txHash } = this.getEntryKey(event, request)
     const entriesByTxHash = this.entriesByChain.getOrInsertComputed(
       chain,
@@ -107,8 +135,8 @@ export class DerivedTxStore {
       chain,
       txHash,
       creatorEvent: event,
+      checkedInHistory,
     })
-    this.queueTxForCheckInHistory(chain, txHash)
   }
 
   private removeEntry(event: InteropEvent, request: TxFromEventRequest) {
@@ -124,10 +152,6 @@ export class DerivedTxStore {
     )
     if (filtered.length === 0) {
       entriesByTxHash.delete(txHash)
-      this.hashesToCheckInHistoryByChain.get(chain)?.delete(txHash)
-      if (this.hashesToCheckInHistoryByChain.get(chain)?.size === 0) {
-        this.hashesToCheckInHistoryByChain.delete(chain)
-      }
       if (entriesByTxHash.size === 0) {
         this.entriesByChain.delete(chain)
       }

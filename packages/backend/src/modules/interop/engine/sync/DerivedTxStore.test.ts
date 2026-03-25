@@ -40,9 +40,12 @@ describe(DerivedTxStore.name, () => {
         chain: 'base',
         txHash: '0xabc',
         creatorEvent,
+        checkedInHistory: false,
       },
     ])
-    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
+      '0xabc',
+    ])
   })
 
   it('throws when a creator event type defines multiple derived tx requests', () => {
@@ -104,7 +107,7 @@ describe(DerivedTxStore.name, () => {
     expect(store.get('base', '0xabc')).toEqual([])
   })
 
-  it('requeues the same tx hash when another creator event for it appears later', () => {
+  it('new creator event for same tx hash is pending even after first was checked', () => {
     const CreatorEvent = createInteropEventType<{
       chain: string
       txHash: string
@@ -137,10 +140,126 @@ describe(DerivedTxStore.name, () => {
 
     const store = new DerivedTxStore([plugin])
     store.onEventCreated(firstEvent)
-    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
+    store.markCheckedInHistory('base', ['0xabc'], ['across'])
+
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
 
     store.onEventCreated(secondEvent)
 
-    expect(store.getAndClearHashesForHistoryCheck('base')).toEqual(['0xabc'])
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
+      '0xabc',
+    ])
+  })
+
+  it('does not return checked entries as pending', () => {
+    const CreatorEvent = createInteropEventType<{
+      chain: string
+      txHash: string
+    }>('test.CreatorEvent')
+    const plugin: InteropPluginResyncable = {
+      name: 'across',
+      capture: () => undefined,
+      getDataRequests: () => [
+        txFromEvent({
+          creatorEvent: CreatorEvent,
+          chainArg: 'chain',
+          txHashArg: 'txHash',
+        }),
+      ],
+    }
+    const creatorEvent = {
+      ...CreatorEvent.mock({
+        chain: 'base',
+        txHash: '0xabc',
+      }),
+      plugin: plugin.name,
+    }
+
+    const store = new DerivedTxStore([plugin])
+    store.onEventCreated(creatorEvent, true)
+
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
+    expect(store.getCount()).toEqual(1)
+  })
+
+  it('only returns hashes for the requested plugins', () => {
+    const CreatorEvent = createInteropEventType<{
+      chain: string
+      txHash: string
+    }>('test.CreatorEvent')
+    const pluginA: InteropPluginResyncable = {
+      name: 'across',
+      capture: () => undefined,
+      getDataRequests: () => [
+        txFromEvent({
+          creatorEvent: CreatorEvent,
+          chainArg: 'chain',
+          txHashArg: 'txHash',
+        }),
+      ],
+    }
+    const pluginB: InteropPluginResyncable = {
+      name: 'wormhole',
+      capture: () => undefined,
+      getDataRequests: () => [
+        txFromEvent({
+          creatorEvent: CreatorEvent,
+          chainArg: 'chain',
+          txHashArg: 'txHash',
+        }),
+      ],
+    }
+    const eventA = {
+      ...CreatorEvent.mock({ chain: 'base', txHash: '0xaaa' }),
+      plugin: pluginA.name,
+    }
+    const eventB = {
+      ...CreatorEvent.mock({ chain: 'base', txHash: '0xbbb' }),
+      plugin: pluginB.name,
+    }
+
+    const store = new DerivedTxStore([pluginA, pluginB])
+    store.onEventCreated(eventA)
+    store.onEventCreated(eventB)
+
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([
+      '0xaaa',
+    ])
+    expect(store.getHashesPendingHistoryCheck('base', ['wormhole'])).toEqual([
+      '0xbbb',
+    ])
+    expect(
+      store.getHashesPendingHistoryCheck('base', ['across', 'wormhole']),
+    ).toEqual(['0xaaa', '0xbbb'])
+  })
+
+  it('markCheckedInHistory returns affected creator events', () => {
+    const CreatorEvent = createInteropEventType<{
+      chain: string
+      txHash: string
+    }>('test.CreatorEvent')
+    const plugin: InteropPluginResyncable = {
+      name: 'across',
+      capture: () => undefined,
+      getDataRequests: () => [
+        txFromEvent({
+          creatorEvent: CreatorEvent,
+          chainArg: 'chain',
+          txHashArg: 'txHash',
+        }),
+      ],
+    }
+    const creatorEvent = {
+      ...CreatorEvent.mock({ chain: 'base', txHash: '0xabc' }),
+      plugin: plugin.name,
+    }
+
+    const store = new DerivedTxStore([plugin])
+    store.onEventCreated(creatorEvent)
+
+    const marked = store.markCheckedInHistory('base', ['0xabc'], ['across'])
+
+    expect(marked).toEqual([creatorEvent])
+    expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
   })
 })

@@ -69,6 +69,7 @@ export class FollowingState implements BlockProcessorState {
     )
     const interopEvents = [...historical.events]
     const fulfilledCreatorEvents = [...historical.fulfilledCreatorEvents]
+    const checkedInHistoryEvents = [...historical.checkedInHistoryEvents]
     const toCapture = this.syncer.getItemsToCapture(block, logs)
     for (const txToCapture of toCapture.txsToCapture) {
       const result = this.syncer.captureTx(txToCapture)
@@ -88,6 +89,7 @@ export class FollowingState implements BlockProcessorState {
       interopEvents,
       updatedSyncedRange,
       fulfilledCreatorEvents,
+      checkedInHistoryEvents,
     )
 
     this.syncer.clearChainSyncError()

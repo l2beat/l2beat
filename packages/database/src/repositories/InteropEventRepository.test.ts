@@ -664,6 +664,7 @@ function event(
     matched: false,
     unsupported: false,
     derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     args: { amount: '1000000000000000000' },
     ctx: { chain: 'chain' } as InteropEventContext,
     chain: 'chain',
