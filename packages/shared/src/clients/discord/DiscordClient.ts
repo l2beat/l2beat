@@ -1,22 +1,23 @@
 import { RateLimiter } from '@l2beat/backend-tools'
-import type { HttpClient } from '../http/HttpClient'
+import { HttpClient } from '../http/HttpClient'
 
 export const DISCORD_MAX_MESSAGE_LENGTH = 2000
 
 export class DiscordClient {
-  constructor(private readonly httpClient: HttpClient) {
+  private readonly httpClient = new HttpClient()
+  constructor(private readonly webhookUrl: string) {
     const rateLimiter = new RateLimiter({
       callsPerMinute: 3000,
     })
     this.sendMessage = rateLimiter.wrap(this.sendMessage.bind(this))
   }
 
-  async sendMessage(message: string, webhookUrl: string) {
+  async sendMessage(message: string) {
     if (message.length > DISCORD_MAX_MESSAGE_LENGTH) {
       throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 
-    const urlWithWait = `${webhookUrl}?wait=true`
+    const urlWithWait = `${this.webhookUrl}?wait=true`
 
     const res = await this.httpClient.fetchRaw(urlWithWait, {
       method: 'POST',
@@ -34,8 +35,8 @@ export class DiscordClient {
     return body.id
   }
 
-  async deleteMessage(messageId: string, webhookUrl: string) {
-    const deleteUrl = `${webhookUrl}/messages/${messageId}`
+  async deleteMessage(messageId: string) {
+    const deleteUrl = `${this.webhookUrl}/messages/${messageId}`
     const res = await this.httpClient.fetchRaw(deleteUrl, {
       method: 'DELETE',
     })
