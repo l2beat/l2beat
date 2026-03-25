@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xda214a6650e7be81a7d46bb789cec668f790ec75
+
+# Diff at Wed, 25 Mar 2026 10:08:53 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1768566202
+- current timestamp: 1774433265
+
+## Description
+
+Security Council nominee election progressed: electionCount incremented from 5 to 6, and the active cohort switched from 0 to 1.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      values.currentCohort:
+-        0
++        1
+      values.electionCount:
+-        5
++        6
+      values.otherCohort:
+-        1
++        0
+    }
+```
+
 Generated with discovered.json: 0x651e79e718a58f0cd09d3838c62d461ae6024e6b
 
 # Diff at Fri, 16 Jan 2026 12:24:32 GMT:

@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x95ea7bcf81e6e072c865b90a88c2e333a2abd898
+
+# Diff at Wed, 25 Mar 2026 10:04:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160419
+- current timestamp: 1774433034
+
+## Description
+
+respectedGameType changed from 6 (OPSuccinctDisputeGame) to 1 (PermissionedDisputeGame) on both OptimismPortal2 and AnchorStateRegistry. This means Phala is no longer using ZK-verified state proofs (via Succinct's SP1) for withdrawal verification, and has switched back to the standard permissioned dispute game model.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
 Generated with discovered.json: 0x2ef680a2dfff0812a791b0696046a31e5df1b173
 
 # Diff at Fri, 13 Feb 2026 11:33:19 GMT:
