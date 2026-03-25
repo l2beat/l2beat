@@ -78,6 +78,8 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     verifierHashes: [
       {
         hash: '0x8dcfa8132726f2dcc75e6b791c48f5e5b375e6ea78a5e161e75b657195192b9d',
+        name: 'Lighter verifier',
+        sourceLink: 'https://github.com/elliottech/lighter-prover/tree/main',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -145,6 +147,7 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
       {
         // DesertVerifier
         hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',
+        name: 'Lighter Desert verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {

@@ -84,6 +84,12 @@ export function L2BeatDevTools() {
               </span>
             </div>
             <div className="flex items-center gap-2">
+              <a
+                href="/dev/icons"
+                className="rounded border border-divider px-2 py-1 text-3xs text-primary uppercase tracking-[0.08em]"
+              >
+                Icons
+              </a>
               <button
                 type="button"
                 onClick={() => setSizeMetrics(getSizeMetrics(ssrData))}

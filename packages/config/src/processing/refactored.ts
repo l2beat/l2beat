@@ -14,12 +14,14 @@ import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
+import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
@@ -45,6 +47,7 @@ import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
+import { tempo } from '../projects/tempo/tempo'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -88,6 +91,7 @@ export const refactored: BaseProject[] = [
   gnosis,
   gateway,
   avalanche,
+  tempo,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -107,8 +111,9 @@ export const refactored: BaseProject[] = [
   mayan,
   meson,
   across,
-  // debridge,
+  debridge,
   stargate,
   cbridge,
   hyperevm,
+  freetunnel,
 ]

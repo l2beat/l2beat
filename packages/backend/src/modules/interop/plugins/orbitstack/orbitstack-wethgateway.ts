@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -131,25 +132,23 @@ export class OrbitStackWethGatewayPlugin implements InteropPlugin {
             return
           }
 
-          // Find OutBoxTransactionExecuted in the same transaction
-          const outBoxTxLog = input.txLogs.find((log) => {
-            const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-            return parsed !== undefined
-          })
+          // Find the closest preceding OutBoxTransactionExecuted in the same transaction.
+          // When a single tx finalizes multiple withdrawals, each WithdrawalFinalized
+          // must pair with its own OutBoxTransactionExecuted (the nearest one before it).
+          const outBoxTx = findParsedBefore(
+            input.txLogs,
+            input.log.logIndex ?? -1,
+            (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
+          )
 
-          if (outBoxTxLog) {
-            const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-              network.outbox,
-            ])
-            if (outBoxTx) {
-              return [
-                WethWithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
-                  chain: network.chain,
-                  position: Number(outBoxTx.transactionIndex),
-                  amount: wethWithdrawalFinalized._amount,
-                }),
-              ]
-            }
+          if (outBoxTx) {
+            return [
+              WethWithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+                chain: network.chain,
+                position: Number(outBoxTx.transactionIndex),
+                amount: wethWithdrawalFinalized._amount,
+              }),
+            ]
           }
         }
       }

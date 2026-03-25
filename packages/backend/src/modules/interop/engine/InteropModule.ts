@@ -65,6 +65,7 @@ export function createInteropModule({
   const plugins = createInteropPlugins({
     configs: configStore,
     chains: config.interop.config.chains,
+    oneSidedChains: config.interop.oneSidedChains,
     httpClient: new HttpClient(),
     logger,
     rpcClients: providers.clients.rpcClients,

@@ -59,6 +59,8 @@ export const aztecv1prover: BaseProject = {
     verifierHashes: [
       {
         hash: '0x7c8a64f644c60e33445be862185b65bf2096c00c9691f49bd03df5f3ce6b6abf',
+        name: 'Aztec v1 verifier',
+        sourceLink: 'https://github.com/AztecProtocol/aztec-v1/tree/develop',
         proofSystem: ZK_CATALOG_TAGS.Plonk.AztecV1,
         knownDeployments: [
           {

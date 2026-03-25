@@ -33,7 +33,7 @@ export function TokenCount({
         </h2>
       </div>
       <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Count of unique abstract tokens transferred{' '}
+        Count of unique tokens transferred{' '}
         <div className="inline-block">
           <BetweenChainsInfo className="lowercase" />
         </div>

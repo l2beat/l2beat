@@ -19,7 +19,7 @@ export function ReportDownloadButton({
       )}
       href={fileUrl}
     >
-      <DownloadArrowIcon className="mr-3" />
+      <DownloadArrowIcon className="mr-3 fill-pure-white" />
       Download the report
     </CustomLink>
   )
