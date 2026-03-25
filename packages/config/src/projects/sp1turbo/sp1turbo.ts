@@ -247,6 +247,12 @@ export const sp1turbo: BaseProject = {
               '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

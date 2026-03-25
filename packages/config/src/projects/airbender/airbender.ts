@@ -130,7 +130,7 @@ export const airbender: BaseProject = {
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE',
+              '0x08513A4646d1Bc8c348C67A3680bb19626E7F13F',
             ),
           },
         ],

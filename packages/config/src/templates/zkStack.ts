@@ -560,7 +560,10 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         ),
       ],
       programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
-      zkVerifiers: getZKStackVerifiers(templateVars.discovery),
+      zkVerifiers: getZKStackVerifiers(
+        templateVars.discovery,
+        templateVars.archivedAt !== undefined,
+      ),
     },
     stateDerivation:
       daProvider !== undefined
@@ -686,8 +689,13 @@ function programHashesReproducible(l2BootloaderHash: string): boolean | null {
 // export because adi is not currently set up as a template but should get verifiers by this logic
 export function getZKStackVerifiers(
   discovery: ProjectDiscovery,
+  isArchived: boolean,
 ): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = []
+  if (isArchived) {
+    // don't want to bother setting up archived projects
+    return result
+  }
   if (discovery.hasContract('DualVerifier')) {
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(

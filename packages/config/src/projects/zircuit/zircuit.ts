@@ -372,7 +372,7 @@ export const zircuit: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: getSP1Verifiers(discovery),
+    zkVerifiers: getVerifiers(),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {
@@ -513,4 +513,11 @@ export const zircuit: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const sp1Verifiers = getSP1Verifiers(discovery)
+  // mock verifier is not an actual sp1 verifier and needs to be removed
+  const mockVerifier = discovery.getContract('SP1MockVerifierWithHash').address
+  return sp1Verifiers.filter((item) => item !== mockVerifier)
 }

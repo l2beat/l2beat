@@ -108,7 +108,7 @@ function getVerifiers(): ChainSpecificAddress[] {
   const verifierNames = [
     'verifier5Manual',
     'verifier6Manual',
-    'verifier7Manual',
+    // 'verifier7Manual', // this is set verifier, not an actual RiscZero verifier smart contract
   ]
   const result: ChainSpecificAddress[] = []
   for (const verifierName of verifierNames) {

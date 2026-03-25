@@ -130,6 +130,7 @@ function uniqAndSortProjectsUsedIn(
   )
 }
 
+// todo: maciek pls fix
 function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,

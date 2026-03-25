@@ -168,6 +168,7 @@ function getScalingRiskStateValidationOptimisticEntry(
   }
 }
 
+// todo: maciek pls fix
 function getTrustedSetupsByProofSystem(
   project: Project<'zkCatalogInfo'>,
   projectId: ProjectId,

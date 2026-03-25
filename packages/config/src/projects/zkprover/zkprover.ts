@@ -122,6 +122,7 @@ export const zkprover: BaseProject = {
       {
         hash: '0x28ddf3744fb9b64bc428bee318e026bee0cf210e23ff5932f645e32aa916c28f',
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Snarkjs,
+        name: 'zkProver Fflonk verifier Wirex',
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(

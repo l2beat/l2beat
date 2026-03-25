@@ -36,6 +36,7 @@ export async function getVerifiersSection(
       }
     })
 
+    // todo: maciek pls fix
     const knownDeployments = verifier.knownDeployments.map((d) => {
       const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
         .explorerUrl
