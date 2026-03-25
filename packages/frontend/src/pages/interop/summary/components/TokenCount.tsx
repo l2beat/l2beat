@@ -77,6 +77,7 @@ export function TokenCount({
         )}
       </div>
       <TopItemsDialog
+        id={undefined}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title="All tokens & pairs by volume"

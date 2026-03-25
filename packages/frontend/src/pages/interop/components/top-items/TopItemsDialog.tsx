@@ -35,7 +35,7 @@ import {
 type ActiveTab = 'tokens' | 'pairs'
 
 interface TopItemsDialogProps {
-  id?: ProjectId
+  id: ProjectId | undefined
   type?: KnownInteropBridgeType
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
