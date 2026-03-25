@@ -58,7 +58,10 @@ describe(DiscordClient.name, () => {
     it('throws when discord returns an error', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetchRaw() {
-          return new Response('bad request', { status: 400, statusText: 'Bad Request' })
+          return new Response('bad request', {
+            status: 400,
+            statusText: 'Bad Request',
+          })
         },
       })
       const discord = mockClient('', httpClient)

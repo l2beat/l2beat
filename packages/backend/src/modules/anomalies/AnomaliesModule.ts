@@ -18,25 +18,25 @@ export function createAnomaliesModule({
 
   const anomaliesNotifier =
     config.notifications &&
-      config.notifications.anomalies &&
-      config.trackedTxsConfig
+    config.notifications.anomalies &&
+    config.trackedTxsConfig
       ? new AnomalyNotifier(
-        logger,
-        clock,
-        new DiscordClient(config.notifications.anomalies.discordWebhookUrl),
-        db,
-        config.anomalies.anomaliesMinDuration,
-        config.trackedTxsConfig,
-      )
+          logger,
+          clock,
+          new DiscordClient(config.notifications.anomalies.discordWebhookUrl),
+          db,
+          config.anomalies.anomaliesMinDuration,
+          config.trackedTxsConfig,
+        )
       : undefined
 
   const realTimeLivenessProcessor = config.trackedTxsConfig
     ? new RealTimeLivenessProcessor(
-      config.trackedTxsConfig,
-      logger,
-      db,
-      anomaliesNotifier,
-    )
+        config.trackedTxsConfig,
+        logger,
+        db,
+        anomaliesNotifier,
+      )
     : undefined
 
   const start = () => {

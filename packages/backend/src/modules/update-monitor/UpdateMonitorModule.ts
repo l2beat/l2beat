@@ -40,7 +40,9 @@ export function createUpdateMonitorModule({
       ? config.notifications.updateMonitor.discordWebhookUrl
       : undefined
 
-  const discordClient = updateMonitorWebhookUrl ? new DiscordClient(updateMonitorWebhookUrl) : undefined
+  const discordClient = updateMonitorWebhookUrl
+    ? new DiscordClient(updateMonitorWebhookUrl)
+    : undefined
 
   const updateNotifier = new UpdateNotifier(
     db,

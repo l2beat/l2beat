@@ -134,12 +134,10 @@ export class UpdateNotifier {
 
     const arrayMessages = Array.isArray(messages) ? messages : [messages]
     for (const message of arrayMessages) {
-      await this.discordClient
-        .sendMessage(message)
-        .then(
-          () => this.logger.debug('Notification to Discord has been sent'),
-          (e) => this.logger.error('Discord API error', e),
-        )
+      await this.discordClient.sendMessage(message).then(
+        () => this.logger.debug('Notification to Discord has been sent'),
+        (e) => this.logger.error('Discord API error', e),
+      )
     }
   }
 

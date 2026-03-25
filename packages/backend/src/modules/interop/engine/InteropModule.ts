@@ -1,4 +1,8 @@
-import { DiscordClient, HttpClient, InteropTransferClassifier } from '@l2beat/shared'
+import {
+  DiscordClient,
+  HttpClient,
+  InteropTransferClassifier,
+} from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'

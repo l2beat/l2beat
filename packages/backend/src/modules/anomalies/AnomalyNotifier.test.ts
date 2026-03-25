@@ -853,10 +853,10 @@ describe(AnomalyNotifier.name, () => {
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
-        '### Ongoing anomalies:\n' +
-        '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
-        '|-----------|-----------|------------------|--------------|-----------------------|\n' +
-        '| 0 seconds | project-1 | batchSubmissions | not approved |                     - |```',
+          '### Ongoing anomalies:\n' +
+          '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
+          '|-----------|-----------|------------------|--------------|-----------------------|\n' +
+          '| 0 seconds | project-1 | batchSubmissions | not approved |                     - |```',
       )
     })
 
@@ -915,10 +915,10 @@ describe(AnomalyNotifier.name, () => {
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
-        '### Ongoing anomalies:\n' +
-        '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
-        '|-----------|-----------|------------------|--------------|-----------------------|\n' +
-        '| 0 seconds | project-1 | batchSubmissions | not approved |             ⚠️ yes ⚠️ |```',
+          '### Ongoing anomalies:\n' +
+          '```|  Duration | ProjectId |          Subtype |     Approval | Implementation Change |\n' +
+          '|-----------|-----------|------------------|--------------|-----------------------|\n' +
+          '| 0 seconds | project-1 | batchSubmissions | not approved |             ⚠️ yes ⚠️ |```',
       )
     })
   })

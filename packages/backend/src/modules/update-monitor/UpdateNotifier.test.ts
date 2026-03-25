@@ -39,7 +39,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -100,7 +100,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -179,7 +179,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -254,7 +254,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -272,7 +272,6 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
         updateMessagesService,
         projectService,
-
       )
 
       const project = 'project-a'
@@ -330,7 +329,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       // Mock project with trackedTxsConfig
@@ -420,7 +419,7 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       // Mock project with trackedTxsConfig that has a different address
@@ -504,7 +503,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -556,7 +555,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -605,7 +604,7 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
       })
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
@@ -638,7 +637,7 @@ describe(UpdateNotifier.name, () => {
         findLatestId: async () => undefined,
       })
       const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => { },
+        storeAndPrune: async () => {},
       })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),

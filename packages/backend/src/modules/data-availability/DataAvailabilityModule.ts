@@ -229,12 +229,12 @@ function createIndexers(
           })),
           // We only sync projects data at 02:00:00
           ...(UnixTime.toStartOf(targetTimestamp, 'day') + 2 * UnixTime.HOUR ===
-            targetTimestamp
+          targetTimestamp
             ? uniqBy(projectConfigurations, (e) => e.projectId).map((c) => ({
-              feature: 'dataAvailability' as const,
-              id: c.projectId,
-              target: targetTimestamp,
-            }))
+                feature: 'dataAvailability' as const,
+                id: c.projectId,
+                target: targetTimestamp,
+              }))
             : []),
         ])
       },

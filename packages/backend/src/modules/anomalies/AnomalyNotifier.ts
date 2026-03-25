@@ -243,9 +243,7 @@ export class AnomalyNotifier {
 
   async sendDiscordNotification(message: string): Promise<string | undefined> {
     try {
-      return await this.discordClient.sendMessage(
-        message,
-      )
+      return await this.discordClient.sendMessage(message)
     } catch (error) {
       this.logger.error('Failed to send Discord notification', {
         error,
@@ -301,7 +299,7 @@ export class AnomalyNotifier {
           diff.projectId === projectId &&
           diff.type === 'implementationChange' &&
           ChainSpecificAddress.chain(ChainSpecificAddress(diff.address)) ===
-          'eth',
+            'eth',
       )
       .map((diff) =>
         ChainSpecificAddress.address(ChainSpecificAddress(diff.address)),
