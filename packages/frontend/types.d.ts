@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
