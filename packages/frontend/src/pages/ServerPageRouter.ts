@@ -7,6 +7,7 @@ import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
+import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
@@ -66,6 +67,7 @@ export function createServerPageRouter(
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,
+    createDevRouter,
   ]
 
   for (const createRouter of routers) {

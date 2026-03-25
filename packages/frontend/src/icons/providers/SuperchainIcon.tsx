@@ -3,7 +3,7 @@ import { SvgIcon } from '../SvgIcon'
 export function SuperchainIcon() {
   return (
     <SvgIcon width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <g clip-path="url(#clip0_38_145)">
+      <g clipPath="url(#clip0_38_145)">
         <path
           d="M14.9677 0H1.03226C0.462157 0 0 0.462157 0 1.03226V14.9677C0 15.5378 0.462157 16 1.03226 16H14.9677C15.5378 16 16 15.5378 16 14.9677V1.03226C16 0.462157 15.5378 0 14.9677 0Z"
           fill="#FF0421"
