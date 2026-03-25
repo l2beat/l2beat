@@ -123,7 +123,7 @@ const ALWAYS_FIRST_VALUES = [
   'No infrastructure',
   'No VM',
   'No RaaS',
-  'No proofs',
+  'No proof systems',
 ]
 export function filterValuesSortFn(a: string, b: string) {
   if (ALWAYS_FIRST_VALUES.includes(a)) return -1
