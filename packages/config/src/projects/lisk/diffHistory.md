@@ -8,7 +8,7 @@ Generated with discovered.json: 0x032a2ceb1cb071aca2a547594fc09039a0be61c9
 
 ## Description
 
-Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA. Additionally, an EOA (0x28bB9385A588EF4747264D19B9A9F1603591680c) tracked by discovery has set an EIP-7702 delegation to an EIP7702StatelessDeleGator contract, unrelated to the project itself.
+Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA. Additionally, a Gelato Multisig signer (0x28bB9385A588EF4747264D19B9A9F1603591680c) has set an EIP-7702 delegation to an EIP7702StatelessDeleGator contract. This account is a member of the Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) which has a role in project governance.
 
 ## Watched changes
 
