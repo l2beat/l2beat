@@ -19,7 +19,7 @@ import { BetweenChainsInfo } from '~/pages/interop/components/BetweenChainsInfo'
 import {
   getTopTokensColumns,
   type TokenRow,
-} from '~/pages/interop/components/top-items/columns'
+} from '~/pages/interop/components/tokens/columns'
 import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { api } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'

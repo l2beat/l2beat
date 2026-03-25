@@ -34,7 +34,7 @@ import {
 
 type ActiveTab = 'tokens' | 'pairs'
 
-interface TopItemsDialogProps {
+interface TokensDialogProps {
   id: ProjectId | undefined
   type?: KnownInteropBridgeType
   isOpen: boolean
@@ -43,14 +43,14 @@ interface TopItemsDialogProps {
   showNetMintedValueColumn?: boolean
 }
 
-export function TopItemsDialog({
+export function TokensDialog({
   id,
   type,
   isOpen,
   setIsOpen,
   title,
   showNetMintedValueColumn,
-}: TopItemsDialogProps) {
+}: TokensDialogProps) {
   const breakpoint = useBreakpoint()
   const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
@@ -98,7 +98,7 @@ export function TopItemsDialog({
 
   const content = (
     <Tabs
-      name="top-items"
+      name="tokens"
       value={activeTab}
       onValueChange={(v) => setActiveTab(v as ActiveTab)}
       variant="highlighted"

@@ -4,8 +4,8 @@ import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
-import { InteropTopItems } from './TopItems'
-import { TopItemsDialog } from './TopItemsDialog'
+import { InteropTopItems } from '../top-items/TopItems'
+import { TokensDialog } from './TokensDialog'
 
 export function TopTokensCell({
   topItems,
@@ -51,7 +51,7 @@ export function TopTokensCell({
         type="cell"
         setIsOpen={setIsOpen}
       />
-      <TopItemsDialog
+      <TokensDialog
         id={protocol.id}
         type={resolvedType}
         isOpen={isOpen}
