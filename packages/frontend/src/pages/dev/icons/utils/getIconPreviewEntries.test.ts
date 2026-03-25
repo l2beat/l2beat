@@ -28,17 +28,7 @@ describe(normalizeIconPreviewModules.name, () => {
       return null
     }
 
-    function SvgIcon() {
-      return null
-    }
-
-    function CustomIcon() {
-      return null
-    }
-
     const entries = normalizeIconPreviewModules({
-      '/src/icons/SvgIcon.tsx': { SvgIcon },
-      '/src/icons/products/CustomIcon.tsx': { CustomIcon },
       '/src/icons/TrendArrow.tsx': {
         TrendArrowUpIcon,
         TrendArrowDownIcon,
