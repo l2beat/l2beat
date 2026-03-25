@@ -43,7 +43,7 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     ctx: reviveBigInts(row.ctx) as InteropEventContext,
     matched: row.matched,
     unsupported: row.unsupported,
-    derivedFulfilled: row.derivedFulfilled,
+    derivedFulfilled: row.derivedFulfilled ?? false,
   }
 }
 
