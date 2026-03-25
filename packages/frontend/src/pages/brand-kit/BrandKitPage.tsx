@@ -15,8 +15,7 @@ export function BrandKitPage(props: AppLayoutProps) {
         <div className="flex flex-col md:gap-6">
           <LogoSection
             title="Full Logo"
-            description='The logo should always be used as provided - with both the "L2" icon and "BEAT". Please do not change the placement of the pieces and change the colors. Always use the full logo when space allows. The light variant is for dark backgrounds, the dark variant is for light
-          backgrounds.'
+            description='The logo should always be used as provided - with both the "L2" icon and "BEAT". Please do not change the placement of the pieces and change the colors. Always use the full logo when space allows.'
             lightSvgHref="/brand-kit/logo-light.svg"
             darkSvgHref="/brand-kit/logo-dark.svg"
             lightPngHref="/brand-kit/logo-light.png"
