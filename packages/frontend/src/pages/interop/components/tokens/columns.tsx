@@ -10,6 +10,7 @@ import {
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
+import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type {
   AverageDuration,
   TokenData,
@@ -243,7 +244,7 @@ export const topTokensPairsColumns = [
               alt={`${tokenA.symbol} icon`}
             />
             <span>{tokenA.symbol}</span>
-            <span className="text-secondary">{'\u2194'}</span>
+            <BidirectionalArrowIcon className="size-4 fill-brand" />
             <img
               className="size-[20px] rounded-full bg-white shadow"
               src={tokenB.iconUrl}
