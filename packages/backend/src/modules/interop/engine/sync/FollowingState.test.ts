@@ -315,8 +315,6 @@ function makeInteropEventRecord(
     },
     matched: false,
     unsupported: false,
-    derivedFulfilled: false,
-    derivedCheckedInHistory: false,
     direction: undefined,
     ...overrides,
   }
