@@ -5,11 +5,11 @@ import { manifest } from '~/utils/Manifest'
 import type {
   CommonInteropData,
   InteropTopItemsParams,
-  PairData,
   TokenFlowData,
+  TokensPairData,
 } from './types'
 import {
-  accumulatePairs,
+  accumulateTokensPairs,
   INITIAL_COMMON_INTEROP_DATA,
 } from './utils/accumulate'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
@@ -21,16 +21,16 @@ import {
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 
-type PairInteropData = CommonInteropData & {
+type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
 }
 
-export async function getInteropPairs({
+export async function getInteropTokensPairs({
   id,
   from,
   to,
   type,
-}: InteropTopItemsParams): Promise<PairData[]> {
+}: InteropTopItemsParams): Promise<TokensPairData[]> {
   const db = getDb()
 
   const interopProject = id
@@ -75,7 +75,7 @@ export async function getInteropPairs({
     ]),
   )
 
-  const result: Map<string, PairInteropData> = new Map()
+  const result: Map<string, TokensPairInteropData> = new Map()
   for (const pair of pairs) {
     const pairKey =
       pair.tokenA === 'unknown' && pair.tokenB === 'unknown'
@@ -87,7 +87,7 @@ export async function getInteropPairs({
     }
 
     result.set(pairKey, {
-      ...accumulatePairs(current, pair),
+      ...accumulateTokensPairs(current, pair),
       flows: current.flows,
     })
 

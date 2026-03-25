@@ -61,7 +61,7 @@ export function accumulateTokens(
   return result
 }
 
-export function accumulatePairs(
+export function accumulateTokensPairs(
   current: CommonInteropData,
   pair: AggregatedInteropTokensPairRecord,
 ) {

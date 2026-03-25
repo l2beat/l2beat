@@ -3,21 +3,25 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
-import { type PairRow, topPairsColumns } from './columns'
+import { type TokensPairRow, topTokensPairsColumns } from './columns'
 
-export type PairsQueryInput = {
+export type TokensPairsQueryInput = {
   id: ProjectId | undefined
   from: string[]
   to: string[]
   type?: KnownInteropBridgeType
 }
 
-export function PairsTable({ queryInput }: { queryInput: PairsQueryInput }) {
-  const { data, isLoading } = api.interop.pairs.useQuery(queryInput)
+export function TokensPairsTable({
+  queryInput,
+}: {
+  queryInput: TokensPairsQueryInput
+}) {
+  const { data, isLoading } = api.interop.tokensPairs.useQuery(queryInput)
 
-  const table = useTable<PairRow>({
+  const table = useTable<TokensPairRow>({
     data: data ?? [],
-    columns: topPairsColumns,
+    columns: topTokensPairsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

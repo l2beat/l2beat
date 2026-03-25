@@ -21,7 +21,7 @@ export const interopRouter = router({
   tokens: procedure
     .input(InteropTopItemsParams)
     .query(({ input }) => getInteropTokens(input)),
-  pairs: procedure
+  tokensPairs: procedure
     .input(InteropTopItemsParams)
     .query(({ input }) => getInteropPairs(input)),
   transfers: procedure

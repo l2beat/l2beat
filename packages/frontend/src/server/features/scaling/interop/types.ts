@@ -193,7 +193,7 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
-export type PairData = {
+export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
   tokenB: { symbol: string; iconUrl: string }

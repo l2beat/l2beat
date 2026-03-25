@@ -22,7 +22,7 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
-import { PairsTable } from './PairsTable'
+import { TokensPairsTable } from './TokenPairsTable'
 import { TokensTable } from './TokensTable'
 
 type ActiveTab = 'tokens' | 'pairs'
@@ -62,7 +62,7 @@ export function TokensDialog({
         <TabsTrigger value="tokens">Tokens</TabsTrigger>
         <TabsTrigger
           value="pairs"
-          onMouseEnter={() => utils.interop.pairs.prefetch(queryInput)}
+          onMouseEnter={() => utils.interop.tokensPairs.prefetch(queryInput)}
         >
           Pairs
         </TabsTrigger>
@@ -74,7 +74,7 @@ export function TokensDialog({
         />
       </TabsContent>
       <TabsContent value="pairs">
-        <PairsTable queryInput={queryInput} />
+        <TokensPairsTable queryInput={queryInput} />
       </TabsContent>
     </Tabs>
   )

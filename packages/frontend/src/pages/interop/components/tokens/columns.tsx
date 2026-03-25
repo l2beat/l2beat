@@ -12,16 +12,16 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { EM_DASH } from '~/consts/characters'
 import type {
   AverageDuration,
-  PairData,
   TokenData,
   TokenFlowData,
+  TokensPairData,
 } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { AvgDurationCell } from '../table/AvgDurationCell'
 import { TokenFlowsCell } from './TokenFlowsCell'
 
 export type TokenRow = TokenData & BasicTableRow
-export type PairRow = PairData & BasicTableRow
+export type TokensPairRow = TokensPairData & BasicTableRow
 
 type CommonRow = {
   volume: number | null
@@ -218,9 +218,9 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
       }),
   ])
 
-const pairColumnHelper = createColumnHelper<PairRow>()
-export const topPairsColumns = [
-  pairColumnHelper.accessor(
+const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
+export const topTokensPairsColumns = [
+  tokensPairColumnHelper.accessor(
     (row) =>
       row.id === 'unknown'
         ? 'Unknown pairs'
@@ -261,5 +261,5 @@ export const topPairsColumns = [
       },
     },
   ),
-  ...getCommonColumns(pairColumnHelper),
+  ...getCommonColumns(tokensPairColumnHelper),
 ]
