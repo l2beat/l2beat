@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1774257638,
+  "timestamp": 1774434780,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
@@ -377,6 +377,21 @@
       "proxyType": "EOA"
     },
     {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "eth:0x66355689a9f067eeb9dc9d899E4192676988279C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf200c358a589427f9686cab4353b2234c8b5ded891cffc5501c145a0146bb2df"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1774307699,
+      "sinceBlock": 24723435,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x66355689a9f067eeb9dc9d899E4192676988279C": "PlonkVerifierMainnetFull"
+      }
+    },
+    {
       "address": "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -716,29 +731,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 69,
+        "nonce": 70,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
-      "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
-      "type": "Contract",
-      "template": "linea/Verifier",
-      "sourceHashes": [
-        "0xe2d2a2fc00e5a10c2c6eff5938d211e0cb3833bc8b3bb897edf79fe77ad26c71"
-      ],
-      "proxyType": "immutable",
-      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1764597227,
-      "sinceBlock": 23919055,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b": "PlonkVerifierMainnetFull"
       }
     },
     {
@@ -844,7 +842,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1060,11 +1058,11 @@
           }
         },
         "CONTRACT_VERSION": "7.0",
-        "currentFinalizedShnarf": "0xdaecf5ce038123098e013c420221c4397bfbc32cd0350ae25a5350c95d836829",
-        "currentFinalizedState": "0x5a52936971a89c981a8dd9bae8b97d31bde56098bba7498c2f2b8cb872c05b97",
+        "currentFinalizedShnarf": "0x5acb8d2ba511cef12209cf49eeb25893e147934f3753e3bc1ed26efb3ae2b22f",
+        "currentFinalizedState": "0x99bb4b74a118ca1bae7f26e1c78f176f141b898b0764683ba7765aa076b05798",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "79955353848485878096",
+        "currentPeriodAmountInWei": "54866857424322558135",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1114,10 +1112,10 @@
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897",
+          "eth:0x66355689a9f067eeb9dc9d899E4192676988279C",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -1967,8 +1965,8 @@
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "93574914162736225153",
-        "currentPeriodEnd": 1774251163,
+        "currentPeriodAmountInWei": "3891314750947261374",
+        "currentPeriodEnd": 1774438562,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -1977,11 +1975,11 @@
         "l1l2MessageSetter": [
           "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 800158,
+        "lastAnchoredL1MessageNumber": 800274,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 106615,
+        "nextMessageNumber": 106637,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
@@ -2908,6 +2906,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x66355689a9f067eeb9dc9d899E4192676988279C": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": [
       "error AmountTooBig(uint256 amount, uint256 limit)",
       "error NoBurnCapabilities(address addr)",
@@ -3143,9 +3144,6 @@
     ],
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
-    ],
-    "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
       "constructor(address implementation_)",
@@ -3812,9 +3810,8 @@
     "linea/LineaRollup_NativeYield": "0x43ca4c9b4c70a37b08d2cc88342dd2959bdc3d397dcd20d780d02705d5e4f1b5",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
-    "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
-  "usedBlockNumbers": { "ethereum": 24719285, "linea": 29865643 },
-  "permissionsConfigHash": "0x69c3f25f8e6cf6fb9ac9ac14c9af07e8e2b51bf2af6409974090abdcb558280a"
+  "usedBlockNumbers": { "ethereum": 24733995, "linea": 29900162 },
+  "permissionsConfigHash": "0x979fec1ddeb83aa5af45026bb99b5d5a9ff4340fb387f9717e47f716e3d8baad"
 }
