@@ -23,10 +23,7 @@ export function ColorSwatch({
   useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
-    copy(color)
-      .then(() => setCopied(true))
-      .catch(() => setCopied(false))
-    setCopied(true)
+    copy(color).then((success) => setCopied(success))
   }
 
   return (
