@@ -89,6 +89,7 @@ const DirectoryTabsContent = ({
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
+      '[--table-sticky-top:40px] md:[--table-sticky-top:56px]',
       'primary-card rounded-xl rounded-tl-none bg-surface-primary px-4 pt-3 pb-4 max-md:rounded-none md:px-6 md:pb-6',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset',
       className,

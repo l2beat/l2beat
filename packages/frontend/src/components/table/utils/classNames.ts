@@ -28,29 +28,26 @@ export function getTableElementClassName(className?: string) {
 export function getBasicTableGroupedHeaderCellClassName(params: {
   isPlaceholder: boolean
   hasHeader: boolean
-  isPinned: boolean
 }) {
   return cn(
-    'font-medium text-primary tracking-[-0.13px]',
+    'bg-header-secondary font-medium text-primary tracking-[-0.13px]',
     !params.isPlaceholder && params.hasHeader && 'rounded-t-lg px-6 pt-4',
-    params.isPinned && getRowClassNamesWithoutOpacity(null),
   )
 }
 
 export function getBasicTableHeaderCellClassName(params: {
   groupParams: BasicTableGroupParams | undefined
-  isPinned: boolean
   headClassName: string | undefined
 }) {
-  const { groupParams, isPinned, headClassName } = params
+  const { groupParams, headClassName } = params
   return cn(
+    'bg-surface-primary',
     groupParams && [
       groupParams.isFirstInGroup && 'pl-6',
       groupParams.isLastInGroup && 'pr-6',
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
-    isPinned && getRowClassNamesWithoutOpacity(null),
     headClassName,
   )
 }

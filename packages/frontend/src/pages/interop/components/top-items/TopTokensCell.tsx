@@ -166,6 +166,7 @@ function TopTokensContent({
               skeletonCount={6}
               table={table}
               tableWrapperClassName="pb-0"
+              stickyHeader={false}
               isLoading={isLoading}
             />
           </div>
@@ -195,6 +196,7 @@ function TopTokensContent({
               skeletonCount={6}
               table={table}
               tableWrapperClassName="pb-0"
+              stickyHeader={false}
               isLoading={isLoading}
             />
           </div>

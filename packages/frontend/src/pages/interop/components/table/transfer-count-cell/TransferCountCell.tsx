@@ -181,6 +181,7 @@ function TransferDetailsDialog({
                 isLoading={isLoading}
                 skeletonCount={8}
                 tableWrapperClassName="pb-0"
+                stickyHeader={false}
               />
               {isFetchingNextPage && (
                 <div className="px-4 py-2 text-center font-medium text-label-value-14 text-secondary">
@@ -225,6 +226,7 @@ function TransferDetailsDialog({
                 isLoading={isLoading}
                 skeletonCount={8}
                 tableWrapperClassName="pb-0"
+                stickyHeader={false}
               />
               {isFetchingNextPage && (
                 <div className="py-2 text-center font-medium text-label-value-14 text-secondary">

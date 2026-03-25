@@ -9,6 +9,7 @@ import type {
 import { flexRender } from '@tanstack/react-table'
 import range from 'lodash/range'
 import React from 'react'
+import { createPortal } from 'react-dom'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
@@ -50,6 +51,7 @@ export interface BasicTableProps<T extends BasicTableRow> {
   table: TanstackTable<T>
   isLoading?: boolean
   skeletonCount?: number
+  stickyHeader?: boolean
   /**
    * Custom row sorting function
    * It is used after tanstack sorting is applied
@@ -79,10 +81,34 @@ type BasicTableVisibleCellData<T extends BasicTableRow> = {
   rowSpan: number
 }
 
+type StickyHeaderState = {
+  active: boolean
+  headerCellWidths: number[]
+  scrollWrapperLeft: number
+  scrollWrapperWidth: number
+  tableWidth: number
+  top: number
+}
+
+const DEFAULT_STICKY_HEADER_STATE: StickyHeaderState = {
+  active: false,
+  headerCellWidths: [],
+  scrollWrapperLeft: 0,
+  scrollWrapperWidth: 0,
+  tableWidth: 0,
+  top: 0,
+}
+
 export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
-  if (props.table.getRowCount() === 0 && !props.isLoading) {
-    return <TableEmptyState />
-  }
+  const isEmpty = props.table.getRowCount() === 0 && !props.isLoading
+  const stickyHeader = props.stickyHeader ?? true
+  const scrollWrapperRef = React.useRef<HTMLDivElement>(null)
+  const tableRef = React.useRef<HTMLTableElement>(null)
+  const stickyHeaderContentRef = React.useRef<HTMLDivElement>(null)
+  const lastStickyHeaderScrollLeftRef = React.useRef<number | null>(null)
+  const [stickyHeaderState, setStickyHeaderState] = React.useState(
+    DEFAULT_STICKY_HEADER_STATE,
+  )
 
   const { groupedHeader, actualHeader } = getBasicTableHeaderSections(
     props.table.getHeaderGroups(),
@@ -93,41 +119,299 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
     props.rowSortingFn,
   )
 
+  const updateStickyHeaderTransform = React.useCallback(() => {
+    const scrollWrapper = scrollWrapperRef.current
+    const stickyHeaderContent = stickyHeaderContentRef.current
+
+    if (!scrollWrapper || !stickyHeaderContent) {
+      return
+    }
+
+    const scrollLeft = scrollWrapper.scrollLeft
+    if (lastStickyHeaderScrollLeftRef.current === scrollLeft) {
+      return
+    }
+
+    lastStickyHeaderScrollLeftRef.current = scrollLeft
+    stickyHeaderContent.style.setProperty(
+      '--table-sticky-scroll-x',
+      `${scrollLeft}px`,
+    )
+    stickyHeaderContent.style.transform = `translate3d(${-scrollLeft}px, 0, 0)`
+  }, [])
+
+  const syncStickyHeaderState = React.useCallback(() => {
+    if (!stickyHeader) {
+      setStickyHeaderState(DEFAULT_STICKY_HEADER_STATE)
+      return
+    }
+
+    const scrollWrapper = scrollWrapperRef.current
+    const table = tableRef.current
+    const tableHead = table?.tHead
+
+    if (!scrollWrapper || !table || !tableHead) {
+      setStickyHeaderState(DEFAULT_STICKY_HEADER_STATE)
+      return
+    }
+
+    const actualHeaderRowIndex = Math.max(tableHead.rows.length - 2, 0)
+    const actualHeaderRow = tableHead.rows.item(actualHeaderRowIndex)
+    const headerCellWidths = actualHeaderRow
+      ? Array.from(actualHeaderRow.cells).map(
+          (cell) => cell.getBoundingClientRect().width,
+        )
+      : []
+
+    const scrollWrapperRect = scrollWrapper.getBoundingClientRect()
+    const tableRect = table.getBoundingClientRect()
+    const tableHeadRect = tableHead.getBoundingClientRect()
+    const stickyTopCssValue = getComputedStyle(scrollWrapper)
+      .getPropertyValue('--table-sticky-top')
+      .trim()
+    const parsedStickyTop = Number.parseFloat(stickyTopCssValue)
+    const stickyTop = Number.isNaN(parsedStickyTop) ? 0 : parsedStickyTop
+
+    const nextState: StickyHeaderState = {
+      active:
+        headerCellWidths.length > 0 &&
+        tableRect.top <= stickyTop &&
+        tableRect.bottom > stickyTop + tableHeadRect.height,
+      headerCellWidths,
+      scrollWrapperLeft: scrollWrapperRect.left,
+      scrollWrapperWidth: scrollWrapper.clientWidth,
+      tableWidth: tableRect.width,
+      top: stickyTop,
+    }
+
+    setStickyHeaderState((previousState) =>
+      areStickyHeaderStatesEqual(previousState, nextState)
+        ? previousState
+        : nextState,
+    )
+  }, [stickyHeader])
+
+  React.useEffect(() => {
+    if (!stickyHeader) {
+      setStickyHeaderState(DEFAULT_STICKY_HEADER_STATE)
+      return
+    }
+
+    let stateAnimationFrame = 0
+    const scheduleSync = () => {
+      cancelAnimationFrame(stateAnimationFrame)
+      stateAnimationFrame = window.requestAnimationFrame(syncStickyHeaderState)
+    }
+
+    scheduleSync()
+
+    const scrollWrapper = scrollWrapperRef.current
+    window.addEventListener('scroll', scheduleSync, { passive: true })
+    window.addEventListener('resize', scheduleSync)
+
+    const resizeObserver = new ResizeObserver(scheduleSync)
+    if (scrollWrapper) {
+      resizeObserver.observe(scrollWrapper)
+    }
+    if (tableRef.current) {
+      resizeObserver.observe(tableRef.current)
+    }
+
+    return () => {
+      cancelAnimationFrame(stateAnimationFrame)
+      window.removeEventListener('scroll', scheduleSync)
+      window.removeEventListener('resize', scheduleSync)
+      resizeObserver.disconnect()
+    }
+  }, [stickyHeader, syncStickyHeaderState])
+
+  React.useEffect(() => {
+    syncStickyHeaderState()
+  }, [syncStickyHeaderState])
+
+  React.useEffect(() => {
+    if (!stickyHeader) {
+      lastStickyHeaderScrollLeftRef.current = null
+      return
+    }
+
+    const scrollWrapper = scrollWrapperRef.current
+    if (!scrollWrapper) {
+      return
+    }
+
+    let transformAnimationFrame = 0
+    const scheduleTransformUpdate = () => {
+      if (transformAnimationFrame !== 0) {
+        return
+      }
+
+      transformAnimationFrame = window.requestAnimationFrame(() => {
+        transformAnimationFrame = 0
+        updateStickyHeaderTransform()
+      })
+    }
+
+    scheduleTransformUpdate()
+    scrollWrapper.addEventListener('scroll', scheduleTransformUpdate, {
+      passive: true,
+    })
+
+    return () => {
+      if (transformAnimationFrame !== 0) {
+        cancelAnimationFrame(transformAnimationFrame)
+      }
+      scrollWrapper.removeEventListener('scroll', scheduleTransformUpdate)
+    }
+  }, [stickyHeader, updateStickyHeaderTransform])
+
+  const handleStickyHeaderWheel = React.useCallback(
+    (event: React.WheelEvent<HTMLDivElement>) => {
+      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) {
+        return
+      }
+
+      const scrollWrapper = scrollWrapperRef.current
+      if (!scrollWrapper) {
+        return
+      }
+
+      scrollWrapper.scrollLeft += event.deltaX
+      event.preventDefault()
+    },
+    [],
+  )
+
+  if (isEmpty) {
+    return <TableEmptyState />
+  }
+
   return (
-    <Table tableWrapperClassName={props.tableWrapperClassName}>
-      {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
-      <TableHeader>
-        {groupedHeader && (
-          <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
-        )}
-        <BasicTableActualHeaderRow actualHeader={actualHeader} />
-        <BasicTableHeaderDividerRow />
-      </TableHeader>
-      <TableBody>
-        {rows.map((row) => (
-          <BasicTableRow row={row} key={row.id} {...props} />
-        ))}
-        {rows.length === 0 &&
-          props.isLoading &&
-          range(props.skeletonCount ?? 10).map((i) => {
-            return (
-              <TableRow highlightId={undefined} key={i}>
-                <TableCell colSpan={100}>
-                  <Skeleton className="h-6 w-full md:h-8" />
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        tableWrapperClassName={props.tableWrapperClassName}
+        scrollWrapperRef={scrollWrapperRef}
+        tableRef={tableRef}
+      >
+        {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
+        <TableHeader>
+          {groupedHeader && (
+            <BasicTableGroupedHeaderRow groupedHeader={groupedHeader} />
+          )}
+          <BasicTableActualHeaderRow actualHeader={actualHeader} />
+          <BasicTableHeaderDividerRow />
+        </TableHeader>
+        <TableBody>
+          {rows.map((row) => (
+            <BasicTableRow row={row} key={row.id} {...props} />
+          ))}
+          {rows.length === 0 &&
+            props.isLoading &&
+            range(props.skeletonCount ?? 10).map((i) => {
+              return (
+                <TableRow highlightId={undefined} key={i}>
+                  <TableCell colSpan={100}>
+                    <Skeleton className="h-6 w-full md:h-8" />
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
+        </TableBody>
+      </Table>
+      {stickyHeader && (
+        <BasicTableStickyHeader
+          groupedHeader={groupedHeader}
+          actualHeader={actualHeader}
+          scrollLeft={scrollWrapperRef.current?.scrollLeft ?? 0}
+          stickyHeaderContentRef={stickyHeaderContentRef}
+          stickyHeaderState={stickyHeaderState}
+          onWheel={handleStickyHeaderWheel}
+        />
+      )}
+    </>
+  )
+}
+
+function BasicTableStickyHeader<T>({
+  groupedHeader,
+  actualHeader,
+  scrollLeft,
+  stickyHeaderContentRef,
+  stickyHeaderState,
+  onWheel,
+}: {
+  groupedHeader: HeaderGroup<T> | undefined
+  actualHeader: HeaderGroup<T>
+  scrollLeft: number
+  stickyHeaderContentRef: React.Ref<HTMLDivElement>
+  stickyHeaderState: StickyHeaderState
+  onWheel: React.WheelEventHandler<HTMLDivElement>
+}) {
+  if (
+    !stickyHeaderState.active ||
+    stickyHeaderState.headerCellWidths.length === 0 ||
+    stickyHeaderState.scrollWrapperWidth === 0
+  ) {
+    return null
+  }
+
+  return createPortal(
+    <div
+      data-sticky-table-header
+      className="pointer-events-none fixed z-40 overflow-hidden md:pointer-events-auto"
+      style={{
+        left: stickyHeaderState.scrollWrapperLeft,
+        top: stickyHeaderState.top,
+        width: stickyHeaderState.scrollWrapperWidth,
+      }}
+      onWheel={onWheel}
+    >
+      <div
+        ref={stickyHeaderContentRef}
+        style={{
+          ['--table-sticky-scroll-x' as string]: `${scrollLeft}px`,
+          backfaceVisibility: 'hidden',
+          transform: `translate3d(${-scrollLeft}px, 0, 0)`,
+          width: stickyHeaderState.tableWidth,
+          willChange: 'transform',
+        }}
+      >
+        <table
+          className="w-full border-collapse text-left"
+          cellSpacing={0}
+          cellPadding={0}
+          style={{ width: stickyHeaderState.tableWidth }}
+        >
+          <TableHeader>
+            {groupedHeader && (
+              <BasicTableGroupedHeaderRow
+                groupedHeader={groupedHeader}
+                stickyScrollOffsetVar="--table-sticky-scroll-x"
+              />
+            )}
+            <BasicTableActualHeaderRow
+              actualHeader={actualHeader}
+              headerCellWidths={stickyHeaderState.headerCellWidths}
+              stickyScrollOffsetVar="--table-sticky-scroll-x"
+            />
+            <BasicTableHeaderDividerRow />
+          </TableHeader>
+        </table>
+      </div>
+    </div>,
+    document.body,
   )
 }
 
 function BasicTableGroupedHeaderRow<T>({
   groupedHeader,
+  stickyScrollOffset,
+  stickyScrollOffsetVar,
 }: {
   groupedHeader: HeaderGroup<T>
+  stickyScrollOffset?: number
+  stickyScrollOffsetVar?: string
 }) {
   const shouldRenderGroupedHeaderRow = groupedHeader.headers.some(
     (header) => !header.isPlaceholder && !!header.column.columnDef.header,
@@ -147,16 +431,19 @@ function BasicTableGroupedHeaderRow<T>({
               className={getBasicTableGroupedHeaderCellClassName({
                 isPlaceholder: header.isPlaceholder,
                 hasHeader: !!header.column.columnDef.header,
-                isPinned: header.column.getIsPinned() !== false,
               })}
-              style={getCommonPinningStyles(header.column)}
+              style={getCommonPinningStyles(header.column, {
+                scrollOffset: stickyScrollOffset,
+                scrollOffsetVar: stickyScrollOffsetVar,
+                zIndex: 30,
+              })}
             >
               {!header.isPlaceholder &&
                 !!header.column.columnDef.header &&
                 flexRender(header.column.columnDef.header, header.getContext())}
             </th>
             {!header.isPlaceholder && !isLast && (
-              <BasicTableColumnFiller as="th" />
+              <BasicTableColumnFiller as="th" className="bg-header-secondary" />
             )}
           </React.Fragment>
         )
@@ -167,26 +454,42 @@ function BasicTableGroupedHeaderRow<T>({
 
 function BasicTableActualHeaderRow<T>({
   actualHeader,
+  headerCellWidths,
+  stickyScrollOffset,
+  stickyScrollOffsetVar,
 }: {
   actualHeader: HeaderGroup<T>
+  headerCellWidths?: number[]
+  stickyScrollOffset?: number
+  stickyScrollOffsetVar?: string
 }) {
+  let renderedCellIndex = -1
+
   return (
     <TableHeaderRow>
       {actualHeader.headers.map((header, index) => {
         const isLast = index === actualHeader.headers.length - 1
         const groupParams = getBasicTableGroupParams(header.column)
+        renderedCellIndex += 1
+        const headerCellWidth = headerCellWidths?.[renderedCellIndex]
         return (
           <React.Fragment key={`${actualHeader.id}-${header.id}`}>
             <TableHead
               colSpan={header.colSpan}
               className={getBasicTableHeaderCellClassName({
                 groupParams,
-                isPinned: header.column.getIsPinned() !== false,
                 headClassName: header.column.columnDef.meta?.headClassName,
               })}
               align={header.column.columnDef.meta?.align}
               tooltip={header.column.columnDef.meta?.tooltip}
-              style={getCommonPinningStyles(header.column)}
+              style={{
+                ...getHeaderCellWidthStyle(headerCellWidth),
+                ...getCommonPinningStyles(header.column, {
+                  scrollOffset: stickyScrollOffset,
+                  scrollOffsetVar: stickyScrollOffsetVar,
+                  zIndex: 30,
+                }),
+              }}
             >
               {header.isPlaceholder ? null : header.column.getCanSort() ? (
                 <SortingArrows
@@ -203,9 +506,19 @@ function BasicTableActualHeaderRow<T>({
                 flexRender(header.column.columnDef.header, header.getContext())
               )}
             </TableHead>
-            {groupParams?.isLastInGroup && !isLast && (
-              <BasicTableColumnFiller as="th" />
-            )}
+            {groupParams?.isLastInGroup &&
+              !isLast &&
+              (() => {
+                renderedCellIndex += 1
+                const fillerWidth = headerCellWidths?.[renderedCellIndex]
+                return (
+                  <BasicTableColumnFiller
+                    as="th"
+                    className="bg-surface-primary"
+                    style={getHeaderCellWidthStyle(fillerWidth)}
+                  />
+                )
+              })()}
           </React.Fragment>
         )
       })}
@@ -216,7 +529,9 @@ function BasicTableActualHeaderRow<T>({
 function BasicTableHeaderDividerRow() {
   return (
     <TableHeaderRow>
-      <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+      <th colSpan={100} className="bg-surface-primary p-0">
+        <div className="mx-0.5 h-0.5 rounded-full bg-divider" />
+      </th>
     </TableHeaderRow>
   )
 }
@@ -452,18 +767,69 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
 
 function BasicTableColumnFiller({
   as: Comp,
+  className,
   rowSpan,
   colSpan,
+  style,
 }: {
   as: 'th' | 'colgroup' | 'td'
+  className?: string
   rowSpan?: number
   colSpan?: number
+  style?: React.CSSProperties
 }) {
   return (
     <Comp
-      className={getBasicTableColumnFillerClassName()}
+      className={cn(getBasicTableColumnFillerClassName(), className)}
       rowSpan={rowSpan}
       colSpan={colSpan}
+      style={style}
     />
   )
+}
+
+function areStickyHeaderStatesEqual(
+  previousState: StickyHeaderState,
+  nextState: StickyHeaderState,
+) {
+  return (
+    previousState.active === nextState.active &&
+    areNumbersClose(
+      previousState.scrollWrapperLeft,
+      nextState.scrollWrapperLeft,
+    ) &&
+    areNumbersClose(
+      previousState.scrollWrapperWidth,
+      nextState.scrollWrapperWidth,
+    ) &&
+    areNumbersClose(previousState.tableWidth, nextState.tableWidth) &&
+    areNumbersClose(previousState.top, nextState.top) &&
+    previousState.headerCellWidths.length ===
+      nextState.headerCellWidths.length &&
+    previousState.headerCellWidths.every((width, index) =>
+      areNumbersClose(width, nextState.headerCellWidths[index]),
+    )
+  )
+}
+
+function areNumbersClose(a: number, b: number | undefined) {
+  if (b === undefined) {
+    return false
+  }
+
+  return Math.abs(a - b) < 0.5
+}
+
+function getHeaderCellWidthStyle(
+  width: number | undefined,
+): React.CSSProperties {
+  if (width === undefined) {
+    return {}
+  }
+
+  return {
+    maxWidth: width,
+    minWidth: width,
+    width,
+  }
 }

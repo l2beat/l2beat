@@ -14,15 +14,23 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  scrollWrapperRef,
+  tableRef,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  scrollWrapperRef?: React.Ref<HTMLDivElement>
+  tableRef?: React.Ref<HTMLTableElement>
 }) => {
   return (
     <div className={getTableOuterWrapperClassName()}>
-      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
+      <div
+        ref={scrollWrapperRef}
+        className={getTableScrollWrapperClassName(tableWrapperClassName)}
+      >
         <HighlightedTableRowProvider>
           <table
+            ref={tableRef}
             className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
@@ -106,6 +114,7 @@ const TableHead = ({
     className={cn(
       'h-10 py-2 text-left align-bottom font-medium text-[13px] uppercase',
       'pr-3 first:pl-2 last:pr-2 md:pr-4',
+      'bg-surface-primary',
       className,
     )}
     {...props}
