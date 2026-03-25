@@ -4,6 +4,7 @@ import { env } from '~/env'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
@@ -59,6 +60,7 @@ export function createServerPageRouter(
     createGovernanceRouter,
     createFaqRouter,
     createAboutUsRouter,
+    createBrandKitRouter,
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
