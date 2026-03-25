@@ -4248,6 +4248,42 @@
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
   },
+  "opstack-derived-tx-base-deposit": {
+    "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7c76adb9ebe70dfdb57f495c7172b308879f87416ebcc9f2e0438d7fe86a1bee"
+      },
+      {
+        "chain": "base",
+        "tx": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "opstack.TransactionDeposited",
+          "args": {
+            "chain": "base",
+            "l2TxHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          }
+        },
+        {
+          "type": "opstack.PortalDepositFinalized",
+          "ctx": {
+            "chain": "base",
+            "txHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          },
+          "args": {
+            "chain": "base",
+            "sourceHash": "0xb613781250a490c408694b600c1443b4b0f12e13792551b9aa12703dfb17f879"
+          }
+        }
+      ]
+    }
+  },
   // Celo uses a custom gas token (CELO), so native withdrawals should track
   // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
   "opstack-celo-native-withdrawal": {

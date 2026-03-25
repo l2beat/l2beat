@@ -18,8 +18,8 @@ export interface InteropEventRecord {
 
   matched: boolean
   unsupported: boolean
-  derivedFulfilled?: boolean
-  derivedCheckedInHistory?: boolean
+  derivedFulfilled: boolean
+  derivedCheckedInHistory: boolean
   direction: string | undefined
 }
 
