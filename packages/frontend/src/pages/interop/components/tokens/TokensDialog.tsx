@@ -1,6 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { type ReactNode, useMemo, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -19,18 +18,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
-import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
-import {
-  getTopTokensColumns,
-  type PairRow,
-  type TokenRow,
-  topPairsColumns,
-} from './columns'
+import { PairsTable } from './PairsTable'
+import { TokensTable } from './TokensTable'
 
 type ActiveTab = 'tokens' | 'pairs'
 
@@ -58,44 +51,6 @@ export function TokensDialog({
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
 
-  const { data: tokensData, isLoading: isTokensLoading } =
-    api.interop.tokens.useQuery(queryInput, {
-      enabled: isOpen,
-    })
-
-  const { data: pairsData, isLoading: isPairsLoading } =
-    api.interop.pairs.useQuery(queryInput, {
-      enabled: isOpen && activeTab === 'pairs',
-    })
-
-  const tokensColumns = useMemo(
-    () => getTopTokensColumns(showNetMintedValueColumn),
-    [showNetMintedValueColumn],
-  )
-
-  const tokensTable = useTable<TokenRow>({
-    data: tokensData ?? [],
-    columns: tokensColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    manualFiltering: true,
-    initialState: {
-      columnPinning: { left: ['icon'] },
-      sorting: [{ id: 'volume', desc: true }],
-    },
-  })
-
-  const pairsTable = useTable<PairRow>({
-    data: pairsData ?? [],
-    columns: topPairsColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    manualFiltering: true,
-    initialState: {
-      sorting: [{ id: 'volume', desc: true }],
-    },
-  })
-
   const content = (
     <Tabs
       name="tokens"
@@ -113,20 +68,13 @@ export function TokensDialog({
         </TabsTrigger>
       </TabsList>
       <TabsContent value="tokens">
-        <BasicTable
-          skeletonCount={6}
-          table={tokensTable}
-          tableWrapperClassName="pb-0"
-          isLoading={isTokensLoading}
+        <TokensTable
+          queryInput={queryInput}
+          showNetMintedValueColumn={showNetMintedValueColumn}
         />
       </TabsContent>
       <TabsContent value="pairs">
-        <BasicTable
-          skeletonCount={6}
-          table={pairsTable}
-          tableWrapperClassName="pb-0"
-          isLoading={isPairsLoading}
-        />
+        <PairsTable queryInput={queryInput} />
       </TabsContent>
     </Tabs>
   )
