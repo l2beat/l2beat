@@ -202,7 +202,7 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
-  readonly ethereumBlobNotifier:
+  readonly ethereumBlobs:
     | {
         discordWebhookUrl: string
       }

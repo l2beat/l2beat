@@ -161,7 +161,7 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      if (notifications && notifications.ethereumBlobNotifier) {
+      if (notifications && notifications.ethereumBlobs) {
         const hourlyIndexer = new HourlyIndexer(logger, clock)
         notificationIndexers.push(hourlyIndexer)
 
@@ -170,8 +170,7 @@ function createIndexers(
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
             discordClient: providers.clients.discord,
-            discordWebhookUrl:
-              notifications.ethereumBlobNotifier.discordWebhookUrl,
+            discordWebhookUrl: notifications.ethereumBlobs.discordWebhookUrl,
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],

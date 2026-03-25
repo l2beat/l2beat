@@ -33,7 +33,7 @@ export class UpdateNotifier {
 
   constructor(
     private readonly db: Database,
-    private readonly discordClient: DiscordClient | undefined,
+    private readonly discordClient: DiscordClient,
     private readonly logger: Logger,
     private readonly updateMessagesService: UpdateMessagesService,
     private readonly projectService: ProjectService,
@@ -123,7 +123,7 @@ export class UpdateNotifier {
   }
 
   private async notify(messages: string | string[]) {
-    if (!this.discordClient || !this.discordWebhookUrl) {
+    if (!this.discordWebhookUrl) {
       if (!this.loggedDiscordClientMissing) {
         this.logger.info(
           'DiscordClient not setup, notification has not been sent. Did you provide correct .env variables?',

@@ -182,10 +182,7 @@ function getNotificationsConfig(
         'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
       ),
     },
-    ethereumBlobNotifier: flags.isEnabled(
-      'notifications',
-      'ethereumBlobNotifier',
-    ) && {
+    ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
       discordWebhookUrl: env.string('ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL'),
     },
   }
