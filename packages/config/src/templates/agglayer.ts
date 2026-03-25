@@ -900,6 +900,10 @@ function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {
 export function getAgglayerVerifiers(
   discovery: ProjectDiscovery,
 ): ChainSpecificAddress[] {
+  if (discovery.hasContract('Verifier')) {
+    // zkProver case
+    return [discovery.getContract('Verifier').address]
+  }
   type ProgramHashDict = Record<string, Record<string, string>[]>
   const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
   const routesDict = discovery.getContractValue<ProgramHashDict>(

@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -312,7 +317,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
 function getVerifiers(): ChainSpecificAddress[] {
   const libraries = discovery.getContractValue<ChainSpecificAddress[]>(
     'HotShotLightClient',
-    '$libraries'
+    '$libraries',
   )
   return [libraries[1]]
 }
