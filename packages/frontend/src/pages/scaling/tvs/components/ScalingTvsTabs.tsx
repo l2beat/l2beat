@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   NotReviewedInfo,
   OthersInfo,
@@ -29,6 +30,7 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { ScalingTvsCharts } from './ScalingTvsCharts'
 import { ScalingTvsDataKeysProvider } from './ScalingTvsDataKeysContext'
+import { ScalingTvsStats } from './ScalingTvsStats'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -69,6 +71,9 @@ export function ScalingTvsTabs(props: Props) {
           <DisplayControls display={display} setDisplay={setDisplay} />
         </div>
       </div>
+      <PrimaryCard className="mt-4">
+        <ScalingTvsStats />
+      </PrimaryCard>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

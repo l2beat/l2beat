@@ -101,6 +101,10 @@ async function getQueryState(
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),
+    helpers.tvs.recategorisedChart.prefetch({
+      range: optionToRange('7d'),
+      filter: { type: 'layer2' },
+    }),
   ])
   return helpers.dehydrate()
 }
