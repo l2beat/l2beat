@@ -1470,7 +1470,13 @@
   "static/icons/hyperevm.png": "6db11cfd34a534c1921d2057a1460de7",
   "static/meta-images/publications/governance-review-87.png": "f20177de73e1e17f35f341e7809cf7e6",
   "static/meta-images/interop/projects/avalanche/opengraph-image.png": "2ad006a3672f003b95a547da90fd82ad",
+  "static/icons/edgechain.png": "51438a8e249b5d601361608020d4a161",
+  "static/meta-images/scaling/projects/edgechain/opengraph-image.png": "4282842ecb68e09870d1d0b9822ae85e",
+  "static/icons/syndicate.png": "cba04d12d826f3b14f368b30f38e8d9a",
+  "static/meta-images/scaling/projects/syndicate/opengraph-image.png": "0cec7c488bbd9787370c9286ff3d279a",
   "static/meta-images/publications/governance-review-88.png": "baa27d9542a8ba0da8e875320f1bcc87",
   "static/icons/tempo.png": "36b7170affa5843454d082c3cfac7197",
-  "static/meta-images/publications/governance-review-89.png": "f9eafe31357bec64dfb688c81a7d7123"
+  "static/meta-images/publications/governance-review-89.png": "f9eafe31357bec64dfb688c81a7d7123",
+  "static/icons/freetunnel.png": "9e92d7f078900c18fe82d44de5b78873",
+  "static/meta-images/interop/projects/freetunnel/opengraph-image.png": "541edf13ac6478efdc37e397377a95a5"
 }

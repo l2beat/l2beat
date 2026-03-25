@@ -180,6 +180,59 @@ This method allows ZK rollups to prove that the data used in their validity proo
     validators: {
       type: 'dynamic',
     },
+    sovereignProjectsTrackingConfig: [
+      {
+        projectId: ProjectId('codex'),
+        name: 'Codex',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c',
+            sequencers: ['0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9'],
+            sinceBlock: 20953494,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('quarkchain'),
+        name: 'QuarkChain SWC',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0xa68295d77766d4e04854746e3c1873c891c1765e',
+            sequencers: ['0xf503a133df0c43b4814b12098604655ad9fe7e3b'],
+            sinceBlock: 23847277,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('creator'),
+        name: 'Creator',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x18cc381705761aa2d2e8ea62888a4029a0fad3ab',
+            sequencers: [
+              '0x9f915dd047b9d64a94e62aa141da3c7425c9431f',
+              '0x0bf4b30e680cc7cbab1c2436275851bcc9d35dc1',
+            ],
+            sinceBlock: 23869474,
+          },
+        ],
+      },
+      {
+        projectId: ProjectId('openzk'),
+        name: 'OpenZK',
+        daTrackingConfig: [
+          {
+            type: 'ethereum',
+            inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+            sequencers: ['0x1c841ed065149e32e4c43e3b10ecd71f1fed1db7'],
+            sinceBlock: 21712806,
+          },
+        ],
+      },
+    ],
   },
   daBridge: {
     name: 'Enshrined Bridge',

@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x5591a3365d8cc9d0d9e1d61949f341ce62f8e615
+
+# Diff at Tue, 24 Mar 2026 21:28:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160404
+- current timestamp: 1774387648
+
+## Description
+
+FeeDisburser implementation upgraded (base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75 → base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6). The only code change is the version string from `1.0.0` to `1.0.0+fee-vault-withdraw-compat`, indicating compatibility with a new FeeVault withdrawal interface. No functional changes to the contract logic. [Diff](https://disco.l2beat.com/diff/base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75/base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6)
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      sourceHashes.1:
+-        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
++        "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be"
+      values.$implementation:
+-        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"
++        "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6"
+      values.$pastUpgrades.2:
++        ["2026-03-13T21:06:31.000Z","0x68c2a1b66361dcb9ec2f8b1fe26ae275021b6d78751d0577fc0bd410dfd47518",["base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.0.0"
++        "1.0.0+fee-vault-withdraw-compat"
+      implementationNames.base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75:
+-        "FeeDisburser"
+      implementationNames.base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6:
++        "FeeDisburser"
+    }
+```
+
+## Source code changes
+
+```diff
+.../base/{.flat@1773160404 => .flat}/FeeDisburser/FeeDisburser.sol    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x29f8c3eeca9cab5e3e253c55ad66a37fa4b5dd30
 
 # Diff at Wed, 04 Mar 2026 20:35:16 GMT:
