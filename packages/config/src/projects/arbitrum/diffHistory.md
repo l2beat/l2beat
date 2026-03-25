@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6bb77fab70893ab26a893a8d73e3ec83ae5669ce
 
 ## Description
 
-Security Council cohort 1 election completed (election #6).
+Security Council elections have started (election #6, cohort 1).
 
 ## Watched changes
 
