@@ -115,8 +115,11 @@ export function TrustedSetupsByProofSystemSection({
                 if (trustedSetups.length === 0 || !proofSystem) return null
 
                 return (
-                  <tr key={key} className="h-8 align-middle">
-                    <td>
+                  <tr
+                    key={key}
+                    className={variant === 'scaling' ? 'align-top' : 'h-8 align-middle'}
+                  >
+                    <td className={variant === 'scaling' ? 'align-top' : undefined}>
                       <TrustedSetupCell
                         trustedSetups={trustedSetups}
                         dotSize="lg"
@@ -188,14 +191,14 @@ function DesktopTrustedSetupsCells({
   if (variant === 'scaling') {
     return (
       <>
-        <td className="min-w-0">
+        <td className="min-w-0 align-top">
           <MergedOnchainVerifierBlock
             onchainVerifiers={onchainVerifiers}
             verifiers={verifiers}
           />
         </td>
-        <td>
-          <UsedInBlock projectsUsedIn={projectsUsedIn} />
+        <td className="align-top">
+          <UsedInBlock projectsUsedIn={projectsUsedIn} stacked />
         </td>
       </>
     )
@@ -240,15 +243,19 @@ function OnchainVerifierBlock({
 function UsedInBlock({
   projectsUsedIn,
   mobile = false,
+  stacked = false,
 }: {
   projectsUsedIn: TrustedSetupsByProofSystem[string]['projectsUsedIn']
   mobile?: boolean
+  stacked?: boolean
 }) {
   if (!projectsUsedIn.length) return null
 
   return (
     <div
-      className={mobile ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'}
+      className={
+        mobile || stacked ? 'flex flex-col gap-2' : 'flex items-center gap-1.5'
+      }
     >
       <p className="font-medium text-label-value-12 text-secondary">Used in</p>
       <ProjectsUsedIn
