@@ -109,6 +109,7 @@ export function TokensDialog({
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as ActiveTab)}
           variant="highlighted"
+          className="min-w-0"
         >
           <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
             <DialogTitle>{title}</DialogTitle>
