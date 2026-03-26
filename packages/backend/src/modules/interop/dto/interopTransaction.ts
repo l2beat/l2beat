@@ -78,7 +78,7 @@ export function toInteropTransaction(
   const parsed = InteropTransaction.safeParse(normalized)
   if (!parsed.success) {
     throw new Error(
-      `Invalid interop transaction at ${parsed.path || '@'}: ${parsed.message}`,
+      `Invalid interop transaction of type ${tx.type} at ${parsed.path || '@'}: ${parsed.message}`,
     )
   }
   return parsed.data
