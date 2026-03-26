@@ -172,18 +172,24 @@ function getNotificationsConfig(
 ): Config['notifications'] {
   return {
     updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
-      discordWebhookUrl: env.string('UPDATE_MONITOR_DISCORD_WEBHOOK_URL'),
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_UPDATE_MONITOR_DISCORD_WEBHOOK_URL',
+      ),
     },
     anomalies: flags.isEnabled('notifications', 'anomalies') && {
-      discordWebhookUrl: env.string('ANOMALIES_DISCORD_WEBHOOK_URL'),
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ANOMALIES_DISCORD_WEBHOOK_URL',
+      ),
     },
     interop: flags.isEnabled('notifications', 'interop') && {
       discordWebhookUrl: env.string(
-        'INTEROP_NOTIFICATIONS_DISCORD_WEBHOOK_URL',
+        'NOTIFICATIONS_INTEROP_DISCORD_WEBHOOK_URL',
       ),
     },
     ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
-      discordWebhookUrl: env.string('ETHEREUM_NOTIFIER_DISCORD_WEBHOOK_URL'),
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
+      ),
     },
   }
 }
