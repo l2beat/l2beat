@@ -56,8 +56,8 @@ describe('interopTransaction', () => {
       expect(() =>
         toInteropTransaction(
           makeTransaction({
-            type: '1024', // out of range
-          }),
+            imBad: true,
+          } as any),
         ),
       ).toThrow()
     })
