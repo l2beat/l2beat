@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3f501e1166c7b0d3372a038f871360d6b8a15940
+Generated with discovered.json: 0x16e9d1d41e711bb224ea6df4b19083d17ca89d7e
 
-# Diff at Wed, 25 Mar 2026 15:00:48 GMT:
+# Diff at Thu, 26 Mar 2026 14:03:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@987d24ffeda681f8398eee54cc913598017a3226 block: 1771254730
+- comparing to: main@66bb74768c380cbd114213db91d2abbf7b8dd7bf block: 1771254730
 - current timestamp: 1774257283
 
 ## Description
@@ -194,6 +194,14 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1771254730 (main branch discovery), not current.
 
 ```diff
+    contract CoinIssuer (eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6) {
+    +++ description: Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","description":"mint unlimited amounts of the AZTEC token and transfer the ownership of the contract.","role":".owner"}]
+    }
+```
+
+```diff
     contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) {
     +++ description: Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.
       description:
@@ -212,7 +220,7 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
       category:
 +        {"name":"Governance","priority":3}
       receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps.","role":".owner","via":[{"address":"eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a","condition":"the GATED_UNTIL timestamp has passed."}]},{"permission":"interact","from":"eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f","description":"add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.","role":".owner"}]
++        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","role":".owner","via":[{"address":"eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a","condition":"the GATED_UNTIL timestamp has passed."}]},{"permission":"interact","from":"eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f","description":"add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.","role":".owner"}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a","role":".GOVERNANCE","condition":"the GATED_UNTIL timestamp has passed."}]
     }
@@ -242,7 +250,7 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
     contract ProtocolTreasury (eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a) {
     +++ description: Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.
       directlyReceivedPermissions:
-+        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps.","role":".owner"}]
++        [{"permission":"interact","from":"eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6","description":"mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2","role":".owner"}]
     }
 ```
 

@@ -354,6 +354,12 @@ export const aztecnetwork: ScalingProject = {
       },
     ],
   },
+  chainConfig: {
+    gasTokens: ['AZTEC'],
+    name: 'aztecnetwork',
+    chainId: 677868, // TODO: verify
+    apis: [], // TODO: add
+  },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS,
     bridge: DA_BRIDGES.ENSHRINED,

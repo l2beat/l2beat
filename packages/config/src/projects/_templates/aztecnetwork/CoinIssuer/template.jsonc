@@ -6,7 +6,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "mint new AZTEC in the bounds of the minting caps."
+          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the {{ASSET}}"
         }
       ]
     }

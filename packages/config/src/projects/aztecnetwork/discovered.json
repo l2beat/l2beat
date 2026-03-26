@@ -13,6 +13,14 @@
       ],
       "proxyType": "immutable",
       "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint unlimited amounts of the AZTEC token and transfer the ownership of the contract.",
+          "role": ".owner"
+        }
+      ],
       "sinceTimestamp": 1762995131,
       "sinceBlock": 23786834,
       "values": {
@@ -97,7 +105,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps.",
+          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
           "role": ".owner",
           "via": [
             {
@@ -336,7 +344,7 @@
         {
           "permission": "interact",
           "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC in the bounds of the minting caps.",
+          "description": "mint new AZTEC in the bounds of the minting caps and forward the acceptOwnership() call to the eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
           "role": ".owner"
         }
       ],
@@ -1700,7 +1708,7 @@
     ]
   },
   "usedTemplates": {
-    "aztecnetwork/Aztec": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
+    "aztecnetwork/Aztec": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "aztecnetwork/AztecTokenPositionRegistry": "0x59976ab5bef1becfde3f9417e435b12d9d791e7ce50906b3a6af408bad767a3e",
     "aztecnetwork/CoinIssuer": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "aztecnetwork/EscapeHatch": "0xc36cbb4ae29d811b032b67a9e8c26ce44b3da19a440e19ae5b0a590807f5f015",
@@ -1722,5 +1730,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24719255 },
-  "permissionsConfigHash": "0x7039e32bd58563db699143d6d895153bdc04490aa86ffcb18ab435c1d31803bb"
+  "permissionsConfigHash": "0xad77cb773e6bdf3be18aa5849dca5c91a0a8118d7be055eeea90dcb46676329b"
 }
