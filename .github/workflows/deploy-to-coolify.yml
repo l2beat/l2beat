@@ -35,7 +35,23 @@ jobs:
       - name: Install Coolify CLI
         if: steps.cache-coolify.outputs.cache-hit != 'true'
         run: |
-          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
+          set -e
+
+          install_coolify() {
+            if ! [ -f /tmp/install.sh ]; then
+              curl -fsSL -o /tmp/install.sh https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh
+            fi
+            bash /tmp/install.sh
+          }
+
+          retry() {
+            until "$@"; do
+              echo "Command has failed, retrying after a brief sleep"
+              sleep 20
+            done
+          }
+
+          retry install_coolify
 
       - name: Setup Coolify context
         run: |
