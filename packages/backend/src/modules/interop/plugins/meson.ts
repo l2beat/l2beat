@@ -70,7 +70,7 @@ export class MesonPlugin implements InteropPlugin {
   readonly name = 'meson'
 
   capture(input: LogToCapture) {
-    if (input.tx.kind === 'bundle') {
+    if (input.tx.kind !== 'canonical') {
       return
     }
 

@@ -207,7 +207,7 @@ export class OrbitStackPlugin implements InteropPlugin {
   readonly name = 'orbitstack'
 
   capture(input: LogToCapture) {
-    if (input.tx.kind === 'bundle') {
+    if (input.tx.kind !== 'canonical') {
       return
     }
 

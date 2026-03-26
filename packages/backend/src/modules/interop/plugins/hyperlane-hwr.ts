@@ -108,9 +108,10 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
-    if (input.tx.kind === 'bundle') {
+    if (input.tx.kind !== 'canonical') {
       return
     }
+
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()
