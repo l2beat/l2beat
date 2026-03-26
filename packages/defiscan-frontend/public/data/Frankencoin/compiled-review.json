@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-25T13:36:00.995Z",
+  "compiledAt": "2026-03-26T08:14:37.149Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "stablecoin",
     "tokenName": "ZCHF",
-    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.72M, with $68.98M in active collateral positions."
+    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.72M, with $65.33M in active collateral positions."
   },
   "totals": {
     "contractCount": 24,
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 1,
     "adminCount": 19,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 83050119.92069063,
+    "totalCapitalAtRisk": 79422731.77319707,
     "totalTokenValueAtRisk": 25724637.771031145,
     "totalTokenValue": 25724637.771031145
   },
@@ -24,7 +24,7 @@
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "name": "MintingHub (Legacy)",
-      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, mint, mintWithReserve, burnFrom, burnWithReserve, burnFromWithReserve, burnWithoutReserve, coverLoss, and collectProfits. This is the older MintingHub, no longer actively used but still registered as a minter with $146.99K in remaining positions.",
+      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, mint, mintWithReserve, burnFrom, burnWithReserve, burnFromWithReserve, burnWithoutReserve, coverLoss, and collectProfits. This is the older MintingHub, no longer actively used but still registered as a minter with $0 in remaining positions.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -414,7 +414,7 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current)",
-      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $68.98M across 51 active positions. Functions including openPosition, challenge, bid, and buyExpiredCollateral are gated by Equity (FPS) token holder qualification.",
+      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $65.33M across 51 active positions. Functions including openPosition, challenge, bid, and buyExpiredCollateral are gated by Equity (FPS) token holder qualification.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -554,7 +554,7 @@
                 "kamikaze",
                 "restructureCapTable"
               ],
-              "fundsUsd": 13923431.96265291,
+              "fundsUsd": 14089154.772220887,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -587,7 +587,7 @@
                 "restructureCapTable",
                 "totalSupply"
               ],
-              "fundsUsd": 13923431.96265291,
+              "fundsUsd": 14089154.772220887,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -685,7 +685,7 @@
                 "kamikaze",
                 "restructureCapTable"
               ],
-              "fundsUsd": 13923431.96265291,
+              "fundsUsd": 14089154.772220887,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             }
@@ -735,7 +735,7 @@
                 "restructureCapTable",
                 "totalSupply"
               ],
-              "fundsUsd": 13923431.96265291,
+              "fundsUsd": 14089154.772220887,
               "tokenValueUsd": 0,
               "fundsAtRisk": false
             },
@@ -761,7 +761,7 @@
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "name": "StablecoinBridge (VCHF)",
-      "description": "Immutable bridge contract enabling 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, holding $503.84K in VCHF reserves. If the VCHF token is paused, frozen, or upgraded by VNX, this bridge's minting and burning would be affected.",
+      "description": "Immutable bridge contract enabling 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, holding $501.29K in VCHF reserves. If the VCHF token is paused, frozen, or upgraded by VNX, this bridge's minting and burning would be affected.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -855,7 +855,7 @@
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $10.22M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
+      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $8.99M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -980,7 +980,7 @@
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Token)",
-      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can call openPosition, challenge, bid, and buyExpiredCollateral on the MintingHub. The Equity contract itself can call kamikaze (self-destruct of shares) and restructureCapTable. It also controls functions on an unknown contract (0xf72e...6Ba6) including setMinterRole, mint, freeze, pause, and setAssetProtectionRole. Holds $13.92M in reserves.",
+      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can call openPosition, challenge, bid, and buyExpiredCollateral on the MintingHub. The Equity contract itself can call kamikaze (self-destruct of shares) and restructureCapTable. It also controls functions on an unknown contract (0xf72e...6Ba6) including setMinterRole, mint, freeze, pause, and setAssetProtectionRole. Holds $14.06M in reserves.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -989,7 +989,7 @@
           "contractName": "Equity",
           "functionName": "kamikaze",
           "impact": "critical",
-          "directFundsUsd": 13923431.96265291,
+          "directFundsUsd": 14089154.772220887,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1010,7 +1010,7 @@
           "contractName": "Equity",
           "functionName": "restructureCapTable",
           "impact": "critical",
-          "directFundsUsd": 13923431.96265291,
+          "directFundsUsd": 14089154.772220887,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1027,9 +1027,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 13923431.96265291,
+      "totalDirectCapital": 14089154.772220887,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 13923431.96265291,
+      "totalReachableCapital": 14089154.772220887,
       "totalReachableTokenValue": 0
     },
     {
@@ -1163,7 +1163,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "burn",
           "viewOnlyPath": false,
-          "directFundsUsd": 503838.1609304662,
+          "directFundsUsd": 501291.65354683815,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1184,7 +1184,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "burnAndSend",
           "viewOnlyPath": false,
-          "directFundsUsd": 503838.1609304662,
+          "directFundsUsd": 501291.65354683815,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1205,7 +1205,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 503838.1609304662,
+          "directFundsUsd": 501291.65354683815,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1226,7 +1226,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mintTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 503838.1609304662,
+          "directFundsUsd": 501291.65354683815,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1270,7 +1270,7 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 503838.1609304662,
+      "totalFundsAtRisk": 501291.65354683815,
       "totalTokenValueAtRisk": 25724637.771031145,
       "dependencyType": "callgraph"
     },
@@ -2090,12 +2090,12 @@
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Reserve Pool)",
-      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $13.92M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
+      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $14.06M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
       "balances": {
-        "totalUsdValue": 13923431.96265291
+        "totalUsdValue": 14062483.192378176
       },
       "positions": {
-        "totalUsdValue": 0
+        "totalUsdValue": 26671.579842710886
       },
       "tokenInfo": null,
       "aggregate": null
@@ -2103,22 +2103,22 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current Positions)",
-      "description": "The active MintingHub managing 51 collateral positions worth $68.98M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
+      "description": "The active MintingHub managing 51 collateral positions worth $65.33M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 68979699.91272724,
-        "contractCount": 51,
+        "totalUsdValue": 65333577.00097618,
+        "contractCount": 55,
         "handlerName": "frankencoin-mintinghub"
       }
     },
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "The current Savings contract holding $10.22M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
+      "description": "The current Savings contract holding $8.99M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
       "balances": {
-        "totalUsdValue": 10220366.480646407
+        "totalUsdValue": 8994697.15436381
       },
       "positions": {
         "totalUsdValue": 0
@@ -2129,9 +2129,9 @@
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "name": "StablecoinBridge (VCHF)",
-      "description": "Bridge contract holding $503.84K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path.",
+      "description": "Bridge contract holding $501.29K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path.",
       "balances": {
-        "totalUsdValue": 503838.1609304662
+        "totalUsdValue": 501291.65354683815
       },
       "positions": null,
       "tokenInfo": null,
@@ -2140,13 +2140,13 @@
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "name": "MintingHub (Legacy Positions)",
-      "description": "The older MintingHub with $146.99K in 2 remaining WBTC collateral positions. No longer used for new position creation.",
+      "description": "The older MintingHub with $0 in 2 remaining WBTC collateral positions. No longer used for new position creation.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 146988.04531047662,
-        "contractCount": 2,
+        "totalUsdValue": 0,
+        "contractCount": 0,
         "handlerName": "frankencoin-mintinghub"
       }
     },
