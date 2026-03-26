@@ -17,7 +17,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { AvgDurationCell } from '../../components/table/AvgDurationCell'
 import { BridgeTypeBadge } from '../../components/table/BridgeTypeBadge'
-import { TopTokensCell } from '../../components/top-items/TopTokensCell'
+import { TopTokensCell } from '../../components/tokens/TopTokensCell'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { transferSizeBuckets } from '../../utils/transferSizeBuckets'
 

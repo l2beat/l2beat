@@ -3251,6 +3251,24 @@
       {
         "chain": "bsc",
         "tx": "0xaff43779f880b234ea7147b777ab866f4e645ec5411b9c4111571b33ff8a6ca3"
+      },
+      // oUSDT OP → Celo
+      {
+        "chain": "optimism",
+        "tx": "0x945a08664172d1c9ded720eedcd534121df73af4030ff62d6967bebdcf385274"
+      },
+      {
+        "chain": "celo",
+        "tx": "0xeb399b9dd3f14c3dbb862f3a1ba3230415af95339c67d314b92bf0ab227a2a41"
+      },
+      // USDT Celo → OP (lock and mint)
+      {
+        "chain": "celo",
+        "tx": "0x999ad1725555b864d682090fbbde15c382a8431b7604001a720f9a47e951050b"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x511e35b924f9c1da4845d0b6668870372dfcc925e1c8d931d4a27effe16e3184"
       }
     ],
     "expects": {
@@ -3274,6 +3292,16 @@
         {
           "type": "hyperlaneHwr.Transfer",
           "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "oUSDT", "amount": 195.463566 } },
+          "dst": { "financials": { "symbol": "USD₮", "amount": 195.463566 } }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "USD₮", "amount": 1000 } },
+          "dst": { "financials": { "symbol": "oUSDT", "amount": 1000 } }
         }
       ],
       "messages": [
@@ -4280,6 +4308,36 @@
             "chain": "base",
             "sourceHash": "0xb613781250a490c408694b600c1443b4b0f12e13792551b9aa12703dfb17f879"
           }
+        }
+      ]
+    }
+  },
+  // Celo uses a custom gas token (CELO), so native withdrawals should track
+  // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
+  "opstack-celo-native-withdrawal": {
+    "tags": ["opstack"],
+    "description": "Celo native CELO token withdrawal (custom gas token)",
+    "txs": [
+      {
+        "chain": "celo",
+        "tx": "0x4bae06b998b57428a9affdc62318dccc80ab4a44c50b2b0965a15b31e09de033"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ac472f9dbdcc7699b237512337c17fda541e1978921a44291d0f788e12094c6"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
         }
       ]
     }

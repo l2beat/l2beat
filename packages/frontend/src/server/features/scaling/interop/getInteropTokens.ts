@@ -1,41 +1,31 @@
 import { unique } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
-import type { InteropProtocolTokensParams, TokenData } from './types'
+import type { InteropTopItemsParams, TokenData } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
-import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTokensData } from './utils/getTokensData'
 
-export async function getInteropProtocolTokens({
+const logger = getLogger().for('getInteropTokens')
+
+export async function getInteropTokens({
   id,
   from,
   to,
   type,
-}: InteropProtocolTokensParams): Promise<TokenData[]> {
-  const logger = getLogger().for('getProtocolTokens')
-
-  const interopProject = await ps.getProject({
-    id,
-    select: ['interopConfig'],
-  })
-  if (!interopProject) {
-    return []
-  }
-
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  if (!snapshotTimestamp) {
+}: InteropTopItemsParams): Promise<TokenData[]> {
+  const interopProject = id
+    ? await ps.getProject({ id, select: ['interopConfig'] })
+    : undefined
+  if (id && !interopProject) {
     return []
   }
 
   const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    {
-      from,
-      to,
-    },
+    { from, to },
     type,
     id,
   )
@@ -57,8 +47,14 @@ export async function getInteropProtocolTokens({
     ),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
-  const relevantBridgeTypes = getRelevantBridgeTypes(interopProject, type)
-  const durationSplit = getDurationSplit(interopProject, relevantBridgeTypes)
+
+  const relevantBridgeTypes = interopProject
+    ? getRelevantBridgeTypes(interopProject, type)
+    : []
+  const durationSplit = interopProject
+    ? getDurationSplit(interopProject, relevantBridgeTypes)
+    : undefined
+
   const tokenDataMap = buildTokensDataMap(records)
 
   return getTokensData({

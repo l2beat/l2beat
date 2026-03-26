@@ -146,6 +146,8 @@ interface OpStackNetwork {
   optimismPortal: ChainSpecificAddress
   l1CrossDomainMessenger: ChainSpecificAddress
   l1StandardBridge: ChainSpecificAddress
+  // Custom gas token on L1 (for chains like Celo that don't use ETH as native token)
+  l1CustomGasToken?: Address32
 }
 
 export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
@@ -231,6 +233,9 @@ export const OPSTACK_NETWORKS = defineNetworks<OpStackNetwork>('opstack', [
     ),
     l1StandardBridge: ChainSpecificAddress(
       'eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe',
+    ),
+    l1CustomGasToken: Address32.from(
+      '0x057898f3c43f129a17517b9056d23851f124b19f',
     ),
   },
 ])
@@ -461,8 +466,12 @@ export class OpStackPlugin implements InteropPluginResyncable {
         }),
       ]
 
-      // If ETH was sent via L2ToL1MessagePasser, also create a Transfer
+      // If native token was sent via L2ToL1MessagePasser, also create a Transfer
       if (messagePassed.args.value > 0n) {
+        const network = OPSTACK_NETWORKS.find(
+          (n) => n.chain === event.args.chain,
+        )
+        const dstTokenAddress = network?.l1CustomGasToken ?? Address32.NATIVE
         results.push(
           Result.Transfer('opstack.L2ToL1Transfer', {
             srcEvent: messagePassed,
@@ -471,7 +480,7 @@ export class OpStackPlugin implements InteropPluginResyncable {
             srcWasBurned: true,
             dstEvent: event,
             dstAmount: messagePassed.args.value,
-            dstTokenAddress: Address32.NATIVE,
+            dstTokenAddress: dstTokenAddress,
             dstWasMinted: false,
           }),
         )
@@ -496,7 +505,9 @@ export class OpStackPlugin implements InteropPluginResyncable {
         }),
       ]
 
-      // If ETH was sent via CrossDomainMessenger, also create a Transfer
+      // If ETH was sent via CrossDomainMessenger, also create a Transfer.
+      // Note: custom gas token chains (e.g. Celo) enforce msg.value == 0 in
+      // sendMessage, so this path only applies to ETH-native chains.
       if (sentMessage.args.value > 0n) {
         results.push(
           Result.Transfer('opstack.L1ToL2Transfer', {
