@@ -4312,6 +4312,26 @@
       ]
     }
   },
+  "opstack-derived-tx-celo-deposit": {
+    "description": "Ethereum -> Celo OptimismPortal deposit with custom gas token (direct, no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x08fa9d296ebb3b9809e7ba4eae0e7ef6b67a32f16483628eba7e30413a454bbf"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x0662930a5d5cd3193fa428fb18fff5304cf36ed08b2b3a54019c8009cb286d30"
+      }
+    ],
+    "events": [
+      "opstack.TransactionDeposited",
+      "opstack.PortalDepositFinalized"
+    ],
+    "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+    "transfers": ["opstack.L1ToL2Transfer"]
+  },
   // Celo uses a custom gas token (CELO), so native withdrawals should track
   // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
   "opstack-celo-native-withdrawal": {
