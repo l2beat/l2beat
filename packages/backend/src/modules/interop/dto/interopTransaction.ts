@@ -13,7 +13,17 @@ const CanonicalTransaction = v
       v.literal('2'),
       v.literal('3'),
       v.literal('4'),
-      v.literal('105'), //arb retryable
+      // arb
+      v.literal('100'),
+      v.literal('101'),
+      v.literal('102'),
+      v.literal('104'),
+      v.literal('105'),
+      v.literal('106'),
+      // op
+      v.literal('126'),
+      // celo
+      v.literal('123'),
     ]),
     hash: v.string(),
     from: v.string(),
