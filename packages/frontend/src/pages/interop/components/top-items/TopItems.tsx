@@ -7,7 +7,14 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { TopItem } from './columns'
+
+type TopItem = {
+  id?: string
+  displayName: string
+  issuer?: string | null
+  iconUrl: string
+  volume: number | null
+}
 
 type InteropTopItemsCellProps = {
   topItems: TopItems<TopItem>

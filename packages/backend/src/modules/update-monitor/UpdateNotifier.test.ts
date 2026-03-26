@@ -72,7 +72,7 @@ describe(UpdateNotifier.name, () => {
         TIMESTAMP,
       )
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -85,21 +85,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -164,7 +149,7 @@ describe(UpdateNotifier.name, () => {
         TIMESTAMP,
       )
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -179,23 +164,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '+++ description: This should never be equal to two',
-          '+++ severity: LOW',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -264,32 +232,13 @@ describe(UpdateNotifier.name, () => {
         '```',
       ].join('\n')
 
-      const publicMessage = [
-        '***project-a*** | detected changes```diff',
-        `    contract Contract (${address.toString()}) {`,
-        '    +++ description: None',
-        '      A:',
-        `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(805)}... (message too long)`,
-        '```',
-      ].join('\n')
-
       expect(internalMessage.length).toBeLessThanOrEqual(
         DISCORD_MAX_MESSAGE_LENGTH,
       )
-      expect(publicMessage.length).toBeLessThanOrEqual(
-        DISCORD_MAX_MESSAGE_LENGTH,
-      )
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         internalMessage,
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        publicMessage,
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -357,7 +306,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -440,7 +388,7 @@ describe(UpdateNotifier.name, () => {
         select: ['trackedTxsConfig'],
       })
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -454,21 +402,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
     })
 
@@ -545,7 +478,7 @@ describe(UpdateNotifier.name, () => {
         select: ['trackedTxsConfig'],
       })
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       // Verify message doesn't contain tracked transactions notification
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
@@ -559,7 +492,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
       )
     })
   })
@@ -614,7 +546,6 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n:warning: Disabled projects: \`project-aaa\`\n:warning: Failed projects: \`project-bbb\`\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
-        'INTERNAL',
       )
     })
 

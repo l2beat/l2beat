@@ -17,9 +17,14 @@ function makeConfig(dangerousOperationsEnabled = false): InteropFeatureConfig {
     dashboard: { enabled: true, getExplorerUrl: () => undefined },
     compare: { enabled: false },
     financials: { enabled: false, tokenDbApiUrl: '' },
-    config: { enabled: false, chains: [], configIntervalMs: -1 },
+    config: {
+      enabled: false,
+      chains: [],
+      configIntervalMs: -1,
+    },
     inMemoryEventCap: 0,
     notifications: false,
+    oneSidedChains: [],
   }
 }
 

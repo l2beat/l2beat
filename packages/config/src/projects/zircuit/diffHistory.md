@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x6fad9fb6fea75857be741e6a6b8934580161aab8
+
+# Diff at Wed, 25 Mar 2026 10:06:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1772198396
+- current timestamp: 1774433075
+
+## Description
+
+L2OutputOracle was upgraded twice in the same transaction. The proposer address was changed from 0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65 to 0x691b3588eB87E6163260650D3BB465883EB6A575.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+      values.$pastUpgrades.9:
++        ["2026-03-19T11:32:11.000Z","0xde1731a6499e91bf3c8d7b575fc6b5e8b92966625ed4f890142c94d8de15ab5a",["eth:0xB0790b9d22F92131e9E8D46F5b0f99ab88C3a21d"]]
+      values.$pastUpgrades.10:
++        ["2026-03-19T11:32:11.000Z","0xde1731a6499e91bf3c8d7b575fc6b5e8b92966625ed4f890142c94d8de15ab5a",["eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"]]
+      values.$upgradeCount:
+-        9
++        11
++++ severity: HIGH
+      values.proposer:
+-        "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
++        "eth:0x691b3588eB87E6163260650D3BB465883EB6A575"
+      values.PROPOSER:
+-        "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65"
++        "eth:0x691b3588eB87E6163260650D3BB465883EB6A575"
+    }
+```
+
 Generated with discovered.json: 0x99bc05a34034b85bf55816c233df3da49516af96
 
 # Diff at Fri, 27 Feb 2026 14:17:19 GMT:

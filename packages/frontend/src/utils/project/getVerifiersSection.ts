@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
@@ -8,6 +9,14 @@ import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrusted
 import { ps } from '~/server/projects'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
+
+function plainDeploymentAddress(
+  address: EthereumAddress | string,
+): EthereumAddress {
+  return ChainSpecificAddress.check(address)
+    ? ChainSpecificAddress.address(address)
+    : (address as EthereumAddress)
+}
 
 export async function getVerifiersSection(
   project: Project<'zkCatalogInfo'>,
@@ -39,14 +48,15 @@ export async function getVerifiersSection(
     const knownDeployments = verifier.knownDeployments.map((d) => {
       const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
         .explorerUrl
+      const addressKey = plainDeploymentAddress(d.address)
       return {
         url: explorerUrl
-          ? `${explorerUrl}/address/${d.address}#code`
+          ? `${explorerUrl}/address/${addressKey}#code`
           : undefined,
-        address: d.address,
+        address: addressKey,
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(project.id, d.chain, d.address)
+          : contractUtils.getUsedIn(project.id, d.chain, addressKey)
         ).sort(tvsComparator(allProjects, tvs)),
       }
     })

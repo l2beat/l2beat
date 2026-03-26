@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedInteropTokenRecord,
+  AggregatedInteropTokensPairRecord,
   AggregatedInteropTransferRecord,
   Database,
   InteropTransferRecord,
@@ -90,6 +91,25 @@ describe(InteropAggregatingIndexer.name, () => {
         },
       ]
 
+      const aggregatedTokensPairs: AggregatedInteropTokensPairRecord[] = [
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          transferTypeStats: undefined,
+          totalDurationSum: 5000,
+          volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          bridgeType: 'lockAndMint',
+        },
+      ]
+
       const interopTransfer = mockObject<Database['interopTransfer']>({
         getByRange: mockFn().resolvesTo(transfers),
       })
@@ -108,6 +128,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(1),
       })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -116,12 +143,14 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropTokensPair,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers,
           aggregatedTokens,
+          aggregatedTokensPairs,
           warnings: [],
         }),
       })
@@ -164,6 +193,15 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith(
+        aggregatedTokensPairs,
+      )
+      expect(
+        aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from)
+      expect(
+        aggregatedInteropTokensPair.deleteByTimestamp,
+      ).toHaveBeenCalledWith(to)
     })
 
     it('handles empty transfers correctly', async () => {
@@ -195,6 +233,13 @@ describe(InteropAggregatingIndexer.name, () => {
         deleteByTimestamp: mockFn().resolvesTo(0),
         insertMany: mockFn().resolvesTo(0),
       })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
@@ -203,12 +248,14 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropTokensPair,
       })
 
       const aggregationService = mockObject<InteropAggregationService>({
         aggregate: mockFn().returns({
           aggregatedTransfers: [],
           aggregatedTokens: [],
+          aggregatedTokensPairs: [],
           warnings: [],
         }),
       })
@@ -235,6 +282,7 @@ describe(InteropAggregatingIndexer.name, () => {
       )
       expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
       expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
   })
 })

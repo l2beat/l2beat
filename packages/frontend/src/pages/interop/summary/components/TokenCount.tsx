@@ -6,7 +6,7 @@ import type { TopItems } from '~/server/features/scaling/interop/utils/getTopIte
 import { api } from '~/trpc/React'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
-import { TokenTableDialog } from '../../components/top-items/TokenTableDialog'
+import { TokensDialog } from '../../components/tokens/TokensDialog'
 import { InteropTopItems } from '../../components/top-items/TopItems'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 
@@ -33,7 +33,7 @@ export function TokenCount({
         </h2>
       </div>
       <div className="mt-1 font-medium text-label-value-12 text-secondary md:text-label-value-14">
-        Count of unique abstract tokens transferred{' '}
+        Count of unique tokens transferred{' '}
         <div className="inline-block">
           <BetweenChainsInfo className="lowercase" />
         </div>
@@ -68,7 +68,7 @@ export function TokenCount({
                 }}
                 className="mt-4"
                 onMouseEnter={() =>
-                  utils.interop.summaryTokens.prefetch(selectionForApi)
+                  utils.interop.tokens.prefetch(selectionForApi)
                 }
                 setIsOpen={setIsOpen}
               />
@@ -76,34 +76,13 @@ export function TokenCount({
           </>
         )}
       </div>
-      <TokenCountContent isOpen={isOpen} setIsOpen={setIsOpen} />
+      <TokensDialog
+        id={undefined}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title="All tokens & pairs by volume"
+      />
     </PrimaryCard>
-  )
-}
-
-function TokenCountContent({
-  isOpen,
-  setIsOpen,
-}: {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}) {
-  const { selectionForApi } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.summaryTokens.useQuery(
-    selectionForApi,
-    {
-      enabled: isOpen,
-    },
-  )
-
-  return (
-    <TokenTableDialog
-      data={data}
-      isLoading={isLoading}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      title="All tokens by volume"
-    />
   )
 }
 

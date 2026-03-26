@@ -797,6 +797,8 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string
+    sourceLink?: string
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {

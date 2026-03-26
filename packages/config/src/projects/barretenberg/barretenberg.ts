@@ -88,6 +88,9 @@ All Barretenberg proving systems extend Plonk, which is based on KZG commitment 
     verifierHashes: [
       {
         hash: '0x059ad02b037fcfd4df2b9db771777d067a400f06fc55cf45fa601511e58e2c3e',
+        name: 'Barretenberg Aztec verifier v4',
+        sourceLink:
+          'https://github.com/AztecProtocol/aztec-packages/tree/v4/noir-projects/noir-protocol-circuits',
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {

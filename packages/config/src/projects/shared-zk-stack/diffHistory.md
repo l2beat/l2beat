@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x86b03767c6fc7fa8ba30f42da12b9d1d35725860
+
+# Diff at Fri, 20 Mar 2026 15:21:21 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1772450897
+- current timestamp: 1774020013
+
+## Description
+
+Added new chain. It is a validium, runs version 30.1 (as ADI chain) and is proven with Airbender. 
+
+## Watched changes
+
+```diff
+    contract BridgeHub (eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.19:
++        {"chainId":30716,"chainTypeManager":"eth:0x1adF137F59949c9081157D5de1e002D1C992071F","chainGovernance":"eth:0xFd559ADe548f7c7493D8B9355d2Ca9aA021D6561"}
+      values.getAllZKChainChainIDs.19:
++        30716
+      values.getAllZKChains.19:
++        "eth:0x2dba7c0321510f9561D86813D261fA2f74f6D586"
+    }
+```
+
+```diff
+    contract MessageRoot (eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        20
++        21
+    }
+```
+
 Generated with discovered.json: 0x677f5c2e6329b3aaef42e4e44f9666a76d2b75c4
 
 # Diff at Mon, 02 Mar 2026 11:29:24 GMT:

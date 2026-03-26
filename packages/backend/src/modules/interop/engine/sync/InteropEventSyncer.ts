@@ -11,9 +11,11 @@ import {
   type RpcLog,
   type RpcReceipt,
   type RpcTransaction,
+  toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import {
+  assert,
   type Block,
   ChainSpecificAddress,
   type EthereumAddress,
@@ -27,8 +29,9 @@ import type {
   InteropEvent,
   InteropPluginResyncable,
   LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
-import { getItemsToCapture } from '../capture/getItemsToCapture'
+import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
@@ -132,6 +135,11 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
+export interface TxCaptureResult {
+  events: InteropEvent[]
+  fulfilledCreatorEvents: InteropEvent[]
+}
+
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
@@ -215,12 +223,87 @@ export class InteropEventSyncer extends TimeLoop {
     }
   }
 
+  captureTx(txToCapture: TxToCapture): TxCaptureResult | undefined {
+    for (const plugin of this.cluster.plugins) {
+      if (!plugin.captureTx) {
+        continue
+      }
+      const creatorEvents = txToCapture.tx.hash
+        ? this.store.derivedTxStore.getCreatorEvents(
+            txToCapture.chain,
+            txToCapture.tx.hash,
+            plugin.name,
+          )
+        : undefined
+      const produced = plugin.captureTx(txToCapture, creatorEvents)
+      if (produced) {
+        return {
+          events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+          fulfilledCreatorEvents: creatorEvents ?? [],
+        }
+      }
+    }
+  }
+
+  async capturePendingHistoricalTxs(beforeBlock: bigint) {
+    const pluginNames = this.cluster.plugins.map((p) => p.name)
+    const txHashes = this.store.derivedTxStore.getHashesPendingHistoryCheck(
+      this.chain,
+      pluginNames,
+    )
+    const interopEvents: InteropEvent[] = []
+    const fulfilledCreatorEvents: InteropEvent[] = []
+
+    for (const txHash of txHashes) {
+      const tx = await this.getTransactionByHash(txHash)
+      if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+        continue
+      }
+
+      const receipt = await this.getTransactionReceipt(txHash)
+      assert(receipt, `Missing receipt for tx ${txHash}`)
+
+      const block = await this.getBlockByNumber(tx.blockNumber)
+      assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
+
+      const result = this.captureTx({
+        chain: this.chain,
+        tx: toTransaction(tx),
+        block: toBlock(block),
+        txLogs: receipt.logs
+          .map((log) => logToViemLog(toEVMLog(log)))
+          .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
+      })
+      if (result) {
+        interopEvents.push(...result.events)
+        fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
+      }
+    }
+
+    const checkedInHistoryEvents =
+      this.store.derivedTxStore.markCheckedInHistory(
+        this.chain,
+        txHashes,
+        pluginNames,
+      )
+
+    return {
+      events: interopEvents,
+      fulfilledCreatorEvents,
+      checkedInHistoryEvents,
+    }
+  }
+
   async saveProducedInteropEvents(
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
+    fulfilledCreatorEvents: InteropEvent[] = [],
+    checkedInHistoryEvents: InteropEvent[] = [],
   ) {
     await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+      await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
+      await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -313,5 +396,29 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
+  }
+}
+
+function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
+  return {
+    hash: tx.hash,
+    from: tx.from,
+    to: tx.to ?? undefined,
+    data: tx.input,
+    type: tx.type?.toString(),
+    value: tx.value,
+  }
+}
+
+function toBlock(block: RpcBlock): TxToCapture['block'] {
+  assert(block.hash, `Missing hash for block ${block.number}`)
+  assert(block.number !== null, 'Missing block number')
+
+  return {
+    number: Number(block.number),
+    hash: block.hash,
+    logsBloom: block.logsBloom,
+    timestamp: Number(block.timestamp),
+    transactions: [],
   }
 }

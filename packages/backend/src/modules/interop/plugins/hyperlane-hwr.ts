@@ -326,34 +326,64 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
 }
 
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
-// priorities: smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
+// 1. exclude xERC20 lockbox mint+burn pairs (same token, same amount)
+// 2. smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
 export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
-  let closestMatch: ParsedTransferLog | undefined
-  let closestDelta: bigint | undefined
-  let closestDistance: number | undefined
-  let hasTransfer = false
-
+  const transfers: { parsed: ParsedTransferLog; logIndex: number | null }[] = []
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (!transfer) continue
+    transfers.push({
+      parsed: {
+        logAddress: Address32.from(log.address),
+        from: Address32.from(transfer.from),
+        to: Address32.from(transfer.to),
+        value: transfer.value,
+      },
+      logIndex: log.logIndex,
+    })
+  }
 
-    hasTransfer = true
-    const parsed: ParsedTransferLog = {
-      logAddress: Address32.from(log.address),
-      from: Address32.from(transfer.from),
-      to: Address32.from(transfer.to),
-      value: transfer.value,
+  // Exclude mint+burn pairs of the same token and amount (xERC20 lockbox pattern).
+  // When a token is minted from 0x0 then immediately burned to 0x0, the pair is
+  // intermediary and should not be picked over the real transfer.
+  const cancelled = new Set<number>()
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const a = transfers[i].parsed
+    if (a.from !== Address32.ZERO) continue
+    for (let j = i + 1; j < transfers.length; j++) {
+      if (cancelled.has(j)) continue
+      const b = transfers[j].parsed
+      if (
+        b.to === Address32.ZERO &&
+        b.logAddress === a.logAddress &&
+        b.value === a.value
+      ) {
+        cancelled.add(i)
+        cancelled.add(j)
+        break
+      }
     }
+  }
 
-    const delta = absDiff(transfer.value, targetAmount)
+  let closestMatch: ParsedTransferLog | undefined
+  let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
+
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const { parsed, logIndex } = transfers[i]
+
+    const delta = absDiff(parsed.value, targetAmount)
     const distance =
-      log.logIndex === null
+      logIndex === null
         ? Number.POSITIVE_INFINITY
-        : Math.abs(log.logIndex - startLogIndex)
+        : Math.abs(logIndex - startLogIndex)
 
     if (closestDelta === undefined || delta < closestDelta) {
       closestDelta = delta
@@ -382,7 +412,7 @@ export function findBestTransferLog(
     }
   }
 
-  return { transfer: closestMatch, hasTransfer }
+  return { transfer: closestMatch, hasTransfer: transfers.length > 0 }
 }
 
 function absDiff(value: bigint, target: bigint): bigint {

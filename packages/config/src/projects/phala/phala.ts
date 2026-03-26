@@ -1,5 +1,6 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
+import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -48,10 +49,11 @@ export const phala: ScalingProject = opStackL2({
       },
     ],
   },
-  nonTemplateProofSystem: {
-    type: 'Validity',
-    zkCatalogId: ProjectId('sp1hypercube'),
-  },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  // nonTemplateProofSystem: {
+  //   type: 'Validity',
+  //   zkCatalogId: ProjectId('sp1hypercube'),
+  // },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -179,6 +181,23 @@ export const phala: ScalingProject = opStackL2({
           '0xa7aaf2512769da4e444e3de247be2564225c2e7a8f74cfe528e46e17d24868e2', // OutputProposed (for anomaly detection support)
         ],
         sinceTimestamp: UnixTime(1770000023),
+        untilTimestamp: UnixTime(1773378287), // switched back to PermissionedDisputeGame
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1773404147), // switched to PermissionedDisputeGame
       },
     },
   ],

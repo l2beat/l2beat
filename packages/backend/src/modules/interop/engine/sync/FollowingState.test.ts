@@ -5,8 +5,14 @@ import type {
 } from '@l2beat/database'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import type { InteropEvent, LogToCapture } from '../../plugins/types'
+import type {
+  InteropEvent,
+  LogToCapture,
+  TxToCapture,
+} from '../../plugins/types'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 import { CatchingUpState } from './CatchingUpState'
+import type { DerivedTxStore } from './DerivedTxStore'
 import { FollowingState } from './FollowingState'
 import type { InteropEventSyncer } from './InteropEventSyncer'
 
@@ -173,6 +179,8 @@ describe(FollowingState.name, () => {
           toBlock: 100n,
           toTimestamp: UnixTime(1_000),
         },
+        [],
+        [],
       )
       expect(clearChainSyncError).toHaveBeenCalled()
     })
@@ -193,12 +201,17 @@ describe(FollowingState.name, () => {
 
       await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
-        fromBlock: 7n,
-        fromTimestamp: UnixTime(70),
-        toBlock: 100n,
-        toTimestamp: UnixTime(1_000),
-      })
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [],
+        {
+          fromBlock: 7n,
+          fromTimestamp: UnixTime(70),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
+        [],
+        [],
+      )
     })
 
     it('bootstraps range from the incoming block when no events exist', async () => {
@@ -212,12 +225,17 @@ describe(FollowingState.name, () => {
 
       await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
-        fromBlock: 100n,
-        fromTimestamp: UnixTime(1_000),
-        toBlock: 100n,
-        toTimestamp: UnixTime(1_000),
-      })
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [],
+        {
+          fromBlock: 100n,
+          fromTimestamp: UnixTime(1_000),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
+        [],
+        [],
+      )
     })
 
     it('saves an empty events list when nothing is captured', async () => {
@@ -238,12 +256,107 @@ describe(FollowingState.name, () => {
 
       await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(saveProducedInteropEvents).toHaveBeenCalledWith([], {
-        fromBlock: 90n,
-        fromTimestamp: UnixTime(0),
-        toBlock: 100n,
-        toTimestamp: UnixTime(1_000),
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [],
+        {
+          fromBlock: 90n,
+          fromTimestamp: UnixTime(0),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
+        [],
+        [],
+      )
+    })
+
+    it('delegates tx capture to the syncer once per tx', async () => {
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
       })
+      const txEvent = mockObject<InteropEvent>({})
+      const captureTx = mockFn().returnsOnce({
+        events: [txEvent],
+        fulfilledCreatorEvents: [],
+      })
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+        ),
+        getItemsToCapture: mockFn().returns({
+          logsToCapture: [],
+          txsToCapture: [txToCapture],
+        }),
+        captureTx,
+        saveProducedInteropEvents,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      await state.processNewestBlock(BLOCK, LOGS)
+
+      expect(captureTx).toHaveBeenCalledWith(txToCapture)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [txEvent],
+        {
+          fromBlock: 90n,
+          fromTimestamp: UnixTime(0),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
+        [],
+        [],
+      )
+    })
+
+    it('captures pending historical txs before processing the current block', async () => {
+      const historicalEvent = mockObject<InteropEvent>({})
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
+      const txEvent = mockObject<InteropEvent>({})
+      const historicalCreatorEvent = mockObject<InteropEvent>({})
+      const historicalCheckedEvent = mockObject<InteropEvent>({})
+      const txCreatorEvent = mockObject<InteropEvent>({})
+      const capturePendingHistoricalTxs = mockFn().resolvesTo({
+        events: [historicalEvent],
+        fulfilledCreatorEvents: [historicalCreatorEvent],
+        checkedInHistoryEvents: [historicalCheckedEvent],
+      })
+      const captureTx = mockFn().returnsOnce({
+        events: [txEvent],
+        fulfilledCreatorEvents: [txCreatorEvent],
+      })
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 90n, toBlock: 99n }),
+        ),
+        getItemsToCapture: mockFn().returns({
+          logsToCapture: [],
+          txsToCapture: [txToCapture],
+        }),
+        capturePendingHistoricalTxs,
+        captureTx,
+        saveProducedInteropEvents,
+      })
+      const state = new FollowingState(syncer, Logger.SILENT)
+
+      await state.processNewestBlock(BLOCK, LOGS)
+
+      expect(capturePendingHistoricalTxs).toHaveBeenCalledWith(100n)
+      expect(saveProducedInteropEvents).toHaveBeenCalledWith(
+        [historicalEvent, txEvent],
+        {
+          fromBlock: 90n,
+          fromTimestamp: UnixTime(0),
+          toBlock: 100n,
+          toTimestamp: UnixTime(1_000),
+        },
+        [historicalCreatorEvent, txCreatorEvent],
+        [historicalCheckedEvent],
+      )
     })
   })
 })
@@ -252,10 +365,17 @@ function createSyncer(
   overrides: Partial<InteropEventSyncer> = {},
 ): InteropEventSyncer {
   return mockObject<InteropEventSyncer>({
+    chain: 'ethereum',
     cluster: {
       name: 'mock-cluster',
       plugins: [],
     } as InteropEventSyncer['cluster'],
+    store: mockObject<InteropEventStore>({
+      derivedTxStore: mockObject<DerivedTxStore>({
+        get: mockFn().returns([]),
+        getCreatorEvents: mockFn().returns(undefined),
+      }),
+    }),
     getResyncState: mockFn().resolvesTo({
       resyncFrom: undefined,
       wipeRequired: false,
@@ -267,6 +387,12 @@ function createSyncer(
       txsToCapture: [],
     }),
     captureLog: mockFn().returns(undefined),
+    capturePendingHistoricalTxs: mockFn().resolvesTo({
+      events: [],
+      fulfilledCreatorEvents: [],
+      checkedInHistoryEvents: [],
+    }),
+    captureTx: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
     clearChainSyncError: mockFn().resolvesTo(undefined),
     ...overrides,
@@ -315,6 +441,8 @@ function makeInteropEventRecord(
     },
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     direction: undefined,
     ...overrides,
   }

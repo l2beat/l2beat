@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -126,26 +127,24 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         network.l1StandardGateway,
       ])
       if (withdrawalFinalized) {
-        // Find OutBoxTransactionExecuted in the same transaction
-        const outBoxTxLog = input.txLogs.find((log) => {
-          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-          return parsed !== undefined
-        })
+        // Find the closest preceding OutBoxTransactionExecuted in the same transaction.
+        // When a single tx finalizes multiple withdrawals, each WithdrawalFinalized
+        // must pair with its own OutBoxTransactionExecuted (the nearest one before it).
+        const outBoxTx = findParsedBefore(
+          input.txLogs,
+          input.log.logIndex ?? -1,
+          (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
+        )
 
-        if (outBoxTxLog) {
-          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-            network.outbox,
-          ])
-          if (outBoxTx) {
-            return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
-                chain: network.chain,
-                position: Number(outBoxTx.transactionIndex),
-                l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized._amount,
-              }),
-            ]
-          }
+        if (outBoxTx) {
+          return [
+            WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+              chain: network.chain,
+              position: Number(outBoxTx.transactionIndex),
+              l1Token: Address32.from(withdrawalFinalized.l1Token),
+              amount: withdrawalFinalized._amount,
+            }),
+          ]
         }
       }
     } else {
@@ -160,29 +159,34 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
       // L2 finalization of L1->L2 ERC20 deposit (Type 0x68 transaction)
       const depositFinalized = parseDepositFinalized(input.log, null)
       if (depositFinalized) {
-        // Find the Transfer event (minting) in the same transaction to get L2 token address
-        const transferLog = input.txLogs.find((log) => {
-          const parsed = parseTransfer(log, null)
-          // Look for mint (from == 0x0) to the recipient
-          return (
-            parsed !== undefined &&
-            parsed.from === '0x0000000000000000000000000000000000000000' &&
-            parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
-          )
-        })
+        // Find the closest preceding mint Transfer to get L2 token address.
+        // In batch deposits, each DepositFinalized has its own mint Transfer
+        // immediately before it, so we must pick the nearest one.
+        const mintTransfer = findParsedBefore(
+          input.txLogs,
+          input.log.logIndex ?? -1,
+          (log) => {
+            const parsed = parseTransfer(log, null)
+            if (!parsed) return undefined
+            if (
+              parsed.from === '0x0000000000000000000000000000000000000000' &&
+              parsed.to.toLowerCase() === depositFinalized.to.toLowerCase()
+            ) {
+              return { address: log.address }
+            }
+            return undefined
+          },
+        )
 
-        if (transferLog) {
-          const transfer = parseTransfer(transferLog, null)
-          if (transfer) {
-            return [
-              DepositFinalized.create(input, {
-                chain: network.chain,
-                l1Token: Address32.from(depositFinalized.l1Token),
-                l2Token: Address32.from(transferLog.address),
-                amount: depositFinalized.amount,
-              }),
-            ]
-          }
+        if (mintTransfer) {
+          return [
+            DepositFinalized.create(input, {
+              chain: network.chain,
+              l1Token: Address32.from(depositFinalized.l1Token),
+              l2Token: Address32.from(mintTransfer.address),
+              amount: depositFinalized.amount,
+            }),
+          ]
         }
       }
 
@@ -202,25 +206,33 @@ export class OrbitStackStandardGatewayPlugin implements InteropPlugin {
         if (l2ToL1TxLog) {
           const l2ToL1Tx = parseL2ToL1Tx(l2ToL1TxLog, [network.arbsys])
           if (l2ToL1Tx) {
-            // Find the Transfer event (burning) to get L2 token address
-            const transferLog = input.txLogs.find((log) => {
-              const parsed = parseTransfer(log, null)
-              // Look for burn (to == 0x0) from the sender
-              return (
-                parsed !== undefined &&
-                parsed.to === '0x0000000000000000000000000000000000000000' &&
-                parsed.from.toLowerCase() ===
-                  withdrawalInitiated._from.toLowerCase()
-              )
-            })
+            // Find the closest preceding burn Transfer to get L2 token address.
+            // In batch withdrawals, each WithdrawalInitiated has its own burn Transfer
+            // immediately before it, so we must pick the nearest one.
+            const burnTransfer = findParsedBefore(
+              input.txLogs,
+              input.log.logIndex ?? -1,
+              (log) => {
+                const parsed = parseTransfer(log, null)
+                if (!parsed) return undefined
+                if (
+                  parsed.to === '0x0000000000000000000000000000000000000000' &&
+                  parsed.from.toLowerCase() ===
+                    withdrawalInitiated._from.toLowerCase()
+                ) {
+                  return { address: log.address }
+                }
+                return undefined
+              },
+            )
 
-            if (transferLog) {
+            if (burnTransfer) {
               return [
                 WithdrawalInitiatedL2ToL1Tx.create(input, {
                   chain: network.chain,
                   position: Number(l2ToL1Tx.position),
                   l1Token: Address32.from(withdrawalInitiated.l1Token),
-                  l2Token: Address32.from(transferLog.address),
+                  l2Token: Address32.from(burnTransfer.address),
                   amount: withdrawalInitiated._amount,
                 }),
               ]

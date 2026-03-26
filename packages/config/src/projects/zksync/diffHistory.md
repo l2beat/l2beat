@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x39a366b037118b460d5e8940aad1cc833b59306f
+
+# Diff at Fri, 20 Mar 2026 15:23:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1767007984
+- current timestamp: 1774020135
+
+## Description
+
+Rotated ms member.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908"
++        "eth:0xeF4CcBDf8f91A001164149558106737A568e4912"
+    }
+```
+
 Generated with discovered.json: 0x6be21968e25f79d16c68a979ce6e95cc38748763
 
 # Diff at Mon, 29 Dec 2025 11:34:07 GMT:
