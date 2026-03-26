@@ -1,4 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -11,6 +12,7 @@ import { Breakdown } from './Breakdown'
 
 interface ValueSecuredBreakdownProps {
   canonical: number
+  customCanonical: number
   external: number
   native: number
   className?: string
@@ -25,6 +27,10 @@ interface ValueSecuredBreakdownTooltipContentProps
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
+  const total = props.canonical + props.external + props.native
+  const additionalTrustAssumptions = props.external + props.customCanonical
+  const trustRatio = total > 0 ? additionalTrustAssumptions / total : 0
+  const trustBand = total > 0 ? getAdditionalTrustBand(trustRatio) : 'mid'
   const values = [
     {
       value: props.canonical,
@@ -38,12 +44,26 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
   ]
 
   return (
-    <Breakdown values={values} className={cn('opacity-80', props.className)} />
+    <div className="inline-flex flex-col gap-1">
+      <Breakdown
+        values={values}
+        className={cn('opacity-80', props.className)}
+      />
+      {total > 0 && (
+        <div className="font-medium text-[11px] text-secondary leading-none">
+          <span className={additionalTrustPercentVariants({ band: trustBand })}>
+            {formatAdditionalTrustSharePercent(trustRatio)}
+          </span>{' '}
+          with additional trust assumptions
+        </div>
+      )}
+    </div>
   )
 }
 
 export function ValueSecuredBreakdownTooltipContent({
   canonical,
+  customCanonical,
   external,
   native,
   change,
@@ -51,6 +71,7 @@ export function ValueSecuredBreakdownTooltipContent({
   hideTotal,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
+  const additionalTrustAssumptions = external + customCanonical
   if (total === 0) {
     return 'No data'
   }
@@ -115,6 +136,11 @@ export function ValueSecuredBreakdownTooltipContent({
               ),
           )}
         </div>
+        {total > 0 && (
+          <AdditionalTrustAssumptionsBanner
+            ratio={additionalTrustAssumptions / total}
+          />
+        )}
       </div>
       {tvsWarnings?.map((warning, i) => (
         <WarningBar
@@ -128,6 +154,74 @@ export function ValueSecuredBreakdownTooltipContent({
           ignoreMarkdown
         />
       ))}
+    </div>
+  )
+}
+
+function formatAdditionalTrustSharePercent(ratio: number) {
+  const percent = ratio * 100
+  if (percent >= 1000) {
+    return '>1K%'
+  }
+  return `${Math.round(percent)}%`
+}
+
+const additionalTrustBannerVariants = cva(
+  'mt-2 w-full rounded-md px-2.5 py-2',
+  {
+    variants: {
+      band: {
+        low: 'bg-positive/15 dark:bg-positive/20',
+        mid: 'bg-warning/15 dark:bg-warning/20',
+        high: 'bg-negative/10 dark:bg-negative/20',
+      },
+    },
+    defaultVariants: {
+      band: 'mid',
+    },
+  },
+)
+
+const additionalTrustPercentVariants = cva('font-bold', {
+  variants: {
+    band: {
+      low: 'text-positive',
+      mid: 'text-warning',
+      high: 'text-negative',
+    },
+  },
+  defaultVariants: {
+    band: 'mid',
+  },
+})
+
+type AdditionalTrustBand = NonNullable<
+  VariantProps<typeof additionalTrustBannerVariants>['band']
+>
+
+function getAdditionalTrustBand(ratio: number): AdditionalTrustBand {
+  const rounded = Math.round(ratio * 100)
+  if (rounded <= 20) {
+    return 'low'
+  }
+  if (rounded >= 80) {
+    return 'high'
+  }
+  return 'mid'
+}
+
+function AdditionalTrustAssumptionsBanner({ ratio }: { ratio: number }) {
+  const band = getAdditionalTrustBand(ratio)
+  return (
+    <div className={additionalTrustBannerVariants({ band })}>
+      <p className="text-label-value-13 text-primary leading-snug">
+        <span className={additionalTrustPercentVariants({ band })}>
+          {formatAdditionalTrustSharePercent(ratio)}
+        </span>{' '}
+        <span className="font-normal">
+          TVS with additional trust assumptions.
+        </span>
+      </p>
     </div>
   )
 }

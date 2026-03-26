@@ -28,6 +28,7 @@ interface TotalValueSecuredCellProps {
         type: 'bridgeType'
         external: number
         canonical: number
+        customCanonical: number
         native: number
       }
     | {
@@ -68,6 +69,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             {props.breakdown.type === 'bridgeType' ? (
               <ValueSecuredBreakdown
                 canonical={props.breakdown.canonical}
+                customCanonical={props.breakdown.customCanonical}
                 external={props.breakdown.external}
                 native={props.breakdown.native}
                 className="h-[3px] w-[180px]"
@@ -91,6 +93,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
         {props.breakdown.type === 'bridgeType' ? (
           <ValueSecuredBreakdownTooltipContent
             canonical={props.breakdown.canonical}
+            customCanonical={props.breakdown.customCanonical}
             external={props.breakdown.external}
             native={props.breakdown.native}
             tvsWarnings={tvsWarnings}

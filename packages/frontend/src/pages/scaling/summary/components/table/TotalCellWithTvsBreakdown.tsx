@@ -23,6 +23,7 @@ interface TotalCellProps {
     | {
         total: number
         canonical: number
+        customCanonical: number
         external: number
         native: number
         associated: number
@@ -93,6 +94,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             </div>
             <ValueSecuredBreakdown
               canonical={props.breakdown.canonical}
+              customCanonical={props.breakdown.customCanonical}
               external={props.breakdown.external}
               native={props.breakdown.native}
               className="h-[3px] w-[180px]"
@@ -103,6 +105,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
       <TooltipContent>
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
+          customCanonical={props.breakdown.customCanonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
           tvsWarnings={tvsWarnings}

@@ -71,6 +71,7 @@ export const getScalingTvsColumns = (
                     ? {
                         type: 'bridgeType',
                         canonical: data.breakdown.canonical,
+                        customCanonical: data.breakdown.customCanonical,
                         external: data.breakdown.external,
                         native: data.breakdown.native,
                       }

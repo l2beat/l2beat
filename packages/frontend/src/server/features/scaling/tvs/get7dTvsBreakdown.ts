@@ -23,6 +23,7 @@ export interface ProjectSevenDayTvsBreakdown {
 interface BreakdownSplit {
   total: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -98,6 +99,7 @@ export async function get7dTvsBreakdown(
     const [
       latestValue,
       latestCanonical,
+      latestCustomCanonical,
       latestExternal,
       latestNative,
       latestEther,
@@ -112,6 +114,7 @@ export async function get7dTvsBreakdown(
     const [
       oldestValue,
       oldestCanonical,
+      oldestCustomCanonical,
       oldestExternal,
       oldestNative,
       oldestEther,
@@ -128,6 +131,7 @@ export async function get7dTvsBreakdown(
         total: latestValue,
         native: latestNative,
         canonical: latestCanonical,
+        customCanonical: latestCustomCanonical,
         external: latestExternal,
         ether: latestEther,
         stablecoin: latestStablecoin,
@@ -141,6 +145,7 @@ export async function get7dTvsBreakdown(
         total: oldestValue,
         native: oldestNative,
         canonical: oldestCanonical,
+        customCanonical: oldestCustomCanonical,
         external: oldestExternal,
         ether: oldestEther,
         stablecoin: oldestStablecoin,
@@ -154,6 +159,10 @@ export async function get7dTvsBreakdown(
         total: calculatePercentageChange(latestValue, oldestValue),
         native: calculatePercentageChange(latestNative, oldestNative),
         canonical: calculatePercentageChange(latestCanonical, oldestCanonical),
+        customCanonical: calculatePercentageChange(
+          latestCustomCanonical,
+          oldestCustomCanonical,
+        ),
         external: calculatePercentageChange(latestExternal, oldestExternal),
         ether: calculatePercentageChange(latestEther, oldestEther),
         stablecoin: calculatePercentageChange(
@@ -230,6 +239,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
           breakdown: {
             total: 60,
             canonical: 30,
+            customCanonical: 10,
             native: 20,
             external: 10,
             ether: 30,
@@ -243,6 +253,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
           breakdown7d: {
             total: 50,
             canonical: 25,
+            customCanonical: 5,
             native: 15,
             external: 10,
             ether: 25,
@@ -256,6 +267,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
           change: {
             total: 0.4,
             canonical: 0.5,
+            customCanonical: 0.25,
             native: 0.25,
             external: 0.25,
             ether: 0.25,

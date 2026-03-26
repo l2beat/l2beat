@@ -95,6 +95,7 @@ export interface ProjectScalingEntry {
         total: number
         native: number
         canonical: number
+        customCanonical: number
         external: number
         totalChange: number
       }
