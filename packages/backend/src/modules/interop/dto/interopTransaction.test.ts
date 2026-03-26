@@ -54,11 +54,9 @@ describe('interopTransaction', () => {
 
     it('rejects unsupported custom envelope types', () => {
       expect(() =>
-        toInteropTransaction(
-          makeTransaction({
-            imBad: true,
-          } as any),
-        ),
+        toInteropTransaction({
+          imBad: true,
+        } as any),
       ).toThrow()
     })
   })
