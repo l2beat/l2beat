@@ -4,14 +4,16 @@ import {
   getBlockNumberAtOrBefore,
   isLimitExceededError,
   type RpcLog,
-  type RpcTransaction,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
-import { toInteropTransaction } from '../../dto/interopTransaction'
+import {
+  type InteropTransaction,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
@@ -240,8 +242,8 @@ export class CatchingUpState implements TimeloopState {
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
         tx:
           txsByHash.get(log.transactionHash) ??
-          // FIXME: risky
-          toInteropTransaction({ hash: log.transactionHash } as RpcTransaction),
+          // FIXME: risky?
+          ({ hash: log.transactionHash } as InteropTransaction),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
