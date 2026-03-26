@@ -97,19 +97,18 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
               customCanonical={props.breakdown.customCanonical}
               external={props.breakdown.external}
               native={props.breakdown.native}
-              className="h-[3px] w-[180px]"
             />
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent fitContent>
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
           customCanonical={props.breakdown.customCanonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
+          change={props.change}
           tvsWarnings={tvsWarnings}
-          hideTotal
         />
       </TooltipContent>
     </Tooltip>

@@ -41,17 +41,17 @@ interface Props {
 
 export const bridgeTypeTvsChartMeta = {
   canonical: {
-    label: 'Canonically bridged',
+    label: 'Canonical',
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   native: {
-    label: 'Natively minted',
+    label: 'Native',
     color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   external: {
-    label: 'Externally bridged',
+    label: 'External',
     color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },

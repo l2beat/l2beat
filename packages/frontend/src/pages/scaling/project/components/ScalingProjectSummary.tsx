@@ -158,7 +158,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     />
                   </ConditionalLink>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent fitContent>
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     customCanonical={

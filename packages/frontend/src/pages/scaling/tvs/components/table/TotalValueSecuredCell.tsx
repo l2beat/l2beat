@@ -72,7 +72,6 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 customCanonical={props.breakdown.customCanonical}
                 external={props.breakdown.external}
                 native={props.breakdown.native}
-                className="h-[3px] w-[180px]"
               />
             ) : (
               <TokenBreakdown
@@ -83,24 +82,24 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 other={props.breakdown.other}
                 rwaPublic={props.breakdown.rwaPublic}
                 rwaRestricted={props.breakdown.rwaRestricted}
-                className="h-[3px] w-[180px]"
+                className="h-[3px] w-[200px]"
               />
             )}
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent className="flex flex-col gap-2">
+      <TooltipContent fitContent className="flex flex-col gap-2">
         {props.breakdown.type === 'bridgeType' ? (
           <ValueSecuredBreakdownTooltipContent
             canonical={props.breakdown.canonical}
             customCanonical={props.breakdown.customCanonical}
             external={props.breakdown.external}
             native={props.breakdown.native}
+            change={props.change}
             tvsWarnings={tvsWarnings}
             associatedTokenSymbols={props.associatedTokens?.map(
               (t) => t.symbol,
             )}
-            hideTotal
           />
         ) : (
           <TokenBreakdownTooltipContent

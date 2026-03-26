@@ -1440,6 +1440,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'ethereum',
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25, // a + b + c + d + e valueForProject
               canonical: 8000.5 + 16000.25 + 800.25, // a + b + e
+              customCanonical: 0,
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5 + 800.25, // a + e
@@ -1455,6 +1456,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 12000.25, // f valueForProject
               canonical: 12000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 12000.25, // f
@@ -1470,6 +1472,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'ethereum',
               value: 24000.25, // a valueForProject
               canonical: 24000.25, // a
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25, // a
@@ -1485,6 +1488,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 20000.25, // f valueForProject
               canonical: 20000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 20000.25, // f
@@ -1515,6 +1519,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'ethereum',
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d (excluding e)
               canonical: 8000.5 + 16000.25, // a + b (excluding e)
+              customCanonical: 0,
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5, // a (excluding e)
@@ -1530,6 +1535,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 12000.25, // f
               canonical: 12000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 12000.25, // f

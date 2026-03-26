@@ -23,7 +23,6 @@ interface ValueSecuredBreakdownTooltipContentProps
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]
   change?: number
-  hideTotal?: boolean
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
@@ -44,15 +43,15 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
   ]
 
   return (
-    <div className="inline-flex flex-col gap-1">
+    <div className="inline-flex flex-col items-end gap-1">
       <Breakdown
         values={values}
-        className={cn('opacity-80', props.className)}
+        className={cn('opacity-80', 'h-[3px] w-[200px]', props.className)}
       />
       {total > 0 && (
-        <div className="font-medium text-[11px] text-secondary leading-none">
+        <div className="text-right font-medium text-[11px] text-secondary leading-none">
           <span className={additionalTrustPercentVariants({ band: trustBand })}>
-            {formatAdditionalTrustSharePercent(trustRatio)}
+            {formatPercent(trustRatio)}
           </span>{' '}
           with additional trust assumptions
         </div>
@@ -68,7 +67,6 @@ export function ValueSecuredBreakdownTooltipContent({
   native,
   change,
   tvsWarnings,
-  hideTotal,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
   const additionalTrustAssumptions = external + customCanonical
@@ -77,42 +75,38 @@ export function ValueSecuredBreakdownTooltipContent({
   }
   const values = [
     {
-      title: 'Canonically bridged',
+      title: 'Canonical',
       value: canonical,
       variant: 'canonical',
     },
     {
-      title: 'Natively minted',
+      title: 'Native',
       value: native,
       variant: 'native',
     },
     {
-      title: 'Externally bridged',
+      title: 'External',
       value: external,
       variant: 'external',
     },
   ] as const
   return (
-    <div className="space-y-2">
+    <div className="w-max space-y-2">
       <div>
-        {!hideTotal && (
-          <>
-            <div className="flex items-center justify-between gap-1">
-              <span className="text-heading-16">TVS</span>
-              <ValueWithPercentageChange change={change}>
-                {formatCurrency(total, 'usd')}
-              </ValueWithPercentageChange>
-            </div>
-            <HorizontalSeparator className="mt-1.5 mb-3" />
-          </>
-        )}
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-heading-16">TVS</span>
+          <ValueWithPercentageChange change={change}>
+            {formatCurrency(total, 'usd')}
+          </ValueWithPercentageChange>
+        </div>
+        <HorizontalSeparator className="mt-1.5 mb-3" />
         <div className="space-y-1">
           {values.map(
             (v, i) =>
               v.value > 0 && (
                 <div
                   key={i}
-                  className="flex items-center justify-between gap-x-6"
+                  className="flex items-center justify-between gap-x-3"
                 >
                   <span className="flex items-center gap-1">
                     <Square
@@ -156,14 +150,6 @@ export function ValueSecuredBreakdownTooltipContent({
       ))}
     </div>
   )
-}
-
-function formatAdditionalTrustSharePercent(ratio: number) {
-  const percent = ratio * 100
-  if (percent >= 1000) {
-    return '>1K%'
-  }
-  return `${Math.round(percent)}%`
 }
 
 const additionalTrustBannerVariants = cva(
@@ -214,9 +200,9 @@ function AdditionalTrustAssumptionsBanner({ ratio }: { ratio: number }) {
   const band = getAdditionalTrustBand(ratio)
   return (
     <div className={additionalTrustBannerVariants({ band })}>
-      <p className="text-label-value-13 text-primary leading-snug">
+      <p className="text-right text-label-value-13 text-primary leading-snug">
         <span className={additionalTrustPercentVariants({ band })}>
-          {formatAdditionalTrustSharePercent(ratio)}
+          {formatPercent(ratio)}
         </span>{' '}
         <span className="font-normal">
           TVS with additional trust assumptions.
