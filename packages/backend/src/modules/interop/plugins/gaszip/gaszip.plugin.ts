@@ -67,6 +67,10 @@ export class GasZipPlugin implements InteropPlugin {
   constructor(private logger: Logger) {}
 
   captureTx(input: TxToCapture) {
+    // TODO: FIX ME
+    if (input.tx.kind === 'bundle') {
+      return
+    }
     const network = getGasZipNetwork(input.chain)
     if (!network) return
 

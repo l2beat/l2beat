@@ -1,70 +1,196 @@
-import type { EVMTransactionSubCall } from '@l2beat/shared'
+import type { EVMTransaction, RpcTransaction } from '@l2beat/shared'
 import type { Transaction } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
-export interface InteropRawTransaction extends Transaction {
-  // shadow extensions
-  calls?: EVMTransactionSubCall[]
-}
+const InteropTransactionData = v.union([v.string(), v.array(v.string())])
 
-export class InteropTransaction {
-  readonly hash?: string
-  readonly from?: string
-  readonly to?: string
-  readonly data?: string | string[]
-  readonly type?: string
-  readonly value?: bigint
-  readonly calls?: EVMTransactionSubCall[]
+// Classic envelope
+const CanonicalTransaction = v
+  .passthroughObject({
+    type: v.union([
+      v.literal('0'),
+      v.literal('1'),
+      v.literal('2'),
+      v.literal('3'),
+      v.literal('4'),
+    ]),
+    hash: v.string(),
+    from: v.string(),
+    to: v.string().optional(),
+    data: InteropTransactionData,
+    value: v.bigint(),
+  })
+  .transform((o) => ({
+    kind: 'canonical' as const,
+    ...o,
+  }))
 
-  constructor(tx: InteropRawTransaction) {
-    this.hash = tx.hash
-    this.from = tx.from
-    this.to = tx.to
-    this.data = tx.data
-    this.type = tx.type
-    this.value = tx.value
-    this.calls = tx.calls
-  }
+// Tempo bundle
+const TempoBundleTransaction = v
+  .passthroughObject({
+    type: v.literal('118'),
+    hash: v.string(),
+    from: v.string(),
+    calls: v.array(
+      v
+        .object({
+          to: v.string().optional(),
+          value: v.bigint(),
+          input: v.string(),
+          data: v.string().optional(),
+        })
+        .transform((o) => ({
+          to: o.to,
+          value: o.value,
+          data: o.data ?? o.input,
+        })),
+    ),
+  })
+  .transform((o) => ({ kind: 'bundle' as const, ...o }))
 
-  getDataCandidates(): string[] {
-    const fromTx =
-      typeof this.data === 'string'
-        ? [this.data]
-        : Array.isArray(this.data)
-          ? this.data
-          : []
-    const fromCalls =
-      this.calls
-        ?.map((call) => call.data)
-        .filter((data): data is string => data !== undefined) ?? []
+export const InteropTransaction = v.union([
+  CanonicalTransaction,
+  TempoBundleTransaction,
+])
+export type InteropTransaction = v.infer<typeof InteropTransaction>
 
-    return [...new Set([...fromTx, ...fromCalls])]
-  }
-
-  getTargetCallValue(targets: string[]): bigint | undefined {
-    if (!this.calls || this.calls.length === 0) return
-
-    const targetSet = new Set(targets.map((target) => target.toLowerCase()))
-    const directMatch = this.calls.find(
-      (call) =>
-        call.value !== undefined &&
-        call.value > 0n &&
-        call.to !== undefined &&
-        targetSet.has(call.to.toLowerCase()),
-    )
-    if (directMatch?.value !== undefined) return directMatch.value
-
-    const positiveCalls = this.calls.filter(
-      (call) => call.value !== undefined && call.value > 0n,
-    )
-    if (positiveCalls.length === 1) return positiveCalls[0]?.value
-  }
-}
+export type InteropUpStreamTransaction =
+  | RpcTransaction
+  | Transaction
+  | EVMTransaction
 
 export function toInteropTransaction(
-  tx: InteropRawTransaction,
+  tx: InteropUpStreamTransaction,
 ): InteropTransaction {
-  if (tx instanceof InteropTransaction) {
-    return tx
+  const normalized = normalizeInteropUpstreamTransaction(tx)
+
+  const parsed = InteropTransaction.safeParse(normalized)
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid interop transaction at ${parsed.path || '@'}: ${parsed.message}`,
+    )
   }
-  return new InteropTransaction(tx)
+  return parsed.data
+}
+
+export function getInteropTransactionDataCandidates(
+  tx: InteropTransaction,
+): string[] {
+  const candidates = new Set<string>()
+
+  if (tx.kind === 'canonical') {
+    const data = Array.isArray(tx.data) ? tx.data : [tx.data]
+    for (const d of data) {
+      candidates.add(d)
+    }
+  }
+
+  if (tx.kind === 'bundle') {
+    const data = tx.calls
+      .map((call) => call.data)
+      .filter((data) => data !== undefined)
+
+    for (const d of data) {
+      candidates.add(d)
+    }
+  }
+
+  return [...candidates]
+}
+
+export function getInteropTransactionTargetCallValue(
+  tx: InteropTransaction,
+  targets: string[],
+): bigint | undefined {
+  const targetSet = new Set(targets.map((target) => target.toLowerCase()))
+
+  if (tx.kind === 'canonical') {
+    if (
+      tx.to !== undefined &&
+      tx.value !== undefined &&
+      tx.value > 0n &&
+      targetSet.has(tx.to.toLowerCase())
+    ) {
+      return tx.value
+    }
+    return
+  }
+
+  const directMatch = tx.calls.find(
+    (call) =>
+      call.value !== undefined &&
+      call.value > 0n &&
+      call.to !== undefined &&
+      targetSet.has(call.to.toLowerCase()),
+  )
+
+  if (directMatch?.value !== undefined) {
+    return directMatch.value
+  }
+
+  const positiveCalls = tx.calls.filter(
+    (call) => call.value !== undefined && call.value > 0n,
+  )
+
+  if (positiveCalls.length === 1) {
+    return positiveCalls[0]?.value
+  }
+}
+
+function normalizeInteropUpstreamTransaction(tx: InteropUpStreamTransaction) {
+  return compactObject({
+    hash: tx.hash,
+    from: tx.from?.toString(),
+    to: tx.to?.toString(),
+    data: getInteropTransactionData(tx),
+    type: normalizeTxType(tx.type),
+    value: tx.value,
+    calls: 'calls' in tx ? tx.calls?.map(normalizeInteropCall) : undefined,
+  })
+}
+
+function getInteropTransactionData(
+  tx: InteropUpStreamTransaction,
+): string | string[] | undefined {
+  if ('data' in tx) {
+    return tx.data
+  }
+  if ('input' in tx) {
+    return tx.input
+  }
+  return undefined
+}
+
+function normalizeInteropCall(call: {
+  to?: { toString(): string } | string
+  value?: bigint
+  data?: string
+  input?: string
+}) {
+  return compactObject({
+    to: call.to?.toString(),
+    value: call.value,
+    input: call.input ?? call.data,
+  })
+}
+
+function normalizeTxType(
+  type: string | bigint | undefined,
+): string | undefined {
+  if (type === undefined) {
+    return undefined
+  }
+  if (typeof type === 'bigint') {
+    return type.toString()
+  }
+  if (/^0x/i.test(type)) {
+    return BigInt(type).toString()
+  }
+  return type
+}
+
+function compactObject<T extends Record<string, unknown>>(value: T): T {
+  return Object.fromEntries(
+    Object.entries(value).filter(([, entry]) => entry !== undefined),
+  ) as T
 }

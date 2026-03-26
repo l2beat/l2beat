@@ -1,4 +1,4 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, assert } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -234,6 +234,9 @@ function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
       wasMinted: transferMatch.transfer.from === Address32.ZERO,
     }
   }
+
+  // FIXME: Handle
+  assert(input.tx.kind === 'canonical')
 
   const txValue = input.tx.value ?? 0n
   if (txValue > 0n) {

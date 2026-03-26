@@ -5,7 +5,7 @@
  * OMNICHAIN
  */
 
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, assert } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
@@ -108,6 +108,10 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   }
 
   capture(input: LogToCapture) {
+    assert(
+      input.tx.kind === 'canonical',
+      'HyperlaneHwr does not support transaction bundles',
+    )
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()

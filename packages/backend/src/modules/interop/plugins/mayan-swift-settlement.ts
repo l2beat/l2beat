@@ -16,6 +16,7 @@ We create one SettlementSent event per order key to enable 1-on-1 matching.
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import {
   MAYAN_EVM_CHAINS,
@@ -98,8 +99,7 @@ export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
     if (orderUnlocked) {
       // Extract emitter chain from the Wormhole VAA in transaction input
       // This tells us which chain the settlement message came from
-      const emitterChainId = input.tx
-        .getDataCandidates()
+      const emitterChainId = getInteropTransactionDataCandidates(input.tx)
         .map((txData) => extractWormholeEmitterChainFromTxData(txData))
         .find(
           (maybeEmitterChainId): maybeEmitterChainId is number =>

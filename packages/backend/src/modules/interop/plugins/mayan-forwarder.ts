@@ -11,6 +11,10 @@ import {
   parseAbi,
   parseAbiParameters,
 } from 'viem'
+import {
+  getInteropTransactionDataCandidates,
+  getInteropTransactionTargetCallValue,
+} from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { findParsedBefore } from './logScan'
@@ -206,15 +210,12 @@ export function findNativeAmountInTx(
   input: Pick<LogToCapture, 'tx' | 'txLogs' | 'log' | 'chain'>,
   targets: EthereumAddress[],
 ): bigint | undefined {
-  const txValue = input.tx.value
-  if (txValue !== undefined && txValue > 0n) return txValue
-
-  const directCallValue = input.tx.getTargetCallValue(targets)
-  if (directCallValue !== undefined && directCallValue > 0n) {
-    return directCallValue
+  const callValue = getInteropTransactionTargetCallValue(input.tx, targets)
+  if (callValue !== undefined && callValue > 0n) {
+    return callValue
   }
 
-  for (const txData of input.tx.getDataCandidates()) {
+  for (const txData of getInteropTransactionDataCandidates(input.tx)) {
     const nestedValue = findExecuteCallValue(txData as `0x${string}`, targets)
     if (nestedValue !== undefined && nestedValue > 0n) {
       return nestedValue

@@ -222,7 +222,7 @@ export class CatchingUpState implements TimeloopState {
       if (!transaction) {
         continue
       }
-      txsByHash.set(txHash, toTransaction(transaction))
+      txsByHash.set(txHash, toInteropTransaction(transaction))
     }
 
     this.setStatus('capturing logs', rangeData, `${logs.length} logs`)
@@ -240,7 +240,8 @@ export class CatchingUpState implements TimeloopState {
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
         tx:
           txsByHash.get(log.transactionHash) ??
-          toInteropTransaction({ hash: log.transactionHash }),
+          // FIXME: risky
+          toInteropTransaction({ hash: log.transactionHash } as RpcTransaction),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -388,21 +389,4 @@ export class CatchingUpState implements TimeloopState {
     }
     this.currentStatus = `${parts.join(' ')} (${progress.join(', ')})${dividerInfo}`
   }
-}
-
-function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  const rawTx = {
-    hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
-    data: tx.input,
-    type: tx.type?.toString(),
-    value: tx.value,
-    calls: tx.calls?.map((call) => ({
-      to: call.to?.toString(),
-      data: call.input ?? call.data,
-      value: call.value,
-    })),
-  }
-  return toInteropTransaction(rawTx)
 }

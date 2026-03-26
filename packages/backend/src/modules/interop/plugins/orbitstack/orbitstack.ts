@@ -207,6 +207,10 @@ export class OrbitStackPlugin implements InteropPlugin {
   readonly name = 'orbitstack'
 
   capture(input: LogToCapture) {
+    assert(
+      input.tx.kind === 'canonical',
+      'OrbitStack plugin does not support transaction bundles',
+    )
     if (input.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.outbox === EthereumAddress(input.log.address),

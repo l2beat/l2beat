@@ -4,6 +4,7 @@ or directly from MayanSwift calldata. The protocol itself is lock/release, so it
 */
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { findParsedAround } from './logScan'
 import {
@@ -121,7 +122,7 @@ function findOrderData(
       : undefined
   if (fromTxLogs) return fromTxLogs
 
-  for (const txData of input.tx.getDataCandidates()) {
+  for (const txData of getInteropTransactionDataCandidates(input.tx)) {
     const decoded = decodeMayanData(
       txData as `0x${string}`,
       wormholeNetworks,
@@ -144,8 +145,7 @@ function captureOrderFulfilled(
     orderFulfilled.key,
     orderFulfilled.sequence,
   )
-  const fulfilledSrcChainId = input.tx
-    .getDataCandidates()
+  const fulfilledSrcChainId = getInteropTransactionDataCandidates(input.tx)
     .map((txData) =>
       extractMayanSwiftFulfillSourceChainFromTxData(txData as `0x${string}`),
     )

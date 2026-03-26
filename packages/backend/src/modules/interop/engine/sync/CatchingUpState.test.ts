@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { CatchingUpState } from './CatchingUpState'
@@ -422,9 +422,10 @@ describe(CatchingUpState.name, () => {
 
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'canonical')
       expect(captured?.tx.hash).toEqual(txHash)
-      expect(captured?.tx.data).toEqual(transaction.input)
-      expect(captured?.tx.value).toEqual(transaction.value)
+      expect(captured?.tx.data).toEqual(transaction.input!)
+      expect(captured?.tx.value).toEqual(transaction.value!)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
     })
@@ -485,11 +486,9 @@ describe(CatchingUpState.name, () => {
 
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'bundle')
       expect(captured?.tx.hash).toEqual(txHash)
-      expect(captured?.tx.data).toEqual(undefined)
-      expect(captured?.tx.value).toEqual(undefined)
       expect(captured?.tx.from).toEqual(transaction.from)
-      expect(captured?.tx.to).toEqual(undefined)
       expect(captured?.tx.calls).toEqual([
         {
           to: callTo,
