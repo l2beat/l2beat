@@ -30,6 +30,8 @@ export const MAYAN_EVM_CHAINS = [
   'linea',
   // no celo
   'hyperevm',
+  'monad',
+  // tempo unsupported
 ] as const
 
 // Fast MCTP and Circle contracts are not deployed on bsc or avalanche
@@ -39,7 +41,13 @@ export const MAYAN_FAST_MCTP_CHAINS = [
   'base',
   'optimism',
   'polygonpos',
+  'unichain',
+  'linea',
+  // no celo
+  'hyperevm',
+  'monad',
 ] as const
+
 // chainconfeeg
 export const MAYAN_WRAPPED_NATIVE_ADDRESSES: Record<
   string,
@@ -55,6 +63,7 @@ export const MAYAN_WRAPPED_NATIVE_ADDRESSES: Record<
   unichain: EthereumAddress('0x4200000000000000000000000000000000000006'),
   linea: EthereumAddress('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'),
   hyperevm: EthereumAddress('0x5555555555555555555555555555555555555555'),
+  monad: EthereumAddress('0x3bd359C1119dA7Da1D913D1C4D2B7c461115433A'),
 }
 
 export function toChainSpecificAddresses(

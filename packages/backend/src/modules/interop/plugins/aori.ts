@@ -47,6 +47,13 @@ const AORI_NETWORKS = defineNetworks('aori', [
     chain: 'bsc',
     address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
   },
+  {
+    chainId: 143,
+    eid: 30390,
+    chain: 'monad',
+    address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
+  },
+  // tempo unsupported
 ])
 
 const parseSettleSent = createEventParser(
