@@ -4312,6 +4312,34 @@
       ]
     }
   },
+  "opstack-derived-tx-base-deposit-eth": {
+    "description": "Ethereum -> Base direct OptimismPortal ETH deposit (no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xedf08a2d003cc28f6cd48297b9e6ac35445bcf525ac22e413e57a343879606eb"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb3abc835cdc1bfe9e36725a843c3f0abf30c2dbea58f1a7e1bcc909f7d259ffa"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH" } },
+          "dst": { "financials": { "symbol": "ETH" } }
+        }
+      ]
+    }
+  },
   "opstack-derived-tx-celo-deposit": {
     "description": "Ethereum -> Celo OptimismPortal deposit with custom gas token (direct, no CDM)",
     "tags": ["opstack", "derived-transaction"],
@@ -4325,12 +4353,20 @@
         "tx": "0x0662930a5d5cd3193fa428fb18fff5304cf36ed08b2b3a54019c8009cb286d30"
       }
     ],
-    "events": [
-      "opstack.TransactionDeposited",
-      "opstack.PortalDepositFinalized"
-    ],
-    "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
-    "transfers": ["opstack.L1ToL2Transfer"]
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
   },
   // Celo uses a custom gas token (CELO), so native withdrawals should track
   // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.

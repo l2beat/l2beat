@@ -368,11 +368,15 @@ export class OpStackPlugin implements InteropPluginResyncable {
       ]
 
       if (transactionDeposited.args.mint > 0n) {
+        const network = OPSTACK_NETWORKS.find(
+          (n) => n.chain === event.args.chain,
+        )
+        const srcTokenAddress = network?.l1CustomGasToken ?? Address32.NATIVE
         results.push(
           Result.Transfer('opstack.L1ToL2Transfer', {
             srcEvent: transactionDeposited,
             srcAmount: transactionDeposited.args.mint,
-            srcTokenAddress: Address32.NATIVE,
+            srcTokenAddress,
             srcWasBurned: false,
             dstEvent: event,
             dstAmount: transactionDeposited.args.mint,
