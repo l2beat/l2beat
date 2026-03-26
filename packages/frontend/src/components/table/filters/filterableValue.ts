@@ -37,6 +37,7 @@ export const FilterableValueId = v.enum([
   'STARK',
   'project',
   'contentCategory',
+  'ProofSystem',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -68,6 +69,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   STARK: 'STARK',
   project: 'Project',
   contentCategory: 'Content Category',
+  ProofSystem: 'Proof System',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -99,6 +101,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   STARK: 'STARKs',
   project: 'projects',
   contentCategory: 'content categories',
+  ProofSystem: 'proof systems',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {
@@ -120,6 +123,7 @@ const ALWAYS_FIRST_VALUES = [
   'No infrastructure',
   'No VM',
   'No RaaS',
+  'No proof systems',
 ]
 export function filterValuesSortFn(a: string, b: string) {
   if (ALWAYS_FIRST_VALUES.includes(a)) return -1

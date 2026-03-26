@@ -1,4 +1,3 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import type { ColumnHelper } from '@tanstack/react-table'
 import { TableLink } from '~/components/table/TableLink'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
@@ -8,7 +7,7 @@ import { getCommonProjectColumns } from './CommonProjectColumns'
 
 export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,
-  getHref: (row: T) => string | undefined,
+  getHref: (row: T) => string,
   opts?: CommonProjectColumnsOptions,
 ) {
   return [
@@ -24,9 +23,6 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
           />
         )
 
-        if (ctx.row.original.id === ProjectId.ETHEREUM) {
-          return projectName
-        }
         return (
           <TableLink href={getHref(ctx.row.original)}>{projectName}</TableLink>
         )

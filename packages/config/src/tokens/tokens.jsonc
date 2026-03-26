@@ -619,6 +619,10 @@
       "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30"
     },
     {
+      "symbol": "AMINO",
+      "address": "0x4DfD742c6E5e28F11Bcbcf6c5e51A965d15ea315"
+    },
+    {
       "symbol": "ARB",
       "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
       "excludeFromTotal": true
@@ -1813,6 +1817,11 @@
     {
       "symbol": "SXP",
       "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
+    },
+    {
+      "symbol": "SYND",
+      "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+      "coingeckoId": "syndicate-3"
     },
     {
       "symbol": "SYN",

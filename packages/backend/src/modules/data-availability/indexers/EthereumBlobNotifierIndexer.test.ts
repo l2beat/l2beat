@@ -1,13 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { BlobPairCount, Database } from '@l2beat/database'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
-import { DISCORD_MAX_MESSAGE_LENGTH } from '../../anomalies/clients/DiscordWebhookClient'
 import { EthereumBlobNotifierIndexer } from './EthereumBlobNotifierIndexer'
 
 describe(EthereumBlobNotifierIndexer.name, () => {
@@ -224,7 +223,7 @@ function mockBlobsRepository(pairs: BlobPairCount[]) {
 }
 
 function mockDiscordClient(sendError?: Error) {
-  return mockObject<DiscordWebhookClient>({
+  return mockObject<DiscordClient>({
     sendMessage: sendError
       ? mockFn().rejectsWith(sendError)
       : mockFn().resolvesTo('msg-id'),

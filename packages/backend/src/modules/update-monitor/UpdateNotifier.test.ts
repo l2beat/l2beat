@@ -27,7 +27,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -96,7 +96,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notifications about the changes with meta', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -175,7 +175,7 @@ describe(UpdateNotifier.name, () => {
 
     it('truncates and sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -250,7 +250,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends errors only to internal channel', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -317,7 +317,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notification about tracked transactions being affected', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -407,7 +407,7 @@ describe(UpdateNotifier.name, () => {
 
     it('does not include tracked transactions message when contract is not in trackedTxsConfig', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -507,7 +507,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -565,6 +565,7 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async (msg: string) => {
           expect(msg.length <= DISCORD_MAX_MESSAGE_LENGTH)
+          return 'message-id'
         },
       })
 
@@ -596,7 +597,7 @@ describe(UpdateNotifier.name, () => {
 
     it('does not send daily reminder at other hour', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
@@ -629,7 +630,7 @@ describe(UpdateNotifier.name, () => {
 
     it('includes disabled projects and failed projects in daily reminder', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,

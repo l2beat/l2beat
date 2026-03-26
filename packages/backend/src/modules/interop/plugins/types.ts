@@ -223,7 +223,7 @@ export interface InteropEventDb {
   ): InteropEvent<T>[]
 }
 
-export type DataRequest = EventDataRequest
+export type DataRequest = EventDataRequest | TxFromEventRequest
 
 interface EventDataRequest {
   type: 'event'
@@ -231,6 +231,24 @@ interface EventDataRequest {
   includeTxEvents?: string[]
   includeTx?: boolean
   addresses: ChainSpecificAddress[] | '*'
+}
+
+export interface TxFromEventRequest<
+  TArgs extends Record<string, unknown> = Record<string, unknown>,
+> {
+  type: 'txFromEvent'
+  creatorEvent: InteropEventType<TArgs>
+  txHashArg: Extract<keyof TArgs, string>
+  chainArg: Extract<keyof TArgs, string>
+}
+
+export function txFromEvent<TArgs extends Record<string, unknown>>(
+  request: Omit<TxFromEventRequest<TArgs>, 'type'>,
+): TxFromEventRequest<TArgs> {
+  return {
+    type: 'txFromEvent',
+    ...request,
+  }
 }
 
 export type DeployedToAbstractMap = Map<
@@ -241,7 +259,10 @@ export type DeployedToAbstractMap = Map<
 export interface InteropPlugin {
   readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
-  captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
+  captureTx?: (
+    input: TxToCapture,
+    creatorEvents?: InteropEvent[],
+  ) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,

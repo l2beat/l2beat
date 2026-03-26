@@ -1,5 +1,10 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  INTEROP_ONE_SIDED_CHAINS,
+  ProjectService,
+} from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   type HttpClient,
   MulticallV3Client,
@@ -9,7 +14,7 @@ import { assert, unique } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { toInteropTransaction } from '../dto/interopTransaction'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
-import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
+import { InteropEventStore } from '../engine/capture/InteropEventStore'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
@@ -19,7 +24,7 @@ import {
   flattenClusters,
   type InteropPlugins,
 } from '../plugins'
-import type { InteropEvent } from '../plugins/types'
+import { type InteropEvent, isPluginResyncable } from '../plugins/types'
 import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'
 import { TokenCaptureMap, TokenReplayMap } from './snapshot/map'
@@ -77,6 +82,7 @@ export class ExampleRunner {
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
+      oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
       configs: this.store,
       httpClient: this.$.http,
       logger: this.$.logger,
@@ -86,6 +92,12 @@ export class ExampleRunner {
     })
 
     await this.loadConfigs(plugins)
+    const eventPlugins = flattenClusters(plugins.eventPlugins)
+    const eventStore = new InteropEventStore(
+      createExampleDb(),
+      500_000,
+      eventPlugins.filter(isPluginResyncable),
+    )
 
     const events: InteropEvent[] = []
 
@@ -99,25 +111,40 @@ export class ExampleRunner {
       const txLogs = logs
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
+      const newEvents: InteropEvent[] = []
+      const fulfilledCreatorEvents: InteropEvent[] = []
 
-      for (const plugin of flattenClusters(plugins.eventPlugins)) {
+      const txToCapture = {
+        chain: txEntry.chain,
+        tx: toInteropTransaction(tx),
+        block,
+        txLogs,
+      }
+
+      for (const plugin of eventPlugins) {
         if (!plugin.captureTx) {
           continue
         }
-        const captured = plugin.captureTx({
-          chain: txEntry.chain,
-          tx: toInteropTransaction(tx),
-          block,
-          txLogs,
-        })
+
+        const creatorEvents = tx.hash
+          ? eventStore.derivedTxStore.getCreatorEvents(
+              txEntry.chain,
+              tx.hash,
+              plugin.name,
+            )
+          : undefined
+        const captured = plugin.captureTx(txToCapture, creatorEvents)
         if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+          newEvents.push(
+            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+          )
+          fulfilledCreatorEvents.push(...(creatorEvents ?? []))
           break
         }
       }
 
       for (const log of txLogs) {
-        for (const plugin of flattenClusters(plugins.eventPlugins)) {
+        for (const plugin of eventPlugins) {
           if (!plugin.capture) {
             continue
           }
@@ -129,26 +156,27 @@ export class ExampleRunner {
             txLogs,
           })
           if (captured) {
-            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+            newEvents.push(
+              ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+            )
             break
           }
         }
       }
-    }
 
-    const eventDb = new InMemoryEventDb()
-    for (const event of events) {
-      eventDb.addEvent(event)
+      events.push(...newEvents)
+      await eventStore.saveNewEvents(newEvents)
+      await eventStore.updateDerivedFulfilled(fulfilledCreatorEvents)
     }
 
     const tokenMap = await this.getTokenMap()
 
     const result = await match(
-      eventDb,
-      (type) => events.filter((x) => x.type === type),
-      [...new Set(events.map((x) => x.type))],
-      events.length,
-      flattenClusters(plugins.eventPlugins),
+      eventStore,
+      (type) => eventStore.getEvents(type),
+      eventStore.getEventTypes(),
+      eventStore.getEventCount(),
+      eventPlugins,
       this.$.example.txs.map((x) => x.chain),
       this.$.logger,
       tokenMap,
@@ -305,4 +333,13 @@ export class ExampleRunner {
 
     return projects.map((p) => p.chainConfig)
   }
+}
+
+function createExampleDb(): Database {
+  return {
+    interopEvent: {
+      insertMany: async () => undefined,
+      updateDerivedFulfilled: async () => undefined,
+    },
+  } as unknown as Database
 }

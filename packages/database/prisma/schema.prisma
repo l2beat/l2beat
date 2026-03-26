@@ -328,9 +328,11 @@ model InteropEvent {
   args        Json
   ctx         Json   @default("{}")
 
-  matched     Boolean
-  unsupported Boolean
-  direction   String?
+  matched          Boolean
+  unsupported      Boolean
+  derivedFulfilled        Boolean?
+  derivedCheckedInHistory Boolean?
+  direction               String?
 
   @@id([eventId])
   @@index([timestamp, plugin, chain])
@@ -375,12 +377,12 @@ model InteropTransfer {
   duration Int?
 
   srcTime         DateTime? @db.Timestamp(6)
-  srcChain        String   @db.VarChar(32)
+  srcChain        String    @db.VarChar(32)
   srcTxHash       String?   @db.VarChar(66)
   srcLogIndex     Int?
   srcEventId      String?   @db.VarChar(40)
-  srcTokenAddress String?  @db.VarChar(66)
-  srcRawAmount    Decimal? @db.Decimal(80, 0)
+  srcTokenAddress String?   @db.VarChar(66)
+  srcRawAmount    Decimal?  @db.Decimal(80, 0)
 
   srcAbstractTokenId String?  @db.VarChar(66)
   srcSymbol          String?  @db.VarChar(66)
@@ -390,12 +392,12 @@ model InteropTransfer {
   srcWasBurned       Boolean?
 
   dstTime         DateTime? @db.Timestamp(6)
-  dstChain        String   @db.VarChar(32)
+  dstChain        String    @db.VarChar(32)
   dstTxHash       String?   @db.VarChar(66)
   dstLogIndex     Int?
   dstEventId      String?   @db.VarChar(40)
-  dstTokenAddress String?  @db.VarChar(66)
-  dstRawAmount    Decimal? @db.Decimal(80, 0)
+  dstTokenAddress String?   @db.VarChar(66)
+  dstRawAmount    Decimal?  @db.Decimal(80, 0)
 
   dstAbstractTokenId String?  @db.VarChar(66)
   dstSymbol          String?  @db.VarChar(66)
