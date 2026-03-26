@@ -108,6 +108,12 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb",
+          "description": "slash sequencers from the active set.",
+          "role": ".GOVERNANCE"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
           "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup.",
           "role": ".owner"
@@ -1710,11 +1716,11 @@
     "aztecnetwork/RewardBooster": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/RewardDistributor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aztecnetwork/Rollup": "0xac23dafc21837e3008e967973110c0f4980243276caba203964c50e90b43e9b2",
-    "aztecnetwork/Slasher": "0xb6adc2e9ef040cc45adae5aaa8d90703697518e09df268b15641cb65bbd78f23",
+    "aztecnetwork/Slasher": "0xeea2ab7255bd1258ceb658820f2ef3cada2e4309246feaf718152db9922a2d7f",
     "aztecnetwork/SlashPayloadCloneable": "0x821354dfe974f5f53d0c4ebf4ce746144ad353e598809041e44c28c9c572fd92",
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24719255 },
-  "permissionsConfigHash": "0x6b0c89c6e76ae76e9bad436a341e725b47f8432ec89fcd68a4b675d275f92206"
+  "permissionsConfigHash": "0x7039e32bd58563db699143d6d895153bdc04490aa86ffcb18ab435c1d31803bb"
 }

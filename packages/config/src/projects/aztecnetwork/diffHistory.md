@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x41cd836ad62aa77bdaf189e6fc331b250f1d79ac
+Generated with discovered.json: 0x3f501e1166c7b0d3372a038f871360d6b8a15940
 
-# Diff at Tue, 24 Mar 2026 06:50:07 GMT:
+# Diff at Wed, 25 Mar 2026 15:00:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bbbdbb0dd14a703b0e04f6763790717b4648cae0 block: 1771254730
+- comparing to: main@987d24ffeda681f8398eee54cc913598017a3226 block: 1771254730
 - current timestamp: 1774257283
 
 ## Description
@@ -18,7 +18,9 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       values.proposalCount:
 -        2
 +        3
-      receivedPermissions.2:
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","description":"slash sequencers from the active set.","role":".GOVERNANCE"}
+      receivedPermissions.3:
 +        {"permission":"interact","from":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","description":"change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.","role":".owner"}
     }
 ```

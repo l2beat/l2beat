@@ -17,6 +17,14 @@
           "description": "veto specific slashing payloads and/or disable all slashing for {{SLASHING_DISABLE_DURATION_fmt}} at a time."
         }
       ]
+    },
+    "GOVERNANCE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "slash sequencers from the active set."
+        }
+      ]
     }
   }
 }
