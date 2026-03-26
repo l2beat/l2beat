@@ -2664,25 +2664,6 @@
     },
     {
       "mode": "auto",
-      "id": "syndicate-EXD",
-      "priceId": "exorde",
-      "symbol": "EXD",
-      "name": "Exorde Network Token",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/28684/large/logo-exorde.png?1696527668",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x02dE007D412266a2e0Fa9287C103474170F06560",
-        "chain": "ethereum",
-        "escrowAddress": "0x6CA109706c6EBe5379c45f20B3311441D50cb711",
-        "decimals": 18,
-        "sinceTimestamp": 1753824383
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "syndicate-eXRD",
       "priceId": "e-radix",
       "symbol": "eXRD",
