@@ -112,15 +112,7 @@ export function initTvsModule({
       {
         parents: [hourlyIndexer],
         indexerService,
-        configurations: config.tvs.amounts
-          .filter((a) => a.type === 'circulatingSupply')
-          .map((amount) => ({
-            // configurationId has to be 12 characters long so we cannot use the apiId directly
-            id: amount.id,
-            minHeight: amount.sinceTimestamp,
-            maxHeight: amount.untilTimestamp ?? null,
-            properties: amount,
-          })),
+        configurations: circulatingSupplyConfigurations,
         circulatingSupplyProvider: providers.circulatingSupply,
         syncOptimizer,
         db: db,
