@@ -50,10 +50,10 @@ export function createInteropModule({
   let notificationClient: InteropNotifier | undefined
 
   if (config.notifications && config.notifications.interop) {
-    notificationClient = new InteropNotifier(
-      new DiscordClient(config.notifications.interop.discordWebhookUrl),
-      logger,
+    const discordClient = new DiscordClient(
+      config.notifications.interop.discordWebhookUrl,
     )
+    notificationClient = new InteropNotifier(discordClient, logger)
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,
       notificationClient,
