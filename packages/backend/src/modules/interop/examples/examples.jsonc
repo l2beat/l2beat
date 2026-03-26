@@ -534,6 +534,49 @@
     "messages": [],
     "transfers": []
   },
+  "ccip-partial-solana": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Ethereum → Solana (v1.6 send to one-sided chain, non-CCTP token)
+      {
+        "chain": "ethereum",
+        "tx": "0xefa8e845c3da7e498a4cb2d08432d88ba30c9b69df6418b6605a5e86bd920e13"
+      },
+      // Solana → Ethereum (v1.6 receive from one-sided chain)
+      {
+        "chain": "ethereum",
+        "tx": "0x9989572dd81ab8617d29802d7517bc97ff08b23f7d6bf5c7acf0cd265cc21fbf"
+      }
+    ],
+    "expects": {
+      "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": [
+        // Ethereum → Solana: TRUF locked on source, no dst side
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000243c9be13faba09f945ccc565547293337da0ad7",
+            "wasBurned": false,
+            "financials": { "symbol": "TRUF" }
+          },
+          "dst": { "chain": "solana" }
+        },
+        // Solana → Ethereum: no src side, syrupUSDC released on dst
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000080ac24aa929eaf5013f6436cda2a7ba190f5cc0b",
+            "wasMinted": false,
+            "financials": { "symbol": "syrupUSDC" }
+          }
+        }
+      ]
+    }
+  },
   "celer": {
     "txs": [
       // message only, wrapping cctp
