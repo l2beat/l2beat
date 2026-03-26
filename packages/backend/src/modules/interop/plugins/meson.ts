@@ -70,6 +70,10 @@ export class MesonPlugin implements InteropPlugin {
   readonly name = 'meson'
 
   capture(input: LogToCapture) {
+    if (input.tx.kind === 'bundle') {
+      return
+    }
+
     const swapExecuted = parseSwapExecuted(input.log, null)
     if (swapExecuted) {
       const decoded = decodeSwap(swapExecuted.encodedSwap)
@@ -235,7 +239,6 @@ function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
     }
   }
 
-  // FIXME: Handle
   assert(input.tx.kind === 'canonical')
 
   const txValue = input.tx.value ?? 0n
