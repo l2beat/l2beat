@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import {
   MessagePassed,
-  RelayedMessage,
-  SentMessage,
+  PortalDepositFinalized,
+  TransactionDeposited,
   WithdrawalFinalized,
 } from './opstack/opstack'
 import {
@@ -122,27 +122,28 @@ export class SynthetixBridgePlugin implements InteropPluginResyncable {
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (FinalizeL2.checkType(event)) {
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
-      })
-      if (!relayedMessage) return
-
-      const sentMessage = db.find(SentMessage, {
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: 'optimism',
-        msgHash: relayedMessage.args.msgHash,
       })
-      if (!sentMessage) return
+      if (!portalDepositFinalized) return
+
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
+        chain: 'optimism',
+      })
+      if (!transactionDeposited) return
 
       const initiateL1 = db.find(InitiateL1, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!initiateL1) return
 
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'synthetix-bridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents: [initiateL1, event],
         }),
         Result.Transfer('synthetix-bridge.L1ToL2Transfer', {
