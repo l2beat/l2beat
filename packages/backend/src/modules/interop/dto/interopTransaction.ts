@@ -7,24 +7,8 @@ const InteropTransactionData = v.union([v.string(), v.array(v.string())])
 // Classic envelope
 const CanonicalTransaction = v
   .passthroughObject({
-    type: v.union([
-      v.literal('0'),
-      v.literal('1'),
-      v.literal('2'),
-      v.literal('3'),
-      v.literal('4'),
-      // arb
-      v.literal('100'),
-      v.literal('101'),
-      v.literal('102'),
-      v.literal('104'),
-      v.literal('105'),
-      v.literal('106'),
-      // op
-      v.literal('126'),
-      // celo
-      v.literal('123'),
-    ]),
+    // we only rely on data below + it's hard to maintain whole complete list
+    type: v.string(),
     hash: v.string(),
     from: v.string(),
     to: v.string().optional(),
