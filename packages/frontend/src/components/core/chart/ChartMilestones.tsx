@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import { useEventListener } from '~/hooks/useEventListener'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { ChevronIcon } from '~/icons/Chevron'
 import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
 import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
@@ -151,24 +152,53 @@ function MilestoneTooltipContent({ milestones }: { milestones: Milestone[] }) {
       </div>
       <div className="flex max-w-[216px] flex-col gap-2 text-left">
         {milestones.map((milestone) => (
-          <div key={`${milestone.date}-${milestone.title}`}>
-            <div className="flex font-bold">
-              <MilestoneListIcon milestone={milestone} />
-              <span className="ml-1.5">{milestone.title}</span>
-            </div>
-            {milestone.description && (
-              <div className="mt-1 max-w-[216px]">{milestone.description}</div>
-            )}
-            <CustomLink
-              href={milestone.url}
-              className="ml-auto block w-fit text-[12px]"
-            >
-              {getMilestoneLinkLabel(milestone)}
-            </CustomLink>
-          </div>
+          <MilestoneTooltipItem
+            key={`${milestone.date}-${milestone.title}`}
+            milestone={milestone}
+            milestonesOnDateCount={milestones.length}
+          />
         ))}
       </div>
     </>
+  )
+}
+
+function MilestoneTooltipItem({
+  milestone,
+  milestonesOnDateCount,
+}: {
+  milestone: Milestone
+  milestonesOnDateCount: number
+}) {
+  const useArrowLink = shouldUseArrowLink(milestone, milestonesOnDateCount)
+
+  return (
+    <div className={cn(useArrowLink && 'flex gap-2')}>
+      <div className={cn('min-w-0', useArrowLink ? 'flex-1' : 'flex flex-col')}>
+        <div className="flex font-bold">
+          <MilestoneListIcon milestone={milestone} />
+          <span className="ml-1.5">{milestone.title}</span>
+        </div>
+        {milestone.description && (
+          <div className="mt-1 max-w-[216px]">{milestone.description}</div>
+        )}
+        {!useArrowLink && (
+          <MilestoneLink
+            milestone={milestone}
+            variant="text"
+            className="mt-1 ml-auto block w-fit text-[12px]"
+          />
+        )}
+      </div>
+      {useArrowLink && (
+        <MilestoneLink
+          milestone={milestone}
+          variant="arrow"
+          className="flex shrink-0 self-center text-[12px]"
+          iconClassName="size-3.5"
+        />
+      )}
+    </div>
   )
 }
 
@@ -318,4 +348,44 @@ function mapMilestones(milestones: Milestone[]): Record<number, Milestone[]> {
 
 function getMilestoneLinkLabel(milestone: { linkLabel?: string }) {
   return milestone.linkLabel ?? 'Learn more'
+}
+
+function shouldUseArrowLink(
+  milestone: Pick<Milestone, 'type'>,
+  milestonesOnDateCount: number,
+) {
+  return milestone.type === 'project' || milestonesOnDateCount > 1
+}
+
+function MilestoneLink({
+  milestone,
+  variant = 'text',
+  className,
+  iconClassName,
+}: {
+  milestone: Pick<Milestone, 'url' | 'linkLabel'>
+  variant: 'text' | 'arrow'
+  className?: string
+  iconClassName?: string
+}) {
+  const label = getMilestoneLinkLabel(milestone)
+
+  if (variant === 'arrow') {
+    return (
+      <CustomLink
+        href={milestone.url}
+        underline={false}
+        className={className}
+        aria-label={label}
+      >
+        <ArrowRightIcon className={iconClassName} />
+      </CustomLink>
+    )
+  }
+
+  return (
+    <CustomLink href={milestone.url} className={className}>
+      {label}
+    </CustomLink>
+  )
 }
