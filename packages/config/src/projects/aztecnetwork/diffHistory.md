@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x16e9d1d41e711bb224ea6df4b19083d17ca89d7e
+Generated with discovered.json: 0x7b93587852835e6df73e348ab27ef76fb0566f24
 
-# Diff at Thu, 26 Mar 2026 14:03:18 GMT:
+# Diff at Fri, 27 Mar 2026 08:42:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@66bb74768c380cbd114213db91d2abbf7b8dd7bf block: 1771254730
+- comparing to: main@8aa6546e9b78250f5f06594e14273625d1277c5d block: 1771254730
 - current timestamp: 1774257283
 
 ## Description
@@ -203,10 +203,10 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
 
 ```diff
     contract GovernanceProposer (eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef) {
-    +++ description: Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.
+    +++ description: Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.
       description:
 -        "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract."
-+        "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals."
++        "Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal."
       category:
 +        {"name":"Governance","priority":3}
       receivedPermissions:
@@ -237,6 +237,15 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
     +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
       category:
 +        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RewardDistributor (eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0) {
+    +++ description: Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.
+      description:
+-        "Holds tokens allocated for protocol rewards. The canonical Rollup contract calls this to distribute payments to sequencers and provers."
++        "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers."
     }
 ```
 

@@ -46,7 +46,7 @@
         "0xf5d24826d1f40e6e4796bdde6cee8f8b3fa9bc6f2a859fdb79c591cd8c6bbfb6"
       ],
       "proxyType": "immutable",
-      "description": "Intermediary contract that allows the L2 Sequencers to submit formal proposals to the L1 Governance contract by signalling their support of L1 payloads in their checkpoint proposals.",
+      "description": "Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises 1000 checkpoints. 600 signals or more during one round allow submitting the payload as a governance proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -286,7 +286,7 @@
         "0x2f431ac339a6130443de9108067868e7bdd0c6f33644cb46128b9fb1c4c39fcc"
       ],
       "proxyType": "immutable",
-      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract calls this to distribute payments to sequencers and provers.",
+      "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers.",
       "sinceTimestamp": 1762995047,
       "sinceBlock": 23786827,
       "values": {

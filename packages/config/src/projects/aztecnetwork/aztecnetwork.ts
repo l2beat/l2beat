@@ -574,7 +574,7 @@ The SlashVeto Council is a ${slashVetoStats} Multisig that can veto specific pro
 Because sequencers stake AZTEC tokens to secure the L2 network, they are also the primary governors of the system. Any governance proposal must be encoded and deployed as a smart contract payload on Ethereum. While core contracts are immutable, the onchain Governance system can designate a new 'canonical' rollup with a ${governanceExecutionDelayString} delay and has access to critical configuration permissions that can freeze or compromise the Rollup system. These permissions can only be accessed through the process described below.
 
 ## 1. The Signaling Phase (\`GovernanceProposer\`)
-Aztec uses an onchain "Empire" signaling system. Active sequencers call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of ${governanceSignalRoundSizeString} slots. To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots. Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
+Aztec uses an onchain "Empire" signaling system. Active sequencers operating on the 'canonical rollup' (as defined by the Registry) call \`signal(payloadAddress)\` on the L1 \`GovernanceProposer\` contract during their designated L2 slots to support a specific upgrade payload. A voting round consists of ${governanceSignalRoundSizeString} slots. To win a round and become a formal proposal, a payload must receive signals from at least ${governanceSignalQuorumSizeString} slots. Once quorum is reached, the payload is submitted to the L1 \`Governance\` contract.
 
 ## 2. The Voting Phase (\`Governance\`)
 Once submitted, the proposal enters a delay and voting flow:
@@ -603,6 +603,6 @@ There is a protective **Vetoer** role held by the SlashVeto Council. The Council
 
 ### Economics & Treasury
 *   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
-*   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds can only be moved with a Governance Proposal.`,
+*   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.`,
   discoveryInfo: getDiscoveryInfo([discovery]),
 }
