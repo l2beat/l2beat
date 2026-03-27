@@ -109,11 +109,16 @@ export class InteropSyncersManager {
   }
 
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
-    for (const v of this.syncers.values()) {
-      const syncer = v.get(chain)
-      if (syncer) {
-        await syncer.processNewestBlock(block, logs)
-      }
+    const results = await Promise.allSettled(
+      Array.from(this.syncers.values())
+        .map((syncersByChain) => syncersByChain.get(chain))
+        .filter((syncer): syncer is InteropEventSyncer => syncer !== undefined)
+        .map((syncer) => syncer.processNewestBlock(block, logs)),
+    )
+
+    const rejected = results.find((result) => result.status === 'rejected')
+    if (rejected?.status === 'rejected') {
+      throw rejected.reason
     }
   }
 

@@ -220,6 +220,7 @@ export class InteropEventSyncer extends TimeLoop {
       if (produced) {
         return produced.map((p) => ({ ...p, plugin: plugin.name }))
       }
+
     }
   }
 
