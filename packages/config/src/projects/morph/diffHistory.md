@@ -14,7 +14,7 @@ Rollup upgrade to make commitBatchWithProof() permissionless under any of these 
 
 this moves sequencer failure and proposer failure to green.
 
-for stage 1 at least an SC and an open proof system are needed.
+for stage 1 at least an SC as upgrader is needed. because of the forced queue and the `rollupDelayPeriod` mechanic, the proof system might already be good for stage 1.
 
 https://disco.l2beat.com/diff/eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3/eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF
 
