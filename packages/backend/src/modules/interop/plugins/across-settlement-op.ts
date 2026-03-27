@@ -1,10 +1,9 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
-  FailedRelayedMessage,
   OPSTACK_NETWORKS,
+  PortalDepositFinalized,
   parseSentMessage,
-  RelayedMessage,
-  SentMessage,
+  TransactionDeposited,
 } from './opstack/opstack'
 import {
   createEventParser,
@@ -74,43 +73,41 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [RelayedMessage, FailedRelayedMessage]
+  matchTypes = [PortalDepositFinalized]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (RelayedMessage.checkType(event)) {
-      // Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
+    if (PortalDepositFinalized.checkType(event)) {
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: event.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // Find MessageRelayedOP at exact offset from SentMessage
-      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageRelayed (N+2)
+      // Find MessageRelayedOP at exact offset from TransactionDeposited
+      // Pattern: TransactionDeposited (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → MessageRelayed (N+3)
       const messageRelayed = db.find(MessageRelayedOP, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!messageRelayed) return
 
       const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'across-settlement',
-          srcEvent: sentMessage,
+          srcEvent: transactionDeposited,
           dstEvent: event,
           extraEvents: [messageRelayed],
         }),
       ]
 
-      // If ETH was sent via CrossDomainMessenger, also create a Transfer
-      if (sentMessage.args.value > 0n) {
+      if (transactionDeposited.args.mint > 0n) {
         results.push(
           Result.Transfer('across-settlement.L1ToL2Transfer', {
-            srcEvent: sentMessage,
-            srcAmount: sentMessage.args.value,
+            srcEvent: transactionDeposited,
+            srcAmount: transactionDeposited.args.mint,
             srcTokenAddress: Address32.NATIVE,
             srcWasBurned: false,
             dstEvent: event,
-            dstAmount: sentMessage.args.value,
+            dstAmount: transactionDeposited.args.mint,
             dstTokenAddress: Address32.NATIVE,
             dstWasMinted: false,
             extraEvents: [messageRelayed],
@@ -119,28 +116,6 @@ export class AcrossSettlementOpPlugin implements InteropPluginResyncable {
       }
 
       return results
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      const messageRelayed = db.find(MessageRelayedOP, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!messageRelayed) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'across-settlement',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [messageRelayed],
-        }),
-      ]
     }
   }
 }

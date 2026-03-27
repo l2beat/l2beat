@@ -1,9 +1,5 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import {
-  FailedRelayedMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { PortalDepositFinalized, TransactionDeposited } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -55,41 +51,41 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [RelayedMessage, FailedRelayedMessage]
+  matchTypes = [PortalDepositFinalized]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (RelayedMessage.checkType(event)) {
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
+    if (PortalDepositFinalized.checkType(event)) {
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: event.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // Find MessageForwarded at exact offset from SentMessage
-      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → MessageForwarded (N+2)
+      // Find MessageForwarded at exact offset from TransactionDeposited
+      // Pattern: TransactionDeposited (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → MessageForwarded (N+3)
       const messageForwarded = db.find(MessageForwarded, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!messageForwarded) return
 
       const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'zklink-nova',
-          srcEvent: sentMessage,
+          srcEvent: transactionDeposited,
           dstEvent: event,
           extraEvents: [messageForwarded],
         }),
       ]
 
-      if (sentMessage.args.value > 0n) {
+      if (transactionDeposited.args.mint > 0n) {
         results.push(
           Result.Transfer('zklink-nova.L1ToL2Transfer', {
-            srcEvent: sentMessage,
-            srcAmount: sentMessage.args.value,
+            srcEvent: transactionDeposited,
+            srcAmount: transactionDeposited.args.mint,
             srcTokenAddress: Address32.NATIVE,
             srcWasBurned: false,
             dstEvent: event,
-            dstAmount: sentMessage.args.value,
+            dstAmount: transactionDeposited.args.mint,
             dstTokenAddress: Address32.NATIVE,
             dstWasMinted: false,
             extraEvents: [messageForwarded],
@@ -98,28 +94,6 @@ export class ZklinkNovaPlugin implements InteropPluginResyncable {
       }
 
       return results
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      const messageForwarded = db.find(MessageForwarded, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!messageForwarded) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'zklink-nova',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [messageForwarded],
-        }),
-      ]
     }
   }
 }
