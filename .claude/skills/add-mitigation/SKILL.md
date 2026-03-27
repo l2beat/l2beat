@@ -19,6 +19,21 @@ Analyze a permissioned function's source code to find on-chain mitigations and a
 
 ## Instructions
 
+### Phase 0: Fetch fund context
+
+Before reading source code, fetch the function's impact data from the API to understand what's at stake:
+
+```bash
+curl -s "localhost:2021/api/projects/<project>/function-analysis" | jq '.contracts["<contractAddress>"]["<functionName>"].impact'
+```
+
+Present the fund context to the researcher:
+
+- If `totalFundsAtRisk > 0` or `totalTokenValueAtRisk > 0`: "This function can reach **$X in funds** across N contracts (+ $Y in token value). Mitigations for this function constrain the following risk."
+- If all zero: "This function has **no detected fund impact**. Mitigations may be less urgent, but you can still add them for documentation purposes."
+
+This helps the researcher prioritize their review effort.
+
 ### Phase 1: Locate source code
 
 Find the flattened source in `packages/config/src/projects/<project>/.flat/`. Match by address in the filename. If not found, check `packages/config/crytic-export/etherscan-contracts/` by address.
@@ -35,6 +50,8 @@ Read the function body and identify **on-chain constraints** that limit what the
 For each constraint found, determine:
 - The **bound values** (constants, storage variables, or computed)
 - Whether the bound is **hardcoded** (literal in code), **discovered** (a contract field we track in `discovered.json`), or a **fieldRef** (a path expression like `$self.MAX_FEE`)
+
+If a constraint cannot be expressed using the standard mitigation types above, **warn the user**: "Found constraint [describe it] but it cannot be represented in the standard mitigation format. Manual review or a custom `other` type with a descriptive text may be needed."
 
 ### Phase 3: Present findings
 
@@ -57,7 +74,7 @@ Ask the user to confirm or adjust before applying. The user may want to:
 
 ### Phase 4: Apply
 
-Add mitigations to the function entry in `packages/config/src/projects/<project>/functions.json`.
+Add mitigations to the function entry via the l2b API (`PUT /api/projects/<project>/functions`).
 
 #### Mitigation format
 
@@ -154,18 +171,35 @@ Use the most specific mode available:
 
 Points to the contract field that enforces the constraint. Used for display and monitoring. Include when the constraint references a specific on-chain value.
 
-#### Applying to functions.json
+#### Saving via API
 
-- Find the function entry by `contractAddress` and `functionName`
-- If the function already has a `mitigations` array, append new entries (don't duplicate)
-- If no `mitigations` array exists, create one
-- Do NOT modify other fields on the function entry (score, ownerDefinitions, etc.)
+Save mitigations via the functions update API. This ensures correct address normalization, attribution stamping, and config severity integration (auto-writes `severity: "HIGH"` for `mitigatedField` references).
+
+1. First, fetch existing mitigations for the function:
+   ```bash
+   curl -s "localhost:2021/api/projects/<project>/functions" | jq '.contracts["<address>"].functions[] | select(.functionName == "<name>") | .mitigations'
+   ```
+
+2. Append new mitigations to the existing array (don't duplicate), then save:
+   ```bash
+   curl -s -X PUT "localhost:2021/api/projects/<project>/functions" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "contractAddress": "<address>",
+       "functionName": "<name>",
+       "mitigations": [... existing + new ...]
+     }'
+   ```
+
+The API replaces the entire `mitigations` array, so always send the full array (existing + new). Only `mitigations` is updated — other fields (`score`, `ownerDefinitions`, etc.) are preserved.
+
 - Do NOT add access control as a mitigation — that's already captured by `isPermissioned` and `ownerDefinitions`
 
 ### Phase 5: Report
 
 ```
 Added 2 mitigations to setDefaultCap on CLGaugeFactory (base:0xB630...):
+  Funds at risk: $12.4M across 3 contracts
   + [valueRange] Default cap bounded 1 to MAX_BPS (10000 bps)
   + [other] Cannot set to zero
 ```

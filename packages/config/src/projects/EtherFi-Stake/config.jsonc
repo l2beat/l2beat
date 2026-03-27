@@ -95,22 +95,28 @@
     },
     // AccessControl: DummyTokenUpgradeable (x5)
     "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     "eth:0x61Ff310aC15a517A846DA08ac9f9abf2A0f9A2bf": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     "eth:0x641B33A2e1e46F3af8f3f0F9249e9111F24A51B3": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     "eth:0x83998e169026136760bE6AF93e776C2F352D4b28": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     "eth:0xDc400f3da3ea5Df0B7B6C127aE2e54CE55644CF3": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
     // AddressMapping: AuctionManager
     "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9": {
+      "ignoreInWatchMode": ["accumulatedRevenue"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: EtherFiOracle
@@ -127,10 +133,12 @@
     },
     // AddressMapping: EtherFiRestaker
     "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf": {
+      "ignoreInWatchMode": ["getTotalPooledEther", "pendingWithdrawalRoots"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: Liquifier
     "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": {
+      "ignoreInWatchMode": ["DEPRECATED_accumulatedFee"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: MembershipManager
@@ -140,6 +148,34 @@
     // AddressMapping: MembershipNFT
     "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": {
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
+    },
+    // ether.fi ETH Token (eETH)
+    "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2": {
+      "ignoreInWatchMode": ["totalShares", "totalSupply"]
+    },
+    // LiquidityPool
+    "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216": {
+      "ignoreInWatchMode": ["totalValueInLp", "totalValueOutOfLp"]
+    },
+    // PriorityWithdrawalQueue
+    "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA": {
+      "ignoreInWatchMode": ["nonce", "totalRemainderShares"]
+    },
+    // WithdrawRequestNFT
+    "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c": {
+      "ignoreInWatchMode": ["totalRemainderEEthShares"]
+    },
+    // Wrapped eETH Token (weETH)
+    "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    // ProtocolRevenueManager
+    "eth:0xfE8A8FC74B2fdD3D745AbFc4940DD858BA60696c": {
+      "ignoreInWatchMode": ["globalRevenueIndex"]
+    },
+    // EtherFiAdmin
+    "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705": {
+      "ignoreInWatchMode": ["blockForNextReportToProcess", "lastAdminExecutionBlock", "lastHandledReportRefBlock", "lastHandledReportRefSlot", "slotForNextReportToProcess"]
     }
   }
 }

@@ -1,3 +1,371 @@
+Generated with discovered.json: 0xac9de328d9afe5d57e46d3d0479f00c2bee9f4b8
+
+# Diff at Thu, 26 Mar 2026 09:20:18 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@66560fd01f284a450c27e3896f8c11e0194eebac block: 1774349093
+- current timestamp: 1774516628
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract LiquidityPool (eth:0x308861A430be4cce5502d0A12724771Fc6DaF216) {
+    +++ description: None
+      values.ethAmountLockedForWithdrawal:
+-        "8292086068067913964648"
++        "15369820143341892140563"
+      values.getTotalPooledEther:
+-        "3057670619420143181720403"
++        "2938589837363846581950641"
+    }
+```
+
+```diff
+    contract PriorityWithdrawalQueue (eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA) {
+    +++ description: None
+      values.getRemainderAmount:
+-        113473700478464
++        113488236729631
+    }
+```
+
+```diff
+    contract MembershipManager (eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000) {
+    +++ description: None
+      values.tierData.0.0:
+-        "102092232945464311"
++        "102205044889990335"
+      values.tierData.1.0:
+-        "117684891452761559"
++        "117808984591740188"
+      values.tierData.2.0:
+-        "132895510501187413"
++        "133030884834618645"
+      values.tierData.3.0:
+-        "148556485737107213"
++        "148703141264991049"
+      values.tierDeposits.0.1:
+-        "14895713818876153181"
++        "14893805883978724071"
+      values.tierDeposits.1.1:
+-        "5244877678605362313"
++        "5244205882323731471"
+      values.tierDeposits.2.1:
+-        "50806351142969872386"
++        "50799843552159832033"
+      values.tierDeposits.3.1:
+-        "101523473971289857221"
++        "101510470218582645638"
+      values.tierVaults.0.0:
+-        "50142843039722971899"
++        "50141504476001725810"
+      values.tierVaults.1.1:
+-        "35243453393083737855"
++        "35145459911981314632"
+      values.tierVaults.1.0:
+-        "36310076078648084231"
++        "36208517298993728743"
+      values.tierVaults.2.0:
+-        "104404883477008297143"
++        "104404212918874918192"
+      values.tierVaults.3.1:
+-        "671132232807253754013"
++        "670534157521875028903"
+      values.tierVaults.3.0:
+-        "703259700901006927904"
++        "702635604748480492517"
+    }
+```
+
+```diff
+    contract EtherFiOracle (eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41) {
+    +++ description: None
+      values.blockStampForNextReport.slotFrom:
+-        13958944
++        13973024
+      values.blockStampForNextReport.slotTo:
+-        13960223
++        13974303
+      values.blockStampForNextReport.blockFrom:
+-        24725401
++        24739430
+      values.lastPublishedReportRefBlock:
+-        24725400
++        24739429
+      values.lastPublishedReportRefSlot:
+-        13958943
++        13973023
+      values.slotForNextReport:
+-        13960223
++        13974303
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A) {
+    +++ description: None
+      values.balances.0:
+-        "40463160717514606127"
++        "38586483013159999761"
+      values.balances.1:
+-        "31909828113254659361"
++        "33577374741548027410"
+      values.D:
+-        "76381422721752570796"
++        "76380942982012525846"
+      values.fee:
+-        3489841
++        3015047
+      values.get_virtual_price:
+-        "1021471702980289804"
++        "1021479862598704473"
+      values.last_prices:
+-        "1125636213624876000"
++        "1125360468795580931"
+      values.last_prices_timestamp:
+-        1774300727
++        1774486139
+      values.lp_price:
+-        "2167481324587699852"
++        "2167233138503743944"
+      values.price_oracle:
+-        "1125636213624876000"
++        "1125360468795580931"
+      values.price_scale:
+-        "1125625306909727423"
++        "1125593184427680035"
+      values.virtual_price:
+-        "1021471702980289804"
++        "1021479862598704473"
+      values.xcp_profit:
+-        "1042339126348069823"
++        "1042347068562471270"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: None
+      values.currRewardsCalculationEndTimestamp:
+-        1773532800
++        1774137600
+      values.getCurrentClaimableDistributionRoot.root:
+-        "0xf7b7b87814a6cd393f2d26fceaf8b6e7833d4ee9b83b39b4ab5d8a34f893f818"
++        "0x59f815285950f5e5deb56f89208eeb7697619003d619d7f845eaea6029fb96d5"
+      values.getCurrentClaimableDistributionRoot.rewardsCalculationEndTimestamp:
+-        1772928000
++        1773532800
+      values.getCurrentClaimableDistributionRoot.activatedAt:
+-        1773770963
++        1774375979
+      values.getCurrentDistributionRoot.root:
+-        "0x59f815285950f5e5deb56f89208eeb7697619003d619d7f845eaea6029fb96d5"
++        "0x50040912e263ba491b905095009fcc612ddc70ed5641a4e8f9eabfe2a673e517"
+      values.getCurrentDistributionRoot.rewardsCalculationEndTimestamp:
+-        1773532800
++        1774137600
+      values.getCurrentDistributionRoot.activatedAt:
+-        1774375979
++        1774982951
+      values.getDistributionRootsLength:
+-        89
++        90
+    }
+```
+
+```diff
+    contract WithdrawRequestNFT (eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c) {
+    +++ description: None
+      values.getEEthRemainderAmount:
+-        "6205003253151626542"
++        "6629371627067528972"
+      values.lastFinalizedRequestId:
+-        75858
++        75927
+      values.nextRequestId:
+-        75933
++        75984
+    }
+```
+
+```diff
+    contract Liquifier (eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F) {
+    +++ description: None
+      values.getTotalPooledEther:
+-        "1128378614484366413215"
++        "1543508268886376693875"
+    }
+```
+
+```diff
+    contract WrapTokenV3ETH (eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1) {
+    +++ description: None
+      values.exchangeRate:
+-        "1093608164698000000"
++        "1093764042219000000"
+      values.totalSupply:
+-        "3174624764490473202176616"
++        "3174628961152101370001340"
+    }
+```
+
+```diff
+    contract MembershipNFT (eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479) {
+    +++ description: None
+      values.accruedLoyaltyPointsOf.2:
+-        80342
++        80541
+      values.accruedLoyaltyPointsOf.3:
+-        99780
++        99973
+      values.accruedLoyaltyPointsOf.4:
+-        99780
++        99973
+      values.accruedStakingRewardsOf.2:
+-        "10209223294546431"
++        "10220504488999033"
+      values.accruedStakingRewardsOf.3:
+-        "10209223294546431"
++        "10220504488999033"
+      values.accruedTierPointsOf.2:
+-        18780
++        18827
+      values.accruedTierPointsOf.3:
+-        23706
++        23753
+      values.accruedTierPointsOf.4:
+-        23706
++        23753
+      values.allTimeHighDepositOf.2:
+-        "112013997764819158"
++        "112027627503468440"
+      values.allTimeHighDepositOf.3:
+-        "110209223294546431"
++        "110220504488999033"
+      values.allTimeHighDepositOf.4:
+-        "110209223294546431"
++        "110220504488999033"
+      values.loyaltyPointsOf.2:
+-        100666
++        100865
+      values.loyaltyPointsOf.3:
+-        99780
++        99973
+      values.loyaltyPointsOf.4:
+-        99780
++        99973
+      values.tierPointsOf.2:
+-        23705
++        23752
+      values.tierPointsOf.3:
+-        23706
++        23753
+      values.tierPointsOf.4:
+-        23706
++        23753
+      values.valueOf.2:
+-        "112013997764819158"
++        "112027627503468440"
+      values.valueOf.3:
+-        "110209223294546431"
++        "110220504488999033"
+      values.valueOf.4:
+-        "110209223294546431"
++        "110220504488999033"
+    }
+```
+
+```diff
+    contract Coinbase Wrapped Staked ETH Token (eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704) {
+    +++ description: None
+      values.exchangeRate:
+-        "1126057768273084167"
++        "1126211478475931415"
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6) {
+    +++ description: None
+      values.admin_balances.0:
+-        0
++        59346707283019
+      values.admin_balances.1:
+-        0
++        7212156146719
+      values.balances.0:
+-        "1203688878226061994"
++        "946308661426324877"
+      values.balances.1:
+-        "2495492534014989171"
++        "2731572326547465602"
+      values.ema_price:
+-        "997611196828771731"
++        "996150185406856707"
+      values.get_p:
+-        "997859760167851488"
++        "996139071468564969"
+      values.get_virtual_price:
+-        "1122862525732263739"
++        "1122997851955903575"
+      values.last_price:
+-        "997860337196259796"
++        "996139480955958014"
+      values.ma_last_time:
+-        1774206107
++        1774466147
+      values.price_oracle:
+-        "997860337196259796"
++        "996139480955958014"
+      values.stored_rates.1:
+-        "1093608164698000000"
++        "1093764042219000000"
+    }
+```
+
+```diff
+    contract Wrapped eETH Token (eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee) {
+    +++ description: None
+      values.getRate:
+-        "1091011640058349522"
++        "1091151401246708947"
+    }
+```
+
+```diff
+    contract EtherfiL1SyncPoolETH (eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146) {
+    +++ description: None
+      values.getTotalUnbackedTokens:
+-        "42257881423729879387"
++        "42301579113884500176"
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022) {
+    +++ description: None
+      values.admin_balances.0:
+-        2173425003365373
++        21626406820857
+      values.admin_balances.1:
+-        95309641133897
++        989757010540
+      values.balances.0:
+-        "20324608161798058824899"
++        "20432103078695901676597"
+      values.balances.1:
+-        "22346269277747255638736"
++        "22220475825604192544129"
+      values.get_virtual_price:
+-        "1134705664739459439"
++        "1134786036019072952"
+    }
+```
+
 Generated with discovered.json: 0x42f9650b49612b4c3dc18b32c9198c0d22089a19
 
 # Diff at Tue, 24 Mar 2026 11:09:43 GMT:

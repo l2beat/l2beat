@@ -384,3 +384,18 @@ The `/run-discovery` Claude Code skill (`.claude/skills/run-discovery/SKILL.md`)
 
 - Default mode pauses after each iteration for user review
 - `--auto` runs all iterations autonomously
+
+### Watch Field Pruning Agent Skill
+
+The `/prune-watch-fields` Claude Code skill (`.claude/skills/prune-watch-fields/SKILL.md`) analyzes all discovered fields on every contract and classifies them for watch-mode monitoring. Fields that change frequently but are not security-critical (supply counters, nonces, oracle reads, reward accumulators) get added to `ignoreInWatchMode` in `config.jsonc`, reducing false-positive alerts during continuous monitoring.
+
+**Usage**: `/prune-watch-fields <project-name>`
+
+**Classification tiers**:
+- **NEVER IGNORE (Tier 1)** — Security-critical fields that must always be monitored: proxy fields (`$admin`, `$implementation`), ownership (`owner`, `pendingOwner`), access control (`accessControl`, `*_ROLE`), governance parameters (`votingDelay`, `quorumNumerator`), fee rate settings, and fields with permission metadata.
+- **SAFE TO IGNORE (Tier 2)** — High-confidence safe fields: supply aggregates (`totalSupply`, `totalAssets`), counters/nonces, batch/block state, queue pointers, timestamps, price/oracle reads, reward index accumulators, and fee running totals.
+- **UNCERTAIN (Tier 3)** — Everything else, sub-categorized for reviewer input (address fields, booleans, small numerics, complex structs).
+
+**Safety cross-checks**: After initial classification, address values are rechecked (an address in a "safe" name pattern gets reclassified to uncertain), permission metadata is verified, and HIGH severity fields are flagged.
+
+**Integration with `/run-discovery`**: Available as an optional final step after discovery completes. Can also be run standalone on any project with an existing `discovered.json`.

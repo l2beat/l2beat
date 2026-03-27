@@ -3,15 +3,15 @@
   "protocols": [
     {
       "slug": "EtherFi-Stake",
-      "name": "EtherFi Staking",
+      "name": "EtherFi Stake",
       "chain": "Ethereum",
       "projectType": "liquid-staking",
       "tokenName": "eETH",
       "totals": {
         "contractCount": 64,
-        "permissionedFunctionCount": 495,
-        "scoredFunctionCount": 0,
-        "adminCount": 39,
+        "permissionedFunctionCount": 494,
+        "scoredFunctionCount": 84,
+        "adminCount": 40,
         "dependencyCount": 7,
         "totalCapitalAtRisk": 21034.733974295774,
         "totalTokenValueAtRisk": 0,
@@ -30,9 +30,9 @@
         "scoredFunctionCount": 1,
         "adminCount": 1,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 79914698.98551074,
-        "totalTokenValueAtRisk": 25856945.213278096,
-        "totalTokenValue": 25856945.213278096
+        "totalCapitalAtRisk": 83050119.92069063,
+        "totalTokenValueAtRisk": 25724637.771031145,
+        "totalTokenValue": 25724637.771031145
       }
     },
     {
@@ -47,7 +47,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 207778221.09754038,
+        "totalCapitalAtRisk": 169519102.78369424,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
@@ -64,9 +64,9 @@
         "scoredFunctionCount": 11,
         "adminCount": 2,
         "dependencyCount": 5,
-        "totalCapitalAtRisk": 793380962.5309043,
+        "totalCapitalAtRisk": 862063927.436899,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 192100000
+        "totalTokenValue": 194400000
       }
     },
     {
@@ -98,9 +98,9 @@
         "scoredFunctionCount": 0,
         "adminCount": 1,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 184197552.2099373,
-        "totalTokenValueAtRisk": 60479247.770068176,
-        "totalTokenValue": 60479247.770068176
+        "totalCapitalAtRisk": 175609673.29952922,
+        "totalTokenValueAtRisk": 60403451.700806536,
+        "totalTokenValue": 60403451.700806536
       }
     },
     {
@@ -115,9 +115,9 @@
         "scoredFunctionCount": 17,
         "adminCount": 0,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 114794430.15728085,
-        "totalTokenValueAtRisk": 31374158.936440747,
-        "totalTokenValue": 31374158.936440747
+        "totalCapitalAtRisk": 113360174.895542,
+        "totalTokenValueAtRisk": 31325385.25346636,
+        "totalTokenValue": 31325385.25346636
       }
     },
     {
@@ -132,16 +132,16 @@
         "scoredFunctionCount": 0,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 771401517.4376072,
+        "totalCapitalAtRisk": 748597271.7224443,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0
       }
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 2372651094.8442755,
-    "totalTokenValueAtRisk": 25292457798.22052,
-    "totalTokenValue": 25349688902.37024,
+    "totalCapitalAtRisk": 2373383982.484294,
+    "totalTokenValueAtRisk": 25294682002.151257,
+    "totalTokenValue": 25351732025.175755,
     "protocolsReviewed": 8
   },
   "dependencies": [
@@ -153,7 +153,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -165,7 +165,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -177,7 +177,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -189,7 +189,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -201,7 +201,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -209,7 +209,7 @@
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "name": "EACAggregatorProxy",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 672825214.4573871,
+      "totalFundsAtRisk": 735580375.3835825,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -221,7 +221,7 @@
       "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "name": "Circle USDC Token",
       "entity": "Circle USDC",
-      "totalFundsAtRisk": 672825214.4573871,
+      "totalFundsAtRisk": 735580375.3835825,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -233,7 +233,7 @@
       "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "name": "Chainlink ETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 298991982.36721814,
+      "totalFundsAtRisk": 288969848.1950712,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -246,22 +246,10 @@
       ]
     },
     {
-      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-      "name": "Morpho Blue",
-      "entity": "Morpho",
-      "totalFundsAtRisk": 207778221.09754038,
-      "protocols": [
-        {
-          "slug": "Steakhouse-USDC",
-          "name": "Steakhouse USDC"
-        }
-      ]
-    },
-    {
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "name": "Tellor Price Feed",
       "entity": "Tellor",
-      "totalFundsAtRisk": 184197552.2099373,
+      "totalFundsAtRisk": 175609673.29952922,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -270,10 +258,22 @@
       ]
     },
     {
+      "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+      "name": "Morpho Blue",
+      "entity": "Morpho",
+      "totalFundsAtRisk": 169519102.78369424,
+      "protocols": [
+        {
+          "slug": "Steakhouse-USDC",
+          "name": "Steakhouse USDC"
+        }
+      ]
+    },
+    {
       "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
       "name": "ConstantPriceFeed (USDT)",
       "entity": null,
-      "totalFundsAtRisk": 120555748.07351723,
+      "totalFundsAtRisk": 126483552.05331646,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -285,7 +285,7 @@
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "name": "Wrapped Ether (WETH)",
       "entity": null,
-      "totalFundsAtRisk": 120555748.07351723,
+      "totalFundsAtRisk": 126483552.05331646,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -297,7 +297,7 @@
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 114794430.15728085,
+      "totalFundsAtRisk": 113360174.89554201,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -309,7 +309,7 @@
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "name": "RocketPool rETH Token",
       "entity": "RocketPool",
-      "totalFundsAtRisk": 114794430.15728085,
+      "totalFundsAtRisk": 113360174.89554201,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -321,7 +321,7 @@
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "name": "Chainlink stETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 111060934.18485714,
+      "totalFundsAtRisk": 110041751.19971398,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -333,7 +333,7 @@
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "name": "Lido wstETH Token",
       "entity": "Lido",
-      "totalFundsAtRisk": 111060934.18485714,
+      "totalFundsAtRisk": 110041751.19971398,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -343,13 +343,13 @@
     },
     {
       "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-      "name": "Ethereum Beacon Chain Deposit Contract",
+      "name": "Ethereum Beacon Chain DepositContract",
       "entity": "Ethereum",
       "totalFundsAtRisk": 49301994.042392276,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         },
         {
           "slug": "lido",
@@ -365,31 +365,31 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
     {
       "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
-      "name": "Curve WrapTokenV3ETH (wstETH/ETH)",
+      "name": "Curve WrapTokenV3ETH",
       "entity": "Curve",
       "totalFundsAtRisk": 46940769.17387663,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
     {
       "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
-      "name": "Curve Pool (view-only)",
+      "name": "Curve Vyper_contract",
       "entity": "Curve",
       "totalFundsAtRisk": 46940769.17387663,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -401,7 +401,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -413,7 +413,7 @@
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },
@@ -421,7 +421,7 @@
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNXCToken (VCHF)",
       "entity": "VCHF",
-      "totalFundsAtRisk": 505270.15873371786,
+      "totalFundsAtRisk": 503838.1609304662,
       "protocols": [
         {
           "slug": "Frankencoin",
@@ -431,13 +431,13 @@
     },
     {
       "address": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
-      "name": "LayerZero Endpoint Owner",
+      "name": "LayerZero Unknown Contract",
       "entity": "LayerZero",
       "totalFundsAtRisk": 0,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
-          "name": "EtherFi Staking"
+          "name": "EtherFi Stake"
         }
       ]
     },

@@ -357,6 +357,19 @@ You can use Claude Code to automate the iterative discovery process:
 3. The agent progressively deepens discovery, classifies contracts (core/external/governance/funds), and prunes external protocols
 4. Review the classification at each iteration (or use `--auto` for autonomous mode)
 5. Results are applied to `config.jsonc` and contract tags
+6. Optionally, run `/prune-watch-fields <project-name>` to reduce monitoring noise (see below)
+
+### Watch Field Pruning
+
+After discovery, many contracts will have fields that change every block (supply totals, nonces, oracle prices) and trigger false-positive monitoring alerts. The `/prune-watch-fields` skill classifies every field and recommends which ones to add to `ignoreInWatchMode` in `config.jsonc`.
+
+1. Make sure the l2b UI server is running (`cd packages/config && l2b ui`)
+2. In Claude Code, run `/prune-watch-fields <project-name>`
+3. The agent presents fields grouped by contract in three tiers: SAFE TO IGNORE, MUST WATCH, and UNCERTAIN
+4. Choose which recommendations to apply (`ignore all safe`, specific numbers, or `skip`)
+5. The agent updates `config.jsonc` and re-runs discovery to sync
+
+Security-critical fields (owners, admins, proxy implementations, fee rates, access control) are never recommended for ignoring. When in doubt, the agent classifies fields as UNCERTAIN and lets you decide.
 
 ### Automated Permission Scanning with Claude Code
 

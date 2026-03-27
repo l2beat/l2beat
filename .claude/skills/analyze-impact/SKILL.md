@@ -21,6 +21,54 @@ Determine whether a permissioned function can retroactively affect funds already
 
 Execute all phases sequentially. Each phase produces auditable output that the researcher can verify.
 
+### Phase 0: Check call graph resolution
+
+Before reading any source code, fetch the function's structured analysis data from the API:
+
+```bash
+curl -s "localhost:2021/api/projects/<project>/function-analysis" | jq '.contracts["<contractAddress>"]["<functionName>"].impact'
+```
+
+This returns:
+- `reachableContracts[]` — contracts reachable via call graph BFS, each with `calledFunctions[]`, `callPath[]`, `fundsUsd`, `viewOnlyPath`
+- `unresolvedCallsCount` — how many external calls couldn't be statically resolved
+- `totalFundsAtRisk`, `totalTokenValueAtRisk`
+
+**If unresolvedCallsCount == 0 (Fast Path):**
+
+The call graph is fully resolved. Present the API-provided reachability as the starting point:
+
+```
+CALL GRAPH REACHABILITY (fully resolved, 0 unresolved calls):
+
+setEmissionCap → calculateMaxEmissions() on CLGaugeFactory
+  → notifyRewardAmount() on CLGauge [$2.4M]
+  → distribute() on Voter (view-only path)
+
+Funds at risk: $2.4M across 1 contract
+```
+
+Then skip Phase 2 (manual read-site tracing) and go directly to Phase 1 (storage mutation) + Phase 3 (temporal classification). For the temporal classification, read only the **terminal functions** in the API-provided call paths — the functions that actually touch funds — rather than grepping all `.flat/` files.
+
+**If unresolvedCallsCount > 0 (Full Manual Trace):**
+
+Read `call-graph-data.json` from disk to identify WHICH calls are unresolved:
+
+```bash
+# In packages/config/src/projects/<project>/call-graph-data.json
+# Look for externalCalls entries on this contract where resolvedAddress is missing
+```
+
+Show the unresolved calls:
+
+```
+UNRESOLVED CALLS (2):
+  - storageVariable: externalOracle, interface: IOracle, function: getPrice
+  - storageVariable: rewardDistributor, interface: IDistributor, function: distribute
+```
+
+Then proceed with ALL phases (1-4) using the full manual trace methodology — the call graph has gaps that must be filled by reading source code.
+
 ### Phase 1: Identify the storage mutation
 
 Read the function's source code from the flattened `.flat/` directory.
@@ -45,7 +93,9 @@ CONSTRAINTS:
 
 Include the exact source lines so the researcher can verify.
 
-### Phase 2: Trace all read sites
+### Phase 2: Trace all read sites (manual path only)
+
+**Skip this phase if Phase 0 used the fast path** — the API already provides the reachability data.
 
 Search ALL source files in the project's `.flat/` directory for every location where the modified storage field is read. Include both direct reads and reads through getter functions.
 
@@ -87,6 +137,10 @@ READ SITES for `_emissionCaps` / `emissionCaps()`:
 ### Phase 3: Classify temporal impact
 
 For each terminal read site (where the value actually influences fund flows), classify it:
+
+**On the fast path:** Read only the terminal functions identified in Phase 0's API data (the functions at the end of `callPath[]` that are on contracts with funds). You already know the chain — just classify the temporal behavior.
+
+**On the manual path:** Use the full call chains from Phase 2.
 
 **Categories:**
 
@@ -146,6 +200,7 @@ IMPACT ANALYSIS: setEmissionCap on CLGaugeFactory
 WRITES: _emissionCaps[_gauge]
 READ BY: emissionCaps() → calculateMaxEmissions() → notifyRewardAmount()
 ENTRY POINT: Voter.distribute() (once per epoch)
+METHOD: API fast path (0 unresolved calls)
 
 VERDICT: ⚡ FUTURE ONLY
   The emission cap is read only during distribute(), which runs

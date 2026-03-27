@@ -403,6 +403,17 @@ Update the iteration counter in tracking.
 
 ---
 
+## Step 5d: Prune Watch Fields (optional)
+
+After the discovery loop stabilizes (no new contracts), offer to classify fields for watch-mode ignore:
+
+- In **normal mode**: Ask the user: "Would you like me to classify fields for watch-mode ignore? This reduces false alerts during continuous monitoring."
+  - If yes → invoke `/prune-watch-fields $0` (the standalone skill handles the full workflow)
+  - If no → skip to Step 6
+- In **`--auto` mode**: Run `/prune-watch-fields $0` automatically. Apply all HIGH-CONFIDENCE (Tier 2) safe-to-ignore recommendations. List any UNCERTAIN fields in the Final Report under a dedicated section.
+
+---
+
 ## Step 6: Final Report
 
 After the loop stabilizes, present a comprehensive report:

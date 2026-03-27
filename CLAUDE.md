@@ -117,6 +117,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 - Discovery Agent (`/run-discovery` Claude Code skill — iterative contract discovery, external/governance/funds tagging, handler configuration, array overflow error fixing)
+- Watch Field Pruning Agent (`/prune-watch-fields` Claude Code skill — classifies discovered fields as safe-to-ignore vs security-critical, updates `ignoreInWatchMode` in config.jsonc, also available as optional step in `/run-discovery`)
 
 ---
 

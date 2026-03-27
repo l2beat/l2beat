@@ -54,9 +54,10 @@ export class CapitalAnalysisCalculator {
   }
 
   /**
-   * Check if a function on a contract has an impact score (not unscored).
-   * Returns true if the function has a real impact score, regardless of permissioned status.
-   * A non-permissioned function with high impact still represents funds at risk when called.
+   * Check if a function on a contract has potential impact on funds.
+   * Returns true unless the function is explicitly marked as 'no-impact' by a researcher.
+   * Unscored functions are treated as potentially impactful (safe default),
+   * matching how direct capital already counts unscored functions.
    */
   private functionHasImpact(
     contractAddress: string,
@@ -68,24 +69,22 @@ export class CapitalAnalysisCalculator {
       this.functionsData.contracts ?? {},
     ).find(([key]) => normalizeChainAddress(key) === normalizedAddress)
 
-    if (!contractEntry) return false
+    // If the contract or function isn't in functions.json, a call graph edge
+    // still exists — the relationship is real. Funds data acts as the natural
+    // guard: external contracts without fund entries contribute $0 regardless.
+    if (!contractEntry) return true
     const contractFunctions = contractEntry[1]
 
-    // Find the function
     const func = contractFunctions.functions.find(
       (f) => f.functionName === functionName,
     )
 
-    if (!func) return false
+    if (!func) return true
 
-    // Check if it has a real impact score (not unscored or undefined)
-    // Note: We don't check isPermissioned here - a function with high impact
-    // is still risky regardless of whether it's permissioned
-    return (
-      func.score !== undefined &&
-      func.score !== 'unscored' &&
-      func.score !== 'no-impact'
-    )
+    // Only exclude functions explicitly marked as no-impact by a researcher.
+    // Unscored/undefined functions default to "potentially impactful" so that
+    // unreviewed projects surface maximum risk rather than hiding it.
+    return func.score !== 'no-impact'
   }
 
   /**

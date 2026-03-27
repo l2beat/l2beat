@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-24T10:31:09.815Z",
+  "lastModified": "2026-03-26T13:55:53.609Z",
   "contracts": {
     "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
       "functions": [
@@ -53,82 +53,121 @@
         {
           "functionName": "schedule",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.080Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.PROPOSER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.437Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.080Z"
+            "date": "2026-03-26T13:55:53.437Z"
           }
         },
         {
           "functionName": "scheduleBatch",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.086Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.PROPOSER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.461Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.086Z"
+            "date": "2026-03-26T13:55:53.461Z"
           }
         },
         {
           "functionName": "cancel",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.093Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.CANCELLER_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.483Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.093Z"
+            "date": "2026-03-26T13:55:53.483Z"
           }
         },
         {
           "functionName": "execute",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.097Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.EXECUTOR_ROLE.members"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+            "fieldName": "getMinDelay"
+          },
+          "timestamp": "2026-03-26T13:55:53.503Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.097Z"
+            "date": "2026-03-26T13:55:53.503Z"
           }
         },
         {
           "functionName": "executeBatch",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.100Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.EXECUTOR_ROLE.members"
+            }
+          ],
+          "delay": {
+            "contractAddress": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+            "fieldName": "getMinDelay"
+          },
+          "timestamp": "2026-03-26T13:55:53.526Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.100Z"
+            "date": "2026-03-26T13:55:53.526Z"
           }
         },
         {
           "functionName": "updateDelay",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.107Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.547Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.107Z"
+            "date": "2026-03-26T13:55:53.547Z"
           }
         },
         {
           "functionName": "grantRole",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.111Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.TIMELOCK_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.566Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.111Z"
+            "date": "2026-03-26T13:55:53.566Z"
           }
         },
         {
           "functionName": "revokeRole",
           "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.115Z",
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.TIMELOCK_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-03-26T13:55:53.587Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-23T17:57:59.115Z"
-          }
-        },
-        {
-          "functionName": "renounceRole",
-          "isPermissioned": true,
-          "timestamp": "2026-03-23T17:57:59.120Z",
-          "lastChangedBy": {
-            "author": "unknown",
-            "date": "2026-03-23T17:57:59.120Z"
+            "date": "2026-03-26T13:55:53.587Z"
           }
         }
       ]
@@ -687,7 +726,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.377Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setProofSubmitter",
@@ -701,7 +741,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.382Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "startCheckpoint",
@@ -715,7 +756,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.387Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "verifyCheckpointProofs",
@@ -729,7 +771,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.392Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "queueETHWithdrawal",
@@ -827,7 +870,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.429Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "forwardEigenPodCall",
@@ -947,7 +991,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.443Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateNodeOperatorManager",
@@ -1049,7 +1094,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.508Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "enableWhitelist",
@@ -1058,7 +1104,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.513Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "pauseContract",
@@ -1076,7 +1123,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.532Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setMinBidPrice",
@@ -1085,7 +1133,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.546Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setMaxBidPrice",
@@ -1094,7 +1143,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.550Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setAccumulatedRevenueThreshold",
@@ -1103,7 +1153,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.556Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateSelectedBidInformation",
@@ -1117,7 +1168,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.561Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "reEnterAuction",
@@ -1131,7 +1183,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.566Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "processAuctionFeeTransfer",
@@ -1223,7 +1276,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.593Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "initializeRoleRegistry",
@@ -1307,7 +1361,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.618Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "invalidateValidatorApprovalTask",
@@ -1349,7 +1404,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.635Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "executeTasks",
@@ -1521,7 +1577,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.702Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unPauseContract",
@@ -1535,7 +1592,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.706Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateAdmin",
@@ -1627,7 +1685,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.747Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "invalidateRegisteredBeaconValidator",
@@ -1636,7 +1695,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.753Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "createBeaconValidators",
@@ -1664,7 +1724,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.765Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "confirmAndFundBeaconValidators",
@@ -1678,7 +1739,25 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.772Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Validator size bounded between 32 ETH and 2048 ETH",
+              "details": {
+                "min": {
+                  "value": "32000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "32 ether"
+                },
+                "max": {
+                  "value": "2048000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "2048 ether"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "upgradeEtherFiNode",
@@ -1701,7 +1780,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.784Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "backfillExistingEtherFiNodes",
@@ -1710,7 +1790,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.788Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "upgradeTo",
@@ -1812,7 +1893,26 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.826Z"
-          }
+          },
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Validator size bounded between 32 ETH and 2048 ETH",
+              "details": {
+                "min": {
+                  "value": "32000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "32 ether"
+                },
+                "max": {
+                  "value": "2048000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "2048 ether"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "registerValidatorSpawner",
@@ -1826,7 +1926,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.834Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unregisterValidatorSpawner",
@@ -1840,7 +1941,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.838Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "DEPRECATED_sendExitRequests",
@@ -1854,7 +1956,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.842Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setFeeRecipient",
@@ -1882,7 +1985,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.855Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "batchCreateBeaconValidators",
@@ -1910,7 +2014,25 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.868Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Validator size bounded between 32 ETH and 2048 ETH",
+              "details": {
+                "min": {
+                  "value": "32000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "32 ether"
+                },
+                "max": {
+                  "value": "2048000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "2048 ether"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "confirmAndFundBeaconValidators",
@@ -1924,7 +2046,25 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.874Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Validator size parameter bounded between 32 ETH and 2048 ETH",
+              "details": {
+                "min": {
+                  "value": "32000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "32 ether"
+                },
+                "max": {
+                  "value": "2048000000000000000000",
+                  "mode": "hardcoded",
+                  "label": "2048 ether"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "pauseContract",
@@ -1952,7 +2092,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.892Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "payProtocolFees",
@@ -1980,7 +2121,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.906Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "rebase",
@@ -2091,7 +2233,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:03.942Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "upgradeTo",
@@ -2520,7 +2663,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.118Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "addNewTier",
@@ -2534,7 +2678,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.127Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateTier",
@@ -2548,7 +2693,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.131Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setPoints",
@@ -2576,7 +2722,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.143Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setWithdrawalLockBlocks",
@@ -2590,7 +2737,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.148Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setDepositAmountParams",
@@ -2604,7 +2752,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.152Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setTopUpCooltimePeriod",
@@ -2618,7 +2767,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.158Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setFeeAmounts",
@@ -2632,7 +2782,21 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.162Z"
-          }
+          },
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Fee amounts must be multiples of 0.001 ether and <= 65.535 ether (uint16.max * 0.001 ether)",
+              "details": {
+                "max": {
+                  "value": "65535000000000000000",
+                  "mode": "hardcoded",
+                  "label": "65.535 ether"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "setFanBoostThresholdEthAmount",
@@ -2646,7 +2810,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.169Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "pauseContract",
@@ -2660,7 +2825,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.177Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unPauseContract",
@@ -2674,7 +2840,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.182Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "rebase",
@@ -2874,7 +3041,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.252Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setOracleReportPeriod",
@@ -2888,7 +3056,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.256Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setConsensusVersion",
@@ -2902,7 +3071,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.262Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unpublishReport",
@@ -2958,7 +3128,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.280Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "submitReport",
@@ -3662,7 +3833,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.613Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "requestWithdraw",
@@ -3676,7 +3848,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.619Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "seizeInvalidRequest",
@@ -3690,7 +3863,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.623Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "finalizeRequests",
@@ -3704,7 +3878,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.627Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "invalidateRequest",
@@ -3732,7 +3907,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.640Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateShareRemainderSplitToTreasuryInBps",
@@ -3746,7 +3922,20 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.644Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Basis points split capped at 10000 (100%)",
+              "details": {
+                "max": {
+                  "value": "10000",
+                  "mode": "hardcoded",
+                  "label": "10000 bps (100%)"
+                }
+              }
+            }
+          ]
         },
         {
           "functionName": "pauseContract",
@@ -3774,7 +3963,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.658Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "handleRemainder",
@@ -4178,7 +4368,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.858Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "sweepFunds",
@@ -4234,7 +4425,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.877Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setProofSubmitter",
@@ -4248,7 +4440,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.882Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "queueETHWithdrawal",
@@ -4262,7 +4455,13 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.887Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Rate limited via EtherFiRateLimiter (UNRESTAKING_LIMIT_ID)"
+            }
+          ]
         },
         {
           "functionName": "completeQueuedETHWithdrawals",
@@ -4290,7 +4489,13 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.896Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Rate limited via EtherFiRateLimiter (UNRESTAKING_LIMIT_ID)"
+            }
+          ]
         },
         {
           "functionName": "completeQueuedWithdrawals",
@@ -4318,7 +4523,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.905Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "verifyCheckpointProofs",
@@ -4332,7 +4538,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.913Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "forwardExternalCall",
@@ -4374,7 +4581,13 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.928Z"
-          }
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Rate limited via EtherFiRateLimiter (EXIT_REQUEST_LIMIT_ID)"
+            }
+          ]
         },
         {
           "functionName": "requestConsolidation",
@@ -4388,7 +4601,14 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.934Z"
-          }
+          },
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Rate limited via EtherFiRateLimiter (CONSOLIDATION_REQUEST_LIMIT_ID)"
+            }
+          ]
         },
         {
           "functionName": "linkLegacyValidatorIds",
@@ -4402,7 +4622,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.940Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "linkPubkeyToNode",
@@ -4416,7 +4637,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:04.946Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "renounceOwnership",
@@ -4634,7 +4856,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.022Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateWhitelistedToken",
@@ -4648,7 +4871,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.027Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "registerToken",
@@ -4662,7 +4886,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.033Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateTimeBoundCapRefreshInterval",
@@ -4676,7 +4901,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.037Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateAdmin",
@@ -4690,7 +4916,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.042Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "withdrawEther",
@@ -4732,7 +4959,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.061Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updatePauser",
@@ -4746,7 +4974,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.067Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateDiscountInBasisPoints",
@@ -4760,7 +4989,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.073Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateQuoteStEthWithCurve",
@@ -4774,7 +5004,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.078Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unPauseContract",
@@ -4788,7 +5019,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.084Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "pauseContract",
@@ -4802,7 +5034,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:05.089Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unwrapL2Eth",
@@ -6537,7 +6770,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.065Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "batchUpdateOperatorsApprovedTags",
@@ -6546,7 +6780,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.075Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "addToWhitelist",
@@ -6555,7 +6790,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.085Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "removeFromWhitelist",
@@ -6564,7 +6800,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.092Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "pauseContract",
@@ -6573,7 +6810,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.102Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "unPauseContract",
@@ -6582,7 +6820,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.111Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setAuctionContractAddress",
@@ -6596,7 +6835,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.119Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateAdmin",
@@ -6610,7 +6850,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.139Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "upgradeTo",
@@ -6740,7 +6981,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.203Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "setAuctionRewardSplitForStakers",
@@ -6754,7 +6996,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.208Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "pauseContract",
@@ -6782,7 +7025,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.221Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "updateAdmin",
@@ -6796,7 +7040,8 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-24T10:31:06.226Z"
-          }
+          },
+          "score": "no-impact"
         },
         {
           "functionName": "upgradeTo",
