@@ -90,6 +90,7 @@ export const megaeth: ScalingProject = opStackL2({
     chainId: 4326,
     explorerUrl: 'https://megaeth.blockscout.com',
     sinceTimestamp: UnixTime(1762797011), // block 1
+    coingeckoPlatform: 'megaeth',
     gasTokens: ['ETH'],
     multicallContracts: [
       {
