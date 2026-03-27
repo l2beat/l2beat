@@ -5,10 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  FailedRelayedMessage,
   MessagePassed,
-  RelayedMessage,
-  SentMessage,
+  PortalDepositFinalized,
+  TransactionDeposited,
   WithdrawalFinalized,
 } from './opstack/opstack'
 import {
@@ -180,40 +179,33 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [
-    DepositBridgeFinalized,
-    WithdrawalBridgeFinalized,
-    FailedRelayedMessage,
-  ]
+  matchTypes = [DepositBridgeFinalized, WithdrawalBridgeFinalized]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (DepositBridgeFinalized.checkType(event)) {
-      // L2: DepositBridgeFinalized → RelayedMessage (offset +1)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: 'base',
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      // L1: Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: 'base',
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → DepositBridgeInitiated (N+2)
       const depositBridgeInitiated = db.find(DepositBridgeInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!depositBridgeInitiated) return
 
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'sky-bridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents: [depositBridgeInitiated, event],
         }),
         Result.Transfer('sky-bridge.L1ToL2Transfer', {
@@ -267,30 +259,6 @@ export class SkyBridgePlugin implements InteropPluginResyncable {
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
           dstWasMinted: false,
-        }),
-      ]
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      if (event.args.chain !== 'base') return
-
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: 'base',
-      })
-      if (!sentMessage) return
-
-      const depositBridgeInitiated = db.find(DepositBridgeInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!depositBridgeInitiated) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'sky-bridge',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [depositBridgeInitiated],
         }),
       ]
     }

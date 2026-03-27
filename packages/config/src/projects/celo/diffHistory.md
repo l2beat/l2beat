@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x8c77158aa3d763a9d8a1d7ec8d70a0b7be072009
+
+# Diff at Wed, 25 Mar 2026 10:06:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1772723699
+- current timestamp: 1774433146
+
+## Description
+
+Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA. Additionally, two signers of the Celo cLabs Multisig (members 3 and 4) were rotated.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+```diff
+    contract Celo cLabs Multisig (eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d) {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x326b764CEb4FE11e70af538D3CB997Bb2e16659d"
++        "eth:0x812f7C111476D45998e6D0C615B41c180C362263"
+      values.$members.4:
+-        "eth:0x48139512241D32047760E7481eBf0b6BF3390f8F"
++        "eth:0x74bc9E59B52117Ccf5Ee457cFb0CBE83b339A065"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0xd7a03912de5954186256dff9ff5a58569453f253
 
 # Diff at Thu, 05 Mar 2026 15:16:57 GMT:

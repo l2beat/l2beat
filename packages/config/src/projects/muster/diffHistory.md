@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x9b2f5179f5751b95a8605a1d8651544600f63389
+
+# Diff at Wed, 25 Mar 2026 10:09:21 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1772723758
+- current timestamp: 1774433287
+
+## Description
+
+Challenge period (confirmPeriodBlocks) drastically reduced from 7200 to 150 L1 blocks (from ~24 hours to ~30 minutes).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s).
+      values.confirmPeriodBlocks:
+-        7200
++        150
+    }
+```
+
 Generated with discovered.json: 0x236b49642d69d88688ed21d5b04ca08237c2c0e0
 
 # Diff at Thu, 05 Mar 2026 15:17:38 GMT:

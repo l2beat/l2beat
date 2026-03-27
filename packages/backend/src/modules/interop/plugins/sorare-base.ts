@@ -1,9 +1,5 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import {
-  FailedRelayedMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { PortalDepositFinalized, TransactionDeposited } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -86,35 +82,32 @@ export class SorareBasePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [FactRegistered, FailedRelayedMessage]
+  matchTypes = [FactRegistered]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (FactRegistered.checkType(event)) {
-      // L2: FactRegistered → RelayedMessage (offset +1)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: 'base',
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      // L1: Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: 'base',
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → TransferRegistered (N+2)
       const transferRegistered = db.find(TransferRegistered, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!transferRegistered) return
 
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'sorare',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents: [transferRegistered, event],
         }),
         Result.Transfer('sorare-base.L1ToL2Transfer', {
@@ -126,30 +119,6 @@ export class SorareBasePlugin implements InteropPluginResyncable {
           dstAmount: transferRegistered.args.amount,
           dstTokenAddress: Address32.NATIVE,
           dstWasMinted: true,
-        }),
-      ]
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      if (event.args.chain !== 'base') return
-
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: 'base',
-      })
-      if (!sentMessage) return
-
-      const transferRegistered = db.find(TransferRegistered, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!transferRegistered) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'sorare',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [transferRegistered],
         }),
       ]
     }
