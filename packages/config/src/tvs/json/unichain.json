@@ -776,6 +776,31 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-USDT0",
+      "priceId": "usdt0",
+      "symbol": "USDT0",
+      "name": "USDT0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9151434b16b9763660705744891fa906f660ecc5",
+        "chain": "unichain",
+        "decimals": 6,
+        "sinceTimestamp": 1741984932
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "unichain-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
