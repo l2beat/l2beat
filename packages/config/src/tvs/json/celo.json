@@ -23,6 +23,24 @@
     },
     {
       "mode": "auto",
+      "id": "celo-BRLA",
+      "priceId": "brla-digital-brla",
+      "symbol": "BRLA",
+      "name": "Brazilian Real",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfeCB3f7c54E2CaAE9dc6Ac9060a822d47e053760",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1716405493
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "celo-CELO-1",
       "priceId": "celo",
       "symbol": "CELO",
@@ -178,6 +196,24 @@
     },
     {
       "mode": "auto",
+      "id": "celo-GBPm",
+      "priceId": "mento-british-pound",
+      "symbol": "GBPm",
+      "name": "Mento British Pound",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33900/large/GBPm.png?1703256215",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004A40746",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742684383
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "celo-OLAS",
       "priceId": "autonolas",
       "symbol": "OLAS",
@@ -303,23 +339,11 @@
       "name": "Tether USD",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "totalSupply",
-            "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-            "chain": "celo",
-            "decimals": 6,
-            "sinceTimestamp": 1742960663
-          },
-          {
-            "type": "const",
-            "value": "323024420080000",
-            "decimals": 6,
-            "sinceTimestamp": 1742960663
-          }
-        ]
+        "type": "totalSupply",
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "chain": "celo",
+        "decimals": 6,
+        "sinceTimestamp": 1742960663
       },
       "category": "stablecoin",
       "source": "native",
