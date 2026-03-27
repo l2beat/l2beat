@@ -365,6 +365,31 @@
     },
     {
       "mode": "auto",
+      "id": "zircuit-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USDC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3b952c8c9c44e8fe201e2b26f6b2200203214cff",
+        "chain": "zircuit",
+        "decimals": 6,
+        "sinceTimestamp": 1724284787
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zircuit-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
