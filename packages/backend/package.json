@@ -41,6 +41,7 @@
   "dependencies": {
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/interop-backoffice": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/discovery": "workspace:*",
@@ -54,7 +55,6 @@
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "diff": "^7.0.0",
-    "discord.js": "^14.21.0",
     "elastic-apm-node": "^4.11.2",
     "ethers": "^5.7.2",
     "koa": "^2.14.1",

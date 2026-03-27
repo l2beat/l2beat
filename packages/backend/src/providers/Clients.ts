@@ -6,7 +6,6 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
-  DiscordClient,
   DuneClient,
   EigenApiClient,
   EspressoClient,
@@ -57,12 +56,10 @@ export interface Clients {
   near: NearClient | undefined
   espresso: EspressoClient | undefined
   dune: DuneClient | undefined
-  discord: DiscordClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -77,7 +74,6 @@ export function initClients(config: Config, logger: Logger): Clients {
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
-  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -370,10 +366,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     return client
   }
 
-  if (config.updateMonitor && config.updateMonitor.discord) {
-    discord = new DiscordClient(http, config.updateMonitor.discord)
-  }
-
   return {
     block: blockClients,
     logs: logsClients,
@@ -398,6 +390,5 @@ export function initClients(config: Config, logger: Logger): Clients {
     voyager: voyagerClient,
     lighter: lighterClient,
     dune,
-    discord,
   }
 }

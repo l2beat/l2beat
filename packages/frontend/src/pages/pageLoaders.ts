@@ -1,4 +1,6 @@
 export const pageLoaders = {
+  IconPreviewPage: async () =>
+    (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
   ScalingRiskPage: async () =>
@@ -94,6 +96,8 @@ export const pageLoaders = {
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,
   AboutUsPage: async () => (await import('./about/AboutUsPage')).AboutUsPage,
+  BrandKitPage: async () =>
+    (await import('./brand-kit/BrandKitPage')).BrandKitPage,
   ChangelogPage: async () =>
     (await import('./changelog/ChangelogPage')).ChangelogPage,
   DonatePage: async () => (await import('./donate/DonatePage')).DonatePage,

@@ -2,6 +2,7 @@ import type { InteropPluginName } from '@l2beat/config'
 import type { AbstractTokenRecord, InteropEventContext } from '@l2beat/database'
 import {
   type Address32,
+  assert,
   type Block,
   type ChainSpecificAddress,
   EthereumAddress,
@@ -41,15 +42,24 @@ export interface InteropMessage {
   dst: InteropEvent
 }
 
-export interface TransferSide {
-  event: InteropEvent
+type TransferSideSource =
+  | {
+      event: InteropEvent
+      chain: undefined
+    }
+  | {
+      event: undefined
+      chain: string
+    }
+
+export type TransferSide = TransferSideSource & {
   tokenAddress?: Address32
   tokenAmount?: bigint
   wasBurned?: boolean
   wasMinted?: boolean
 }
 
-export interface InteropTransfer {
+export type InteropTransfer = {
   kind: 'InteropTransfer'
   plugin: string
   type: string
@@ -213,7 +223,7 @@ export interface InteropEventDb {
   ): InteropEvent<T>[]
 }
 
-export type DataRequest = EventDataRequest
+export type DataRequest = EventDataRequest | TxFromEventRequest
 
 interface EventDataRequest {
   type: 'event'
@@ -221,6 +231,24 @@ interface EventDataRequest {
   includeTxEvents?: string[]
   includeTx?: boolean
   addresses: ChainSpecificAddress[] | '*'
+}
+
+export interface TxFromEventRequest<
+  TArgs extends Record<string, unknown> = Record<string, unknown>,
+> {
+  type: 'txFromEvent'
+  creatorEvent: InteropEventType<TArgs>
+  txHashArg: Extract<keyof TArgs, string>
+  chainArg: Extract<keyof TArgs, string>
+}
+
+export function txFromEvent<TArgs extends Record<string, unknown>>(
+  request: Omit<TxFromEventRequest<TArgs>, 'type'>,
+): TxFromEventRequest<TArgs> {
+  return {
+    type: 'txFromEvent',
+    ...request,
+  }
 }
 
 export type DeployedToAbstractMap = Map<
@@ -231,7 +259,10 @@ export type DeployedToAbstractMap = Map<
 export interface InteropPlugin {
   readonly name: InteropPluginName
   capture?: (input: LogToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
-  captureTx?: (input: TxToCapture) => Omit<InteropEvent, 'plugin'>[] | undefined
+  captureTx?: (
+    input: TxToCapture,
+    creatorEvents?: InteropEvent[],
+  ) => Omit<InteropEvent, 'plugin'>[] | undefined
   matchTypes?: InteropEventType<unknown>[]
   match?: (
     event: InteropEvent,
@@ -335,20 +366,31 @@ function Message(
   }
 }
 
-export interface InteropTransferOptions {
-  srcEvent: InteropEvent
+export type InteropTransferOptions = {
   srcTokenAddress?: Address32
   srcAmount?: bigint
   srcWasBurned?: boolean
 
-  dstEvent: InteropEvent
   dstTokenAddress?: Address32
   dstAmount?: bigint
   dstWasMinted?: boolean
 
   bridgeType?: KnownInteropBridgeType
   extraEvents?: InteropEvent[]
-}
+} & (
+  | {
+      srcEvent: InteropEvent
+      dstEvent: InteropEvent
+    }
+  | {
+      srcEvent: InteropEvent
+      dstChain: string
+    }
+  | {
+      srcChain: string
+      dstEvent: InteropEvent
+    }
+)
 
 function Transfer(
   type: string,
@@ -359,27 +401,51 @@ function Transfer(
       'InteropTransfer type must have the format: "app-name.Transfer" or "app-name.Transfer.app-name"',
     )
   }
+
+  const src = {
+    tokenAddress: options.srcTokenAddress,
+    tokenAmount: options.srcAmount,
+    wasBurned: options.srcWasBurned,
+    ...('srcEvent' in options
+      ? { event: options.srcEvent, chain: undefined }
+      : { event: undefined, chain: options.srcChain }),
+  } satisfies TransferSide
+
+  const dst = {
+    tokenAddress: options.dstTokenAddress,
+    tokenAmount: options.dstAmount,
+    wasMinted: options.dstWasMinted,
+    ...('dstEvent' in options
+      ? { event: options.dstEvent, chain: undefined }
+      : { event: undefined, chain: options.dstChain }),
+  } satisfies TransferSide
+
+  const events = [
+    ...(src.event ? [src.event] : []),
+    ...(dst.event ? [dst.event] : []),
+    ...(options.extraEvents ?? []),
+  ]
+
+  assert(
+    src.event !== undefined || src.chain !== undefined,
+    'Transfer requires either srcEvent or srcChain',
+  )
+  assert(
+    dst.event !== undefined || dst.chain !== undefined,
+    'Transfer requires either dstEvent or dstChain',
+  )
+  assert(
+    events.length > 0,
+    'Transfer requires at least single event - either srcEvent or dstEvent',
+  )
+
   return {
     kind: 'InteropTransfer',
     type,
     bridgeType: options.bridgeType,
-    events: [
-      options.srcEvent,
-      options.dstEvent,
-      ...(options.extraEvents ?? []),
-    ],
-    src: {
-      event: options.srcEvent,
-      tokenAddress: options.srcTokenAddress,
-      tokenAmount: options.srcAmount,
-      wasBurned: options.srcWasBurned,
-    },
-    dst: {
-      event: options.dstEvent,
-      tokenAddress: options.dstTokenAddress,
-      tokenAmount: options.dstAmount,
-      wasMinted: options.dstWasMinted,
-    },
+    events,
+    src,
+    dst,
   }
 }
 

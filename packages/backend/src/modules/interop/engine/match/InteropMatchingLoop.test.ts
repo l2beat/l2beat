@@ -8,6 +8,7 @@ import {
   createInteropEventType,
   type InteropEvent,
   type InteropPlugin,
+  Result,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
 import { InteropMatchingLoop, match } from './InteropMatchingLoop'
@@ -187,5 +188,56 @@ describe('match', () => {
     )
 
     expect(seen).toEqual(TOKEN_A)
+  })
+
+  it('keeps transfers with explicit chain on the missing side', async () => {
+    const Event = createInteropEventType<{
+      $dstChain: string
+    }>('test.Event')
+    const db = new InMemoryEventDb()
+
+    const event = Event.mock({ $dstChain: 'solana' }, 1)
+    event.ctx = {
+      chain: 'ethereum',
+      timestamp: 123,
+      logIndex: 7,
+      txHash: '0xabc',
+    }
+    db.addEvent(event)
+
+    const plugin: InteropPlugin = {
+      name: 'mock-plugin' as InteropPluginName,
+      matchTypes: [Event],
+      match(event) {
+        if (!Event.checkType(event)) {
+          return
+        }
+        return [
+          Result.Transfer('test.Transfer', {
+            srcEvent: event,
+            dstChain: 'solana',
+          }),
+        ]
+      },
+    }
+
+    const result = await match(
+      db,
+      (type) => db.getEvents(type),
+      db.getEventTypes(),
+      db.getEventCount(),
+      [plugin],
+      ['ethereum'],
+      Logger.SILENT,
+      mockObject<TokenMap>({}),
+    )
+
+    expect(result.transfers.length).toEqual(1)
+    expect(result.unsupported.length).toEqual(0)
+
+    const transfer = result.transfers[0]
+    expect(transfer.src.event?.ctx.chain).toEqual('ethereum')
+    expect(transfer.dst.event).toEqual(undefined)
+    expect(transfer.dst.chain).toEqual('solana')
   })
 })

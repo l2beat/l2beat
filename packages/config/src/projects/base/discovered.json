@@ -1,6 +1,6 @@
 {
   "name": "base",
-  "timestamp": 1773160404,
+  "timestamp": 1774387648,
   "configHash": "0x7e5006a9cd6e910bbcff7795125cf6ccb79bc0029116463ab977215145232266",
   "entries": [
     {
@@ -10,7 +10,7 @@
       "template": "opstack/Layer2/FeeDisburser",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0x9e4d8a31512b7aaafcbf23f817cbdc9bbe404a0fa262aaf98220120c52fde7cb"
+        "0x3191b674fc342aed9eded2ad3c79eead2fb38e8a2b0589a8ec5058dadfe2d5be"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.",
@@ -19,7 +19,7 @@
       "sinceBlock": 6728,
       "values": {
         "$admin": "base:0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
-        "$implementation": "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75",
+        "$implementation": "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6",
         "$pastUpgrades": [
           [
             "2023-09-01T23:06:43.000Z",
@@ -30,19 +30,24 @@
             "2026-03-03T17:36:17.000Z",
             "0x055b31e8fb8689e5e72d9c41c1c38b5a165fd145aa76bf118194f86a066d0650",
             ["base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75"]
+          ],
+          [
+            "2026-03-13T21:06:31.000Z",
+            "0x68c2a1b66361dcb9ec2f8b1fe26ae275021b6d78751d0577fc0bd410dfd47518",
+            ["base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "base:0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1772323219,
+        "lastDisbursementTime": 1774378283,
         "netFeeRevenue": 0,
-        "version": "1.0.0",
+        "version": "1.0.0+fee-vault-withdraw-compat",
         "WITHDRAWAL_MIN_GAS": 35000
       },
       "implementationNames": {
         "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA": "Proxy",
-        "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75": "FeeDisburser"
+        "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6": "FeeDisburser"
       }
     },
     {
@@ -71,7 +76,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "base:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292672265",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292672777",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -287,10 +292,10 @@
           ]
         ],
         "$upgradeCount": 3,
-        "basefee": 306752372,
+        "basefee": 55140517,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
-        "blobBaseFee": 17200010,
+        "blobBaseFee": 2950118,
         "blobBaseFeeScalar": 1055762,
         "daFootprintGasScalar": 139,
         "DEPOSITOR_ACCOUNT": "base:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -300,15 +305,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xbe2413bbd2fe029737a7b9d94f5d443d2c5255d6d98de7201bf13b2cd4b94285",
+        "hash": "0xad1b8939e255fd3a3a46670627c502eee933fcb1ec6bb6e0ba98da1754d8b05e",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 24628269,
+        "number": 24730063,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 3,
-        "timestamp": 1773160223,
+        "sequenceNumber": 1,
+        "timestamp": 1774387463,
         "version": "1.7.0"
       },
       "implementationNames": {
@@ -1226,7 +1231,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 11864,
+        "gameCount": 12204,
         "gameImpls": [
           "eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -1349,8 +1354,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516470,
-          "prevBlockNum": 24628256
+          "prevBoughtGas": 1326609,
+          "prevBlockNum": 24730070
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2199,7 +2204,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293150395",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293156219",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2292,13 +2297,13 @@
         ],
         "$upgradeCount": 2,
         "absolutePrestateFromGame": "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e",
-        "anchorGame": "eth:0x890F8b02D7f7CB6C79b3d66e50abA67502c3b494",
+        "anchorGame": "eth:0xBE8E83b221cE9AEb6E6cB2A26EDf7C5F0AbbBBfB",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xf224f00db1f32850178e70e2633d0d8aacf2e021d0e1caef66dd7af5b8607953",
-          42881843
+          "0x72ec3460bb889f6f9c3b23b7fe5f681134d4d9e819f9796821c5af60c2a5961a",
+          43495274
         ],
         "getStartingAnchorRoot": {
           "root": "0x9a37fe32cd2b49385bec0236b7b5c2177e71176bb306d19a49a8a77651ce2cd0",
@@ -2800,6 +2805,24 @@
       "function initialize(address _bridge)",
       "function version() view returns (string)"
     ],
+    "base:0x72984FeF9c2123eBB66912CeAB9e47C5E9B738e6": [
+      "constructor(address l1Wallet, uint256 feeDisbursementInterval)",
+      "error FeeVaultMustWithdrawToFeeDisburser()",
+      "error FeeVaultMustWithdrawToL2()",
+      "error IntervalNotReached()",
+      "error IntervalTooLow()",
+      "error ZeroAddress()",
+      "event FeesDisbursed(uint256 disbursementTime, uint256 deprecated, uint256 totalFeesDisbursed)",
+      "event FeesReceived(address indexed sender, uint256 amount)",
+      "event NoFeesCollected()",
+      "function FEE_DISBURSEMENT_INTERVAL() view returns (uint256)",
+      "function L1_WALLET() view returns (address)",
+      "function WITHDRAWAL_MIN_GAS() view returns (uint32)",
+      "function disburseFees()",
+      "function lastDisbursementTime() view returns (uint256)",
+      "function netFeeRevenue() view returns (uint256)",
+      "function version() pure returns (string)"
+    ],
     "base:0x75505a97BD334E7BD3C476893285569C4136Fa0F": [
       "constructor()",
       "error AlreadyExists()",
@@ -2979,24 +3002,6 @@
       "function totalProcessed() view returns (uint256)",
       "function version() view returns (string)",
       "function withdraw()"
-    ],
-    "base:0xDa70b4cd0Cd8193f665A7D49CeFD5f79F11FCc75": [
-      "constructor(address l1Wallet, uint256 feeDisbursementInterval)",
-      "error FeeVaultMustWithdrawToFeeDisburser()",
-      "error FeeVaultMustWithdrawToL2()",
-      "error IntervalNotReached()",
-      "error IntervalTooLow()",
-      "error ZeroAddress()",
-      "event FeesDisbursed(uint256 disbursementTime, uint256 deprecated, uint256 totalFeesDisbursed)",
-      "event FeesReceived(address indexed sender, uint256 amount)",
-      "event NoFeesCollected()",
-      "function FEE_DISBURSEMENT_INTERVAL() view returns (uint256)",
-      "function L1_WALLET() view returns (address)",
-      "function WITHDRAWAL_MIN_GAS() view returns (uint32)",
-      "function disburseFees()",
-      "function lastDisbursementTime() view returns (uint256)",
-      "function netFeeRevenue() view returns (uint256)",
-      "function version() pure returns (string)"
     ],
     "eth:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E": [
       "constructor(address _owner)",
@@ -4095,6 +4100,6 @@
     "opstack/SuperchainConfig_base": "0x103395272d77a2e3ce04a5f4cdef3df2f6d47b5d24f3e8b1137118cfdce7c9a8",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 43185528, "ethereum": 24628284 },
+  "usedBlockNumbers": { "base": 43799150, "ethereum": 24730078 },
   "permissionsConfigHash": "0x17c4b187cda9f11d312ecebe25d337c2f743f1595d5325538f05e02ef1a67d6a"
 }

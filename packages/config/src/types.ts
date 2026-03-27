@@ -212,13 +212,32 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
-export interface Milestone {
+interface BaseMilestone {
   title: string
   url: string
+  linkLabel?: string
   date: string
   description?: string
-  type: 'general' | 'incident'
 }
+
+interface GeneralMilestone extends BaseMilestone {
+  type: 'general'
+}
+
+interface IncidentMilestone extends BaseMilestone {
+  type: 'incident'
+}
+
+interface ProjectIconMilestone extends BaseMilestone {
+  projectId: ProjectId
+  projectIcon: string
+  type: 'project'
+}
+
+export type Milestone =
+  | ProjectIconMilestone
+  | GeneralMilestone
+  | IncidentMilestone
 
 export interface ChainConfig {
   /**
@@ -777,6 +796,8 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string
+    sourceLink?: string
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {

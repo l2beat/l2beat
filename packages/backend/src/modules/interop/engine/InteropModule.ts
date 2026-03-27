@@ -1,9 +1,12 @@
-import { HttpClient, InteropTransferClassifier } from '@l2beat/shared'
+import {
+  DiscordClient,
+  HttpClient,
+  InteropTransferClassifier,
+} from '@l2beat/shared'
 import type { LongChainName } from '@l2beat/shared-pure'
 import { getTokenDbClient } from '@l2beat/token-backend'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { DiscordWebhookClient } from '../../anomalies/clients/DiscordWebhookClient'
 import type { ApplicationModule, ModuleDependencies } from '../../types'
 import {
   createInteropPlugins,
@@ -12,6 +15,7 @@ import {
 } from '../plugins'
 import { RelayApiClient } from '../plugins/relay/RelayApiClient'
 import { RelayIndexer, RelayRootIndexer } from '../plugins/relay/relay.indexer'
+import { isPluginResyncable } from '../plugins/types'
 import { InteropAggregatingIndexer } from './aggregation/InteropAggregatingIndexer'
 import { InteropAggregationService } from './aggregation/InteropAggregationService'
 import { InteropBlockProcessor } from './capture/InteropBlockProcessor'
@@ -41,14 +45,13 @@ export function createInteropModule({
   }
   logger = logger.tag({ feature: 'interop', module: 'interop' })
 
-  const eventStore = new InteropEventStore(db, config.interop.inMemoryEventCap)
   let configStore = new InteropConfigStore(db)
 
   let notificationClient: InteropNotifier | undefined
 
-  if (config.interop.notifications) {
-    const discordClient = new DiscordWebhookClient(
-      config.interop.notifications.discordWebhookUrl,
+  if (config.notifications && config.notifications.interop) {
+    const discordClient = new DiscordClient(
+      config.notifications.interop.discordWebhookUrl,
     )
     notificationClient = new InteropNotifier(discordClient, logger)
     configStore = new InteropMonitoringConfigStoreProxy(
@@ -65,12 +68,19 @@ export function createInteropModule({
   const plugins = createInteropPlugins({
     configs: configStore,
     chains: config.interop.config.chains,
+    oneSidedChains: config.interop.oneSidedChains,
     httpClient: new HttpClient(),
     logger,
     rpcClients: providers.clients.rpcClients,
     tokenDbClient,
     configIntervalMs: config.interop.config.configIntervalMs,
   })
+  const eventPlugins = flattenClusters(plugins.eventPlugins)
+  const eventStore = new InteropEventStore(
+    db,
+    config.interop.inMemoryEventCap,
+    eventPlugins.filter(isPluginResyncable),
+  )
 
   const syncersManager = new InteropSyncersManager(
     pluginsAsClusters(plugins.eventPlugins),
@@ -86,7 +96,7 @@ export function createInteropModule({
     for (const chain of config.interop.capture.chains) {
       const processor = new InteropBlockProcessor(
         chain.id,
-        flattenClusters(plugins.eventPlugins),
+        eventPlugins,
         eventStore,
         logger,
       )
@@ -102,7 +112,7 @@ export function createInteropModule({
     eventStore,
     db,
     tokenDbClient,
-    flattenClusters(plugins.eventPlugins),
+    eventPlugins,
     config.interop.capture.chains.map((c) => c.id),
     logger,
   )
@@ -207,7 +217,7 @@ export function createInteropModule({
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
       configPlugins: plugins.configPlugins.length,
-      eventPlugins: flattenClusters(plugins.eventPlugins).length,
+      eventPlugins: eventPlugins.length,
     })
 
     if (config.interop && config.interop.capture.enabled) {

@@ -10,7 +10,7 @@ import type { InteropTokensSectionProps } from './interop/InteropTokensSection'
 import type { InteropTransfersSectionProps } from './interop/InteropTransfersSection'
 import type { InteropVolumeSectionProps } from './interop/InteropVolumeSection'
 import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
-import type { LivenessSectionProps } from './LivenessSection'
+import type { LivenessSectionProps } from './liveness/LivenessSection'
 import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
@@ -27,6 +27,7 @@ import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
+import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
 type SectionId =
@@ -59,7 +60,6 @@ type SectionId =
   | 'interop-volume'
   | 'interop-transfers'
   | 'interop-tokens'
-
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -221,6 +221,11 @@ interface ProjectDetailsZkCatalogTvsSection {
   props: ProjectDetailsProps<ZkCatalogTvsSectionProps>
 }
 
+interface ProjectDetailsUpgradesAndGovernanceSection {
+  type: 'UpgradesAndGovernanceSection'
+  props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -255,4 +260,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropVolumeSection
   | ProjectDetailsInteropTransfersSection
   | ProjectDetailsInteropTokensSection
+  | ProjectDetailsUpgradesAndGovernanceSection
 )

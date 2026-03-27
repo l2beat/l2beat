@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
+import { useTracking } from '~/hooks/useTracking'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
@@ -103,6 +104,7 @@ export function InteropSelectedChainsProvider({
     [mode, selection],
   )
 
+  const { track } = useTracking()
   const debouncedSelection = useDebouncedValue(selection, 500)
   const skipNextUrlUpdate = useRef(false)
 
@@ -124,7 +126,16 @@ export function InteropSelectedChainsProvider({
     }
 
     window.history.pushState({}, '', nextUrl)
-  }, [debouncedSelection, mode])
+
+    const chains = [
+      ...new Set([...debouncedSelection.from, ...debouncedSelection.to]),
+    ]
+      .sort()
+      .join(',')
+    track('interopChainsSelected', {
+      props: { chains, page: window.location.pathname },
+    })
+  }, [debouncedSelection, mode, track])
 
   useEventListener('popstate', () => {
     skipNextUrlUpdate.current = true

@@ -1,6 +1,11 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import {
+  createInteropTrpcRouter,
+  createKoaMiddleware,
+  createTRPCContext,
+} from '@l2beat/interop-backoffice'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -42,6 +47,35 @@ export function createInteropRouter(
     ctx.body = dangerousOperationsDisabledResponse
     return false
   }
+
+  // Example server side implementation
+
+  const trpcMiddleware = createKoaMiddleware({
+    router: createInteropTrpcRouter({
+      status: {
+        memory: () => {
+          const memoryUsage = process.memoryUsage()
+
+          return Promise.resolve({
+            rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
+            heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
+            heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
+            external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`,
+            arrayBuffers: `${(memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2)} MB`,
+          })
+        },
+      },
+    }),
+    prefix: '/interop/trpc',
+    allowMethodOverride: true,
+    createContext: ({ req }) =>
+      createTRPCContext({
+        headers: new Headers(req.headers as Record<string, string>),
+        db,
+      }),
+  })
+
+  router.all(['/interop/trpc', '/interop/trpc/(.*)'], trpcMiddleware)
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()

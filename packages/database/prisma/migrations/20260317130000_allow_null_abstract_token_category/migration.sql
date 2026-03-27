@@ -1,0 +1,2 @@
+ALTER TABLE "AbstractToken"
+ALTER COLUMN "category" DROP NOT NULL;

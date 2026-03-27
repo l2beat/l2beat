@@ -65,6 +65,7 @@ function AbstractTokenView({
     defaultValues: {
       ...token,
       issuer: token.issuer ?? undefined,
+      category: token.category,
       coingeckoId: token.coingeckoId ?? undefined,
       iconUrl: token.iconUrl ?? undefined,
       comment: token.comment ?? undefined,
@@ -120,6 +121,7 @@ function AbstractTokenView({
                     update: {
                       ...values,
                       issuer: values.issuer || null,
+                      category: values.category ?? null,
                       iconUrl: values.iconUrl || null,
                       coingeckoId: values.coingeckoId || null,
                       comment: values.comment || null,

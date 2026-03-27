@@ -37,7 +37,7 @@
         "sinceTimestamp": 1734701579
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -63,7 +63,7 @@
         "sinceTimestamp": 1733855519
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

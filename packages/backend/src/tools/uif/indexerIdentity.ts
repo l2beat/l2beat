@@ -14,4 +14,5 @@ export const INDEXER_NAMES = {
   TVS_PRICE: 'tvs_price_indexer',
   TVS_CIRCULATING_SUPPLY: 'tvs_circulating_supply_indexer',
   TVS_TOKEN_VALUE: 'tvs_token_value',
+  ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
 }

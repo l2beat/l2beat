@@ -269,7 +269,7 @@ export class HighLevelProvider implements IProvider {
     const result = await this.provider.getBlock(blockNumber)
     duration += performance.now()
     this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
-    return result
+    return result ?? undefined
   }
 
   async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {

@@ -1,4 +1,3 @@
-import type { InteropDurationSplit } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -94,6 +93,16 @@ export const InteropProtocolTokensParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
+export const InteropTopItemsParams = v.object({
+  id: v.union([
+    v.string().transform((value) => ProjectId(value)),
+    v.undefined(),
+  ]),
+  ...InteropSelectionInputShape,
+  type: KnownInteropBridgeType.optional(),
+})
+
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
@@ -117,13 +126,13 @@ export type InteropProtocolTransferDetailsItem = {
   dstSymbol: string | undefined
   dstTokenIconUrl: string
   valueUsd: number | undefined
-  duration: number
+  duration: number | undefined
   srcChain: string
-  srcTxHash: string
-  srcTxHashHref: string
+  srcTxHash: string | undefined
+  srcTxHashHref: string | undefined
   dstChain: string
-  dstTxHash: string
-  dstTxHashHref: string
+  dstTxHash: string | undefined
+  dstTxHashHref: string | undefined
 }
 
 export type InteropProtocolTransferStats = {
@@ -148,6 +157,7 @@ export type AggregatedInteropTransferWithTokens =
 export type CommonInteropData = {
   volume: number
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
@@ -173,6 +183,20 @@ export type TokenData = {
   symbol: string
   issuer: string | null
   iconUrl: string
+  volume: number | null
+  transferCount: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  netMintedValue: number | undefined
+  flows: TokenFlowData[]
+}
+
+export type TokensPairData = {
+  id: string
+  tokenA: { symbol: string; iconUrl: string }
+  tokenB: { symbol: string; iconUrl: string }
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -217,9 +241,3 @@ export type AverageDuration =
   | SingleAverageDuration
   | SplitAverageDuration
   | UnknownAverageDuration
-/** Two-level map: projectId -> bridgeType -> durationSplit config */
-
-export type DurationSplitMap = Map<
-  string,
-  Map<KnownInteropBridgeType, NonNullable<InteropDurationSplit>>
->

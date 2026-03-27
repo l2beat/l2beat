@@ -1,6 +1,5 @@
-import type { Database } from '@l2beat/database'
+import type { Database, KyselyLogEvent } from '@l2beat/database'
 import { compiledToSqlQuery, createDatabase } from '@l2beat/database'
-import type { LogEvent } from 'kysely'
 import { env } from '~/env'
 import { getLogger } from './utils/logger'
 
@@ -81,7 +80,7 @@ export function pool() {
 export function makeDbLogger(tag: string) {
   const logger = getLogger().for(tag)
 
-  return (event: LogEvent) => {
+  return (event: KyselyLogEvent) => {
     if (event.level === 'error') {
       logger.error('Query failed', {
         durationMs: event.queryDurationMillis,

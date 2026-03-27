@@ -1,9 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { DiscordClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
-import type { DataAvailabilityTrackingConfig } from '../../config/Config'
+import type {
+  DataAvailabilityTrackingConfig,
+  NotificationsConfig,
+} from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -12,6 +16,7 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
+import { EthereumBlobNotifierIndexer } from './indexers/EthereumBlobNotifierIndexer'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { BlobService } from './services/BlobService'
@@ -34,13 +39,15 @@ export function initDataAvailabilityModule({
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers, eigenIndexers } = createIndexers(
-    config.da,
-    clock,
-    db,
-    logger,
-    providers,
-  )
+  const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
+    createIndexers(
+      config.da,
+      config.notifications,
+      clock,
+      db,
+      logger,
+      providers,
+    )
 
   return {
     start: async () => {
@@ -76,12 +83,23 @@ export function initDataAvailabilityModule({
         )
         logger.info('EigenDA indexer started')
       }
+
+      if (notificationIndexers.length > 0) {
+        logger.info('Starting notification indexers')
+        await Promise.all(
+          notificationIndexers.map(async (indexer) => {
+            await indexer.start()
+          }),
+        )
+        logger.info('Notification indexers started')
+      }
     },
   }
 }
 
 function createIndexers(
   config: DataAvailabilityTrackingConfig,
+  notifications: NotificationsConfig | false,
   clock: Clock,
   database: Database,
   logger: Logger,
@@ -97,6 +115,8 @@ function createIndexers(
     | EigenDaProjectsIndexer
     | HourlyIndexer
   )[] = []
+  const notificationIndexers: (HourlyIndexer | EthereumBlobNotifierIndexer)[] =
+    []
 
   for (const daLayer of config.blockLayers) {
     const configurations = config.blockProjects.filter(
@@ -141,6 +161,26 @@ function createIndexers(
         logger,
       )
       daIndexers.push(blobIndexer)
+
+      if (notifications && notifications.ethereumBlobs) {
+        const hourlyIndexer = new HourlyIndexer(logger, clock)
+        notificationIndexers.push(hourlyIndexer)
+
+        const notifierIndexer = new EthereumBlobNotifierIndexer(
+          {
+            db: database,
+            configurations: configurations.filter((c) => c.type === 'ethereum'),
+            discordClient: new DiscordClient(
+              notifications.ethereumBlobs.discordWebhookUrl,
+            ),
+            indexerService,
+            minHeight: 0,
+            parents: [hourlyIndexer],
+          },
+          logger,
+        )
+        notificationIndexers.push(notifierIndexer)
+      }
     }
 
     const indexer = new DaIndexer(
@@ -241,5 +281,10 @@ function createIndexers(
     eigenIndexers.push(projectsIndexer)
   }
 
-  return { targetIndexers, daIndexers, eigenIndexers }
+  return {
+    targetIndexers,
+    daIndexers,
+    eigenIndexers,
+    notificationIndexers,
+  }
 }
