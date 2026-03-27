@@ -104,9 +104,9 @@ export const morph: ScalingProject = {
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
         noRedTrustedSetups: true,
-        programHashesReproducible: null,
+        programHashesReproducible: true,
         proverSourcePublished: true,
-        verifierContractsReproducible: null,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
