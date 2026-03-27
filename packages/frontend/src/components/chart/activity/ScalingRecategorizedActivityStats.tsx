@@ -1,4 +1,3 @@
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +11,7 @@ import {
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { Skeleton } from '~/components/core/Skeleton'
 import { StatCard } from '../stats/StatCard'
 import { StatsGrid } from '../stats/StatsGrid'
 
@@ -27,7 +27,7 @@ export function ScalingRecategorizedActivityStats({ entries }: Props) {
   })
 
   return (
-    <StatsGrid columns={4} className="min-w-182">
+    <StatsGrid columns={4} columnsMobile={2}>
       <Stat
         type="rollups"
         metric={metric}
@@ -89,28 +89,38 @@ function Stat({
   scalingFactor?: number
   isLoading: boolean
 }) {
-  return (
-    <StatCard color={statsMeta[type].color}>
-      <div className="h-6.5 text-center font-medium text-label-value-13 md:h-7 md:text-label-value-14 lg:h-8 lg:text-label-value-16">
-        {statsMeta[type].label} Past Day {metric.toUpperCase()}
+  const scalingFactorFooter =
+    scalingFactor !== undefined ? (
+      <div className="flex items-center gap-1 pt-1 text-secondary">
+        <div className="text-label-value-13 lg:text-label-value-14">
+          <span className="font-normal">Scaling factor: </span>
+          <span className="font-bold">{scalingFactor.toFixed(2)}x</span>
+        </div>
+        <ScalingFactorTooltip metric={metric} />
       </div>
-      <div className="flex h-9 flex-col items-center justify-center md:h-[43px] lg:h-13">
-        {isLoading ? (
-          <Skeleton className="h-[23px] w-15 md:h-7 md:w-19 lg:h-8 lg:w-25" />
-        ) : (
-          <div className="font-bold text-heading-20 md:text-heading-24 lg:text-heading-32">
-            {value !== undefined ? formatActivityCount(value) : 'No data'}
-          </div>
-        )}
-        {scalingFactor !== undefined && (
-          <div className="flex items-center gap-1 text-secondary">
-            <div className="text-label-value-13 lg:text-label-value-14">
-              <span className="font-normal">Scaling factor: </span>
-              <span className="font-bold">{scalingFactor.toFixed(2)}x</span>
-            </div>
-            <ScalingFactorTooltip metric={metric} />
-          </div>
-        )}
+    ) : undefined
+
+  return (
+    <StatCard
+      color={statsMeta[type].color}
+      title={`${statsMeta[type].label} Past Day ${metric.toUpperCase()}`}
+      isLoading={isLoading}
+      footer={
+        type !== 'rollups'
+          ? undefined
+          : isLoading
+            ? (
+                <div className="flex min-h-[17px] items-center justify-center gap-1 pt-1 md:min-h-[18px]">
+                  <Skeleton className="min-h-[13px] w-[10.5rem] md:min-h-4 md:w-[11.5rem]" />
+                </div>
+              )
+            : scalingFactorFooter
+      }
+    >
+      <div className="flex min-h-[23px] items-center justify-center md:min-h-7">
+        <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
+          {value !== undefined ? formatActivityCount(value) : 'No data'}
+        </div>
       </div>
     </StatCard>
   )

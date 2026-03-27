@@ -8,9 +8,10 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { optionToRange } from '~/utils/range/range'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
-const statsMeta: Record<StatType, { label: string; color?: string }> = {
+const statsMeta: Record<StatType, { label: string; color: string }> = {
   total: {
     label: 'Total',
+    color: 'var(--chart-ethereum)',
   },
   rollups: {
     label: 'Rollups',
@@ -35,13 +36,7 @@ export function ScalingTvsStats() {
   const stats = getStats(data?.chart)
 
   return (
-    <StatsGrid columns={4} className="min-w-[750px]">
-      <Stat
-        type="total"
-        value={stats?.total.value}
-        change={stats?.total.change}
-        isLoading={isLoading}
-      />
+    <StatsGrid columns={4} columnsMobile={2}>
       <Stat
         type="rollups"
         value={stats?.rollups.value}
@@ -60,6 +55,12 @@ export function ScalingTvsStats() {
         change={stats?.others.change}
         isLoading={isLoading}
       />
+      <Stat
+        type="total"
+        value={stats?.total.value}
+        change={stats?.total.change}
+        isLoading={isLoading}
+      />
     </StatsGrid>
   )
 }
@@ -76,25 +77,30 @@ function Stat({
   isLoading: boolean
 }) {
   const meta = statsMeta[type]
-  const color = meta.color
 
   return (
-    <StatCard color={color}>
-      <span className="font-medium text-label-value-13 md:text-label-value-14">
-        {meta.label}
-      </span>
-      <div className="mt-1 flex items-center gap-1">
-        {isLoading ? (
-          <Skeleton className="h-[23px] w-15 md:h-7 md:w-19" />
-        ) : (
-          <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
-            {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
-          </div>
-        )}
-        {isLoading ? (
-          <Skeleton className="h-3 w-10" />
-        ) : change !== undefined ? (
-          <PercentChange value={change} />
+    <StatCard
+      color={meta.color}
+      title={meta.label}
+      isLoading={isLoading}
+      loadingContent={
+        <div className="flex min-h-[23px] items-center gap-1 md:min-h-7">
+          <Skeleton className="min-h-[23px] w-[6rem] self-center md:min-h-7 md:w-[7.25rem]" />
+          <span className="relative inline-block w-[52px] self-center pl-3.5">
+            <Skeleton className="min-h-[18px] w-full md:min-h-[23px]" />
+          </span>
+        </div>
+      }
+    >
+      <div className="flex min-h-6 items-center gap-1 md:min-h-7">
+        <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
+          {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
+        </div>
+        {change !== undefined ? (
+          <PercentChange
+            textClassName="md:text-heading-20 text-heading-16"
+            value={change}
+          />
         ) : null}
       </div>
     </StatCard>

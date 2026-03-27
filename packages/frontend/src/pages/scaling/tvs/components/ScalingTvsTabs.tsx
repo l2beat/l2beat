@@ -14,7 +14,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import {
   NotReviewedInfo,
   OthersInfo,
@@ -71,9 +70,9 @@ export function ScalingTvsTabs(props: Props) {
           <DisplayControls display={display} setDisplay={setDisplay} />
         </div>
       </div>
-      <PrimaryCard className="mt-4">
+      <div className="mt-4">
         <ScalingTvsStats />
-      </PrimaryCard>
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

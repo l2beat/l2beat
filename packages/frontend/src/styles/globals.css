@@ -18,6 +18,23 @@
   }
 }
 
+/* StatsGrid: column counts from inline --stats-grid-cols-* (no JS breakpoint = no layout flash) */
+.stats-grid-cols {
+  grid-template-columns: repeat(
+    var(--stats-grid-cols-mobile, 2),
+    minmax(0, 1fr)
+  );
+}
+
+@media (min-width: 1200px) {
+  .stats-grid-cols {
+    grid-template-columns: repeat(
+      var(--stats-grid-cols-desktop, 4),
+      minmax(0, 1fr)
+    );
+  }
+}
+
 @custom-variant primary-card {
   &:where(.primary-card *) {
     @slot;

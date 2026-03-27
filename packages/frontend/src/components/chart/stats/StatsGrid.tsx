@@ -1,19 +1,33 @@
-import type React from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { cn } from '~/utils/cn'
 
 interface StatsGridProps {
   columns: number
-  children: React.ReactNode
+  columnsMobile: number
+  children: ReactNode
   className?: string
 }
 
-export function StatsGrid({ columns, children, className }: StatsGridProps) {
+export function StatsGrid({
+  columns,
+  columnsMobile,
+  children,
+  className,
+}: StatsGridProps) {
   return (
     <OverflowWrapper>
       <div
-        className={cn('my-3 grid gap-2 lg:gap-3', className)}
-        style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+        className={cn(
+          'stats-grid-cols mx-2 my-3 grid gap-2 md:mx-0 lg:gap-3',
+          className,
+        )}
+        style={
+          {
+            '--stats-grid-cols-mobile': columnsMobile,
+            '--stats-grid-cols-desktop': columns,
+          } as CSSProperties
+        }
       >
         {children}
       </div>
