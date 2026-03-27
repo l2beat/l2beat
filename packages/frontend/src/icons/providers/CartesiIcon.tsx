@@ -6,7 +6,7 @@ export function CartesiIcon(props: SvgIconProps) {
     <SvgIcon
       width="24"
       height="24"
-      viewBox="0 0 24 24"
+      viewBox="0 0 350.2 344"
       aria-label="Cartesi icon"
       {...props}
     >
