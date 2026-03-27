@@ -1,3 +1,4 @@
+import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -11,7 +12,6 @@ import {
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { Skeleton } from '~/components/core/Skeleton'
 import { StatCard } from '../stats/StatCard'
 import { StatsGrid } from '../stats/StatsGrid'
 
@@ -106,15 +106,13 @@ function Stat({
       title={`${statsMeta[type].label} Past Day ${metric.toUpperCase()}`}
       isLoading={isLoading}
       footer={
-        type !== 'rollups'
-          ? undefined
-          : isLoading
-            ? (
-                <div className="flex min-h-[17px] items-center justify-center gap-1 pt-1 md:min-h-[18px]">
-                  <Skeleton className="min-h-[13px] w-[10.5rem] md:min-h-4 md:w-[11.5rem]" />
-                </div>
-              )
-            : scalingFactorFooter
+        type !== 'rollups' ? undefined : isLoading ? (
+          <div className="flex min-h-[17px] items-center justify-center gap-1 pt-1 md:min-h-[18px]">
+            <Skeleton className="min-h-[13px] w-[10.5rem] md:min-h-4 md:w-[11.5rem]" />
+          </div>
+        ) : (
+          scalingFactorFooter
+        )
       }
     >
       <div className="flex min-h-[23px] items-center justify-center md:min-h-7">
