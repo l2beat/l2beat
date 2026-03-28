@@ -1,3 +1,167 @@
+Generated with discovered.json: 0x9202854905bbe030a6d1f823f9fba4e3624d403a
+
+# Diff at Sat, 28 Mar 2026 09:08:07 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@12dca86fcbb84744a19e33638cbd2a3b9188646c block: 1774516628
+- current timestamp: 1774688591
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract MembershipManager (eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000) {
+    +++ description: None
+      values.tierData.0.0:
+-        "102205044889990335"
++        "102327262324949009"
+      values.tierData.1.0:
+-        "117808984591740188"
++        "117943423770194729"
+      values.tierData.2.0:
+-        "133030884834618645"
++        "133177545756569055"
+      values.tierData.3.0:
+-        "148703141264991049"
++        "148862023930437325"
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A) {
+    +++ description: None
+      values.balances.0:
+-        "38586483013159999761"
++        "36731523905497758159"
+      values.balances.1:
+-        "33577374741548027410"
++        "35226766626301335817"
+      values.D:
+-        "76380942982012525846"
++        "76378764093039609057"
+      values.fee:
+-        3015047
++        3203043
+      values.get_virtual_price:
+-        "1021479862598704473"
++        "1021498322525891566"
+      values.last_prices:
+-        "1125360468795580931"
++        "1125608078751955185"
+      values.last_prices_timestamp:
+-        1774486139
++        1774590983
+      values.lp_price:
+-        "2167233138503743944"
++        "2167510720552377298"
+      values.price_oracle:
+-        "1125360468795580931"
++        "1125608078751955185"
+      values.price_scale:
+-        "1125593184427680035"
++        "1125488287189697913"
+      values.virtual_price:
+-        "1021479862598704473"
++        "1021498322525891566"
+      values.xcp_profit:
+-        "1042347068562471270"
++        "1042368951658173634"
+    }
+```
+
+```diff
+    contract WrapTokenV3ETH (eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1) {
+    +++ description: None
+      values.exchangeRate:
+-        "1093764042219000000"
++        "1093916419794000000"
+      values.totalSupply:
+-        "3174628961152101370001340"
++        "3174724814459507527278060"
+    }
+```
+
+```diff
+    contract Coinbase Wrapped Staked ETH Token (eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704) {
+    +++ description: None
+      values.exchangeRate:
+-        "1126211478475931415"
++        "1126366588197836311"
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6) {
+    +++ description: None
+      values.admin_balances.0:
+-        59346707283019
++        230599886829358
+      values.admin_balances.1:
+-        7212156146719
++        175730753603960
+      values.balances.0:
+-        "946308661426324877"
++        "1009996162144526296"
+      values.balances.1:
+-        "2731572326547465602"
++        "2673432080092081850"
+      values.ema_price:
+-        "996150185406856707"
++        "997255269302795731"
+      values.get_p:
+-        "996139071468564969"
++        "996678671783877696"
+      values.get_virtual_price:
+-        "1122997851955903575"
++        "1123206674514993276"
+      values.last_price:
+-        "996139480955958014"
++        "996678576133890041"
+      values.ma_last_time:
+-        1774466147
++        1774681811
+      values.price_oracle:
+-        "996139480955958014"
++        "996678805648417329"
+      values.stored_rates.1:
+-        "1093764042219000000"
++        "1093916419794000000"
+    }
+```
+
+```diff
+    contract Wrapped eETH Token (eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee) {
+    +++ description: None
+      values.getRate:
+-        "1091151401246708947"
++        "1091302773638237919"
+    }
+```
+
+```diff
+    contract Vyper_contract (eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022) {
+    +++ description: None
+      values.admin_balances.0:
+-        21626406820857
++        223252274303102
+      values.admin_balances.1:
+-        989757010540
++        31076667760
+      values.balances.0:
+-        "20432103078695901676597"
++        "20406727704996868123195"
+      values.balances.1:
+-        "22220475825604192544129"
++        "22240369202946360953451"
+      values.get_virtual_price:
+-        "1134786036019072952"
++        "1134865705376828920"
+    }
+```
+
 Generated with discovered.json: 0xac9de328d9afe5d57e46d3d0479f00c2bee9f4b8
 
 # Diff at Thu, 26 Mar 2026 09:20:18 GMT:

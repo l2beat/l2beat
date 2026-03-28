@@ -144,10 +144,21 @@ These fields change frequently but have no security implications.
 - `minted`, `minterReserve`, `equity` (when numeric — protocol accounting)
 - State accumulation variables: `F_ETH`, `F_LUSD`, `P`, `S` (Liquity-style)
 
-### Tier 3: UNCERTAIN (needs reviewer input)
+### Tier 3: UNCERTAIN (agent-reasoned suggestions)
 
-Everything that doesn't match Tier 1 or Tier 2. Sub-categorize for the reviewer:
+Everything that doesn't match Tier 1 or Tier 2. For each UNCERTAIN field, **reason about whether it should be ignored** using:
 
+- The field name semantics (e.g., `ethAmountLockedForWithdrawal` clearly tracks a changing balance)
+- The field value (large wei-denominated numbers suggest balances/amounts that change frequently)
+- The contract name and role (e.g., a `LiquidityPool` contract's amount fields are likely volatile)
+- General DeFi domain knowledge (withdrawal queues, locked amounts, finalized request IDs are operational state)
+
+Classify each UNCERTAIN field into one of:
+- **SUGGEST IGNORE** — you believe this is safe to ignore, with a short reason (e.g., "pool balance that changes with every deposit/withdrawal")
+- **SUGGEST WATCH** — you believe this should be monitored, with a short reason (e.g., "could be an admin-changeable parameter")
+- **TRULY UNCERTAIN** — you genuinely can't tell — flag for the reviewer with context
+
+Sub-categorize for additional context:
 - **Numeric non-accumulator**: Small number value, doesn't match a safe pattern — could be a parameter
 - **Address field**: Address value but not matching a never-ignore pattern — could be a replaceable dependency
 - **Boolean field**: Could be a pause flag or feature toggle — needs context
@@ -186,19 +197,28 @@ MUST WATCH — correctly not ignored (<N> fields):
   - pauseGuardian (address: eth:0x...) — security role
   - performanceFee (uint256: 1000) — fee rate setting (admin-changeable)
 
-UNCERTAIN — please review (<N> fields):
-  4. extensionDelegate (address: eth:0x...) — address field, unclear role
-  5. totalsBasic (struct: {...}) — complex struct, may contain mixed fields
+SUGGESTED IGNORE — agent recommends adding, please confirm (<N> fields):
+  4. ethAmountLockedForWithdrawal (uint256: 14193177...) — pool balance tracking locked ETH, changes with every withdrawal
+  5. getRemainderAmount (uint256: 113496760573373) — withdrawal queue remainder, operational state
+
+SUGGESTED WATCH — agent recommends keeping monitored (<N> fields):
+  6. extensionDelegate (address: eth:0x...) — address field, could be a replaceable dependency
+
+TRULY UNCERTAIN — please review (<N> fields):
+  7. totalsBasic (struct: {...}) — complex struct, may contain mixed fields
 ```
 
 **After presenting all contracts**, ask the user:
 
 > How would you like to proceed?
-> - `ignore all safe` — apply all SAFE TO IGNORE recommendations
+> - `ignore all` — apply all SAFE TO IGNORE + all SUGGESTED IGNORE
+> - `ignore all safe` — apply only SAFE TO IGNORE (skip suggestions)
 > - `ignore 1,3,7` — apply specific numbered items only
 > - `ignore all except 4,5` — apply most, keep some for review
 > - `skip` — don't add any ignoreInWatchMode now
 > - `skip <ContractName>` — skip a specific contract
+
+SUGGESTED IGNORE items require explicit user confirmation — they are NOT auto-applied with `ignore all safe`, only with `ignore all` or by number.
 
 **Also show warnings** if any existing `ignoreInWatchMode` entries match Tier 1 (NEVER IGNORE) patterns:
 ```

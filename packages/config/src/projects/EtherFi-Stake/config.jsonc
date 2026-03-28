@@ -116,11 +116,12 @@
     },
     // AddressMapping: AuctionManager
     "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9": {
-      "ignoreInWatchMode": ["accumulatedRevenue"],
+      "ignoreInWatchMode": ["accumulatedRevenue", "bids", "getBidOwner", "isBidActive", "numberOfActiveBids", "numberOfBids"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: EtherFiOracle
     "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41": {
+      "ignoreInWatchMode": ["blockStampForNextReport", "lastPublishedReportRefBlock", "lastPublishedReportRefSlot", "slotForNextReport"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: NodeOperatorManager
@@ -129,6 +130,7 @@
     },
     // AddressMapping: RegulationsManager
     "eth:0xBd23fF26197Eda06a930641Ac13ED5F3dB35f4DE": {
+      "ignoreInWatchMode": ["correctVersionHash", "whitelistVersion"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: EtherFiRestaker
@@ -138,15 +140,17 @@
     },
     // AddressMapping: Liquifier
     "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F": {
-      "ignoreInWatchMode": ["DEPRECATED_accumulatedFee"],
+      "ignoreInWatchMode": ["DEPRECATED_accumulatedFee", "DEPRECATED_eigenLayerWithdrawalClaimGasCost", "getTotalPooledEther"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: MembershipManager
     "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000": {
+      "ignoreInWatchMode": ["allTimeHighDepositAmount", "tierDeposits", "tierVaults", "tokenData", "tokenDeposits"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // AddressMapping: MembershipNFT
     "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479": {
+      "ignoreInWatchMode": ["accruedLoyaltyPointsOf", "accruedStakingRewardsOf", "accruedTierPointsOf", "allTimeHighDepositOf", "claimableTier", "loyaltyPointsOf", "nextMintTokenId", "nftData", "tierOf", "tierPointsOf", "transferLockedUntil", "uri", "valueOf"],
       "fields": { "admins": { "handler": { "type": "addressMapping", "discoveredJson": "src/projects/EtherFi-Stake/discovered.json" } } }
     },
     // ether.fi ETH Token (eETH)
@@ -155,15 +159,15 @@
     },
     // LiquidityPool
     "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216": {
-      "ignoreInWatchMode": ["totalValueInLp", "totalValueOutOfLp", "getTotalPooledEther", "ethAmountLockedForWithdrawal"]
+      "ignoreInWatchMode": ["amountForShare", "ethAmountLockedForWithdrawal", "getTotalPooledEther", "numPendingDeposits", "sharesForAmount", "sharesForWithdrawalAmount", "totalValueInLp", "totalValueOutOfLp"]
     },
     // PriorityWithdrawalQueue
     "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA": {
-      "ignoreInWatchMode": ["nonce", "totalRemainderShares", "getRemainderAmount", "getFinalizedRequestIds", "ethAmountLockedForPriorityWithdrawal"]
+      "ignoreInWatchMode": ["ethAmountLockedForPriorityWithdrawal", "getFinalizedRequestIds", "getRemainderAmount", "getRequestIds", "nonce", "totalActiveRequests", "totalRemainderShares"]
     },
     // WithdrawRequestNFT
     "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c": {
-      "ignoreInWatchMode": ["totalRemainderEEthShares"]
+      "ignoreInWatchMode": ["aggregateSumOfEEthShare", "currentRequestIdToScanFromForShareRemainder", "getApproved", "getClaimableAmount", "getEEthRemainderAmount", "getRequest", "isFinalized", "isScanOfShareRemainderCompleted", "isValid", "lastFinalizedRequestId", "lastRequestIdToScanUntilForShareRemainder", "nextRequestId", "ownerOf", "tokenURI", "totalRemainderEEthShares"]
     },
     // Wrapped eETH Token (weETH)
     "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee": {
@@ -176,6 +180,18 @@
     // EtherFiAdmin
     "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705": {
       "ignoreInWatchMode": ["blockForNextReportToProcess", "lastAdminExecutionBlock", "lastHandledReportRefBlock", "lastHandledReportRefSlot", "slotForNextReportToProcess"]
+    },
+    // EtherFiNodesManager
+    "eth:0x8B71140AD2e5d1E7018d2a7f8a288BD3CD38916F": {
+      "ignoreInWatchMode": ["etherfiNodeAddress", "getEigenPod"]
+    },
+    // TNFT
+    "eth:0x7B5ae07E2AF1C861BcC4736D23f5f66A61E0cA5e": {
+      "ignoreInWatchMode": ["getApproved", "ownerOf", "tokenURI"]
+    },
+    // EtherfiL1SyncPoolETH
+    "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146": {
+      "ignoreInWatchMode": ["getTotalUnbackedTokens"]
     }
   }
 }
