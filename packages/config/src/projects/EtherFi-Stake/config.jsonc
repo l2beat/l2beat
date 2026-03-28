@@ -155,11 +155,11 @@
     },
     // LiquidityPool
     "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216": {
-      "ignoreInWatchMode": ["totalValueInLp", "totalValueOutOfLp"]
+      "ignoreInWatchMode": ["totalValueInLp", "totalValueOutOfLp", "getTotalPooledEther", "ethAmountLockedForWithdrawal"]
     },
     // PriorityWithdrawalQueue
     "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA": {
-      "ignoreInWatchMode": ["nonce", "totalRemainderShares"]
+      "ignoreInWatchMode": ["nonce", "totalRemainderShares", "getRemainderAmount", "getFinalizedRequestIds", "ethAmountLockedForPriorityWithdrawal"]
     },
     // WithdrawRequestNFT
     "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c": {
