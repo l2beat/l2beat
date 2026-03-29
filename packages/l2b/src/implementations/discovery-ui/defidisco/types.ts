@@ -30,6 +30,8 @@ export function normalizeMitigationValue(
 export interface Mitigation {
   type: MitigationType
   description: string
+  // For 'other': short 1-2 word label shown in badges (falls back to truncated description if absent)
+  label?: string
   // For 'delay': reference to a contract field (reuses existing delay pattern)
   delayRef?: { contractAddress: string; fieldName: string }
   // For 'delay': resolved value in seconds (populated by v2-score API)

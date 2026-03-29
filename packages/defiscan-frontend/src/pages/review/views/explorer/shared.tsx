@@ -69,7 +69,11 @@ export function deduplicateMitigations(
   const seen = new Set<string>()
   const result: Mitigation[] = []
   for (const m of mitigations) {
-    const key = `${m.type}:${m.delaySeconds ?? ''}:${displayMitigationValue(m.valueRange?.min)}:${displayMitigationValue(m.valueRange?.max)}:${displayMitigationValue(m.relativeValue?.maxChangePercent)}:${m.description}:${m.scopedTo?.address ?? ''}:${m.scopedTo?.type ?? ''}`
+    // 'other' mitigations with a label collapse by label only (ignoring scope and description variants)
+    const key =
+      m.type === 'other' && m.label
+        ? `other-label:${m.label}`
+        : `${m.type}:${m.delaySeconds ?? ''}:${displayMitigationValue(m.valueRange?.min)}:${displayMitigationValue(m.valueRange?.max)}:${displayMitigationValue(m.relativeValue?.maxChangePercent)}:${m.description}:${m.scopedTo?.address ?? ''}:${m.scopedTo?.type ?? ''}`
     if (!seen.has(key)) {
       seen.add(key)
       result.push(m)

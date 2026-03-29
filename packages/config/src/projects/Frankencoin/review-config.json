@@ -10,11 +10,11 @@
   "admins": {
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
       "name": "MintingHub (Legacy)",
-      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, mint, mintWithReserve, burnFrom, burnWithReserve, burnFromWithReserve, burnWithoutReserve, coverLoss, and collectProfits. This is the older MintingHub, no longer actively used but still registered as a minter with {{legacyMintingHubCollateral}} in remaining positions."
+      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, collectProfits, coverLoss, and burnWithoutReserve directly. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve. This is the older MintingHub, no longer actively used but still registered as a minter with {{legacyMintingHubCollateral}} in remaining positions."
     },
     "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
       "name": "StablecoinBridge (XCHF)",
-      "description": "Immutable bridge contract that allows 1:1 conversion between XCHF (CryptoFranc) and ZCHF. Registered as an active minter, it can mint and burn ZCHF. The bridge holds XCHF as backing for ZCHF minted through it."
+      "description": "Immutable bridge contract enabling 1:1 conversion between XCHF (CryptoFranc) and ZCHF. Registered as an active minter but already expired (horizon passed ~2024-10-27), so no further minting is possible. Has an immutable minting limit of 10,000,000 ZCHF. The bridge holds XCHF as backing."
     },
     "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
       "name": "Savings (Legacy)",
@@ -26,11 +26,11 @@
     },
     "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
       "name": "MintingHub (Current)",
-      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages {{currentMintingHubCollateral}} across 51 active positions. Functions including openPosition, challenge, bid, and buyExpiredCollateral are gated by Equity (FPS) token holder qualification."
+      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages {{currentMintingHubCollateral}} across 51 active positions. Functions including openPosition, clone, challenge, bid, and buyExpiredCollateral are open to anyone. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve on the Frankencoin token."
     },
     "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
       "name": "StablecoinBridge (VCHF)",
-      "description": "Immutable bridge contract enabling 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, holding {{vchfBridgeBalance}} in VCHF reserves. If the VCHF token is paused, frozen, or upgraded by VNX, this bridge's minting and burning would be affected."
+      "description": "Immutable bridge contract that allows 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, it can mint and burn ZCHF. Has an immutable minting limit of 2,000,000 ZCHF and expires at a fixed horizon timestamp (~2026-04-15). The bridge holds VCHF as backing for ZCHF minted through it."
     },
     "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
       "name": "Savings (Current)",
@@ -38,7 +38,7 @@
     },
     "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": {
       "name": "TransferReference (Chainlink)",
-      "description": "Chainlink CCIP infrastructure contract registered as an active minter. Enables cross-chain ZCHF transfers by minting and burning tokens on the Ethereum side of the bridge."
+      "description": "Chainlink CCIP infrastructure contract registered as an active minter. Facilitates cross-chain ZCHF transfers via transferFrom and approve operations on the Ethereum side of the bridge. Does not directly call mint or burn."
     },
     "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
       "name": "BurnMintTokenPool (Chainlink)",
@@ -58,7 +58,7 @@
     },
     "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6": {
       "name": "XCHF Minter 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig controlled by the XCHF (CryptoFranc) entity. Can mint new XCHF tokens. Since XCHF can be bridged 1:1 to ZCHF via the StablecoinBridge, unlimited XCHF minting could theoretically be used to drain the bridge's reserves."
+      "description": "A 3-of-6 GnosisSafe multisig controlled by the XCHF (CryptoFranc) entity. Can mint new XCHF tokens. The XCHF StablecoinBridge is expired (horizon passed ~2024-10-26), so XCHF minting can no longer be used to mint ZCHF through the bridge."
     },
     "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD": {
       "name": "XCHF Operator 3/6 Multisig",
@@ -66,7 +66,7 @@
     },
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
       "name": "Equity (FPS Token)",
-      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can call openPosition, challenge, bid, and buyExpiredCollateral on the MintingHub. The Equity contract itself can call kamikaze (self-destruct of shares) and restructureCapTable. It also controls functions on an unknown contract (0xf72e...6Ba6) including setMinterRole, mint, freeze, pause, and setAssetProtectionRole. Holds {{equityBalance}} in reserves."
+      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can propose changes to Savings parameters via proposeChange. The Equity contract itself has kamikaze (self-sacrifice of shares for voting power) and restructureCapTable (emergency cap table wipe when equity falls below 1000 ZCHF). Holds {{equityBalance}} in reserves."
     },
     "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": {
       "name": "VNX Proxy Admin (VCHF)",
@@ -92,7 +92,7 @@
     },
     "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
       "name": "Chainlink ARMProxy",
-      "description": "Chainlink Active Risk Management proxy used by the PositionRoller and MintingHub for cross-chain position operations. Owned by the Chainlink RBACTimelock. "
+      "description": "Chainlink Active Risk Management proxy used by the CCIP infrastructure (BurnMintTokenPool, BridgeAccounting) for cross-chain ZCHF transfer validation. Owned by the Chainlink RBACTimelock."
     },
     "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e": {
       "name": "XCHF Owner 3/4 Multisig",
@@ -108,7 +108,7 @@
     },
     "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": {
       "name": "Chainlink TransferReference",
-      "description": "Chainlink CCIP infrastructure contract that enables cross-chain ZCHF transfers. Registered as an active minter on the Frankencoin token, meaning it can mint and burn ZCHF for bridging operations."
+      "description": "Chainlink CCIP infrastructure contract that facilitates cross-chain ZCHF transfers via transferFrom and approve. Registered as an active minter on the Frankencoin token but does not directly call mint or burn."
     },
     "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
       "name": "Chainlink BurnMintTokenPool",
@@ -142,7 +142,11 @@
     },
     "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
       "name": "StablecoinBridge (VCHF)",
-      "description": "Bridge contract holding {{vchfBridgeBalance}} in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path."
+      "description": "Bridge contract holding {{vchfBridgeBalance}} in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path. Has an immutable minting limit of 2,000,000 ZCHF and expires ~2026-04-15."
+    },
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
+      "name": "StablecoinBridge (XCHF)",
+      "description": "Expired bridge contract holding {{xchfBridgeBalance}} in XCHF reserves. The bridge expired ~2024-10-27, so no further minting is possible."
     },
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
       "name": "MintingHub (Legacy Positions)",
@@ -204,6 +208,7 @@
     "currentMintingHubCollateral": "fundsdata.contracts[\"eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557\"].aggregate.totalUsdValue",
     "currentSavingsBalance": "fundsdata.contracts[\"eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38\"].balances.totalUsdValue",
     "vchfBridgeBalance": "fundsdata.contracts[\"eth:0x3B71ba73299F925a837836160c3E1Fec74340403\"].balances.totalUsdValue",
+    "xchfBridgeBalance": "fundsdata.contracts[\"eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF\"].balances.totalUsdValue",
     "legacyMintingHubCollateral": "fundsdata.contracts[\"eth:0x7546762fdb1a6d9146b33960545C3f6394265219\"].aggregate.totalUsdValue",
     "legacySavingsBalance": "fundsdata.contracts[\"eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE\"].balances.totalUsdValue"
   }

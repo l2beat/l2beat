@@ -52,8 +52,9 @@ export function MitigationBadge({ mitigation: m }: { mitigation: Mitigation }) {
     tooltip = `Max change: ${m.relativeValue?.maxChangePercent !== undefined ? displayMitigationValue(m.relativeValue.maxChangePercent) : '?'}%`
     if (m.description) tooltip += ` — ${m.description}`
   } else {
-    label =
-      m.description.length > 20
+    label = m.label
+      ? m.label
+      : m.description.length > 20
         ? m.description.slice(0, 20) + '\u2026'
         : m.description
     tooltip = m.description

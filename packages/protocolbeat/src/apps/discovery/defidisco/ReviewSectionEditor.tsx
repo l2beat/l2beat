@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { IS_READONLY } from '../../../config/readonly'
 import type {
   ReviewContentBlock,
   ReviewSection,
@@ -92,7 +93,8 @@ export function ReviewSectionEditor({
             type="text"
             value={section.title}
             onChange={(e) => updateTitle(e.target.value)}
-            className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           />
         </div>
         <div className="flex items-center gap-2">
@@ -101,7 +103,8 @@ export function ReviewSectionEditor({
             type="text"
             value={section.description ?? ''}
             onChange={(e) => updateDescription(e.target.value)}
-            className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             placeholder="Optional description"
           />
         </div>
@@ -123,12 +126,14 @@ export function ReviewSectionEditor({
         />
       ))}
 
-      <button
-        onClick={addSubsection}
-        className="w-full rounded border border-dashed border-coffee-500 px-3 py-1.5 text-xs text-coffee-300 hover:border-autumn-300 hover:text-autumn-300"
-      >
-        + Add Subsection
-      </button>
+      {!IS_READONLY && (
+        <button
+          onClick={addSubsection}
+          className="w-full rounded border border-dashed border-coffee-500 px-3 py-1.5 text-xs text-coffee-300 hover:border-autumn-300 hover:text-autumn-300"
+        >
+          + Add Subsection
+        </button>
+      )}
     </div>
   )
 }
@@ -212,33 +217,36 @@ function SubsectionEditor({
           onChange={(e) =>
             onChange((sub) => ({ ...sub, title: e.target.value }))
           }
-          className="flex-1 rounded border border-coffee-700 bg-coffee-800 px-2 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="flex-1 rounded border border-coffee-700 bg-coffee-800 px-2 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         />
-        <div className="flex items-center gap-0.5">
-          <button
-            onClick={() => onMove(-1)}
-            disabled={index === 0}
-            className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
-            title="Move up"
-          >
-            ↑
-          </button>
-          <button
-            onClick={() => onMove(1)}
-            disabled={index === total - 1}
-            className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
-            title="Move down"
-          >
-            ↓
-          </button>
-          <button
-            onClick={onRemove}
-            className="px-1 text-xs text-red-400 hover:text-red-300"
-            title="Remove subsection"
-          >
-            ✕
-          </button>
-        </div>
+        {!IS_READONLY && (
+          <div className="flex items-center gap-0.5">
+            <button
+              onClick={() => onMove(-1)}
+              disabled={index === 0}
+              className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
+              title="Move up"
+            >
+              ↑
+            </button>
+            <button
+              onClick={() => onMove(1)}
+              disabled={index === total - 1}
+              className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
+              title="Move down"
+            >
+              ↓
+            </button>
+            <button
+              onClick={onRemove}
+              className="px-1 text-xs text-red-400 hover:text-red-300"
+              title="Remove subsection"
+            >
+              ✕
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Content blocks */}
@@ -258,7 +266,7 @@ function SubsectionEditor({
           />
         ))}
 
-        <AddBlockButton onAdd={addBlock} />
+        {!IS_READONLY && <AddBlockButton onAdd={addBlock} />}
       </div>
     </div>
   )

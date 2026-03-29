@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 import { getResources, updateResources } from '../../../api/api'
+import { IS_READONLY } from '../../../config/readonly'
 import type {
   FrontendSubtype,
   ResourceEntry,
@@ -118,12 +119,14 @@ export function ReviewResourcesEditor({ project }: ReviewResourcesEditorProps) {
             <span className="ml-2 font-normal text-red-400">Save failed</span>
           )}
         </h3>
-        <button
-          onClick={() => setShowAdd(!showAdd)}
-          className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
-        >
-          {showAdd ? 'Cancel' : '+ Add'}
-        </button>
+        {!IS_READONLY && (
+          <button
+            onClick={() => setShowAdd(!showAdd)}
+            className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
+          >
+            {showAdd ? 'Cancel' : '+ Add'}
+          </button>
+        )}
       </div>
 
       {showAdd && (
@@ -261,7 +264,8 @@ function ResourceEntryRow({
                     type === 'license' ? localEntry.licenseScope : undefined,
                 })
               }}
-              className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+              disabled={IS_READONLY}
+              className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             >
               {RESOURCE_TYPES.map((rt) => (
                 <option key={rt.value} value={rt.value}>
@@ -278,7 +282,8 @@ function ResourceEntryRow({
                     frontendSubtype: e.target.value as FrontendSubtype,
                   })
                 }
-                className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+                disabled={IS_READONLY}
+                className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
               >
                 {FRONTEND_SUBTYPES.map((fs) => (
                   <option key={fs.value} value={fs.value}>
@@ -296,8 +301,9 @@ function ResourceEntryRow({
               onChange={(e) =>
                 setLocalEntry({ ...localEntry, url: e.target.value })
               }
+              disabled={IS_READONLY}
               placeholder="https://..."
-              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             />
           </div>
           {localEntry.type === 'license' ? (
@@ -317,7 +323,8 @@ function ResourceEntryRow({
                       label: v === '__other__' ? '' : v,
                     })
                   }}
-                  className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+                  disabled={IS_READONLY}
+                  className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
                 >
                   {LICENSE_PRESETS.map((l) => (
                     <option key={l} value={l}>
@@ -336,8 +343,9 @@ function ResourceEntryRow({
                         label: e.target.value || undefined,
                       })
                     }
+                    disabled={IS_READONLY}
                     placeholder="License name"
-                    className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+                    className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
                   />
                 )}
               </div>
@@ -352,8 +360,9 @@ function ResourceEntryRow({
                       licenseScope: e.target.value || undefined,
                     })
                   }
+                  disabled={IS_READONLY}
                   placeholder="e.g. Contracts, Frontend, SDK"
-                  className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+                  className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
                 />
               </div>
             </>
@@ -369,30 +378,33 @@ function ResourceEntryRow({
                     label: e.target.value || undefined,
                   })
                 }
+                disabled={IS_READONLY}
                 placeholder="Optional label"
-                className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+                className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
               />
             </div>
           )}
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={onDelete}
-              className="rounded px-2 py-0.5 text-xs text-red-400 hover:bg-coffee-700"
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => onUpdate(localEntry)}
-              disabled={!isDirty}
-              className={`rounded px-2 py-0.5 text-xs font-medium ${
-                isDirty
-                  ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
-                  : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
-              }`}
-            >
-              Apply
-            </button>
-          </div>
+          {!IS_READONLY && (
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={onDelete}
+                className="rounded px-2 py-0.5 text-xs text-red-400 hover:bg-coffee-700"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => onUpdate(localEntry)}
+                disabled={!isDirty}
+                className={`rounded px-2 py-0.5 text-xs font-medium ${
+                  isDirty
+                    ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
+                    : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
+                }`}
+              >
+                Apply
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

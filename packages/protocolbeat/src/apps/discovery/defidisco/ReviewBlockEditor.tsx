@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { IS_READONLY } from '../../../config/readonly'
 import type {
   ReviewContentBlock,
   ReviewDropdownBlock,
@@ -73,31 +74,33 @@ export function ReviewBlockEditor({
           {BLOCK_TYPE_LABELS[block.type]}
         </span>
         <div className="flex-1" />
-        <div className="flex items-center gap-0.5">
-          <button
-            onClick={() => onMove(-1)}
-            disabled={index === 0}
-            className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
-            title="Move up"
-          >
-            ↑
-          </button>
-          <button
-            onClick={() => onMove(1)}
-            disabled={index === total - 1}
-            className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
-            title="Move down"
-          >
-            ↓
-          </button>
-          <button
-            onClick={onRemove}
-            className="px-1 text-xs text-red-400 hover:text-red-300"
-            title="Remove block"
-          >
-            ✕
-          </button>
-        </div>
+        {!IS_READONLY && (
+          <div className="flex items-center gap-0.5">
+            <button
+              onClick={() => onMove(-1)}
+              disabled={index === 0}
+              className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
+              title="Move up"
+            >
+              ↑
+            </button>
+            <button
+              onClick={() => onMove(1)}
+              disabled={index === total - 1}
+              className="px-1 text-xs text-coffee-400 hover:text-coffee-100 disabled:opacity-30"
+              title="Move down"
+            >
+              ↓
+            </button>
+            <button
+              onClick={onRemove}
+              className="px-1 text-xs text-red-400 hover:text-red-300"
+              title="Remove block"
+            >
+              ✕
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Block-specific editor */}
@@ -159,7 +162,8 @@ function TextBlockForm({
       <textarea
         value={block.content}
         onChange={(e) => onChange({ ...block, content: e.target.value })}
-        className="w-full rounded border border-coffee-600 bg-coffee-900 px-2 py-1 font-mono text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+        disabled={IS_READONLY}
+        className="w-full rounded border border-coffee-600 bg-coffee-900 px-2 py-1 font-mono text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         rows={3}
         placeholder="Enter text content... Use {{dataKey}} for interpolation"
       />
@@ -240,9 +244,10 @@ function TableBlockForm({
               type="text"
               value={header}
               onChange={(e) => updateHeader(colIdx, e.target.value)}
-              className="w-24 rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none"
+              disabled={IS_READONLY}
+              className="w-24 rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             />
-            {block.headers.length > 1 && (
+            {!IS_READONLY && block.headers.length > 1 && (
               <button
                 onClick={() => removeColumn(colIdx)}
                 className="text-xs text-red-400 hover:text-red-300"
@@ -252,12 +257,14 @@ function TableBlockForm({
             )}
           </div>
         ))}
-        <button
-          onClick={addColumn}
-          className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-        >
-          + Col
-        </button>
+        {!IS_READONLY && (
+          <button
+            onClick={addColumn}
+            className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+          >
+            + Col
+          </button>
+        )}
       </div>
 
       {/* Rows */}
@@ -269,25 +276,30 @@ function TableBlockForm({
               type="text"
               value={cell}
               onChange={(e) => updateCell(rowIdx, colIdx, e.target.value)}
-              className="w-24 rounded border border-coffee-700 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+              disabled={IS_READONLY}
+              className="w-24 rounded border border-coffee-700 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
               placeholder={block.headers[colIdx]}
             />
           ))}
-          <button
-            onClick={() => removeRow(rowIdx)}
-            className="text-xs text-red-400 hover:text-red-300"
-          >
-            ✕
-          </button>
+          {!IS_READONLY && (
+            <button
+              onClick={() => removeRow(rowIdx)}
+              className="text-xs text-red-400 hover:text-red-300"
+            >
+              ✕
+            </button>
+          )}
         </div>
       ))}
 
-      <button
-        onClick={addRow}
-        className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-      >
-        + Row
-      </button>
+      {!IS_READONLY && (
+        <button
+          onClick={addRow}
+          className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+        >
+          + Row
+        </button>
+      )}
 
       {/* Advanced options (colorScale, badgeColumns) as raw JSON */}
       <AdvancedTableOptions block={block} onChange={onChange} />
@@ -359,7 +371,8 @@ function AdvancedTableOptions({
               // Don't update on invalid JSON
             }
           }}
-          className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           rows={2}
           placeholder='[{"column": 2, "colorMap": {"Immutable": "immutable"}}]'
         />
@@ -383,7 +396,8 @@ function AdvancedTableOptions({
                 // Don't update on invalid JSON
               }
             }}
-            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             rows={2}
             placeholder='{"columns": [2], "referenceMetric": "totalRaw", "valueMetrics": [["ethRaw"]]}'
           />
@@ -410,7 +424,8 @@ function AdvancedTableOptions({
                   externalCallers.length > 0 ? externalCallers : undefined,
               })
             }}
-            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             placeholder="BorrowerOperations, StabilityPool"
           />
         </div>
@@ -515,9 +530,10 @@ function ExpandableTableBlockForm({
               type="text"
               value={header}
               onChange={(e) => updateHeader(colIdx, e.target.value)}
-              className="w-24 rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none"
+              disabled={IS_READONLY}
+              className="w-24 rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs font-medium text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             />
-            {block.headers.length > 1 && (
+            {!IS_READONLY && block.headers.length > 1 && (
               <button
                 onClick={() => removeColumn(colIdx)}
                 className="text-xs text-red-400 hover:text-red-300"
@@ -527,12 +543,14 @@ function ExpandableTableBlockForm({
             )}
           </div>
         ))}
-        <button
-          onClick={addColumn}
-          className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-        >
-          + Col
-        </button>
+        {!IS_READONLY && (
+          <button
+            onClick={addColumn}
+            className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+          >
+            + Col
+          </button>
+        )}
       </div>
 
       {/* Rows */}
@@ -548,12 +566,14 @@ function ExpandableTableBlockForm({
         />
       ))}
 
-      <button
-        onClick={addRow}
-        className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-      >
-        + Row
-      </button>
+      {!IS_READONLY && (
+        <button
+          onClick={addRow}
+          className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+        >
+          + Row
+        </button>
+      )}
 
       <AdvancedTableOptions block={block} onChange={onChange} />
     </div>
@@ -586,7 +606,8 @@ function ExpandableRowEditor({
             type="text"
             value={cell}
             onChange={(e) => onUpdateCell(colIdx, e.target.value)}
-            className="w-24 rounded border border-coffee-700 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="w-24 rounded border border-coffee-700 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             placeholder={headers[colIdx]}
           />
         ))}
@@ -597,12 +618,14 @@ function ExpandableRowEditor({
         >
           {showExpanded ? '▾' : '▸'}
         </button>
-        <button
-          onClick={onRemove}
-          className="text-xs text-red-400 hover:text-red-300"
-        >
-          ✕
-        </button>
+        {!IS_READONLY && (
+          <button
+            onClick={onRemove}
+            className="text-xs text-red-400 hover:text-red-300"
+          >
+            ✕
+          </button>
+        )}
       </div>
       {showExpanded && (
         <div className="ml-2">
@@ -616,7 +639,8 @@ function ExpandableRowEditor({
                 : ''
             }
             onChange={(e) => onUpdateExpanded(e.target.value)}
-            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none"
+            disabled={IS_READONLY}
+            className="w-full rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 font-mono text-xs text-coffee-200 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             rows={3}
             placeholder='{"functions": [{"name": "mint()", "callers": ["ActivePool"]}]}'
           />
@@ -695,7 +719,8 @@ function DropdownBlockForm({
           type="text"
           value={block.label}
           onChange={(e) => onChange({ ...block, label: e.target.value })}
-          className="flex-1 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="flex-1 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         />
       </div>
 
@@ -714,25 +739,27 @@ function DropdownBlockForm({
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-1">
-        {(['text', 'table', 'link', 'metric'] as const).map((type) => (
-          <button
-            key={type}
-            onClick={() => addNestedBlock(type)}
-            className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-          >
-            + {type.charAt(0).toUpperCase() + type.slice(1)}
-          </button>
-        ))}
-        {depth + 1 < maxDepth && (
-          <button
-            onClick={() => addNestedBlock('dropdown')}
-            className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-          >
-            + Dropdown
-          </button>
-        )}
-      </div>
+      {!IS_READONLY && (
+        <div className="flex flex-wrap gap-1">
+          {(['text', 'table', 'link', 'metric'] as const).map((type) => (
+            <button
+              key={type}
+              onClick={() => addNestedBlock(type)}
+              className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+            >
+              + {type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          ))}
+          {depth + 1 < maxDepth && (
+            <button
+              onClick={() => addNestedBlock('dropdown')}
+              className="rounded border border-dashed border-coffee-600 px-1.5 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+            >
+              + Dropdown
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -756,7 +783,8 @@ function LinkBlockForm({
           type="text"
           value={block.text}
           onChange={(e) => onChange({ ...block, text: e.target.value })}
-          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           placeholder="Link text"
         />
       </div>
@@ -766,7 +794,8 @@ function LinkBlockForm({
           type="text"
           value={block.href}
           onChange={(e) => onChange({ ...block, href: e.target.value })}
-          className="w-48 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="w-48 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           placeholder="https://..."
         />
       </div>
@@ -775,6 +804,7 @@ function LinkBlockForm({
           type="checkbox"
           checked={block.external}
           onChange={(e) => onChange({ ...block, external: e.target.checked })}
+          disabled={IS_READONLY}
           className="rounded"
         />
         External
@@ -809,7 +839,8 @@ function MetricBlockForm({
           type="text"
           value={block.label}
           onChange={(e) => onChange({ ...block, label: e.target.value })}
-          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           placeholder="Metric label"
         />
       </div>
@@ -819,7 +850,8 @@ function MetricBlockForm({
           type="text"
           value={block.dataKey}
           onChange={(e) => onChange({ ...block, dataKey: e.target.value })}
-          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="w-32 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           placeholder="totalTroves"
         />
       </div>
@@ -830,7 +862,8 @@ function MetricBlockForm({
           onChange={(e) =>
             onChange({ ...block, format: e.target.value as ReviewMetricFormat })
           }
-          className="rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="rounded border border-coffee-600 bg-coffee-900 px-1 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         >
           {METRIC_FORMATS.map((f) => (
             <option key={f.value} value={f.value}>

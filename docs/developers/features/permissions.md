@@ -183,6 +183,7 @@
 - **Mitigations**: Each function can have `mitigations[]` in `functions.json`. Each mitigation has:
   - `type`: `'valueRange'` (MIN/MAX), `'relativeValue'` (% change), or `'other'`
   - `description`: Human-readable explanation of the constraint
+  - `label`: Optional short label (1-2 words) for `'other'`-type mitigations — shown in badges instead of the truncated description. Full description appears on hover. When absent, the badge falls back to the first 20 characters of the description.
   - `valueRange.min/max` and `relativeValue.maxChangePercent`: Use `MitigationValue` type — either `{ mode: 'hardcoded', value: string }` or `{ mode: 'fieldRef', fieldPath: string }` (same path syntax as owner definitions)
   - `mitigatedField`: Optional `{ contractAddress, fieldName }` — links the mitigation to a specific contract field. When set, `configSeverity.ts` auto-writes `severity: "HIGH"` to `config.jsonc` so the monitoring service sends priority Discord alerts on field changes
   - `scopedTo`: Optional `{ address: string, type: 'admin' | 'dependency' }` — scopes the mitigation to a specific admin or dependency. When absent, the mitigation is global (applies to all callers). When present, the mitigation only appears under the matching admin/dependency in scoring breakdowns and compiled reviews. The `delay` field on `FunctionEntry` is always global.
@@ -192,7 +193,8 @@
   - **Example**: `XCHF → StablecoinBridge.mint() → Frankencoin.mint()` where `Frankencoin.mint` has a mitigation scoped to StablecoinBridge. When viewing `StablecoinBridge.mint` from XCHF's perspective, the minting limit propagates transitively because StablecoinBridge is on the call path.
   - **Compiler passthrough**: `reviewCompiler.ts` uses `f.mitigations` directly from `projectAnalysis.getAdmins()`/`getDependencies()` — it does not compute or filter mitigations itself.
   - **Legacy**: `v2Scoring.ts` has its own `buildMergedMitigations()` + `filterMitigationsForOwner()` for the `/v2-score` endpoint but does not include transitive propagation.
-  - **UI**: Scope dropdown in `FunctionFolder.tsx` mitigation form — populated from resolved owners (Admins optgroup) and manual dependencies (Dependencies optgroup). Scoped mitigations display a purple badge showing the admin/dependency name.
+  - **UI**: Scope dropdown in `FunctionFolder.tsx` mitigation form — populated from resolved owners (Admins optgroup) and manual dependencies (Dependencies optgroup). Scoped mitigations display a purple badge showing the admin/dependency name. When type is `'other'`, a "Label" input field appears inline to fill in the short badge label.
+  - **Deduplication**: `deduplicateMitigations()` in `shared.tsx` collapses mitigations for entity-level badge lists (explorer + report cards). For `'other'` mitigations with a `label`, the dedup key is `other-label:<label>` — so all variants scoped to different callers collapse into one badge. Other types deduplicate by their full field set.
   - **Backend**: `configSeverity.ts` — `ensureFieldSeverity()` validates field exists in `discovered.json` before writing; `removeFieldSeverityIfAutoOnly()` cleans up when mitigated field is unlinked (only removes severity if no other field config properties exist)
   - **Frontend**: `resolveFieldValue()` in `ownerResolution.ts` resolves field-referenced values at display time
   - **Backward compat**: `normalizeMitigationValue()` converts old plain-string values to `MitigationValue` objects. Mitigations without `scopedTo` are treated as global (backward compatible).

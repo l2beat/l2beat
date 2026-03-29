@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-18T15:43:04.388Z",
+  "lastModified": "2026-03-27T10:00:00.000Z",
   "contracts": {
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "functions": [
@@ -12,7 +12,104 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:36:12.327Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Position Fee"
+            },
+            {
+              "type": "other",
+              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Position Fee"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "mintWithReserve",
@@ -22,7 +119,109 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:36:08.616Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters); each position has individual minting limits, minimum collateral requirements, reserve ratios, and expiration dates",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub (legacy): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "mint",
@@ -43,14 +242,145 @@
               "scopedTo": {
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
-              }
+              },
+              "label": "Mint Limit"
+            },
+            {
+              "type": "other",
+              "description": "1:1 backed — requires depositing equivalent XCHF tokens before minting",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "1:1 Backed"
+            },
+            {
+              "type": "other",
+              "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
+              "mitigatedField": {
+                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "fieldName": "horizon"
+              },
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Expired"
+            },
+            {
+              "type": "other",
+              "description": "Minting limit",
+              "mitigatedField": {
+                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "fieldName": "limit"
+              },
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Mint Limit"
+            },
+            {
+              "type": "other",
+              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "1:1 Backed"
+            },
+            {
+              "type": "other",
+              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
+              "mitigatedField": {
+                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "fieldName": "horizon"
+              },
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Expiry"
+            },
+            {
+              "type": "other",
+              "description": "Flash loan only — mints ZCHF to itself and burns the exact same amount via burnFrom in the same transaction",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Flash Loan"
+            },
+            {
+              "type": "other",
+              "description": "Only callable via Chainlink CCIP router on incoming cross-chain transfers; rate-limited per chain by CCIP rate limiter",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "CCIP Rate Limit"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub (legacy): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
             }
           ],
-          "timestamp": "2026-03-18T15:43:04.388Z",
+          "timestamp": "2026-03-27T10:00:00.000Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-18T15:43:04.388Z"
-          }
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "score": "critical"
         },
         {
           "functionName": "burnFrom",
@@ -60,7 +390,104 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:35:43.536Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Burns ZCHF to release equivalent XCHF to user; bounded by bridge's minted balance",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Burn Limit"
+            },
+            {
+              "type": "other",
+              "description": "Burns ZCHF to release equivalent VCHF to user; bounded by bridge's minted balance",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Burn Limit"
+            },
+            {
+              "type": "other",
+              "description": "Flash loan repayment only — burns the exact amount previously minted in the same transaction",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Flash Loan"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub (legacy): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "burnWithoutReserve",
@@ -70,7 +497,104 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:35:55.657Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Called during challenge resolution to burn the repayment amount; bounded by position's minted debt",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "Called during challenge resolution to burn the repayment amount; bounded by position's minted debt",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "burnWithReserve",
@@ -80,7 +604,109 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:35:52.782Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters) to repay debt and reclaim proportional reserve",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub (legacy): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "burnFromWithReserve",
@@ -90,7 +716,109 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:35:50.221Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters) to repay debt from a payer and reclaim proportional reserve",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "MintingHub (legacy): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BridgeAccounting: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "coverLoss",
@@ -100,7 +828,102 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:36:01.889Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Called during challenge resolution when bid is insufficient to cover repayment; bounded by position's outstanding debt",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "Called during challenge resolution when bid is insufficient to cover repayment; bounded by position's outstanding debt",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "Mints accrued interest to Savings contract; bounded by currentRatePPM × elapsed time × account balance",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              }
+            },
+            {
+              "type": "other",
+              "description": "Mints accrued interest to Savings contract; bounded by currentRatePPM × elapsed time × account balance",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              }
+            },
+            {
+              "type": "other",
+              "description": "Called for cross-chain loss accounting; only triggered by validated CCIP messages from registered remote token pools",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "CCIP Rate Limit"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         },
         {
           "functionName": "collectProfits",
@@ -110,7 +933,104 @@
               "path": "$self.activeMinters"
             }
           ],
-          "timestamp": "2026-01-29T16:35:59.163Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          },
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Collects 1000 ZCHF opening fee on new positions and proportional profits during challenge resolution",
+              "scopedTo": {
+                "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "Collects 1000 ZCHF opening fee on new positions and proportional profits during challenge resolution",
+              "scopedTo": {
+                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+                "type": "admin"
+              },
+              "label": "Challenge Burn"
+            },
+            {
+              "type": "other",
+              "description": "Sends accumulated ZCHF balance (cross-chain profits) to reserve; only triggered by validated CCIP messages",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "CCIP Rate Limit"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (XCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "StablecoinBridge (VCHF): does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "Savings: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "PositionRoller: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "TransferReference: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called"
+            }
+          ]
         }
       ]
     },
@@ -286,7 +1206,18 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:09.336Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Caller must sacrifice their own votes proportionally — budget deducted from caller first, then applied to targets up to that budget"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         },
         {
           "functionName": "restructureCapTable",
@@ -296,7 +1227,33 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:09.336Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "critical",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "Only callable when system equity < MINIMUM_EQUITY (1000 ZCHF) — system must be near-insolvent",
+              "valueRange": {
+                "max": {
+                  "mode": "discovered",
+                  "value": "1000000000000000000000"
+                },
+                "unit": "ZCHF"
+              },
+              "mitigatedField": {
+                "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+                "fieldName": "equity"
+              }
+            },
+            {
+              "type": "other",
+              "description": "Caller must be qualified FPS holder with 2% quorum of total votes (via checkQualified with helpers)"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         }
       ]
     },
@@ -310,7 +1267,59 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:12.973Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "description": "riskPremium bounded to 100%",
+              "valueRange": {
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "1000000"
+                },
+                "unit": "ppm"
+              }
+            },
+            {
+              "type": "valueRange",
+              "description": "reservePPM must be between CHALLENGER_REWARD (2%) and 100%",
+              "valueRange": {
+                "min": {
+                  "mode": "discovered",
+                  "value": "20000"
+                },
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "1000000"
+                },
+                "unit": "ppm"
+              }
+            },
+            {
+              "type": "valueRange",
+              "description": "Minimum collateral value must be at least 5000 ZCHF worth",
+              "valueRange": {
+                "min": {
+                  "mode": "hardcoded",
+                  "value": "5000000000000000000000"
+                },
+                "unit": "ZCHF"
+              }
+            },
+            {
+              "type": "other",
+              "description": "Requires 1000 ZCHF irrevocable opening fee and collateral deposit from caller"
+            },
+            {
+              "type": "other",
+              "description": "Collateral token must revert on failed transfers (verified at position creation)"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         },
         {
           "functionName": "clone",
@@ -335,7 +1344,18 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:12.974Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Challenger must deposit matching collateral amount; position must be registered (validPos)"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         },
         {
           "functionName": "bid",
@@ -345,7 +1365,18 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:12.974Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Bidder must pay ZCHF at Dutch auction price; market mechanism with declining price over challenge period"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         },
         {
           "functionName": "buyExpiredCollateral",
@@ -355,7 +1386,18 @@
               "path": "$self"
             }
           ],
-          "timestamp": "2026-01-29T10:31:12.975Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Must pay expiredPurchasePrice which starts at 10x liquidation price and declines linearly over two challenge periods"
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         }
       ]
     },
@@ -541,7 +1583,34 @@
               "path": "@equity.checkQualified"
             }
           ],
-          "timestamp": "2026-01-29T10:31:34.820Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "7-day mandatory delay before proposed rate takes effect",
+              "delaySeconds": 604800
+            },
+            {
+              "type": "other",
+              "description": "Caller must be qualified FPS holder with 2% quorum of total votes (via equity.checkQualified)"
+            },
+            {
+              "type": "valueRange",
+              "description": "Rate bounded by uint24 type — maximum ~1677% APR (16,777,215 PPM)",
+              "valueRange": {
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "16777215"
+                },
+                "unit": "ppm"
+              }
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         }
       ]
     },
@@ -555,7 +1624,34 @@
               "path": "@equity.checkQualified"
             }
           ],
-          "timestamp": "2026-01-29T10:31:37.626Z"
+          "timestamp": "2026-03-27T10:00:00.000Z",
+          "score": "no-impact",
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "7-day mandatory delay before proposed rate takes effect",
+              "delaySeconds": 604800
+            },
+            {
+              "type": "other",
+              "description": "Caller must be qualified FPS holder with 2% quorum of total votes (via equity.checkQualified)"
+            },
+            {
+              "type": "valueRange",
+              "description": "Rate bounded by uint24 type — maximum ~1677% APR (16,777,215 PPM)",
+              "valueRange": {
+                "max": {
+                  "mode": "hardcoded",
+                  "value": "16777215"
+                },
+                "unit": "ppm"
+              }
+            }
+          ],
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-27T10:00:00.000Z"
+          }
         }
       ]
     },

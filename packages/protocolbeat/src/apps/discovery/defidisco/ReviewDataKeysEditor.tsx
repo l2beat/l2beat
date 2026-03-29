@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
+import { IS_READONLY } from '../../../config/readonly'
 
 interface ReviewDataKeysEditorProps {
   dataKeys: Record<string, string>
@@ -85,12 +86,14 @@ export function ReviewDataKeysEditor({
             />
           ))}
 
-          <button
-            onClick={addKey}
-            className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
-          >
-            + Add Data Key
-          </button>
+          {!IS_READONLY && (
+            <button
+              onClick={addKey}
+              className="rounded border border-dashed border-coffee-600 px-2 py-0.5 text-xs text-coffee-400 hover:border-autumn-300 hover:text-autumn-300"
+            >
+              + Add Data Key
+            </button>
+          )}
         </div>
       )}
     </div>
@@ -123,7 +126,8 @@ function DataKeyRow({
             onKeyChange(editingKey)
           }
         }}
-        className="w-36 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 font-mono text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+        disabled={IS_READONLY}
+        className="w-36 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 font-mono text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         placeholder="keyName"
       />
       <span className="text-xs text-coffee-400">=</span>
@@ -131,15 +135,18 @@ function DataKeyRow({
         type="text"
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
-        className="flex-1 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+        disabled={IS_READONLY}
+        className="flex-1 rounded border border-coffee-600 bg-coffee-900 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         placeholder="$38.1M"
       />
-      <button
-        onClick={onRemove}
-        className="px-1 text-xs text-red-400 hover:text-red-300"
-      >
-        ✕
-      </button>
+      {!IS_READONLY && (
+        <button
+          onClick={onRemove}
+          className="px-1 text-xs text-red-400 hover:text-red-300"
+        >
+          ✕
+        </button>
+      )}
     </div>
   )
 }

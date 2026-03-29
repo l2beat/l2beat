@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 import { updateReviewConfigEntity } from '../../../api/api'
+import { IS_READONLY } from '../../../config/readonly'
 import type {
   EntityDescription,
   ReviewConfig,
@@ -137,7 +138,8 @@ function ProtocolSection({
         <select
           value={type}
           onChange={(e) => onTypeChange(e.target.value as ReviewProjectType)}
-          className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+          disabled={IS_READONLY}
+          className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         >
           {PROTOCOL_TYPES.map((pt) => (
             <option key={pt} value={pt}>
@@ -150,9 +152,10 @@ function ProtocolSection({
       <textarea
         value={description}
         onChange={(e) => onDescriptionChange(e.target.value)}
+        disabled={IS_READONLY}
         placeholder="Protocol description..."
         rows={4}
-        className="w-full rounded border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        className="w-full rounded border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
       />
     </div>
   )
@@ -188,12 +191,14 @@ function EntitySection({
             ({entries.length})
           </span>
         </h3>
-        <button
-          onClick={() => setShowAdd(!showAdd)}
-          className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
-        >
-          {showAdd ? 'Cancel' : '+ Add'}
-        </button>
+        {!IS_READONLY && (
+          <button
+            onClick={() => setShowAdd(!showAdd)}
+            className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
+          >
+            {showAdd ? 'Cancel' : '+ Add'}
+          </button>
+        )}
       </div>
 
       {showAdd && (
@@ -277,36 +282,42 @@ function EntityEntry({
               type="text"
               value={localName}
               onChange={(e) => setLocalName(e.target.value)}
+              disabled={IS_READONLY}
               placeholder="Human-friendly label"
-              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
             />
           </div>
           <textarea
             value={localDesc}
             onChange={(e) => setLocalDesc(e.target.value)}
+            disabled={IS_READONLY}
             placeholder="Description..."
             rows={3}
-            className="mb-1 w-full rounded border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+            className="mb-1 w-full rounded border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
           />
-          <div className="flex justify-end gap-2">
-            <button
-              onClick={() => onSave(address, undefined, '')}
-              className="rounded px-2 py-0.5 text-xs text-red-400 hover:bg-coffee-700"
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => onSave(address, localName || undefined, localDesc)}
-              disabled={!isDirty || isSaving}
-              className={`rounded px-2 py-0.5 text-xs font-medium ${
-                isDirty && !isSaving
-                  ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
-                  : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
-              }`}
-            >
-              {isSaving ? 'Saving...' : 'Save'}
-            </button>
-          </div>
+          {!IS_READONLY && (
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => onSave(address, undefined, '')}
+                className="rounded px-2 py-0.5 text-xs text-red-400 hover:bg-coffee-700"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() =>
+                  onSave(address, localName || undefined, localDesc)
+                }
+                disabled={!isDirty || isSaving}
+                className={`rounded px-2 py-0.5 text-xs font-medium ${
+                  isDirty && !isSaving
+                    ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
+                    : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
+                }`}
+              >
+                {isSaving ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

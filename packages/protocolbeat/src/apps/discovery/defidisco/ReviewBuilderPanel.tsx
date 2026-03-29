@@ -13,6 +13,7 @@ import {
   AVAILABLE_PROJECT_TYPES,
   getReviewTemplate,
 } from './reviewBuilderTemplates'
+import { IS_READONLY } from '../../../config/readonly'
 import { registerPanelDirtyCheck } from './panelDirtyState'
 import { ReviewSectionEditor } from './ReviewSectionEditor'
 import { ReviewDataKeysEditor } from './ReviewDataKeysEditor'
@@ -72,7 +73,7 @@ export function ReviewBuilderPanel() {
   }, [])
 
   const handleSave = useCallback(async () => {
-    if (!localConfig) return
+    if (!localConfig || IS_READONLY) return
     setSaving(true)
     setSaveError(null)
     try {
@@ -157,17 +158,23 @@ export function ReviewBuilderPanel() {
         <p className="text-coffee-200 text-sm">
           Select a project type to start from a template:
         </p>
-        <div className="flex gap-2">
-          {AVAILABLE_PROJECT_TYPES.map((pt) => (
-            <button
-              key={pt}
-              onClick={() => handleTemplateSelect(pt)}
-              className="rounded bg-autumn-300 px-4 py-2 text-sm font-medium text-coffee-900 hover:bg-autumn-200"
-            >
-              {pt.charAt(0).toUpperCase() + pt.slice(1)}
-            </button>
-          ))}
-        </div>
+        {IS_READONLY ? (
+          <p className="text-coffee-400 text-sm">
+            Read-only mode — cannot create reviews
+          </p>
+        ) : (
+          <div className="flex gap-2">
+            {AVAILABLE_PROJECT_TYPES.map((pt) => (
+              <button
+                key={pt}
+                onClick={() => handleTemplateSelect(pt)}
+                className="rounded bg-autumn-300 px-4 py-2 text-sm font-medium text-coffee-900 hover:bg-autumn-200"
+              >
+                {pt.charAt(0).toUpperCase() + pt.slice(1)}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     )
   }
@@ -187,17 +194,19 @@ export function ReviewBuilderPanel() {
           {!isDirty && !saving && savedJson && (
             <span className="text-xs text-green-400">Saved</span>
           )}
-          <button
-            onClick={handleSave}
-            disabled={!isDirty || saving}
-            className={`rounded px-3 py-1 text-xs font-medium ${
-              isDirty && !saving
-                ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
-                : 'bg-coffee-700 text-coffee-400 cursor-not-allowed'
-            }`}
-          >
-            {saving ? 'Saving...' : 'Save'}
-          </button>
+          {!IS_READONLY && (
+            <button
+              onClick={handleSave}
+              disabled={!isDirty || saving}
+              className={`rounded px-3 py-1 text-xs font-medium ${
+                isDirty && !saving
+                  ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
+                  : 'bg-coffee-700 text-coffee-400 cursor-not-allowed'
+              }`}
+            >
+              {saving ? 'Saving...' : 'Save'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -298,7 +307,8 @@ function MetadataField({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none"
+        disabled={IS_READONLY}
+        className="rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
         placeholder={label.toLowerCase()}
       />
     </div>

@@ -602,6 +602,7 @@ export function FunctionFolder({
   const [newMitigation, setNewMitigation] = useState<{
     type: MitigationType
     description: string
+    label: string
     valueRange: {
       min: MitigationValueFormState
       max: MitigationValueFormState
@@ -616,6 +617,7 @@ export function FunctionFolder({
   }>({
     type: 'valueRange',
     description: '',
+    label: '',
     valueRange: { min: { ...emptyMitVal }, max: { ...emptyMitVal }, unit: '' },
     relativeValue: { maxChangePercent: { ...emptyMitVal } },
     mitigatedField: {
@@ -839,6 +841,7 @@ export function FunctionFolder({
     setNewMitigation({
       type: 'valueRange',
       description: '',
+      label: '',
       valueRange: {
         min: { ...emptyMitVal },
         max: { ...emptyMitVal },
@@ -874,6 +877,9 @@ export function FunctionFolder({
     const mitigation: Mitigation = {
       type: newMitigation.type,
       description: newMitigation.description,
+    }
+    if (newMitigation.type === 'other' && newMitigation.label.trim()) {
+      mitigation.label = newMitigation.label.trim()
     }
     if (newMitigation.type === 'valueRange') {
       const min = formToMitVal(newMitigation.valueRange.min)
@@ -959,6 +965,7 @@ export function FunctionFolder({
     setNewMitigation({
       type: m.type,
       description: m.description,
+      label: m.label ?? '',
       valueRange: {
         min: mitValToForm(m.valueRange?.min),
         max: mitValToForm(m.valueRange?.max),
@@ -2675,6 +2682,31 @@ export function FunctionFolder({
                       <option value="other">Other</option>
                     </select>
                   </div>
+
+                  {/* Label field for 'other' type */}
+                  {newMitigation.type === 'other' && (
+                    <div className="flex-1">
+                      <label className="mb-1 block text-coffee-300 text-xs">
+                        Label{' '}
+                        <span className="text-coffee-500">
+                          (short, shown in badge)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={newMitigation.label}
+                        onChange={(e) =>
+                          setNewMitigation((prev) => ({
+                            ...prev,
+                            label: e.target.value,
+                          }))
+                        }
+                        placeholder="e.g. Rate Limit"
+                        maxLength={30}
+                        className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                      />
+                    </div>
+                  )}
 
                   {/* Inline value fields */}
                   {newMitigation.type === 'valueRange' && (

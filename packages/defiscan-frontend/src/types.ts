@@ -91,6 +91,8 @@ export function displayMitigationValue(
 export interface Mitigation {
   type: MitigationType
   description: string
+  // For 'other': short 1-2 word label shown in badges (falls back to truncated description if absent)
+  label?: string
   delayRef?: { contractAddress: string; fieldName: string }
   delaySeconds?: number
   valueRange?: { min?: MitigationValue; max?: MitigationValue; unit?: string }
