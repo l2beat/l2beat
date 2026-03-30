@@ -12,6 +12,14 @@ EigenLayer v1.12.0 upgrade: Rewards 2.2, Duration Vaults, and Incentive Council.
 
 EmissionsController replaces the old TokenHopper/RewardAllStakersActionGenerator incentive flow. StrategyFactory upgraded with DurationVaultStrategy support. All strategies upgraded to new implementation with beforeAddShares/beforeRemoveShares hooks. StrategiesBeacon implementation updated.
 
+Implementation diffs:
+- Strategies: [diff](https://disco.l2beat.com/diff/eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7/eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230)
+- bEIGEN-Strategy: [diff](https://disco.l2beat.com/diff/eth:0x4a0aee93BE6C87B227cA0B450E15245631233532/eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40)
+- StrategyFactory: [diff](https://disco.l2beat.com/diff/eth:0x5194D2a6A0900796903503926E9CF775b926c8AF/eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7)
+- StrategyManager: [diff](https://disco.l2beat.com/diff/eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c/eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394)
+- RewardsCoordinator: [diff](https://disco.l2beat.com/diff/eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF/eth:0xa0673C53980665a706352412D2538bA005403C26)
+- StrategiesBeacon impl: [diff](https://disco.l2beat.com/diff/eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780/eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce)
+
 ## Watched changes
 
 ```diff
