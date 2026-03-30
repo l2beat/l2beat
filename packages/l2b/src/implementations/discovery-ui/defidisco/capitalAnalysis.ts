@@ -1,14 +1,15 @@
 import { addressesEqual, normalizeChainAddress } from './addressUtils'
 import type { EnhancedGraph } from './enhancedTraversal'
-import type {
-  AdminDetail,
-  AdminDetailWithCapital,
-  ApiFunctionsResponse,
-  ApiFundsDataResponse,
-  CallGraphTraversalResult,
-  FunctionCapitalAnalysis,
-  Impact,
-  ReachableContract,
+import {
+  isUpgradeFunction,
+  type AdminDetail,
+  type AdminDetailWithCapital,
+  type ApiFunctionsResponse,
+  type ApiFundsDataResponse,
+  type CallGraphTraversalResult,
+  type FunctionCapitalAnalysis,
+  type Impact,
+  type ReachableContract,
 } from './types'
 
 /**
@@ -155,13 +156,42 @@ export class CapitalAnalysisCalculator {
       contract: string
       function: string
       pathIsViewOnly: boolean
-    }> = [
-      {
+    }> = []
+
+    if (isUpgradeFunction(startFunction)) {
+      // Upgrade = arbitrary code execution on this contract.
+      // The new implementation can call any function, so seed BFS with ALL
+      // functions from this contract's call graph + permission edges.
+      const normalizedStart = normalizeChainAddress(startContract)
+      const allEdges = this.enhancedGraph.forwardIndex.get(normalizedStart)
+      if (allEdges) {
+        const seenFunctions = new Set<string>()
+        for (const edge of allEdges) {
+          const fn = edge.sourceFunction
+          if (fn && !seenFunctions.has(fn)) {
+            seenFunctions.add(fn)
+            queue.push({
+              contract: startContract,
+              function: fn,
+              pathIsViewOnly: false, // upgrade = non-view
+            })
+          }
+        }
+      }
+      // Also add the upgrade function itself (may have its own calls)
+      queue.push({
+        contract: startContract,
+        function: startFunction,
+        pathIsViewOnly: false,
+      })
+      // Permission edges (no sourceFunction) are followed by default in BFS
+    } else {
+      queue.push({
         contract: startContract,
         function: startFunction,
         pathIsViewOnly: true,
-      },
-    ]
+      })
+    }
 
     while (queue.length > 0) {
       const { contract, function: func, pathIsViewOnly } = queue.shift()!
@@ -331,6 +361,7 @@ export class CapitalAnalysisCalculator {
       contractName,
       functionName,
       impact,
+      isUpgrade: isUpgradeFunction(functionName) || undefined,
       directFundsUsd,
       directTokenValueUsd,
       reachableContracts,

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-29T08:02:14.530Z",
+  "compiledAt": "2026-03-30T14:02:07.869Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "stETH",
-    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $17.33B in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract."
+    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $18.14B in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract."
   },
   "totals": {
     "contractCount": 69,
@@ -16,15 +16,15 @@
     "scoredFunctionCount": 199,
     "adminCount": 55,
     "dependencyCount": 1,
-    "totalCapitalAtRisk": 17334719522.864567,
-    "totalTokenValueAtRisk": 17101906821.511387,
-    "totalTokenValue": 17101906821.511387
+    "totalCapitalAtRisk": 18141888346.171436,
+    "totalTokenValueAtRisk": 18417575522.910305,
+    "totalTokenValue": 18417575522.910305
   },
   "admins": [
     {
       "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "name": "Lido DAO Agent",
-      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $107.24M in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
+      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $202.58M in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
       "adminType": "Contract",
       "isGovernance": true,
       "functions": [
@@ -43,8 +43,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -54,7 +54,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -75,8 +75,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -86,7 +86,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -107,8 +107,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -118,7 +118,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -139,8 +139,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -150,7 +150,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -171,8 +171,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -182,7 +182,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -203,8 +203,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -214,7 +214,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -235,8 +235,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -246,7 +246,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -267,8 +267,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -278,7 +278,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -353,7 +353,7 @@
               "calledFunctions": [
                 "transferFrom"
               ],
-              "fundsUsd": 684.4971036087923,
+              "fundsUsd": 693.7321307897657,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -374,7 +374,7 @@
               "calledFunctions": [
                 "transferFrom"
               ],
-              "fundsUsd": 684.4971036087923,
+              "fundsUsd": 693.7321307897657,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1057,8 +1057,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -1078,8 +1078,8 @@
               "calledFunctions": [
                 "receiveWithdrawals"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -1213,7 +1213,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 0.000022923668179265,
+          "directFundsUsd": 0.000024734055312888012,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1222,7 +1222,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 0.000022923668179265,
+          "directFundsUsd": 0.000024734055312888012,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1231,7 +1231,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
-          "directFundsUsd": 0.000022923668179265,
+          "directFundsUsd": 0.000024734055312888012,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1240,7 +1240,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
-          "directFundsUsd": 0.000022923668179265,
+          "directFundsUsd": 0.000024734055312888012,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1313,8 +1313,8 @@
               "calledFunctions": [
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -1326,7 +1326,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1358,8 +1358,8 @@
               "calledFunctions": [
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -1371,7 +1371,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1403,8 +1403,8 @@
               "calledFunctions": [
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -1416,7 +1416,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1448,8 +1448,8 @@
               "calledFunctions": [
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -1461,7 +1461,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1537,7 +1537,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 107237225.1140943,
+          "directFundsUsd": 202579639.28687963,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1546,7 +1546,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 107237225.1140943,
+          "directFundsUsd": 202579639.28687963,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1555,7 +1555,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
-          "directFundsUsd": 107237225.1140943,
+          "directFundsUsd": 202579639.28687963,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1564,7 +1564,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
-          "directFundsUsd": 107237225.1140943,
+          "directFundsUsd": 202579639.28687963,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1833,10 +1833,10 @@
           ]
         }
       ],
-      "totalDirectCapital": 107237225.11411722,
+      "totalDirectCapital": 202579639.28690436,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 113579360.2854962,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 204941557.88752607,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
@@ -1860,8 +1860,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -1871,7 +1871,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1913,7 +1913,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1926,8 +1926,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2006,7 +2006,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2051,7 +2051,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2062,8 +2062,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -2071,8 +2071,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
@@ -2096,8 +2096,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2107,7 +2107,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2149,7 +2149,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2162,8 +2162,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2242,7 +2242,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2287,7 +2287,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2298,8 +2298,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -2307,8 +2307,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
@@ -2332,8 +2332,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2343,7 +2343,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2385,7 +2385,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2398,8 +2398,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2478,7 +2478,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2523,7 +2523,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2534,8 +2534,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -2543,8 +2543,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
@@ -2568,8 +2568,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2579,7 +2579,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2621,7 +2621,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2634,8 +2634,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2714,7 +2714,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2759,7 +2759,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2770,8 +2770,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -2779,8 +2779,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
@@ -2804,8 +2804,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2815,7 +2815,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -2857,7 +2857,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2870,8 +2870,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -2950,7 +2950,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2995,7 +2995,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3006,8 +3006,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -3015,8 +3015,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389",
@@ -3040,8 +3040,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -3051,7 +3051,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -3093,7 +3093,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3106,8 +3106,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -3186,7 +3186,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3231,7 +3231,7 @@
                 "getStakingModuleNonce",
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3242,8 +3242,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -3251,8 +3251,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
@@ -3513,8 +3513,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -3524,7 +3524,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3574,7 +3574,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3653,7 +3653,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3871,8 +3871,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -3882,7 +3882,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -3932,7 +3932,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4011,7 +4011,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4149,7 +4149,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4164,8 +4164,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -4270,7 +4270,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4350,7 +4350,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4484,7 +4484,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4499,8 +4499,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -4605,7 +4605,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4685,7 +4685,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4832,7 +4832,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -4847,8 +4847,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -4953,7 +4953,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5020,7 +5020,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5167,7 +5167,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5182,8 +5182,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -5288,7 +5288,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5355,7 +5355,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5482,8 +5482,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -5561,8 +5561,8 @@
               "calledFunctions": [
                 "receiveELRewards"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             }
           ]
@@ -5593,7 +5593,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5627,8 +5627,8 @@
               "calledFunctions": [
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -5640,7 +5640,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5667,10 +5667,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000022923668179265,
+      "totalDirectCapital": 0.000024734055312888012,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17227481613.25337,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 17939308013.152424,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
@@ -5953,8 +5953,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -5964,7 +5964,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6014,7 +6014,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6093,7 +6093,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6285,8 +6285,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -6296,7 +6296,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6346,7 +6346,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6425,7 +6425,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6617,8 +6617,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -6628,7 +6628,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6678,7 +6678,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6757,7 +6757,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6956,7 +6956,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -6971,8 +6971,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -7033,7 +7033,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7089,7 +7089,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7281,8 +7281,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -7292,7 +7292,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7342,7 +7342,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7421,7 +7421,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7613,8 +7613,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -7624,7 +7624,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7674,7 +7674,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7753,7 +7753,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -7945,8 +7945,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -7956,7 +7956,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8006,7 +8006,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8085,7 +8085,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8277,8 +8277,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -8288,7 +8288,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8338,7 +8338,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8417,7 +8417,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8609,8 +8609,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -8620,7 +8620,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8670,7 +8670,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8749,7 +8749,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8941,8 +8941,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -8952,7 +8952,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9002,7 +9002,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9081,7 +9081,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9273,8 +9273,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -9284,7 +9284,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9334,7 +9334,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9413,7 +9413,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9528,8 +9528,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -9539,7 +9539,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9645,7 +9645,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9725,7 +9725,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9852,8 +9852,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -9863,7 +9863,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9969,7 +9969,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10060,7 +10060,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10187,8 +10187,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -10198,7 +10198,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10304,7 +10304,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10395,7 +10395,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10522,8 +10522,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -10533,7 +10533,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10639,7 +10639,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10730,7 +10730,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10857,8 +10857,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -10868,7 +10868,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10974,7 +10974,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11065,7 +11065,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11192,8 +11192,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -11203,7 +11203,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11309,7 +11309,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11400,7 +11400,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11527,8 +11527,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -11538,7 +11538,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11644,7 +11644,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11735,7 +11735,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11862,8 +11862,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -11873,7 +11873,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -11979,7 +11979,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12070,7 +12070,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12197,8 +12197,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -12208,7 +12208,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12314,7 +12314,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12405,7 +12405,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12532,8 +12532,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -12543,7 +12543,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12649,7 +12649,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12740,7 +12740,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12867,8 +12867,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -12878,7 +12878,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -12984,7 +12984,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13075,7 +13075,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13256,7 +13256,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13271,8 +13271,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -13384,7 +13384,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13440,7 +13440,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13598,7 +13598,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13613,8 +13613,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -13726,7 +13726,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13782,7 +13782,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13940,7 +13940,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -13955,8 +13955,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -14068,7 +14068,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14124,7 +14124,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14282,7 +14282,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14297,8 +14297,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -14410,7 +14410,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14466,7 +14466,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14624,7 +14624,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14639,8 +14639,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -14752,7 +14752,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14808,7 +14808,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14966,7 +14966,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -14981,8 +14981,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -15094,7 +15094,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15150,7 +15150,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15295,7 +15295,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15310,8 +15310,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -15423,7 +15423,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15492,7 +15492,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15637,7 +15637,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15652,8 +15652,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -15765,7 +15765,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15834,7 +15834,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15979,7 +15979,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -15994,8 +15994,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -16107,7 +16107,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16176,7 +16176,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16321,7 +16321,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16336,8 +16336,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -16449,7 +16449,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16518,7 +16518,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16663,7 +16663,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16678,8 +16678,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -16791,7 +16791,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -16860,7 +16860,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17005,7 +17005,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17020,8 +17020,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -17133,7 +17133,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17202,7 +17202,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17330,8 +17330,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -17341,7 +17341,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17447,7 +17447,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17514,7 +17514,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17637,8 +17637,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -17648,7 +17648,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17754,7 +17754,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17849,7 +17849,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -17972,8 +17972,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -17983,7 +17983,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18089,7 +18089,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18184,7 +18184,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18307,8 +18307,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -18318,7 +18318,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18424,7 +18424,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18519,7 +18519,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18642,8 +18642,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -18653,7 +18653,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18759,7 +18759,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18854,7 +18854,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -18977,8 +18977,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -18988,7 +18988,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19094,7 +19094,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19189,7 +19189,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19312,8 +19312,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -19323,7 +19323,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19429,7 +19429,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19524,7 +19524,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19647,8 +19647,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -19658,7 +19658,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19764,7 +19764,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19859,7 +19859,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -19982,8 +19982,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -19993,7 +19993,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20099,7 +20099,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20194,7 +20194,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20317,8 +20317,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -20328,7 +20328,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20434,7 +20434,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20529,7 +20529,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20652,8 +20652,8 @@
                 "totalSupply",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -20663,7 +20663,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20769,7 +20769,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20864,7 +20864,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -20919,8 +20919,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
@@ -21933,9 +21933,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000022923668179265,
+      "totalDirectCapital": 0.000024734055312888012,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000022923668179265,
+      "totalReachableCapital": 0.000024734055312888012,
       "totalReachableTokenValue": 0
     },
     {
@@ -22162,7 +22162,7 @@
     {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
       "name": "TokenManager",
-      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $684.50 in direct capital through the LDO token and Voting contract.",
+      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $693.73 in direct capital through the LDO token and Voting contract.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -22171,7 +22171,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "changeController",
           "impact": "critical",
-          "directFundsUsd": 684.4971036087923,
+          "directFundsUsd": 693.7321307897657,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22180,7 +22180,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "generateTokens",
           "impact": "critical",
-          "directFundsUsd": 684.4971036087923,
+          "directFundsUsd": 693.7321307897657,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22189,7 +22189,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "destroyTokens",
           "impact": "critical",
-          "directFundsUsd": 684.4971036087923,
+          "directFundsUsd": 693.7321307897657,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22198,7 +22198,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "enableTransfers",
           "impact": "critical",
-          "directFundsUsd": 684.4971036087923,
+          "directFundsUsd": 693.7321307897657,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22207,7 +22207,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "claimTokens",
           "impact": "critical",
-          "directFundsUsd": 684.4971036087923,
+          "directFundsUsd": 693.7321307897657,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22221,15 +22221,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 684.4971036087923,
+      "totalDirectCapital": 693.7321307897657,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 684.4971036087923,
+      "totalReachableCapital": 693.7321307897657,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
       "name": "LidoExecutionLayerRewardsVault",
-      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $6.34M in direct capital.",
+      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $2.36M in direct capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -22243,15 +22243,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6341450.674275389,
-      "totalDirectTokenValue": 17101906821.511387,
-      "totalReachableCapital": 6341450.674275389,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalDirectCapital": 2361224.8684909153,
+      "totalDirectTokenValue": 18417575522.910305,
+      "totalReachableCapital": 2361224.8684909153,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "name": "WithdrawalVault",
-      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $6.34M in direct capital.",
+      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $2.36M in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -22265,15 +22265,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6341450.674275389,
-      "totalDirectTokenValue": 17101906821.511387,
-      "totalReachableCapital": 6341450.674275389,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalDirectCapital": 2361224.8684909153,
+      "totalDirectTokenValue": 18417575522.910305,
+      "totalReachableCapital": 2361224.8684909153,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "name": "AccountingOracle",
-      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $6.34M in reachable capital.",
+      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $2.36M in reachable capital.",
       "adminType": "Contract",
       "isGovernance": false,
       "functions": [
@@ -22323,15 +22323,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6341450.6742983125,
-      "totalDirectTokenValue": 17101906821.511387,
-      "totalReachableCapital": 6341450.6742983125,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalDirectCapital": 2361224.8685156493,
+      "totalDirectTokenValue": 18417575522.910305,
+      "totalReachableCapital": 2361224.8685156493,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "name": "DepositSecurityModule",
-      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $6.34M in reachable capital.",
+      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $2.36M in reachable capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -22354,10 +22354,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 6341450.6742983125,
-      "totalDirectTokenValue": 17101906821.511387,
-      "totalReachableCapital": 6341450.6742983125,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalDirectCapital": 2361224.8685156493,
+      "totalDirectTokenValue": 18417575522.910305,
+      "totalReachableCapital": 2361224.8685156493,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
@@ -22542,8 +22542,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -22553,7 +22553,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22603,7 +22603,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22682,7 +22682,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22887,8 +22887,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -22898,7 +22898,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -22948,7 +22948,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23027,7 +23027,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23232,8 +23232,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -23243,7 +23243,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23293,7 +23293,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23372,7 +23372,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23404,8 +23404,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
@@ -23577,8 +23577,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -23588,7 +23588,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23638,7 +23638,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23717,7 +23717,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23909,8 +23909,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -23920,7 +23920,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -23970,7 +23970,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24049,7 +24049,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24241,8 +24241,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -24252,7 +24252,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24302,7 +24302,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24381,7 +24381,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24427,8 +24427,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -24466,7 +24466,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24522,7 +24522,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24566,7 +24566,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -24584,8 +24584,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45",
@@ -24757,8 +24757,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -24768,7 +24768,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24818,7 +24818,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -24897,7 +24897,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25089,8 +25089,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -25100,7 +25100,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25150,7 +25150,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25229,7 +25229,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25421,8 +25421,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -25432,7 +25432,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25482,7 +25482,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25561,7 +25561,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25593,8 +25593,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xf165148978Fa3cE74d76043f833463c340CFB704",
@@ -25644,9 +25644,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000022923668179265,
+      "totalDirectCapital": 0.000024734055312888012,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000022923668179265,
+      "totalReachableCapital": 0.000024734055312888012,
       "totalReachableTokenValue": 0
     },
     {
@@ -25666,9 +25666,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000022923668179265,
+      "totalDirectCapital": 0.000024734055312888012,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000022923668179265,
+      "totalReachableCapital": 0.000024734055312888012,
       "totalReachableTokenValue": 0
     },
     {
@@ -25791,7 +25791,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25806,8 +25806,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -25912,7 +25912,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -25992,7 +25992,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26147,7 +26147,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26162,8 +26162,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -26214,7 +26214,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26350,7 +26350,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26382,8 +26382,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081",
@@ -26496,7 +26496,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26511,8 +26511,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -26563,7 +26563,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26699,7 +26699,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26845,7 +26845,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -26860,8 +26860,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -26912,7 +26912,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27035,7 +27035,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27067,8 +27067,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x74836470337Ba5d2a92fe16E44AD862E28fcf9B3",
@@ -27235,8 +27235,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -27246,7 +27246,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27336,7 +27336,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27392,7 +27392,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27561,7 +27561,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27576,8 +27576,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -27678,7 +27678,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27734,7 +27734,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -27766,8 +27766,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xb9d82E1A49f6a66E8a07260BA05Cf9Ac8a938B1C",
@@ -27934,8 +27934,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -27945,7 +27945,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28035,7 +28035,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28091,7 +28091,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28260,7 +28260,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28275,8 +28275,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -28377,7 +28377,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28433,7 +28433,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28465,8 +28465,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x7dAdae4e1a0DB43F6bcfA75295666fc044605679",
@@ -28633,8 +28633,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -28644,7 +28644,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28734,7 +28734,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28790,7 +28790,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28959,7 +28959,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -28974,8 +28974,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -29076,7 +29076,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29132,7 +29132,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29164,8 +29164,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951",
@@ -29296,8 +29296,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -29307,7 +29307,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29420,7 +29420,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29489,7 +29489,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29645,7 +29645,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29660,8 +29660,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -29762,7 +29762,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29831,7 +29831,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -29863,8 +29863,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C",
@@ -29995,8 +29995,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -30006,7 +30006,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30119,7 +30119,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30188,7 +30188,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30344,7 +30344,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30359,8 +30359,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -30461,7 +30461,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30530,7 +30530,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30562,8 +30562,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE",
@@ -30694,8 +30694,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -30705,7 +30705,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30818,7 +30818,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -30887,7 +30887,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31043,7 +31043,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31058,8 +31058,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -31160,7 +31160,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31229,7 +31229,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31261,8 +31261,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0",
@@ -31366,7 +31366,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31381,8 +31381,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -31487,7 +31487,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31554,7 +31554,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31722,7 +31722,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31737,8 +31737,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -31789,7 +31789,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31912,7 +31912,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -31944,8 +31944,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
@@ -32024,8 +32024,8 @@
                 "receiveELRewards",
                 "handleOracleReport"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -32063,7 +32063,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32119,7 +32119,7 @@
               "calledFunctions": [
                 "getStETHByWstETH"
               ],
-              "fundsUsd": 17221140162.57907,
+              "fundsUsd": 17936946788.28391,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -32163,7 +32163,7 @@
               "calledFunctions": [
                 "getLastRequestId"
               ],
-              "fundsUsd": 107237225.1140943,
+              "fundsUsd": 202579639.28687963,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -32181,8 +32181,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17334718838.367462,
-      "totalReachableTokenValue": 17101906821.511387
+      "totalReachableCapital": 18141887652.439304,
+      "totalReachableTokenValue": 18417575522.910305
     },
     {
       "address": "eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C",
@@ -32283,8 +32283,8 @@
               "calledFunctions": [
                 "deposit"
               ],
-              "fundsUsd": 6341450.674275389,
-              "tokenValueUsd": 17101906821.511387,
+              "fundsUsd": 2361224.8684909153,
+              "tokenValueUsd": 18417575522.910305,
               "fundsAtRisk": true
             },
             {
@@ -32298,15 +32298,15 @@
                 "getStakingModuleLastDepositBlock",
                 "getStakingModuleMinDepositBlockDistance"
               ],
-              "fundsUsd": 0.000022923668179265,
+              "fundsUsd": 0.000024734055312888012,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 6341450.6742983125,
-      "totalTokenValueAtRisk": 17101906821.511387
+      "totalFundsAtRisk": 2361224.8685156493,
+      "totalTokenValueAtRisk": 18417575522.910305
     }
   ],
   "funds": [
@@ -32315,10 +32315,10 @@
       "name": "wstETH (Wrapped stETH)",
       "description": "The wrapped stETH contract that holds stETH on behalf of wstETH holders. Contains (N/A) in stETH, making it the largest single concentration of protocol funds. wstETH provides a non-rebasing wrapper around stETH for DeFi integrations.",
       "balances": {
-        "totalUsdValue": 8629492526.790377
+        "totalUsdValue": 8968560668.579662
       },
       "positions": {
-        "totalUsdValue": 8591647635.788692
+        "totalUsdValue": 8968386119.704247
       },
       "tokenInfo": null,
       "aggregate": null
@@ -32328,10 +32328,10 @@
       "name": "WithdrawalQueueERC721 (stETH)",
       "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds (N/A) in stETH and ETH balances, plus (N/A) in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals.",
       "balances": {
-        "totalUsdValue": 101036165.71216835
+        "totalUsdValue": 137930564.63412273
       },
       "positions": {
-        "totalUsdValue": 6201059.401925952
+        "totalUsdValue": 64649074.65275689
       },
       "tokenInfo": null,
       "aggregate": null
@@ -32341,14 +32341,14 @@
       "name": "Lido stETH Token (ETH Buffer)",
       "description": "The stETH token contract itself holds (N/A) in ETH as a deposit buffer before it is staked on the Beacon Chain. This buffer provides immediate withdrawal liquidity for small requests.",
       "balances": {
-        "totalUsdValue": 6341450.674275389
+        "totalUsdValue": 2361224.8684909153
       },
       "positions": null,
       "tokenInfo": {
         "symbol": "stETH",
-        "price": 2005.961761,
+        "price": 2160.282629,
         "totalSupply": "8525539795427529688197688",
-        "tokenValue": 17101906821.511387
+        "tokenValue": 18417575522.910305
       },
       "aggregate": null
     },
@@ -32357,10 +32357,10 @@
       "name": "Lido DAO Token (LDO)",
       "description": "The LDO governance token contract. Holds (N/A) in miscellaneous token balances.",
       "balances": {
-        "totalUsdValue": 684.4949999245523
+        "totalUsdValue": 693.7298656785624
       },
       "positions": {
-        "totalUsdValue": 0.0021036842399088642
+        "totalUsdValue": 0.002265111203339056
       },
       "tokenInfo": null,
       "aggregate": null

@@ -108,6 +108,7 @@ export interface CompiledAdminFunction {
   contractName: string
   functionName: string
   impact: Impact
+  isUpgrade?: boolean
   directFundsUsd: number
   directTokenValueUsd: number
   reachableContracts: CompiledReachableContract[]

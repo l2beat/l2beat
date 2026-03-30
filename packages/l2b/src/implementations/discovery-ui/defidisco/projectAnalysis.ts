@@ -33,20 +33,21 @@ import {
 } from './functions'
 import { getFundsData } from './fundsData'
 import { DiscoveredDataAccess } from './ownerResolution'
-import type {
-  AdminDetail,
-  ApiAddressType,
-  ApiCallGraphResponse,
-  ApiContractTagsResponse,
-  ApiFunctionAnalysisResponse,
-  ApiFunctionsResponse,
-  ApiFundsDataResponse,
-  FunctionCapitalAnalysis,
-  Impact,
-  Mitigation,
-  OwnershipChainStep,
-  ReachableContract,
-  TraversalTerminal,
+import {
+  isUpgradeFunction,
+  type AdminDetail,
+  type ApiAddressType,
+  type ApiCallGraphResponse,
+  type ApiContractTagsResponse,
+  type ApiFunctionAnalysisResponse,
+  type ApiFunctionsResponse,
+  type ApiFundsDataResponse,
+  type FunctionCapitalAnalysis,
+  type Impact,
+  type Mitigation,
+  type OwnershipChainStep,
+  type ReachableContract,
+  type TraversalTerminal,
 } from './types'
 
 // ============================================================================
@@ -83,6 +84,7 @@ export interface AdminFunctionEntry {
   functionName: string
   impact: Impact
   mitigations?: Mitigation[]
+  isUpgrade?: boolean
   chains: CollapsedChain[]
   directFundsUsd: number
   directTokenValueUsd: number
@@ -767,6 +769,10 @@ export class ProjectAnalysis {
           impact: f.impact,
           mitigations: f.mitigations,
           chains,
+          isUpgrade:
+            capitalFunc?.isUpgrade ||
+            isUpgradeFunction(f.functionName) ||
+            undefined,
           directFundsUsd: capitalFunc?.directFundsUsd ?? 0,
           directTokenValueUsd: capitalFunc?.directTokenValueUsd ?? 0,
           reachableContracts: capitalFunc?.reachableContracts ?? [],

@@ -228,6 +228,11 @@ export function AdminFunctionTable({
               <span className="font-mono text-text-primary">
                 {fn.functionName}()
               </span>
+              {fn.isUpgrade && (
+                <span className="ml-1 rounded px-1 text-[10px] font-medium bg-red-500/20 text-red-400">
+                  upgrade
+                </span>
+              )}
             </td>
             <td className="py-1.5">
               {fn.mitigations && fn.mitigations.length > 0 ? (

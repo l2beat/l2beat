@@ -2,6 +2,29 @@
 
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
+// ============================================================================
+// Upgrade Function Detection
+// ============================================================================
+
+/**
+ * Function names that grant arbitrary control over a contract's logic.
+ * An upgrade replaces the entire implementation, so the caller can:
+ * 1. Drain all direct funds in the contract
+ * 2. Call any external function reachable from any function in the contract
+ * 3. Make any permissioned calls the contract has authority to make
+ */
+const UPGRADE_FUNCTION_NAMES = new Set([
+  'upgradeTo',
+  'upgradeToAndCall',
+  'proxy__upgradeTo',
+  'proxy__upgradeToAndCall',
+  'upgradeBeacon',
+])
+
+export function isUpgradeFunction(functionName: string): boolean {
+  return UPGRADE_FUNCTION_NAMES.has(functionName)
+}
+
 // Scoring type aliases
 export type Impact = 'critical' | 'no-impact'
 
@@ -110,6 +133,8 @@ export interface FunctionCapitalAnalysis {
   functionName: string
   impact: Impact
   mitigations?: Mitigation[]
+  // True if this is an upgrade function (grants arbitrary control over the contract)
+  isUpgrade?: boolean
   // Direct funds in the contract containing this function
   directFundsUsd: number
   // Token market cap if the function's contract IS a token

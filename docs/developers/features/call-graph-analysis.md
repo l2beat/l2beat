@@ -70,7 +70,7 @@ Internal helper: `contractHasFunction(discovered, entry, functionName)` — chec
 
 Exported from `callGraph.ts`, used by `functionAnalysis.ts` and `projectAnalysis.ts`:
 
-- `traverseWithPaths(callGraphData, startContract, startFunction)` — BFS traversal with path tracking, returns reachable contracts + shortest paths
+- `traverseWithPaths(callGraphData, startContract, startFunction)` — BFS traversal with path tracking, returns reachable contracts + shortest paths. **Upgrade-aware**: when `startFunction` is an upgrade function (detected via `isUpgradeFunction()` from `types.ts`), seeds the BFS with ALL caller functions from the contract's call graph, since a new implementation can execute any code path
 - `findContractGraph(callGraphData, contract)` — case-insensitive contract graph lookup
 - `buildExternalAddressSet(tags)` / `buildTagsByAddress(tags)` — build lookup structures from contract tags
 - `isExternalAddress(address, externalAddresses)` / `findTag(tagsByAddress, address)` — address matching with `eth:` prefix normalization

@@ -20,12 +20,13 @@ import {
   parseVariableAssignments,
 } from './callGraphHeuristics'
 import { getContractTags } from './contractTags'
-import type {
-  ApiCallGraphResponse,
-  CallPathStep,
-  ContractCallGraph,
-  ContractTag,
-  ExternalCall,
+import {
+  isUpgradeFunction,
+  type ApiCallGraphResponse,
+  type CallPathStep,
+  type ContractCallGraph,
+  type ContractTag,
+  type ExternalCall,
 } from './types'
 
 // =============================================================================
@@ -1305,14 +1306,41 @@ export function traverseWithPaths(
     pathIsViewOnly: boolean
     /** Path taken to reach this (contract, function) pair */
     path: CallPathStep[]
-  }> = [
-    {
+  }> = []
+
+  if (isUpgradeFunction(startFunction)) {
+    // Upgrade = arbitrary code execution on this contract.
+    // Seed BFS with ALL caller functions from this contract's call graph.
+    const contractGraph = findContractGraph(callGraphData, startContract)
+    if (contractGraph) {
+      const seenFunctions = new Set<string>()
+      for (const call of contractGraph.externalCalls) {
+        if (!seenFunctions.has(call.callerFunction)) {
+          seenFunctions.add(call.callerFunction)
+          queue.push({
+            contract: startContract,
+            function: call.callerFunction,
+            pathIsViewOnly: false, // upgrade = non-view
+            path: [],
+          })
+        }
+      }
+    }
+    // Also add the upgrade function itself
+    queue.push({
+      contract: startContract,
+      function: startFunction,
+      pathIsViewOnly: false,
+      path: [],
+    })
+  } else {
+    queue.push({
       contract: startContract,
       function: startFunction,
       pathIsViewOnly: true,
       path: [],
-    },
-  ]
+    })
+  }
 
   while (queue.length > 0) {
     const { contract, function: func, pathIsViewOnly, path } = queue.shift()!

@@ -467,6 +467,11 @@ export function OwnerSection({
                   </button>
                   <span className="text-coffee-500">.</span>
                   <span className="text-blue-400">{func.functionName}()</span>
+                  {func.isUpgrade && (
+                    <span className="ml-1 rounded px-1 text-[10px] font-medium bg-red-500/20 text-red-400">
+                      UPGRADE
+                    </span>
+                  )}
                   <span className="ml-2 text-coffee-500">(</span>
                   <span
                     className="text-xs capitalize"

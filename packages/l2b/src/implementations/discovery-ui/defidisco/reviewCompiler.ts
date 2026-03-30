@@ -91,6 +91,7 @@ export interface CompiledAdminFunction {
   contractName: string
   functionName: string
   impact: Impact
+  isUpgrade?: boolean
   directFundsUsd: number
   directTokenValueUsd: number
   reachableContracts: CompiledReachableContract[]
@@ -417,6 +418,7 @@ export class ReviewCompiler {
           contractName: f.contractName,
           functionName: f.functionName,
           impact: f.impact,
+          isUpgrade: f.isUpgrade,
           directFundsUsd: f.directFundsUsd,
           directTokenValueUsd: f.directTokenValueUsd,
           reachableContracts: (f.reachableContracts ?? []).map((r) => ({

@@ -151,6 +151,18 @@ Types are defined in `projectAnalysis.ts` (backend) and mirrored in `packages/pr
 - `enhancedTraversal.ts` — exports `buildEnhancedGraph()`, `buildIndices()`, `EnhancedGraph`, `EnhancedEdge`
 - `projectAnalysis.ts` — builds the enhanced graph and orchestrates capital analysis
 
+### Upgrade Function Detection
+
+Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `proxy__upgradeTo`, `proxy__upgradeToAndCall`, `upgradeBeacon`) replace the entire contract implementation, granting the caller arbitrary control over all funds and call paths. Standard BFS only follows edges from the specific function being analyzed, but an upgrade means **every** function in the contract becomes reachable.
+
+**Detection**: `isUpgradeFunction(functionName)` exported from `types.ts`, checks against the `UPGRADE_FUNCTION_NAMES` set.
+
+**BFS seeding**: When `traverseForward()` in `capitalAnalysis.ts` starts from an upgrade function, it seeds the BFS queue with ALL source functions from the contract's enhanced graph edges (not just the upgrade function). This correctly models that a new implementation can execute any code path. The same pattern applies in `traverseWithPaths()` in `callGraph.ts` for function-level analysis.
+
+**`isUpgrade` flag in the data pipeline**: Set on `FunctionCapitalAnalysis` in `capitalAnalysis.ts`, propagated through `AdminFunctionEntry` in `projectAnalysis.ts`, `CompiledAdminFunction` in `reviewCompiler.ts`, and the corresponding frontend types.
+
+**UI indicators**: Both protocolbeat (`scoringShared.tsx`) and defiscan-frontend (`shared.tsx`) display an "UPGRADE" badge next to upgrade function names in admin function listings.
+
 ## Review Builder
 
 **Unified review configuration**: Protocol metadata, descriptions, entity annotations, and section-based layout all stored in a single `review-config.json` file per project.
