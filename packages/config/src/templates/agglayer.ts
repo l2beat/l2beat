@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
@@ -317,6 +318,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
       ...(variantSections.programHashes?.length
         ? { programHashes: variantSections.programHashes }
         : {}),
+      zkVerifiers: getAgglayerVerifiers(config.discovery),
     },
     upgradesAndGovernance,
     milestones: config.milestones,
@@ -893,4 +895,27 @@ function getPessimisticVKeys(discovery: ProjectDiscovery): string[] {
   return Object.values(pessimisticVKeyDict).flatMap((arr) =>
     arr.map((el) => el['pessimisticVKey']),
   )
+}
+
+export function getAgglayerVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  if (discovery.hasContract('Verifier')) {
+    // zkProver case
+    return [discovery.getContract('Verifier').address]
+  }
+  type ProgramHashDict = Record<string, Record<string, string>[]>
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  const routesDict = discovery.getContractValue<ProgramHashDict>(
+    'AgglayerGateway',
+    'routes',
+  )
+  for (const routes of Object.values(routesDict)) {
+    for (const route of routes) {
+      if (route['verifier']) {
+        uniqueVerifierAddresses.add(ChainSpecificAddress(route['verifier']))
+      }
+    }
+  }
+  return Array.from(uniqueVerifierAddresses)
 }

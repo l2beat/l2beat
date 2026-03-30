@@ -161,6 +161,8 @@ export const myria: ScalingProject = {
       ),
     ],
     programHashes: myriaProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stone verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

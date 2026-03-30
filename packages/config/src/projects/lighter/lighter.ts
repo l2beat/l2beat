@@ -300,6 +300,7 @@ export const lighter: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -322,4 +323,20 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierProxy = discovery.getContractValue<ChainSpecificAddress>(
+    'Lighter',
+    'verifier',
+  )
+
+  const result = discovery.get$Implementations(verifierProxy)
+  result.push(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Lighter',
+      'desertVerifier',
+    ),
+  )
+  return result
 }

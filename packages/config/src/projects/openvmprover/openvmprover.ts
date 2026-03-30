@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -108,10 +108,10 @@ The STARK proof is wrapped in Halo2 SNARK with KZG commitments over BN254 curve 
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',
@@ -147,10 +147,10 @@ solc --version  # should be 0.8.19
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x749fC77A1a131632a8b88e8703E489557660C75e',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',
