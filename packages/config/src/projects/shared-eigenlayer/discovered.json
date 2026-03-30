@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
-  "timestamp": 1774879465,
-  "configHash": "0x514e245732d31ea8683b2315506499a145f2a80130349bf88b2bdcc398e5badc",
+  "timestamp": 1774882369,
+  "configHash": "0x7df751fa6ae03ac8649588a67434c7960abc7143f83b5dd627ddfaced8327c45",
   "entries": [
     {
       "address": "eth:0x00000000000000000000000000000000000E16E4",
@@ -1820,8 +1820,8 @@
           "maxStalenessPeriod": 0
         },
         "getGeneratorReferenceTimestamp": 1,
-        "getLatestReferenceBlockNumber": 24763745,
-        "getLatestReferenceTimestamp": 1774793363,
+        "getLatestReferenceBlockNumber": 24770872,
+        "getLatestReferenceTimestamp": 1774879211,
         "GLOBAL_TABLE_ROOT_CERT_TYPEHASH": "0x4491f5ee91595f938885ef73c9a1fa8a6d14ff9b9dab4aa24b8802bbb9bfc1cc",
         "globalRootConfirmationThreshold": 10000,
         "MAX_BPS": 10000,
@@ -3034,7 +3034,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "693938465623837700361364",
+        "totalShares": "693938465403251096904520",
         "underlyingToken": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "fieldMeta": {
@@ -3396,7 +3396,7 @@
         "paused": 0,
         "pauserRegistry": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "412496237337635141875496932",
+        "totalShares": "412496120322929962405597356",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -6922,6 +6922,6 @@
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24770893 },
+  "usedBlockNumbers": { "ethereum": 24771133 },
   "permissionsConfigHash": "0x97d92abaafc2a09311b5fcaac98020d1ac3a7138a11595adc53de65f714cf436"
 }

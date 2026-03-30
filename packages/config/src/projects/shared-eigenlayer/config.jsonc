@@ -45,13 +45,13 @@
     "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": "EmissionsController"
   },
   "overrides": {
-    "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": {
-      // RegistryCoordinator - belongs to eigenda discovery, skip here
-      "ignoreDiscovery": true
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      // AVSDirectory.avs lists all 81 registered AVSs - don't follow them
+      "ignoreRelatives": ["avs"]
     },
-    "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": {
-      // EigenDAServiceManager - belongs to eigenda discovery, skip here
-      "ignoreDiscovery": true
+    "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": {
+      // EmissionsController.getDistribution references AVS addresses (e.g. EigenDAServiceManager) - don't follow
+      "ignoreRelatives": ["getDistribution"]
     },
     "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": {
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
