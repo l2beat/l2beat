@@ -55,6 +55,7 @@ const CommandDialog = ({
         )}
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile={fullScreenMobile}
+        hideCloseButton
       >
         <Slot className="border-none! [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}

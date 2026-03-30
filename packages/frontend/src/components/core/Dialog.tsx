@@ -1,5 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import type * as React from 'react'
+import { CloseIcon } from '~/icons/Close'
 
 import { cn } from '~/utils/cn'
 
@@ -32,9 +33,11 @@ const DialogContent = ({
   className,
   children,
   fullScreenMobile,
+  hideCloseButton,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   fullScreenMobile?: boolean
+  hideCloseButton?: boolean
 }) => (
   <DialogPortal>
     <DialogOverlay className={cn(fullScreenMobile && 'max-md:hidden')} />
@@ -50,6 +53,12 @@ const DialogContent = ({
       {...props}
     >
       {children}
+      {!hideCloseButton && (
+        <DialogPrimitive.Close className="absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none">
+          <CloseIcon className="size-4 fill-primary" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      )}
     </DialogPrimitive.Content>
   </DialogPortal>
 )
