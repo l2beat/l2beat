@@ -39,10 +39,7 @@ const governanceConfiguration = discovery.getContractValue<{
   minimumVotes: string
 }>('Governance', 'getConfiguration')
 
-governanceConfiguration.executionDelay = 30 * UnixTime.DAY // TODO: remove this override
-
-// const exitWindowObject = RISK_VIEW.EXIT_WINDOW(governanceConfiguration.executionDelay,20 * UnixTime.DAY,) // TODO: formalize the inclusion delay and use onchain gov delay when launched
-const hardCodedExitSimTime = 20 * UnixTime.DAY
+const hardCodedExitSimTime = 20 * UnixTime.DAY // https://sekuba.github.io/crsim/?max_horizon_days=100&target_inclusion_percent=99&max_new_sequencers_per_epoch=0&honest_add_success_rate=0.5
 const exitWindow = governanceConfiguration.executionDelay - hardCodedExitSimTime
 const exitWindowObject = {
   value: formatSeconds(exitWindow),
