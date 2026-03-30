@@ -17,7 +17,6 @@ export interface ManagedChildIndexerOptions extends IndexerOptions {
   tags?: IndexerTags
   minHeight: number
   indexerService: IndexerService
-  logger: Logger
   updateRetryStrategy?: RetryStrategy
   configHash?: string
 }
@@ -25,9 +24,12 @@ export interface ManagedChildIndexerOptions extends IndexerOptions {
 export abstract class ManagedChildIndexer extends ChildIndexer {
   private readonly indexerId: string
 
-  constructor(public readonly options: ManagedChildIndexerOptions) {
-    const logger = options.logger.tag(options.tags ?? {})
-    super(logger, options.parents, options)
+  constructor(
+    public readonly options: ManagedChildIndexerOptions,
+    logger: Logger,
+  ) {
+    const taggedLogger = logger.tag(options.tags ?? {})
+    super(taggedLogger, options.parents, options)
     this.indexerId = createIndexerId(options.name, options.tags?.tag)
     assertUniqueIndexerId(this.indexerId)
   }

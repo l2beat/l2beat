@@ -8,5 +8,11 @@
     "hash": "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338",
     "address": "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc",
     "blockNumber": 22988752
+  },
+  "OptimismPortal2.sol": {
+    "hash": "0x9b5cb94efaca7f6a941c6e29cd8f71079ec5ea2360e3f4948e59560dd107d7f9",
+    "address": "eth:0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4",
+    "chain": "ethereum",
+    "blockNumber": 24582831
   }
 }

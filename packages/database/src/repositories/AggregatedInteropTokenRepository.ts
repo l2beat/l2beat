@@ -1,17 +1,25 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropToken } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTokenRecord {
   timestamp: UnixTime
   id: string
+  bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
   abstractTokenId: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   volume: number
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  mintedValueUsd: number | undefined
+  burnedValueUsd: number | undefined
 }
 
 export function toRecord(
@@ -20,12 +28,21 @@ export function toRecord(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     id: row.id,
+    bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
     abstractTokenId: row.abstractTokenId,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
+    transfersWithDurationCount: row.transfersWithDurationCount,
     totalDurationSum: row.totalDurationSum,
     volume: row.volume,
+    minTransferValueUsd: row.minTransferValueUsd ?? undefined,
+    maxTransferValueUsd: row.maxTransferValueUsd ?? undefined,
+    mintedValueUsd: row.mintedValueUsd ?? undefined,
+    burnedValueUsd: row.burnedValueUsd ?? undefined,
   }
 }
 
@@ -35,12 +52,19 @@ export function toRow(
   return {
     timestamp: UnixTime.toDate(record.timestamp),
     id: record.id,
+    bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
     abstractTokenId: record.abstractTokenId,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
+    transfersWithDurationCount: record.transfersWithDurationCount,
     totalDurationSum: record.totalDurationSum,
     volume: record.volume,
+    minTransferValueUsd: record.minTransferValueUsd,
+    maxTransferValueUsd: record.maxTransferValueUsd,
+    mintedValueUsd: record.mintedValueUsd,
+    burnedValueUsd: record.burnedValueUsd,
   }
 }
 
@@ -64,17 +88,17 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByChainsTimestampAndId(
+  async getByChainsAndTimestamp(
     timestamp: UnixTime,
-    srcChains: string[],
-    dstChains: string[],
-    protocolIds?: string[],
+    sourceChains: string[],
+    destinationChains: string[],
+    type?: InteropBridgeType,
+    protocolId?: string,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
   ): Promise<AggregatedInteropTokenRecord[]> {
-    if (srcChains.length === 0 || dstChains.length === 0) {
-      return []
-    }
-
-    if (protocolIds && protocolIds.length === 0) {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
       return []
     }
 
@@ -82,11 +106,53 @@ export class AggregatedInteropTokenRepository extends BaseRepository {
       .selectFrom('AggregatedInteropToken')
       .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
-      .where('srcChain', 'in', srcChains)
-      .where('dstChain', 'in', dstChains)
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
 
-    if (protocolIds) {
-      query = query.where('id', 'in', protocolIds)
+    if (protocolId) {
+      query = query.where('id', '=', protocolId)
+    }
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
+
+    if (type) {
+      query = query.where('bridgeType', '=', type)
+    }
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
+  async getByChainsIdAndTimestamp(
+    timestamp: UnixTime,
+    id: string,
+    sourceChains: string[],
+    destinationChains: string[],
+    type?: InteropBridgeType,
+    options?: {
+      includeSameChainTransfers?: boolean
+    },
+  ): Promise<AggregatedInteropTokenRecord[]> {
+    if (sourceChains.length === 0 || destinationChains.length === 0) {
+      return []
+    }
+
+    let query = this.db
+      .selectFrom('AggregatedInteropToken')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('srcChain', 'in', sourceChains)
+      .where('dstChain', 'in', destinationChains)
+      .where('id', '=', id)
+
+    if (!options?.includeSameChainTransfers) {
+      query = query.whereRef('srcChain', '!=', 'dstChain')
+    }
+
+    if (type) {
+      query = query.where('bridgeType', '=', type)
     }
 
     const rows = await query.execute()

@@ -165,6 +165,8 @@
     "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "Alchemy Multisig 1",
     "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
     "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
+    "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636": "Celo Security Council",
+    "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": "Celo cLabs Multisig",
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "Optimism Security Council",
     "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
     "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "Arbitrum Multisig 1",

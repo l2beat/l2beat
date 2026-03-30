@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { PriceProvider } from '@l2beat/shared'
 import {
   assert,
@@ -19,16 +20,22 @@ interface DaBeatPricesIndexerDeps
 }
 
 export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig> {
-  constructor(private readonly $: DaBeatPricesIndexerDeps) {
+  constructor(
+    private readonly $: DaBeatPricesIndexerDeps,
+    logger: Logger,
+  ) {
     assert(
       $.configurations.length === 1,
       'This indexer should take only one configuration',
     )
-    super({
-      ...$,
-      name: 'dabeat_prices_indexer',
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+    super(
+      {
+        ...$,
+        name: 'dabeat_prices_indexer',
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+      },
+      logger,
+    )
   }
 
   override async multiUpdate(

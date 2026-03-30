@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,7 +9,7 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getScalingUpcomingData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),

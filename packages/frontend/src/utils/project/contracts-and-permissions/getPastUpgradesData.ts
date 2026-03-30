@@ -1,38 +1,114 @@
-import type { ProjectContract } from '@l2beat/config'
+import type { ProjectContract, ProjectContracts } from '@l2beat/config'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import mean from 'lodash/mean'
-import type { TechnologyContract } from '~/components/projects/sections/ContractEntry'
+import type { PastUpgradesData } from '~/components/projects/sections/PastUpgradesDialog'
+
+type UpgradeContext = {
+  explorerUrl: string
+  proxyContract: {
+    name?: string
+    address: string
+  }
+}
+
+export interface PastUpgradeProxyContract {
+  name?: string
+  address: string
+  href: string
+}
+
+type PastUpgradeWithContext = NonNullable<
+  ProjectContract['pastUpgrades']
+>[number] &
+  UpgradeContext
+
+export function getProjectPastUpgrades(
+  contracts: ProjectContracts | undefined,
+): PastUpgradeWithContext[] {
+  const allPastUpgrades: PastUpgradeWithContext[] = []
+  const seenPastUpgrades = new Set<string>()
+
+  for (const contract of Object.values(contracts?.addresses ?? {}).flat()) {
+    if (!contract.pastUpgrades || contract.pastUpgrades.length === 0) continue
+
+    for (const upgrade of contract.pastUpgrades) {
+      const proxyAddress = ChainSpecificAddress.address(contract.address)
+      const explorerUrl = contract.url
+        ? new URL(contract.url).origin
+        : 'https://etherscan.io'
+      const key = `${upgrade.transactionHash}-${upgrade.timestamp}-${proxyAddress}`
+
+      if (!seenPastUpgrades.has(key)) {
+        seenPastUpgrades.add(key)
+        allPastUpgrades.push({
+          ...upgrade,
+          explorerUrl,
+          proxyContract: {
+            name: contract.name,
+            address: proxyAddress,
+          },
+        })
+      }
+    }
+  }
+
+  return allPastUpgrades
+}
 
 export function getPastUpgradesData(
-  contractPastUpgrades: ProjectContract['pastUpgrades'],
-  explorerUrl: string,
-): TechnologyContract['pastUpgrades'] {
-  const pastUpgrades =
-    contractPastUpgrades
-      ?.sort((a, b) => b.timestamp - a.timestamp)
-      .map((upgrade, i) => {
-        const previousUpgrade = contractPastUpgrades?.[i + 1]
+  contractPastUpgrades: PastUpgradeWithContext[] | undefined,
+): PastUpgradesData | undefined {
+  const sortedUpgrades = [...(contractPastUpgrades ?? [])].sort(
+    (a, b) => b.timestamp - a.timestamp,
+  )
+  const upgradesByProxy = getUpgradeHistoryByProxy(sortedUpgrades)
+  const pastUpgrades = Array.from(upgradesByProxy.values())
+    .flatMap((proxyUpgrades) =>
+      proxyUpgrades.map((upgrade, index) => {
+        const previousUpgrade = proxyUpgrades[index + 1]
+
         return {
+          isInitialDeployment: previousUpgrade === undefined,
           timestamp: upgrade.timestamp,
           transactionHash: {
             hash: upgrade.transactionHash,
-            href: `${explorerUrl}/tx/${upgrade.transactionHash}`,
+            href: `${upgrade.explorerUrl}/tx/${upgrade.transactionHash}`,
           },
           implementations: getImplementations(
-            explorerUrl,
+            upgrade.explorerUrl,
             upgrade.implementations,
             previousUpgrade,
           ),
+          proxyContract: {
+            name: upgrade.proxyContract.name,
+            address: upgrade.proxyContract.address,
+            href: `${upgrade.explorerUrl}/address/${upgrade.proxyContract.address}#code`,
+          },
         }
-      }) ?? []
-
-  const lastUpgrade = pastUpgrades[0]
-  if (!lastUpgrade) return
-
+      }),
+    )
+    .sort((a, b) => b.timestamp - a.timestamp)
+  if (pastUpgrades.length === 0) return
   return {
     upgrades: pastUpgrades,
-    stats: getPastUpgradesStats(pastUpgrades, lastUpgrade),
+    stats: getPastUpgradesStats(upgradesByProxy),
   }
+}
+
+function getUpgradeHistoryByProxy(upgrades: PastUpgradeWithContext[]) {
+  const result = new Map<string, PastUpgradeWithContext[]>()
+
+  for (const upgrade of upgrades) {
+    const key = upgrade.proxyContract.address
+    const existing = result.get(key)
+    if (existing) {
+      existing.push(upgrade)
+    } else {
+      result.set(key, [upgrade])
+    }
+  }
+
+  return result
 }
 
 function getImplementations(
@@ -55,28 +131,40 @@ function getImplementations(
 }
 
 function getPastUpgradesStats(
-  pastUpgrades: NonNullable<TechnologyContract['pastUpgrades']>['upgrades'],
-  lastUpgrade: NonNullable<
-    TechnologyContract['pastUpgrades']
-  >['upgrades'][number],
+  upgradesByProxy: Map<string, PastUpgradeWithContext[]>,
 ) {
   const intervals: number[] = []
-  for (let i = 1; i < pastUpgrades.length; i++) {
-    const prevUpgrade = pastUpgrades[i - 1]
-    const currentUpgrade = pastUpgrades[i]
-    if (!prevUpgrade || !currentUpgrade) continue
-    intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
-  }
+  let count = 0
+  let lastUpgrade: PastUpgradeWithContext | undefined
 
-  // we want to add the interval from the last upgrade to now
-  if (pastUpgrades.length > 1) {
-    intervals.push(UnixTime.now() - lastUpgrade.timestamp)
+  for (const upgrades of upgradesByProxy.values()) {
+    count += Math.max(0, upgrades.length - 1)
+
+    const latestProxyUpgrade = upgrades[0]
+    if (
+      latestProxyUpgrade &&
+      (!lastUpgrade || latestProxyUpgrade.timestamp > lastUpgrade.timestamp)
+    ) {
+      lastUpgrade = latestProxyUpgrade
+    }
+
+    for (let i = 1; i < upgrades.length; i++) {
+      const prevUpgrade = upgrades[i - 1]
+      const currentUpgrade = upgrades[i]
+      if (!prevUpgrade || !currentUpgrade) continue
+      intervals.push(prevUpgrade.timestamp - currentUpgrade.timestamp)
+    }
+
+    // We keep the existing single-contract logic and apply it per proxy.
+    if (upgrades.length > 1 && latestProxyUpgrade) {
+      intervals.push(UnixTime.now() - latestProxyUpgrade.timestamp)
+    }
   }
 
   return {
-    count: pastUpgrades.length - 1,
+    count,
     avgInterval: intervals.length > 0 ? mean(intervals) : null,
     lastInterval:
-      pastUpgrades.length > 1 ? UnixTime.now() - lastUpgrade.timestamp : null,
+      count > 0 && lastUpgrade ? UnixTime.now() - lastUpgrade.timestamp : null,
   }
 }

@@ -14,7 +14,7 @@
 
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": false,
-    "module": "CommonJS",
+    "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react-jsx",
     "incremental": true,

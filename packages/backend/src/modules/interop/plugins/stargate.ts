@@ -36,7 +36,8 @@ export const StargateV2OFTSentBusRode = createInteropEventType<{
   amountReceivedLD: bigint
   amountSD: bigint
   $dstChain: string
-}>('stargate-v2.OFTSentBus')
+  hydra: boolean
+}>('stargate-v2.OFTSentBus', { direction: 'outgoing' })
 
 export const StargateV2OFTSentTaxi = createInteropEventType<{
   guid: string
@@ -44,7 +45,8 @@ export const StargateV2OFTSentTaxi = createInteropEventType<{
   amountReceivedLD: bigint
   tokenAddress: Address32
   $dstChain: string
-}>('stargate-v2.OFTSentTaxi')
+  hydra: boolean
+}>('stargate-v2.OFTSentTaxi', { direction: 'outgoing' })
 
 export const StargateV2OFTReceived = createInteropEventType<{
   guid: string
@@ -55,7 +57,8 @@ export const StargateV2OFTReceived = createInteropEventType<{
   destinationEid: number
   amountReceivedLD: bigint
   $srcChain: string
-}>('stargate-v2.OFTReceived')
+  hydra: boolean
+}>('stargate-v2.OFTReceived', { direction: 'incoming' })
 
 const parseBusDriven = createEventParser(
   'event BusDriven(uint32 dstEid, uint72 startTicketId, uint8 numPassengers, bytes32 guid)',
@@ -66,7 +69,7 @@ export const StargateV2BusDriven = createInteropEventType<{
   guid: string
   destinationEid: number
   $dstChain: string
-}>('stargate-v2.BusDriven')
+}>('stargate-v2.BusDriven', { direction: 'outgoing' })
 
 const parseBusRode = createEventParser(
   'event BusRode(uint32 dstEid, uint72 ticketId, uint80 fare, bytes passenger)',
@@ -80,6 +83,8 @@ const parseCreditsReceived = createEventParser(
   'event CreditsReceived(uint32 srcEid, (uint32 srcEid, uint64 amount)[] credits)',
 )
 
+// https://stargateprotocol.gitbook.io/stargate/v2-developer-docs/technical-reference/mainnet-contracts
+// chainconfeeg
 export const STARGATE_NETWORKS = defineNetworks('stargate', [
   {
     chain: 'ethereum',
@@ -209,6 +214,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0xf4D9235269a96aaDaFc9aDAe454a0618eBE37949',
       ),
       token: 'ETH',
+      hydra: true,
     },
     usdcPool: {
       address: EthereumAddress('0x2086f755A6d9254045C257ea3d382ef854849B0f'),
@@ -216,6 +222,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0xF1815bd50389c46847f0Bda824eC8da914045D14',
       ),
       token: 'USDC',
+      hydra: true,
     },
     usdtPool: {
       address: EthereumAddress('0xEb8d955d8Ae221E5b502851ddd78E6C4498dB4f6'),
@@ -223,6 +230,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0x674843C06FF83502ddb4D37c2E09C01cdA38cbc8',
       ),
       token: 'USDT',
+      hydra: true,
     },
     tokenMessaging: EthereumAddress(
       '0xBE574b6219C6D985d08712e90C21A88fd55f1ae8',
@@ -243,6 +251,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1',
       ),
       token: 'USDC',
+      hydra: true,
     },
     usdtPool: {
       address: EthereumAddress('0x943C484278b8bE05D119DfC73CfAa4c9D8f11A76'),
@@ -250,23 +259,117 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
         '0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD',
       ),
       token: 'USDT',
+      hydra: true,
     },
     tokenMessaging: EthereumAddress(
       '0x183D6b82680189bB4dB826F739CdC9527D467B25',
+    ),
+  },
+  {
+    chain: 'bsc',
+    eid: 30102,
+    usdcPool: {
+      address: EthereumAddress('0x962Bd449E630b0d928f308Ce63f1A21F02576057'),
+      tokenAddress: Address32.from(
+        '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0x138EB30f73BC423c6455C53df6D89CB01d9eBc63'),
+      tokenAddress: Address32.from(
+        '0x55d398326f99059ff775485246999027b3197955',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0x6E3d884C96d640526F273C61dfcF08915eBd7e2B',
+    ),
+  },
+  {
+    chain: 'linea',
+    eid: 30183,
+    nativePool: {
+      address: EthereumAddress('0x81F6138153d473E8c5EcebD3DC8Cd4903506B075'),
+      tokenAddress: Address32.NATIVE,
+      token: 'ETH',
+    },
+    tokenMessaging: EthereumAddress(
+      '0x5f688F563Dc16590e570f97b542FA87931AF2feD',
+    ),
+  },
+  {
+    chain: 'unichain',
+    eid: 30320,
+    nativePool: {
+      address: EthereumAddress('0xe9aBA835f813ca05E50A6C0ce65D0D74390F7dE7'),
+      tokenAddress: Address32.NATIVE,
+      token: 'ETH',
+    },
+    tokenMessaging: EthereumAddress(
+      '0xB1EeAD6959cb5bB9B20417d6689922523B2B86C3',
+    ),
+  },
+  {
+    chain: 'avalanche',
+    eid: 30106,
+    usdcPool: {
+      address: EthereumAddress('0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47'),
+      tokenAddress: Address32.from(
+        '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
+      ),
+      token: 'USDC',
+    },
+    usdtPool: {
+      address: EthereumAddress('0x12dC9256Acc9895B076f6638D628382881e62CeE'),
+      tokenAddress: Address32.from(
+        '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
+      ),
+      token: 'USDT',
+    },
+    tokenMessaging: EthereumAddress(
+      '0x17E450Be3Ba9557F2378E20d64AD417E59Ef9A34',
+    ),
+  },
+  {
+    chain: 'ink',
+    eid: 30339,
+    usdcPool: {
+      address: EthereumAddress('0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590'),
+      tokenAddress: Address32.from(
+        '0xF1815bd50389c46847f0Bda824eC8da914045D14',
+      ),
+      token: 'USDC',
+      hydra: true,
+    },
+    tokenMessaging: EthereumAddress(
+      '0x45f1A95A4D3f3836523F5c83673c797f4d4d263B',
     ),
   },
 ])
 
 const StargateV2CreditsSent = createInteropEventType<{
   $dstChain: string
-}>('stargate-v2-credit.CreditsSent')
+}>('stargate-v2-credit.CreditsSent', { direction: 'outgoing' })
 
 const StargateV2CreditsReceived = createInteropEventType<{
   $srcChain: string
-}>('stargate-v2-credit.CreditsReceived')
+}>('stargate-v2-credit.CreditsReceived', { direction: 'incoming' })
 
 const GUID_ZERO =
   '0x0000000000000000000000000000000000000000000000000000000000000000'
+
+function getStargateBridgeType(srcWasBurned: boolean, dstWasMinted: boolean) {
+  if (!srcWasBurned && !dstWasMinted) {
+    return 'nonMinting' // normal case
+  }
+
+  if (srcWasBurned && dstWasMinted) {
+    return 'burnAndMint' // full hydra
+  }
+
+  return 'lockAndMint'
+}
 
 export class StargatePlugin implements InteropPlugin {
   readonly name = 'stargate'
@@ -281,7 +384,7 @@ export class StargatePlugin implements InteropPlugin {
 
     const poolAddresses = [
       network.nativePool?.address,
-      network.usdcPool.address,
+      network.usdcPool?.address,
       network.usdtPool?.address,
     ].filter((addy): addy is EthereumAddress => !!addy)
 
@@ -318,6 +421,7 @@ export class StargatePlugin implements InteropPlugin {
                   (x) => x.eid,
                   oftSent.dstEid,
                 ),
+                hydra: pool.hydra ?? false,
               }),
             ]
           }
@@ -330,6 +434,7 @@ export class StargatePlugin implements InteropPlugin {
           amountReceivedLD: oftSent.amountReceivedLD,
           tokenAddress: pool.tokenAddress,
           $dstChain: findChain(STARGATE_NETWORKS, (x) => x.eid, oftSent.dstEid),
+          hydra: pool.hydra ?? false,
         }),
       ]
     }
@@ -364,6 +469,7 @@ export class StargatePlugin implements InteropPlugin {
             (x) => x.eid,
             oftReceived.srcEid,
           ),
+          hydra: pool.hydra ?? false,
         }),
       ]
     }
@@ -451,11 +557,10 @@ export class StargatePlugin implements InteropPlugin {
       ]
 
       for (const oftSentBusRode of oftSentBusRodeBatch) {
-        const passengerReceiver = Address32.cropToEthereumAddress(
-          oftSentBusRode.args.receiver as Address32,
-        )
         const matchedIndex = oftReceivedBatch.findIndex(
-          (o) => o.args.receiver === passengerReceiver,
+          (o) =>
+            Address32.from(o.args.receiver) ===
+            Address32.from(oftSentBusRode.args.receiver),
         )
         if (matchedIndex === -1) return
 
@@ -469,6 +574,12 @@ export class StargatePlugin implements InteropPlugin {
             dstEvent: matchedOftReceived,
             dstTokenAddress: matchedOftReceived.args.tokenAddress,
             dstAmount: matchedOftReceived.args.amountReceivedLD,
+            srcWasBurned: oftSentBusRode.args.hydra,
+            dstWasMinted: matchedOftReceived.args.hydra,
+            bridgeType: getStargateBridgeType(
+              oftSentBusRode.args.hydra,
+              matchedOftReceived.args.hydra,
+            ),
           }),
         )
       }
@@ -494,6 +605,12 @@ export class StargatePlugin implements InteropPlugin {
           dstEvent: oftReceived,
           dstTokenAddress: oftReceived.args.tokenAddress,
           dstAmount: oftReceived.args.amountReceivedLD,
+          srcWasBurned: oftSentTaxi.args.hydra,
+          dstWasMinted: oftReceived.args.hydra,
+          bridgeType: getStargateBridgeType(
+            oftSentTaxi.args.hydra,
+            oftReceived.args.hydra,
+          ),
         }),
       ]
     }

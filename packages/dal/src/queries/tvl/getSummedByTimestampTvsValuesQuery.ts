@@ -25,35 +25,22 @@ export type ProjectWithRanges = v.infer<typeof ProjectWithRanges>
 
 export async function getSummedByTimestampTvsValuesQuery(
   db: Database,
-  projects: ProjectId[] | ProjectWithRanges[],
+  projects: ProjectId[],
   range: [number | null, number],
   forSummary: boolean,
   excludeAssociated: boolean,
   excludeRwaRestrictedTokens: boolean,
 ): Promise<SummedByTimestampTvsValuesRecord[]> {
-  const projectsWithRanges = v.array(ProjectWithRanges).safeParse(projects)
-
-  const tvsRecords = projectsWithRanges.success
-    ? await db.tvsTokenValue.getSummedByTimestampWithProjectsRanges(
-        projectsWithRanges.data,
-        range[0],
-        range[1],
-        {
-          forSummary,
-          excludeAssociated,
-          excludeRwaRestrictedTokens,
-        },
-      )
-    : await db.tvsTokenValue.getSummedByTimestampByProjects(
-        projects as ProjectId[],
-        range[0],
-        range[1],
-        {
-          forSummary,
-          excludeAssociated,
-          excludeRwaRestrictedTokens,
-        },
-      )
+  const tvsRecords = await db.tvsTokenValue.getSummedByTimestampByProjects(
+    projects,
+    range[0],
+    range[1],
+    {
+      forSummary,
+      excludeAssociated,
+      excludeRwaRestrictedTokens,
+    },
+  )
 
   return tvsRecords.map((v) => [
     v.timestamp,

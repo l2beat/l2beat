@@ -5,6 +5,11 @@ import {
 } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './TableTooltip'
+import {
+  getTableElementClassName,
+  getTableOuterWrapperClassName,
+  getTableScrollWrapperClassName,
+} from './utils/classNames'
 
 const Table = ({
   className,
@@ -14,16 +19,11 @@ const Table = ({
   tableWrapperClassName?: string
 }) => {
   return (
-    <div className="max-md:-mr-4">
-      <div
-        className={cn(
-          'relative w-full overflow-auto pb-3 max-md:pr-4',
-          tableWrapperClassName,
-        )}
-      >
+    <div className={getTableOuterWrapperClassName()}>
+      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
         <HighlightedTableRowProvider>
           <table
-            className={cn('w-full border-collapse text-left', className)}
+            className={getTableElementClassName(className)}
             cellSpacing={0}
             cellPadding={0}
             {...props}

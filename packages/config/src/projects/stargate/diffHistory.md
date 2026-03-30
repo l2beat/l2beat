@@ -1,3 +1,497 @@
+Generated with discovered.json: 0xbc55d55aa9595bd8de43bd6518f028648516ae8b
+
+# Diff at Mon, 02 Mar 2026 09:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a block: 1761552231
+- current timestamp: 1772444834
+
+## Description
+
+migrate to baseproject.
+
+## Watched changes
+
+```diff
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+      values.pools.22:
+-        "base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2"
++        "base:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2)
+    +++ description: None
+```
+
+```diff
+    EOA  (base:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2","description":"pause the pool and set deficit offsets (affects crosschain liquidity and fees).","role":".planner"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate DVN (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+```
+
+```diff
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+      values.signerSize:
+-        4
++        5
+    }
+```
+
+```diff
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.0:
+-        "eth:0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
++        "eth:0xfD3F88EcA6cC5301b6d7068a09dc924aE9dFA3c3"
+      values.$members.1:
+-        "eth:0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
++        "eth:0x00BD5C12508a346e4355c8Ee085aE2BCB742E814"
+      values.$members.2:
+-        "eth:0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
++        "eth:0x18b3Bf351B161E3DE0d9d47Efa80d9f474bDd5D1"
+      values.$members.4:
+-        "eth:0x8A403992b0d9CA20f009063C7bE6F20814Cb8AEB"
+      values.totalSigners:
+-        6
++        5
+    }
+```
+
+```diff
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+      values.getUlnConfig.requiredDVNs.0:
+-        "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero DVN (eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+## Source code changes
+
+```diff
+.../Stargate DVN.sol => .flat/LayerZero DVN.sol}   |    0
+ .../dev/null                                       | 2743 --------------------
+ .../StargatePoolEURC.sol}                          |    0
+ 3 files changed, 2743 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761552231 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Factory (eth:0x06D538690AF257Da524f25D0CD52fD85b1c2173E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DAI Pool (eth:0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SG-ETH Pool (eth:0x101816545F6bd2b1076434B54383a1E633390A2E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WOO Pool (eth:0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryV2 (eth:0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDT Pool (eth:0x38EA452219524Bb87e18dE1C24D3bB59510BD783)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDT Pool2 (eth:0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UltraLightNodeV2 (eth:0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract sUSD Pool (eth:0x590d4f8A68583639f215f675F3a259Ed84790580)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TSS Oracle (eth:0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NonceContract (eth:0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarGate Multisig (eth:0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Endpoint (eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDD Pool (eth:0x692953e758c3669290cb1677180c64183cEe374e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Router (eth:0x8731d54E9D02c286767d56ac03e8037C07e01e98)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarGateFeeLibrary7 (eth:0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Relayer (eth:0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MAI Pool (eth:0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract mETH Pool (eth:0xA572d137666DCbAdFA47C3fC41F15e90134C618c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (eth:0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x1a44076050125825900e736c501f859c50fE728c","description":"configure the default send/receive libraries used for verification, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"},{"permission":"interact","from":"eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2","description":"configure the settings of this library, affecting all OApps that have not set up a custom security config.","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Google Cloud Oracle (eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: Defines the logic that validates LayerZero Packets for this DVN.
+```
+
+```diff
+-   Status: DELETED
+    contract METIS Pool (eth:0xd8772edBF88bBa2667ed011542343b0eDDaCDa47)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDC Pool (eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LUSD Pool (eth:0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Frax Pool (eth:0xfA0F307783AC21C39E939ACFF795e27b650F6e68)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingArbitrum (arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingBase (base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolEURC (base:0x87Dd5A7481726a53C5Ac6b0D296F5846f95a72f2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasurer (eth:0x1041D127b2d4BC700F0F563883bC689502606918)
+    +++ description: Permissions proxy allowing addresses to act through it.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Executor (eth:0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (eth:0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: A contract that is part of the LayerZero messaging protocol. The Stargate OApp owner can configure verification (MessageLib) and execution settings here.
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: Simple LayerZero library that blocks all messages if configured.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (eth:0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CreditMessaging (eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d)
+    +++ description: A LayerZero OApp owned by Stargate that is used for the virtual crosschain accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingEthereum (eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: LayerZero library used to read state from remote blockchains.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolEURC (eth:0x783129E4d7bA0Af0C896c239E57C06DF379aAE8c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate DVN (eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind DVN (eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Send Library used by LayerZero, defining the protocol/execution of sent messages.
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Multisig 2 (eth:0xBE634B030FEAaB661300667EaF82510a3a025413)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Receive Library used by LayerZero, defining the validation of received messages.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingLinea (linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingOptimism (oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessagingScroll (scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038)
+    +++ description: A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately (taxi) for higher fees.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd184b6d46d4db77e718930f27522eaba5b78b638
 
 # Diff at Mon, 27 Oct 2025 08:05:59 GMT:

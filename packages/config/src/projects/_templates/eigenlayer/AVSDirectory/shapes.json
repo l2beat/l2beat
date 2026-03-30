@@ -8,5 +8,10 @@
     "hash": "0x9d891889c1fcc1bd08979780a1502190faf4e8230d94e47de322da41bf7e5143",
     "address": "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2",
     "blockNumber": 22375190
+  },
+  "AVSDirectory_v1.9.0": {
+    "hash": "0x2e898060c596c2058f1140538534ecf4a6c7aeea4f1db17d15eddf3487f5a1fc",
+    "address": "eth:0xcD35Cef328b496fA9d70a8d7C34EF3434614862b",
+    "blockNumber": 24350294
   }
 }

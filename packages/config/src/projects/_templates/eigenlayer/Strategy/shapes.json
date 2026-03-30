@@ -28,5 +28,20 @@
     "hash": "0xb58160c9903763d4c6dd724e3ce4e687fa5eeff34a50885a3a3b614aee688553",
     "address": "eth:0x530fDB7AdF7d489DF49c27e3d3512c0dD64886be",
     "blockNumber": 23083608
+  },
+  "Strategy_v1.9.0": {
+    "hash": "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52",
+    "address": "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7",
+    "blockNumber": 24350294
+  },
+  "Strategy_bEIGEN_v1.9.0": {
+    "hash": "0x49be559baf3f68046b1c4d4312e12ffd2f9c062523d5233fd1fe2d87ac417c72",
+    "address": "eth:0x4a0aee93BE6C87B227cA0B450E15245631233532",
+    "blockNumber": 24350294
+  },
+  "StrategyBase_v1.9.0": {
+    "hash": "0x5234a1c479bda8867e26056b51731358e59cec30e9e5f7f057e545c395f72f05",
+    "address": "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780",
+    "blockNumber": 24350294
   }
 }

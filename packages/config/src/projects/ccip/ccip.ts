@@ -1,0 +1,28 @@
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { BaseProject } from '../../types'
+
+export const ccip: BaseProject = {
+  id: ProjectId('ccip'),
+  slug: 'ccip',
+  name: 'Chainlink CCIP',
+  shortName: 'CCIP',
+  addedAt: UnixTime(1769526436),
+  interopConfig: {
+    plugins: [
+      {
+        plugin: 'ccip',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        plugin: 'ccip',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'ccip',
+        bridgeType: 'nonMinting',
+      },
+    ],
+    type: 'multichain',
+  },
+  isInteropProtocol: true,
+}

@@ -8,15 +8,18 @@ export const layerzero: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769421770),
   interopConfig: {
-    bridgeType: 'omnichain',
+    isAggregate: true,
     plugins: [
       {
-        plugin: 'layerzero-v2',
+        plugin: 'layerzero-v2-ofts',
+        bridgeType: 'burnAndMint',
       },
       {
         plugin: 'layerzero-v2-ofts',
+        bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

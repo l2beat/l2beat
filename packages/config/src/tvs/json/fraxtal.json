@@ -518,7 +518,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -639,7 +639,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }

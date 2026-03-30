@@ -62,7 +62,7 @@ function SidebarProvider({
           } as React.CSSProperties
         }
         className={cn(
-          'group/sidebar-wrapper min-h-svh w-full bg-background',
+          'group/sidebar-wrapper flex min-h-svh w-full flex-col bg-background',
           className,
         )}
         {...props}
@@ -217,7 +217,7 @@ function SidebarGroupSmallLink({
     <a
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
-        'pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
+        'flex items-center gap-1 pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
         isActive && 'text-brand hover:text-brand',
         className,
       )}

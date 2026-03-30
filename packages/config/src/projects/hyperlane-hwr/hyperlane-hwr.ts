@@ -8,22 +8,17 @@ export const hyperlaneHwr: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768926236),
   interopConfig: {
-    bridgeType: 'omnichain',
     plugins: [
       {
         plugin: 'hyperlane-hwr',
-      },
-      // TODO: where should we count the AMB apps below? (messages without transfer)
-      {
-        plugin: 'hyperlane',
+        bridgeType: 'burnAndMint',
       },
       {
-        plugin: 'hyperlane-simple-apps',
-      },
-      {
-        plugin: 'hyperlane-eco',
+        plugin: 'hyperlane-hwr',
+        bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

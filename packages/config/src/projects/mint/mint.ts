@@ -29,7 +29,7 @@ export const mint: ScalingProject = opStackL2({
       repositories: ['https://github.com/Mint-Blockchain'],
       socialMedia: [
         'https://twitter.com/Mint_Blockchain',
-        'https://discord.gg/mint-blockchain',
+        'https://discord.com/invite/jmANcWNp8r',
         'https://t.me/MintBlockchain',
         'https://mirror.xyz/mintchain.eth',
         'https://community.mintchain.io',

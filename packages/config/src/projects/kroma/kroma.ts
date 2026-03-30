@@ -236,6 +236,10 @@ export const kroma: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

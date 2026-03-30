@@ -156,6 +156,7 @@ export async function getEcosystemEntry(
         'archivedAt',
         'isUpcoming',
         'hasTestnet',
+        'contracts',
       ],
       where: ['isScaling'],
     }),
@@ -301,7 +302,7 @@ export async function getEcosystemEntry(
   }
 }
 
-export interface EcosystemMilestone extends Milestone {
+export type EcosystemMilestone = Milestone & {
   projectName: string
 }
 

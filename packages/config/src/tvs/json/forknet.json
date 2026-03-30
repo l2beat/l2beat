@@ -4,6 +4,24 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "forknet-1INCH",
+      "priceId": "1inch",
+      "symbol": "1INCH",
+      "name": "1INCH Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFe88e3E9BD8eC1B76CD7d6aAf630F1C6E6041fA1",
+        "chain": "forknet",
+        "decimals": 18,
+        "sinceTimestamp": 1756893611
+      }
+    },
+    {
+      "mode": "auto",
       "id": "forknet-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",

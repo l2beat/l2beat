@@ -68,12 +68,7 @@ describe(AddressAnalyzer.name, () => {
       )
 
       const address = ChainSpecificAddress.random()
-      const result = await addressAnalyzer.analyze(
-        provider,
-        address,
-        config,
-        undefined,
-      )
+      const result = await addressAnalyzer.analyze(provider, address, config)
 
       expect(result).toEqual({
         ...EMPTY_ANALYZED_EOA,
@@ -172,12 +167,7 @@ describe(AddressAnalyzer.name, () => {
         }),
       )
 
-      const result = await addressAnalyzer.analyze(
-        provider,
-        address,
-        config,
-        undefined,
-      )
+      const result = await addressAnalyzer.analyze(provider, address, config)
 
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
@@ -291,12 +281,7 @@ describe(AddressAnalyzer.name, () => {
         }),
       )
 
-      const result = await addressAnalyzer.analyze(
-        provider,
-        address,
-        config,
-        undefined,
-      )
+      const result = await addressAnalyzer.analyze(provider, address, config)
 
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
@@ -407,12 +392,7 @@ describe(AddressAnalyzer.name, () => {
         }),
       )
 
-      const result = await addressAnalyzer.analyze(
-        provider,
-        address,
-        config,
-        undefined,
-      )
+      const result = await addressAnalyzer.analyze(provider, address, config)
 
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,

@@ -1,4 +1,195 @@
-Generated with discovered.json: 0xa2b52bde21ece72c0d01fa1e252e748c0455f45e
+Generated with discovered.json: 0x0527c5ae98ffc376bb5a13294c1128e873be7e03
+
+# Diff at Tue, 24 Mar 2026 21:26:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160419
+- current timestamp: 1774387529
+
+## Description
+
+respectedGameType changed from 6 (OPSuccinctDisputeGame) to 1 (PermissionedDisputeGame) on both OptimismPortal2 and AnchorStateRegistry. This means Phala is no longer using ZK-verified state proofs (via Succinct's SP1) for withdrawal verification, and has switched back to the standard permissioned dispute game model.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        6
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        6
++        1
+    }
+```
+
+Generated with discovered.json: 0x2ef680a2dfff0812a791b0696046a31e5df1b173
+
+# Diff at Fri, 13 Feb 2026 11:33:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1770116126
+- current timestamp: 1770116126
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770116126 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "0x"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
+Generated with discovered.json: 0xcaa598f7fd23d9ad8678fe217b322cd6577b161f
+
+# Diff at Tue, 03 Feb 2026 11:33:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a94928de2efc98d55da2625bd62f96eb1c25b904 block: 1769604483
+- current timestamp: 1770116126
+
+## Description
+
+Phala switched back to op-succinct dispute game type 6: https://etherscan.io/address/0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD#events (full validity proofs). Games of type 6 are being created now: https://etherscan.io/address/0x2157F4d5934c4b12193C4983E99b9D6418798a2E#events.
+
+Previous version of op-succinct upgraded to v4.0.0-rc.1: https://github.com/succinctlabs/op-succinct/releases/tag/v4.0.0-rc.1. Diff is here: https://disco.l2beat.com/diff/eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470/eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D. (Contract itself still claims that it has verison v3.0.0, but it is lies: https://github.com/succinctlabs/op-succinct/blob/v4.0.0-rc.1/contracts/src/validity/OPSuccinctDisputeGame.sol#L37).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x2157F4d5934c4b12193C4983E99b9D6418798a2E) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.gameImpls.6:
+-        "eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470"
++        "eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the 6."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        6
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        6
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OPSuccinctDisputeGame (eth:0xb476cC5ECF2472A040DC381552B7a9bd7951A470)
+    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xDeF9B23dAE7769004e80f579f9d3aF0D7a29E4aD) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 6."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        6
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        6
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctDisputeGame (eth:0x2c2dA5EFfAbDA3a9ffe8e3D526C5b1F3B42FEa6D)
+    +++ description: A dispute game wrapper around OPSuccinctL2OutputOracle. It is needed to comply with OptimismPortal2 requirement to have a DisputeGameFactory. Whenever a new game is created, an SP1 proof is immediately verified, so in fact there is no optimistic dispute game happening.
+```
+
+## Source code changes
+
+```diff
+.../OPSuccinctDisputeGame.sol                      | 41 +++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0x09c8e4f08050e7e81b826460c34bc6320f87a782
+
+# Diff at Wed, 28 Jan 2026 12:49:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1769598027
+- current timestamp: 1769604483
+
+## Description
+
+Roles discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769598027 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824","role":".challenger"}
+    }
+```
+
+```diff
+    EOA  (eth:0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"propose","from":"eth:0x46e057CE57bb9E5Af63f30b4dcD9e385eD4ac824","role":".proposer"}
+    }
+```
+
+Generated with discovered.json: 0xd038087a3d1a598e55357dff30a7943cf5f12cfa
 
 # Diff at Tue, 27 Jan 2026 16:56:39 GMT:
 

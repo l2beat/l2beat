@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xc66e803381fa4b925af0d0eacbbd60e6b3a516bc
+
+# Diff at Mon, 23 Feb 2026 14:40:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1770822598
+- current timestamp: 1771857556
+
+## Description
+
+Caldera signer rotation on Caldera Multisig 1 (same shared multisig as molten): signer 0xc454... removed, signer 0xbCDb... added. Total signers unchanged at 8, threshold unchanged at "3 of 8 (38%)".
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$members.3:
+-        "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+    }
+```
+
+Generated with discovered.json: 0xcccd6aafc2ac60de01cda760a035364a4a45b61b
+
+# Diff at Tue, 10 Feb 2026 15:08:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f50179f538296b663a83471c3dbf59e9be12a4a3 block: 1764334605
+- current timestamp: 1770736058
+
+## Description
+
+New SafeL2 multisig discovered.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |    0
+ .../SafeL2.sol                                     | 1152 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 1189 insertions(+)
+```
+
 Generated with discovered.json: 0x601b85851172db9d8adc864f70662a358d200dba
 
 # Diff at Mon, 05 Jan 2026 17:44:58 GMT:

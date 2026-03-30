@@ -397,11 +397,30 @@ export async function findRateLimit(
   let upperRate = config.upperBoundary
 
   let { successes, aborted } = await runBatch(
-    lowerRate,
+    upperRate,
     blockNumber,
     config,
     logger,
   )
+  if (!aborted && isBatchSuccessful(successes, upperRate, config)) {
+    logger.info(`  Upper bound test ${chalk.green('PASSED')}`)
+    logger.info('')
+    logger.info(
+      chalk.bold(
+        `Estimated rate limit: ${chalk.green(upperRate.toString())} calls/min`,
+      ),
+    )
+    return { batchSize, rateLimit: upperRate }
+  }
+
+  logger.info(`  Upper bound test ${chalk.red('FAILED')}`)
+
+  ;({ successes, aborted } = await runBatch(
+    lowerRate,
+    blockNumber,
+    config,
+    logger,
+  ))
   if (aborted || !isBatchSuccessful(successes, lowerRate, config)) {
     logger.info(chalk.red('✗ Rate limit is below the lower boundary.'))
     return { batchSize, rateLimit: lowerRate }

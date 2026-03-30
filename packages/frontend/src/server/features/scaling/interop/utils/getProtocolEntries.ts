@@ -1,188 +1,241 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  INTEROP_CHAINS,
-  type InteropConfig,
-  type Project,
-} from '@l2beat/config'
-import { assert, notUndefined } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
+import type { KnownInteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import type { AggregatedInteropTransferWithTokens } from '../types'
-import { getProtocolsDataMap } from './getProtocolsDataMap'
+import type {
+  AggregatedInteropTransferWithTokens,
+  ByBridgeTypeData,
+  InteropSelectionInput,
+  ProtocolEntry,
+} from '../types'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
+import { getAverageDuration, getDurationSplit } from './getAverageDuration'
+import { getChainsData } from './getChainsData'
+import { flowsMapToSorted } from './getFlows'
+import {
+  getProtocolsDataMap,
+  getProtocolsDataMapByBridgeType,
+  type ProtocolDataByBridgeType,
+} from './getProtocolsDataMap'
+import { getRelevantBridgeTypes } from './getRelevantBridgeTypes'
+import { getTokensData } from './getTokensData'
+import { getTopItems } from './getTopItems'
 
-export type TokenData = {
-  id: string
-  symbol: string
-  iconUrl: string
-  volume: number
-}
-
-export type ChainData = {
-  id: string
-  name: string
-  iconUrl: string
-  volume: number
-}
-
-export type DurationSplit = {
-  type: 'split'
-  in: {
-    label: string
-    duration: number | null
-  }
-  out: {
-    label: string
-    duration: number | null
-  }
-}
-
-export type ProtocolEntry = {
-  iconUrl: string
-  protocolName: string
-  bridgeType: 'nonMinting' | 'lockAndMint' | 'omnichain'
-  volume: number
-  tokens: TokenData[]
-  chains: ChainData[]
-  transferCount: number
-  averageValue: number
-  averageDuration: { type: 'single'; duration: number } | DurationSplit
-}
+const TOP_ITEMS_LIMIT = 3
+const logger = getLogger().for('getAllProtocolEntries')
 
 export function getProtocolEntries(
   records: AggregatedInteropTransferWithTokens[],
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
+  tokensDetailsMap: TokensDetailsMap,
   interopProjects: Project<'interopConfig'>[],
-): ProtocolEntry[] {
-  const logger = getLogger().for('getProtocolsByType')
+  type: KnownInteropBridgeType | undefined,
+  snapshotTimestamp: UnixTime | undefined,
+  selection: InteropSelectionInput,
+): {
+  entries: ProtocolEntry[]
+  zeroTransferProtocols: { name: string; iconUrl: string }[]
+} {
+  const protocolsDataMap = getProtocolsDataMap(records)
+  const protocolsDataByBridgeTypeMap = getProtocolsDataMapByBridgeType(records)
 
-  const durationSplitMap = new Map<
-    string,
-    NonNullable<InteropConfig['durationSplit']>
-  >()
+  const entries: ProtocolEntry[] = []
+  const zeroTransferProtocols: { name: string; iconUrl: string }[] = []
+
   for (const project of interopProjects) {
-    if (project.interopConfig.durationSplit) {
-      durationSplitMap.set(project.id, project.interopConfig.durationSplit)
-    }
-  }
+    const data = protocolsDataMap.get(project.id)
 
-  const protocolsDataMap = getProtocolsDataMap(records, durationSplitMap)
+    const subgroupProject = interopProjects.find(
+      (p) => p.id === project.interopConfig.subgroupId,
+    )
 
-  const protocolsData = Array.from(protocolsDataMap.entries()).sort(
-    (a, b) => b[1].volume - a[1].volume,
-  )
+    const byBridgeType = getByBridgeTypeData(
+      project,
+      protocolsDataByBridgeTypeMap,
+      tokensDetailsMap,
+      logger,
+      selection,
+    )
 
-  return protocolsData
-    .map(([key, data]) => {
-      const project = interopProjects.find((p) => p.id === key)
-      assert(project, `Project not found: ${key}`)
-      const bridgeType = project.interopConfig.bridgeType
+    const bridgeTypes = getRelevantBridgeTypes(project, undefined).sort(
+      sortBridgeTypesFn,
+    )
 
-      return {
-        iconSlug: project.slug,
+    // Show zeros for projects that don't have data but have plugins for the given type
+    if (!data && (!type || bridgeTypes.includes(type))) {
+      zeroTransferProtocols.push({
+        name: project.interopConfig.name ?? project.name,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        protocolName: project.interopConfig.name ?? project.name,
-        bridgeType,
-        volume: data.volume,
-        tokens: getTokensData(data.tokens, tokensDetailsMap, logger),
-        chains: getChainsData(data.chains, logger),
-        transferCount: data.transferCount,
-        averageValue:
-          data.transferCount > 0 ? data.volume / data.transferCount : 0,
-        averageDuration: getAverageDuration(key, data, durationSplitMap),
-      }
-    })
-    .sort((a, b) => b.volume - a.volume)
-}
-
-function getTokensData(
-  tokens: Map<string, number>,
-  tokensDetailsMap: Map<string, { symbol: string; iconUrl: string | null }>,
-  logger: Logger,
-) {
-  return Array.from(tokens.entries())
-    .map(([tokenId, volume]) => {
-      const tokenDetails = tokensDetailsMap.get(tokenId)
-
-      if (!tokenDetails) {
-        logger.warn(`Token not found: ${tokenId}`)
-        return undefined
-      }
-
-      return {
-        id: tokenId,
-        symbol: tokenDetails.symbol,
-        iconUrl:
-          tokenDetails.iconUrl ??
-          manifest.getUrl('/images/token-placeholder.png'),
-        volume,
-      }
-    })
-    .filter(notUndefined)
-    .toSorted((a, b) => b.volume - a.volume)
-}
-
-function getChainsData(
-  chains: Map<string, number>,
-  logger: Logger,
-): ChainData[] {
-  return Array.from(chains.entries())
-    .map(([chainId, volume]) => {
-      const chain = INTEROP_CHAINS.find((c) => c.id === chainId)
-      if (!chain) {
-        logger.warn(`Chain not found: ${chainId}`)
-        return undefined
-      }
-
-      return {
-        id: chainId,
-        name: chain.name,
-        iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-        volume,
-      }
-    })
-    .filter(notUndefined)
-    .toSorted((a, b) => b.volume - a.volume)
-}
-
-function getAverageDuration(
-  key: string,
-  data: {
-    transferCount: number
-    totalDurationSum: number
-    inTransferCount: number
-    inDurationSum: number
-    outTransferCount: number
-    outDurationSum: number
-  },
-  durationSplitMap: Map<string, NonNullable<InteropConfig['durationSplit']>>,
-): ProtocolEntry['averageDuration'] {
-  const durationSplit = durationSplitMap.get(key)
-
-  if (durationSplit) {
-    return {
-      type: 'split',
-      in: {
-        label: durationSplit.in.label,
-        duration:
-          data.inTransferCount > 0
-            ? Math.floor(data.inDurationSum / data.inTransferCount)
-            : null,
-      },
-      out: {
-        label: durationSplit.out.label,
-        duration:
-          data.outTransferCount > 0
-            ? Math.floor(data.outDurationSum / data.outTransferCount)
-            : null,
-      },
+      })
+      continue
     }
+
+    // Skip projects that don't have data and don't have plugins for the given type
+    if (!data) continue
+
+    const relevantBridgeTypes = getRelevantBridgeTypes(project, type)
+    const durationSplitForProtocol = getDurationSplit(
+      project,
+      relevantBridgeTypes,
+    )
+    const averageDuration =
+      project.interopConfig.transfersTimeMode === 'unknown'
+        ? { type: 'unknown' as const }
+        : getAverageDuration(data, durationSplitForProtocol)
+
+    const tokens = getTokensData({
+      tokens: data.tokens,
+      tokensDetailsMap,
+      unknownTransfersCount: data.transferCount - data.identifiedTransferCount,
+      // No duration split map for aggregated view
+      durationSplit: undefined,
+      logger,
+    })
+    const chains = getChainsData({
+      chains: data.chains,
+      // No duration split map for aggregated view
+      durationSplit: undefined,
+      logger,
+    })
+
+    entries.push({
+      id: project.id,
+      slug: project.slug,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      name: project.interopConfig.name ?? project.name,
+      shortName: project.interopConfig.shortName,
+      bridgeTypes,
+      isAggregate: project.interopConfig.isAggregate,
+      subgroup: subgroupProject
+        ? {
+            name: subgroupProject.name,
+            iconUrl: manifest.getUrl(`/icons/${subgroupProject.slug}.png`),
+          }
+        : undefined,
+      volume: data.volume,
+      byBridgeType,
+      tokens: getTopItems(tokens, TOP_ITEMS_LIMIT),
+      chains: getTopItems(chains, TOP_ITEMS_LIMIT),
+      transferCount: data.transferCount,
+      averageValue:
+        data.identifiedTransferCount > 0
+          ? data.volume / data.identifiedTransferCount
+          : null,
+      minTransferValueUsd: data.minTransferValueUsd,
+      maxTransferValueUsd: data.maxTransferValueUsd,
+      averageDuration,
+      averageValueInFlight: data.averageValueInFlight,
+      netMintedValue:
+        data.mintedValueUsd !== undefined && data.burnedValueUsd !== undefined
+          ? data.mintedValueUsd - data.burnedValueUsd
+          : undefined,
+      snapshotTimestamp,
+    })
   }
 
   return {
-    type: 'single',
-    duration:
-      data.transferCount > 0
-        ? Math.floor(data.totalDurationSum / data.transferCount)
-        : 0,
+    entries: entries.sort((a, b) => b.volume - a.volume),
+    zeroTransferProtocols,
   }
+}
+
+function getByBridgeTypeData(
+  project: Project<'interopConfig'>,
+  protocolsDataByBridgeTypeMap: Map<string, ProtocolDataByBridgeType>,
+  tokensDetailsMap: TokensDetailsMap,
+  logger: Logger,
+  selection: InteropSelectionInput,
+): ByBridgeTypeData | undefined {
+  const data = protocolsDataByBridgeTypeMap.get(project.id)
+  if (!data) return undefined
+
+  return {
+    lockAndMint: data.lockAndMint
+      ? {
+          volume: data.lockAndMint.volume,
+          transferCount: data.lockAndMint.transferCount,
+          averageValue:
+            data.lockAndMint.identifiedTransferCount > 0
+              ? data.lockAndMint.volume /
+                data.lockAndMint.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.lockAndMint.tokens,
+              tokensDetailsMap,
+              durationSplit: getDurationSplit(project, ['lockAndMint']),
+              unknownTransfersCount:
+                data.lockAndMint.transferCount -
+                data.lockAndMint.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.lockAndMint.flows, selection),
+          netMintedValue:
+            data.lockAndMint.mintedValueUsd !== undefined &&
+            data.lockAndMint.burnedValueUsd !== undefined
+              ? data.lockAndMint.mintedValueUsd -
+                data.lockAndMint.burnedValueUsd
+              : undefined,
+        }
+      : undefined,
+    nonMinting: data.nonMinting
+      ? {
+          volume: data.nonMinting.volume,
+          transferCount: data.nonMinting.transferCount,
+          averageValue:
+            data.nonMinting.identifiedTransferCount > 0
+              ? data.nonMinting.volume / data.nonMinting.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.nonMinting.tokens,
+              tokensDetailsMap,
+              durationSplit: getDurationSplit(project, ['nonMinting']),
+              unknownTransfersCount:
+                data.nonMinting.transferCount -
+                data.nonMinting.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.nonMinting.flows, selection),
+          averageValueInFlight: data.nonMinting.averageValueInFlight,
+        }
+      : undefined,
+    burnAndMint: data.burnAndMint
+      ? {
+          volume: data.burnAndMint.volume,
+          transferCount: data.burnAndMint.transferCount,
+          averageValue:
+            data.burnAndMint.identifiedTransferCount > 0
+              ? data.burnAndMint.volume /
+                data.burnAndMint.identifiedTransferCount
+              : null,
+          tokens: getTopItems(
+            getTokensData({
+              tokens: data.burnAndMint.tokens,
+              tokensDetailsMap,
+              durationSplit: getDurationSplit(project, ['burnAndMint']),
+              unknownTransfersCount:
+                data.burnAndMint.transferCount -
+                data.burnAndMint.identifiedTransferCount,
+              logger,
+            }),
+            TOP_ITEMS_LIMIT,
+          ),
+          flows: flowsMapToSorted(data.burnAndMint.flows, selection),
+        }
+      : undefined,
+  }
+}
+
+const bridgeTypesOrder = ['nonMinting', 'lockAndMint', 'burnAndMint']
+
+function sortBridgeTypesFn(
+  a: KnownInteropBridgeType,
+  b: KnownInteropBridgeType,
+): number {
+  return bridgeTypesOrder.indexOf(a) - bridgeTypesOrder.indexOf(b)
 }

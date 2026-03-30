@@ -114,16 +114,18 @@ function mockIndexer($: {
     getBlobs: async () => $.blobs ?? [], // Empty response
   })
 
-  const indexer = new BlobIndexer({
-    daProvider,
-    logger: Logger.SILENT,
-    daLayer: DA_LAYER,
-    batchSize: $.batchSize ?? 100,
-    parents: [],
-    indexerService: $.indexerService ?? mockObject<IndexerService>(),
-    blobService,
-    minHeight: 0,
-  })
+  const indexer = new BlobIndexer(
+    {
+      daProvider,
+      daLayer: DA_LAYER,
+      batchSize: $.batchSize ?? 100,
+      parents: [],
+      indexerService: $.indexerService ?? mockObject<IndexerService>(),
+      blobService,
+      minHeight: 0,
+    },
+    Logger.SILENT,
+  )
 
   return { indexer, daProvider, blobService }
 }

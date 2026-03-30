@@ -1,10 +1,7 @@
-import { pluralize } from '@l2beat/shared-pure'
-import { Button } from '~/components/core/Button'
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -19,95 +16,86 @@ import { ChainSelectorChainToggle } from './ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from './types'
 
 export function ChainSelectorButton({
+  chainKey,
   allChains,
-  type,
 }: {
+  chainKey: 'from' | 'to'
   allChains: InteropChainWithIcon[]
-  type: 'from' | 'to'
 }) {
-  const { selectedChains, toggleFrom, toggleTo, isDirty, reset } =
-    useInteropSelectedChains()
+  const { selectedChains, selectChain } = useInteropSelectedChains()
+  const selectedFrom =
+    selectedChains.from.length === 1 ? selectedChains.from[0] : undefined
+  const selectedTo =
+    selectedChains.to.length === 1 ? selectedChains.to[0] : undefined
 
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
     iconUrl,
     isSelected: {
-      from: selectedChains.from.includes(id),
-      to: selectedChains.to.includes(id),
+      from: selectedFrom === id,
+      to: selectedTo === id,
     },
   }))
 
-  const selectedChainsCount = selectedChains[type].length
+  const selectedChain = chainsWithDetails.find(
+    (chain) => chain.isSelected[chainKey],
+  )
 
   const trigger = (
-    <div className="flex h-10 items-center gap-1.5 rounded-lg bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
-      <div className="font-semibold leading-none">
-        {selectedChainsCount} {pluralize(selectedChainsCount, 'chain')}
-      </div>
-      <div className="-space-x-3 md:-space-x-2 flex items-center">
-        {chainsWithDetails
-          .filter((chain) => chain.isSelected[type])
-          .map((chain, i) => (
-            <img
-              key={chain.id}
-              src={chain.iconUrl}
-              alt={chain.name}
-              className="size-5 rounded-full bg-white shadow"
-              style={{ zIndex: selectedChainsCount - i }}
-            />
-          ))}
-      </div>
+    <div className="flex h-10 items-center justify-center gap-2 rounded-lg border border-divider bg-surface-primary px-4 py-[7px] text-xs leading-none md:text-sm">
+      <img
+        key={selectedChain?.id}
+        src={selectedChain?.iconUrl}
+        alt={selectedChain?.name}
+        className="size-5"
+      />
+      <div className="font-semibold leading-none">{selectedChain?.name}</div>
     </div>
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:flex-col md:items-center md:gap-3">
-      <div className="font-semibold capitalize max-md:hidden">{type}</div>
-      <div className="font-medium text-xs leading-none md:hidden">
-        <span className="capitalize">{type}</span> selected chains
-      </div>
+    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-3">
       {/* Mobile */}
       <Drawer>
-        <DrawerTrigger className="md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className={isDirty ? 'pb-0' : 'pb-12'}>
+        <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
+        <DrawerContent className="pb-4">
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
-              Chains
+              Chain selector
             </DrawerTitle>
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
-              Select the chains you want to include
+              Select two chains
             </DrawerDescription>
           </DrawerHeader>
-          <div className="mb-2 font-semibold text-xs leading-none">From</div>
-          <div className="flex flex-wrap gap-2">
+          <div className="mb-2 font-semibold text-xs leading-none">
+            First chain
+          </div>
+          <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
                 isSelected={chain.isSelected.from}
-                toggleSelected={toggleFrom}
+                toggleSelected={(chainId) => selectChain('from', chainId)}
+                disabled={chain.isSelected.to}
               />
             ))}
           </div>
-          <div className="mt-4 mb-2 font-semibold text-xs leading-none">To</div>
-          <div className="flex flex-wrap gap-2">
+          <div className="mt-3 mb-2 font-semibold text-xs leading-none">
+            Second chain
+          </div>
+          <div className="flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
                 isSelected={chain.isSelected.to}
-                toggleSelected={toggleTo}
+                toggleSelected={(chainId) => selectChain('to', chainId)}
+                disabled={chain.isSelected.from}
               />
             ))}
           </div>
-          {isDirty && (
-            <DrawerFooter className="px-0 pt-6">
-              <Button variant="outline" className="w-full" onClick={reset}>
-                Reset all filters
-              </Button>
-            </DrawerFooter>
-          )}
         </DrawerContent>
       </Drawer>
       {/* Desktop */}
@@ -120,13 +108,14 @@ export function ChainSelectorButton({
           align="start"
           side="bottom"
         >
-          <div className="flex flex-wrap gap-1">
+          <div className="mt-2.5 flex flex-wrap gap-1">
             {chainsWithDetails.map((chain) => (
               <ChainSelectorChainToggle
                 key={chain.id}
                 chain={chain}
-                isSelected={chain.isSelected[type]}
-                toggleSelected={type === 'from' ? toggleFrom : toggleTo}
+                isSelected={chain.isSelected[chainKey]}
+                toggleSelected={(chainId) => selectChain(chainKey, chainId)}
+                disabled={chain.isSelected[chainKey === 'from' ? 'to' : 'from']}
               />
             ))}
           </div>

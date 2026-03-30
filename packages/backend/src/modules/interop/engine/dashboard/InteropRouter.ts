@@ -1,19 +1,26 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import {
+  createInteropTrpcRouter,
+  createKoaMiddleware,
+  createTRPCContext,
+} from '@l2beat/interop-backoffice'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
-import type {
-  InteropTransferStream,
-  SerializableInteropTransfer,
-} from '../stream/InteropTransferStream'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
+import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
+import { renderSupportChartsPage } from './SupportChartsPage'
+import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
 
 export function createInteropRouter(
@@ -22,9 +29,53 @@ export function createInteropRouter(
   processors: InteropBlockProcessor[],
   syncersManager: InteropSyncersManager,
   logger: Logger,
-  transferStream: InteropTransferStream,
 ) {
   const router = new Router()
+  let coveragePiesCache: string | undefined
+  const dangerousOperationsDisabledResponse = {
+    error: 'Interop resync and restart operations are disabled',
+  }
+
+  const ensureDangerousOperationsEnabled = (
+    ctx: Router.RouterContext,
+  ): boolean => {
+    if (config.dangerousOperationsEnabled) {
+      return true
+    }
+
+    ctx.status = 403
+    ctx.body = dangerousOperationsDisabledResponse
+    return false
+  }
+
+  // Example server side implementation
+
+  const trpcMiddleware = createKoaMiddleware({
+    router: createInteropTrpcRouter({
+      status: {
+        memory: () => {
+          const memoryUsage = process.memoryUsage()
+
+          return Promise.resolve({
+            rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
+            heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
+            heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
+            external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`,
+            arrayBuffers: `${(memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2)} MB`,
+          })
+        },
+      },
+    }),
+    prefix: '/interop/trpc',
+    allowMethodOverride: true,
+    createContext: ({ req }) =>
+      createTRPCContext({
+        headers: new Headers(req.headers as Record<string, string>),
+        db,
+      }),
+  })
+
+  router.all(['/interop/trpc', '/interop/trpc/(.*)'], trpcMiddleware)
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -66,10 +117,167 @@ export function createInteropRouter(
 
   router.get('/interop/status', async (ctx) => {
     const pluginSyncStatuses = await syncersManager.getPluginSyncStatuses()
-    const showResyncControls = ctx.query.showResync !== undefined
+    const showResyncControls =
+      config.dangerousOperationsEnabled && ctx.query.showResync !== undefined
 
     ctx.body = renderStatusPage({ pluginSyncStatuses, showResyncControls })
   })
+
+  router.get('/interop/anomalies', async (ctx) => {
+    const rows = await db.aggregatedInteropTransfer.getDailySeries()
+    const explored = explore(rows)
+    if (ctx.query.raw === 'true') {
+      ctx.body = explored
+    } else {
+      const VALUE_DIFF_THRESHOLD_PERCENT = 15
+      const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
+      const suspiciousTransfers =
+        await db.interopTransfer.getValueMismatchTransfers(
+          VALUE_DIFF_THRESHOLD_PERCENT,
+          MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        )
+      ctx.body = renderAnomaliesPage({
+        stats: explored,
+        suspiciousTransfers,
+        valueDiffThresholdPercent: VALUE_DIFF_THRESHOLD_PERCENT,
+        minimumSideValueUsdThreshold: MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      })
+    }
+  })
+
+  router.get('/interop/anomalies/:id', async (ctx) => {
+    const params = v.object({ id: v.string() }).validate(ctx.params)
+    const series = await db.aggregatedInteropTransfer.getDailySeriesById(
+      params.id,
+    )
+    ctx.body = renderAnomalyIdPage({ id: params.id, series })
+  })
+
+  router.get('/interop/aggregates', async (ctx) => {
+    const latestTimestamp =
+      await db.aggregatedInteropTransfer.getLatestTimestamp()
+    if (!latestTimestamp) {
+      return (ctx.body = {
+        error: 'No latest timestamp found',
+      })
+    }
+    const from = latestTimestamp - UnixTime.DAY
+    const transfers = await db.interopTransfer.getByRange(from, latestTimestamp)
+    const configs = config.aggregation ? config.aggregation.configs : []
+
+    const classifier = new InteropTransferClassifier()
+    const consumedIds = new Set<string>()
+    for (const aggConfig of configs) {
+      const classified = classifier.classifyTransfers(
+        transfers,
+        aggConfig.plugins,
+      )
+      for (const records of Object.values(classified)) {
+        for (const r of records) {
+          consumedIds.add(r.transferId)
+        }
+      }
+    }
+
+    const unconsumed = transfers.filter((t) => !consumedIds.has(t.transferId))
+
+    ctx.body = renderAggregatesPage({
+      transfers: unconsumed,
+      latestTransfers: transfers,
+      configs,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+    })
+  })
+
+  const buildCoveragePiesPage = async () => {
+    const chartConfigs = [
+      {
+        id: 'layerzero-packet-oft-sent',
+        title: 'layerzero-v2.PacketOFTSent destination chains',
+        centerLabel: 'PacketOFTSent events',
+        type: 'layerzero-v2.PacketOFTSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'layerzero-packet-oft-delivered',
+        title: 'layerzero-v2.PacketOFTDelivered source chains',
+        centerLabel: 'PacketOFTDelivered events',
+        type: 'layerzero-v2.PacketOFTDelivered',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'relay-token-sent',
+        title: 'relay.TokenSent destination chains',
+        centerLabel: 'relay.TokenSent events',
+        type: 'relay.TokenSent',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'relay-token-received',
+        title: 'relay.TokenReceived source chains',
+        centerLabel: 'relay.TokenReceived events',
+        type: 'relay.TokenReceived',
+        chainArg: '$srcChain' as const,
+      },
+      {
+        id: 'ccip-send-requested',
+        title: 'ccip.CCIPSendRequested destination chains',
+        centerLabel: 'CCIPSendRequested events',
+        type: 'ccip.CCIPSendRequested',
+        chainArg: '$dstChain' as const,
+      },
+      {
+        id: 'ccip-execution-state-changed',
+        title: 'ccip.ExecutionStateChanged source chains',
+        centerLabel: 'ExecutionStateChanged events',
+        type: 'ccip.ExecutionStateChanged',
+        chainArg: '$srcChain' as const,
+      },
+    ]
+
+    const rows = await Promise.all(
+      chartConfigs.map((chart) =>
+        db.interopEvent.getSupportBreakdownByChainArg(
+          chart.type,
+          chart.chainArg,
+        ),
+      ),
+    )
+
+    return renderSupportChartsPage({
+      charts: chartConfigs.map((chart, i) => ({
+        id: chart.id,
+        title: chart.title,
+        centerLabel: chart.centerLabel,
+        rows: rows[i] ?? [],
+      })),
+    })
+  }
+
+  const isRefreshRequested = (value: unknown): boolean => {
+    if (Array.isArray(value)) {
+      return value.includes('1') || value.includes('true')
+    }
+    return value === '1' || value === 'true'
+  }
+
+  const renderCoveragePies = async (ctx: Router.RouterContext) => {
+    const refresh = isRefreshRequested(ctx.query.refresh)
+
+    if (refresh) {
+      coveragePiesCache = await buildCoveragePiesPage()
+      return ctx.redirect('/interop/coverage-pies')
+    }
+
+    if (coveragePiesCache === undefined) {
+      coveragePiesCache = await buildCoveragePiesPage()
+    }
+
+    ctx.body = coveragePiesCache
+  }
+
+  router.get('/interop/coverage-pies', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
     const memoryUsage = process.memoryUsage()
@@ -117,17 +325,19 @@ export function createInteropRouter(
   })
 
   router.post('/interop/resync', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
     const payload = ResyncRequest.validate(ctx.request.body)
     const { pluginName, resyncRequestedFrom } = payload
 
     const defaultFrom = resyncRequestedFrom['*']
-    const existingChains = (
-      await db.interopPluginSyncState.findByPluginName(pluginName)
-    ).map((r) => r.chain)
+    const chains = syncersManager.getChainsForPlugin(pluginName)
 
     const updatedChains = new Set<string>()
     await db.transaction(async () => {
-      for (const chain of existingChains) {
+      for (const chain of chains) {
         const resyncFrom = resyncRequestedFrom[chain] ?? defaultFrom
         if (resyncFrom) {
           await db.interopPluginSyncState.setResyncRequestedFrom(
@@ -143,6 +353,39 @@ export function createInteropRouter(
     ctx.body = {
       updatedChains: Array.from(updatedChains),
     }
+  })
+
+  router.post('/interop/restart-from-now', async (ctx) => {
+    if (!ensureDangerousOperationsEnabled(ctx)) {
+      return
+    }
+
+    const payload = v
+      .object({ pluginName: v.string() })
+      .validate(ctx.request.body)
+    const { pluginName } = payload
+
+    const chains = syncersManager.getChainsForPlugin(pluginName)
+
+    await db.transaction(async () => {
+      for (const chain of chains) {
+        await db.interopPluginSyncState.upsert({
+          pluginName,
+          chain,
+          lastError: null,
+          resyncRequestedFrom: null,
+          wipeRequired: true,
+        })
+      }
+    })
+
+    ctx.body = { updatedChains: chains }
+  })
+
+  router.post('/interop/refresh-financials', async (ctx) => {
+    const updatedTransfers = await db.interopTransfer.markAllAsUnprocessed()
+
+    ctx.body = { updatedTransfers }
   })
 
   router.get('/interop/events/:kind/:type', async (ctx) => {
@@ -220,36 +463,6 @@ export function createInteropRouter(
       getExplorerUrl: config.dashboard.getExplorerUrl,
       status,
     })
-  })
-
-  router.get('/interop/transfers/stream', (ctx) => {
-    ctx.set('Content-Type', 'text/event-stream')
-    ctx.set('Cache-Control', 'no-cache')
-    ctx.set('Connection', 'keep-alive')
-    ctx.set('X-Accel-Buffering', 'no')
-    ctx.status = 200
-    ctx.compress = false
-    ctx.respond = false
-
-    ctx.res.write(':\n\n')
-
-    const write = (payload: SerializableInteropTransfer[]) => {
-      ctx.res.write(`data: ${JSON.stringify(payload)}\n\n`)
-    }
-
-    const unsubscribe = transferStream.subscribe(write, { replay: 20 })
-
-    const heartbeat = setInterval(() => {
-      ctx.res.write(':\n\n')
-    }, 15_000)
-
-    const close = () => {
-      clearInterval(heartbeat)
-      unsubscribe()
-    }
-
-    ctx.req.on('close', close)
-    ctx.req.on('end', close)
   })
 
   router.get('/interop/transfers/:type', async (ctx) => {

@@ -31,7 +31,6 @@ export function Head({ manifest, metadata }: HeadProps) {
         type="image/png"
         sizes="180x180"
       />
-      <link rel="stylesheet" href={manifest.getUrl('/index.css')} />
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />

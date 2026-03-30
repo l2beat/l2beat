@@ -1,6 +1,6 @@
 {
   "name": "immutablezkevm",
-  "timestamp": 1741355351,
+  "timestamp": 1772614819,
   "configHash": "0xf6dd8179500bb1d193784143fe0ea87b58e9c4828b7e671d9d065ed9d045627b",
   "entries": [
     {
@@ -133,17 +133,17 @@
       }
     },
     {
+      "address": "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -257,14 +257,14 @@
           "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba",
           "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
           "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
-          "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+          "eth:0x94e97260182B9537822687Dd3c301225c6f87a5e"
         ],
         "$threshold": 4,
         "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 34,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -599,6 +599,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21995404 },
-  "permissionsConfigHash": "0x59426f1f1c86ea3d0a6c40b140684d5636469729c539f42d3ec52050fa74960b"
+  "usedBlockNumbers": { "ethereum": 24583056 },
+  "permissionsConfigHash": "0xee6b8682850182f9b9c7fb71fbe8e4915712fa52dadf81fed5a4b2711853e908"
 }

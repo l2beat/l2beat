@@ -9,5 +9,11 @@
     "address": "eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846",
     "chain": "ethereum",
     "blockNumber": 23839591
+  },
+  "EigenDACertVerifier_v3.sol": {
+    "hash": "0x2246a40167c418ed7a92ae3a5068e397e2ea4035bac8d4728a20c82364fa5f14",
+    "address": "eth:0xa4F38615e6a1846ccD7ff08E8179CBdAC8F5ff3B",
+    "chain": "ethereum",
+    "blockNumber": 24404410
   }
 }

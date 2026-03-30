@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -29,16 +30,22 @@ interface TokenValueIndexerDeps
 }
 
 export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
-  constructor(private readonly $: TokenValueIndexerDeps) {
-    super({
-      ...$,
-      name: INDEXER_NAMES.TVS_TOKEN_VALUE,
-      tags: {
-        tag: $.project,
-        project: $.project,
+  constructor(
+    private readonly $: TokenValueIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: INDEXER_NAMES.TVS_TOKEN_VALUE,
+        tags: {
+          tag: $.project,
+          project: $.project,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async multiUpdate(

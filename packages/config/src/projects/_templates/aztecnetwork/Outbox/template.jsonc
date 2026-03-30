@@ -1,5 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.",
-  "ignoreMethods": ["getRootData"]
+  "description": "Facilitates L2 to L1 communication. It stores the roots of L2 to L1 message trees per epoch, which are inserted by the Rollup contract. Users and portals can consume these messages on L1 by providing a Merkle proof against the stored root. A nullifier bitmap prevents double consumption.",
+  "ignoreMethods": ["getRootData", "hasMessageBeenConsumedAtEpoch"],
+  "fields": {
+    "ROLLUP": {
+      "description": "The address of the core Rollup contract that possesses the permission to insert new L2 to L1 message tree roots."
+    },
+    "VERSION": {
+      "description": "The identifier of the Aztec instance/version to prevent cross-instance replay attacks."
+    }
+  }
 }

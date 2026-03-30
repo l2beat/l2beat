@@ -435,7 +435,7 @@ function buildValidiumSections(
   context: SharedContext,
 ): VariantSections {
   const dacInfo = getDacInfo(config.discovery)
-  const provider = resolveValidiumDaProvider(config, context, dacInfo)
+  const provider = resolveValidiumDaProvider(config, dacInfo)
 
   const customDa =
     config.customDa ??
@@ -491,7 +491,7 @@ function buildValidiumSections(
       genesisState:
         'The genesis state, whose corresponding root is accessible as Batch 0 root in the `_legacyBatchNumToStateRoot` variable of AgglayerManager, is available [here](https://github.com/agglayer/agglayer-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
       dataFormat:
-        'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
+        'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/tools/zkevm/architecture/protocol/transaction-life-cycle/transaction-batching/). Only /signed hashes of batches are posted to the Validium contract.',
     } satisfies ProjectScalingStateDerivation)
 
   const stateValidation =
@@ -728,7 +728,6 @@ function buildOpstackClosedSections(
 
 function resolveValidiumDaProvider(
   config: AgglayerCdkErigonValidiumConfig,
-  context: SharedContext,
   dacInfo?: DacInfo,
 ): DAProvider {
   if (config.daProvider !== undefined) {

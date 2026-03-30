@@ -10,6 +10,7 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -73,7 +74,7 @@ export const facet: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
   stage: getStage(
@@ -91,6 +92,10 @@ export const facet: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
+        noRedTrustedSetups: false,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -138,7 +143,7 @@ export const facet: ScalingProject = {
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {
@@ -153,7 +158,7 @@ export const facet: ScalingProject = {
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {

@@ -16,11 +16,10 @@ import {
   Result,
 } from '../types'
 import {
-  FailedRelayedMessage,
   MessagePassed,
   OPSTACK_NETWORKS,
-  RelayedMessage,
-  SentMessage,
+  PortalDepositFinalized,
+  TransactionDeposited,
   WithdrawalFinalized,
 } from './opstack'
 
@@ -307,7 +306,6 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
     // L1 -> L2: trigger on L2 finalization events
     ETHBridgeFinalizedL2,
     DepositFinalized,
-    FailedRelayedMessage,
   ]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
@@ -342,9 +340,11 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: erc20BridgeInitiated,
           srcAmount: erc20BridgeInitiated.args.amount,
           srcTokenAddress: erc20BridgeInitiated.args.l2Token,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
+          dstWasMinted: false,
         }),
       ]
     }
@@ -380,41 +380,41 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
           srcEvent: ethBridgeInitiated,
           srcAmount: ethBridgeInitiated.args.amount,
           srcTokenAddress: Address32.NATIVE,
+          srcWasBurned: true,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.NATIVE,
+          dstWasMinted: false,
         }),
       ]
     }
 
     if (ETHBridgeFinalizedL2.checkType(event)) {
-      // L2: ETHBridgeFinalizedL2 (N) → RelayedMessage (N+1)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: event.args.chain,
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: ETHBridgeInitiatedL1 → ... → SentMessage (offset varies: -2 for Base, -3 for Optimism due to ETHLocked)
       const ethBridgeInitiated = db.find(ETHBridgeInitiatedL1, {
-        sameTxBefore: sentMessage,
+        sameTxBefore: transactionDeposited,
         chain: event.args.chain,
       })
       if (!ethBridgeInitiated) return
 
-      // L2: DepositFinalized (N) → ETHBridgeFinalizedL2 (N+1) → RelayedMessage (N+2)
+      // L2: DepositFinalized (N-1) → ETHBridgeFinalizedL2 (N)
       const depositFinalized = db.find(DepositFinalized, {
-        sameTxAtOffset: { event: relayedMessage, offset: -2 },
+        sameTxAtOffset: { event, offset: -1 },
         chain: event.args.chain,
       })
 
-      const extraEvents: InteropEvent[] = []
+      const extraEvents: InteropEvent[] = [event]
       if (depositFinalized) {
         extraEvents.push(depositFinalized)
       }
@@ -422,39 +422,40 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'opstack-standardbridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents,
         }),
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: ethBridgeInitiated,
           srcAmount: ethBridgeInitiated.args.amount,
           srcTokenAddress: Address32.NATIVE,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: Address32.NATIVE,
+          dstWasMinted: true,
           extraEvents,
         }),
       ]
     }
 
     if (DepositFinalized.checkType(event)) {
-      // L2: DepositFinalized (N) → ERC20BridgeFinalized (N+1) → RelayedMessage (N+2)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 2 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: event.args.chain,
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: ERC20DepositInitiated (N) → ERC20BridgeInitiated (N+1) → TransactionDeposited (N+2) → SentMessage (N+3)
+      // L1: ERC20DepositInitiated (N) → ERC20BridgeInitiated (N+1) → TransactionDeposited (N+2)
       const erc20DepositInitiated = db.find(ERC20DepositInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: -3 },
+        sameTxAtOffset: { event: transactionDeposited, offset: -2 },
         chain: event.args.chain,
       })
       // If not found, this might be an ETH deposit (DepositFinalized is also emitted for ETH)
@@ -464,61 +465,22 @@ export class OpStackStandardBridgePlugin implements InteropPluginResyncable {
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'opstack-standardbridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
+          extraEvents: [event],
         }),
         Result.Transfer('opstack-standardbridge.L1ToL2Transfer', {
           srcEvent: erc20DepositInitiated,
           srcAmount: erc20DepositInitiated.args.amount,
           srcTokenAddress: erc20DepositInitiated.args.l1Token,
+          srcWasBurned: false,
           dstEvent: event,
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l2Token,
+          dstWasMinted: true,
+          extraEvents: [event],
         }),
       ]
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      const network = OPSTACK_NETWORKS.find((n) => n.chain === event.args.chain)
-      if (!network) return
-
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      // Try to find ERC20DepositInitiated
-      const erc20DepositInitiated = db.find(ERC20DepositInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: -3 },
-        chain: event.args.chain,
-      })
-      if (erc20DepositInitiated) {
-        return [
-          Result.Message('opstack.L1ToL2MessageFailed', {
-            app: 'opstack-standardbridge',
-            srcEvent: sentMessage,
-            dstEvent: event,
-            extraEvents: [erc20DepositInitiated],
-          }),
-        ]
-      }
-
-      // Try to find ETHBridgeInitiatedL1
-      const ethBridgeInitiated = db.find(ETHBridgeInitiatedL1, {
-        sameTxBefore: sentMessage,
-        chain: event.args.chain,
-      })
-      if (ethBridgeInitiated) {
-        return [
-          Result.Message('opstack.L1ToL2MessageFailed', {
-            app: 'opstack-standardbridge',
-            srcEvent: sentMessage,
-            dstEvent: event,
-            extraEvents: [ethBridgeInitiated],
-          }),
-        ]
-      }
     }
   }
 }

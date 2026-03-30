@@ -56,6 +56,10 @@ import {
 import { solidityKeccak256 } from 'ethers/lib/utils'
 import { BinaryReader } from '../../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { findBestTransferLog } from '../hyperlane-hwr'
+import { MayanForwarded } from '../mayan-forwarder'
+import { OrderFulfilled } from '../mayan-mctp-fast'
+import { findWrappedMayanWormholeLog } from '../mayan-wormhole'
 import {
   createEventParser,
   createInteropEventType,
@@ -63,11 +67,12 @@ import {
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from '../types'
+import { LogMessagePublished } from '../wormhole/wormhole.plugin'
 import { CCTPV2Config } from './cctp.config'
 
 const messageSentLog = 'event MessageSent(bytes message)'
@@ -79,7 +84,6 @@ const parseV2MessageReceived = createEventParser(v2MessageReceivedLog)
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
-const parseTransfer = createEventParser(transferLog)
 
 export const CCTPv2MessageSent = createInteropEventType<{
   fast: boolean
@@ -104,22 +108,29 @@ export const CCTPv2MessageReceived = createInteropEventType<{
   dstAmount?: bigint
 }>('cctp-v2.MessageReceived', { direction: 'incoming' })
 
-export class CCTPV2Plugin implements InteropPlugin {
+export class CCTPV2Plugin implements InteropPluginResyncable {
   readonly name = 'cctp-v2'
 
   constructor(private configs: InteropConfigStore) {}
 
-  pendingGetDataRequests(): DataRequest[] {
+  getDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCTPV2Config)
     if (!networks) return []
 
-    const networksWithTransmitter = networks.filter(
-      (network): network is typeof network & { messageTransmitter: string } =>
-        network.messageTransmitter !== undefined,
-    )
-    const addresses = networksWithTransmitter.map((network) =>
-      ChainSpecificAddress.fromLong(network.chain, network.messageTransmitter),
-    )
+    const addresses: ChainSpecificAddress[] = []
+    for (const network of networks) {
+      if (!network.messageTransmitter) continue
+      try {
+        addresses.push(
+          ChainSpecificAddress.fromLong(
+            network.chain,
+            network.messageTransmitter,
+          ),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip
+      }
+    }
 
     return [
       {
@@ -158,6 +169,8 @@ export class CCTPV2Plugin implements InteropPlugin {
 
         if (!message) return
         const burnMessage = decodeV2MessageBody(message.messageBody)
+        const messageHash = hashV2MessageBody(message.messageBody)
+        if (!messageHash) return
 
         return [
           CCTPv2MessageSent.create(input, {
@@ -174,7 +187,7 @@ export class CCTPV2Plugin implements InteropPlugin {
             tokenAddress: burnMessage
               ? Address32.from(burnMessage.burnToken)
               : undefined,
-            messageHash: hashV2MessageBody(message.messageBody),
+            messageHash,
           }),
         ]
       }
@@ -184,27 +197,16 @@ export class CCTPV2Plugin implements InteropPlugin {
       network.messageTransmitter,
     ])
     if (v2MessageReceived) {
-      if (!v2MessageReceived) return
       const messageBody = decodeV2MessageBody(v2MessageReceived.messageBody)
+      const messageHash = hashV2MessageBody(v2MessageReceived.messageBody)
+      if (!messageHash) return
 
-      const previouspreviousLog = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 2,
+      const transferMatch = findBestTransferLog(
+        input.txLogs,
+        messageBody ? messageBody.amount - messageBody.feeExecuted : 0n,
+        input.log.logIndex ?? -1,
       )
-      const fourback = input.txLogs.find(
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        (x) => x.logIndex === input.log.logIndex! - 4,
-      )
-      const transfer =
-        previouspreviousLog && parseTransfer(previouspreviousLog, null)
-      const fallbackTransfer = fourback && parseTransfer(fourback, null)
-      let dstAmount = transfer?.value
-      if (
-        fallbackTransfer?.value !== undefined &&
-        fallbackTransfer.value > (transfer?.value ?? 0)
-      ) {
-        dstAmount = fallbackTransfer.value
-      }
+
       return [
         CCTPv2MessageReceived.create(input, {
           app: messageBody ? 'TokenMessengerV2' : undefined,
@@ -220,11 +222,12 @@ export class CCTPV2Plugin implements InteropPlugin {
           finalityThresholdExecuted: Number(
             v2MessageReceived.finalityThresholdExecuted,
           ),
-          messageHash: hashV2MessageBody(v2MessageReceived.messageBody),
-          dstTokenAddress: previouspreviousLog
-            ? Address32.from(previouspreviousLog.address)
+          messageHash,
+
+          dstTokenAddress: transferMatch.transfer
+            ? Address32.from(transferMatch.transfer?.logAddress)
             : undefined,
-          dstAmount,
+          dstAmount: transferMatch.transfer?.value,
         }),
       ]
     }
@@ -244,7 +247,37 @@ export class CCTPV2Plugin implements InteropPlugin {
       const messageSent = messageSentMatches.sort(
         (a, b) => a.ctx.timestamp - b.ctx.timestamp,
       )[0]
+
+      const wrappers: MatchResult = []
+      const mayanForwarded = db.find(MayanForwarded, {
+        sameTxAfter: messageSent,
+      })
+      const orderFulfilled = db.find(OrderFulfilled, {
+        sameTxAfter: messageReceived,
+      })
+      if (mayanForwarded) {
+        const mayanWrappedWormholeLog = findWrappedMayanWormholeLog(
+          db,
+          mayanForwarded,
+          LogMessagePublished,
+        )
+        wrappers.push(
+          Result.Message('mayan.Message', {
+            app: 'mctp',
+            srcEvent: mayanForwarded,
+            // Keep Mayan message detection anchored to source forwarder event.
+            // Consume only extra events that are confidently part of Mayan wrapping.
+            dstEvent: messageReceived,
+            extraEvents: [
+              ...(mayanWrappedWormholeLog ? [mayanWrappedWormholeLog] : []),
+              ...(orderFulfilled ? [orderFulfilled] : []),
+            ],
+          }),
+        )
+      }
+
       return [
+        ...wrappers,
         Result.Message(
           messageSent.args.fast ? 'cctp-v2.FastMessage' : 'cctp-v2.SlowMessage',
           {
@@ -262,6 +295,7 @@ export class CCTPV2Plugin implements InteropPlugin {
           dstAmount: messageReceived.args.dstAmount,
           srcWasBurned: true,
           dstWasMinted: true,
+          bridgeType: 'burnAndMint',
         }),
       ]
     }
@@ -307,18 +341,19 @@ export function decodeV2Message(encodedHex: string) {
   }
 }
 
-export function hashV2MessageBody(encodedHex: string) {
+export function hashV2MessageBody(encodedHex: string): string | undefined {
   const messageBody = decodeV2MessageBody(encodedHex)
+  if (!messageBody) return undefined
   return solidityKeccak256(
     ['uint32', 'bytes32', 'bytes32', 'uint256', 'bytes32', 'uint256', 'bytes'],
     [
-      messageBody?.version,
-      messageBody?.burnToken,
-      messageBody?.mintRecipient,
-      messageBody?.amount,
-      messageBody?.messageSender,
-      messageBody?.maxFee,
-      messageBody?.hookData,
+      messageBody.version,
+      messageBody.burnToken,
+      messageBody.mintRecipient,
+      messageBody.amount,
+      messageBody.messageSender,
+      messageBody.maxFee,
+      messageBody.hookData,
     ],
   )
 }

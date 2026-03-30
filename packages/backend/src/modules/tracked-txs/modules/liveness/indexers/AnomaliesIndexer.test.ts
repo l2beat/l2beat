@@ -474,25 +474,27 @@ function createIndexer(options: {
   indexerService?: IndexerService
   transaction?: Database['transaction']
 }) {
-  return new AnomaliesIndexer({
-    tags: { tag: options.tag },
-    indexerService: options.indexerService ?? mockObject<IndexerService>(),
-    logger: Logger.SILENT,
-    minHeight: 0,
-    parents: [],
-    db: mockObject<Database>({
-      liveness:
-        options.livenessRepository ?? mockObject<Database['liveness']>(),
-      anomalies:
-        options.anomaliesRepository ??
-        mockObject<Database['anomalies']>({
-          upsertMany: mockFn().resolvesTo(1),
-        }),
-      anomalyStats:
-        options.anomalyStatsRepository ??
-        mockObject<Database['anomalyStats']>(),
-      transaction: options.transaction ?? (async (fun) => await fun()),
-    }),
-    projects: MOCK_PROJECTS,
-  })
+  return new AnomaliesIndexer(
+    {
+      tags: { tag: options.tag },
+      indexerService: options.indexerService ?? mockObject<IndexerService>(),
+      minHeight: 0,
+      parents: [],
+      db: mockObject<Database>({
+        liveness:
+          options.livenessRepository ?? mockObject<Database['liveness']>(),
+        anomalies:
+          options.anomaliesRepository ??
+          mockObject<Database['anomalies']>({
+            upsertMany: mockFn().resolvesTo(1),
+          }),
+        anomalyStats:
+          options.anomalyStatsRepository ??
+          mockObject<Database['anomalyStats']>(),
+        transaction: options.transaction ?? (async (fun) => await fun()),
+      }),
+      projects: MOCK_PROJECTS,
+    },
+    Logger.SILENT,
+  )
 }

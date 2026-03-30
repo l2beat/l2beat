@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Keeps track of the total stake of each operator.",
   "ignoreRelatives": ["quorumStrategies"],
   "fields": {

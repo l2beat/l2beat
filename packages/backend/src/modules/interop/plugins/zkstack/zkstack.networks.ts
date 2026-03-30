@@ -7,7 +7,7 @@ export interface ZkStackNetwork {
   diamondAddress: ChainSpecificAddress
   l2SharedBridge: ChainSpecificAddress
   l2L1Messenger: ChainSpecificAddress
-  l2EthToken: ChainSpecificAddress
+  l2GasToken: ChainSpecificAddress
 }
 
 export const ETH_ASSET_ID =
@@ -36,7 +36,7 @@ export const SUPPORTED_CHAINS = defineNetworks<ZkStackNetwork>('zkstack', [
     l2L1Messenger: ChainSpecificAddress(
       'zksync:0x0000000000000000000000000000000000008008',
     ),
-    l2EthToken: ChainSpecificAddress(
+    l2GasToken: ChainSpecificAddress(
       'zksync:0x000000000000000000000000000000000000800A',
     ),
   },
@@ -52,7 +52,7 @@ export const SUPPORTED_CHAINS = defineNetworks<ZkStackNetwork>('zkstack', [
     l2L1Messenger: ChainSpecificAddress(
       'abstract:0x0000000000000000000000000000000000008008',
     ),
-    l2EthToken: ChainSpecificAddress(
+    l2GasToken: ChainSpecificAddress(
       'abstract:0x000000000000000000000000000000000000800A',
     ),
   },

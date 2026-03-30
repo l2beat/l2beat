@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import clsx from 'clsx'
 import type { ButtonHTMLAttributes } from 'react'
+import { cn } from '../utils/cn'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants>
@@ -38,7 +38,7 @@ export function Button({
   return (
     <button
       {...props}
-      className={clsx(className, buttonVariants({ variant, size }))}
+      className={cn(buttonVariants({ variant, size }), className)}
     >
       {children}
     </button>

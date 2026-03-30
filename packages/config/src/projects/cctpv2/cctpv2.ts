@@ -8,12 +8,13 @@ export const cctpv2: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769070497),
   interopConfig: {
-    bridgeType: 'omnichain',
     plugins: [
       {
         plugin: 'cctp-v2',
+        bridgeType: 'burnAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

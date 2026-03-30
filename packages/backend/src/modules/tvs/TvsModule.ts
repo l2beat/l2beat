@@ -77,65 +77,75 @@ export function initTvsModule({
     },
   })
 
-  const priceIndexer = new TvsPriceIndexer({
+  const priceIndexer = new TvsPriceIndexer(
+    {
+      parents: [hourlyIndexer],
+      indexerService,
+      configurations: config.tvs.prices.map((price) => ({
+        // configurationId has to be 12 characters long so we cannot use the priceId directly
+        id: price.id,
+        minHeight: price.sinceTimestamp,
+        maxHeight: price.untilTimestamp ?? null,
+        properties: price,
+      })),
+      priceProvider: providers.price,
+      syncOptimizer,
+      db: db,
+    },
     logger,
-    parents: [hourlyIndexer],
-    indexerService,
-    configurations: config.tvs.prices.map((price) => ({
-      // configurationId has to be 12 characters long so we cannot use the priceId directly
-      id: price.id,
-      minHeight: price.sinceTimestamp,
-      maxHeight: price.untilTimestamp ?? null,
-      properties: price,
-    })),
-    priceProvider: providers.price,
-    syncOptimizer,
-    db: db,
-  })
+  )
 
   const amountIndexers = new Map<string, Indexer>()
 
-  const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer({
-    logger,
-    parents: [hourlyIndexer],
-    indexerService,
-    configurations: config.tvs.amounts
-      .filter((a) => a.type === 'circulatingSupply')
-      .map((amount) => ({
-        // configurationId has to be 12 characters long so we cannot use the apiId directly
-        id: amount.id,
-        minHeight: amount.sinceTimestamp,
-        maxHeight: amount.untilTimestamp ?? null,
-        properties: amount,
-      })),
-    circulatingSupplyProvider: providers.circulatingSupply,
-    syncOptimizer,
-    db: db,
-  })
-  amountIndexers.set(
-    CirculatingSupplyAmountIndexer.SOURCE(),
-    circulatingSupplyIndexer,
-  )
+  const circulatingSupplyConfigurations = config.tvs.amounts
+    .filter((a) => a.type === 'circulatingSupply')
+    .map((amount) => ({
+      // configurationId has to be 12 characters long so we cannot use the apiId directly
+      id: amount.id,
+      minHeight: amount.sinceTimestamp,
+      maxHeight: amount.untilTimestamp ?? null,
+      properties: amount,
+    }))
+
+  if (circulatingSupplyConfigurations.length > 0) {
+    const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        configurations: circulatingSupplyConfigurations,
+        circulatingSupplyProvider: providers.circulatingSupply,
+        syncOptimizer,
+        db: db,
+      },
+      logger,
+    )
+    amountIndexers.set(
+      CirculatingSupplyAmountIndexer.SOURCE(),
+      circulatingSupplyIndexer,
+    )
+  }
 
   const blockTimestampIndexers = new Map<string, Indexer>()
 
   for (const block of config.tvs.blockTimestamps) {
-    const blockTimestampIndexer = new BlockTimestampIndexer({
-      syncOptimizer,
-      blockTimestampProvider: providers.blockTimestamp,
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: [
-        {
-          id: block.configurationId,
-          minHeight: block.sinceTimestamp,
-          maxHeight: block.untilTimestamp ?? null,
-          properties: block,
-        },
-      ],
-      db: db,
+    const blockTimestampIndexer = new BlockTimestampIndexer(
+      {
+        syncOptimizer,
+        blockTimestampProvider: providers.blockTimestamp,
+        parents: [hourlyIndexer],
+        indexerService,
+        configurations: [
+          {
+            id: block.configurationId,
+            minHeight: block.sinceTimestamp,
+            maxHeight: block.untilTimestamp ?? null,
+            properties: block,
+          },
+        ],
+        db: db,
+      },
       logger,
-    })
+    )
     blockTimestampIndexers.set(block.chainName, blockTimestampIndexer)
   }
 
@@ -147,23 +157,25 @@ export function initTvsModule({
 
     const configurations = onchainAmounts.filter((a) => a.chain === chain)
 
-    const amountIndexer = new OnchainAmountIndexer({
-      syncOptimizer,
-      chain: chain,
-      totalSupplyProvider: providers.totalSupply,
-      starknetTotalSupplyProvider: providers.starknetTotalSupply,
-      balanceProvider: providers.balance,
-      parents: [blockTimestampIndexer],
-      indexerService,
-      configurations: configurations.map((c) => ({
-        id: createAmountConfig(c).id,
-        minHeight: c.sinceTimestamp,
-        maxHeight: c.untilTimestamp ?? null,
-        properties: c,
-      })),
-      db: db,
+    const amountIndexer = new OnchainAmountIndexer(
+      {
+        syncOptimizer,
+        chain: chain,
+        totalSupplyProvider: providers.totalSupply,
+        starknetTotalSupplyProvider: providers.starknetTotalSupply,
+        balanceProvider: providers.balance,
+        parents: [blockTimestampIndexer],
+        indexerService,
+        configurations: configurations.map((c) => ({
+          id: createAmountConfig(c).id,
+          minHeight: c.sinceTimestamp,
+          maxHeight: c.untilTimestamp ?? null,
+          properties: c,
+        })),
+        db: db,
+      },
       logger,
-    })
+    )
     amountIndexers.set(chain, amountIndexer)
   }
 
@@ -181,25 +193,27 @@ export function initTvsModule({
 
     const tokensWithRanges = getTokensWithRanges(project.tokens)
 
-    const tokenValueIndexer = new TokenValueIndexer({
-      syncOptimizer,
-      valueService,
-      dbStorage,
-      project: project.projectId,
-      maxTimestampsToProcessAtOnce: 500,
-      parents: [priceIndexer, ...amountSources],
-      indexerService,
-      configurations: tokensWithRanges.map((t) => {
-        return {
-          id: TokenValueIndexer.idToConfigurationId(t),
-          minHeight: t.sinceTimestamp,
-          maxHeight: t.untilTimestamp ?? null,
-          properties: t,
-        }
-      }),
-      db: db,
+    const tokenValueIndexer = new TokenValueIndexer(
+      {
+        syncOptimizer,
+        valueService,
+        dbStorage,
+        project: project.projectId,
+        maxTimestampsToProcessAtOnce: 500,
+        parents: [priceIndexer, ...amountSources],
+        indexerService,
+        configurations: tokensWithRanges.map((t) => {
+          return {
+            id: TokenValueIndexer.idToConfigurationId(t),
+            minHeight: t.sinceTimestamp,
+            maxHeight: t.untilTimestamp ?? null,
+            properties: t,
+          }
+        }),
+        db: db,
+      },
       logger,
-    })
+    )
 
     valueIndexers.push(tokenValueIndexer)
   }

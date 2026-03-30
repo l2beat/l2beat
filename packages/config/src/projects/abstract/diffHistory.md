@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x222a5583906919be7b64d71b27dfddb6edc39642
+
+# Diff at Mon, 16 Feb 2026 14:00:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1770975745
+- current timestamp: 1771250356
+
+## Description
+
+Upgrade to v29.4 (this verfier upgrade version was introduced in an [emergency upgrade](https://etherscan.io/tx/0xef1d02776ae4a2a590278883f7347c4a863fcbe7a0b9ce96bc766084aab5dee9)).
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.10:
++        ["2026-02-13T18:02:59.000Z","0xa1b9a5968d7a9dd2d0c811f4e381780c2f21cb2628199f65abe9d1621010f3ff",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        10
++        11
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051587
++        124554051588
+      values.getSemverProtocolVersion.2:
+-        3
++        4
+      values.getVerifier:
+-        "eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B"
++        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d or eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026 depending on the supplied proof type.
+```
+
+```diff
+    contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.7:
++        {"_protocolVersion":124554051588,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xB3f4396C2040e502d0556Cbb16C0B22fE777A026)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../abstract/{.flat@1770975745 => .flat}/L1VerifierFflonk.sol     | 4 ++--
+ .../abstract/{.flat@1770975745 => .flat}/L1VerifierPlonk.sol      | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xdbb023c437d7aabeac94a652f55cf5dac81ab6d9
+
+# Diff at Fri, 13 Feb 2026 09:43:31 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@76c91db634aafdce14aca08d74e9d04bb256d971 block: 1769510461
+- current timestamp: 1770975745
+
+## Description
+
+Added new member and decreased threshold of a ms.
+
+## Watched changes
+
+```diff
+    contract Safe (eth:0x325407EEC948b97429068AF0cd8A8D95F06315a4) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x392C009a49E9368Fc2bDd8B1e5520E62DEB8276c"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x5685ca99aaa33357e47f7e6c0e2176ab45cbddf2
 
 # Diff at Tue, 27 Jan 2026 10:42:06 GMT:

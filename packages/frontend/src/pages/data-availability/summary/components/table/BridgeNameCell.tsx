@@ -23,23 +23,30 @@ export function BridgeNameCell({
     | DaBridgeArchivedEntry
     | DaLivenessBridgeTableEntry
 }) {
-  const isUnverified = bridge.statuses?.verificationWarning === true
   return (
     <TableLink
       href={bridge.href}
       className="flex items-center gap-1.5 font-medium text-sm"
     >
       {bridge.name}
-      {isUnverified && (
-        <Tooltip>
-          <TooltipTrigger>
-            <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
-          </TooltipTrigger>
-          <TooltipContent>
-            This bridge contains unverified contracts.
-          </TooltipContent>
-        </Tooltip>
-      )}
+      {bridge.statuses?.verificationWarnings &&
+        Object.values(bridge.statuses.verificationWarnings).some(
+          (value) => value !== undefined,
+        ) && (
+          <Tooltip>
+            <TooltipTrigger>
+              <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+            </TooltipTrigger>
+            <TooltipContent>
+              {bridge.statuses.verificationWarnings.contracts && (
+                <p>{bridge.statuses.verificationWarnings.contracts}</p>
+              )}
+              {bridge.statuses.verificationWarnings.programHashes && (
+                <p>{bridge.statuses.verificationWarnings.programHashes}</p>
+              )}
+            </TooltipContent>
+          </Tooltip>
+        )}
       {bridge.statuses?.underReview && (
         <Tooltip>
           <TooltipTrigger>

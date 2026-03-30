@@ -8,5 +8,11 @@
     "hash": "0x40060e8b2904995f3cb0149fcbf73924c9b1e2e164a823a7957d703a9f7c6fe5",
     "address": "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80",
     "blockNumber": 22823774
+  },
+  "Ethereum_SpokePool.sol": {
+    "hash": "0x51fe389d737f63ba780131cbcd7de767178890a9783c26f10a7914e04b8cccf8",
+    "address": "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B",
+    "chain": "ethereum",
+    "blockNumber": 24375884
   }
 }

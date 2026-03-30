@@ -3,8 +3,11 @@ import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 
 export interface TvsByTokenType {
   ether: number
-  stablecoins: number
+  stablecoin: number
+  btc: number
   other: number
+  rwaPublic: number
+  rwaRestricted: number
 }
 export function getTvsByTokenType(
   ecosystemProjects: Project[],
@@ -14,21 +17,23 @@ export function getTvsByTokenType(
     (acc, curr) => {
       const projectTvs = tvs.projects[curr.id.toString()]
 
-      const other =
-        (projectTvs?.breakdown.total ?? 0) -
-        (projectTvs?.breakdown.ether ?? 0) -
-        (projectTvs?.breakdown.stablecoin ?? 0)
-
       return {
         ether: acc.ether + (projectTvs?.breakdown.ether ?? 0),
-        stablecoins: acc.stablecoins + (projectTvs?.breakdown.stablecoin ?? 0),
-        other: acc.other + other,
+        stablecoin: acc.stablecoin + (projectTvs?.breakdown.stablecoin ?? 0),
+        btc: acc.btc + (projectTvs?.breakdown.btc ?? 0),
+        other: acc.other + (projectTvs?.breakdown.other ?? 0),
+        rwaPublic: acc.rwaPublic + (projectTvs?.breakdown.rwaPublic ?? 0),
+        rwaRestricted:
+          acc.rwaRestricted + (projectTvs?.breakdown.rwaRestricted ?? 0),
       }
     },
     {
       ether: 0,
-      stablecoins: 0,
+      stablecoin: 0,
+      btc: 0,
       other: 0,
+      rwaPublic: 0,
+      rwaRestricted: 0,
     },
   )
 }

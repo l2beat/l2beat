@@ -147,7 +147,7 @@ function Calculation({
           <p className="mb-2">{operatorToText(formula.operator)}:</p>
         )}
         <ul className="list-inside list-decimal space-y-2">
-          {formula.arguments.map((arg, i) => {
+          {formula.arguments.map((arg) => {
             return (
               <li key={arg.type}>
                 <FormulaWithOperator

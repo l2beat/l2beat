@@ -7,8 +7,8 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { BridgeNameCell } from '~/pages/data-availability/summary/components/table/BridgeNameCell'
@@ -153,10 +153,7 @@ export const publicColumns = () => [
       }
 
       return (
-        <AnomalyIndicator
-          anomalies={bridge.anomalies}
-          hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
-        />
+        <AnomalyIndicator anomalies={bridge.anomalies} href={bridge.href} />
       )
     },
     meta: {
@@ -172,7 +169,7 @@ export const publicColumns = () => [
             <AnomalyIndicator
               key={bridge.slug}
               anomalies={bridge.anomalies}
-              hasTrackedContractsChanged={bridge.hasTrackedContractsChanged}
+              href={bridge.href}
             />
           )
         })

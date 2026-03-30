@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xc3e17013d6736046f390cc72012189a980b50a65
+
+# Diff at Fri, 13 Feb 2026 11:33:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769513405
+- current timestamp: 1769513405
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769513405 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "0x"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0xdb7468132586f01d6d0c8e98d9dad2525c5c3540
 
 # Diff at Tue, 27 Jan 2026 11:31:33 GMT:

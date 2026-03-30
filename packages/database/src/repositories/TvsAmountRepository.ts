@@ -63,6 +63,7 @@ export class TvsAmountRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<TvsAmountRecord[]> {
+    if (configurationIds.length === 0) return []
     const rows = await this.db
       .selectFrom('TvsAmount')
       .select(['timestamp', 'configurationId', 'amount'])
@@ -90,18 +91,34 @@ export class TvsAmountRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async deleteByConfigInTimeRange(
-    configId: string,
-    fromInclusive: UnixTime,
-    toInclusive: UnixTime,
+  async deleteByConfigs(
+    configs: {
+      configurationId: string
+      fromInclusive: UnixTime
+      toInclusive: UnixTime
+    }[],
   ): Promise<number> {
-    const result = await this.db
-      .deleteFrom('TvsAmount')
-      .where('configurationId', '=', configId)
-      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
+    if (configs.length === 0) return 0
+
+    let totalDeleted = 0
+    await this.batch(configs, 100, async (batch) => {
+      const result = await this.db
+        .deleteFrom('TvsAmount')
+        .where((eb) =>
+          eb.or(
+            batch.map((c) =>
+              eb.and([
+                eb('configurationId', '=', c.configurationId),
+                eb('timestamp', '>=', UnixTime.toDate(c.fromInclusive)),
+                eb('timestamp', '<=', UnixTime.toDate(c.toInclusive)),
+              ]),
+            ),
+          ),
+        )
+        .executeTakeFirst()
+      totalDeleted += Number(result.numDeletedRows)
+    })
+    return totalDeleted
   }
 
   async getAll(): Promise<TvsAmountRecord[]> {

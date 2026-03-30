@@ -1,3 +1,190 @@
+Generated with discovered.json: 0x0834cdd4e515bed0dddd0a3444c11ae58871e184
+
+# Diff at Wed, 11 Mar 2026 13:45:48 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772118702
+- current timestamp: 1773236668
+
+## Description
+
+Categories
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772118702 (main branch discovery), not current.
+
+```diff
+    contract StakeRegistry (eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract BLSApkRegistry (eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract RegistryCoordinator (eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EjectionManager (eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract SocketRegistry (eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
+    +++ description: None
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenDADisperserRegistry (eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract PaymentVault (eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract IndexRegistry (eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+Generated with discovered.json: 0xebbed40e0f32279fcd1ca78b68ee9858b0ff4623
+
+# Diff at Thu, 26 Feb 2026 15:12:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770908185
+- current timestamp: 1772118702
+
+## Description
+
+EigenLayerRewardsInitiatorMultisig: one member removed (0xf20eD26be), reducing signers from 5 to 4. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/4 (75%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x850cec99c0efc6f451d5ab61c031eda3f4e44561
+
+# Diff at Thu, 12 Feb 2026 14:57:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@632144c808f959f8e2164511b7a59e409831ae61 block: 1769597655
+- current timestamp: 1770908185
+
+## Description
+
+One signer was removed from the EigenDAOperationsMultisig, reducing it from 6 to 5 members. The threshold remains at 3, changing the ratio from 50% to 60%.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      values.$members.5:
+-        "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0xb27f3cbef3e17b1f122a68a3fdf06a3347836e95
+
+# Diff at Wed, 28 Jan 2026 10:55:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f3a771bee255d769c9ede9d03ff728859c8fd040 block: 1763633846
+- current timestamp: 1769597655
+
+## Description
+
+Member rotation.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB"
++        "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7"
+    }
+```
+
 Generated with discovered.json: 0x163911d60403c096ab776b414b18720e50876b2b
 
 # Diff at Thu, 20 Nov 2025 10:18:33 GMT:

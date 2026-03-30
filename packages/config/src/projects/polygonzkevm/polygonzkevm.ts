@@ -152,7 +152,7 @@ export const polygonzkevm: ScalingProject = agglayer({
     },
     {
       title: 'Polygon zkEVM Etrog upgrade',
-      url: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
+      url: 'https://docs.polygon.technology/tools/zkevm/architecture/protocol/etrog-upgrade',
       date: '2024-02-13',
       description: 'Polygon zkEVM is upgraded to the Polygon Etrog version.',
       type: 'general',

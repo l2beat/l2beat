@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["USDT_ADDRESS"],
+  "ignoreRelatives": ["USDT_ADDRESS", "tokensMapped"],
+  "ignoreInWatchMode": ["tokensMapped"],
   "fields": {
     "accessControl": { "handler": { "type": "accessControl" } },
     "migrator": {
@@ -14,6 +15,14 @@
           "description": "can migrate the canonically bridged USDT token to a native or external version."
         }
       ]
+    },
+    "tokensMapped": {
+      "handler": {
+        "type": "event",
+        "select": "childToken",
+        "set": { "event": "TokenMapped" },
+        "groupBy": "rootToken"
+      }
     }
   }
 }

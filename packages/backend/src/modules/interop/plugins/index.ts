@@ -13,11 +13,14 @@ import { AcrossConfigPlugin } from './across/across.config'
 import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
+import { AgglayerPlugin } from './agglayer'
 import { AllbridgePlugIn } from './allbridge'
+import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
-import { CCIPPlugIn } from './ccip'
+import { CCIPConfigPlugin } from './ccip/ccip.config'
+import { CCIPPlugin } from './ccip/ccip.plugin'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
 import { CCTPV1Plugin } from './cctp/cctp-v1.plugin'
 import { CCTPV2Plugin } from './cctp/cctp-v2.plugin'
@@ -37,23 +40,27 @@ import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
+import { LineaPlugin } from './linea'
 import { MakerBridgePlugin } from './maker-bridge'
 import { MayanForwarderPlugin } from './mayan-forwarder'
-import { MayanMctpPlugin } from './mayan-mctp'
 import { MayanMctpFastPlugin } from './mayan-mctp-fast'
 import { MayanSwiftPlugin } from './mayan-swift'
 import { MayanSwiftSettlementPlugin } from './mayan-swift-settlement'
+import { MesonPlugin } from './meson'
 import { OpStackPlugin } from './opstack/opstack'
 import { OpStackStandardBridgePlugin } from './opstack/opstack-standardbridge'
 import { OrbitStackPlugin } from './orbitstack/orbitstack'
 import { OrbitStackCustomGatewayPlugin } from './orbitstack/orbitstack-customgateway'
 import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standardgateway'
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
+import { PolygonConfigPlugin } from './polygon/polygon.config'
+import { PolygonPlugin } from './polygon/polygon.plugin'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
 import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
+import { SynthetixBridgePlugin } from './synthetix-bridge'
 import type { InteropPlugin } from './types'
 import { WorldIdPlugin } from './world-id'
 import { WormholeConfigPlugin } from './wormhole/wormhole.config'
@@ -79,11 +86,13 @@ export interface InteropPlugins {
 
 export interface InteropPluginDependencies {
   chains: { name: string; id: number }[]
+  oneSidedChains: string[]
   httpClient: HttpClient
   rpcClients: IRpcClient[]
   logger: Logger
   configs: InteropConfigStore
   tokenDbClient: TokenDbClient
+  configIntervalMs: number
 }
 
 export function createInteropPlugins(
@@ -100,48 +109,61 @@ export function createInteropPlugins(
         deps.configs,
         deps.logger,
         ethereumRpc,
+        deps.configIntervalMs,
       ),
       new LayerZeroConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
+        deps.configIntervalMs,
       ),
-      new CCTPConfigPlugin(deps.chains, deps.configs, deps.logger, rpcs),
+      new CCTPConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.configIntervalMs,
+      ),
       new WormholeConfigPlugin(
         deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
         rpcs,
+        deps.configIntervalMs,
+      ),
+      new CCIPConfigPlugin(
+        deps.chains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
+        deps.configIntervalMs,
       ),
       new ZkStackConfigPlugin(
         deps.configs,
         deps.logger,
         rpcs,
         deps.tokenDbClient,
+        deps.configIntervalMs,
+      ),
+      new PolygonConfigPlugin(
+        deps.configs,
+        deps.logger,
+        rpcs,
+        deps.configIntervalMs,
       ),
     ],
     eventPlugins: [
       new SquidCoralPlugin(),
       new DeBridgePlugin(),
       new DeBridgeDlnPlugin(),
-      new MayanForwarderPlugin(deps.configs),
+      new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
-      new CCIPPlugIn(),
+      new MesonPlugin(),
+      new CCIPPlugin(deps.configs),
       new CentriFugePlugin(),
-      {
-        name: 'cctp',
-        plugins: [
-          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
-          new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
-          new MayanMctpPlugin(), // should be run before CCTP
-          new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
-          new CCTPV1Plugin(deps.configs),
-          new CCTPV2Plugin(deps.configs),
-        ],
-      },
       {
         name: 'layerzero',
         plugins: [
@@ -154,13 +176,25 @@ export function createInteropPlugins(
       {
         name: 'wormhole',
         plugins: [
+          // Mayan plugins (use both Wormhole messaging and CCTP for transfers)
+          new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
+          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+          new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
+          new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
+          // Wormhole-specific plugins
           new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
           new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
+          // CCTP plugins (Circle's cross-chain USDC)
+          new CCTPV1Plugin(deps.configs),
+          new CCTPV2Plugin(deps.configs),
+          // Core Wormhole messaging (most generic, runs last)
           new WormholePlugin(deps.configs),
         ],
       },
       new AllbridgePlugIn(),
+      new AvalanchePlugin(),
+      new LineaPlugin(),
       {
         name: 'axelar',
         plugins: [
@@ -186,6 +220,7 @@ export function createInteropPlugins(
           new ZklinkNovaPlugin(), // should be run before OpStack
           new WorldIdPlugin(), // should be run before OpStack
           new LidoWstethPlugin(), // should be run before OpStack
+          new SynthetixBridgePlugin(), // should be run before OpStackStandardBridge
           new SorareBasePlugin(), // should be run before OpStackStandardBridge
           new BeefyBridgePlugin(), // should be run before OpStackStandardBridge
           new MakerBridgePlugin(), // should be run before OpStackStandardBridge
@@ -207,6 +242,7 @@ export function createInteropPlugins(
       new OneinchFusionPlusPlugin(),
       new RelayPlugin(),
       new GasZipPlugin(deps.logger),
+      new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
     ],
   }

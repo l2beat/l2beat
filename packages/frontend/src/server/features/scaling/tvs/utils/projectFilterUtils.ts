@@ -6,13 +6,7 @@ import { v } from '@l2beat/validate'
 // support it yet. It's a performance issue.
 export const TvsProjectFilter = v.union([
   v.object({
-    type: v.enum([
-      'layer2',
-      'rollups',
-      'validiumsAndOptimiums',
-      'others',
-      'bridge',
-    ]),
+    type: v.enum(['layer2', 'rollups', 'validiumsAndOptimiums', 'others']),
   }),
   v.object({
     type: v.literal('projects'),
@@ -26,21 +20,18 @@ export const TvsProjectFilterType = v.enum([
   'rollups',
   'validiumsAndOptimiums',
   'others',
-  'bridge',
   'projects',
 ])
 export type TvsProjectFilterType = v.infer<typeof TvsProjectFilterType>
 
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
-): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
+): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {
     case 'layer2':
       return (project) =>
         !!project.scalingInfo &&
         !(project.statuses.reviewStatus === 'initialReview')
-    case 'bridge':
-      return (project) => !!project.isBridge
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'rollups':

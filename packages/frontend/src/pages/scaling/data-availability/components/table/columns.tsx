@@ -4,8 +4,8 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
@@ -33,7 +33,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell
                 key={da.layer.value}
                 value={da.layer}
@@ -60,7 +60,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell
                 key={da.layer.value}
                 value={da.bridge}
@@ -123,7 +123,7 @@ export function getScalingDataAvailabilityColumns(hideProofSystem?: boolean) {
         additionalRows: (ctx) => {
           return ctx.row.original.dataAvailability
             .slice(1)
-            .map((da, i) => (
+            .map((da) => (
               <TableValueCell key={da.layer.value} value={da.mode} />
             ))
         },

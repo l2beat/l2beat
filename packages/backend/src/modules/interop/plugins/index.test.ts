@@ -18,11 +18,13 @@ describe('Interop Plugins', async () => {
   const chainNames = new Set<string>()
   const plugins = createInteropPlugins({
     chains: [],
+    oneSidedChains: [],
     configs: mockObject<InteropConfigStore>(),
     httpClient: mockObject<HttpClient>(),
     logger: Logger.SILENT,
     rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
     tokenDbClient: mockObject<TokenDbClient>(),
+    configIntervalMs: -1,
   })
 
   before(async () => {

@@ -5,20 +5,31 @@
  * NON-MINTING
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { Dispatch, Process, parseDispatch, parseDispatchId } from './hyperlane'
-import { findParsedAround, parseSentTransferRemote } from './hyperlane-hwr'
+import {
+  Dispatch,
+  dispatchIdLog,
+  dispatchLog,
+  Process,
+  parseDispatch,
+  parseDispatchId,
+} from './hyperlane'
+import { parseSentTransferRemote, sentTransferRemoteLog } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createInteropEventType,
+  type DataRequest,
   defineNetworks,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
+// https://minter.merkly.com/hyperlane/docs --> ETH bridge
+// chainconfeeg
 const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
   'hyperlane-merkly-tokenbridge',
   [
@@ -55,6 +66,19 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chainId: 2741,
       address: EthereumAddress('0xa0be52cEA8BDC5CF39ca6EdB4FeBb9610ef68750'),
     },
+    // no katana
+    // no bsc
+    // no celo
+    {
+      chain: 'linea',
+      chainId: 59144,
+      address: EthereumAddress('0x8F2161c83F46B46628cb591358dE4a89A63eEABf'),
+    },
+    {
+      chain: 'ink',
+      chainId: 57073,
+      address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
+    },
   ],
 )
 
@@ -67,8 +91,21 @@ export const HwrTransferSentMerkly = createInteropEventType<{
   tokenAddress: Address32
 }>('hyperlane-merkly-tokenbridge.TransferSent')
 
-export class HyperlaneMerklyTokenBridgePlugin implements InteropPlugin {
+export class HyperlaneMerklyTokenBridgePlugin
+  implements InteropPluginResyncable
+{
   readonly name = 'hyperlane-merkly-tokenbridge'
+
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: sentTransferRemoteLog,
+        includeTxEvents: [dispatchLog, dispatchIdLog],
+        addresses: '*',
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const network = MERKLY_TOKENBRIDGE_NETWORKS.find(

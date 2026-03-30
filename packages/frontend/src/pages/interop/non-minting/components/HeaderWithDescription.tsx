@@ -1,11 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { TRANSFER_TYPE_DISPLAY } from '../../utils/display'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader
-      description="In-flight risk only. Tokens are therefore first bridged using a different
-          minting bridge that needs to be separately assessed."
-    >
+    <MainPageHeader description={TRANSFER_TYPE_DISPLAY.nonMinting.description}>
       Non-minting Protocols
     </MainPageHeader>
   )

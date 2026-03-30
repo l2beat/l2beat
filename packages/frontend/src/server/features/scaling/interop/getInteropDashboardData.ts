@@ -1,23 +1,33 @@
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getTokenDb } from '~/server/tokenDb'
 import { manifest } from '~/utils/Manifest'
-import type { InteropDashboardParams } from './types'
-import {
-  getProtocolEntries,
-  type ProtocolEntry,
-} from './utils/getProtocolEntries'
-import { getTopPaths, type InteropPathData } from './utils/getTopPaths'
+import type { InteropDashboardParams, ProtocolEntry, TokenData } from './types'
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import { getFlows, type InteropFlowData } from './utils/getFlows'
+import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
+import { getProtocolEntries } from './utils/getProtocolEntries'
+import { getSummaryTokensData } from './utils/getSummaryTokensData'
+import { getTopItems, type TopItems } from './utils/getTopItems'
 import {
   getTopProtocols,
   type InteropProtocolData,
 } from './utils/getTopProtocols'
+import { getTopToken, type InteropTopTokenData } from './utils/getTopToken'
+import {
+  getTransferSizeChartData,
+  type TransferSizeDataPoint,
+} from './utils/getTransferSizeChartData'
 
 export type InteropDashboardData = {
-  top3Paths: InteropPathData[]
+  flows: InteropFlowData[]
   topProtocols: InteropProtocolData[]
+  topToken: InteropTopTokenData | undefined
+  tokenCount: number
+  topTokens: TopItems<TokenData>
+  transferSizeChartData: TransferSizeDataPoint[] | undefined
   entries: ProtocolEntry[]
+  zeroTransferProtocols: { name: string; iconUrl: string }[]
 }
 
 export async function getInteropDashboardData(
@@ -26,79 +36,45 @@ export async function getInteropDashboardData(
   if (env.MOCK) {
     return getMockInteropDashboardData()
   }
-  const tokenDb = getTokenDb()
 
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
 
-  const filteredProjects = params.type
-    ? interopProjects.filter((p) => p.interopConfig?.bridgeType === params.type)
-    : undefined
+  const { records, snapshotTimestamp } =
+    await getLatestAggregatedInteropTransferWithTokens(params, params.type)
 
-  const db = getDb()
-  const latestTimestamp =
-    await db.aggregatedInteropTransfer.getLatestTimestamp()
-  if (!latestTimestamp) {
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      entries: [],
-    }
-  }
-
-  const [transfers, tokens] = await Promise.all([
-    db.aggregatedInteropTransfer.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-    db.aggregatedInteropToken.getByChainsTimestampAndId(
-      latestTimestamp,
-      params.from,
-      params.to,
-      filteredProjects?.map((p) => p.id),
-    ),
-  ])
-
-  const records = transfers.map((transfer) => ({
-    ...transfer,
-    tokens: tokens
-      .filter(
-        (token) =>
-          token.id === transfer.id &&
-          token.srcChain === transfer.srcChain &&
-          token.dstChain === transfer.dstChain,
-      )
-      .map((token) => ({
-        abstractTokenId: token.abstractTokenId,
-        transferCount: token.transferCount,
-        totalDurationSum: token.totalDurationSum,
-        volume: token.volume,
-      })),
-  }))
-
-  if (records.length === 0) {
-    return {
-      top3Paths: [],
-      topProtocols: [],
-      entries: [],
-    }
-  }
-
-  const tokensDetailsData = await tokenDb.abstractToken.getByIds(
+  const abstractTokenIds = unique(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
-  const tokensDetailsDataMap = new Map<
-    string,
-    { symbol: string; iconUrl: string | null }
-  >(tokensDetailsData.map((t) => [t.id, t]))
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+  const summaryTokens = getSummaryTokensData(records, tokensDetailsMap)
+
+  // Projects that are part of other projects
+  const subgroupProjects = new Set(
+    interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
+  )
 
   return {
-    top3Paths: getTopPaths(records),
-    topProtocols: getTopProtocols(records, interopProjects),
-    entries: getProtocolEntries(records, tokensDetailsDataMap, interopProjects),
+    flows: getFlows(records, params, subgroupProjects).slice(0, 2),
+    topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
+    topToken: getTopToken({
+      records,
+      tokensDetailsMap,
+      interopProjects,
+      subgroupProjects,
+    }),
+    tokenCount: summaryTokens.length,
+    topTokens: getTopItems(summaryTokens, 5),
+    transferSizeChartData: getTransferSizeChartData(records, interopProjects),
+    ...getProtocolEntries(
+      records,
+      tokensDetailsMap,
+      interopProjects,
+      params.type,
+      snapshotTimestamp,
+      params,
+    ),
   }
 }
 
@@ -107,16 +83,15 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     select: ['interopConfig'],
   })
 
-  const top3Paths: InteropPathData[] = [
+  const flows: InteropFlowData[] = [
     { srcChain: 'ethereum', dstChain: 'optimism', volume: 35_000_000 },
-    { srcChain: 'ethereum', dstChain: 'arbitrum', volume: 30_000_000 },
-    { srcChain: 'ethereum', dstChain: 'base', volume: 22_000_000 },
+    { srcChain: 'optimism', dstChain: 'ethereum', volume: 30_000_000 },
   ]
 
   const topProtocols: InteropProtocolData[] = interopProjects
     .slice(0, 5)
     .map((project, i) => ({
-      protocolName: project.interopConfig.name ?? project.name,
+      name: project.interopConfig.name ?? project.name,
       volume: { value: 20_000_000 - i * 3_000_000, share: 20 - i * 3 },
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
@@ -125,16 +100,32 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     {
       id: 'eth001',
       symbol: 'ETH',
+      issuer: 'ethereum',
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       volume: 10_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 10_000,
+      minTransferValueUsd: 8_500,
+      maxTransferValueUsd: 12_000,
+      netMintedValue: undefined,
+      flows: [],
     },
     {
       id: 'usdc01',
       symbol: 'USDC',
+      issuer: 'circle',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
+      minTransferValueUsd: 9_500,
+      maxTransferValueUsd: 10_500,
+      netMintedValue: undefined,
+      flows: [],
     },
   ]
 
@@ -144,31 +135,132 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       name: 'Ethereum',
       iconUrl: manifest.getUrl('/icons/ethereum.png'),
       volume: 8_000_000,
+      transferCount: 1000,
+      avgDuration: { type: 'single', duration: 100_000 } as const,
+      avgValue: 8_000,
+      minTransferValueUsd: 6_000,
+      maxTransferValueUsd: 12_000,
+      netMintedValue: undefined,
     },
     {
       id: 'arbitrum',
       name: 'Arbitrum',
       iconUrl: manifest.getUrl('/icons/arbitrum.png'),
       volume: 5_000_000,
+      transferCount: 500,
+      avgDuration: { type: 'single', duration: 50_000 } as const,
+      avgValue: 10_000,
+      minTransferValueUsd: 7_500,
+      maxTransferValueUsd: 14_000,
+      netMintedValue: undefined,
     },
   ]
 
-  const allProtocols: ProtocolEntry[] = interopProjects.map((project) => ({
-    protocolName: project.interopConfig.name ?? project.name,
-    iconSlug: project.slug,
+  const entries: ProtocolEntry[] = interopProjects.map((project) => ({
+    id: project.id,
+    slug: project.slug,
+    name: project.interopConfig.name ?? project.name,
+    shortName: project.interopConfig.shortName,
+    isAggregate: project.interopConfig.isAggregate,
+    subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    bridgeType: project.interopConfig.bridgeType,
+    bridgeTypes: ['lockAndMint', 'nonMinting', 'burnAndMint'],
     volume: 15_000_000,
-    tokens: mockTokens,
-    chains: mockChains,
+    tokens: { items: mockTokens, remainingCount: 2 },
+    chains: { items: mockChains, remainingCount: 4 },
     transferCount: 5000,
     averageValue: 3000,
+    minTransferValueUsd: 100,
+    maxTransferValueUsd: 100_000,
     averageDuration: { type: 'single', duration: 100_000 },
+    byBridgeType: undefined,
+    averageValueInFlight: undefined,
+    netMintedValue: undefined,
+    snapshotTimestamp: undefined,
   }))
 
+  const topToken: InteropTopTokenData | undefined = mockTokens[0]
+    ? {
+        symbol: mockTokens[0].symbol,
+        iconUrl: mockTokens[0].iconUrl,
+        volume: mockTokens[0].volume,
+        transferCount: mockTokens[0].transferCount,
+        topProtocol: interopProjects[0]
+          ? {
+              name:
+                interopProjects[0].interopConfig.name ??
+                interopProjects[0].shortName ??
+                interopProjects[0].name,
+              iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+            }
+          : undefined,
+      }
+    : undefined
+
+  const transferSizeChartData: TransferSizeDataPoint[] = [
+    {
+      name: 'Arbitrum Canonical',
+      iconUrl: manifest.getUrl('/icons/arbitrum.png'),
+      countUnder100: 10,
+      percentageUnder100: 10,
+      count100To1K: 12,
+      percentage100To1K: 12,
+      count1KTo10K: 50,
+      percentage1KTo10K: 50,
+      count10KTo100K: 35,
+      percentage10KTo100K: 35,
+      countOver100K: 1,
+      percentageOver100K: 1,
+      minTransferValueUsd: 50,
+      maxTransferValueUsd: 250_000,
+      averageTransferSizeUsd: 12_500,
+    },
+    {
+      name: 'Optimism Canonical',
+      iconUrl: manifest.getUrl('/icons/optimism.png'),
+      countUnder100: 5,
+      percentageUnder100: 5,
+      count100To1K: 8,
+      percentage100To1K: 8,
+      count1KTo10K: 10,
+      percentage1KTo10K: 10,
+      count10KTo100K: 4,
+      percentage10KTo100K: 4,
+      countOver100K: 0,
+      percentageOver100K: 0,
+      minTransferValueUsd: 75,
+      maxTransferValueUsd: 90_000,
+      averageTransferSizeUsd: 6_700,
+    },
+    {
+      name: 'Base Canonical',
+      iconUrl: manifest.getUrl('/icons/base.png'),
+      countUnder100: 5,
+      percentageUnder100: 5,
+      count100To1K: 8,
+      percentage100To1K: 8,
+      count1KTo10K: 10,
+      percentage1KTo10K: 10,
+      count10KTo100K: 4,
+      percentage10KTo100K: 4,
+      countOver100K: 0,
+      percentageOver100K: 0,
+      minTransferValueUsd: 120,
+      maxTransferValueUsd: 80_000,
+      averageTransferSizeUsd: 5_900,
+    },
+  ]
+
   return {
-    top3Paths,
+    flows,
     topProtocols,
-    entries: allProtocols,
+    topToken,
+    tokenCount: mockTokens.length,
+    topTokens: getTopItems(mockTokens, 5),
+    transferSizeChartData,
+    entries,
+    zeroTransferProtocols: [
+      { name: 'Base Canonical', iconUrl: manifest.getUrl('/icons/base.png') },
+    ],
   }
 }

@@ -216,6 +216,36 @@ describe(getReachableEntries.name, () => {
   })
 
   /*
+   * Depth-limited linear chain test case
+   *
+   *    ┌───┐ ref  ┌───┐ ref  ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B ├─────►│ C ├─────►│ D │
+   *    └───┘      └───┘      └───┘      └───┘
+   *      ▲
+   *   entrypoint
+   *
+   * Expected:
+   *  - maxDepth = 0 => A
+   *  - maxDepth = 2 => A, B, C
+   */
+  it('should limit traversal to the provided maxDepth', () => {
+    const entryA = createMockEntry(ADDRESSES.A, { ref: ADDRESSES.B })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(ADDRESSES.D)
+
+    const entries = [entryA, entryB, entryC, entryD]
+    const entrypoints = [entryA.address]
+
+    expect(getReachableEntries(entries, entrypoints, 0)).toEqual([entryA])
+    expect(getReachableEntries(entries, entrypoints, 2)).toEqual([
+      entryA,
+      entryB,
+      entryC,
+    ])
+  })
+
+  /*
    * Diamond pattern test case
    *
    *         ┌───┐
@@ -496,5 +526,40 @@ describe(getReachableEntries.name, () => {
 
     const result = getReachableEntries(entries, entrypoints)
     expect(result).toEqual([entryA, entryB, entryC, entryD])
+  })
+
+  /*
+   * Shortest-path depth test case
+   *
+   *    ┌───┐ ref  ┌───┐ ref  ┌───┐ ref  ┌───┐ ref  ┌───┐
+   *    │ A ├─────►│ B ├─────►│ C ├─────►│ D ├─────►│ F │
+   *    └─┬─┘      └───┘      └───┘      └─▲─┘      └───┘
+   *      │                                 │
+   *      │ ref                             │ ref
+   *      ▼                                 │
+   *    ┌───┐───────────────────────────────┘
+   *    │ E │
+   *    └───┘
+   *
+   * entrypoint: A
+   *
+   * Expected: with maxDepth=3, F is included because
+   * D is reached via A->E->D (depth 2), not only via A->B->C->D (depth 3).
+   */
+  it('should use the shortest path depth when maxDepth is set', () => {
+    const entryA = createMockEntry(ADDRESSES.A, {
+      refs: [ADDRESSES.B, ADDRESSES.E],
+    })
+    const entryB = createMockEntry(ADDRESSES.B, { ref: ADDRESSES.C })
+    const entryC = createMockEntry(ADDRESSES.C, { ref: ADDRESSES.D })
+    const entryD = createMockEntry(ADDRESSES.D, { ref: ADDRESSES.F })
+    const entryE = createMockEntry(ADDRESSES.E, { ref: ADDRESSES.D })
+    const entryF = createMockEntry(ADDRESSES.F)
+
+    const entries = [entryA, entryB, entryC, entryD, entryE, entryF]
+    const entrypoints = [entryA.address]
+
+    const result = getReachableEntries(entries, entrypoints, 3)
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE, entryF])
   })
 })

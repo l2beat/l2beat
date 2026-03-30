@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x0918dd0d67c16cef451b0ff0e258a0955e12281c
+
+# Diff at Wed, 04 Mar 2026 09:20:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6a30ad0d296eab5cfae7df5ce6dbeea89f168dc4 block: 1772461789
+- current timestamp: 1772615972
+
+## Description
+
+minus one vali.
+
+## Watched changes
+
+```diff
+    contract StakingNFT (eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0) {
+    +++ description: None
+      values.totalSupply:
+-        12
++        11
+    }
+```
+
+Generated with discovered.json: 0x7e7fd3b54b1fb93b37bce40ac7a5c2e7e8d7d0cd
+
+# Diff at Mon, 02 Mar 2026 14:31:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5ab64a0fd4565502c09ba45d0cdeaafd479dc9b8 block: 1769674846
+- current timestamp: 1772461789
+
+## Description
+
+vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: Main configuration contract to manage stakers and their voting power and validate checkpoint signatures. After the shibarium hack, this contract also includes a validator blacklist managed by eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06.
+      values.currentValidatorSetSize:
+-        12
++        11
+    }
+```
+
+Generated with discovered.json: 0x6c2253374ff25d8456927b5135e21ba2ddacef56
+
+# Diff at Thu, 29 Jan 2026 08:21:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c9622efccc03e90f3e3da4283b4873ee6b8197d6 block: 1760536727
+- current timestamp: 1769674846
+
+## Description
+
+Add comment about plasma bridge.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1760536727 (main branch discovery), not current.
+
+```diff
+    contract Registry (eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB) {
+    +++ description: Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'.
+      description:
+-        "Maintains the addresses of the contracts used in the system."
++        "Maintains the addresses of the contracts used in the system, part of the old 'plasma bridge'."
+    }
+```
+
 Generated with discovered.json: 0xaa1bae773635ee31aeefbee378b1b4e993a5ff7a
 
 # Diff at Wed, 15 Oct 2025 14:11:53 GMT:

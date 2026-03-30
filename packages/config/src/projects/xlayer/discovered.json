@@ -1,6 +1,6 @@
 {
   "name": "xlayer",
-  "timestamp": 1768998877,
+  "timestamp": 1773665851,
   "configHash": "0xd99857e33141571ee459b81285c7a125cfb2a56304459e49fb351dba55bf48b9",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -20,7 +20,15 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle",
+        "wethFromGame"
+      ],
       "sinceTimestamp": 1761567143,
       "sinceBlock": 23668700,
       "values": {
@@ -34,14 +42,17 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x0873CcC0BBbC11Be570564A657c17c5a17F0D416",
+        "absolutePrestateFromGame": "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c",
+        "anchorGame": "eth:0x658477788Ca495828A017587eF5dE4e2093b70e9",
+        "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x07da2244fa30867f9efa0b907d0848cc4be9666bb32732d4609fd99b3d2f469b",
-          49622437
+          "0xe6256d3000c7e1a552e6890c12f207f4f00de1825e12c4b43240cf1bca4d2e35",
+          54286982
         ],
         "initVersion": 1,
+        "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "paused": false,
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
@@ -50,7 +61,9 @@
         "retirementTimestamp": 1761567143,
         "superchainConfig": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
         "systemConfig": "eth:0x5065809Af286321a05fBF85713B5D5De7C8f0433",
-        "version": "3.5.0"
+        "version": "3.5.0",
+        "vmFromGame": "eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4",
+        "wethFromGame": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -424,7 +437,7 @@
         "DELAYED_WETH_SLOT": "0x51547f31a231e1007dca33017faa3da20d959b95087c588a7768bfb922fd58ff",
         "delayedWETH": "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6",
         "disputeGameFactory": "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675",
-        "eip1559Denominator": 100000000,
+        "eip1559Denominator": 50,
         "eip1559Elasticity": 1,
         "gasLimit": 50000000,
         "gasPayingToken": {
@@ -452,7 +465,7 @@
         "l1StandardBridge": "eth:0xAecF995ABf9E7eDE7ae0CE65E60622C9eD84823a",
         "l2ChainId": 196,
         "maximumGasLimit": 500000000,
-        "minBaseFee": 0,
+        "minBaseFee": 20000000,
         "minimumGasLimit": 21000000,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
@@ -598,7 +611,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24277729
+          "prevBlockNum": 24664750
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -644,7 +657,7 @@
         "0x6cfb201001cb96cee7b477019cd49965bdecb41a5187426e75ec032f7ebc5091"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.",
       "sinceTimestamp": 1761567083,
       "sinceBlock": 23668695,
       "values": {
@@ -780,10 +793,11 @@
           ]
         ],
         "$upgradeCount": 1,
+        "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2037,
+        "gameCount": 3329,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8",
@@ -797,10 +811,13 @@
         "initBonds": [0, 10000000000, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
-        "permissionedGamesTotal": 2037,
+        "permissionedGameArgs": "0x",
+        "permissionedGamesTotal": 3329,
+        "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6",
         "proxyAdminOwner": "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A",
-        "version": "1.3.0"
+        "version": "1.3.0",
+        "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -812,6 +829,11 @@
         "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": "Proxy",
         "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50": "DisputeGameFactory"
       },
+      "usedTypes": [
+        { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1214,7 +1236,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619843",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619897",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2233,9 +2255,9 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
+    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge_neutered": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge_neutered": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -2248,6 +2270,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 24283195 },
+  "usedBlockNumbers": { "ethereum": 24670205 },
   "permissionsConfigHash": "0xc3f263683f13bb34a96bed4c37a9109e77464d1d416add204678547c54a9fd59"
 }

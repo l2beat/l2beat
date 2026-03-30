@@ -39,15 +39,17 @@ describe(InteropCompareLoop.name, () => {
         interopTransfer,
       })
 
-      const logger = mockObject<Logger>({
-        info: mockFn().returns({}),
-        warn: mockFn().returns({}),
-        error: mockFn().returns({}),
+      const tagLogger = mockObject<Logger>({
+        info: mockFn().returns(undefined),
+        warn: mockFn().returns(undefined),
+        error: mockFn().returns(undefined),
       })
-      //@ts-ignore
-      logger.for = () => logger
-      //@ts-ignore
-      logger.tag = () => logger
+      const forLogger = mockObject<Logger>({
+        tag: mockFn().returns(tagLogger),
+      })
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(forLogger),
+      })
 
       const comparator = new InteropCompareLoop(db, plugin, logger)
 
@@ -58,27 +60,39 @@ describe(InteropCompareLoop.name, () => {
       expect(interopMessage.getExistingItems).toHaveBeenCalledTimes(2)
       expect(interopTransfer.getExistingItems).toHaveBeenCalledTimes(2)
 
-      expect(logger.warn).toHaveBeenNthCalledWith(1, 'Missing item skipped', {
-        plugin: 'plugin',
-        item: {
-          ...unknown[0],
-          isLatest: true,
+      expect(tagLogger.warn).toHaveBeenNthCalledWith(
+        1,
+        'Missing item skipped',
+        {
+          plugin: 'plugin',
+          item: {
+            ...unknown[0],
+            isLatest: true,
+          },
         },
-      })
-      expect(logger.warn).toHaveBeenNthCalledWith(2, 'Missing item detected', {
-        plugin: 'plugin',
-        item: {
-          ...unknown[0],
-          isLatest: false,
+      )
+      expect(tagLogger.warn).toHaveBeenNthCalledWith(
+        2,
+        'Missing item detected',
+        {
+          plugin: 'plugin',
+          item: {
+            ...unknown[0],
+            isLatest: false,
+          },
         },
-      })
-      expect(logger.warn).toHaveBeenNthCalledWith(3, 'Missing item skipped', {
-        plugin: 'plugin',
-        item: {
-          ...unknown[1],
-          isLatest: true,
+      )
+      expect(tagLogger.warn).toHaveBeenNthCalledWith(
+        3,
+        'Missing item skipped',
+        {
+          plugin: 'plugin',
+          item: {
+            ...unknown[1],
+            isLatest: true,
+          },
         },
-      })
+      )
     })
   })
 })

@@ -7,7 +7,6 @@ import { Callout } from '~/components/Callout'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeTooltipContent'
 import { WarningBar } from '~/components/WarningBar'
-import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
@@ -33,8 +32,7 @@ export function StageTooltip({
   if (stageConfig.stage === 'NotApplicable') return null
   const missing =
     stageConfig.stage !== 'UnderReview'
-      ? stageConfig.missing?.principle &&
-        featureFlags.stageOneRequirementsChanged()
+      ? stageConfig.missing?.principle
         ? [stageConfig.missing.principle]
         : stageConfig.missing?.requirements
       : undefined

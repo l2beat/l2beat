@@ -4,7 +4,9 @@ import type {
   StageConfigured,
   StageUnderReview,
 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { UnderReviewBadge } from '~/components/badge/UnderReviewBadge'
+import { useCountdownsContext } from '~/components/CountdownsContext'
 import {
   Collapsible,
   CollapsibleContent,
@@ -18,7 +20,6 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { CustomLink } from '~/components/link/CustomLink'
-import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'
 import { MissingIcon } from '~/icons/Missing'
@@ -65,6 +66,7 @@ export function StageSection({
   walkAway,
   ...sectionProps
 }: StageSectionProps) {
+  const countdowns = useCountdownsContext()
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
       <ProjectSection {...sectionProps} isUnderReview>
@@ -89,6 +91,7 @@ export function StageSection({
       : UnderReviewIcon
 
   const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
+  const showUpcomingGuidelines = countdowns.stageChanges >= UnixTime.now()
 
   return (
     <ProjectSection {...sectionProps}>
@@ -195,10 +198,20 @@ export function StageSection({
       <HorizontalSeparator className="my-4" />
       <div className="space-y-2">
         {stageConfig.summary.map((stage) => {
-          const requirementsForLabel =
-            stage.principle && featureFlags.stageOneRequirementsChanged()
+          const nonUpcomingRequirements = stage.requirements.filter(
+            (r) => !r.upcoming,
+          )
+          const upcomingRequirements = showUpcomingGuidelines
+            ? stage.requirements.filter((r) => r.upcoming)
+            : []
+          const effectiveRequirements = showUpcomingGuidelines
+            ? nonUpcomingRequirements
+            : stage.requirements
+          const requirementsForLabel = stage.principle
+            ? showUpcomingGuidelines
               ? [stage.principle]
-              : stage.requirements
+              : [stage.principle, ...effectiveRequirements]
+            : effectiveRequirements
           const satisfiedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )
@@ -209,13 +222,13 @@ export function StageSection({
             (r) => r.satisfied === 'UnderReview',
           )
 
-          const satisfiedRequirements = stage.requirements.filter(
+          const satisfiedRequirements = effectiveRequirements.filter(
             (r) => r.satisfied === true,
           )
-          const missingRequirements = stage.requirements.filter(
+          const missingRequirements = effectiveRequirements.filter(
             (r) => r.satisfied === false,
           )
-          const underReviewRequirements = stage.requirements.filter(
+          const underReviewRequirements = effectiveRequirements.filter(
             (r) => r.satisfied === 'UnderReview',
           )
 
@@ -261,9 +274,7 @@ export function StageSection({
                     <div className="space-y-2">
                       <div className="flex items-center gap-1">
                         <span className="font-bold text-brand text-label-value-14">
-                          {featureFlags.stageOneRequirementsChanged()
-                            ? 'Principle'
-                            : 'Upcoming Principle'}
+                          Principle
                         </span>
                         <Tooltip>
                           <TooltipTrigger>
@@ -299,12 +310,11 @@ export function StageSection({
                     </div>
                   )}
 
-                  {featureFlags.stageOneRequirementsChanged() &&
-                    stage.principle && (
-                      <p className="font-bold text-label-value-14 text-secondary">
-                        Guidelines
-                      </p>
-                    )}
+                  {stage.principle && (
+                    <p className="font-bold text-label-value-14 text-secondary">
+                      Guidelines
+                    </p>
+                  )}
                   <ul className="space-y-1 md:space-y-2">
                     {satisfiedRequirements.map((req, i) => (
                       <li key={i} className="flex">
@@ -331,6 +341,30 @@ export function StageSection({
                       </li>
                     ))}
                   </ul>
+                  {showUpcomingGuidelines &&
+                    upcomingRequirements.length > 0 && (
+                      <div className="mt-3 rounded-lg bg-brand/20 p-4">
+                        <p className="mb-2 font-bold text-label-value-14 text-secondary">
+                          Upcoming guidelines
+                        </p>
+                        <ul className="space-y-1 md:space-y-2">
+                          {upcomingRequirements.map((req, i) => (
+                            <li key={i} className="flex">
+                              {req.satisfied === 'UnderReview' ? (
+                                <UnderReviewIcon className="relative top-0.5 size-4 shrink-0 md:top-[3px]" />
+                              ) : req.satisfied === true ? (
+                                <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive md:top-[3px]" />
+                              ) : (
+                                <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative md:top-[3px]" />
+                              )}
+                              <Markdown className="ml-2 font-medium text-paragraph-14 md:text-paragraph-16">
+                                {req.description}
+                              </Markdown>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                 </div>
               </CollapsibleContent>
             </Collapsible>

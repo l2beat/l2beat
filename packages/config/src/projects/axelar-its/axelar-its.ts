@@ -8,12 +8,17 @@ export const axelarits: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769520298),
   interopConfig: {
-    bridgeType: 'omnichain',
     plugins: [
       {
         plugin: 'axelar-its',
+        bridgeType: 'burnAndMint',
+      },
+      {
+        plugin: 'axelar-its',
+        bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

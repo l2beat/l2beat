@@ -12,13 +12,13 @@ export function createGovernanceRouter(
 
   router.get('/governance', async (req, res) => {
     const data = await getGovernanceData(manifest, req.originalUrl)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('/governance/ethereum-connect', (req, res) => {
+  router.get('/governance/ethereum-connect', async (req, res) => {
     const data = getEthereumConnectData(manifest, req.originalUrl)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 

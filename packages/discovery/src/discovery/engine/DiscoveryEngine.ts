@@ -139,7 +139,6 @@ export class DiscoveryEngine {
               provider,
               address,
               makeEntryStructureConfig(config, address),
-              config.entrypoints,
               templates,
             )
             resolved[address.toString()] = analysis

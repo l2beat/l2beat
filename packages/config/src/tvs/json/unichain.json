@@ -23,6 +23,25 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-BAL",
+      "priceId": "balancer",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",
@@ -31,6 +50,25 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-CRV",
+      "priceId": "curve-dao-token",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
         "chain": "ethereum",
         "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "decimals": 18,
@@ -155,6 +193,26 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -311,6 +369,44 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-PAXG",
+      "priceId": "pax-gold",
+      "symbol": "PAXG",
+      "name": "Paxos Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9519/large/paxgold.png?1696509604",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "rwaPublic",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-pzETH-1",
       "priceId": "renzo-restaked-lst",
       "symbol": "pzETH",
@@ -408,7 +504,7 @@
     },
     {
       "mode": "custom",
-      "id": "unichain-sUSDS-2",
+      "id": "unichain-sUSDS",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -464,7 +560,27 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -580,7 +696,7 @@
     },
     {
       "mode": "custom",
-      "id": "unichain-USDS-2",
+      "id": "unichain-USDS",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
@@ -636,15 +752,8 @@
         ]
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -757,48 +866,36 @@
     },
     {
       "mode": "auto",
-      "id": "unichain-wstETH-1",
+      "id": "unichain-wstETH",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-        "decimals": 18,
-        "sinceTimestamp": 1730748227
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+            "decimals": 18,
+            "sinceTimestamp": 1730748227
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",
+            "decimals": 18,
+            "sinceTimestamp": 1739519603
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "unichain-wstETH-2",
-      "priceId": "wrapped-steth",
-      "symbol": "wstETH",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",
-        "decimals": 18,
-        "sinceTimestamp": 1739519603
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
     },
     {
       "mode": "auto",

@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -75,20 +75,16 @@ export const lisk: ScalingProject = opStackL2({
       address: ChainSpecificAddress(
         'eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6',
       ),
-      name: 'External USDC Vault',
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description:
-        'Custom externally governed escrow for USDC bridged to Lisk.',
+      name: 'USDC Vault',
+      description: 'Custom escrow for USDC bridged to Lisk.',
       tokens: ['USDC'],
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
         'eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677',
       ),
-      name: 'External EURC Vault',
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description:
-        'Custom externally governed escrow for EURC bridged to Lisk.',
+      name: 'EURC Vault',
+      description: 'Custom escrow for EURC bridged to Lisk.',
       tokens: ['EURC'],
     }),
     discovery.getEscrowDetails({
@@ -96,7 +92,6 @@ export const lisk: ScalingProject = opStackL2({
         'eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),

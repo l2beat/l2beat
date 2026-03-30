@@ -33,6 +33,9 @@ export const bsc: BaseProject = {
         version: '3',
       },
     ],
-    apis: [{ type: 'etherscan', chainId }],
+    apis: [
+      { type: 'etherscan', chainId },
+      { type: 'rpc', url: 'https://bsc-dataseed.bnbchain.org' },
+    ],
   },
 }

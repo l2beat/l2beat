@@ -122,7 +122,7 @@ function InnovatorTierCard({
         alt={partner.slug}
         className="h-[42px] w-auto object-contain md:h-[52px]"
       />
-      <ArrowButtonIcon className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
+      <ArrowButtonIcon className="absolute right-6 fill-pure-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
   )
 }
@@ -141,7 +141,7 @@ function SupporterTierCard({
       className="group relative flex h-14 items-center justify-between rounded border border-divider bg-center bg-cover px-6 py-4 lg:h-16"
     >
       <img className="h-full" src={partner.logo.src} alt={partner.slug} />
-      <ArrowButtonIcon className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
+      <ArrowButtonIcon className="absolute right-6 fill-pure-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
   )
 }

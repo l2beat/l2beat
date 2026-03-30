@@ -15,18 +15,116 @@
         "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
       }
     ],
-    "events": [
-      "allbridge.MessageSent",
-      "allbridge.MessageReceived",
-      "allbridge.TokensSent",
-      "allbridge.TokensReceived"
+    "expects": {
+      "events": [
+        {
+          "type": "allbridge.MessageSent"
+        },
+        {
+          "type": "allbridge.TokensSent"
+        },
+        {
+          "type": "allbridge.MessageReceived"
+        },
+        {
+          "type": "allbridge.TokensReceived"
+        }
+      ],
+      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
+      "transfers": [
+        {
+          "type": "allbridge.Transfer",
+          "events": [
+            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
+            {
+              "type": "allbridge.TokensReceived",
+              "args": { "amount": "39898063" }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "avalanche": {
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xd4f2f8b755db7e834e7bffaf5fe619385f3d8af04c0d4a3f588403de427ae4d9"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x4438867ab6043d14073f8784937688bd2bf9b7078ef76ca364be3803e6143649"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x006cf082c0dac7c2f886600e4ea6e9d6085c413a386e1c206725824a4a756aa4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x70fc73af9244945ec066f2a6bff3bc36497e446fc87f01ed4998512fbc7521fe"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xe8ede4edcf8ea2b29fcf89c283c4982aae0ee1f60852c0bda7f45092b9e474da"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x0b6abf11885fd4a57c819ec526b6c22e3d522ee965270571f52a128b64013f73"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xeee6a8094146cd6568b0521e914367a13585f01c6fc916c34b168aa0ef322792"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x79904e2c6d87055e04cff3faf9f4b1011430266f9e348daab6b1db976f1a4684"
+      }
     ],
-    "messages": ["allbridge.Message"],
-    "transfers": ["allbridge.Transfer"]
+    "expects": {
+      "events": [
+        { "type": "avalanche.Deposit" },
+        { "type": "avalanche.Mint" },
+        { "type": "avalanche.Burn" },
+        { "type": "avalanche.Withdrawal" },
+        { "type": "avalanche.Deposit" },
+        { "type": "avalanche.Mint" },
+        { "type": "avalanche.Burn" },
+        { "type": "avalanche.Withdrawal" }
+      ],
+      "messages": [
+        { "type": "avalanche.Message", "app": "avalanche-bridge" },
+        { "type": "avalanche.Message", "app": "avalanche-bridge" },
+        { "type": "avalanche.Message", "app": "avalanche-bridge" },
+        { "type": "avalanche.Message", "app": "avalanche-bridge" }
+      ],
+      "transfers": [
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        },
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "avalanche.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
+    }
   },
   "ccip": {
+    "loadConfigs": ["ccip"],
     "txs": [
-      // Arbitrum → Base (old Minted event format)
+      // 1. v1.5 Burned + Minted (burn & mint): Arbitrum → Base
       {
         "chain": "arbitrum",
         "tx": "0x89f4d3325105dadaddd73e67843739547337688ad75969a31145f80127681429"
@@ -35,7 +133,7 @@
         "chain": "base",
         "tx": "0x05e94651d51f379b1b5c56756b1908431b19d72e9dc05fef801d96c434866109"
       },
-      // Arbitrum → Ethereum (old Minted event format)
+      // 2. v1.5 Burned + Minted (burn & mint): Arbitrum → Ethereum
       {
         "chain": "arbitrum",
         "tx": "0x9e6ea796ee5b851f57643669dd24fe68948b752d7369ebce6cbd1901c2e19349"
@@ -44,7 +142,7 @@
         "chain": "ethereum",
         "tx": "0x7c86a861a08dde62ac6a9de69467fcdb32db8f502caab15ea91b41f4d83da1fa"
       },
-      // Base → Ethereum (has Released event)
+      // 3. v1.5 Burned + Released (burn & unlock): Base → Ethereum
       {
         "chain": "base",
         "tx": "0xf678216cf093c1517c81359c73d86ed3351c2ef07ef7d22056cd940fd9fb881b"
@@ -53,7 +151,7 @@
         "chain": "ethereum",
         "tx": "0xf977ea203a1100a4c84cbcd494c7e9ada4e84326f46b1e648693248c091b544f"
       },
-      // Base → Ethereum (has ReleasedOrMinted event - USDC)
+      // 4. v1.6.1+ LockedOrBurned + ReleasedOrMinted, USDC via CCTP (isCctpBacked): Base → Ethereum
       {
         "chain": "base",
         "tx": "0x9c99b5b0bb81356c643da3eabcba8e76d70c1434509b239f6619dfb0165dde46"
@@ -62,7 +160,7 @@
         "chain": "ethereum",
         "tx": "0xa8e64ce873efd60fa103e29733a089f8960063d4c1c20b7507d3d838dd6faa90"
       },
-      // Ethereum → Base (USDC transfer)
+      // 5. USDC via CCTP (isCctpBacked — transfer handled by CCTP plugin): Ethereum → Base
       {
         "chain": "ethereum",
         "tx": "0x995d6705856238e85b293eb190f3a3b7c8dd61fb6579f3e14d04412f384714ef"
@@ -71,7 +169,7 @@
         "chain": "base",
         "tx": "0xb12cbb7d5252086155c63dcc9496e35c1f1bf09cf69deb65a8886242edccd6c3"
       },
-      // Base → Arbitrum (USDC transfer)
+      // 6. USDC via CCTP (isCctpBacked — transfer handled by CCTP plugin): Base → Arbitrum
       {
         "chain": "base",
         "tx": "0x677f39f89080c3659d126f203d32a5d66da6049118e2e6fac8fa530f2407d81a"
@@ -80,7 +178,7 @@
         "chain": "arbitrum",
         "tx": "0x389ab7037904f0709e847c098f6a66c01c01093f20b391cfaa3f6ce17d4e1c22"
       },
-      // Ethereum → Base BATCHED (2 source txs, 1 dst tx with 2 ExecutionStateChanged events)
+      // 7. Batched delivery (2 source txs → 1 dest tx with 2 ExecutionStateChanged): Ethereum → Base
       {
         "chain": "ethereum",
         "tx": "0x0c4597c5a788e5700dfff0583a8da5e16ba3f2ef56acca8629f18dcb08920d02"
@@ -93,7 +191,7 @@
         "chain": "base",
         "tx": "0x5cb327c65ab86ddc22bc81fb310c3a2d80c7ca44a690f8de0f3c2a7c7abfbbbf"
       },
-      // Base → Ethereum LINK token (tests Released event parsing)
+      // 8. v1.5 Burned + Released (LINK burn & unlock): Base → Ethereum
       {
         "chain": "base",
         "tx": "0xadbfe87e982ec948b7825b5c48f7284957a2dfe06012858fe0d37309e290a385"
@@ -102,7 +200,7 @@
         "chain": "ethereum",
         "tx": "0x1cfdefda87414b4dc7c5bc04fcc264260a4231f50e15a91a839a718948a33989"
       },
-      // Ethereum → Arbitrum WETH token
+      // 9. v1.5 Locked + Released (WETH lock & unlock): Ethereum → Arbitrum
       {
         "chain": "ethereum",
         "tx": "0x57ffa562517040e73b538e0762c7a1131cef66a0676a57d447fa252f34954935"
@@ -110,74 +208,378 @@
       {
         "chain": "arbitrum",
         "tx": "0x142313291f839043b3f56627b5022ab4dc5cb6f1dffe15a3985f7093a2bc96b1"
+      },
+      // 10. v1.5 Burned + Released (LINK burn & unlock): Celo → Ethereum
+      {
+        "chain": "celo",
+        "tx": "0xfeac6910d4809306821b846d8cacd484ce25d57610cbfe6893a11d8bb931d66f"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x17790b1d74e9a290140d93feb5bf8a44aaed26fc89ab2139a887ab98cc95373e"
+      },
+      // 11. v1.5 Locked + MintedAndWithdrawn (USDT lock & release via XERC20Lockbox): Ethereum → Celo
+      {
+        "chain": "ethereum",
+        "tx": "0x96f01f09475d7c17b801b8750f53cd161e86ee7228f68fae383016e13a121a57"
+      },
+      {
+        "chain": "celo",
+        "tx": "0xb9ed1df00d2d1eea7d9bbfff59a38c2b8f36b7d880e66308b8cadcfaccc844be"
+      },
+      // 12. v1.5 DepositedAndBurned + Released (USDT lock & release via XERC20Lockbox): Celo → Ethereum
+      {
+        "chain": "celo",
+        "tx": "0xec9b14f3bd905f23c889c5b74f8817045423420ae815f139687cf39d6ae16849"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xeb8f2f24d7fa86947f6ad0b14c5355c5dfaf76c58e712b99f14d073715dd948a"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // 1-3: v1.5 token pool events produce ccip.Transfer
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        // 4-6: USDC via CCTP — no ccip.Transfer (handled by CCTP plugin)
+        // 7: batched delivery — 2 transfers
+        { "type": "ccip.Transfer" },
+        { "type": "ccip.Transfer" },
+        // 8: LINK burn & unlock
+        { "type": "ccip.Transfer" },
+        // 9: WETH lock & unlock
+        { "type": "ccip.Transfer" },
+        // 10: Celo → Ethereum LINK (burn & release)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "LINK" } },
+          "dst": { "financials": { "symbol": "LINK" } }
+        },
+        // 11: Ethereum → Celo USDT (lock & release via XERC20Lockbox)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "USDT", "amount": 60 } },
+          "dst": { "financials": { "amount": 60 } }
+        },
+        // 12: Celo → Ethereum USDT (lock & release via XERC20Lockbox)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "amount": 1000 } },
+          "dst": { "financials": { "symbol": "USDT", "amount": 1000 } }
+        }
+      ]
+    }
+  },
+  "ccip-hyperevm": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // HyperEVM → Ethereum (v1.5 Burned, burn & unlock)
+      {
+        "chain": "hyperevm",
+        "tx": "0xb3f0ac69eefddd774f8a59a16e02b4222acc859af2f1cdeaf3d9c313aad0273a"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc5449f032e5cf58943b620131b36df835f100783140c969a3fbb69fbcdae6171"
+      }
+    ],
+    "expects": {
+      "transfers": [{ "type": "ccip.Transfer" }]
+    }
+  },
+  "ccip-batched": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Batch 1: Arbitrum → Ethereum (fluid + vsn)
+      {
+        "chain": "arbitrum",
+        "tx": "0xc84e9e5d1d5942337d7425e24b0e9b8d33e02e2b3a9bd3d523af56f4e1a6d493"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xdaced5bdf57edc8a1ac28496e1d48a75a83bb0ea41b3d2caabf94aefee15beca"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x07270dcb47c17e37197ce8ee44c174f92f3b5591153f4dd608ef78b6910e2b24"
+      },
+      // Batch 2: Ethereum → Base (wmtx + chex)
+      {
+        "chain": "ethereum",
+        "tx": "0x1da399f8ee02f1cf305f4d8886091877e0707106cf489becab9b3039625c4a6c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ce550b243cbe0faf788179e587dcd0037e5ffdc0d9858e2643e0aae798f06ee"
+      },
+      {
+        "chain": "base",
+        "tx": "0x14b2cd0c59b277be8f8a082d00e3ce1f116e070c7750b61acc02cae10d1a71d1"
+      },
+      // Batch 3: Ethereum → Base (wmtx + zchf)
+      {
+        "chain": "ethereum",
+        "tx": "0x62006d8df196bb0d99ec153cf6e1fbe69504d1db8a9ab209778091d14a350bed"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6ad6b072d4a85593d4b01e661f742f35e04624ebc272832285d2af96a8c7b859"
+      },
+      {
+        "chain": "base",
+        "tx": "0x1a405804d2cbeebbc10ca72711f238c57c8964029f4cc654061932e2573fbdae"
+      },
+      // Batch 4: Base → Ethereum (syrupusdc + zchf)
+      {
+        "chain": "base",
+        "tx": "0x2c922cf88ddc1d4a0adfeb44e7452fb9348865034ff640ca468305ded84394d2"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4a10bc384fc6b61082a714a10dba26c29312db52ac8ca4a90317ef45d1f9e490"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x71b41756f26387ca0cb65f16700f20c2b6b21b605debabd69f9928db3f1aa740"
+      },
+      // Batch 5: Ethereum → Base (syrupusdc - single transfer, shares dst tx with cctp)
+      {
+        "chain": "ethereum",
+        "tx": "0xab559db1d1fadf1769eb9ed54c9cd947b849b2e82f563da44d9faf4ed2bdaf5f"
+      },
+      {
+        "chain": "base",
+        "tx": "0x84ead484b442ca5af710de79af5b8b88a3f10f2b0ca12681cc1213174cfd2665"
+      },
+      // Batch 6: Base → Ethereum (LBTC + dextf)
+      {
+        "chain": "base",
+        "tx": "0xcc54bf7f78c1d85bf06ab5625d4d5812c99f202d3bb972d25133894371e57f00"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe23f10c03cf9df10ba90ee2fbd899f603a12b3ad8c20bf35ea5fa86607188101"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9c169d8efdb52db2871f8a524fe0b840b7e52bfdae308dcd1fb38e3ae2437ca5"
+      },
+      // Batch 7: Ethereum → Base (DEXTF + paal + DEXTF — 3-message batch)
+      {
+        "chain": "ethereum",
+        "tx": "0x199d1b8fc8788a905fc6dae9a0938ce5a79b89f90f145acdd49952239484c094"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf720db18b692656645ffae547335a346d8f21e5302e1741cef0e6b42b3d4019c"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf7f2f67eceab1a986da25a1ba8a7a6b3c61301eddf290123e2b859a163560038"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb4392fa5e89239d24695e041f02d92ce875ab82bec5b41fc813cd03d2c873ffb"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // Batch 1: VSN + FLUID (arbitrum → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "VSN" } },
+          "dst": { "financials": { "symbol": "VSN" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "FLUID" } },
+          "dst": { "financials": { "symbol": "FLUID" } }
+        },
+        // Batch 2: WMTX + CHEX (ethereum → base)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "WMTX" } },
+          "dst": { "financials": { "symbol": "WMTX" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "CHEX" } },
+          "dst": { "financials": { "symbol": "CHEX" } }
+        },
+        // Batch 3: WMTX + ZCHF (ethereum → base)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "WMTX" } },
+          "dst": { "financials": { "symbol": "WMTX" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
+        },
+        // Batch 4: syrupUSDC + ZCHF (base → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "ZCHF" } },
+          "dst": { "financials": { "symbol": "ZCHF" } }
+        },
+        // Batch 5: syrupUSDC (ethereum → base, single transfer)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "syrupUSDC" } },
+          "dst": { "financials": { "symbol": "syrupUSDC" } }
+        },
+        // Batch 6: LBTC + DEXTF (base → ethereum)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "LBTC" } },
+          "dst": { "financials": { "symbol": "LBTC" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "DEXTF" } },
+          "dst": { "financials": { "symbol": "DEXTF" } }
+        },
+        // Batch 7: $PAAL + DEXTF + DEXTF (ethereum → base, 3-message batch)
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "$PAAL" } },
+          "dst": { "financials": { "symbol": "$PAAL" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "DEXTF" } },
+          "dst": { "financials": { "symbol": "DEXTF" } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "DEXTF" } },
+          "dst": { "financials": { "symbol": "DEXTF" } }
+        }
+      ]
+    }
+  },
+  "ccip-cctp-usdc": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      // Base → Optimism USDC via CCIP (uses CCTP v1 under the hood)
+      {
+        "chain": "base",
+        "tx": "0xc46f7c65ecaf67ba82518d20c77a9ca153bb8d92572773f62afb512f736ddfc0"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x36c6e8404b0f619c24e85c16ad007a82d24c6dccd9f026c73d8aea0ebf9b7bba"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "CCIP Token Transfer" }],
+    "transfers": ["cctp-v1.Transfer"]
+  },
+  "ccip-messaging": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // LaPoste (Abracadabra) - pure messaging, no token transfer through CCIP
+      // Arbitrum → Ethereum
+      {
+        "chain": "arbitrum",
+        "tx": "0xf393fcfb456ae71c6cd1e326ae1a1630d3ed7f80501b72586194ba66be05edd8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x57fcb2aa31b96ed2c753e9d0853f3c4f6dd34260d506ebc274a8002d2d656ec5"
+      }
+    ],
+    "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+    "messages": [{ "type": "ccip.Message", "app": "unknown" }],
+    "transfers": []
+  },
+  "ccip-unsupported-chain": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Base → Sonic (Sonic is unsupported, only source side captured)
+      {
+        "chain": "base",
+        "tx": "0xd98e73cb566950d3311117ccad12dc84dfd22d2c82ecae013fe2c751573f9322"
+      },
+      // Sonic → Base (inbound from unsupported chain, only dst side captured)
+      {
+        "chain": "base",
+        "tx": "0xc5721df4bb21ab7511d9c995e6b843fe4b0f1ae2530d53d30bac18e6b6d5f245"
+      },
+      // Base → Bittensor (v1.6 CCIPMessageSent, Bittensor is unsupported)
+      {
+        "chain": "base",
+        "tx": "0x4064cbfb507412b8fc2b457975408f7f06860af15b99a3f01c868839140e56c1"
+      },
+      // Bittensor → Base (v1.6 ExecutionStateChanged inbound)
+      {
+        "chain": "base",
+        "tx": "0x3caad21891ceb20380b2b77ef2b87e7a3eb8a854b93c39cece65dac2d66b067d"
       }
     ],
     "events": [
       "ccip.CCIPSendRequested",
       "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.CCIPSendRequested",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
-      "ccip.ExecutionStateChanged",
       "ccip.ExecutionStateChanged",
       "ccip.ExecutionStateChanged"
     ],
-    "messages": [
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" },
-      { "type": "ccip.Message", "app": "CCIP Token Transfer" }
-    ],
-    "transfers": [
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer",
-      "ccip.Transfer"
-    ]
+    "messages": [],
+    "transfers": []
   },
   "celer": {
     "txs": [
+      // message only, wrapping cctp
       {
-        "chain": "arbitrum", // IM
-        "tx": "0x2c3f1a655a15d77758fb4253e10572e6db9190ce9cf3a48264a78b28022919a3"
+        "chain": "ethereum",
+        "tx": "0x98B29DCFCD0F65B09584A14DCEDFA6DC29FD2C3FF96AFDD72EB0B71370D69DDF"
       },
       {
-        "chain": "arbitrum", // Executed
-        "tx": "0x6256f99519a3455a68baa3b671a79352ae5f721f36137f313e6107b2267b8ce6"
+        "chain": "polygonpos",
+        "tx": "0xcac581169caac00801aa086b98678a58d64b76349b8e680ce2e4391f75dff3eb"
+      },
+      // message only, unknown
+      {
+        "chain": "arbitrum",
+        "tx": "0xbec638451e06399b5c0ed44faec78e66efa33dc85261cede55f3f469291af549"
       },
       {
-        "chain": "ethereum", // Send
-        "tx": "0xff51fac268e039a5cc4026baa658c13a44046b6f7df15a647d1e4f8c73eaad64"
+        "chain": "bsc",
+        "tx": "0x91091c0a1ee70c82f3681f951068edeec9699859cc7bd6d20c54e0e9b8c49966"
+      },
+      // nonMinting transfer via cbridge liquidity pool
+      {
+        "chain": "linea",
+        "tx": "0x493f51cd5f2327660e6a682f038e9f93a1db296b2ac42bf345ef8859f6434bb4"
       },
       {
-        "chain": "ethereum", // Relay
-        "tx": "0x963f5203a729d35925faefe037504ab1ee7b12cda04d1a4b717817dca1af5f46"
+        "chain": "bsc",
+        "tx": "0x129b03dd3072c79b8829ea978b8cfef13c804d708d9c42b90b9497d1f2345e1a"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "celer.Message",
+        "celer.Executed",
+        "celer.Message",
+        "celer.Executed",
+        "celer.Send",
+        "celer.Relay"
+      ],
+      "messages": [
+        { "type": "celer.Message", "app": "wrappingForeignTransfer" },
+        { "type": "celer.Message", "app": "unknown" },
+        { "type": "celer.Message", "app": "cBridge" }
+      ],
+      "transfers": ["celer.Transfer"]
+    }
   },
   "mayan-forwarder": {
     "txs": [
@@ -192,6 +594,58 @@
       {
         "chain": "ethereum",
         "tx": "0x47b1ddf11342a81aec106555a30da420ed831460a08bb347023515a761a10580"
+      }
+    ]
+  },
+  "mayan-forwarder-cctp-domain-mapping": {
+    "loadConfigs": ["wormhole", "cctp-v1", "cctp-v2"],
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x01b5f12874335e7eb0c5efe57a3bfc4aef5e92a2c3b08aa907a9ca50f5a3ae82"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xd1189ae051bf14fe75e552b658feb905f4dcc1ceb88d81c7d7f2e7489f890cdc"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "mayan-forwarder.MayanForwarded",
+          "args": { "$dstChain": "optimism" }
+        }
+      ]
+    }
+  },
+  "meson": {
+    "description": "Liquidity swap + tunnel samples from MESON_PLAN",
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x454aa9a68e2e99789407d93d30d6e7d174f739977ca578aa6a9937247b64fdea"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x7f5e8814b2c41208dbc00f060273f02bc670c37581e25c30d8fdfc1116cd38aa"
+      },
+      // tunnel events are not matching, TODO
+      {
+        "chain": "arbitrum",
+        "tx": "0xa4d497c7826ef5025901b086a735e89c95faf71f41e066ff1029271e12d76619"
+      },
+      {
+        "chain": "bob",
+        "tx": "0xb56575f17495f677ad1a15e4b4511c3396bf09c1482ac281ca915184f070f60c"
+      },
+      // gas/native transfer
+      {
+        "chain": "base",
+        "tx": "0x6e3671be03faa0444bfe5135a84d9d2fe20c3658f6763cf53098b232c8a5f7a4"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xe4fdc4e6856940605d11c5fea1ea4e501ab8d04e560a1dc65fe0a9652684be0b"
       }
     ]
   },
@@ -212,60 +666,138 @@
     "loadConfigs": ["cctp-v2"],
     "txs": [
       {
-        "chain": "arbitrum",
-        "tx": "0x284aed9764a451c32bae3ade17ce61daf420f20d80f3b0849db45af54a16cf1c"
+        "chain": "optimism",
+        "tx": "0x9c1e856a46e156e06260d64bf1344053530f5b8cf9d2186630ef130b509ca5c6"
       },
       {
-        "chain": "ethereum",
-        "tx": "0x607ef6ded5162ece9b8c8d9df7ef0be69aa6005863403a963295bb362222d5a0"
+        "chain": "base",
+        "tx": "0xf3455d6cb9b30bfcae1f202688605efeaecde76bd03f8d2b171afa83e7c6cc24"
       }
     ]
   },
-  "mayan-mctp-bridge": {
+  "wormhole-tokenbridge-to-bsc": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "base",
-        "tx": "0xf31d79e452692369a486f9ea470a17e123651e02dd50060a710f28e5a268bf5a"
+        "tx": "0x2e528c91e0c482d41d340dedcc777e3c7701ab931828d2ff8713909e7c07d545"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x3d1ea24667818c88ee4fc0f8234fe20793d0293734265627a3eec6887f505746"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
+    }
+  },
+  // This tx goes through a Portal Token Bridge Relayer contract, which emits
+  // a second TransferRedeemed with the same (emitterChainId, emitterAddress, sequence).
+  // Only the one from the known tokenBridge should be captured.
+  "wormhole-tokenbridge-relayer": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x6880788cb979136c5c57fbf4ac2b584426cb30e14677d93234d6ea0b40e4243c"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x8dd26c010032079f62029edfb6bfc9323041c6306af60cd1589838d39e9c69c0"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": false }
+        }
+      ]
+    }
+  },
+  "mayan-mctp": {
+    "loadConfigs": ["wormhole", "cctp-v2", "cctp-v1"],
+    "txs": [
+      // cctp v1
+      {
+        "chain": "arbitrum",
+        "tx": "0xcd3e330e687e969354c4402151f04a7ae377b2ec1bcf9f8d1a043b2f0ba4eed5"
+      },
+      {
+        "chain": "base",
+        "tx": "0xd6181ec44595a8d9c36dd0395df0b9da64ad9d078c33bab7de95a96c6208c5c8"
+      },
+      // cctp v2
+      {
+        "chain": "optimism",
+        "tx": "0xbe39bcd13c8d7f37570b4536f40432ec12f167e2aa6b42710e815059c32bda04"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4bedb6bca328cc57f6c5612deeb1b0d16871e63b25fe15d68f9923bc54916c5d"
+      },
+      // no 'orderfulfilled', cctp v2
+      {
+        "chain": "base",
+        "tx": "0x01b070f620aa34ac50111b4b45c796d8198d53d0ec5df04caaf31fdc87b2285d"
       },
       {
         "chain": "optimism",
-        "tx": "0x8fee2c8243140764b8ba74ae2c11f22495e7c5eae15f384f37fa3c826eebe465"
+        "tx": "0x53757875a9275f260be13cc93b53970c36226ddb7eb04a23d0a8fdadd9d00cc5"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "cctp-v2.MessageReceived",
+        "mayan-mctp-fast.OrderFulfilled",
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "cctp-v2.MessageReceived",
+        "cctp-v2.MessageSent",
+        "mayan-forwarder.MayanForwarded",
+        "wormhole.LogMessagePublished",
+        "cctp-v1.MessageReceived",
+        "cctp-v1.MessageSent",
+        "mayan-forwarder.MayanForwarded"
+      ],
+      "messages": [
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v2.FastMessage", "app": "cctp-v2" },
+        { "type": "mayan.Message", "app": "mctp" },
+        { "type": "cctp-v1.Message", "app": "cctp-v1" }
+      ],
+      "transfers": ["cctp-v2.Transfer", "cctp-v2.Transfer", "cctp-v1.Transfer"]
+    }
   },
-  "mayan-mctp-bridge-fee-on-dst": {
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0xcb533450fe53baf53d82e61be8c3a7dc8967a8d9ade6c745301f3e16326cbf49"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x62f7808a27b877880526c6ae606598e368e9af36f4137ad3236de49af1a5b6b1"
-      }
-    ]
-  },
-  "mayan-mctp-swap": {
+  "msw": {
+    "loadConfigs": ["wormhole"],
     "txs": [
       {
         "chain": "arbitrum",
-        "tx": "0x87d69e29fa08dcccaa82f312f1fab55b3b0deaa637b5165ecebd1d3a15bbf51c"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0xf5e01a33e94a921708f6d64dc4a0dfb6a2f388f87d57765e05c40d6199779292"
-      }
-    ]
-  },
-  "mayan-mctp-fast-swap": {
-    "txs": [
-      {
-        "chain": "ethereum",
-        "tx": "0x6a3439c2875764b29b8be902265985397c5fd2782e7f2be0821a5bda713a48ff"
+        "tx": "0x9cd049ec905c02ee9cf4946724ba2714f0e84cd221448c8e7a0f6278d7dd54e7"
       },
       {
         "chain": "base",
-        "tx": "0x9f2d722cfc23e8a248d8380860f6f2212cf9d0cb93cf4f76804da31dae26b090"
+        "tx": "0x6edc80451a459d72bb17a016f5e06f066452172039cd34852de0a259fa4a9fb2"
       }
     ]
   },
@@ -353,9 +885,104 @@
       {
         "chain": "base",
         "tx": "0x0015b68093c56f3c80e48d3e21fe6fa09560bb6bc04bd8c546401c07758b9207"
+      },
+      // no forwarder event
+      {
+        "chain": "optimism",
+        "tx": "0x74cc616108c148d691c85d49c1d0470e74c6e9923488332cd0ad634e4b2e0a29"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0d9e645e1d491611634f8f5545291f6a999889bf6abaadde541217e3b917df6a"
+      },
+      // Refunded order on Base
+      {
+        "chain": "base",
+        "tx": "0xfa2a7f45a7db62aaf7071c602dfe2890d8b0741052c506da7afba8b1e3fd1718"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe6ceacc75b0e8a0c8f724bde613c551edb976045835e24681d7646e1f6aad53e"
+      },
+      // orphan fulfill events with exotic signatures that should correctly decode their $srcChain as solana
+      {
+        "chain": "arbitrum",
+        "tx": "0x0dcc9091d25564ff14333455d40376c78c148ec7d7e7da477301fc0d25b80d4c"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0xead243cb6f81932a16cd922556b91bcd95cec094bfe9cbb0d86fbfb76d531f14"
       }
     ],
-    "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    "expects": {
+      "events": [
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.OrderRefunded",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.SettlementSent"
+      ],
+      "messages": [
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift" },
+        { "type": "mayan-swift.Message", "app": "mayan-swift-refund" }
+      ],
+      "transfers": [
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer",
+        "mayan-swift.Transfer"
+      ],
+      "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+    }
   },
   "mayan-swift-settlement-non-batched": {
     "loadConfigs": ["wormhole"],
@@ -394,15 +1021,17 @@
         "tx": "0x4c63d872d324fda368e1612e8f5ce8df3e61a13913d4b6c6bd8b30b93773aa07"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-forwarder.MayanForwarded",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-forwarder.MayanForwarded",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "mayan-swift-settlement-batched": {
     "loadConfigs": ["wormhole"],
@@ -452,14 +1081,16 @@
         "tx": "0x1cce878d867321728632a6e4d898e1b029e208dd9ae3d1e92f500dd4405abc5c"
       }
     ],
-    "events": [
-      "mayan-swift.OrderCreated",
-      "mayan-swift.OrderFulfilled",
-      "mayan-swift.SettlementSent",
-      "mayan-swift.OrderUnlocked"
-    ],
-    "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
-    "transfers": ["mayan-swift.Transfer"]
+    "expects": {
+      "events": [
+        "mayan-swift.OrderCreated",
+        "mayan-swift.OrderFulfilled",
+        "mayan-swift.SettlementSent",
+        "mayan-swift.OrderUnlocked"
+      ],
+      "messages": ["mayan-swift.Message", "mayan-swift.SettlementMessage"],
+      "transfers": ["mayan-swift.Transfer"]
+    }
   },
   "circle-gateway": {
     "loadConfigs": ["cctp-v2"],
@@ -673,8 +1304,41 @@
       {
         "chain": "base",
         "tx": "0x574ee29934a0c965243b46c2c66c9b8c6cd77a2de8dfcb0d75ee32940fd11cad"
+      },
+      // tokenbridge with MonitoringSendEvent gross amount >> Sent.amount, no financials
+      {
+        "chain": "arbitrum",
+        "tx": "0xcebb9c80105ca18f748a8ad9bd86f69b60471196179805e5653f8bbb2204ecc8"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xf4c14edca7fea1c1ad9f15cf25fd680a491d982f1b4bde047d9fae307784ef3a"
+      },
+      {
+        "chain": "base",
+        "tx": "0x0b6b7f4359b183ce1d75ec92b930e48edcddb736da063eb14640d11af3222508"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4e3b05ae8a99ee9a7cb45523fe8a39ca7ce08b0202dba9db2c620383bd85b219"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "debridge.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "debridge.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "debridge.Transfer",
+          "bridgeType": "lockAndMint"
+        }
+      ]
+    }
   },
   "debridge-dln": {
     "txs": [
@@ -686,6 +1350,15 @@
       {
         "chain": "base",
         "tx": "0x60e502eaae1d5e525b699e4ecfe5007ef6917a7bb920141b1ae77aefd7a61fc8"
+      },
+      // intent fill using new event sig
+      {
+        "chain": "base",
+        "tx": "0xa9ce83fda9e2c08be08af41301bcf3a36c264093323bcef99292cd86b1876256"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xec207de4433472870d5a9e0ed95aab8f9ffec565a859346dbe23eab27fdffe8a"
       },
       // settlement (including the above intent)
       {
@@ -773,6 +1446,15 @@
       {
         "chain": "base",
         "tx": "0x5056d23e00423379b4466a25a233527499060f3904718ceaebe14c4a87d5c27f"
+      },
+      // NTT transfer from Arbitrum → Polygon (Relayer path)
+      {
+        "chain": "arbitrum",
+        "tx": "0x695f22bb48d3f3382d12e03737acc5ebbb4bd87590d5566e394f84760a14e1ad"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x08b6056ca4dc1cd84b9fbeb9d3c849bb89d27b7f50555aa862126c09ca490463"
       }
     ],
     "events": ["wormhole-ntt.ReceivedMessage"],
@@ -780,9 +1462,11 @@
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
       { "type": "wormhole.Message", "app": "m0-index" },
       { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" },
-      { "type": "wormhole.Message", "app": "wormhole-ntt-core" }
+      { "type": "wormhole.Message", "app": "wormhole-ntt-core" },
+      { "type": "wormhole.Message", "app": "wormhole-ntt-relayer" }
     ],
     "transfers": [
+      "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer",
       "wormhole-ntt.Transfer"
@@ -815,7 +1499,97 @@
         "chain": "base",
         "tx": "0xcc4a19dfa0dd4ca8b1f010083a89e5bc23d72f9cbb1194b57f3c040d35a412ac"
       }
-    ]
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
+  },
+  // Wrapped-to-wrapped transfers (both sides are Wormhole-wrapped WETH, canonical on Ethereum).
+  // Both directions should be burn/mint since neither chain holds the native token.
+  "wormhole-tokenbridge-polygon-avax": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0x93257339849d2b65cfeac0abafba344d851fae8b3fe83b78a3163bc9acb94f05"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0x0d44a8dd467cf3e40366084bc8f6ef851624336a16cacaf010728fb4c2b63ed0"
+      },
+      {
+        "chain": "avalanche",
+        "tx": "0xae431ef3b41d6caca2f0bfa8901c1bc6cb033e31b3146c677d80c9e91d7ee864"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xc0cb4eb819e983288bd8e4df39b065efbf0b846bdbfcce104e9951f3bc203c44"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed",
+        "wormhole.LogMessagePublished",
+        "wormhole.LogTransferRedeemed"
+      ],
+      "messages": ["wormhole.Message", "wormhole.Message"],
+      "transfers": [
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        },
+        {
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": true },
+          "dst": { "wasMinted": true }
+        }
+      ]
+    }
+  },
+  // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
+  "wormhole-tokenbridge-unsupported": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xe91a8896e83d8222dc9ec4a73bc482e98f073c0828c7c52b66b3f7ae7290779d"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "wormhole.LogMessagePublished",
+          "unsupported": true
+        }
+      ]
+    }
   },
   "stargatev2taxi": {
     "loadConfigs": ["layerzero-v2"],
@@ -986,12 +1760,12 @@
     "loadConfigs": ["across"],
     "txs": [
       {
-        "chain": "ethereum",
-        "tx": "0xe0ef176608450355ce700cc2f697b9b9bf9a1b1c849ae245569691aeb894f506"
+        "chain": "bsc",
+        "tx": "0xbc7f08235557cef472ca4beef1d97a1b8279f8c7cdb424bef8394bbbae0cfa24"
       },
       {
         "chain": "arbitrum",
-        "tx": "0xf9ae34c090a6073f3503144cf9aafe7ccdabc4f25f7a362037646741b6e3f332"
+        "tx": "0xd4255d8ecf5fffc7702467b7f7e354c93a5c9a8be43f585eaceeeb999d141c28"
       }
     ]
   },
@@ -1099,8 +1873,8 @@
       }
     ],
     "events": [
-      "opstack.SentMessage",
-      "opstack.RelayedMessage",
+      "opstack.TransactionDeposited",
+      "opstack.PortalDepositFinalized",
       "opstack.MessagePassed",
       "opstack.WithdrawalFinalized"
     ],
@@ -1274,6 +2048,56 @@
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sorare" }],
     "transfers": ["sorare-base.L1ToL2Transfer"]
   },
+  "synthetix-bridge": {
+    "txs": [
+      // L1 → L2 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xdb75ac17c95ae52986a8c62514da622ee18a1a7417ab177e172a443d2cafa51c"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x39f17fb6f6040661e5785cc1aed3d53fb94a366af2706b84fedb433b5a501e61"
+      },
+      // L2 → L1 withdrawal
+      {
+        "chain": "optimism",
+        "tx": "0xa0f993f78ca209864747f7a102acff91303a0674963b3f18521450b8cab90245"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xfe9a8c5ca5895d057548d6584fea4ddc7e61e372d7b54634814d271bc2cc3390"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "synthetix-bridge.InitiateL1" },
+        { "type": "synthetix-bridge.FinalizeL2" },
+        { "type": "opstack.PortalDepositFinalized" },
+        { "type": "opstack.MessagePassed" },
+        { "type": "synthetix-bridge.InitiateL2" },
+        { "type": "synthetix-bridge.FinalizeL1" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "synthetix-bridge" },
+        { "type": "opstack.L2ToL1Message", "app": "synthetix-bridge" }
+      ],
+      "transfers": [
+        {
+          "type": "synthetix-bridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 1234.66961 } }
+        },
+        {
+          "type": "synthetix-bridge.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "sUSD", "amount": 50362.24 } },
+          "dst": { "financials": { "symbol": "sUSD", "amount": 50362.24 } }
+        }
+      ]
+    }
+  },
   "beefy-bridge": {
     "txs": [
       {
@@ -1312,12 +2136,12 @@
     "description": "ethereum -> optimism (erc20)",
     "txs": [
       {
-        "chain": "optimism",
-        "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
       }
     ],
     "messages": [
@@ -1330,12 +2154,12 @@
     "description": "ethereum -> optimism (eth)",
     "txs": [
       {
-        "chain": "optimism",
-        "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
-      },
-      {
         "chain": "ethereum",
         "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
       }
     ],
     "messages": [
@@ -1384,12 +2208,12 @@
     "description": "ethereum -> base (eth)",
     "txs": [
       {
-        "chain": "base",
-        "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
       }
     ],
     "messages": [
@@ -1402,18 +2226,69 @@
     "description": "ethereum -> base (erc20)",
     "txs": [
       {
-        "chain": "base",
-        "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771"
+      },
+      {
+        "chain": "base",
+        "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
       }
     ],
     "messages": [
       { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ],
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+  },
+  "opstack-standardbridge-ink-eth": {
+    "tags": ["opstack"],
+    "description": "ink <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: 12.5 ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x9e95331ccfa3f3a1766e2f7a04bbb4d168b9f497225755ec9fd2382eb6e0d0d0"
+      },
+      {
+        "chain": "ink",
+        "tx": "0x9abb7e54d4fa4b2dfd301cdc078e23ccee2fd2a70449ac21d0cce4d0f50bb77c"
+      },
+      // L2 -> L1: ~3257 ETH withdrawal
+      {
+        "chain": "ink",
+        "tx": "0x293f59294066b8089360fc9b8c6dbf4ee0da3dd988ce3c590fd76b0d41a17a16"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x47959e35b2ba0057d888fe44b2eee0416aeb38e33329090869aa73c11fd4464b"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.ETHBridgeInitiatedL1" },
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" },
+        { "type": "opstack.DepositFinalized" },
+        { "type": "opstack.ETHBridgeFinalizedL2" },
+        { "type": "opstack.ETHBridgeInitiatedL2" },
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.ETHBridgeFinalizedL1" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [
+        { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+        { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+      ],
+      "transfers": [
+        {
+          "type": "opstack-standardbridge.L2ToL1Transfer",
+          "dst": { "financials": { "symbol": "ETH", "amount": 3257.09284 } }
+        },
+        {
+          "type": "opstack-standardbridge.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH", "amount": 12.5 } }
+        }
+      ]
+    }
   },
   "orbitstack": {
     "txs": [
@@ -1461,36 +2336,320 @@
       {
         "chain": "arbitrum",
         "tx": "0xbb37befbb0b6a3935dca843c7e5d344bcd488df9650b8af755e50cc284174cbf"
+      },
+      // arbitrum -> ethereum (batch withdrawal: 3 ERC20s, 2 finalized in first tx, 1 in second)
+      {
+        "chain": "arbitrum",
+        "tx": "0xb8dfa0f4fa976bc2d4605707b144a7622e0186968c4f7dfe5e2ac722f0c65f84"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xa3d09a8874ff55654c69e98e6d9dc9d79505dffee7ca7bd45bbc4421cc16ba9b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x9a463f4602f065af48f4621d0f1428cc87fbb697fc1ea9dd572f51152a43ffc7"
       }
     ],
-    "events": [
-      "orbitstack.L2ToL1Tx",
-      "orbitstack.L2ToL1Tx",
-      "orbitstack.OutBoxTransactionExecuted",
-      "orbitstack.OutBoxTransactionExecuted",
-      "orbitstack.MessageDelivered",
-      "orbitstack.MessageDelivered",
-      "orbitstack.MessageDelivered",
-      "orbitstack.RedeemScheduled",
-      "orbitstack.RedeemScheduled",
-      "orbitstack.RedeemScheduled"
-    ],
-    "messages": [
+    "expects": {
+      "events": [
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        // batch withdrawal: 3 L2ToL1Tx + 3 OutBoxTransactionExecuted
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.L2ToL1Tx",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted",
+        "orbitstack.OutBoxTransactionExecuted"
+      ],
+      "messages": [
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "unknown" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        // batch withdrawal: 3 standardgateway messages
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-standardgateway"
+        }
+      ],
+      "transfers": [
+        // ERC20 withdrawal (~143.9 tokens, pre-existing pair)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": { "tokenAmount": "143889600000000000000" },
+          "dst": { "tokenAmount": "143889600000000000000" }
+        },
+        // batch withdrawal: AAVE (~20.4)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "20398996319898153414",
+            "financials": { "symbol": "AAVE" }
+          },
+          "dst": {
+            "tokenAmount": "20398996319898153414",
+            "financials": { "symbol": "AAVE" }
+          }
+        },
+        // batch withdrawal: LINK (~721.6)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "721637591964946688931",
+            "financials": { "symbol": "LINK" }
+          },
+          "dst": {
+            "tokenAmount": "721637591964946688931",
+            "financials": { "symbol": "LINK" }
+          }
+        },
+        // batch withdrawal: WBTC (~0.2)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "20242269",
+            "financials": { "symbol": "WBTC" }
+          },
+          "dst": {
+            "tokenAmount": "20242269",
+            "financials": { "symbol": "WBTC" }
+          }
+        },
+        // ETH-only withdrawal (~1.18 ETH)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1180000000000000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1180000000000000000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH-only deposit (~4.1 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "4095649445030424000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "4095649445030424000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH deposit via LiFi (~1.2 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "1208543441872000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1208543441872000000",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
+  },
+  "orbitstack-contract-deposit": {
+    "description": "ETH deposits via contract (tx.value != callvalue)",
+    "txs": [
+      // #1 tx.value ~0, callvalue ~99.6 ETH
       {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-standardgateway"
+        "chain": "ethereum",
+        "tx": "0x02a9d0fc53e11198f14565c7dbd771ca4dd26be81414791fa68aca3159e8a68c"
       },
-      { "type": "orbitstack.L2ToL1Message", "app": "orbitstack-eth" },
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
-      { "type": "orbitstack.L1ToL2Message", "app": "unknown" },
-      { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" }
+      {
+        "chain": "arbitrum",
+        "tx": "0xdb6987cc9bb91eeba19b64696c6a4c0d08a6fff06a23bb75bfd820ce42e5e721"
+      },
+      // #2 tx.value ~0, callvalue ~99.6 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xb2fc9fafed817684f2217b36cada893eb3bd31edfefe375e1e0d541aa97251f5"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x97453ebf9c47c7034095e4cc9d1c75127c115b9fa3853e21ac0203b2dc360cce"
+      },
+      // #3 tx.value ~0, callvalue ~99.6 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xbb26c2bbb5e9422ff77d61d4289f6e041b8894b202bb3dd6c3fa4326d73a94e0"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x6307cb9329cecbbde94ec3ce80218b06090d124a0b85ccc9ea2bbef4df7fb56d"
+      },
+      // #4 tx.value ~0, callvalue ~2.52 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x66330322ccd916034207528b468be7813e4894368710ab7d4a259e360c4fc17a"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x7fb5bbc2e9d0ea748eb51fd473feb18af779822af39aa099e42f08ba8cd5739c"
+      },
+      // #5 tx.value ~0.000003, callvalue ~1 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xf1f33691f3f4c8f30e9eb190daebe773b562773364d77f0d849ea43ac19f2451"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x06fc8e44ba5e622a903fa359ec9c434596b8f6dbca8c4131d311694657dc5dca"
+      },
+      // #6 tx.value ~0.000003, callvalue ~0.36 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xe121ca674e5dcf0e55ed5e1fb69447f698280a4b27bbb943b41d532b87647036"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x15890010ee0d19f07a968d495a35dd4134c02317aa96c72ee713b0f0edb6333c"
+      },
+      // #7 tx.value ~0.000003, callvalue ~0.017 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x38404b48eac314e324aecd1acc7cc322d8d58505188c7ff6079b689ad8f3b1a7"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0e4730ce7315ae30eaa996c90e192adde4a0a9cf592fb950ec46b644204a44b5"
+      },
+      // #8 tx.value ~0.000003, callvalue ~0.008 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0x45985b1aa7e74df6ae590149a515e97e26f92311660be6bf1514e72895e37ab0"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x0b4b0144f6080381b81d9c387861c1bf7362b48bb13ad3deb5a2910a0b1dbf71"
+      },
+      // #9 tx.value ~0.0003, callvalue ~0.005 ETH
+      {
+        "chain": "ethereum",
+        "tx": "0xb9e3bcd2005889095eebdcc7b1b0ec2abb045b1eccb8933d9f5aa54dbe088ace"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9cdcd3295dd590650d6c27c9bcfe2148105480b2b85c677c0a26b20e5adaa728"
+      }
     ],
-    "transfers": [
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer"
-    ]
+    "expects": {
+      "events": [
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.MessageDelivered",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled",
+        "orbitstack.RedeemScheduled"
+      ],
+      "messages": [
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "orbitstack-eth" },
+        { "type": "orbitstack.L1ToL2Message", "app": "unknown" }
+      ],
+      "transfers": [
+        // #1: src and dst must both be 99638260582708341042 (99.64 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99638260582708341042" },
+          "dst": { "tokenAmount": "99638260582708341042" }
+        },
+        // #2: 99568277625740241036 (99.57 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568277625740241036" },
+          "dst": { "tokenAmount": "99568277625740241036" }
+        },
+        // #3: 99568276377004601828 (99.57 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "99568276377004601828" },
+          "dst": { "tokenAmount": "99568276377004601828" }
+        },
+        // #4: 2520000000000000000 (2.52 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "2520000000000000000" },
+          "dst": { "tokenAmount": "2520000000000000000" }
+        },
+        // #5: 1002908246394282415 (1.00 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "1002908246394282415" },
+          "dst": { "tokenAmount": "1002908246394282415" }
+        },
+        // #6: 361524941036395607 (0.36 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "361524941036395607" },
+          "dst": { "tokenAmount": "361524941036395607" }
+        },
+        // #7: 16787756779462298 (0.017 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "16787756779462298" },
+          "dst": { "tokenAmount": "16787756779462298" }
+        },
+        // #8: 8040127013904382 (0.008 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "8040127013904382" },
+          "dst": { "tokenAmount": "8040127013904382" }
+        },
+        // #9: 5240948878743354 (0.005 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": { "tokenAmount": "5240948878743354" },
+          "dst": { "tokenAmount": "5240948878743354" }
+        }
+      ]
+    }
   },
   "orbitstack-standardgateway": {
     "txs": [
@@ -1538,7 +2697,53 @@
         "chain": "arbitrum",
         "tx": "0xc0a88c1ee35876f124cecedeece187913b4db2c7b00dfa0037d27a3e65622374"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        // ERC20 deposit: LINK (~425.4)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "425376209999999983616",
+            "financials": { "symbol": "LINK" }
+          },
+          "dst": {
+            "tokenAmount": "425376209999999983616",
+            "financials": { "symbol": "LINK" }
+          }
+        },
+        // ETH withdrawal via standardgateway
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": { "tokenAmount": "833465700000" },
+          "dst": { "tokenAmount": "833465700000" }
+        },
+        // ETH withdrawal (~10000 ETH)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "10000000000000000000000",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "10000000000000000000000",
+            "financials": { "symbol": "ETH" }
+          }
+        },
+        // ETH deposit (~1.98 ETH)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "1978210989309931500",
+            "financials": { "symbol": "ETH" }
+          },
+          "dst": {
+            "tokenAmount": "1978210989309931500",
+            "financials": { "symbol": "ETH" }
+          }
+        }
+      ]
+    }
   },
   "orbitstack-customgateway": {
     "txs": [
@@ -1631,76 +2836,166 @@
         "tx": "0x5b3b56b8ec3e0fc60583e4c1dba1b25b0019bf348a423880a1d5c4b429eff2af"
       }
     ],
-    "events": [
-      // dai deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // dai withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // lpt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // lpt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // grt deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // grt withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized",
-      // wsteth deposit
-      "orbitstack-customgateway.MessageDeliveredDepositInitiated",
-      "orbitstack-customgateway.DepositFinalized",
-      // wsteth withdrawal
-      "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
-      "orbitstack-customgateway.WithdrawalFinalized"
-    ],
-    "messages": [
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-dai"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-lpt"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-grt"
-      },
-      {
-        "type": "orbitstack.L1ToL2Message",
-        "app": "orbitstack-customgateway-wsteth"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-dai"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-lpt"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-grt"
-      },
-      {
-        "type": "orbitstack.L2ToL1Message",
-        "app": "orbitstack-customgateway-wsteth"
-      }
-    ],
-    "transfers": [
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L1ToL2Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer",
-      "orbitstack.L2ToL1Transfer"
-    ]
+    "expects": {
+      "events": [
+        // dai deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // dai withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // lpt deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // lpt withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // grt deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // grt withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized",
+        // wsteth deposit
+        "orbitstack-customgateway.MessageDeliveredDepositInitiated",
+        "orbitstack-customgateway.DepositFinalized",
+        // wsteth withdrawal
+        "orbitstack-customgateway.L2ToL1TxWithdrawalInitiated",
+        "orbitstack-customgateway.WithdrawalFinalized"
+      ],
+      "messages": [
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-dai"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-lpt"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-grt"
+        },
+        {
+          "type": "orbitstack.L1ToL2Message",
+          "app": "orbitstack-customgateway-wsteth"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-dai"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-lpt"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-grt"
+        },
+        {
+          "type": "orbitstack.L2ToL1Message",
+          "app": "orbitstack-customgateway-wsteth"
+        }
+      ],
+      "transfers": [
+        // DAI deposit (~100)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "100000000000000000000",
+            "financials": { "symbol": "DAI" }
+          },
+          "dst": {
+            "tokenAmount": "100000000000000000000",
+            "financials": { "symbol": "DAI" }
+          }
+        },
+        // LPT deposit (~8500)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "8500000000000000000000",
+            "financials": { "symbol": "LPT" }
+          },
+          "dst": {
+            "tokenAmount": "8500000000000000000000",
+            "financials": { "symbol": "LPT" }
+          }
+        },
+        // GRT deposit (~4235.5)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "4235507018590850589075",
+            "financials": { "symbol": "GRT" }
+          },
+          "dst": {
+            "tokenAmount": "4235507018590850589075",
+            "financials": { "symbol": "GRT" }
+          }
+        },
+        // wstETH deposit (~32.7)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "32671608000000000000",
+            "financials": { "symbol": "wstETH" }
+          },
+          "dst": {
+            "tokenAmount": "32671608000000000000",
+            "financials": { "symbol": "wstETH" }
+          }
+        },
+        // DAI withdrawal (~382183.4)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "382183383839361344983387",
+            "financials": { "symbol": "DAI" }
+          },
+          "dst": {
+            "tokenAmount": "382183383839361344983387",
+            "financials": { "symbol": "DAI" }
+          }
+        },
+        // LPT withdrawal (~187)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "187000000000000000000",
+            "financials": { "symbol": "LPT" }
+          },
+          "dst": {
+            "tokenAmount": "187000000000000000000",
+            "financials": { "symbol": "LPT" }
+          }
+        },
+        // GRT withdrawal (~1000)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1000000000000000000000",
+            "financials": { "symbol": "GRT" }
+          },
+          "dst": {
+            "tokenAmount": "1000000000000000000000",
+            "financials": { "symbol": "GRT" }
+          }
+        },
+        // wstETH withdrawal (~4.25)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "4248954738283870331",
+            "financials": { "symbol": "wstETH" }
+          },
+          "dst": {
+            "tokenAmount": "4248954738283870331",
+            "financials": { "symbol": "wstETH" }
+          }
+        }
+      ]
+    }
   },
   "orbitstack-wethgateway": {
     "txs": [
@@ -1726,7 +3021,35 @@
         "chain": "ethereum",
         "tx": "0x21aa860c4921be68811f449b8163385c5e4b859e17636d22e43ec40c2d06a64d"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        // WETH deposit (~0.026)
+        {
+          "type": "orbitstack.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "26034215081344613",
+            "financials": { "symbol": "WETH" }
+          },
+          "dst": {
+            "tokenAmount": "26034215081344613",
+            "financials": { "symbol": "WETH" }
+          }
+        },
+        // WETH withdrawal (~0.00148)
+        {
+          "type": "orbitstack.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "1480000000000000",
+            "financials": { "symbol": "WETH" }
+          },
+          "dst": {
+            "tokenAmount": "1480000000000000",
+            "financials": { "symbol": "WETH" }
+          }
+        }
+      ]
+    }
   },
   "hyperlane": {
     "txs": [
@@ -1877,7 +3200,7 @@
   },
   "hwr": {
     // 4 hwr transfers, one is USDC via cctp
-    "loadConfigs": ["cctp-v2"],
+    // "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "base",
@@ -1910,8 +3233,84 @@
       {
         "chain": "base",
         "tx": "0x4ee250794e41620b5103ee898062188e7ce4acaec045addee1ac22cba2cd0718"
+      },
+      // smolcoin
+      {
+        "chain": "arbitrum",
+        "tx": "0xf32c41db9377c65d3c542b8cc6b1575fe2b539fac640ae2bfc65929970f65adb"
+      },
+      {
+        "chain": "base",
+        "tx": "0x6fd7165f4087a39c6e4519a41607c74d1c4b965445babdcabacd08d5fa5e8b1c"
+      },
+      // burnmint priority in transfer matching
+      {
+        "chain": "ethereum",
+        "tx": "0x791a654671da9a5ec81a212b8de707e9c298c760f6aef4972b53be4c850bb2a3"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xaff43779f880b234ea7147b777ab866f4e645ec5411b9c4111571b33ff8a6ca3"
+      },
+      // oUSDT OP → Celo
+      {
+        "chain": "optimism",
+        "tx": "0x945a08664172d1c9ded720eedcd534121df73af4030ff62d6967bebdcf385274"
+      },
+      {
+        "chain": "celo",
+        "tx": "0xeb399b9dd3f14c3dbb862f3a1ba3230415af95339c67d314b92bf0ab227a2a41"
+      },
+      // USDT Celo → OP (lock and mint)
+      {
+        "chain": "celo",
+        "tx": "0x999ad1725555b864d682090fbbde15c382a8431b7604001a720f9a47e951050b"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x511e35b924f9c1da4845d0b6668870372dfcc925e1c8d931d4a27effe16e3184"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "oUSDT", "amount": 195.463566 } },
+          "dst": { "financials": { "symbol": "USD₮", "amount": 195.463566 } }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "USD₮", "amount": 1000 } },
+          "dst": { "financials": { "symbol": "oUSDT", "amount": 1000 } }
+        }
+      ],
+      "messages": [
+        {
+          "type": "hyperlane.Message",
+          "app": "cctp"
+        }
+      ]
+    }
   },
   "wormhole-debug": {
     "loadConfigs": ["wormhole"],
@@ -1962,8 +3361,54 @@
       {
         "chain": "base",
         "tx": "0x08fceb6f2db1a78a81a6ad94b8b2f137d7eb4e111043db1a7a05909db4208025"
+      },
+      // nonMinting usdt
+      {
+        "chain": "ethereum",
+        "tx": "0x9bf5081baeaad8390ae233f340c75981ac6a9de6cf9662d120c49a6715606e25"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x6ff4008db4c54dad1cafd6a5179342b4f67ac658bc35809a8464b59cd3dbfc5c"
+      },
+      // burnMint with fees
+      {
+        "chain": "bsc",
+        "tx": "0xe4542a28e94a22c1a3905294ab3cb832aae73dafc7983ab4df6d19ece2e993b2"
+      },
+      {
+        "chain": "base",
+        "tx": "0xac2254035ff788d5f9ee4bb15c0805eac0ec29e96a40083b48ecf2850fb6ed3a"
       }
-    ]
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "lockAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "nonMinting"
+        },
+        {
+          "type": "oftv2.Transfer",
+          "bridgeType": "burnAndMint"
+        }
+      ]
+    }
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
@@ -2133,6 +3578,32 @@
       {
         "chain": "base",
         "tx": "0xe313f2567de7f2b39c284ab2ce1c5b65e1c232907d74514c44087354df630685"
+      },
+      // non eth example that ignores amount matching
+      {
+        "chain": "polygonpos",
+        "tx": "0xe8a7526bbe9d0cf9db9571afa998dea40fffd7501c5267d435a836a7ec5dfb17"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x9ff0c8056035b0dabb3b42c9a60ada4cf80080f23d23f2955a33a730493213aa"
+      },
+      // earlier fill must not consume a later deposit
+      {
+        "chain": "arbitrum",
+        "tx": "0xbd974cf83e594079aa215adb93416f00a5eec385fea7ac5f9719c972b818d831"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xd89c61cbd50db4df2295dbb16324df5d1828a447c52e8af86fa7a9f5fa86fed1"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x7f911d7955e1ba84bbab699c6c0eb51b828c00e4658ba75803eb40243572a4c0"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x4379e5493802f2e625fc1b9f924eda0d4537c3b0af8dc64b1f24f191e7bd2ae0"
       }
     ]
   },
@@ -2212,6 +3683,39 @@
       { "type": "zkstack.Message", "app": "canonical-erc20" }
     ],
     "transfers": ["canonical-erc20.Transfer", "canonical-erc20.Transfer"]
+  },
+  "zkstack-unsupported": {
+    "loadConfigs": ["zkstack"],
+    "tags": ["zkstack"],
+    "txs": [
+      // 'legacy' deposit erc-20
+      {
+        "chain": "ethereum",
+        "tx": "0x1f090ee0f3ff13c2681800b388a7177e6a22c99edfc2b565a00d43e541931dea"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0xf01dbaf12640a53a1f101ae71ffbe7dbf39b232622b662fd4ba0d708f74e8240"
+      },
+      // zklink message
+      {
+        "chain": "ethereum",
+        "tx": "0x9222223d139c1c95b2cca9174db6f8bc82c1dda45a0dfe6aa1f9b0d1bb7dee58"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x926ad40e0da97e84ade4ce52b4a8c488f0588b75db1730da58f513b47101369c"
+      },
+      // 'AccessControlledOCR2Aggregator' message
+      {
+        "chain": "ethereum",
+        "tx": "0xe0194201751283be901e44b8ab744055eacab9fdf3f8df71ff160cc9341406aa"
+      },
+      {
+        "chain": "zksync2",
+        "tx": "0x4679a9290df4277ecdec5171be31a3a379550823458388c95659a7c9035a79fb"
+      }
+    ]
   },
   "zkstack-deposit-message": {
     "loadConfigs": ["zkstack"],
@@ -2349,6 +3853,180 @@
       { "type": "opstack.L1ToL2Message", "app": "zklink-nova" }
     ]
   },
+  "linea": {
+    "tags": ["linea"],
+    "txs": [
+      // Ethereum -> Linea (LINEA token)
+      {
+        "chain": "ethereum",
+        "tx": "0x621358c0e38e9493bd296101f37a7f0a5c9405af200abfdf9b6a776a67fea32b"
+      },
+      {
+        "chain": "linea",
+        "tx": "0x2ce2f62f8b446193a9beec723bfe13e9a9f8d50e6c46e8e82dc68ebeebc5f467"
+      },
+      // Linea -> Ethereum (USDT token)
+      {
+        "chain": "linea",
+        "tx": "0x9693ef1f7bdfbd92844f03cdf11c35fa0e4f9e12fedbd32960ebeb3d8ac6aafd"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x33c836c1c72e061f17d55a4f62315acaadc4ffdebd7ffb44380933906338806f"
+      },
+      // Ethereum -> Linea (ETH native)
+      {
+        "chain": "ethereum",
+        "tx": "0x046c05100cb6f81ba2574c149b3a23cc8de47c9fa5eb59855b138150e8f6c1a5"
+      },
+      {
+        "chain": "linea",
+        "tx": "0xe015890f538ec4fe20930cd26064ff9c09625000e6f4435cfe025f3b0b938497"
+      },
+      // Linea -> Ethereum (ETH native)
+      {
+        "chain": "linea",
+        "tx": "0x7e69817428ddf53c97dcf4ef1ffd78abfd4eabc066da69cd14ca2a28244f37b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xab86e5828737ad2ed7033c0c7cbc1ccab8040884ce011dc7ccd22d0d2b24543b"
+      },
+      // Ethereum -> Linea (DYSN token, burned on L1)
+      {
+        "chain": "ethereum",
+        "tx": "0x267febf6de33009d58e4c77c9a94b597a7460b262782358dfa2de74f9b38dba4"
+      },
+      {
+        "chain": "linea",
+        "tx": "0x6ab0b7042dce65957fd377ae6eda1fa2e90dab85b2c9a005d0cd04f5bd3be295"
+      }
+    ],
+    "expects": {
+      "events": [
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageSent",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.MessageClaimed",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingInitiatedV2",
+        "linea.BridgingFinalizedV2",
+        "linea.BridgingFinalizedV2",
+        "linea.BridgingFinalizedV2"
+      ],
+      "messages": [
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "linea" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "linea" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "linea.Message",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "linea" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "linea.L1ToL2Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        },
+        {
+          "type": "linea.L2ToL1Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "linea" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          }
+        },
+        {
+          "type": "linea.L1ToL2Transfer",
+          "src": {
+            "event": {
+              "type": "linea.MessageSent",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.MessageClaimed",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        },
+        {
+          "type": "linea.L2ToL1Transfer",
+          "src": {
+            "event": {
+              "type": "linea.MessageSent",
+              "ctx": { "chain": "linea" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.MessageClaimed",
+              "ctx": { "chain": "ethereum" }
+            }
+          }
+        },
+        {
+          "type": "linea.L1ToL2Transfer",
+          "src": {
+            "event": {
+              "type": "linea.BridgingInitiatedV2",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "event": {
+              "type": "linea.BridgingFinalizedV2",
+              "ctx": { "chain": "linea" }
+            }
+          }
+        }
+      ]
+    }
+  },
   "maker-bridge": {
     "txs": [
       // L1 -> L2 deposit
@@ -2382,6 +4060,118 @@
     ],
     "transfers": ["maker-bridge.L1ToL2Transfer", "maker-bridge.L2ToL1Transfer"]
   },
+  "polygon-deposit": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x8a93efe609b9ad991dc70b152b6a575a8f601650cf9c73c1bda2bce4477d288f"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x7a29792add2a082c18c35a758fe823368a34537eb7f980fc6722489a949cc914"
+      },
+      // PoS bridge deposit
+      {
+        "chain": "ethereum",
+        "tx": "0xa374c8585cb595df46b23b5cf2aa20aac14fc66a78eacf8bbe45323b36e12c36"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xbaad5b4d133b7b45a60673ba34a024201e8da0b300fba3a55aaebface16af506"
+      },
+      // message only
+      {
+        "chain": "ethereum",
+        "tx": "0xa3902f2de62c48541dbcf6bc923224842f699a97632a4d4cc25a52c02cefcc07"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0xb999af0a60e66dc2e1b203357bc076759c4feb83cfa46719526257a4180a0bb9"
+      },
+      // ETH deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x5bb751e109aa729e493493629e5d2285a83a320ffede1904c288842bdaeb4330"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x03de08cd274dc0f9eedb5ab659b8745d96d5126334869d5a7a9313a88ae88bb4"
+      }
+    ],
+    "events": [
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted",
+      "polygon.StateSynced",
+      "polygon.StateCommitted"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "canonical-deposit" },
+      { "type": "polygon.Message", "app": "unknown" }
+    ],
+    "transfers": [
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer",
+      "polygon.L1ToL2Transfer"
+    ]
+  },
+  "polygon-withdrawal": {
+    "loadConfigs": ["polygon"],
+    "txs": [
+      // Plasma bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x2161831d33d492d84c84bc81c1b821ec24a8460a56718e0828a374439a348280"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6d5463530e31301203093cf3cbd4a2b58750a91e068b648e6c81a21f6bd9a2d5"
+      },
+      // PoS bridge withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0xf0ff5f2c0297fe741751ae507fa8517a7642405554753e853ca5a20b638b8fc2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xe6e2b3d8093f37a86d9fb2c959daf04e634a0b7521df214012a59a4f399bc96c"
+      },
+      // eth withdrawal
+      {
+        "chain": "polygonpos",
+        "tx": "0x5a7d4b2851bc6d98e3ceae4a0fecba4d601c4a89bad57c2ca468952de00e7d90"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x29c2e92eab9465afb840e364f7df8fcf59034e12ff8e5bf29a96d7a4de58b79d"
+      }
+    ],
+    "events": [
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized",
+      "polygon.WithdrawalInitiated",
+      "polygon.WithdrawalFinalized"
+    ],
+    "messages": [
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" },
+      { "type": "polygon.Message", "app": "canonical-withdrawal" }
+    ],
+    "transfers": [
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer",
+      "polygon.L2ToL1Transfer"
+    ]
+  },
   "sky-bridge": {
     "txs": [
       // L1 -> L2 deposit
@@ -2400,5 +4190,212 @@
     ],
     "messages": [{ "type": "opstack.L1ToL2Message", "app": "sky-bridge" }],
     "transfers": ["sky-bridge.L1ToL2Transfer"]
+  },
+  "agglayer-ethereum-katana-eth": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (ETH)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xc5dc78d49624f1f83392290c645c3404a004d6f6de74bf3d73522151201c283d"
+      },
+      {
+        "chain": "katana",
+        "tx": "0xb8324124abdc9e0ffdd2ad2ebde5d379263eac7add4d880af28cb1ce956eb7bf"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-ethereum-katana-vbusdt": {
+    "tags": ["agglayer"],
+    "name": "ethereum -> katana (vbUSDT)",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x21e1be31961fda8642a21188266036f602fa63d703b876eab35871a7469f7683"
+      },
+      {
+        "chain": "katana",
+        "tx": "0x2d923202c7638fdc23f85260aacf4e895ba4ce835ddd06e4dca8f8c1de9d59ae"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-forknet-vbeth": {
+    "tags": ["agglayer"],
+    "name": "katana -> forknet (vbETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xb11827436b3ecb880c58e0bd665dd96bb31ae494d5c9aea86bd4eecd07bc7594"
+      },
+      {
+        "chain": "forknet",
+        "tx": "0xab2cfe2866df7643478fa837ecd15e871dca251cda63697c54a8bf5c1d7e3a2c"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-morpho": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (MORPHO)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xf08b8b98f2666a661c218971435797ba464642c0f98553e21b20e64e8b52324d"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x5c621c551c8760b8f3814cf129dae9a954b5bfa1efdce84d3881c60fbe850bd7"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "agglayer-katana-ethereum-eth": {
+    "tags": ["agglayer"],
+    "name": "katana -> ethereum (ETH)",
+    "txs": [
+      {
+        "chain": "katana",
+        "tx": "0xcf59eacd76a37632762e3825a91fe8bdd93758f0d1ff4633b2ba726ba8d6ee5b"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x005c68d2cd9a23e087487da5992c233efe0fb8c1dd9cb1d7b2ee955568b9ffed"
+      }
+    ],
+    "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
+    "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
+    "transfers": ["agglayer.Transfer"]
+  },
+  "opstack-derived-tx-base-deposit": {
+    "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7c76adb9ebe70dfdb57f495c7172b308879f87416ebcc9f2e0438d7fe86a1bee"
+      },
+      {
+        "chain": "base",
+        "tx": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "opstack.TransactionDeposited",
+          "args": {
+            "chain": "base",
+            "l2TxHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          }
+        },
+        {
+          "type": "opstack.PortalDepositFinalized",
+          "ctx": {
+            "chain": "base",
+            "txHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          },
+          "args": {
+            "chain": "base",
+            "sourceHash": "0xb613781250a490c408694b600c1443b4b0f12e13792551b9aa12703dfb17f879"
+          }
+        }
+      ]
+    }
+  },
+  "opstack-derived-tx-base-deposit-eth": {
+    "description": "Ethereum -> Base direct OptimismPortal ETH deposit (no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xedf08a2d003cc28f6cd48297b9e6ac35445bcf525ac22e413e57a343879606eb"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb3abc835cdc1bfe9e36725a843c3f0abf30c2dbea58f1a7e1bcc909f7d259ffa"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH" } },
+          "dst": { "financials": { "symbol": "ETH" } }
+        }
+      ]
+    }
+  },
+  "opstack-derived-tx-celo-deposit": {
+    "description": "Ethereum -> Celo OptimismPortal deposit with custom gas token (direct, no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x08fa9d296ebb3b9809e7ba4eae0e7ef6b67a32f16483628eba7e30413a454bbf"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x0662930a5d5cd3193fa428fb18fff5304cf36ed08b2b3a54019c8009cb286d30"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
+  },
+  // Celo uses a custom gas token (CELO), so native withdrawals should track
+  // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
+  "opstack-celo-native-withdrawal": {
+    "tags": ["opstack"],
+    "description": "Celo native CELO token withdrawal (custom gas token)",
+    "txs": [
+      {
+        "chain": "celo",
+        "tx": "0x4bae06b998b57428a9affdc62318dccc80ab4a44c50b2b0965a15b31e09de033"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ac472f9dbdcc7699b237512337c17fda541e1978921a44291d0f788e12094c6"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
   }
 }

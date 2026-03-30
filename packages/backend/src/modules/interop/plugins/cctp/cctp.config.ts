@@ -31,7 +31,9 @@ const V2_MESSAGE_TRANSMITTER = EthereumAddress(
 )
 
 // https://developers.circle.com/cctp/v1/evm-smart-contracts
-// V1 is an older version, we assume there wont any changes
+// V1 is an older version, we assume there won't be any changes.
+// Notably absent: bsc (V1 was never deployed there; BSC is only on V2, domain 17).
+// chainconfeeg COMPLETE
 const OVERRIDES_V1 = [
   {
     chain: 'ethereum',
@@ -40,13 +42,13 @@ const OVERRIDES_V1 = [
       '0x0a992d191DEeC32aFe36203Ad87D7d289a738F81',
     ),
   },
-  // {
-  //   chain: 'avalanche',
-  //   domain: 1,
-  //   messageTransmitter: EthereumAddress(
-  //     '0x8186359aF5F57FbB40c6b14A588d2A59C0C29880',
-  //   ),
-  // },
+  {
+    chain: 'avalanche',
+    domain: 1,
+    messageTransmitter: EthereumAddress(
+      '0x8186359aF5F57FbB40c6b14A588d2A59C0C29880',
+    ),
+  },
   {
     chain: 'optimism',
     domain: 2,
@@ -68,23 +70,24 @@ const OVERRIDES_V1 = [
       '0xAD09780d193884d503182aD4588450C416D6F9D4',
     ),
   },
-  // {
-  //   chain: 'polygonpos',
-  //   domain: 7,
-  //   messageTransmitter: EthereumAddress(
-  //     '0xAD09780d193884d503182aD4588450C416D6F9D4',
-  //   ),
-  // },
-  // {
-  //   chain: 'unichain',
-  //   domain: 10,
-  //   messageTransmitter: EthereumAddress(
-  //     '0x353bE9E2E38AB1D19104534e4edC21c643Df86f4',
-  //   ),
-  // },
+  {
+    chain: 'polygonpos',
+    domain: 7,
+    messageTransmitter: EthereumAddress(
+      '0xF3be9355363857F3e001be68856A2f96b4C39Ba9',
+    ),
+  },
+  {
+    chain: 'unichain',
+    domain: 10,
+    messageTransmitter: EthereumAddress(
+      '0x353bE9E2E38AB1D19104534e4edC21c643Df86f4',
+    ),
+  },
 ]
 
 // https://developers.circle.com/cctp/evm-smart-contracts
+// chainconfeeg actual override
 const OVERRIDES_V2 = [
   { chain: 'solana', domain: 5 },
   { chain: 'sonic', domain: 13 },
@@ -101,8 +104,9 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     private store: InteropConfigStore,
     protected logger: Logger,
     private rpcs: Map<string, IRpcClient>,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: 'cctp' })
   }
 
@@ -113,7 +117,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciledV1 = reconcileNetworks(previousV1, latest.v1)
 
     if (reconciledV1.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCTPV1Config.key,
         removed: reconciledV1.removed,
       })
@@ -130,7 +134,7 @@ export class CCTPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciledV2 = reconcileNetworks(previousV2, latest.v2)
 
     if (reconciledV2.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCTPV2Config.key,
         removed: reconciledV2.removed,
       })

@@ -155,6 +155,47 @@ auxiliary logs (e.g. `Transfer`, `BridgeBurn`, `BridgeMint`, etc.) during the ca
 }
 ```
 
+### When You Need Transaction Data
+
+Use `includeTx` in `getDataRequests()` when your capture logic needs transaction
+fields like `data` or `value` during resync:
+
+```ts
+{
+  type: 'event',
+  signature: myPrimaryEventLog,
+  includeTx: true,
+  addresses: [L1_BRIDGE],
+}
+```
+
+### Log Scanning Utilities (`logScan.ts`)
+
+**Never use `txLogs.find()`** to locate related logs. In batch transactions it always
+returns the first match, pairing every event with the same log. Use `logScan.ts` instead,
+which searches outward from the current log's position.
+
+| Function | Direction | Returns |
+|----------|-----------|---------|
+| `findParsedBefore(logs, logIndex, transform)` | backward | First non-undefined transform result |
+| `findParsedAfter(logs, logIndex, transform)` | forward | Same |
+| `findParsedAround(logs, logIndex, transform)` | both (closest first) | Same |
+| `findTransferLogBefore(logs, logIndex, parse, predicate)` | backward | `{ transfer?, hasTransfer }` |
+| `findTransferLogAfter(...)` / `findTransferLogAround(...)` | forward / both | Same |
+| `iterateLogs(logs, logIndex, direction)` | any | Generator of `[log, index]` pairs |
+
+```ts
+import { findParsedBefore } from '../logScan'
+
+const outBoxTx = findParsedBefore(
+  input.txLogs,
+  input.log.logIndex ?? -1,
+  (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
+)
+```
+
+Reference: `orbitstack-standardgateway.ts`, `orbitstack-wethgateway.ts`
+
 ### Synthetic Matching Keys
 
 If the two sides do not share a hash/nonce, build the most robust synthetic key:
@@ -212,6 +253,19 @@ Convert hex logIndex to decimal and calculate offset.
 - `Address32.from(log.address)` for ERC-20 token addresses.
 - `EthereumAddress(value)` for receiver/sender EOA-like fields (validates checksum).
 - Prefer `defineNetworks()` + chain-specific filtering if the plugin supports multiple networks.
+
+### Transfer Token Mechanism
+
+Transfers support `srcWasBurned` and `dstWasMinted` booleans to track how tokens move:
+
+| Pattern | srcWasBurned | dstWasMinted | Example |
+|---------|--------------|--------------|---------|
+| lock/mint | `false` | `true` | L1→L2 canonical bridges |
+| burn/unlock | `true` | `false` | L2→L1 canonical bridges |
+| burn/mint | `true` | `true` | CCIP, native USDC |
+| lock/release | `false` | `false` | Liquidity pools |
+
+For dynamic detection (e.g., CCIP), check `Transfer` events: `to == 0x0` or `0xdead` = burned, `from == 0x0` = minted.
 
 ## Troubleshooting
 

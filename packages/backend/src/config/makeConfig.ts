@@ -1,9 +1,5 @@
 import type { Env } from '@l2beat/backend-tools'
-import {
-  type ChainConfig,
-  INTEROP_CHAINS,
-  ProjectService,
-} from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
@@ -12,11 +8,10 @@ import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getEcosystemsConfig } from './features/ecosystemToken'
-import { getInteropAggregationConfigs } from './features/interop'
+import { getInteropFeatureConfig } from './features/interop'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
-import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
@@ -88,13 +83,14 @@ export async function makeConfig(
           },
           isReadonly,
         },
+    notifications:
+      flags.isEnabled('notifications') && getNotificationsConfig(env, flags),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
       cache: {
         tvs: flags.isEnabled('cache', 'tvs'),
         liveness: flags.isEnabled('cache', 'liveness'),
-        verifiers: flags.isEnabled('cache', 'verifiers'),
       },
     },
     health: {
@@ -121,7 +117,6 @@ export async function makeConfig(
 
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
-    verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor:
@@ -153,51 +148,49 @@ export async function makeConfig(
       ethereumWsUrl: env.optionalString(['ETHEREUM_WS_URL']),
     },
     anomalies: flags.isEnabled('anomalies') && {
-      anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
       anomaliesMinDuration: env.integer(
         'ANOMALIES_MIN_DURATION',
         60 * 60, // 1 hour
       ),
     },
-    interop: flags.isEnabled('interop') && {
-      aggregation: flags.isEnabled('interop', 'aggregation')
-        ? { configs: await getInteropAggregationConfigs(ps) }
-        : false,
-      capture: {
-        enabled: flags.isEnabled('interop', 'capture'),
-        chains: INTEROP_CHAINS.filter((c) =>
-          flags.isEnabled('interop', 'capture', c.id),
-        ),
-      },
-      matching: flags.isEnabled('interop', 'matching'),
-      cleaner: flags.isEnabled('interop', 'cleaner'),
-      dashboard: {
-        enabled: flags.isEnabled('interop', 'dashboard'),
-        getExplorerUrl: (chain: string) => {
-          const c = chains.find((cc) => cc.name === chain)
-
-          return c?.explorerUrl
-        },
-      },
-      compare: {
-        enabled: flags.isEnabled('interop', 'compare'),
-      },
-      financials: {
-        enabled: flags.isEnabled('interop', 'financials'),
-        tokenDbApiUrl: env.string('TOKEN_BACKEND_TRPC_URL'),
-        tokenDbAuthToken: env.optionalString('TOKEN_BACKEND_CF_TOKEN'),
-      },
-      config: {
-        enabled: flags.isEnabled('interop', 'config'),
-        chains: activeChains
-          .filter((c) => c.chainId !== undefined)
-          .map((c) => ({ id: c.chainId as number, name: c.name })),
-      },
-      inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
-    },
+    interop: await getInteropFeatureConfig(
+      ps,
+      env,
+      flags,
+      chains,
+      activeChains,
+    ),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last
     flags: flags.getResolved(),
+  }
+}
+
+function getNotificationsConfig(
+  env: Env,
+  flags: FeatureFlags,
+): Config['notifications'] {
+  return {
+    updateMonitor: flags.isEnabled('notifications', 'updateMonitor') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_UPDATE_MONITOR_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    anomalies: flags.isEnabled('notifications', 'anomalies') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ANOMALIES_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    interop: flags.isEnabled('notifications', 'interop') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_INTEROP_DISCORD_WEBHOOK_URL',
+      ),
+    },
+    ethereumBlobs: flags.isEnabled('notifications', 'ethereumBlobs') && {
+      discordWebhookUrl: env.string(
+        'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
+      ),
+    },
   }
 }
 

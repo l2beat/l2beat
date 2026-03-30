@@ -1,4 +1,5 @@
 import {
+  ConfigHealthService,
   ConfigReader,
   ConfigWriter,
   getDiscoveryPaths,
@@ -15,6 +16,7 @@ import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
+import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
@@ -73,6 +75,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configReader = new ConfigReader(paths.discovery)
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
+  const configHealthService = new ConfigHealthService()
+
   const diffoveryController = new DiffoveryController()
 
   app.use(express.json())
@@ -119,13 +123,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const { project, address } = paramsValidation.data
 
     const checkFlatCode = readonly === false
-    const response = getCode(
-      paths,
-      configReader,
-      project,
-      address,
-      checkFlatCode,
-    )
+    const response = getCode(configReader, project, address, checkFlatCode)
     res.json(response)
   })
 
@@ -220,6 +218,15 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     attachTemplateRouter(app, templateService)
     attachConfigRouter(app, configReader, configWriter, templateService)
 
+    app.get('/api/config/health', (_, res) => {
+      const response = getConfigHealth(
+        configReader,
+        templateService,
+        configHealthService,
+      )
+      res.json(response)
+    })
+
     app.get('/api/handlers', (_req, res) => {
       res.json({
         handlers: Object.entries(UserHandlers).map(([type, definition]) => ({
@@ -246,13 +253,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
       const { project, searchTerm, address } = paramsValidation.data
 
-      const response = searchCode(
-        paths,
-        configReader,
-        project,
-        searchTerm,
-        address,
-      )
+      const response = searchCode(configReader, project, searchTerm, address)
       res.json(response)
     })
 
@@ -278,7 +279,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       }
       const { project, address, against } = queryValidation.data
 
-      const { codePaths } = getCodePaths(paths, configReader, project, address)
+      const { codePaths } = getCodePaths(configReader, project, address)
       const implementationPath =
         codePaths.length > 1 ? codePaths[1].path : codePaths[0].path
       const againstPath =

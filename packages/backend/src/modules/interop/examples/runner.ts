@@ -1,5 +1,10 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
-import { INTEROP_CHAINS, ProjectService } from '@l2beat/config'
+import {
+  INTEROP_CHAINS,
+  INTEROP_ONE_SIDED_CHAINS,
+  ProjectService,
+} from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   type HttpClient,
   MulticallV3Client,
@@ -7,18 +12,22 @@ import {
 } from '@l2beat/shared'
 import { assert, unique } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { toInteropTransaction } from '../dto/interopTransaction'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
-import { InMemoryEventDb } from '../engine/capture/InMemoryEventDb'
+import { InteropEventStore } from '../engine/capture/InteropEventStore'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { toDeployedId } from '../engine/financials/InteropFinancialsLoop'
 import { match } from '../engine/match/InteropMatchingLoop'
+import { buildTokenMap, type TokenMap } from '../engine/match/TokenMap'
 import {
   createInteropPlugins,
   flattenClusters,
   type InteropPlugins,
 } from '../plugins'
-import type { InteropEvent } from '../plugins/types'
+import { type InteropEvent, isPluginResyncable } from '../plugins/types'
+import { getAdditionalChainsForConfigs } from './configAdditionalChains'
 import type { Example, RunResult } from './core'
+import { TokenCaptureMap, TokenReplayMap } from './snapshot/map'
 import { RpcReplay } from './snapshot/replay'
 import {
   type ExampleInputs,
@@ -55,7 +64,13 @@ export class ExampleRunner {
       .filter((c) => c.chainId !== undefined)
       .map((c) => ({ name: c.name, id: c.chainId as number }))
 
-    const allChains = unique(this.$.example.txs?.flatMap((t) => t.chain) ?? [])
+    const additionalChains = getAdditionalChainsForConfigs(
+      this.$.example.loadConfigs ?? [],
+    )
+    const allChains = unique([
+      ...(this.$.example.txs?.flatMap((t) => t.chain) ?? []),
+      ...additionalChains,
+    ])
 
     const rpcClients = await Promise.all(
       allChains.map((chain) => this.getRpcClient(chain)),
@@ -67,14 +82,22 @@ export class ExampleRunner {
 
     const plugins = createInteropPlugins({
       chains: pluginChains,
+      oneSidedChains: [...INTEROP_ONE_SIDED_CHAINS],
       configs: this.store,
       httpClient: this.$.http,
       logger: this.$.logger,
       rpcClients,
       tokenDbClient: this.$.tokenDbClient,
+      configIntervalMs: -1,
     })
 
     await this.loadConfigs(plugins)
+    const eventPlugins = flattenClusters(plugins.eventPlugins)
+    const eventStore = new InteropEventStore(
+      createExampleDb(),
+      500_000,
+      eventPlugins.filter(isPluginResyncable),
+    )
 
     const events: InteropEvent[] = []
 
@@ -88,75 +111,101 @@ export class ExampleRunner {
       const txLogs = logs
         .filter((l) => l.transactionHash === tx.hash)
         .map(logToViemLog)
+      const newEvents: InteropEvent[] = []
+      const fulfilledCreatorEvents: InteropEvent[] = []
 
-      for (const plugin of flattenClusters(plugins.eventPlugins)) {
+      const txToCapture = {
+        chain: txEntry.chain,
+        tx: toInteropTransaction(tx),
+        block,
+        txLogs,
+      }
+
+      for (const plugin of eventPlugins) {
         if (!plugin.captureTx) {
           continue
         }
-        const captured = plugin.captureTx({
-          chain: txEntry.chain,
-          tx,
-          block,
-          txLogs,
-        })
+
+        const creatorEvents = tx.hash
+          ? eventStore.derivedTxStore.getCreatorEvents(
+              txEntry.chain,
+              tx.hash,
+              plugin.name,
+            )
+          : undefined
+        const captured = plugin.captureTx(txToCapture, creatorEvents)
         if (captured) {
-          events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+          newEvents.push(
+            ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+          )
+          fulfilledCreatorEvents.push(...(creatorEvents ?? []))
           break
         }
       }
 
       for (const log of txLogs) {
-        for (const plugin of flattenClusters(plugins.eventPlugins)) {
+        for (const plugin of eventPlugins) {
           if (!plugin.capture) {
             continue
           }
           const captured = plugin.capture({
             chain: txEntry.chain,
             log: log,
-            tx,
+            tx: toInteropTransaction(tx),
             block,
             txLogs,
           })
           if (captured) {
-            events.push(...captured.map((c) => ({ ...c, plugin: plugin.name })))
+            newEvents.push(
+              ...captured.map((c) => ({ ...c, plugin: plugin.name })),
+            )
             break
           }
         }
       }
+
+      events.push(...newEvents)
+      await eventStore.saveNewEvents(newEvents)
+      await eventStore.updateDerivedFulfilled(fulfilledCreatorEvents)
     }
 
-    const eventDb = new InMemoryEventDb()
-    for (const event of events) {
-      eventDb.addEvent(event)
-    }
+    const tokenMap = await this.getTokenMap()
 
     const result = await match(
-      eventDb,
-      (type) => events.filter((x) => x.type === type),
-      [...new Set(events.map((x) => x.type))],
-      events.length,
-      flattenClusters(plugins.eventPlugins),
+      eventStore,
+      (type) => eventStore.getEvents(type),
+      eventStore.getEventTypes(),
+      eventStore.getEventCount(),
+      eventPlugins,
       this.$.example.txs.map((x) => x.chain),
       this.$.logger,
+      tokenMap,
     )
 
-    const eventsWithContext = events.map((e) => ({ ...e, chain: e.ctx.chain }))
+    const unsupportedEventIds = new Set(
+      result.unsupported.map((e) => e.eventId),
+    )
+    const eventsWithContext = events.map((e) => ({
+      ...e,
+      chain: e.ctx.chain,
+      unsupported: unsupportedEventIds.has(e.eventId),
+    }))
 
     const transfersWithContext = result.transfers.map((u) => ({
       transfer: u,
       srcId: toDeployedId(
         INTEROP_CHAINS,
-        u.src.event.ctx.chain,
+        u.src.event?.ctx.chain ?? u.src.chain,
         u.src.tokenAddress,
       ),
       dstId: toDeployedId(
         INTEROP_CHAINS,
-        u.dst.event.ctx.chain,
+        u.dst.event?.ctx.chain ?? u.dst.chain,
         u.dst.tokenAddress,
       ),
       events: u.events.map((e) => ({ ...e, chain: e.ctx.chain })),
-      src: { ...u.src, chain: u.src.event.ctx.chain },
-      dst: { ...u.dst, chain: u.dst.event.ctx.chain },
+      src: { ...u.src, chain: u.src.event?.ctx.chain ?? u.src.chain },
+      dst: { ...u.dst, chain: u.dst.event?.ctx.chain ?? u.dst.chain },
     }))
 
     return {
@@ -169,6 +218,8 @@ export class ExampleRunner {
 
   public async flush(result: RunResult) {
     if (this.$.mode === 'capture') {
+      // rpc write on-the-fly
+      // token-map write on-the-fly
       this.inputs.writeSpace('config', this.store.getAll())
     }
 
@@ -202,6 +253,20 @@ export class ExampleRunner {
         await config.run()
       }
     }
+  }
+
+  private async getTokenMap(): Promise<TokenMap> {
+    if (this.$.mode === 'replay') {
+      return new TokenReplayMap(this.inputs) as unknown as TokenMap
+    }
+
+    const map = await buildTokenMap(this.$.tokenDbClient)
+
+    if (this.$.mode === 'capture') {
+      return new TokenCaptureMap(map, this.inputs)
+    }
+
+    return map
   }
 
   private async getRpcClient(chain: string) {
@@ -268,4 +333,13 @@ export class ExampleRunner {
 
     return projects.map((p) => p.chainConfig)
   }
+}
+
+function createExampleDb(): Database {
+  return {
+    interopEvent: {
+      insertMany: async () => undefined,
+      updateDerivedFulfilled: async () => undefined,
+    },
+  } as unknown as Database
 }

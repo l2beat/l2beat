@@ -5,6 +5,7 @@ import { ChainPrefix } from './ChainPrefix'
 import { FormatSeconds } from './FormatSeconds'
 import { GreaterThan } from './GreaterThan'
 import { Mapping } from './Mapping'
+import { SliceAddress } from './SliceAddress'
 import { TimeSince } from './TimeSince'
 import { Undecimal } from './Undecimal'
 
@@ -16,6 +17,7 @@ export const TypeConverters = {
   ChainPrefix,
   GreaterThan,
   TimeSince,
+  SliceAddress,
 }
 
 export function isCustomTypeCaster(name: string): boolean {

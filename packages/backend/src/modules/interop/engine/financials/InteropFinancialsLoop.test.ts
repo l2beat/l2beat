@@ -234,6 +234,11 @@ describe(InteropFinancialsLoop.name, () => {
         srcPrice: 3000,
         srcAmount: 0.5,
         srcValueUsd: 1500,
+        dstAbstractTokenId: null,
+        dstSymbol: null,
+        dstPrice: null,
+        dstAmount: null,
+        dstValueUsd: null,
       }
       expect(interopTransfer.updateFinancials).toHaveBeenCalledWith(
         'msg2',
@@ -241,6 +246,11 @@ describe(InteropFinancialsLoop.name, () => {
       )
 
       const thirdUpdate: InteropTransferUpdate = {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
         dstSymbol: 'TOKEN',
         dstAbstractTokenId: '222222:ethereum:TOKEN',
         dstAmount: 200000000000,
@@ -299,12 +309,13 @@ describe(InteropFinancialsLoop.name, () => {
         },
       } as any)
 
-      const logger = mockObject<Logger>({
+      const forLogger = mockObject<Logger>({
         info: mockFn().returns(undefined),
         warn: mockFn().returns(undefined),
       })
-      //@ts-ignore
-      logger.for = () => logger
+      const logger = mockObject<Logger>({
+        for: mockFn().returns(forLogger),
+      })
 
       const service = new InteropFinancialsLoop(
         [
@@ -319,8 +330,19 @@ describe(InteropFinancialsLoop.name, () => {
 
       await service.run()
 
-      // Should still update with empty financials
-      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {})
+      // Should still update, explicitly clearing stale financial values
+      expect(interopTransfer.updateFinancials).toHaveBeenCalledWith('msg1', {
+        srcAbstractTokenId: null,
+        srcSymbol: null,
+        srcPrice: null,
+        srcAmount: null,
+        srcValueUsd: null,
+        dstAbstractTokenId: null,
+        dstSymbol: null,
+        dstPrice: null,
+        dstAmount: null,
+        dstValueUsd: null,
+      })
     })
   })
 })

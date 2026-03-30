@@ -10,10 +10,12 @@ import { cn } from '~/utils/cn'
 export function TechStackTag({
   tag,
   withoutTooltip,
+  displayType = 'name',
   className,
 }: {
   tag: ZkCatalogTag
   withoutTooltip?: boolean
+  displayType?: 'name' | 'type' | 'typeAndName'
   className?: string
 }) {
   return (
@@ -26,10 +28,17 @@ export function TechStackTag({
             className,
           )}
         >
-          {tag.type}: {tag.name}
+          {displayType === 'typeAndName'
+            ? `${tag.type}: ${tag.name}`
+            : tag[displayType]}
         </div>
       </TooltipTrigger>
-      <TooltipContent>{tag.description}</TooltipContent>
+      <TooltipContent>
+        <span className="font-bold text-label-value-13">
+          {tag.type}: {tag.name}
+        </span>
+        <p>{tag.description}</p>
+      </TooltipContent>
     </Tooltip>
   )
 }

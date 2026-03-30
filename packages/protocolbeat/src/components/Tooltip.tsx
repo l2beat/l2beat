@@ -1,5 +1,5 @@
 import * as RadixTooltip from '@radix-ui/react-tooltip'
-import clsx from 'clsx'
+import { cn } from '../utils/cn'
 
 export function TooltipProvider({
   delayDuration = 0,
@@ -24,14 +24,15 @@ export function TooltipTrigger(props: RadixTooltip.TooltipTriggerProps) {
 
 export function TooltipContent({
   sideOffset = 4,
+  className,
   ...props
 }: RadixTooltip.TooltipContentProps) {
   return (
     <RadixTooltip.Content
       sideOffset={sideOffset}
-      className={clsx(
-        'z-[100] h-fit max-h-80 w-fit max-w-80 origin-(--radix-tooltip-content-transform-origin) overflow-y-auto border border-coffee-400 bg-coffee-900 px-3 py-1.5 text-coffee-400 text-xs',
-        props.className,
+      className={cn(
+        'z-[100] h-fit max-h-80 w-fit max-w-80 origin-(--radix-tooltip-content-transform-origin) overflow-y-auto whitespace-pre-wrap border border-coffee-400 bg-coffee-900 px-3 py-1.5 text-coffee-400 text-xs',
+        className,
       )}
       {...props}
     >

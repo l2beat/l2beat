@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of {{getBondSizeFmt}} AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any bonded candidates.",
+  "ignoreMethods": [
+    "getCandidateAtIndex",
+    "getCandidateAtIndexForHatch",
+    "getCandidateCountForHatch",
+    "getCandidateInfo",
+    "getDesignatedProposer",
+    "getFirstEpoch",
+    "getHatch",
+    "getSeedTimestamp",
+    "getSetTimestamp",
+    "isCandidate",
+    "isHatchOpen",
+    "isHatchPrepared",
+    "isHatchValidated"
+  ],
+  "ignoreInWatchMode": ["getCurrentHatch"],
+  "fields": {
+    "getBondSizeFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function getBondSize() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"],
+      "description": "The amount of tokens required to join the candidate set."
+    },
+    "getCandidateCount": {
+      "description": "Hatch proposer candidates who posted the bond.",
+      "severity": "HIGH"
+    },
+    "getBondToken": {
+      "description": "The ERC20 token used for candidate bonds."
+    },
+    "getFailedHatchPunishmentFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function getFailedHatchPunishment() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"],
+      "description": "The amount deducted from the bond if the designated proposer fails to fulfill their duties."
+    },
+    "getWithdrawalTax": {
+      "description": "The amount deducted from the bond when a candidate voluntarily exits the active set."
+    },
+    "getFrequency": {
+      "description": "The number of epochs between escape hatch windows."
+    },
+    "getActiveDuration": {
+      "description": "The number of epochs an escape hatch remains open."
+    },
+    "getLagInHatches": {
+      "description": "The number of hatches ahead for which candidates are deterministically selected."
+    },
+    "getProposingExitDelay": {
+      "description": "The additional time (in seconds) a proposer must wait after their hatch ends before they can exit."
+    },
+    "LAG_IN_EPOCHS_FOR_RANDAO": {
+      "description": "The number of epochs to look back from the start of the hatch for a stable RANDAO seed."
+    },
+    "LAG_IN_EPOCHS_FOR_SET_SIZE": {
+      "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
+    },
+    "getRollup": { "description": "The address of the core Rollup contract." }
+  }
+}

@@ -555,22 +555,24 @@ describe(L2CostsAggregatorIndexer.name, () => {
 })
 
 function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
-  return new L2CostsAggregatorIndexer({
-    indexerService: mockObject<IndexerService>(),
-    logger: Logger.SILENT,
-    minHeight: 0,
-    parents: [],
-    db: mockObject<Database>({
-      l2Cost: mockObject<Database['l2Cost']>(),
-      l2CostPrice: mockObject<Database['l2CostPrice']>(),
-      aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-        upsertMany: mockFn().resolvesTo(1),
+  return new L2CostsAggregatorIndexer(
+    {
+      indexerService: mockObject<IndexerService>(),
+      minHeight: 0,
+      parents: [],
+      db: mockObject<Database>({
+        l2Cost: mockObject<Database['l2Cost']>(),
+        l2CostPrice: mockObject<Database['l2CostPrice']>(),
+        aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+          upsertMany: mockFn().resolvesTo(1),
+        }),
+        indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
       }),
-      indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
-    }),
-    projects: MOCK_PROJECTS,
-    ...deps,
-  })
+      projects: MOCK_PROJECTS,
+      ...deps,
+    },
+    Logger.SILENT,
+  )
 }
 
 function tx(

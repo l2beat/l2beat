@@ -1,6 +1,6 @@
 {
   "name": "lyra",
-  "timestamp": 1769513434,
+  "timestamp": 1772198387,
   "configHash": "0x510ea28a3a8d8b73d2fac1d324bc35ee4556e24fe267ee7d5fd0602fbb86de3b",
   "entries": [
     {
@@ -200,7 +200,7 @@
         "disputeGameFactory": "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21",
         "eip1559Denominator": 0,
         "eip1559Elasticity": 0,
-        "gasLimit": 200000000,
+        "gasLimit": 500000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "eth:0x5456f02c08e9A018E42C39b351328E5AA864174A",
           "l1ERC721Bridge": "eth:0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
@@ -692,7 +692,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 13 (31%)",
-        "nonce": 219,
+        "nonce": 239,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -780,7 +780,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620993",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621023",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1044,7 +1044,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 24286579
+          "prevBlockNum": 24547299
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1120,10 +1120,11 @@
           ]
         ],
         "$upgradeCount": 4,
+        "challengerFromDGF": "UNRESOLVED",
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 373,
+        "gameCount": 435,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x2839BaF8BbdA830e96896aA698A6183ea42295A8",
@@ -1137,10 +1138,13 @@
         "initBonds": [0, 0, 0, 0, 0],
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 373,
+        "permissionedGameArgs": "0x",
+        "permissionedGamesTotal": 435,
+        "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "version": "1.3.0"
+        "version": "1.3.0",
+        "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
         "gameImpls": { "severity": "HIGH" },
@@ -1152,6 +1156,11 @@
         "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21": "Proxy",
         "eth:0x74Fac1D45B98bae058F8F566201c9A81B85C7D50": "DisputeGameFactory"
       },
+      "usedTypes": [
+        { "typeCaster": "SliceAddress", "arg": { "offset": 124 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 144 } },
+        { "typeCaster": "SliceAddress", "arg": { "offset": 72 } }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1165,7 +1174,15 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+      "ignoreInWatchMode": [
+        "anchorGame",
+        "getAnchorRoot",
+        "absolutePrestateFromGame",
+        "vmFromGame",
+        "oracleFromVm",
+        "challengePeriodFromOracle",
+        "wethFromGame"
+      ],
       "sinceTimestamp": 1768923371,
       "sinceBlock": 24276925,
       "values": {
@@ -1179,14 +1196,17 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
+        "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
+        "anchorGame": "eth:0xCf9961FDfc31F26966F999CCdD5a1D2AA9298133",
+        "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xdead000000000000000000000000000000000000000000000000000000000000",
-          0
+          "0x839ca3da2b0cf450a3b5e9090c4eb222569ec94eb4a6773abe4b94fe07cf407c",
+          35779401
         ],
         "initVersion": 1,
+        "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
         "paused": false,
         "proxyAdmin": "eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1195,7 +1215,9 @@
         "retirementTimestamp": 1768923371,
         "superchainConfig": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
         "systemConfig": "eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
-        "version": "3.5.0"
+        "version": "3.5.0",
+        "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
+        "wethFromGame": "eth:0x30332E9ec0833ECd34d6eb0bf5C14C442D0217F1"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -2092,9 +2114,9 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
+    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0xe7884d3b36a316645fdb5a6b9834ef5afc176d1eda99f34a56d721fe76727523",
+    "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
@@ -2106,6 +2128,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24325881 },
+  "usedBlockNumbers": { "ethereum": 24548521 },
   "permissionsConfigHash": "0xd1b8dd56b5eb594e813c249ddccc92e1fe1a764fcf7848654580d122266dfcdf"
 }

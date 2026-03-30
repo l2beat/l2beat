@@ -41,6 +41,13 @@ pnpm interop:example all --seal
 pnpm test
 ```
 
+## Additional RPC chains for config plugins
+
+Some config plugins need RPCs that are not referenced in the example tx list.
+The example runner loads extra chains based on `loadConfigs`, using
+`configAdditionalChains.ts`. Add a mapping there when a config plugin needs
+extra RPCs beyond the example transactions.
+
 ## When to Re-seal
 
 You must re-seal when:

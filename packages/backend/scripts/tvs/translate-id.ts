@@ -20,7 +20,7 @@ const cmd = command({
 
     const projects = await ps.getProjects({
       select: ['tvsConfig'],
-      optional: ['chainConfig', 'isBridge'],
+      optional: ['chainConfig'],
     })
 
     const configs = []

@@ -54,7 +54,7 @@ describe('interop examples', () => {
         const runner = new ExampleRunner({
           exampleId: example,
           example: definition,
-          logger: Logger.SILENT,
+          logger: Logger.ERROR,
           http: mockObject<HttpClient>({}),
           tokenDbClient: mockObject<TokenDbClient>({}),
           snapshotService,

@@ -118,7 +118,7 @@ export const adi: ScalingProject = {
           formula: 'sharedBridge',
           firstParameter: EthereumAddress(
             '0x0583Ef2B6416cb7B287406438B940E4d99680C5B',
-          ), // gateway diamond on ethereum
+          ), // adi diamond on ethereum
           address: EthereumAddress(
             '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
           ),
@@ -137,7 +137,7 @@ export const adi: ScalingProject = {
           formula: 'sharedBridge',
           firstParameter: EthereumAddress(
             '0x0583Ef2B6416cb7B287406438B940E4d99680C5B',
-          ), // gateway diamond on ethereum
+          ), // adi diamond on ethereum
           address: EthereumAddress(
             '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
           ),
@@ -156,7 +156,7 @@ export const adi: ScalingProject = {
           formula: 'sharedBridge',
           firstParameter: EthereumAddress(
             '0x0583Ef2B6416cb7B287406438B940E4d99680C5B',
-          ), // gateway diamond on ethereum
+          ), // adi diamond on ethereum
           address: EthereumAddress(
             '0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186',
           ),
@@ -214,6 +214,10 @@ export const adi: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,

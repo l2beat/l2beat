@@ -98,6 +98,10 @@ export const fuelv1: ScalingProject = {
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,

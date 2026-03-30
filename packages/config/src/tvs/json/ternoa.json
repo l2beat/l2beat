@@ -167,6 +167,24 @@
     },
     {
       "mode": "auto",
+      "id": "ternoa-ONDO",
+      "priceId": "ondo-finance",
+      "symbol": "ONDO",
+      "name": "Ondo",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x69e7cE2db8E59C70b25Fe9F7b36B6F8892ebd7E9",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ternoa-POL",
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
@@ -222,6 +240,24 @@
     },
     {
       "mode": "auto",
+      "id": "ternoa-SKY",
+      "priceId": "sky",
+      "symbol": "SKY",
+      "name": "SKY Governance Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39925/large/sky.jpg?1724827980",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xBF8A05cB73e1a80095dFb337981571BB4e48461D",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
       "id": "ternoa-TEL",
       "priceId": "telcoin",
       "symbol": "TEL",
@@ -237,6 +273,24 @@
         "decimals": 2,
         "sinceTimestamp": 1735650935,
         "untilTimestamp": 1753387200
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2548C94A3092494dB3aF864cc2cF781a72f55678",
+        "chain": "ternoa",
+        "decimals": 18,
+        "sinceTimestamp": 1735650935
       }
     },
     {
@@ -272,6 +326,24 @@
         "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
         "chain": "ternoa",
         "decimals": 6,
+        "sinceTimestamp": 1735650935
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "ternoa-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xBfE55a77Cb773229610830226b6c54bDCf36761E",
+        "chain": "ternoa",
+        "decimals": 18,
         "sinceTimestamp": 1735650935
       }
     },

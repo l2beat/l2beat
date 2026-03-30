@@ -1,3 +1,167 @@
+Generated with discovered.json: 0xf9e8d293d9a2d9527f9fdfb1e50708d8f0ebadd8
+
+# Diff at Thu, 05 Mar 2026 10:33:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1771254730
+- current timestamp: 1771254730
+
+## Description
+
+config: move old ignition templates to make space for alpha.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+    contract Inbox (eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee) {
+    +++ description: Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.
+      template:
+-        "aztecnetwork/Inbox"
++        "aztecnetwork/ignition/Inbox"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      template:
+-        "aztecnetwork/Rollup"
++        "aztecnetwork/ignition/Rollup"
+    }
+```
+
+```diff
+    contract FeeJuicePortal (eth:0xe05dc9D5969272831757181fFf1532B066254bf1) {
+    +++ description: A one-way public bridge to deposit AZTEC tokens to the Rollup.
+      template:
+-        "aztecnetwork/FeeJuicePortal"
++        "aztecnetwork/ignition/FeeJuicePortal"
+    }
+```
+
+```diff
+    contract Outbox (eth:0xf006c41097861AFeb18b05e586B921c081411Ee9) {
+    +++ description: Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.
+      template:
+-        "aztecnetwork/Outbox"
++        "aztecnetwork/ignition/Outbox"
+    }
+```
+
+Generated with discovered.json: 0x66b1aa14ba13d1e6d8f56a79f297a6bf0dc329cf
+
+# Diff at Fri, 20 Feb 2026 20:44:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3edf2b3bacf84cf46a7d5d7c744851af89730742 block: 1771254730
+- current timestamp: 1771254730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771254730 (main branch discovery), not current.
+
+```diff
+    contract AZTEC Token (eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2) {
+    +++ description: AZTEC token contract
+      name:
+-        "Aztec"
++        "AZTEC Token"
+    }
+```
+
+Generated with discovered.json: 0xd11bc141182aa6d49b30900edad6f62b44bda83c
+
+# Diff at Mon, 16 Feb 2026 15:13:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bb0201789c97cc74af8432f172609bc8ef3357f0 block: 1769432788
+- current timestamp: 1771254730
+
+## Description
+
+TGE happened. Sequencers can claim block production rewards, AZTEC is transferable and tradable on uniswap. Token governance is launched.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+    +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.isRewardsClaimable:
+-        false
++        true
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769432788 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract StakingRegistry (eth:0x042dF8f42790d6943F41C25C2132400fd727f452)
+    +++ description: Manages staking providers for delegation.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseStaker (eth:0x0Cb8fe28D35fD4763C4f3E3761904bAcF829BbF8)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
+-   Status: DELETED
+    contract ATPWithdrawableAndClaimableStakerV2 (eth:0x11ED6b4a9D44cf8bC4e1763D08304eF20c998c95)
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseStaker (eth:0x6131D4900CD8dC328FB3CF6DFFEfbC628F02e7d9)
+    +++ description: A template contract used for staker proxies within the StakingRegistry.
+```
+
+```diff
+-   Status: DELETED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x63841bAD6B35b6419e15cA9bBBbDf446D4dC3dde)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
+```
+
+```diff
+-   Status: DELETED
+    contract TGEPayload (eth:0x77A5EEF319E23615B848a09Ebd151744547b959C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ATPWithdrawableAndClaimableStaker (eth:0x7C009AE557234d094D798A03D21E3c1C1CAD3b42)
+    +++ description: Standard escrow implementation used to simplify and manage staking with locked AZTEC tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract GovernanceAcceleratedLock (eth:0x7d6DECF157E1329A20c4596eAf78D387E896aa4e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AztecTokenPositionRegistry_Sequencers (eth:0x8F778768aDed86AB778a47cd81b3b42B4b3F655B)
+    +++ description: A registry for contracts related to Sequencer staking and token unlock parameters.
+```
+
 Generated with discovered.json: 0x23e18f2b5d441f0d11e389024ea3e9e2f7bc0e9b
 
 # Diff at Mon, 26 Jan 2026 13:07:34 GMT:

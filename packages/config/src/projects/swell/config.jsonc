@@ -8,12 +8,10 @@
   ],
   "overrides": {
     "eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
-    },
-    "eth:0x761443767001f90bcf1F9b93d8d357362F0Ded1e": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposerFromDGF": { "permissions": [{ "type": "propose" }] },
+        "challengerFromDGF": { "permissions": [{ "type": "challenge" }] }
       }
     }
   }

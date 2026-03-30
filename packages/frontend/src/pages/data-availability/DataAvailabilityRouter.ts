@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -14,7 +14,7 @@ import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabil
 export function createDataAvailabilityRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
@@ -31,7 +31,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilitySummaryData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -44,7 +44,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityRiskData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -57,7 +57,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -70,7 +70,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityLivenessData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -83,7 +83,7 @@ export function createDataAvailabilityRouter(
       },
       () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
@@ -111,7 +111,7 @@ export function createDataAvailabilityRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

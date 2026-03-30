@@ -50,8 +50,9 @@ export class AcrossConfigPlugin
     private store: InteropConfigStore,
     protected logger: Logger,
     private ethereumRpc: IRpcClient,
+    intervalMs: number,
   ) {
-    super({ intervalMs: 20 * 60 * 1000 })
+    super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: AcrossConfig.key })
   }
 
@@ -62,7 +63,7 @@ export class AcrossConfigPlugin
     const reconciled = reconcileNetworks(previous, latest)
 
     if (reconciled.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: AcrossConfig.key,
         removed: reconciled.removed,
       })

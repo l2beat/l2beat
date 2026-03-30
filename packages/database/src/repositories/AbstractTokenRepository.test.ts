@@ -75,6 +75,26 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
         comment: 'updated comment',
       })
     })
+
+    it('allows clearing the category', async () => {
+      const record = abstractToken({
+        id: 'TK0001',
+        category: 'stablecoin',
+      })
+      await repository.insert(record)
+
+      const updatedRows = await repository.updateById(record.id, {
+        category: null,
+      })
+
+      expect(updatedRows).toEqual(1)
+
+      const stored = await repository.findById(record.id)
+      expect(stored).toEqual({
+        ...record,
+        category: null,
+      })
+    })
   })
 
   describe(AbstractTokenRepository.prototype.findByCoingeckoId.name, () => {
@@ -150,11 +170,13 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
           id: 'TK0001',
           symbol: 'ETH',
           iconUrl: 'https://example.com/eth.png',
+          issuer: 'ethereum',
         },
         {
           id: 'TK0003',
           symbol: 'DAI',
           iconUrl: null,
+          issuer: null,
         },
       ])
     })
@@ -182,7 +204,7 @@ function abstractToken(
     id: overrides.id,
     issuer: overrides.issuer ?? null,
     symbol: overrides.symbol ?? 'TOKEN',
-    category: overrides.category ?? 'other',
+    category: overrides.category ?? null,
     iconUrl: overrides.iconUrl ?? null,
     coingeckoId: overrides.coingeckoId ?? null,
     coingeckoListingTimestamp: overrides.coingeckoListingTimestamp ?? null,

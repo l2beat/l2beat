@@ -67,7 +67,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -93,7 +93,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -119,7 +119,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }

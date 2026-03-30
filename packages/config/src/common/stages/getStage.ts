@@ -1,4 +1,10 @@
-import { type ChecklistTemplate, createGetStage, isSatisfied } from './stage'
+import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import {
+  type ChecklistTemplate,
+  createGetStage,
+  isSatisfied,
+  type UpcomingStageRequirements,
+} from './stage'
 
 interface GetStageOptions {
   rollupNodeLink?: string
@@ -8,9 +14,22 @@ interface GetStageOptions {
     short: string
     long: string
   }
+  proverSourceLink?: string
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
+
+const UPCOMING_STAGE_REQUIREMENTS: UpcomingStageRequirements = {
+  stage1: {
+    expiresAt: PROJECT_COUNTDOWNS.stageChanges,
+    items: [
+      'noRedTrustedSetups',
+      'proverSourcePublished',
+      'verifierContractsReproducible',
+      'programHashesReproducible',
+    ],
+  },
+}
 
 export const getStage = (
   blueprintChecklist: BlueprintChecklist,
@@ -26,7 +45,10 @@ export const getStage = (
   const blueprint = getBlueprint(opts)
 
   return {
-    ...createGetStage(blueprint)(blueprintChecklist),
+    ...createGetStage(
+      blueprint,
+      UPCOMING_STAGE_REQUIREMENTS,
+    )(blueprintChecklist),
     additionalConsiderations: opts?.additionalConsiderations,
     stage1PrincipleDescription: opts?.stage1PrincipleDescription,
   }
@@ -102,6 +124,32 @@ const getBlueprint = (opts?: GetStageOptions) =>
               ? ` [(List of members)](${opts.securityCouncilReference}).`
               : '.'),
           negative: 'The Security Council is not properly set up.',
+        },
+        noRedTrustedSetups: {
+          positive:
+            'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+          negative:
+            'The proof system does not meet the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
+        },
+        proverSourcePublished: {
+          positive:
+            'Prover source code is published.' +
+            (opts?.proverSourceLink
+              ? ` [View code](${opts.proverSourceLink})`
+              : ''),
+          negative: 'Prover source code is not published.',
+        },
+        verifierContractsReproducible: {
+          positive:
+            "Onchain verifiers' smart contracts can be independently regenerated from the verifier source code.",
+          negative:
+            "Not all onchain verifiers' smart contracts can be independently regenerated from the verifier source code.",
+        },
+        programHashesReproducible: {
+          positive:
+            'The sources of all programs used are public and program hashes can be independently regenerated.',
+          negative:
+            'Not all program sources are public or not all program hashes can be independently regenerated.',
         },
       },
     },

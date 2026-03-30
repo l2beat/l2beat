@@ -1,10 +1,12 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
+import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
+import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
 import { TrustedSetupCell } from '../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
@@ -33,7 +35,7 @@ export const zkCatalogColumns = [
     },
     enableHiding: false,
   }),
-  columnHelper.accessor((row) => row.tvs, {
+  columnHelper.accessor((row) => row.tvs.value, {
     id: 'tvs',
     meta: {
       tooltip:
@@ -44,7 +46,7 @@ export const zkCatalogColumns = [
         <TwoRowCell>
           <TwoRowCell.First>
             <div className="font-bold text-base">
-              {formatCurrency(ctx.row.original.tvs.value, 'usd')}
+              {formatCurrency(ctx.getValue(), 'usd')}
             </div>
           </TwoRowCell.First>
           <TwoRowCell.Second>
@@ -75,7 +77,9 @@ export const zkCatalogColumns = [
           additionalRows: (ctx) => {
             return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
               .slice(1)
-              .map(([key, ts]) => <TrustedSetupCell key={key} {...ts} />)
+              .map(([key, ts]) => (
+                <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
+              ))
           },
         },
       }),
@@ -101,13 +105,80 @@ export const zkCatalogColumns = [
           },
         },
       }),
+      columnHelper.display({
+        id: 'used-in',
+        header: 'Used in',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <ProjectsUsedInByStatus data={first.projectsUsedInByStatus} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <ProjectsUsedInByStatus
+                  key={key}
+                  data={ts.projectsUsedInByStatus}
+                />
+              ))
+          },
+        },
+      }),
     ],
   }),
   columnHelper.display({
-    id: 'tech-stack',
-    header: 'Tech stack',
+    id: 'zkevm-tech-stack',
+    header: 'Main prover tech stack',
     cell: (ctx) => {
-      return <TechStackCell techStack={ctx.row.original.techStack} />
+      return (
+        <TechStackCell
+          tags={[
+            ...(ctx.row.original.techStack.zkVM ?? []),
+            ...(ctx.row.original.techStack.snark ?? []),
+          ]}
+        />
+      )
+    },
+    meta: {
+      tooltip:
+        'Technical attributes of the main proving system itself, which could be a zkVM or circuit-based. For validity L2s, this system produces a proof of valid state transition of one or more L2 blocks, possibly with recursive proving.',
+      cellClassName: 'pr-1!',
+    },
+  }),
+  columnHelper.display({
+    id: 'arrow',
+    cell: (ctx) => {
+      const { finalWrap, zkVM, snark } = ctx.row.original.techStack
+
+      const leftSideEmpty = !(zkVM?.length || snark?.length)
+      const rightSideEmpty = !finalWrap?.length
+
+      if (leftSideEmpty || rightSideEmpty) return null
+
+      return <FilledArrowIcon className="fill-secondary" />
+    },
+    meta: {
+      cellClassName: 'pr-1!',
+    },
+  }),
+  columnHelper.display({
+    id: 'final-wrap-stack',
+    header: 'Final wrap stack',
+    cell: (ctx) => {
+      return (
+        <TechStackCell
+          tags={ctx.row.original.techStack.finalWrap ?? []}
+          className="md:min-w-[180px]"
+        />
+      )
+    },
+    meta: {
+      tooltip:
+        'Technical attributes of the final wrap proving system, if applicable. Final wrap is a circuit-based SNARK that compresses the proof from the main prover and produces the proof that is submitted onchain for efficient verification.',
     },
   }),
 ]

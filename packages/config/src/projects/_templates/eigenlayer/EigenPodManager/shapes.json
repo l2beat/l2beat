@@ -13,5 +13,10 @@
     "hash": "0x1d0e4cec5c013a815e3c94572dfa980117f415c1f63d79ba522cf437c672534f",
     "address": "eth:0xE48D7CaeC1790b293667e4bB2dE1E00536F2bABd",
     "blockNumber": 23083567
+  },
+  "EigenPodManager_v1.9.0": {
+    "hash": "0x202a0be086b58267c42f08c1e1cade3232244aaf3fef2195bc77fc74db6b5459",
+    "address": "eth:0xd22dd829779ADBf3869fb224F703452f7F95E9dB",
+    "blockNumber": 24350294
   }
 }

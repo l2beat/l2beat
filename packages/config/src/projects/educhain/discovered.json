@@ -1,6 +1,6 @@
 {
   "name": "educhain",
-  "timestamp": 1756118260,
+  "timestamp": 1772118697,
   "configHash": "0x849f0d336c03ca606b7e87952e90211b3f008707c362b55737d14c14bd1f13ef",
   "entries": [
     {
@@ -96,7 +96,7 @@
         "allowedOutboxList": [
           "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"
         ],
-        "delayedMessageCount": 27616,
+        "delayedMessageCount": 29150,
         "inboxHistory": [
           "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
           "arb1:0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
@@ -106,8 +106,8 @@
         "outboxHistory": ["arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 72580,
-        "sequencerReportedSubMessageCount": 16749573
+        "sequencerMessageCount": 115829,
+        "sequencerReportedSubMessageCount": 42410574
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -512,7 +512,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 72580,
+        "batchCount": 115829,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"],
         "bridge": "arb1:0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -543,7 +543,7 @@
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 27616,
+        "totalDelayedMessagesRead": 29150,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -566,7 +566,23 @@
     {
       "address": "arb1:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0xa02612e698cdf0f165e76377b7aefb72b855bf88be73017b1ec214669fc409cf"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "arb1:0x5aF42746a8Af42d8a4708dF238C53F1F71abF0E0",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "GelatoDelegation",
+          "version": "0.0.1",
+          "chainId": 42161,
+          "verifyingContract": "arb1:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "arb1:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108"
+      }
     },
     {
       "name": "RollupProxy",
@@ -623,13 +639,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "10000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6758,
+        "firstUnresolvedNode": 11155,
         "inbox": "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22775036,
-        "latestConfirmed": 6757,
-        "latestNodeCreated": 6757,
+        "latestConfirmed": 11154,
+        "latestNodeCreated": 11154,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -1095,7 +1111,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 6737,
+        "nonce": 11134,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1418,6 +1434,34 @@
       "function sequencerInbox() view returns (address)",
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
+    ],
+    "arb1:0x5aF42746a8Af42d8a4708dF238C53F1F71abF0E0": [
+      "error ExcessiveInvalidation()",
+      "error InvalidCaller()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error InvalidSignatureS()",
+      "error InvalidValidator()",
+      "error Unauthorized()",
+      "error UnsupportedExecutionMode()",
+      "event ValidatorAdded(address indexed validator)",
+      "event ValidatorRemoved(address indexed validator)",
+      "function addValidator(address validator)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function entryPoint() pure returns (address)",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash)",
+      "function getNonce(uint192 key) view returns (uint256)",
+      "function invalidateNonce(uint256 newNonce)",
+      "function isValidSignature(bytes32 digest, bytes signature) view returns (bytes4)",
+      "function isValidatorEnabled(address validator) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function removeValidator(address validator)",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool)",
+      "function supportsInterface(bytes4 interfaceID) pure returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256)"
     ],
     "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1874,6 +1918,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 372114453 },
+  "usedBlockNumbers": { "arbitrum": 436205081 },
   "permissionsConfigHash": "0x9018f20da56fae341cc2367860b74d2b18b66ef53f1f6bb29523092db305d6aa"
 }

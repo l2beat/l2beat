@@ -77,6 +77,7 @@ export const stone: BaseProject = {
       {
         projectId: ProjectId('immutablex'),
         sinceTimestamp: UnixTime(1617832800),
+        untilTimestamp: UnixTime(1772672831),
       },
       {
         projectId: ProjectId('sorare'),
@@ -112,6 +113,9 @@ export const stone: BaseProject = {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
         // in hex format '0x...'
         hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
+        name: 'Stone verifier 2024_10',
+        sourceLink:
+          'https://etherscan.io/address/0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942#code',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           {
@@ -121,7 +125,6 @@ export const stone: BaseProject = {
             chain: 'ethereum',
             overrideUsedIn: [
               ProjectId('edgex'),
-              ProjectId('immutablex'),
               ProjectId('myria'),
               ProjectId('sorare'),
               ProjectId('brine'),

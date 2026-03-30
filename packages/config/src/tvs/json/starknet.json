@@ -18,15 +18,8 @@
         "sinceTimestamp": 1652101033
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Custom escrow"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -44,8 +37,15 @@
         "sinceTimestamp": 1715731200
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -100,8 +100,15 @@
         "sinceTimestamp": 1692689267
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -157,8 +164,15 @@
         "sinceTimestamp": 1688046071
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -212,8 +226,15 @@
         "sinceTimestamp": 1718236800
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -231,8 +252,15 @@
         "sinceTimestamp": 1657137623
       },
       "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -268,8 +296,15 @@
         "sinceTimestamp": 1692689279
       },
       "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -396,8 +431,15 @@
         "sinceTimestamp": 1698061847
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -452,8 +494,15 @@
         "sinceTimestamp": 1657137615
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -542,7 +591,14 @@
         "untilTimestamp": 1768848455
       },
       "category": "btc",
-      "source": "canonical",
+      "source": "custom-canonical",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      },
       "isAssociated": false
     },
     {
@@ -561,12 +617,12 @@
         "sinceTimestamp": 1657137623
       },
       "category": "ether",
-      "source": "external",
+      "source": "custom-canonical",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Custom escrow"
+            "name": "Canonical + additional trust assumptions"
           }
         ]
       }
@@ -588,8 +644,15 @@
         "untilTimestamp": 1750939200
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "source": "custom-canonical",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical + additional trust assumptions"
+          }
+        ]
+      }
     }
   ]
 }

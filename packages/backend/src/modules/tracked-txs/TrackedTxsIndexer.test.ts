@@ -273,36 +273,38 @@ function getMockTrackedTxsIndexer(params: {
     projects,
   } = params
 
-  return new TrackedTxsIndexer({
-    configurations: configurations ?? [
-      mockObject<Configuration<TrackedTxConfigEntry>>({ id: 'a' }),
-    ],
-    db: mockDatabase({
-      l2Cost: l2CostRepository ?? mockObject<Database['l2Cost']>(),
-      liveness: livenessRepository ?? mockObject<Database['liveness']>(),
-      syncMetadata:
-        syncMetadataRepository ??
-        mockObject<Database['syncMetadata']>({
-          updateSyncedUntil: mockFn(async () => {}),
+  return new TrackedTxsIndexer(
+    {
+      configurations: configurations ?? [
+        mockObject<Configuration<TrackedTxConfigEntry>>({ id: 'a' }),
+      ],
+      db: mockDatabase({
+        l2Cost: l2CostRepository ?? mockObject<Database['l2Cost']>(),
+        liveness: livenessRepository ?? mockObject<Database['liveness']>(),
+        syncMetadata:
+          syncMetadataRepository ??
+          mockObject<Database['syncMetadata']>({
+            updateSyncedUntil: mockFn(async () => {}),
+          }),
+      }),
+      indexerService: indexerService ?? mockObject<IndexerService>({}),
+      trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
+      updaters: updaters ?? [
+        mockObject<TxUpdaterInterface<'liveness'>>({
+          type: 'liveness',
+          update: async () => {},
         }),
-    }),
-    indexerService: indexerService ?? mockObject<IndexerService>({}),
-    trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
-    updaters: updaters ?? [
-      mockObject<TxUpdaterInterface<'liveness'>>({
-        type: 'liveness',
-        update: async () => {},
-      }),
-      mockObject<TxUpdaterInterface<'l2costs'>>({
-        type: 'l2costs',
-        update: async () => {},
-      }),
-    ],
-    logger: Logger.SILENT,
-    parents: [],
-    serializeConfiguration: () => '',
-    projects,
-  })
+        mockObject<TxUpdaterInterface<'l2costs'>>({
+          type: 'l2costs',
+          update: async () => {},
+        }),
+      ],
+      parents: [],
+      serializeConfiguration: () => '',
+      projects,
+    },
+    Logger.SILENT,
+  )
 }
 
 function getMockTrackedTxResults(): TrackedTxResult[] {

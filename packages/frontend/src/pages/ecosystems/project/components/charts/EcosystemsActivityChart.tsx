@@ -9,6 +9,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import {
   EthereumFillGradientDef,
@@ -16,9 +17,14 @@ import {
 } from '~/components/core/chart/defs/EthereumGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
+import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import { InfoIcon } from '~/icons/Info'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type {
   EcosystemEntry,
@@ -110,7 +116,6 @@ export function EcosystemsActivityChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
         interactiveLegend={{
           dataKeys,
@@ -118,10 +123,15 @@ export function EcosystemsActivityChart({
           disableOnboarding: true,
         }}
       >
-        <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: [
+          <ChartStrokeOverFillAreaComponents
+            data={[
               {
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
@@ -136,17 +146,16 @@ export function EcosystemsActivityChart({
                 fill: 'url(#fillProjects)',
                 hide: !dataKeys.includes('projects'),
               },
-            ],
-          })}
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
-              scale: 'lin',
+            ]}
+          />
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               unit: ' UOPS',
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<ActivityCustomTooltip metric="uops" />} />
           <defs>
             <CustomFillGradientDef
@@ -191,7 +200,19 @@ function Header({
           )
         ) : stats?.latestUops ? (
           <div className="font-semibold text-xl">
-            {formatActivityCount(stats.latestUops)} UOPS
+            {formatActivityCount(stats.latestUops)} UOPS{' '}
+            <Tooltip>
+              <TooltipTrigger>
+                <InfoIcon className="size-3.5" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  The user operations include user actions that are bundled
+                  within a single transaction. If a transaction doesn't have
+                  bundled actions, it's considered as one operation.
+                </p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />

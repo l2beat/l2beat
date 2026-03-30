@@ -1,3 +1,217 @@
+Generated with discovered.json: 0xb9def753e26c70b370ed847be530d0195bae29d4
+
+# Diff at Thu, 12 Mar 2026 13:08:25 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772791434
+- current timestamp: 1773320760
+
+## Description
+
+OptimismPortal2 and AnchorStateRegistry upgraded (same tx). proofMaturityDelaySeconds reduced from 604800 (7 days) to 86400 (1 day), disputeGameFinalityDelaySeconds from 302400 (3.5 days) to 86400 (1 day). Actual withdrawal time still depends on Kailua game resolution / proof timing. Templates still match — no new functionality, just constructor parameter changes baked into the new implementations. OptimismPortal2 diff: https://disco.l2beat.com/diff/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202/eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287 AnchorStateRegistry diff: https://disco.l2beat.com/diff/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E/eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431
+
+## Watched changes
+
+```diff
+    contract OptimismPortal2 (eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.$implementation:
+-        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
++        "eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287"
+      values.$pastUpgrades.10:
++        ["2026-03-12T10:39:35.000Z","0x0c0e889a96e766d168753f3e596af7d57a9c07f7d84fb0ba05e3d46adf61ddd8",["eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        86400
+      values.proofMaturityDelaySeconds:
+-        604800
++        86400
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
+-        "OptimismPortal2"
+      implementationNames.eth:0x3C877699263119022Cdaa251058c1BAc8Fc43287:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      values.$implementation:
+-        "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E"
++        "eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431"
+      values.$pastUpgrades.1:
++        ["2026-03-12T10:39:35.000Z","0x0c0e889a96e766d168753f3e596af7d57a9c07f7d84fb0ba05e3d46adf61ddd8",["eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.disputeGameFinalityDelaySeconds:
+-        302400
++        86400
+      implementationNames.eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0xd0216bdcC195abDF77746B6a6347CE85e2535431:
++        "AnchorStateRegistry"
+    }
+```
+
+Generated with discovered.json: 0xafd6a86c6d5cf320b1babb5e8a37aa4c4ad7f314
+
+# Diff at Fri, 06 Mar 2026 10:05:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4100d91208092499341e9181894e315cc8ef1f26 block: 1772143358
+- current timestamp: 1772791434
+
+## Description
+
+New KailuaGame and KailuaTreasury instances deployed with the same implementation code (identical source hashes). The ROLLUP_CONFIG_HASH changed (0x4910...→0x69d9...) in preparation for BOB's Jovian hardfork activation on March 12, 2026 (mainnet timestamp 1773325801). The Kailua config hash includes hardfork timestamps, so adding jovian_time changes the hash. Ref: https://github.com/bob-collective/bob/pull/960. The KailuaTreasury L2_BLOCK_NUMBER also advanced (29576476→29835945).
+
+KailuaGame diff: https://disco.l2beat.com/diff/eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a/eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF
+
+KailuaTreasury diff: https://disco.l2beat.com/diff/eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895/eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a"
++        "eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0x4BE239c86364eD73fc244A5F50c8ccB101a492eF)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0x9B3E1661bccAF907893B71e4016c01513ae9263C)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+Generated with discovered.json: 0xb15c9fd77c1a7287678c8ad8c91872056d324e99
+
+# Diff at Thu, 26 Feb 2026 22:03:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769532258
+- current timestamp: 1772143358
+
+## Description
+
+BOB's Kailua dispute system was updated with new KailuaGame and KailuaTreasury contract instances. The DisputeGameFactory's game1337 implementation changed from 0xe4341585 to 0xe34577E7.
+
+The new KailuaTreasury (0xE99AF5F4) retains the 0.5 ETH participation bond but has no vanguard advantage set (previously 1 month). The source code change is the addition of an OP-Contracts v5 compatibility shim: an `anchorStateRegistry()` function that returns `msg.sender`, allowing withdrawals under op-contracts v5.0.0.
+
+The FPVM image ID also updated (0xf176eb82 → 0x4aca4abd), indicating a new ZK verification image for the RISC Zero prover.
+
+KailuaGame diff: https://disco.l2beat.com/diff/eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b/eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a
+
+KailuaTreasury diff: https://disco.l2beat.com/diff/eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420/eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+```
+
+```diff
+    EOA  (eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x6F27A23Fc28C18EB2C268BFe1d575E051Ad94420","description":"propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.","role":".vanguard"}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b"
++        "eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0xe4341585B9BbC55A44C20A3C037058891e7A053b)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (eth:0xe34577E7d8bbdf044de236B15DF132B1409ca82a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (eth:0xE99AF5F4C60E06Beb3827F4ffdD06E88c55fB895)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 0s.
+```
+
+## Source code changes
+
+```diff
+.../projects/bob/{.flat@1769532258 => .flat}/KailuaTreasury.sol  | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+```
+
+Generated with discovered.json: 0x13d49e446b120492a07f5cb3561b918045e47a85
+
+# Diff at Fri, 13 Feb 2026 11:33:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769532258
+- current timestamp: 1769532258
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769532258 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0x64ba262484c99fb1d7c15926c7614428a5b2bf51
 
 # Diff at Tue, 27 Jan 2026 16:46:34 GMT:

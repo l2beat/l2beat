@@ -4,7 +4,7 @@ import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
-import type { LivenessSectionProps } from '~/components/projects/sections/LivenessSection'
+import type { LivenessSectionProps } from '~/components/projects/sections/liveness/LivenessSection'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
@@ -14,7 +14,10 @@ import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
   helpers: SsrHelpers,
-  project: Project<never, 'archivedAt' | 'trackedTxsConfig' | 'livenessConfig'>,
+  project: Project<
+    never,
+    'archivedAt' | 'trackedTxsConfig' | 'livenessConfig' | 'livenessInfo'
+  >,
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): Promise<
@@ -42,10 +45,15 @@ export async function getLivenessSection(
   )
   const duplicatedData = project.livenessConfig?.duplicateData.to
 
-  const configuredSubtypes = compact([
-    ...Object.keys(configSubtypes),
-    duplicatedData,
-  ]) as TrackedTxsConfigSubtype[]
+  const configuredSubtypes = (
+    compact([
+      ...Object.keys(configSubtypes),
+      duplicatedData,
+    ]) as TrackedTxsConfigSubtype[]
+  ).filter(
+    (subtype) => project.livenessInfo?.overwrites?.[subtype] !== 'no-data', // we do not want to show disabled subtypes
+  )
+
   const range = optionToRange('max')
   const subtype = getDefaultSubtype(configuredSubtypes)
 

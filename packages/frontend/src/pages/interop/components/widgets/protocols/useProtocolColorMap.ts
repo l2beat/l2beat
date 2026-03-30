@@ -19,7 +19,7 @@ export function useProtocolColorMap(
     }
 
     // Get all unique protocol names and sort for consistent ordering
-    const protocolNames = uniq(allProtocols.map((p) => p.protocolName)).sort()
+    const protocolNames = uniq(allProtocols.map((p) => p.name)).sort()
 
     const colors = generateAccessibleColors(protocolNames.length + 1) // +1 for "Others"
 

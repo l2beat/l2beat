@@ -251,6 +251,8 @@ interface OpStackConfigCommon {
    * but still are a part of superchain config due to offchain agreements
    */
   isPartOfSuperchain?: boolean
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -393,7 +395,7 @@ function opStackCommon(
           : fraudProofType === 'OpSuccinctFDP'
             ? {
                 type: 'Optimistic',
-                zkCatalogId: ProjectId('sp1'),
+                zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
             : {
@@ -631,6 +633,24 @@ function getProgramHashes(
         'PermissionedDisputeGame',
         'absolutePrestate',
       )
+      const EMPTY_PRESTATE = '0x' + '0'.repeat(64)
+      // V2 dispute games store params in clone bytecode;
+      // the implementation contract returns zero.
+      // Read from AnchorStateRegistry's game clone instead.
+      if (absolutePrestate === EMPTY_PRESTATE) {
+        const fromAnchor = templateVars.discovery.hasContract(
+          'AnchorStateRegistry',
+        )
+          ? templateVars.discovery.getContractValueOrUndefined<string>(
+              'AnchorStateRegistry',
+              'absolutePrestateFromGame',
+            )
+          : undefined
+        if (fromAnchor && fromAnchor !== EMPTY_PRESTATE) {
+          return [PROGRAM_HASHES(fromAnchor)]
+        }
+        return []
+      }
       return [PROGRAM_HASHES(absolutePrestate)]
     }
     case 'Kailua': {
@@ -682,6 +702,19 @@ function getProgramHashes(
       return opSuccinctProgramHashes.map((el) => PROGRAM_HASHES(el))
     }
   }
+}
+
+function programHashesReproducible(
+  templateVars: OpStackConfigCommon,
+): boolean | null {
+  const programHashes =
+    templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars)
+  if (programHashes.length === 0) return null
+  if (programHashes.some((h) => h.verificationStatus === 'unsuccessful'))
+    return false
+  if (programHashes.every((h) => h.verificationStatus === 'successful'))
+    return true
+  return null
 }
 
 function getStateValidation(
@@ -753,11 +786,7 @@ function getStateValidation(
           'splitDepth',
         )
 
-      const oracleChallengePeriod =
-        templateVars.discovery.getContractValue<number>(
-          'PreimageOracle',
-          'challengePeriod',
-        )
+      const oracleChallengePeriod = getOracleChallengePeriod(templateVars)
 
       return describeOPFP({
         disputeGameBonds: permissionedDisputeGameBonds,
@@ -770,6 +799,8 @@ function getStateValidation(
       })
     }
     case 'Permissionless': {
+      const faultDisputeGame = getFaultDisputeGameName(templateVars)
+
       const permissionlessDisputeGameBonds =
         templateVars.discovery.getContractValue<number[]>(
           'DisputeGameFactory',
@@ -777,33 +808,29 @@ function getStateValidation(
         )[0] // 0 is for permissionless games!
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
-        'FaultDisputeGame',
+        faultDisputeGame,
         'maxClockDuration',
       )
 
       const permissionlessGameMaxDepth =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'maxGameDepth',
         )
 
       const permissionlessGameSplitDepth =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'splitDepth',
         )
 
       const permissionlessGameClockExtension =
         templateVars.discovery.getContractValue<number>(
-          'FaultDisputeGame',
+          faultDisputeGame,
           'clockExtension',
         )
 
-      const oracleChallengePeriod =
-        templateVars.discovery.getContractValue<number>(
-          'PreimageOracle',
-          'challengePeriod',
-        )
+      const oracleChallengePeriod = getOracleChallengePeriod(templateVars)
 
       return describeOPFP({
         disputeGameBonds: permissionlessDisputeGameBonds,
@@ -842,6 +869,10 @@ function getStateValidation(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
       )
+      const vanguardDescription =
+        vanguardAdvantage === 0
+          ? 'The **Vanguard** is configured with `vanguardAdvantage = 0`, so this advantage is currently disabled (not active) and child proposals are permissionless immediately.'
+          : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
       return {
         categories: [
           {
@@ -854,7 +885,7 @@ Proposals consist of a state root and a reference to their parent and implicitly
 
 Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}. 
 
-The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
+${vanguardDescription}`,
             references: [
               {
                 title: 'Sequencing - Kailua Docs',
@@ -1372,6 +1403,15 @@ function getRiskViewProposerFailure(
       if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
         return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
       }
+      if (vanguardAdvantage === 0) {
+        return {
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+            vanguardAdvantage,
+          ),
+          description:
+            'The primary whitelisted proposer currently has no optimistic advantage (`vanguardAdvantage = 0`), so this privilege is disabled (not active). Anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal to win against the privileged proposer and/or supply a bond and make a counter proposal immediately.',
+        }
+      }
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
         vanguardAdvantage,
       )
@@ -1426,6 +1466,20 @@ function computedStage(
           fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
+        noRedTrustedSetups:
+          fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
+            ? true
+            : null,
+        programHashesReproducible: programHashesReproducible(templateVars),
+        proverSourcePublished:
+          fraudProofType === 'Kailua' ||
+          fraudProofType === 'KailuaSoon' ||
+          fraudProofType === 'OpSuccinct' ||
+          fraudProofType === 'OpSuccinctFDP'
+            ? true
+            : null,
+        verifierContractsReproducible:
+          templateVars.zkVerifierContractsReproducible ?? null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug:
@@ -1614,7 +1668,7 @@ function getTechnologyExitMechanism(
 
       const disputeGameName =
         fraudProofType === 'Permissionless'
-          ? 'FaultDisputeGame'
+          ? getFaultDisputeGameName(templateVars)
           : 'PermissionedDisputeGame'
 
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
@@ -2145,6 +2199,36 @@ function getOptimismPortal(templateVars: OpStackConfigCommon): EntryParameters {
   }
 }
 
+// V2 dispute games renamed FaultDisputeGame → FaultDisputeGameV2
+function getFaultDisputeGameName(templateVars: OpStackConfigCommon): string {
+  if (templateVars.discovery.hasContract('FaultDisputeGame')) {
+    return 'FaultDisputeGame'
+  }
+  return 'FaultDisputeGameV2'
+}
+
+// V2 dispute games don't discover PreimageOracle (VM address is zero
+// in the implementation). The standard challenge period is 86400s.
+function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
+  if (templateVars.discovery.hasContract('PreimageOracle')) {
+    return templateVars.discovery.getContractValue<number>(
+      'PreimageOracle',
+      'challengePeriod',
+    )
+  }
+  // V2: PreimageOracle not discovered (VM is zero in implementation).
+  // Read from AnchorStateRegistry's chained handler instead.
+  if (templateVars.discovery.hasContract('AnchorStateRegistry')) {
+    const fromAnchor =
+      templateVars.discovery.getContractValueOrUndefined<number>(
+        'AnchorStateRegistry',
+        'challengePeriodFromOracle',
+      )
+    if (fromAnchor !== undefined) return fromAnchor
+  }
+  return 86400
+}
+
 function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
   const fraudProofType = getFraudProofType(templateVars)
 
@@ -2200,7 +2284,7 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
     }
     case 'Permissionless': {
       return templateVars.discovery.getContractValue<number>(
-        'FaultDisputeGame',
+        getFaultDisputeGameName(templateVars),
         'maxClockDuration',
       )
     }
@@ -2257,16 +2341,17 @@ type FraudProofType =
   | 'OpSuccinctFDP'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
-  // Check if it's OpSuccinct by looking for OPSuccinctL2OutputOracle contract
-  if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
-    return 'OpSuccinct'
-  }
-
   const portal = getOptimismPortal(templateVars)
+
+  // Legacy OptimismPortal doesn't have dispute games
   if (portal.name === 'OptimismPortal') {
+    if (templateVars.discovery.hasContract('OPSuccinctL2OutputOracle')) {
+      return 'OpSuccinct'
+    }
     return 'None'
   }
 
+  // OptimismPortal2 uses dispute games - check respectedGameType
   const respectedGameType = templateVars.discovery.getContractValue<number>(
     portal.name ?? portal.address,
     'respectedGameType',
@@ -2277,6 +2362,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1) {
     return 'Permissioned'
+  }
+  if (respectedGameType === 6) {
+    return 'OpSuccinct'
   }
   if (respectedGameType === 1337) {
     return 'Kailua'

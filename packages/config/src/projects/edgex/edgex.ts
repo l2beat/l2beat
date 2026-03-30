@@ -24,6 +24,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
+import { getSHARPBootloaderHashes } from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('edgex')
 
@@ -66,12 +67,7 @@ const edgexProgramHashes = []
 edgexProgramHashes.push(
   discovery.getContractValue<string>('GpsFactRegistryAdapter', 'programHash'),
 )
-const bootloaderConfig = discovery.getContractValue<string[]>(
-  'SHARPVerifier',
-  'getBootloaderConfig',
-)
-edgexProgramHashes.push(bootloaderConfig[0]) // simpleBootloaderProgramHash
-edgexProgramHashes.push(bootloaderConfig[1]) // applicativeBootloaderProgramHash
+edgexProgramHashes.push(...getSHARPBootloaderHashes())
 
 export const edgex: ScalingProject = {
   type: 'layer2',

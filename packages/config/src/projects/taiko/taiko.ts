@@ -359,6 +359,10 @@ export const taiko: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: false,
+        proverSourcePublished: true,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

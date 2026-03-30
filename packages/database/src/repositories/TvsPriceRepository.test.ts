@@ -135,6 +135,18 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('returns empty array when configurationIds is empty', async () => {
+      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+
+      const result = await repository.getPricesInRange(
+        [],
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
   })
 
   describe(TvsPriceRepository.prototype.getPricesInRangeByPriceId.name, () => {
@@ -207,8 +219,8 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.deleteByConfigInTimeRange.name, () => {
-    it('deletes data in range for matching config', async () => {
+  describe(TvsPriceRepository.prototype.deleteByConfigs.name, () => {
+    it('deletes data in range for matching configs', async () => {
       await repository.upsertMany([
         tvsPrice('b', 'eth', UnixTime(1), 1000),
         tvsPrice('b', 'eth', UnixTime(2), 1100),
@@ -216,11 +228,13 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         tvsPrice('c', 'btc', UnixTime(2), 20000),
       ])
 
-      const deleted = await repository.deleteByConfigInTimeRange(
-        'b'.repeat(12),
-        UnixTime(1),
-        UnixTime(2),
-      )
+      const deleted = await repository.deleteByConfigs([
+        {
+          configurationId: 'b'.repeat(12),
+          fromInclusive: UnixTime(1),
+          toInclusive: UnixTime(2),
+        },
+      ])
 
       expect(deleted).toEqual(2)
 
@@ -234,16 +248,23 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     it('returns 0 if no matching config found', async () => {
       await repository.upsertMany([tvsPrice('b', 'eth', UnixTime(1), 1000)])
 
-      const deleted = await repository.deleteByConfigInTimeRange(
-        'c'.repeat(12),
-        UnixTime(1),
-        UnixTime(2),
-      )
+      const deleted = await repository.deleteByConfigs([
+        {
+          configurationId: 'c'.repeat(12),
+          fromInclusive: UnixTime(1),
+          toInclusive: UnixTime(2),
+        },
+      ])
 
       expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([tvsPrice('b', 'eth', UnixTime(1), 1000)])
+    })
+
+    it('returns 0 for empty configs', async () => {
+      const deleted = await repository.deleteByConfigs([])
+      expect(deleted).toEqual(0)
     })
   })
 

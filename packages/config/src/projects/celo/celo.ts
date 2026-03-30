@@ -55,6 +55,7 @@ export const celo: ScalingProject = opStackL2({
     },
   },
   hasSuperchainScUpgrades: true,
+  hasProperSecurityCouncil: true,
   associatedTokens: ['CELO'],
   chainConfig: {
     gasTokens: ['CELO'],
@@ -86,6 +87,40 @@ export const celo: ScalingProject = opStackL2({
   },
   nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
   isNodeAvailable: 'UnderReview',
+  interopConfig: {
+    name: 'Celo Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'celo',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'celo',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
   milestones: [

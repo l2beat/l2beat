@@ -8,5 +8,10 @@
     "hash": "0xa704abda563be08e6ca83769e716b07daf54f505f36b9a0278f751eb355c802e",
     "address": "eth:0xC97602648fA52F92B4ee2b0e5a54Bd15b6cB0345",
     "blockNumber": 23083543
+  },
+  "AllocationManager_v1.9.0": {
+    "hash": "0x403e87c83844ebe1b8b808ea7ba2b87e2b40009fcd11ed4d5b6f84a0062504cb",
+    "address": "eth:0xdA2A68D318A571dD550F2EcbCb09bf50497e97C4",
+    "blockNumber": 24350294
   }
 }

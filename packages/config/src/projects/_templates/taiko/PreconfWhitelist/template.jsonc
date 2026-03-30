@@ -7,7 +7,8 @@
     "getOperatorCandidatesForNextEpoch",
     "getOperatorForCurrentEpoch",
     "getOperatorForNextEpoch",
-    "registeredOperators"
+    "registeredOperators",
+    "havingPerfectOperators"
   ],
   "fields": {
     "getOperatorCandidatesForCurrentEpoch": {
@@ -29,6 +30,9 @@
         "remove": { "event": "OperatorRemoved" }
       },
       "edit": ["length"]
+    },
+    "havingPerfectOperators": {
+      "description": "tells the contract whether it can safely pick a random operator using a simple mathematical operation, or if it needs to perform a more expensive \"loop-and-check\" operation"
     }
   }
 }

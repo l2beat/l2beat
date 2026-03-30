@@ -27,7 +27,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -72,7 +72,7 @@ describe(UpdateNotifier.name, () => {
         TIMESTAMP,
       )
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -85,21 +85,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -111,7 +96,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notifications about the changes with meta', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -164,7 +149,7 @@ describe(UpdateNotifier.name, () => {
         TIMESTAMP,
       )
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -179,23 +164,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '+++ description: This should never be equal to two',
-          '+++ severity: LOW',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -207,7 +175,7 @@ describe(UpdateNotifier.name, () => {
 
     it('truncates and sends notifications about the changes', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -264,32 +232,13 @@ describe(UpdateNotifier.name, () => {
         '```',
       ].join('\n')
 
-      const publicMessage = [
-        '***project-a*** | detected changes```diff',
-        `    contract Contract (${address.toString()}) {`,
-        '    +++ description: None',
-        '      A:',
-        `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(805)}... (message too long)`,
-        '```',
-      ].join('\n')
-
       expect(internalMessage.length).toBeLessThanOrEqual(
         DISCORD_MAX_MESSAGE_LENGTH,
       )
-      expect(publicMessage.length).toBeLessThanOrEqual(
-        DISCORD_MAX_MESSAGE_LENGTH,
-      )
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         internalMessage,
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        publicMessage,
-        'PUBLIC',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -301,7 +250,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends errors only to internal channel', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateMessagesService = mockObject<UpdateMessagesService>({
@@ -357,7 +306,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
       )
       expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
@@ -369,7 +317,7 @@ describe(UpdateNotifier.name, () => {
 
     it('sends notification about tracked transactions being affected', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -440,7 +388,7 @@ describe(UpdateNotifier.name, () => {
         select: ['trackedTxsConfig'],
       })
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
@@ -454,27 +402,12 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
-      )
-      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
-        2,
-        [
-          '***project-a*** | detected changes```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          '-        1',
-          '+        2',
-          '    }',
-          '```',
-        ].join('\n'),
-        'PUBLIC',
       )
     })
 
     it('does not include tracked transactions message when contract is not in trackedTxsConfig', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -545,7 +478,7 @@ describe(UpdateNotifier.name, () => {
         select: ['trackedTxsConfig'],
       })
 
-      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       // Verify message doesn't contain tracked transactions notification
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
@@ -559,7 +492,6 @@ describe(UpdateNotifier.name, () => {
           '    }',
           '```',
         ].join('\n'),
-        'INTERNAL',
       )
     })
   })
@@ -575,7 +507,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
 
       const updateNotifier = new UpdateNotifier(
@@ -614,7 +546,6 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         `# Daily bot report @ ${UnixTime.toYYYYMMDD(timestamp)}\n:warning: Disabled projects: \`project-aaa\`\n:warning: Failed projects: \`project-bbb\`\n${templatizationStatus}\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
-        'INTERNAL',
       )
     })
 
@@ -634,6 +565,7 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async (msg: string) => {
           expect(msg.length <= DISCORD_MAX_MESSAGE_LENGTH)
+          return 'message-id'
         },
       })
 
@@ -665,7 +597,7 @@ describe(UpdateNotifier.name, () => {
 
     it('does not send daily reminder at other hour', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
@@ -698,7 +630,7 @@ describe(UpdateNotifier.name, () => {
 
     it('includes disabled projects and failed projects in daily reminder', async () => {
       const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => {},
+        sendMessage: async () => 'message-id',
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,

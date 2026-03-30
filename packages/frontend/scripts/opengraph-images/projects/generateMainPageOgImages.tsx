@@ -56,19 +56,7 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'interop',
-    title: 'Omnichain',
-  },
-  {
-    type: 'bridges',
-    title: 'Summary',
-  },
-  {
-    type: 'bridges',
-    title: 'Risk Analysis',
-  },
-  {
-    type: 'bridges',
-    title: 'Archived',
+    title: 'Burn & Mint',
   },
   {
     type: 'data-availability',
@@ -91,6 +79,9 @@ const mainPages: MainPage[] = [
   },
   {
     title: 'About Us',
+  },
+  {
+    title: 'Changelog',
   },
   {
     title: 'Donate',

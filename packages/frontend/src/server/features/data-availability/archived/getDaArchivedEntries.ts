@@ -1,5 +1,5 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import {
   groupByDaTabs,
   type TabbedDaEntries,
@@ -9,7 +9,7 @@ import {
   getProjectsChangeReport,
   type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
   getCommonDacDaEntry,
@@ -32,7 +32,10 @@ export async function getDaArchivedEntries(): Promise<
         select: ['daLayer', 'statuses'],
         where: ['archivedAt'],
       }),
-      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+        select: ['daBridge', 'statuses'],
+        optional: ['contracts'],
+      }),
       ps.getProjects({
         select: ['customDa', 'statuses'],
         where: ['archivedAt'],
@@ -73,7 +76,7 @@ export interface DaBridgeArchivedEntry
 
 function getDaArchivedEntry(
   layer: Project<'daLayer' | 'statuses'>,
-  bridges: Project<'daBridge' | 'statuses'>[],
+  bridges: Project<'daBridge' | 'statuses', 'contracts'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
   projectsChangeReport: ProjectsChangeReport,
@@ -84,8 +87,8 @@ function getDaArchivedEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: !getIsProjectVerified(
-          b.statuses.unverifiedContracts,
+        verificationWarnings: getProjectVerificationWarnings(
+          b,
           projectsChangeReport.getChanges(b.id),
         ),
         underReview:
@@ -107,13 +110,16 @@ function getDaArchivedEntry(
     })
   }
 
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
       .map((x) => x.id),
   ).latest
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     risks: getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
     bridges: daBridges,
   }

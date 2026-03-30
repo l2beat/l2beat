@@ -12,12 +12,18 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
+import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
+import { InfoIcon } from '~/icons/Info'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -108,10 +114,14 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id="fill"
@@ -129,14 +139,14 @@ export function EcosystemsTvsChart({
             strokeWidth={2}
             isAnimationActive={false}
           />
-          {getCommonChartComponents({
-            data: chartData,
-            isLoading,
-            yAxis: {
+          <ChartCommonComponents
+            data={chartData}
+            isLoading={isLoading}
+            yAxis={{
               tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-            syncedUntil: data?.syncedUntil,
-          })}
+            }}
+            syncedUntil={data?.syncedUntil}
+          />
           <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
@@ -163,7 +173,21 @@ function Header({
   return (
     <div className="mb-3">
       <div className="flex justify-between">
-        <div className="font-bold text-xl">TVS</div>
+        <div className="font-bold text-xl">
+          TVS{' '}
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                The total value secured by projects within the ecosystem -
+                including canonically bridged, externally bridged and natively
+                minted tokens.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
         {invert ? (
           stats?.marketShare ? (
             <div className="font-semibold text-xl">

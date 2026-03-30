@@ -16,33 +16,42 @@ We create one SettlementSent event per order key to enable 1-on-1 matching.
 */
 
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { getInteropTransactionDataCandidates } from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import {
+  MAYAN_EVM_CHAINS,
+  MAYAN_PROTOCOLS,
+  toChainSpecificAddresses,
+} from './mayan-shared'
 import { SettlementSent } from './mayan-swift'
 import {
   extractMayanSwiftBatchOrderKeys,
   extractWormholeEmitterChainFromTxData,
   getMayanSwiftSettlementMsgType,
-  MAYAN_SWIFT,
   MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK,
 } from './mayan-swift.utils'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 import { WormholeConfig } from './wormhole/wormhole.config'
 
-const parseLogMessagePublished = createEventParser(
-  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)',
-)
+// Event signatures
+const logMessagePublishedLog =
+  'event LogMessagePublished(address indexed sender, uint64 sequence, uint32 nonce, bytes payload, uint8 consistencyLevel)'
+const orderUnlockedLog = 'event OrderUnlocked(bytes32 key)'
 
-const parseOrderUnlocked = createEventParser('event OrderUnlocked(bytes32 key)')
+const parseLogMessagePublished = createEventParser(logMessagePublishedLog)
+
+const parseOrderUnlocked = createEventParser(orderUnlockedLog)
 
 // OrderUnlocked event emitted on source chain when settlement is processed
 // $srcChain is the chain where SettlementSent was emitted (the transfer destination chain)
@@ -53,23 +62,49 @@ export const OrderUnlocked = createInteropEventType<{
   $srcChain?: string
 }>('mayan-swift.OrderUnlocked')
 
-export class MayanSwiftSettlementPlugin implements InteropPlugin {
+export class MayanSwiftSettlementPlugin implements InteropPluginResyncable {
   readonly name = 'mayan-swift-settlement'
 
   constructor(private configs: InteropConfigStore) {}
+
+  getDataRequests(): DataRequest[] {
+    const mayanSwiftAddresses = toChainSpecificAddresses(
+      MAYAN_EVM_CHAINS,
+      MAYAN_PROTOCOLS.mayanSwift,
+    )
+
+    return [
+      {
+        type: 'event',
+        signature: orderUnlockedLog,
+        includeTx: true, // Need tx.data to extract emitter chain from VAA
+        addresses: mayanSwiftAddresses,
+      },
+      {
+        type: 'event',
+        signature: logMessagePublishedLog,
+        addresses: mayanSwiftAddresses,
+      },
+    ]
+  }
 
   capture(input: LogToCapture) {
     const wormholeNetworks = this.configs.get(WormholeConfig)
     if (!wormholeNetworks) return
 
     // Capture OrderUnlocked events
-    const orderUnlocked = parseOrderUnlocked(input.log, [MAYAN_SWIFT])
+    const orderUnlocked = parseOrderUnlocked(input.log, [
+      MAYAN_PROTOCOLS.mayanSwift,
+    ])
     if (orderUnlocked) {
       // Extract emitter chain from the Wormhole VAA in transaction input
       // This tells us which chain the settlement message came from
-      const txData =
-        typeof input.tx.data === 'string' ? input.tx.data : undefined
-      const emitterChainId = extractWormholeEmitterChainFromTxData(txData)
+      const emitterChainId = getInteropTransactionDataCandidates(input.tx)
+        .map((txData) => extractWormholeEmitterChainFromTxData(txData))
+        .find(
+          (maybeEmitterChainId): maybeEmitterChainId is number =>
+            maybeEmitterChainId !== undefined,
+        )
       const $srcChain = emitterChainId
         ? findChain(wormholeNetworks, (x) => x.wormholeChainId, emitterChainId)
         : undefined
@@ -85,7 +120,10 @@ export class MayanSwiftSettlementPlugin implements InteropPlugin {
     // Capture batched SettlementSent from postBatch transactions
     // Non-batched settlements are captured in mayan-swift.ts
     const logMsg = parseLogMessagePublished(input.log, null)
-    if (logMsg && EthereumAddress(logMsg.sender) === MAYAN_SWIFT) {
+    if (
+      logMsg &&
+      EthereumAddress(logMsg.sender) === MAYAN_PROTOCOLS.mayanSwift
+    ) {
       const msgType = getMayanSwiftSettlementMsgType(logMsg.payload)
       if (msgType !== MAYAN_SWIFT_MSG_TYPE_BATCH_UNLOCK) return
 

@@ -1,2 +1,2 @@
 export type ChartUnit = 'usd' | 'eth'
-export type ChartScale = 'lin' | 'log'
+export type ChartScale = 'linear' | 'symlog'

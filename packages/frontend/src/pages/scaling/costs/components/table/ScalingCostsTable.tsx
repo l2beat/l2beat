@@ -99,7 +99,7 @@ function mapToTableEntry(
     ...entry,
     data: {
       type: 'available',
-      isSynced: projectData.isSynced,
+      isSynced: !entry.statuses?.syncWarning,
       total: projectData[unit].total,
       calldata: projectData[unit].calldata,
       blobs: projectData[unit].blobs,

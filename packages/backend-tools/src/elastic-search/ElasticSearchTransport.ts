@@ -10,6 +10,11 @@ export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
   flushInterval?: number
   indexPrefix?: string
+  /**
+   * Optional extra `parameters` for the diagnostic log when a bulk flush fails.
+   * Use for app-specific correlation (e.g. request ids parsed from batched ECS lines).
+   */
+  flushFailureContext?: (batch: string[]) => Record<string, unknown>
 }
 
 export type UuidProvider = () => string
@@ -59,11 +64,14 @@ export class ElasticSearchTransport implements LoggerTransport {
       return
     }
 
+    /** In scope for `catch` so we can correlate flush failures with batched log lines. */
+    let batch: string[] = []
+
     try {
       const index = await this.createIndex()
 
       // copy buffer contents as it may change during async operations below
-      const batch = [...this.buffer]
+      batch = [...this.buffer]
 
       //clear buffer
       this.buffer.splice(0)
@@ -85,6 +93,11 @@ export class ElasticSearchTransport implements LoggerTransport {
     } catch (error) {
       console.log(error)
 
+      let flushFailureExtra: Record<string, unknown> = {}
+      try {
+        flushFailureExtra = this.options.flushFailureContext?.(batch) ?? {}
+      } catch {}
+
       try {
         // We want to get notified in case there is a "push time error"
         // e.g. fields types collision https://github.com/l2beat/l2beat/pull/10136
@@ -99,7 +112,12 @@ export class ElasticSearchTransport implements LoggerTransport {
                   level: 'ERROR',
                   message: error instanceof Error ? error.message : '',
                   parameters: {
-                    cause: error instanceof Error ? (error.cause ?? '') : '',
+                    cause:
+                      error instanceof Error
+                        ? (error.cause ?? undefined)
+                        : undefined,
+                    batchLogCount: batch.length,
+                    ...flushFailureExtra,
                   },
                 }),
               ),

@@ -9,7 +9,8 @@
         "type": "event",
         "select": "version",
         "add": { "event": "UpdateVerifier" }
-      }
+      },
+      "description": "Each element of the array says which version of verifier is registered under this index in latestVerifier array."
     },
     "latestVerifier": {
       "handler": {
@@ -17,7 +18,8 @@
         "maxLength": 20,
         "indices": "{{ verifierVersions }}"
       },
-      "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
+      "edit": ["map", ["shape", "startBatchIndex", "verifier"]],
+      "description": "Only verifiers of version >= 7 can be used to check Scroll STF (see _commitBatchesFromV7 on Scroll contract). Versions are NOT indices of this array, they are given by verifierVersions array."
     },
     "legacyVerifiersLength": {
       "handler": {

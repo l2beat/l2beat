@@ -1,13 +1,8 @@
 {
   "name": "shared-polygon-cdk",
-  "timestamp": 1769431545,
+  "timestamp": 1773663853,
   "configHash": "0x934720a7c40bc5be49c63e385d21b232a3346e4be45c3c7e8f662422a67783c9",
   "entries": [
-    {
-      "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "SP1Verifier",
       "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
@@ -103,6 +98,12 @@
             {
               "selector": "0x00080001",
               "newVKey": "0x6e38caa6114ac4b9779f647547de9e8f09e9f5cd6194e7134110760d3aa31b53"
+            }
+          ],
+          "0x000a0001": [
+            {
+              "selector": "0x000a0001",
+              "newVKey": "0x7767a8330ce68dac35265ba15d9eec6722b943cf00dc3b733779e1ae55696f70"
             }
           ]
         },
@@ -391,7 +392,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+          "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
           "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
           "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
           "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
@@ -399,14 +400,14 @@
           "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
           "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
           "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
-          "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+          "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
         ],
         "$threshold": 5,
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 96,
+        "nonce": 99,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -460,7 +461,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x596c67669f52385b30cb5db6f462eadfd0d97e07e0aa2fde3de7e8a7e59c7d24",
+        "getRoot": "0x35dfef9e49c8f6e3e8a7e58f5b2008e567437f544fc36639440f79916ce91de6",
         "getWrappedTokenBridgeImplementation": "eth:0x83D7B775de608e6e5566E86a307AE65548F341F4",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -719,17 +720,17 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x3636a47d887bbd9ef0e23330db88949b38b84126d2de4e8081c424029b0f1cd6",
+        "getRollupExitRoot": "0x66de575e660c36a21b204312e1ace3f246eb060a66dd59bae86c3a067964aa49",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1769430755,
+        "lastAggregationTimestamp": 1773661067,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [
           14, 17, 18, 19, 20, 3, 21, 22, 23, 7, 24, 26, 1
         ],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "v1.0.0",
-        "rollupCount": 26,
+        "rollupCount": 27,
         "rollupsDataV2": [
           {
             "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -964,6 +965,15 @@
             "rollupTypeID": 13,
             "rollupVerifierType": 2,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "rollupContract": "eth:0x5DdF600b83eaa5eC7F8e89315F9D8CaC5E7406b4",
+            "chainID": 13371,
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 14,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
         "rollupTypeCount": 14,
@@ -1081,8 +1091,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 854117,
-        "totalVerifiedBatches": 853647,
+        "totalSequencedBatches": 864378,
+        "totalVerifiedBatches": 863902,
         "trustedAggregatorAC": [
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
           "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
@@ -1163,9 +1173,9 @@
         ],
         "$upgradeCount": 5,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 86557,
+        "depositCount": 95278,
         "GER_VERSION": "v1.0.0",
-        "getRoot": "0x8770b239710199341e8f3e04259e3c9c59551fc996255ad862c80cabee3a4f22",
+        "getRoot": "0xdf50c113a7d4f8f3246cb8c9d6c964ec11dedc1912343685ab73cf831b368d49",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "version": "v1.0.0"
       },
@@ -1176,17 +1186,17 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1230,35 +1240,24 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
+          "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
           "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
-          "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
           "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
-          "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-          "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
+          "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
+          "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
         ],
         "$threshold": 3,
         "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 26,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
-    },
-    {
-      "address": "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb",
@@ -1283,7 +1282,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "address": "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2591,6 +2590,6 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24319090 },
-  "permissionsConfigHash": "0x86efec29d17ac30a8a5ee21a9eb579bddaba53f4c0b5735d662a6f49e798365b"
+  "usedBlockNumbers": { "ethereum": 24670039 },
+  "permissionsConfigHash": "0x9eb29e5f133bc51998ce999ef857b10bb5193d840210fa50d898a8da2ef355da"
 }

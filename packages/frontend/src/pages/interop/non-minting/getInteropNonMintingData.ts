@@ -1,76 +1,114 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import type { FromToQuery } from '../InteropRouter'
+import { withProjectIcon } from '~/utils/withProjectIcon'
+import type { InteropChainWithIcon } from '../components/chain-selector/types'
+import type { InteropQuery } from '../InteropRouter'
+import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { toInteropApiSelection } from '../utils/toInteropApiSelection'
+import type { InteropMode, InteropSelection } from '../utils/types'
+
+interface GetInteropNonMintingDataOptions {
+  mode?: InteropMode
+}
 
 export async function getInteropNonMintingData(
-  req: Request<unknown, unknown, unknown, FromToQuery>,
+  req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
+  options?: GetInteropNonMintingDataOptions,
 ): Promise<RenderData> {
-  const helpers = getSsrHelpers()
+  const mode = options?.mode ?? 'public'
   const appLayoutProps = await getAppLayoutProps()
-  const interopChainsIds = INTEROP_CHAINS.map((chain) => chain.id)
-  const initialSelectedChains = {
-    from: (
-      req.query.from?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
-    to: (
-      req.query.to?.filter((id) => interopChainsIds.includes(id)) ??
-      interopChainsIds
-    ).sort(),
-  }
+  const interopChains = getInteropChains()
+  const interopChainsIds = interopChains.map((chain) => chain.id)
+
+  const initialSelection = getInitialInteropSelection({
+    query: req.query,
+    interopChainsIds,
+    mode,
+  })
+
   const queryState = await cache.get(
     {
       key: [
         'interop',
         'non-minting',
+        mode,
         'prefetch',
-        initialSelectedChains.from.join(','),
-        initialSelectedChains.to.join(','),
+        initialSelection.from.join(','),
+        initialSelection.to.join(','),
       ],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    async () => {
-      await helpers.interop.dashboard.prefetch({
-        from: initialSelectedChains.from,
-        to: initialSelectedChains.to,
-        type: 'nonMinting',
-      })
-      return helpers.dehydrate()
-    },
+    async () => getCachedData(initialSelection, mode),
   )
 
-  const interopChainsWithIcons = INTEROP_CHAINS.map((chain) => ({
-    ...chain,
-    iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-  }))
+  const interopChainsWithIcons: InteropChainWithIcon[] = interopChains.map(
+    (chain) => ({
+      ...chain,
+      iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+    }),
+  )
 
   return {
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Interoperability - L2BEAT',
+        description:
+          'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
+
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/interop/non-minting/opengraph-image.png',
         },
+        excludeFromSearchEngines: mode === 'internal',
       }),
     },
     ssr: {
       page: 'InteropNonMintingPage',
       props: {
         ...appLayoutProps,
-        queryState,
-        interopChains: interopChainsWithIcons,
-        initialSelectedChains,
+        mode,
+        ...queryState,
+        interopChains: interopChainsWithIcons.filter(
+          (chain) => !chain.isUpcoming,
+        ),
+        onboardingInteropChains: interopChainsWithIcons,
+        initialSelection,
       },
     },
+  }
+}
+
+async function getCachedData(
+  initialSelection: InteropSelection,
+  mode: InteropMode,
+) {
+  const helpers = getSsrHelpers()
+  const apiSelection = toInteropApiSelection(initialSelection, mode)
+  const [protocols] = await Promise.all([
+    ps.getProjects({
+      select: ['interopConfig'],
+    }),
+    apiSelection.from.length > 0 && apiSelection.to.length > 0
+      ? helpers.interop.dashboard.prefetch({
+          ...apiSelection,
+          type: 'nonMinting',
+        })
+      : undefined,
+  ])
+
+  return {
+    queryState: helpers.dehydrate(),
+    protocols: protocols.map(withProjectIcon),
   }
 }

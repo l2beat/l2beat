@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
+import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { InteropEvent } from '../kysely/generated/types'
 
@@ -17,6 +18,8 @@ export interface InteropEventRecord {
 
   matched: boolean
   unsupported: boolean
+  derivedFulfilled: boolean
+  derivedCheckedInHistory: boolean
   direction: string | undefined
 }
 
@@ -41,6 +44,8 @@ export function toRecord(row: Selectable<InteropEvent>): InteropEventRecord {
     ctx: reviveBigInts(row.ctx) as InteropEventContext,
     matched: row.matched,
     unsupported: row.unsupported,
+    derivedFulfilled: row.derivedFulfilled ?? false,
+    derivedCheckedInHistory: row.derivedCheckedInHistory ?? false,
   }
 }
 
@@ -56,6 +61,8 @@ export function toRow(record: InteropEventRecord): Insertable<InteropEvent> {
     blockNumber: record.blockNumber,
     matched: record.matched,
     unsupported: record.unsupported,
+    derivedFulfilled: record.derivedFulfilled,
+    derivedCheckedInHistory: record.derivedCheckedInHistory,
     args: JSON.stringify(record.args, (_, value) =>
       typeof value === 'bigint' ? `BigInt(${value})` : value,
     ),
@@ -73,6 +80,12 @@ export interface InteropEventStatsRecord {
   unmatched: number
   oldUnmatched: number
   unsupported: number
+}
+
+export interface InteropEventSupportBreakdownRecord {
+  chain: string
+  isSupported: boolean
+  count: number
 }
 
 export class InteropEventRepository extends BaseRepository {
@@ -191,6 +204,37 @@ export class InteropEventRepository extends BaseRepository {
     }))
   }
 
+  async getSupportBreakdownByChainArg(
+    type: string,
+    chainArg: '$dstChain' | '$srcChain',
+  ): Promise<InteropEventSupportBreakdownRecord[]> {
+    const chainExpression = sql<string>`COALESCE(NULLIF(args ->> ${chainArg}, ''), '(unknown)')`
+
+    const source = this.db
+      .selectFrom('InteropEvent')
+      .where('type', '=', type)
+      .select([chainExpression.as('chain'), 'unsupported'])
+      .as('source')
+
+    const rows = await this.db
+      .selectFrom(source)
+      .select((eb) => [
+        'chain',
+        eb.fn.countAll().as('count'),
+        sql<boolean>`NOT BOOL_OR(unsupported)`.as('isSupported'),
+      ])
+      .groupBy('chain')
+      .orderBy('count', 'desc')
+      .orderBy('chain', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      chain: row.chain,
+      isSupported: Boolean(row.isSupported),
+      count: Number(row.count),
+    }))
+  }
+
   async getExpired(currentTime: UnixTime): Promise<InteropEventRecord[]> {
     const rows = await this.db
       .selectFrom('InteropEvent')
@@ -218,6 +262,28 @@ export class InteropEventRepository extends BaseRepository {
       await this.db
         .updateTable('InteropEvent')
         .set({ unsupported: true })
+        .where('eventId', 'in', batch)
+        .execute()
+    })
+  }
+
+  async updateDerivedFulfilled(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+    await this.batch(eventIds, 2_000, async (batch) => {
+      await this.db
+        .updateTable('InteropEvent')
+        .set({ derivedFulfilled: true })
+        .where('eventId', 'in', batch)
+        .execute()
+    })
+  }
+
+  async updateDerivedCheckedInHistory(eventIds: string[]): Promise<void> {
+    if (eventIds.length === 0) return
+    await this.batch(eventIds, 2_000, async (batch) => {
+      await this.db
+        .updateTable('InteropEvent')
+        .set({ derivedCheckedInHistory: true })
         .where('eventId', 'in', batch)
         .execute()
     })

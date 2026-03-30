@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import {
   getBlockNumberAtOrBefore,
+  isLimitExceededError,
   type RpcLog,
   toEVMLog,
   UpsertMap,
@@ -9,6 +10,10 @@ import {
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
+import {
+  type InteropTransaction,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
@@ -23,6 +28,7 @@ const LOG_QUERY_RANGE: Record<string, bigint> = {
   DEFAULT: 10_000n,
   arbitrum: 100_000n,
 }
+const MAX_LOG_RANGE_DIVIDER = 3
 
 interface RangeData {
   nextRange: { from: bigint; to: bigint }
@@ -33,12 +39,19 @@ interface RangeData {
 export class CatchingUpState implements TimeloopState {
   type = 'timeLoop' as const
   name = 'catchingUp'
-  status = 'starting'
+  private currentStatus = 'starting'
+
+  get status() {
+    return this.currentStatus
+  }
 
   constructor(
     private readonly syncer: InteropEventSyncer,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    // Reset when new resync begins
+    this.syncer.logRangeDivider = undefined
+  }
 
   async run(): Promise<SyncerState> {
     return await this.catchUp()
@@ -47,39 +60,43 @@ export class CatchingUpState implements TimeloopState {
   async catchUp(): Promise<SyncerState> {
     while (true) {
       if (this.syncer.isAggregationInProgress()) {
-        this.status = 'waiting for aggregation'
-        return this
-      }
-
-      if (this.syncer.latestBlockNumber === undefined) {
-        this.status = 'waiting for block number'
+        this.setStatus('waiting for aggregation')
         return this
       }
 
       const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-      if (resyncFrom !== undefined && wipeRequired) {
+      if (wipeRequired) {
         this.syncer.waitingForWipe = true
-        this.status = 'waiting for wipe'
+        this.setStatus('waiting for wipe')
         return this
       }
       if (this.syncer.waitingForWipe && !wipeRequired) {
         this.syncer.waitingForWipe = false
       }
 
-      this.status = 'syncing'
+      if (this.syncer.latestBlockNumber === undefined) {
+        this.setStatus('waiting for block number')
+        return this
+      }
+
       const rangeData = await this.calculateNextRange(
         this.syncer.latestBlockNumber,
         resyncFrom,
       )
       if (rangeData) {
+        this.setStatus('preparing range', rangeData)
         const logQuery = this.syncer.buildLogQuery()
-        await this.syncRange(logQuery, rangeData)
+        const syncResult = await this.syncRange(logQuery, rangeData)
+        if (syncResult === 'retrySmallerRange') {
+          this.setStatus('retrying smaller range')
+          return this
+        }
 
         if (resyncFrom) {
           await this.clearResyncRequestFlagUnlessWipePending()
         }
       } else {
-        this.status = 'idle'
+        this.setStatus('idle')
         return new FollowingState(this.syncer, this.logger)
       }
 
@@ -88,17 +105,30 @@ export class CatchingUpState implements TimeloopState {
         rangeData.fullRange.toBlock === rangeData.latestBlockNumber
       ) {
         // we're at tip, start following
-        this.status = 'idle'
+        this.setStatus('idle')
         return new FollowingState(this.syncer, this.logger)
       }
     }
   }
 
-  private async syncRange(logQuery: LogQuery, rangeData: RangeData) {
-    const interopEvents = logQuery.isEmpty()
-      ? []
-      : await this.captureRange(rangeData.nextRange, logQuery)
+  private async syncRange(
+    logQuery: LogQuery,
+    rangeData: RangeData,
+  ): Promise<'synced' | 'retrySmallerRange'> {
+    let interopEvents: InteropEvent[] = []
+    if (!logQuery.isEmpty()) {
+      try {
+        interopEvents = await this.captureRange(rangeData, logQuery)
+      } catch (error) {
+        if (error instanceof Error && isLimitExceededError(error)) {
+          this.increaseLogRangeDivider()
+          return 'retrySmallerRange'
+        }
+        throw error
+      }
+    }
 
+    this.setStatus('saving events', rangeData, `${interopEvents.length} events`)
     await this.syncer.saveProducedInteropEvents(
       interopEvents,
       rangeData.fullRange,
@@ -109,6 +139,8 @@ export class CatchingUpState implements TimeloopState {
       pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
     })
+
+    return 'synced'
   }
 
   private async fetchLogsForRange(
@@ -116,36 +148,44 @@ export class CatchingUpState implements TimeloopState {
     logQuery: LogQuery,
     range: { from: bigint; to: bigint },
   ): Promise<RpcLog[]> {
+    const addresses =
+      logQuery.addresses === '*' ? undefined : Array.from(logQuery.addresses)
     this.logger.info('Getting logs', {
       chain,
       from: range.from,
       to: range.to,
-      addresses: logQuery.addresses,
+      addresses: logQuery.addresses === '*' ? 'all' : addresses,
       topics: [logQuery.topic0s],
     })
 
-    const logs = await this.syncer.getLogs({
+    const filter: Parameters<InteropEventSyncer['getLogs']>[0] = {
       fromBlock: range.from,
       toBlock: range.to,
-      address: Array.from(logQuery.addresses),
       topics: [Array.from(logQuery.topic0s)],
-    })
+    }
+    if (addresses !== undefined) {
+      filter.address = addresses
+    }
+
+    const logs = await this.syncer.getLogs(filter)
 
     return logs
   }
 
   private async captureRange(
-    range: { from: bigint; to: bigint },
+    rangeData: RangeData,
     logQueryForChain: LogQuery,
   ): Promise<InteropEvent[]> {
+    this.setStatus('fetching logs', rangeData)
     const logs = await this.fetchLogsForRange(
       this.syncer.chain,
       logQueryForChain,
-      range,
+      rangeData.nextRange,
     )
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
     const txsWithIncludedEvents = new Set<string>()
+    const txsWithFullData = new Set<string>()
     for (const log of logs) {
       assert(log.transactionHash)
       const v = logsPerTx.getOrInsert(log.transactionHash, [])
@@ -155,8 +195,18 @@ export class CatchingUpState implements TimeloopState {
       if (topic0 && logQueryForChain.topicToTxEvents.has(topic0)) {
         txsWithIncludedEvents.add(log.transactionHash)
       }
+      if (topic0 && logQueryForChain.topic0sWithTx.has(topic0)) {
+        txsWithFullData.add(log.transactionHash)
+      }
     }
 
+    if (txsWithIncludedEvents.size > 0) {
+      this.setStatus(
+        'loading receipts',
+        rangeData,
+        `${txsWithIncludedEvents.size} txs`,
+      )
+    }
     for (const txHash of txsWithIncludedEvents) {
       const receipt = await this.syncer.getTransactionReceipt(txHash)
       if (!receipt) {
@@ -170,6 +220,19 @@ export class CatchingUpState implements TimeloopState {
       )
     }
 
+    const txsByHash = new Map<string, LogToCapture['tx']>()
+    if (txsWithFullData.size > 0) {
+      this.setStatus('loading txs', rangeData, `${txsWithFullData.size} txs`)
+    }
+    for (const txHash of txsWithFullData) {
+      const transaction = await this.syncer.getTransactionByHash(txHash)
+      if (!transaction) {
+        continue
+      }
+      txsByHash.set(txHash, toInteropTransaction(transaction))
+    }
+
+    this.setStatus('capturing logs', rangeData, `${logs.length} logs`)
     const interopEvents = []
     for (const log of logs) {
       assert(log.transactionHash)
@@ -182,7 +245,10 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: { hash: log.transactionHash },
+        tx:
+          txsByHash.get(log.transactionHash) ??
+          // FIXME: risky?
+          ({ hash: log.transactionHash } as InteropTransaction),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -243,9 +309,9 @@ export class CatchingUpState implements TimeloopState {
       fullFromTimestamp = syncedRange.fromTimestamp
       nextFrom = syncedRange.toBlock + 1n
     } else {
-      throw new Error(
-        `Can't resync ${this.syncer.cluster.name} cluster without "from" timestamp`,
-      )
+      // No synced range and no forced start — transition to FollowingState
+      // (happens after restart-from-now clears all synced state)
+      return undefined
     }
 
     let nextTo: bigint
@@ -254,8 +320,14 @@ export class CatchingUpState implements TimeloopState {
 
     const queryRange =
       LOG_QUERY_RANGE[this.syncer.chain] ?? LOG_QUERY_RANGE.DEFAULT
-    nextTo = nextFrom + queryRange - 1n
-    assert(nextTo > nextFrom)
+    const divider = this.syncer.logRangeDivider ?? 0
+    const divisor = 2n ** BigInt(divider)
+    let effectiveRange = queryRange / divisor
+    if (effectiveRange < 1n) {
+      effectiveRange = 1n
+    }
+    nextTo = nextFrom + effectiveRange - 1n
+    assert(nextTo >= nextFrom)
     if (nextTo >= latestBlock.number) {
       nextTo = latestBlock.number
       fullTo = nextTo
@@ -279,6 +351,16 @@ export class CatchingUpState implements TimeloopState {
     }
   }
 
+  private increaseLogRangeDivider() {
+    const current = this.syncer.logRangeDivider ?? 0
+    if (current >= MAX_LOG_RANGE_DIVIDER) {
+      throw new Error(
+        `Log range divider exceeded max of ${MAX_LOG_RANGE_DIVIDER}`,
+      )
+    }
+    this.syncer.logRangeDivider = current + 1
+  }
+
   private async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     latestBlockNumber: bigint,
@@ -295,5 +377,23 @@ export class CatchingUpState implements TimeloopState {
         },
       ),
     )
+  }
+
+  private setStatus(status: string, rangeData?: RangeData, detail?: string) {
+    const divider = this.syncer.logRangeDivider ?? 0
+    const dividerInfo = divider === 0 ? '' : ` [/${2 ** divider}]`
+
+    if (!rangeData) {
+      this.currentStatus = `${status}${dividerInfo}`
+      return
+    }
+
+    const { from, to } = rangeData.nextRange
+    const parts = [`${status} ${from}-${to}`]
+    const progress = [`${rangeData.latestBlockNumber - to} behind tip`]
+    if (detail) {
+      progress.push(detail)
+    }
+    this.currentStatus = `${parts.join(' ')} (${progress.join(', ')})${dividerInfo}`
   }
 }

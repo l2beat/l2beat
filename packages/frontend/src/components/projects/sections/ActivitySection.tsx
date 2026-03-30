@@ -1,4 +1,6 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
+import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumActivityChart } from '~/components/chart/activity/EthereumActivityChart'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import type { ChartRange } from '~/utils/range/range'
@@ -26,12 +28,21 @@ export function ActivitySection({
   return (
     <ProjectSection {...sectionProps}>
       {dataSource && <ChartDataSourceInfo dataSource={dataSource} />}
-      <ProjectActivityChart
-        milestones={milestones}
-        project={project}
-        category={category}
-        defaultRange={defaultRange}
-      />
+      {project.id === ProjectId.ETHEREUM ? (
+        <EthereumActivityChart
+          milestones={milestones}
+          project={project}
+          category={category}
+          defaultRange={defaultRange}
+        />
+      ) : (
+        <ProjectActivityChart
+          milestones={milestones}
+          project={project}
+          category={category}
+          defaultRange={defaultRange}
+        />
+      )}
     </ProjectSection>
   )
 }

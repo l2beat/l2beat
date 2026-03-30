@@ -3,6 +3,7 @@ import type { PoolConfig } from 'pg'
 import { DatabaseClient } from './kysely'
 import { ActivityRepository } from './repositories/ActivityRepository'
 import { AggregatedInteropTokenRepository } from './repositories/AggregatedInteropTokenRepository'
+import { AggregatedInteropTokensPairRepository } from './repositories/AggregatedInteropTokensPairRepository'
 import { AggregatedInteropTransferRepository } from './repositories/AggregatedInteropTransferRepository'
 import { AggregatedL2CostRepository } from './repositories/AggregatedL2CostRepository'
 import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
@@ -40,7 +41,6 @@ import { UpdateDiffRepository } from './repositories/UpdateDiffRepository'
 import { UpdateMessageRepository } from './repositories/UpdateMessageRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
 
 export type Database = ReturnType<typeof createDatabase>
@@ -65,6 +65,7 @@ export function createDatabase(
     interopTransfer: new InteropTransferRepository(db),
     aggregatedInteropTransfer: new AggregatedInteropTransferRepository(db),
     aggregatedInteropToken: new AggregatedInteropTokenRepository(db),
+    aggregatedInteropTokensPair: new AggregatedInteropTokensPairRepository(db),
     interopRecentPrices: new InteropRecentPricesRepository(db),
     interopPluginSyncState: new InteropPluginSyncStateRepository(db),
     interopPluginSyncedRange: new InteropPluginSyncedRangeRepository(db),
@@ -105,7 +106,6 @@ export function createDatabase(
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
     realTimeLiveness: new RealTimeLivenessRepository(db),
-    verifierStatus: new VerifierStatusRepository(db),
     syncMetadata: new SyncMetadataRepository(db),
     notifications: new NotificationsRepository(db),
     // #endregion

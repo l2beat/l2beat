@@ -69,11 +69,11 @@ export function ScalingProjectTvsBreakdownPage({
                     tvsInfo={project.tvsInfo}
                   />
                 </PrimaryCard>
+                <TableFilterContextProvider>
+                  <ProjectTvsBreakdownTokenTable entries={entries} />
+                </TableFilterContextProvider>
               </ScalingRwaRestrictedTokensContextProvider>
             </TvsChartControlsContextProvider>
-            <TableFilterContextProvider>
-              <ProjectTvsBreakdownTokenTable entries={entries} />
-            </TableFilterContextProvider>
           </SelectedTokenContextProvider>
         </div>
         <RequestTokenBox />

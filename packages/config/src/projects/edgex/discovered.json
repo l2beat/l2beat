@@ -1,6 +1,6 @@
 {
   "name": "edgex",
-  "timestamp": 1767004364,
+  "timestamp": 1769695138,
   "configHash": "0x5cb999bde5dc790f9b1a3de7f6f00d91d9175043b78486af8c31f49184bc94c4",
   "entries": [
     {
@@ -277,7 +277,7 @@
         "$members": [
           "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e",
           "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
-          "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863",
+          "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
           "eth:0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8"
         ],
         "$threshold": 3,
@@ -285,7 +285,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 507,
+        "nonce": 515,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -361,11 +361,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
       "type": "EOA",
       "proxyType": "EOA"
@@ -410,6 +405,11 @@
           "role": ".operators"
         }
       ]
+    },
+    {
+      "address": "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD8A6A3ca1739423de5F634dFAa8BA224EAf16d0e",
@@ -476,7 +476,7 @@
         "FREEZE_GRACE_PERIOD": 604800,
         "getEnableWindowDuration": 1209600,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 37984,
+        "getLastBatchId": 43112,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -487,7 +487,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 37949,
+        "getSequenceNumber": 43077,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -1052,6 +1052,6 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "usedBlockNumbers": { "ethereum": 24117726 },
-  "permissionsConfigHash": "0x3dfc4be19c95d94453b10f95ffe36b91341b65751cd832afd9dae041745bf811"
+  "usedBlockNumbers": { "ethereum": 24340960 },
+  "permissionsConfigHash": "0x275efa89109b0ea5d1a68861b9491acec9786a33c905c2be9daf86ec7ce49285"
 }

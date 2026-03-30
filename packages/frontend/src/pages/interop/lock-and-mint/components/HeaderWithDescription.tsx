@@ -1,8 +1,9 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { TRANSFER_TYPE_DISPLAY } from '../../utils/display'
 
 export function HeaderWithDescription() {
   return (
-    <MainPageHeader description="One-sided risk. If user bridge back, the original tokens are unlocked and the bridge risk is removed.">
+    <MainPageHeader description={TRANSFER_TYPE_DISPLAY.lockAndMint.description}>
       Lock & Mint Protocols
     </MainPageHeader>
   )

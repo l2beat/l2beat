@@ -8,8 +8,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -26,6 +25,10 @@ import { linkAddresses } from '~/utils/markdown/linkAddresses'
 import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import {
+  getPastUpgradesData,
+  getProjectPastUpgrades,
+} from '~/utils/project/contracts-and-permissions/getPastUpgradesData'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
@@ -47,7 +50,7 @@ import {
 } from '~/utils/project/underReview'
 import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
@@ -189,7 +192,7 @@ export async function getScalingProjectEntry(
       select: ['contracts'],
     }),
     ps.getProjects({
-      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
+      optional: ['daBridge', 'isScaling', 'isDaLayer'],
     }),
   ])
 
@@ -324,10 +327,12 @@ export async function getScalingProjectEntry(
         })
       : undefined
 
-  const isHostChainVerified = getIsProjectVerified(
-    hostChain?.statuses.unverifiedContracts ?? [],
-    projectsChangeReport.getChanges(hostChain?.id ?? ''),
-  )
+  const hostChainVerificationWarnings = hostChain
+    ? getProjectVerificationWarnings(
+        hostChain,
+        projectsChangeReport.getChanges(hostChain.id),
+      )
+    : { contracts: undefined, programHashes: undefined }
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,
@@ -336,7 +341,8 @@ export async function getScalingProjectEntry(
       }
     : undefined
   const hostChainRisksSummary =
-    hostChain && getScalingRiskSummarySection(hostChain, isHostChainVerified)
+    hostChain &&
+    getScalingRiskSummarySection(hostChain, hostChainVerificationWarnings)
   const hostChainWarningWithRiskCount =
     hostChain && hostChainRisksSummary
       ? {
@@ -452,11 +458,15 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const isProjectVerified = getIsProjectVerified(
-    project.statuses.unverifiedContracts ?? [],
+  const projectVerificationWarnings = getProjectVerificationWarnings(
+    project,
     changes,
   )
-  const riskSummary = getScalingRiskSummarySection(project, isProjectVerified)
+
+  const riskSummary = getScalingRiskSummarySection(
+    project,
+    projectVerificationWarnings,
+  )
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -495,7 +505,7 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: isHostChainVerified,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -508,7 +518,7 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: isProjectVerified,
+        isVerified: !projectVerificationWarnings.contracts,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -580,21 +590,30 @@ export async function getScalingProjectEntry(
     })
   }
 
-  if (project.scalingTechnology.upgradesAndGovernance) {
+  const allPastUpgrades = getProjectPastUpgrades(project.contracts)
+
+  if (
+    project.scalingTechnology.upgradesAndGovernance ||
+    allPastUpgrades.length > 0
+  ) {
     sections.push({
-      type: 'MarkdownSection',
+      type: 'UpgradesAndGovernanceSection',
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: linkAddresses(
-          project.scalingTechnology.upgradesAndGovernance,
-          project.contracts,
-          project.permissions,
-        ),
+        content: project.scalingTechnology.upgradesAndGovernance
+          ? linkAddresses(
+              project.scalingTechnology.upgradesAndGovernance,
+              project.contracts,
+              project.permissions,
+            )
+          : undefined,
         diagram: getDiagramParams(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
+
+        pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -686,9 +705,10 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      isVerified: isProjectVerified,
+      isVerified: !hostChainVerificationWarnings.contracts,
       slug: project.slug,
       contracts: project.contracts,
+      tvsConfig: project.tvsConfig,
       isUnderReview: !!project.statuses.reviewStatus,
       architectureImage: project.scalingTechnology.architectureImage,
     },
@@ -696,6 +716,7 @@ export async function getScalingProjectEntry(
     projectsChangeReport,
     zkCatalogProjects,
     allProjectsWithContracts,
+    tvsStats,
   )
   if (contractsSection) {
     sections.push({

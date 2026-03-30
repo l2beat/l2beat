@@ -1,8 +1,8 @@
 import type { ProjectContract, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import type { InMemoryCache } from '../../cache/InMemoryCache'
 import type { OpenApi } from '../../OpenApi'
 import { GenericErrorResponse } from '../../types'
 import { getTokensData } from './getTokensData'
@@ -26,7 +26,7 @@ export function addProjectsRoutes(
       tags: ['projects'],
       result: v.array(ProjectSchema),
     },
-    async (req, res) => {
+    async (_, res) => {
       const projects = await ps.getProjects({
         optional: ['chainConfig'],
       })

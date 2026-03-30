@@ -1,7 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -17,7 +17,7 @@ export async function getScalingTvsData(
     { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
   >,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
@@ -56,7 +56,7 @@ export async function getScalingTvsData(
 }
 
 async function getCachedData(
-  cache: ICache,
+  cache: InMemoryCache,
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
   const [entries, queryState] = await Promise.all([

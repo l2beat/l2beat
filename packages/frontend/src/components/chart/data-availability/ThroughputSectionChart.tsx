@@ -84,14 +84,16 @@ export function ThroughputSectionChart({
           />
         </div>
       </div>
-      <ProjectDaAbsoluteThroughputChart
-        project={project}
-        dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-        isLoading={isLoading}
-        milestones={milestones}
-        syncedUntil={data?.syncedUntil}
-        resolution={resolution}
-      />
+      <div className="mb-2">
+        <ProjectDaAbsoluteThroughputChart
+          project={project}
+          dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
+          isLoading={isLoading}
+          milestones={milestones}
+          syncedUntil={data?.syncedUntil}
+          resolution={resolution}
+        />
+      </div>
       <DaThroughputByProjectChart
         data={data?.byProjectChart.data}
         project={project}

@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import { useContext, useMemo } from 'react'
 import { HiringBadge } from '~/components/badge/HiringBadge'
+import { ChangelogUnreadBadge } from '~/components/changelog/ChangelogUnreadBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
 import { MobileTopNavbar } from '~/components/nav/mobile/MobileTopNavbar'
@@ -12,13 +13,11 @@ import { WhatsNewWidgetCloseable } from '~/components/whats-new/WhatsNewWidgetCl
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
-import { buildInteropUrl } from '~/pages/interop/utils/buildInteropUrl'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
 import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
@@ -37,10 +36,10 @@ export function SideNavLayout({
   maxWidth = 'default',
 }: SideNavLayoutProps) {
   const whatsNew = useWhatsNewContext()
-  const isMobile = useIsMobile()
   const topChildren = (
     <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
+
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
 
   const groups = useMemo(
@@ -97,7 +96,7 @@ export function SideNavLayout({
             },
           ],
         },
-        env.CLIENT_SIDE_INTEROP_ENABLED && {
+        {
           type: 'multiple',
           title: 'Interop',
           match: 'interop',
@@ -107,55 +106,27 @@ export function SideNavLayout({
           links: [
             {
               title: 'Summary',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/summary') ??
                 '/interop/summary',
-                selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
-              ),
             },
             {
               title: 'Non-minting protocols',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/non-minting') ??
                 '/interop/non-minting',
-                selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
-              ),
             },
             {
               title: 'Lock & Mint protocols',
-              href: buildInteropUrl(
+              href:
+                selectedChainsContext?.buildUrl('/interop/lock-and-mint') ??
                 '/interop/lock-and-mint',
-                selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
-              ),
             },
             {
-              title: 'Omnichain tokens',
-              href: buildInteropUrl(
-                '/interop/omnichain',
-                selectedChainsContext?.selectedChains,
-                selectedChainsContext?.allChainIds,
-              ),
-            },
-          ],
-        },
-        !env.CLIENT_SIDE_INTEROP_ENABLED && {
-          type: 'multiple',
-          title: 'Bridges',
-          match: 'bridges',
-          icon: (
-            <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-          ),
-          links: [
-            {
-              title: 'Summary',
-              href: '/bridges/summary',
-            },
-          ],
-          secondaryLinks: [
-            {
-              title: 'Archived',
-              href: '/bridges/archived',
+              title: 'Burn & Mint protocols',
+              href:
+                selectedChainsContext?.buildUrl('/interop/burn-and-mint') ??
+                '/interop/burn-and-mint',
             },
           ],
         },
@@ -237,12 +208,67 @@ export function SideNavLayout({
             })),
         },
       ]),
-    [selectedChainsContext?.selectedChains, selectedChainsContext?.allChainIds],
+    [selectedChainsContext],
+  )
+
+  const sideLinks = useMemo(
+    () =>
+      compact([
+        {
+          title: 'About Us',
+          href: '/about-us',
+        },
+        {
+          title: 'Publications',
+          href: '/publications',
+        },
+        {
+          title: 'Changelog',
+          href: '/changelog',
+          accessory: <ChangelogUnreadBadge />,
+        },
+        {
+          title: 'Forum',
+          href: externalLinks.forum,
+        },
+        {
+          title: 'Donate',
+          href: '/donate',
+        },
+        {
+          title: 'Governance',
+          href: '/governance',
+        },
+        {
+          title: 'Tools',
+          href: externalLinks.tools,
+        },
+        {
+          title: 'Glossary',
+          href: '/glossary',
+        },
+        {
+          title: 'Jobs',
+          href: externalLinks.jobs,
+          accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
+            <HiringBadge />
+          ) : undefined,
+        },
+        {
+          title: 'Brand Kit',
+          href: '/brand-kit',
+        },
+        {
+          title: 'FAQ',
+          href: '/faq',
+        },
+      ]),
+    [],
   )
 
   return (
     <SidebarProvider>
-      <div className="relative flex flex-col lg:flex-row">
+      <div className="relative flex grow flex-col lg:flex-row">
         <div className="block lg:hidden">{topChildren}</div>
         <MobileTopNavbar
           groups={groups}
@@ -253,26 +279,28 @@ export function SideNavLayout({
           logoLink={LOGO_LINK}
           groups={groups}
           sideLinks={sideLinks}
-          whatsNew={whatsNew}
         />
         <div
           className={cn(
-            'min-w-0 flex-1 has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
             childrenWrapperClassName,
           )}
         >
           <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
           <div
+            style={
+              {
+                '--tablet-content-horizontal-padding': '20px',
+              } as React.CSSProperties
+            }
             className={cn(
-              'mx-auto min-h-screen md:px-5 lg:pl-0',
+              'mx-auto flex w-full grow flex-col md:px-(--tablet-content-horizontal-padding) lg:pl-0',
               maxWidth === 'default' && 'max-w-(--breakpoint-lg)',
               maxWidth === 'wide' && 'max-w-412',
             )}
           >
             {children}
-            {whatsNew && isMobile && (
-              <WhatsNewWidgetCloseable whatsNew={whatsNew} />
-            )}
+            {whatsNew && <WhatsNewWidgetCloseable whatsNew={whatsNew} />}
           </div>
           <Footer
             className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
@@ -283,47 +311,3 @@ export function SideNavLayout({
     </SidebarProvider>
   )
 }
-
-const sideLinks = compact([
-  {
-    title: 'About Us',
-    href: '/about-us',
-  },
-  {
-    title: 'Publications',
-    href: '/publications',
-  },
-  {
-    title: 'Forum',
-    href: externalLinks.forum,
-  },
-  {
-    title: 'Donate',
-    href: '/donate',
-  },
-  {
-    title: 'Governance',
-    href: '/governance',
-  },
-  {
-    title: 'Tools',
-    href: externalLinks.tools,
-  },
-  {
-    title: 'Glossary',
-    href: '/glossary',
-  },
-  {
-    title: 'Jobs',
-    href: externalLinks.jobs,
-    accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? <HiringBadge /> : undefined,
-  },
-  {
-    title: 'Brand Kit',
-    href: externalLinks.brandKit,
-  },
-  {
-    title: 'FAQ',
-    href: '/faq',
-  },
-])

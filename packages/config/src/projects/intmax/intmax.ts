@@ -88,7 +88,7 @@ export const intmax: ScalingProject = {
       references: [
         {
           title: 'INTMAX Block Builder - INTMAX docs',
-          url: 'https://intmax-wallet.gitbook.io/intmax-developers-hub/intmax-block-builder',
+          url: 'https://docs.network.intmax.io/developers-hub/intmax-block-builder',
         },
       ],
     },
@@ -188,6 +188,10 @@ export const intmax: ScalingProject = {
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
+        proverSourcePublished: true,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,

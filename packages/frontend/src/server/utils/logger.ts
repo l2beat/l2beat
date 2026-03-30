@@ -4,7 +4,10 @@ import {
   type LoggerOptions,
   type LoggerTransport,
 } from '@l2beat/backend-tools'
-import type { ElasticSearchTransportOptions } from '@l2beat/backend-tools/elastic-search'
+import {
+  ElasticSearchTransport,
+  type ElasticSearchTransportOptions,
+} from '@l2beat/backend-tools/elastic-search'
 import { env } from '~/env'
 
 let logger: Logger | undefined
@@ -31,14 +34,12 @@ export function getLogger(): Logger {
       throw new Error('ES_NODE, ES_API_KEY, and ES_INDEX_PREFIX must be set')
     }
 
-    const {
-      ElasticSearchTransport,
-    } = require('@l2beat/backend-tools/elastic-search')
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
       indexPrefix: env.ES_INDEX_PREFIX,
       flushInterval: env.ES_FLUSH_INTERVAL,
+      flushFailureContext,
     }
 
     loggerTransports.push(new ElasticSearchTransport(options))
@@ -51,4 +52,29 @@ export function getLogger(): Logger {
 
   logger = new Logger(options)
   return logger
+}
+
+function flushFailureContext(batch: string[]): Record<string, unknown> {
+  const requestIds = collectUniqueRequestIdsFromEcsBatchLines(batch)
+  return requestIds.length > 0 ? { requestIds } : {}
+}
+
+function collectUniqueRequestIdsFromEcsBatchLines(lines: string[]): string[] {
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const line of lines) {
+    try {
+      const doc = JSON.parse(line) as {
+        parameters?: { requestId?: unknown }
+      }
+      const id = doc.parameters?.requestId
+      if (typeof id === 'string' && id.trim() && !seen.has(id)) {
+        seen.add(id)
+        out.push(id.trim())
+      }
+    } catch {
+      // ignore malformed lines
+    }
+  }
+  return out
 }

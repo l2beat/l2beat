@@ -8,12 +8,13 @@ export const debridgeDln: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1768915493),
   interopConfig: {
-    bridgeType: 'nonMinting',
     plugins: [
       {
         plugin: 'debridge-dln',
+        bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

@@ -1,10 +1,12 @@
 import type { Stage } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
 import { StageBadge } from '~/components/badge/StageBadge'
 import { CssVariables } from '~/components/CssVariables'
-import type { ChartMeta } from '~/components/core/chart/Chart'
+import type {
+  ChartMeta,
+  CustomChartTooltipProps,
+} from '~/components/core/chart/Chart'
 import {
   ChartTooltip,
   ChartTooltipWrapper,
@@ -136,11 +138,11 @@ export function EcosystemTvsByStage({
             )
           })}
         </div>
-        <SimpleChartContainer
-          meta={chartMeta}
-          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
-        >
-          <PieChart>
+        <SimpleChartContainer meta={chartMeta}>
+          <PieChart
+            responsive
+            className="aspect-square! h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
+          >
             <ChartTooltip
               cursor={false}
               content={<CustomTooltip />}
@@ -179,9 +181,9 @@ export function EcosystemTvsByStage({
   )
 }
 
-function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
+function CustomTooltip({ payload }: CustomChartTooltipProps) {
   const { meta } = useChart()
-  if (!active || !payload) return null
+  if (!payload) return null
   return (
     <ChartTooltipWrapper>
       <div className="flex w-32 flex-col gap-1">

@@ -29,11 +29,13 @@ describe(SlotTxsCountService.name, () => {
           }),
       })
 
-      const service = new SlotTxsCountService({
-        projectId: ProjectId('a'),
-        provider: mockProvider,
-        logger: Logger.SILENT,
-      })
+      const service = new SlotTxsCountService(
+        {
+          projectId: ProjectId('a'),
+          provider: mockProvider,
+        },
+        Logger.SILENT,
+      )
 
       const result = await service.getTxsCount(1, 4)
       expect(result).toEqual({

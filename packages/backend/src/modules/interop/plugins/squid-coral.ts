@@ -59,11 +59,19 @@ const parseOrderFilled = createEventParser(
   'event OrderFilled(bytes32 indexed orderHash, (address fromAddress, address toAddress, address filler, address fromToken, address toToken, uint256 expiry, uint256 fromAmount, uint256 fillAmount, uint256 feeRate, uint256 fromChain, uint256 toChain, bytes32 postHookHash) order)',
 )
 
+// https://docs.squidrouter.com/additional-resources/contracts
+// chainconfeeg
 export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '1', chain: 'ethereum' },
   { chainId: '10', chain: 'optimism' },
   { chainId: '42161', chain: 'arbitrum' },
   { chainId: '8453', chain: 'base' },
+  { chainId: '137', chain: 'polygonpos' },
+  // no zksync2, apechain, abstract supported
+  { chainId: '56', chain: 'bsc' },
+  { chainId: '42220', chain: 'celo' },
+  { chainId: '43114', chain: 'avalanche' },
+  // no hyperevm, ink, unichain
 ])
 
 export const LogOrderCreated = createInteropEventType<{

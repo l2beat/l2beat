@@ -4,6 +4,8 @@ import type {
   InteropMessageRecord,
   InteropTransferRecord,
 } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
   generateId,
@@ -18,16 +20,16 @@ import {
   type MatchResult,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
-import type { InteropTransferStream } from '../stream/InteropTransferStream'
+import { buildTokenMap, type TokenMap } from './TokenMap'
 
 export class InteropMatchingLoop extends TimeLoop {
   constructor(
     private store: InteropEventStore,
     private db: Database,
+    private tokenDbClient: TokenDbClient,
     private plugins: InteropPlugin[],
     private supportedChains: string[],
     protected logger: Logger,
-    private transferStream: InteropTransferStream,
     private readonly intervalMs = 10_000,
   ) {
     super({ intervalMs })
@@ -35,6 +37,8 @@ export class InteropMatchingLoop extends TimeLoop {
   }
 
   async run() {
+    const tokenMap = await buildTokenMap(this.tokenDbClient)
+
     const result = await match(
       this.store,
       (type) => this.store.getEvents(type),
@@ -43,6 +47,7 @@ export class InteropMatchingLoop extends TimeLoop {
       this.plugins,
       this.supportedChains,
       this.logger,
+      tokenMap,
     )
 
     const messageRecords = result.messages.map(toMessageRecord)
@@ -64,10 +69,6 @@ export class InteropMatchingLoop extends TimeLoop {
         transfers,
       })
     })
-
-    if (transferRecords.length > 0) {
-      this.transferStream?.publishBulk(transferRecords, this.intervalMs)
-    }
   }
 }
 
@@ -79,6 +80,7 @@ export async function match(
   plugins: InteropPlugin[],
   supportedChains: string[],
   logger: Logger,
+  tokenMap: TokenMap,
 ) {
   const start = Date.now()
   logger.info('Matching started', {
@@ -118,7 +120,7 @@ export async function match(
         }
         let result: MatchResult | undefined
         try {
-          result = await plugin.match?.(event, filteredDb)
+          result = await plugin.match?.(event, filteredDb, tokenMap)
         } catch (e) {
           logger.error('Matching failed', e, {
             plugin: plugin.name,
@@ -258,43 +260,57 @@ function toMessageRecord(message: InteropMessage): InteropMessageRecord {
 }
 
 function toTransferRecord(transfer: InteropTransfer): InteropTransferRecord {
+  const src = transfer.src
+  const dst = transfer.dst
+
+  const srcTime = src.event?.ctx.timestamp
+  const dstTime = dst.event?.ctx.timestamp
+
+  const srcChain = src.event?.ctx.chain ?? src.chain
+  const dstChain = dst.event?.ctx.chain ?? dst.chain
+
+  assert(srcChain, 'srcChain could not be inferred from transfer')
+  assert(dstChain, 'dstChain could not be inferred from transfer')
+
   return {
     plugin: transfer.plugin,
     transferId: generateId('T'),
     type: transfer.type,
-    duration: Math.max(
-      transfer.dst.event.ctx.timestamp - transfer.src.event.ctx.timestamp,
-      0,
-    ),
+    bridgeType: transfer.bridgeType,
+    duration:
+      srcTime !== undefined && dstTime !== undefined
+        ? Math.max(dstTime - srcTime, 0)
+        : undefined,
     timestamp: Math.max(
-      transfer.src.event.ctx.timestamp,
-      transfer.dst.event.ctx.timestamp,
+      srcTime ?? 0,
+      dstTime ?? 0,
+      transfer.events[0]?.ctx.timestamp ?? 0,
     ),
 
-    srcChain: transfer.src.event.ctx.chain,
-    srcTime: transfer.src.event.ctx.timestamp,
-    srcEventId: transfer.src.event.eventId,
-    srcLogIndex: transfer.src.event.ctx.logIndex,
-    srcTxHash: transfer.src.event.ctx.txHash,
+    srcChain,
+    srcTime,
+    srcEventId: src.event?.eventId,
+    srcLogIndex: src.event?.ctx.logIndex,
+    srcTxHash: src.event?.ctx.txHash,
 
-    srcTokenAddress: transfer.src.tokenAddress,
-    srcRawAmount: transfer.src.tokenAmount,
-    srcWasBurned: transfer.src.wasBurned,
+    srcTokenAddress: src.tokenAddress,
+    srcRawAmount: src.tokenAmount,
+    srcWasBurned: src.wasBurned,
     srcSymbol: undefined,
     srcAbstractTokenId: undefined,
     srcAmount: undefined,
     srcPrice: undefined,
     srcValueUsd: undefined,
 
-    dstChain: transfer.dst.event.ctx.chain,
-    dstTime: transfer.dst.event.ctx.timestamp,
-    dstEventId: transfer.dst.event.eventId,
-    dstLogIndex: transfer.dst.event.ctx.logIndex,
-    dstTxHash: transfer.dst.event.ctx.txHash,
+    dstChain,
+    dstTime,
+    dstEventId: dst.event?.eventId,
+    dstLogIndex: dst.event?.ctx.logIndex,
+    dstTxHash: dst.event?.ctx.txHash,
 
-    dstTokenAddress: transfer.dst.tokenAddress,
-    dstRawAmount: transfer.dst.tokenAmount,
-    dstWasMinted: transfer.dst.wasMinted,
+    dstTokenAddress: dst.tokenAddress,
+    dstRawAmount: dst.tokenAmount,
+    dstWasMinted: dst.wasMinted,
     dstSymbol: undefined,
     dstAbstractTokenId: undefined,
     dstAmount: undefined,

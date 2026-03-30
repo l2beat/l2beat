@@ -1,5 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type {
+  AggregatedInteropTokenRecord,
+  AggregatedInteropTokensPairRecord,
+  AggregatedInteropTransferRecord,
+  Database,
+  InteropTransferRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
@@ -8,6 +14,7 @@ import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
+import type { InteropAggregationService } from './InteropAggregationService'
 
 describe(InteropAggregatingIndexer.name, () => {
   const to = 1768484645
@@ -17,7 +24,7 @@ describe(InteropAggregatingIndexer.name, () => {
   })
 
   describe(InteropAggregatingIndexer.prototype.update.name, () => {
-    it('aggregates transfers and saves to database', async () => {
+    it('fetches transfers, aggregates via service, and saves to database', async () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
           srcChain: 'ethereum',
@@ -28,22 +35,79 @@ describe(InteropAggregatingIndexer.name, () => {
           srcValueUsd: 2000,
           dstValueUsd: 2000,
         }),
-        createTransfer('across', 'msg2', 'deposit', to - 2 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth',
-          dstAbstractTokenId: 'eth',
-          duration: 6000,
-          srcValueUsd: 3000,
-          dstValueUsd: 3000,
-        }),
       ]
 
       const configs: InteropAggregationConfig[] = [
         {
           id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const aggregatedTransfers: AggregatedInteropTransferRecord[] = [
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          totalDurationSum: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          avgValueInFlight: undefined,
+          transferTypeStats: undefined,
+          mintedValueUsd: 0,
+          burnedValueUsd: 2000,
+          countUnder100: 0,
+          count100To1K: 0,
+          count1KTo10K: 1,
+          count10KTo100K: 0,
+          countOver100K: 0,
+          identifiedCount: 1,
           bridgeType: 'lockAndMint',
-          plugins: [{ plugin: 'across' }],
+        },
+      ]
+
+      const aggregatedTokens: AggregatedInteropTokenRecord[] = [
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          abstractTokenId: 'eth',
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          transferTypeStats: undefined,
+          totalDurationSum: 5000,
+          volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          bridgeType: 'lockAndMint',
+          mintedValueUsd: 0,
+          burnedValueUsd: 2000,
+        },
+      ]
+
+      const aggregatedTokensPairs: AggregatedInteropTokensPairRecord[] = [
+        {
+          timestamp: to,
+          id: 'config1',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          tokenA: 'eth___',
+          tokenB: 'eth___',
+          transferCount: 1,
+          transfersWithDurationCount: 1,
+          transferTypeStats: undefined,
+          totalDurationSum: 5000,
+          volume: 2000,
+          minTransferValueUsd: 2000,
+          maxTransferValueUsd: 2000,
+          bridgeType: 'lockAndMint',
         },
       ]
 
@@ -56,14 +120,21 @@ describe(InteropAggregatingIndexer.name, () => {
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(2),
+        insertMany: mockFn().resolvesTo(1),
       })
       const aggregatedInteropToken = mockObject<
         Database['aggregatedInteropToken']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(2),
+        insertMany: mockFn().resolvesTo(1),
+      })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(1),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
@@ -73,25 +144,43 @@ describe(InteropAggregatingIndexer.name, () => {
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
+        aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areAllSyncersFollowing: mockFn().returns(true),
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        syncersManager,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers,
+          aggregatedTokens,
+          aggregatedTokensPairs,
+          warnings: [],
+        }),
       })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          aggregationService,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.update(from, to)
 
       expect(result).toEqual(to)
       expect(interopTransfer.getByRange).toHaveBeenCalledWith(from, to)
+      expect(aggregationService.aggregate).toHaveBeenCalledWith(
+        transfers,
+        configs,
+        to,
+      )
       expect(transaction).toHaveBeenCalledTimes(1)
       expect(
         aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
@@ -99,138 +188,35 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
         to,
       )
-      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
-        {
-          timestamp: to,
-          id: 'config1',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          transferCount: 2,
-          totalDurationSum: 11000,
-          srcValueUsd: 5000,
-          dstValueUsd: 5000,
-        },
-      ])
-      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
-        {
-          timestamp: to,
-          id: 'config1',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          abstractTokenId: 'eth',
-          transferCount: 2,
-          totalDurationSum: 11000,
-          volume: 5000,
-        },
-      ])
+      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith(
+        aggregatedTransfers,
+      )
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith(
+        aggregatedTokens,
+      )
       expect(
         aggregatedInteropToken.deleteAllButEarliestPerDayBefore,
       ).toHaveBeenCalledWith(from)
       expect(aggregatedInteropToken.deleteByTimestamp).toHaveBeenCalledWith(to)
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith(
+        aggregatedTokensPairs,
+      )
+      expect(
+        aggregatedInteropTokensPair.deleteAllButEarliestPerDayBefore,
+      ).toHaveBeenCalledWith(from)
+      expect(
+        aggregatedInteropTokensPair.deleteByTimestamp,
+      ).toHaveBeenCalledWith(to)
     })
 
-    it('filters transfers by plain plugin, chain plugin, and abstractTokenId plugin simultaneously', async () => {
-      const transfers: InteropTransferRecord[] = [
-        // Plain plugin filter: across (should match config1)
-        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth',
-          dstAbstractTokenId: 'eth',
-          duration: 5000,
-          srcValueUsd: 2000,
-          dstValueUsd: 2000,
-        }),
-        createTransfer('stargate', 'msg2', 'deposit', to - 2 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth',
-          dstAbstractTokenId: 'eth',
-          duration: 6000,
-          srcValueUsd: 3000,
-          dstValueUsd: 3000,
-        }),
-        // Chain plugin filter: cctp-v1 with ethereum chain (should match config2)
-        createTransfer('cctp-v1', 'msg3', 'deposit', to - 3 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'usdc',
-          dstAbstractTokenId: 'usdc',
-          duration: 7000,
-          srcValueUsd: 1000,
-          dstValueUsd: 1000,
-        }),
-        createTransfer('cctp-v1', 'msg4', 'deposit', to - 4 * UnixTime.HOUR, {
-          srcChain: 'polygon',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'usdc',
-          dstAbstractTokenId: 'usdc',
-          duration: 8000,
-          srcValueUsd: 1500,
-          dstValueUsd: 1500,
-        }),
-        createTransfer('cctp-v1', 'msg5', 'deposit', to - 5 * UnixTime.HOUR, {
-          srcChain: 'arbitrum',
-          dstChain: 'ethereum',
-          srcAbstractTokenId: 'usdc',
-          dstAbstractTokenId: 'usdc',
-          duration: 9000,
-          srcValueUsd: 2500,
-          dstValueUsd: 2500,
-        }),
-        // AbstractTokenId plugin filter: stargate with eth token (should match config3)
-        createTransfer('stargate', 'msg6', 'deposit', to - 6 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth',
-          dstAbstractTokenId: 'eth',
-          duration: 10000,
-          srcValueUsd: 4000,
-          dstValueUsd: 4000,
-        }),
-        createTransfer('stargate', 'msg7', 'deposit', to - 7 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'usdc',
-          dstAbstractTokenId: 'usdc',
-          duration: 11000,
-          srcValueUsd: 500,
-          dstValueUsd: 500,
-        }),
-        createTransfer('stargate', 'msg8', 'deposit', to - 8 * UnixTime.HOUR, {
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          srcAbstractTokenId: 'eth',
-          dstAbstractTokenId: 'usdc',
-          duration: 12000,
-          srcValueUsd: 3500,
-          dstValueUsd: 3000,
-        }),
-      ]
+    it('handles empty transfers correctly', async () => {
+      const transfers: InteropTransferRecord[] = []
 
       const configs: InteropAggregationConfig[] = [
-        // Config1: Plain plugin filter - should match msg1 (across)
         {
           id: 'config1',
-          bridgeType: 'lockAndMint',
-          plugins: [{ plugin: 'across' }],
-        },
-        // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum) and msg5 (arbitrum->ethereum)
-        {
-          id: 'config2',
-          bridgeType: 'lockAndMint',
-          plugins: [{ chain: 'ethereum', plugin: 'cctp-v1' }],
-        },
-        // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth) and msg8 (eth->usdc, src is eth)
-        {
-          id: 'config3',
-          bridgeType: 'lockAndMint',
-          plugins: [
-            {
-              abstractTokenId: 'eth',
-              plugin: 'stargate',
-            },
-          ],
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -243,144 +229,69 @@ describe(InteropAggregatingIndexer.name, () => {
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(5),
+        insertMany: mockFn().resolvesTo(0),
       })
       const aggregatedInteropToken = mockObject<
         Database['aggregatedInteropToken']
       >({
         deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
         deleteByTimestamp: mockFn().resolvesTo(0),
-        insertMany: mockFn().resolvesTo(5),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
       })
 
       const transaction = mockFn(async (fn: any) => await fn())
 
       const db = mockDatabase({
+        transaction,
         interopTransfer,
         aggregatedInteropTransfer,
         aggregatedInteropToken,
-        transaction,
+        aggregatedInteropTokensPair,
       })
       const syncersManager = mockObject<InteropSyncersManager>({
         areAllSyncersFollowing: mockFn().returns(true),
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs,
-        syncersManager,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          aggregatedTokensPairs: [],
+          warnings: [],
+        }),
       })
 
-      await indexer.update(0, to)
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs,
+          aggregationService,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
-      expect(
-        aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore,
-      ).toHaveBeenCalledWith(from)
-      expect(aggregatedInteropTransfer.deleteByTimestamp).toHaveBeenCalledWith(
+      const result = await indexer.update(from, to)
+
+      expect(result).toEqual(to)
+      expect(aggregationService.aggregate).toHaveBeenCalledWith(
+        transfers,
+        configs,
         to,
       )
-      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([
-        // Config1: Plain plugin filter - should match msg1 (across)
-        {
-          timestamp: to,
-          id: 'config1',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          transferCount: 1,
-          totalDurationSum: 5000,
-          srcValueUsd: 2000,
-          dstValueUsd: 2000,
-        },
-        // Config2: Chain plugin filter - should match msg3 (ethereum->arbitrum)
-        {
-          timestamp: to,
-          id: 'config2',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          transferCount: 1,
-          totalDurationSum: 7000,
-          srcValueUsd: 1000,
-          dstValueUsd: 1000,
-        },
-        // Config2: Chain plugin filter - should match msg5 (arbitrum->ethereum)
-        {
-          timestamp: to,
-          id: 'config2',
-          srcChain: 'arbitrum',
-          dstChain: 'ethereum',
-          transferCount: 1,
-          totalDurationSum: 9000,
-          srcValueUsd: 2500,
-          dstValueUsd: 2500,
-        },
-        // Config3: AbstractTokenId plugin filter - should match msg6 (eth->eth)
-        {
-          timestamp: to,
-          id: 'config3',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          transferCount: 3,
-          totalDurationSum: 28000,
-          srcValueUsd: 10500,
-          dstValueUsd: 10000,
-        },
-      ])
-      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([
-        {
-          timestamp: to,
-          id: 'config1',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          abstractTokenId: 'eth',
-          transferCount: 1,
-          totalDurationSum: 5000,
-          volume: 2000,
-        },
-        {
-          timestamp: to,
-          id: 'config2',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          abstractTokenId: 'usdc',
-          transferCount: 1,
-          totalDurationSum: 7000,
-          volume: 1000,
-        },
-        {
-          timestamp: to,
-          id: 'config2',
-          srcChain: 'arbitrum',
-          dstChain: 'ethereum',
-          abstractTokenId: 'usdc',
-          transferCount: 1,
-          totalDurationSum: 9000,
-          volume: 2500,
-        },
-        {
-          timestamp: to,
-          id: 'config3',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          abstractTokenId: 'eth',
-          transferCount: 3,
-          totalDurationSum: 28000,
-          volume: 10500,
-        },
-        {
-          timestamp: to,
-          id: 'config3',
-          srcChain: 'ethereum',
-          dstChain: 'arbitrum',
-          abstractTokenId: 'usdc',
-          transferCount: 1,
-          totalDurationSum: 12000,
-          volume: 3000,
-        },
-      ])
+      expect(aggregatedInteropTransfer.insertMany).toHaveBeenCalledWith([])
+      expect(aggregatedInteropToken.insertMany).toHaveBeenCalledWith([])
+      expect(aggregatedInteropTokensPair.insertMany).toHaveBeenCalledWith([])
     })
 
     it('skips aggregation when not all syncers are following', async () => {
@@ -412,15 +323,27 @@ describe(InteropAggregatingIndexer.name, () => {
         areAllSyncersFollowing: mockFn().returns(false),
       })
 
-      const indexer = new InteropAggregatingIndexer({
-        db,
-        configs: [],
-        syncersManager,
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        minHeight: 0,
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          aggregatedTokensPairs: [],
+          warnings: [],
+        }),
       })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationService,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
 
       const result = await indexer.update(from, to)
 
@@ -446,12 +369,15 @@ function createTransfer(
     duration: number
     srcValueUsd?: number
     dstValueUsd?: number
+    srcWasBurned?: boolean
+    dstWasMinted?: boolean
   },
 ): InteropTransferRecord {
   return {
     plugin,
     transferId,
     type,
+    bridgeType: undefined,
     timestamp,
     srcTime: timestamp,
     srcTxHash: 'random-hash',
@@ -459,7 +385,7 @@ function createTransfer(
     srcEventId: 'random-event-id',
     srcTokenAddress: undefined,
     srcRawAmount: undefined,
-    srcWasBurned: undefined,
+    srcWasBurned: overrides.srcWasBurned ?? undefined,
     srcSymbol: undefined,
     srcAmount: undefined,
     srcPrice: undefined,
@@ -469,7 +395,7 @@ function createTransfer(
     dstEventId: 'random-event-id',
     dstTokenAddress: undefined,
     dstRawAmount: undefined,
-    dstWasMinted: undefined,
+    dstWasMinted: overrides.dstWasMinted ?? undefined,
     dstSymbol: undefined,
     dstAmount: undefined,
     dstPrice: undefined,

@@ -4,5 +4,11 @@
     "address": "eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4",
     "chain": "ethereum",
     "blockNumber": 23834069
+  },
+  "RewardBooster_alpha.sol": {
+    "hash": "0x7e3d88822760fe6d4eef2faf9c6e14ae481b4ce38a65abe838a87511e128b9f0",
+    "address": "eth:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80",
+    "chain": "ethereum",
+    "blockNumber": 24590324
   }
 }

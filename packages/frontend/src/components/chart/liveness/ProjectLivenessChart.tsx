@@ -20,7 +20,6 @@ interface Props {
   project: ChartProject
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
   milestones: Milestone[]
   defaultRange: ChartRange
   isArchived: boolean
@@ -31,7 +30,6 @@ export function ProjectLivenessChart({
   project,
   configuredSubtypes,
   anomalies,
-  hasTrackedContractsChanged,
   milestones,
   isArchived,
   defaultRange,
@@ -94,24 +92,24 @@ export function ProjectLivenessChart({
           <LivenessChartRangeControls range={range} setRange={setRange} />
         </ChartControlsWrapper>
       </div>
-      <LivenessChart
-        data={chartData}
-        isLoading={isLoading}
-        project={project}
-        subtype={subtype}
-        milestones={milestones}
-        lastValidTimestamp={lastValidTimestamp}
-        anyAnomalyLive={anyAnomalyLive}
-        resolution={rangeToResolution(range)}
-        tickCount={4}
-        className="mt-4 mb-3"
-      />
+      <div className="mt-4 mb-3">
+        <LivenessChart
+          data={chartData}
+          isLoading={isLoading}
+          project={project}
+          subtype={subtype}
+          milestones={milestones}
+          lastValidTimestamp={lastValidTimestamp}
+          anyAnomalyLive={anyAnomalyLive}
+          resolution={rangeToResolution(range)}
+          tickCount={4}
+        />
+      </div>
       <LivenessChartStats
         isLoading={isLoading}
         stats={chart?.stats}
         anomalies={anomalies}
         configuredSubtypes={configuredSubtypes}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
         isArchived={isArchived}
       />
     </div>

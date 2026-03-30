@@ -1,21 +1,27 @@
 import type { Project } from '@l2beat/config'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { VerifiersSectionProps } from '~/components/projects/sections/VerifiersSection'
+import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { getZkCatalogLogo } from '~/server/features/zk-catalog/getZkCatalogLogo'
 import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
-import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
+
+function plainDeploymentAddress(
+  address: EthereumAddress | string,
+): EthereumAddress {
+  return ChainSpecificAddress.check(address)
+    ? ChainSpecificAddress.address(address)
+    : (address as EthereumAddress)
+}
 
 export async function getVerifiersSection(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
   const projects = await ps.getProjects({
@@ -30,22 +36,27 @@ export async function getVerifiersSection(
     const key = `${verifier.proofSystem.type}-${verifier.proofSystem.id}`
     const proofSystemVerifiers = byProofSystem[key]
 
-    const attesters = verifier.attesters?.map((attester) => ({
-      ...attester,
-      icon: manifest.getUrl(`/icons/${attester.id}.png`),
-    }))
+    const attesters = verifier.attesters?.map((attester) => {
+      const icon = getZkCatalogLogo(attester.id)
+      return {
+        ...attester,
+        icon: icon.light,
+        iconDark: icon.dark,
+      }
+    })
 
     const knownDeployments = verifier.knownDeployments.map((d) => {
       const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
         .explorerUrl
+      const addressKey = plainDeploymentAddress(d.address)
       return {
         url: explorerUrl
-          ? `${explorerUrl}/address/${d.address}#code`
+          ? `${explorerUrl}/address/${addressKey}#code`
           : undefined,
-        address: d.address,
+        address: addressKey,
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(project.id, d.chain, d.address)
+          : contractUtils.getUsedIn(project.id, d.chain, addressKey)
         ).sort(tvsComparator(allProjects, tvs)),
       }
     })
@@ -53,7 +64,7 @@ export async function getVerifiersSection(
     const projectsUsedIn = uniqBy(
       knownDeployments.flatMap((d) => d.projectsUsedIn),
       (u) => u.id,
-    )
+    ).sort(tvsComparator(allProjects, tvs))
 
     if (!proofSystemVerifiers) {
       byProofSystem[key] = {

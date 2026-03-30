@@ -1,29 +1,21 @@
+import type { InteropMode, InteropSelection } from './types'
+
 export function buildInteropUrl(
   path: string,
-  queryParams?: { from?: string[]; to?: string[] },
-  allChainIds?: string[],
+  selection: InteropSelection,
+  mode: InteropMode,
 ): string {
-  if (!queryParams) {
-    return path
-  }
-
   const params = new URLSearchParams()
 
-  // Only add params when not all chains selected
-  const allCount = allChainIds?.length ?? 0
-  if (
-    queryParams.from &&
-    queryParams.from.length > 0 &&
-    queryParams.from.length < allCount
-  ) {
-    params.set('from', queryParams.from.join(','))
-  }
-  if (
-    queryParams.to &&
-    queryParams.to.length > 0 &&
-    queryParams.to.length < allCount
-  ) {
-    params.set('to', queryParams.to.join(','))
+  if (mode === 'public') {
+    if (selection.from.length !== 1 || selection.to.length !== 1) {
+      return path
+    }
+
+    params.set('selectedChains', [selection.from[0], selection.to[0]].join(','))
+  } else {
+    params.set('from', selection.from.join(','))
+    params.set('to', selection.to.join(','))
   }
 
   return params.size > 0 ? `${path}?${params.toString()}` : path

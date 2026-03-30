@@ -85,7 +85,7 @@ export async function getRecategorisedActivityChart(
     aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
   const aggregatedOthersEntries = aggregateActivityRecords(othersEntries) ?? {}
   const aggregatedEthereumEntries =
-    aggregateActivityRecords(ethereumEntries, true) ?? {}
+    aggregateActivityRecords(ethereumEntries, { forEthereum: true }) ?? {}
 
   if (
     Object.values(aggregatedRollupsEntries).length === 0 &&

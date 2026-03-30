@@ -29,7 +29,7 @@ interface Props {
 
 export function ScalingActivityChart({ milestones, entries }: Props) {
   const { range, setRange } = useActivityChartRangeContext()
-  const [scale, setScale] = useState<ChartScale>('lin')
+  const [scale, setScale] = useState<ChartScale>('linear')
   const { dataKeys, toggleDataKey } = useChartDataKeys(
     RECATEGORISED_ACTIVITY_CHART_META,
   )
@@ -59,18 +59,20 @@ export function ScalingActivityChart({ milestones, entries }: Props) {
         data={data}
         isLoading={isLoading}
         milestones={milestones}
+        scale={scale}
         chartMeta={RECATEGORISED_ACTIVITY_CHART_META}
         interactiveLegend={{
           dataKeys,
           onItemClick: toggleDataKey,
         }}
       />
-      <ActivityRatioChart
-        data={ratioData}
-        isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
-        className="mb-2"
-      />
+      <div className="mb-2">
+        <ActivityRatioChart
+          data={ratioData}
+          isLoading={isLoading}
+          syncedUntil={data?.syncedUntil}
+        />
+      </div>
       <Controls
         scale={scale}
         setScale={setScale}
@@ -99,8 +101,8 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
             value={scale}
             onValueChange={(value) => setScale(value as ChartScale)}
           >
-            <RadioGroupItem value="log">LOG</RadioGroupItem>
-            <RadioGroupItem value="lin">LIN</RadioGroupItem>
+            <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+            <RadioGroupItem value="linear">LIN</RadioGroupItem>
           </RadioGroup>
         ) : (
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />

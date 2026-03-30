@@ -9,6 +9,7 @@ import {
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTvsTargetTimestamp } from '../tvs/utils/getTvsTargetTimestamp'
+import { MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN } from './const'
 
 export interface ScalingProjectTvsBreakdown {
   project: WithProjectIcon<
@@ -53,7 +54,9 @@ export async function getScalingProjectTvsBreakdown(
   return {
     project: withProjectIcon(project),
     dataTimestamp: getTvsTargetTimestamp(),
-    entries,
+    entries: entries.filter(
+      (entry) => entry.valueForProject >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
+    ),
     project7dData,
     milestones: project.milestones ?? [],
   }

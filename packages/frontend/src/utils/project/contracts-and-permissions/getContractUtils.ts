@@ -68,16 +68,14 @@ async function getContractUsageMap() {
     ps.getProjects({ where: ['daLayer'] }),
     ps.getProjects({
       select: ['contracts'],
-      optional: ['permissions', 'isScaling', 'isBridge', 'daBridge'],
+      optional: ['permissions', 'isScaling', 'daBridge'],
       whereNot: ['archivedAt'],
     }),
   ])
 
   for (const project of projects) {
     let url = `/scaling/projects/${project.slug}`
-    if (project.isBridge) {
-      url = `/bridges/projects/${project.slug}`
-    } else if (project.daBridge) {
+    if (project.daBridge) {
       const layer = daLayers.find((x) => x.id === project.daBridge?.daLayer)
       url = `/data-availability/projects/${layer?.slug}/${project.slug}`
     }

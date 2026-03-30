@@ -1038,6 +1038,11 @@ function getRiskView(
           ? validatorAfkTimeSeconds
           : challengePeriodSeconds + validatorAfkTimeSeconds // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
 
+        const ONE_YEAR_IN_SECONDS = 365 * 24 * 60 * 60
+        if (totalDelay > ONE_YEAR_IN_SECONDS) {
+          return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
+        }
+
         return {
           ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(totalDelay),
           secondLine: formatDelay(totalDelay),
@@ -1367,6 +1372,10 @@ function computedStage(
     return { stage: 'NotApplicable' }
   }
 
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
   return getStage(
     {
       stage0: {
@@ -1383,6 +1392,10 @@ function computedStage(
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,
+        noRedTrustedSetups: null,
+        programHashesReproducible: programHashesReproducible(wasmModuleRoot),
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -1487,4 +1500,11 @@ function BoLDStateValidation(
       },
     ],
   }
+}
+
+function programHashesReproducible(wasmModuleRoot: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(wasmModuleRoot).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
 }

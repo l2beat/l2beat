@@ -6,7 +6,7 @@ import type { ChartMeta } from '../Chart'
  */
 export function sortLegend<T>(
   chartMeta: ChartMeta,
-  payload: T[],
+  payload: readonly T[],
   nameKey?: string,
 ): T[] {
   const metaKeys = Object.keys(chartMeta)

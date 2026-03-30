@@ -8,12 +8,13 @@ export const gaszip: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime(1769070497),
   interopConfig: {
-    bridgeType: 'nonMinting',
     plugins: [
       {
         plugin: 'gaszip',
+        bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

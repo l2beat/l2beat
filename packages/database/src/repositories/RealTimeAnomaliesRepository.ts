@@ -142,4 +142,17 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  async deleteOngoingByProjectIdAndSubtype(
+    projectId: string,
+    subtype: TrackedTxsConfigSubtype,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('RealTimeAnomaly')
+      .where('projectId', '=', projectId)
+      .where('subtype', '=', subtype)
+      .where('status', '=', 'ongoing')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
 }

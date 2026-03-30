@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -13,21 +14,28 @@ export interface BlockIndexerDeps
   blockProvider: BlockProvider
   logsProvider: LogsProvider
   blockProcessors: BlockProcessor[]
+  stopBlockIndexerAtTimestampMs?: number
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
 }
 
 export class BlockIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: BlockIndexerDeps) {
-    super({
-      ...$,
-      name: 'block_indexer',
-      tags: {
-        tag: $.source,
-        chain: $.source,
+  constructor(
+    private readonly $: BlockIndexerDeps,
+    logger: Logger,
+  ) {
+    super(
+      {
+        ...$,
+        name: 'block_indexer',
+        tags: {
+          tag: $.source,
+          chain: $.source,
+        },
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
-      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-    })
+      logger,
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -81,7 +89,30 @@ export class BlockIndexer extends ManagedChildIndexer {
       count: consistentBlocks.length,
     })
 
+    const processingStart = Date.now()
+    const stopBlockIndexerAtTimestampMs = this.$.stopBlockIndexerAtTimestampMs
+    let processedBlocks = 0
+    let processedLogs = 0
+    let lastProcessedBlockNumber: number | undefined
     for (const { block, logs } of consistentBlocks) {
+      const blockTimestampMs = block.timestamp
+      if (
+        stopBlockIndexerAtTimestampMs !== undefined &&
+        blockTimestampMs > stopBlockIndexerAtTimestampMs
+      ) {
+        this.logger.info('Stopping block sync at configured timestamp', {
+          blockNumber: block.number,
+          blockTimestampMs,
+          stopBlockIndexerAtTimestampMs,
+        })
+        if (lastProcessedBlockNumber === undefined) {
+          throw new Error(
+            `Block ${block.number} timestamp (${blockTimestampMs}) is greater than STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS (${stopBlockIndexerAtTimestampMs})`,
+          )
+        }
+        break
+      }
+
       for (const processor of this.$.blockProcessors) {
         try {
           const start = Date.now()
@@ -103,9 +134,20 @@ export class BlockIndexer extends ManagedChildIndexer {
         blockNumber: block.number,
         logs: logs.length,
       })
+      processedBlocks++
+      processedLogs += logs.length
+      lastProcessedBlockNumber = block.number
     }
+    const processingDuration = Date.now() - processingStart
+    this.logger.info('Processed blocks', {
+      chain: this.$.source,
+      blocks: processedBlocks,
+      logs: processedLogs,
+      processors: this.$.blockProcessors.length,
+      durationMs: Number.parseFloat(processingDuration.toFixed(2)),
+    })
 
-    return actualTo
+    return lastProcessedBlockNumber ?? actualTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {

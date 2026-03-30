@@ -1,7 +1,7 @@
-import capitalize from 'lodash/capitalize'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export function TokenSummaryBox({ token }: { token: ProjectToken }) {
@@ -11,7 +11,7 @@ export function TokenSummaryBox({ token }: { token: ProjectToken }) {
         <span className="font-bold">{formatCurrency(token.value, 'usd')}</span>
       </ChartStatsItem>
       <ChartStatsItem label="Bridging Type">
-        <span className="font-bold">{capitalize(token.source)}</span>
+        <span className="font-bold">{sourceToLabel(token.source)}</span>
       </ChartStatsItem>
       <ChartStatsItem label="Category">
         <span className="font-bold">{categoryToLabel(token.category)}</span>

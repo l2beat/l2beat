@@ -36,5 +36,11 @@
     "address": "eth:0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d",
     "chain": "ethereum",
     "blockNumber": 24318608
+  },
+  "L1VerifierFflonk_v29_4": {
+    "hash": "0x3d80c4cef4b064c6aa35b40463287e7e4430c33c3ca17027c4b7855f9cfec730",
+    "address": "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442",
+    "chain": "ethereum",
+    "blockNumber": 24419115
   }
 }

@@ -1,10 +1,8 @@
-import { externalLinks } from '~/consts/externalLinks'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
 } from '~/utils/project/underReview'
 import { Banner } from '../Banner'
-import { CustomLink } from '../link/CustomLink'
 
 interface Project {
   archivedAt?: number
@@ -17,37 +15,20 @@ interface Project {
   }
 }
 
-export function ProjectSummaryBars({
-  project,
-  showBridgesWarning,
-}: {
-  project: Project
-  showBridgesWarning?: boolean
-}) {
+export function ProjectSummaryBars({ project }: { project: Project }) {
   if (
     !project.archivedAt &&
     !project.isUpcoming &&
     !project.underReviewStatus &&
     !project.header?.warning &&
     !project.header?.redWarning &&
-    !project.header?.emergencyWarning &&
-    !showBridgesWarning
+    !project.header?.emergencyWarning
   ) {
     return null
   }
 
   return (
     <div className="mb-3 space-y-2">
-      {showBridgesWarning && (
-        <Banner type="warning" centered>
-          <p>
-            L2BEAT Bridges is a work in progress. You might find incomplete
-            research or inconsistent naming. Join our{' '}
-            <CustomLink href={externalLinks.discord}>Discord</CustomLink> to
-            suggest improvements!
-          </p>
-        </Banner>
-      )}
       {project.archivedAt && (
         <Banner type="info" centered>
           This project is archived and no longer maintained.

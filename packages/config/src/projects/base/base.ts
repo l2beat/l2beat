@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW } from '../../common'
+import { DERIVATION } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -50,41 +50,70 @@ export const base: ScalingProject = opStackL2({
   },
   interopConfig: {
     name: 'Base Canonical',
-    bridgeType: 'lockAndMint',
     durationSplit: {
-      in: {
-        label: 'L1 -> L2',
-        from: 'ethereum',
-        to: 'base',
-      },
-      out: {
-        label: 'L2 -> L1',
-        from: 'base',
-        to: 'ethereum',
-      },
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+            'beefy-bridge.L1ToL2Transfer',
+            'maker-bridge.L1ToL2Transfer',
+            'sorare-base.L1ToL2Transfer',
+            'lido-wsteth.L1ToL2Transfer',
+            'sky-bridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+            'maker-bridge.L2ToL1Transfer',
+            'lido-wsteth.L2ToL1Transfer',
+            'sky-bridge.L2ToL1Transfer',
+          ],
+        },
+      ],
     },
     plugins: [
       {
         chain: 'base',
         plugin: 'opstack',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'beefy-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'maker-bridge',
+        bridgeType: 'lockAndMint',
       },
       {
         chain: 'base',
         plugin: 'sorare-base',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'base',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'base',
+        plugin: 'sky-bridge',
+        bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
@@ -93,7 +122,6 @@ export const base: ScalingProject = opStackL2({
         'eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
@@ -102,7 +130,6 @@ export const base: ScalingProject = opStackL2({
         'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
       ),
       tokens: ['USDS', 'sUSDS'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
@@ -227,6 +254,10 @@ export const base: ScalingProject = opStackL2({
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
+        noRedTrustedSetups: null,
+        programHashesReproducible: null,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -238,11 +269,15 @@ export const base: ScalingProject = opStackL2({
       rollupNodeLink: 'https://github.com/base-org/node',
     },
   ),
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-    isPartOfSuperchain: true,
-  },
   milestones: [
+    {
+      title: 'Base leaves the Superchain',
+      url: 'https://blog.base.dev/next-chapter-for-base-chain-1',
+      date: '2026-03-04T00:00:00Z',
+      description:
+        'Base decouples from Optimism Superchain governance with its own upgrade path.',
+      type: 'general',
+    },
     {
       title: 'Base halts block production for 33mins',
       url: 'https://status.base.org/incidents/kdq3t8s13gfs',
@@ -288,16 +323,16 @@ export const base: ScalingProject = opStackL2({
     },
   ],
   upgradesAndGovernance:
-    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
+    'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.',
+    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council. There is no delay on upgrades.',
   },
   nonTemplateRiskView: {
     exitWindow: {
       value: 'None',
       description:
-        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 3 parties: Base multisig, the Op Foundation Operations multisig, and the Base Security Council.',
+        'There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable. Upgrades need to be approved by 2 parties: the Base Coordinator Multisig and the Base Security Council.',
       sentiment: 'bad',
       orderHint: 0, // 0-7 days
     },

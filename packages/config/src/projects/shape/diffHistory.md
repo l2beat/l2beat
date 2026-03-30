@@ -1,3 +1,809 @@
+Generated with discovered.json: 0xcfa6c2d0ce525bd8eccb402967e7289ee1d118f5
+
+# Diff at Wed, 25 Mar 2026 10:05:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773181943
+- current timestamp: 1774433058
+
+## Description
+
+Upgrade 14: Isthmus L1 Contracts + MT-Cannon. https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796
+
+Also includes the shared OpFoundation signer rotation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x0D8a607F3d2de86adD04Df00f06794cB339A40de) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735","role":".proposer"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) {
+    +++ description: None
+      directlyReceivedPermissions.4.from:
+-        "eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61"
++        "eth:0x36B4f78990619Fdd8F7E9cc7965326336f2bd706"
+      directlyReceivedPermissions.6.from:
+-        "eth:0x846d9469BAaF481f8516f7c1d03990672B68CB09"
++        "eth:0xc55f722cF6e14907B844a8B8D3CFd0C04Cf3Ed9B"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2b18602877181C3cB72C687E2A771E123A3788E3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xfaa50769db48b1d2c04c06a8a0a4771b87b3c0ff20a508115bfdb2b576fdb454"
++        "0x12cf78bcfa479caaee8133c0f935dcdcc333cdc116805f6b81bd80f6ba52128c"
+      values.$implementation:
+-        "eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"
++        "eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"
+      values.$pastUpgrades.4:
++        ["2026-03-16T07:53:47.000Z","0xbba5fc3724938e6ca6020735a7228ea48d2f585b5d14ddbb92faa343e49c8154",["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]]
+      values.$pastUpgrades.5:
++        ["2026-03-25T08:07:11.000Z","0xae63a02fd16176b4b8f5d7da48f3c23d05bf5f171f93991f2b9002789668d759",["eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"]]
+      values.$upgradeCount:
+-        4
++        6
+      values.version:
+-        "2.5.0"
++        "2.10.0"
+      values.ENCODING_OVERHEAD:
++        260
+      values.FLOOR_CALLDATA_OVERHEAD:
++        40
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      values.systemConfig:
++        "eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355"
+      values.TX_BASE_GAS:
++        21000
+      implementationNames.eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
++        "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689"
+      values.$implementation:
+-        "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"
++        "eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D"
+      values.$pastUpgrades.2:
++        ["2026-03-25T08:07:11.000Z","0xae63a02fd16176b4b8f5d7da48f3c23d05bf5f171f93991f2b9002789668d759",["eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D"]]
+      values.$upgradeCount:
+-        2
++        3
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735"
++        "eth:0x0621932Ea17bE6ad17409c0A9A112E166Afc0653"
+      values.version:
+-        "1.0.1"
++        "1.2.0"
+      values.initVersion:
++        1
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      implementationNames.eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract L1StandardBridge (eth:0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x4a2d83507f25be218f504b76815e4494138af88734cc54d34666c631aea88af5"
++        "0x29b630d028d2dfddff75dc128b41ae51836c874dcd31a62c9d7313599e6261fb"
+      values.$implementation:
+-        "eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6"
++        "eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb"
+      values.version:
+-        "2.2.2"
++        "2.7.0"
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      values.systemConfig:
++        "eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355"
+      implementationNames.eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6:
+-        "L1StandardBridge"
+      implementationNames.eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (eth:0x846d9469BAaF481f8516f7c1d03990672B68CB09)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735","role":".challenger"}
+      receivedPermissions.5.from:
+-        "eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61"
++        "eth:0x36B4f78990619Fdd8F7E9cc7965326336f2bd706"
+      receivedPermissions.7.from:
+-        "eth:0x846d9469BAaF481f8516f7c1d03990672B68CB09"
++        "eth:0xc55f722cF6e14907B844a8B8D3CFd0C04Cf3Ed9B"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xe9d3E49b0636016c5fE9eaA2347948D0bA9f15Af) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c"
++        "0xab560cdc633c64552a47cd693ebc9aaab91fe80bec99e9e89b9d13d89a994c22"
+      values.$implementation:
+-        "eth:0x276d3730f219f7ec22274f7263180b8452B46d47"
++        "eth:0x7f1d12fB2911EB095278085f721e644C1f675696"
+      values.$pastUpgrades.4:
++        ["2026-03-16T07:53:47.000Z","0xbba5fc3724938e6ca6020735a7228ea48d2f585b5d14ddbb92faa343e49c8154",["eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"]]
+      values.$pastUpgrades.5:
++        ["2026-03-25T08:07:11.000Z","0xae63a02fd16176b4b8f5d7da48f3c23d05bf5f171f93991f2b9002789668d759",["eth:0x7f1d12fB2911EB095278085f721e644C1f675696"]]
+      values.$upgradeCount:
+-        4
++        6
+      values.version:
+-        "2.3.1"
++        "2.8.0"
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      values.systemConfig:
++        "eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355"
+      implementationNames.eth:0x276d3730f219f7ec22274f7263180b8452B46d47:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x7f1d12fB2911EB095278085f721e644C1f675696:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xEB06fFa16011B5628BaB98E29776361c83741dd3) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x67ee16b5b6c32cdcc862bea390e45017908e6945cfaa01d3ef75dc9de7c9d946"
++        "0x8ca0818fc584e81a5cead0efc1c32f3273182323dcbd08a60779d55cb0aa90c9"
+      values.$implementation:
+-        "eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"
++        "eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999"
+      values.$pastUpgrades.4:
++        ["2026-03-16T07:53:47.000Z","0xbba5fc3724938e6ca6020735a7228ea48d2f585b5d14ddbb92faa343e49c8154",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$pastUpgrades.5:
++        ["2026-03-25T08:07:11.000Z","0xae63a02fd16176b4b8f5d7da48f3c23d05bf5f171f93991f2b9002789668d759",["eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999"]]
+      values.$upgradeCount:
+-        4
++        6
+      values.respectedGameTypeUpdatedAt:
+-        1738700903
++        1774426031
+      values.version:
+-        "3.13.0"
++        "5.0.0"
+      values.anchorStateRegistry:
++        "eth:0xc55f722cF6e14907B844a8B8D3CFd0C04Cf3Ed9B"
+      values.ethLockbox:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      implementationNames.eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd:
+-        "OptimismPortal2"
+      implementationNames.eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    EOA  (eth:0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x846d9469BAaF481f8516f7c1d03990672B68CB09","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774"
++        "0xc64176b1425d9639f5082ecef5e30b3b365111e2be71596ab1bd831edba65bd9"
+      values.$implementation:
+-        "eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"
++        "eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"
+      values.$pastUpgrades.6:
++        ["2026-03-16T07:53:47.000Z","0xbba5fc3724938e6ca6020735a7228ea48d2f585b5d14ddbb92faa343e49c8154",["eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"]]
+      values.$pastUpgrades.7:
++        ["2026-03-25T08:07:11.000Z","0xae63a02fd16176b4b8f5d7da48f3c23d05bf5f171f93991f2b9002789668d759",["eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"]]
+      values.$upgradeCount:
+-        6
++        8
+      values.DISPUTE_GAME_FACTORY_SLOT:
+-        "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906"
+      values.getAddresses.disputeGameFactory:
+-        "eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952"
+      values.maximumGasLimit:
+-        200000000
++        500000000
+      values.version:
+-        "2.4.0"
++        "3.7.0"
+      values.guardian:
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.initVersion:
++        3
+      values.l2ChainId:
++        360
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      values.paused:
++        false
+      values.proxyAdmin:
++        "eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"
+      values.proxyAdminOwner:
++        "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
+      values.superchainConfig:
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      implementationNames.eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc:
+-        "SystemConfig"
+      implementationNames.eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557:
++        "SystemConfig"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x0621932Ea17bE6ad17409c0A9A112E166Afc0653)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x07BABE08EE4D07dBA236530183B24055535A7011)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x36B4f78990619Fdd8F7E9cc7965326336f2bd706)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0xc55f722cF6e14907B844a8B8D3CFd0C04Cf3Ed9B)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  418 +++-
+ .../DelayedWETH/DelayedWETH.sol                    |  406 +++-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  254 ++-
+ .../GnosisSafe/GnosisSafe.sol => /dev/null         |  953 --------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |   35 -
+ .../L1CrossDomainMessenger.sol                     |  647 +++++-
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  334 ++-
+ .../L1StandardBridge/L1StandardBridge.sol          |  334 ++-
+ .../shape/{.flat@1773181943 => .flat}/MIPS.sol     | 2270 ++++++++++++++------
+ .../OptimismPortal2/OptimismPortal2.sol            |  975 ++++++---
+ .../PermissionedDisputeGame.sol                    |  110 +-
+ .../SystemConfig/SystemConfig.sol                  |  468 +++-
+ 12 files changed, 4840 insertions(+), 2364 deletions(-)
+```
+
+Generated with discovered.json: 0x7a04a4e78988eb89bbec2a7f68e9e4d5c66afbc4
+
+# Diff at Tue, 10 Mar 2026 22:34:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@fade2c5e24fed41bc60645f0e28f64c1f000aa1c block: 1772654729
+- current timestamp: 1773181943
+
+## Description
+
+Shape applies OP Stack Upgrade #13 (OPCM and Incident Response Improvements): https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739
+All upgraded implementations are standard shared contracts already deployed across the Superchain.
+
+Upgraded contracts:
+- L1CrossDomainMessenger (v2.3.0→v2.5.0): [diff](https://disco.l2beat.com/diff/eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65/eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231). Added interop predeploy addresses. Refactoring.
+- DisputeGameFactory (v1.0.0→v1.0.1): [diff](https://disco.l2beat.com/diff/eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B/eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0). Minor refactoring.
+- OptimismMintableERC20Factory (v1.9.0→v1.10.1): [diff](https://disco.l2beat.com/diff/eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846/eth:0x5493f4677A186f64805fe7317D6993ba4863988F). Minor refactoring.
+- L1StandardBridge (v2.1.0→v2.2.2): [diff](https://disco.l2beat.com/diff/eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF/eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6). Added interop predeploy addresses. Refactoring.
+- DelayedWETH (v1.1.0→v1.3.0): [diff](https://disco.l2beat.com/diff/eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087/eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e). Delay reduced from 7d to 3.5d. New `hold(address)` overload for recovering WETH.
+- L1ERC721Bridge (v2.1.0→v2.3.1): [diff](https://disco.l2beat.com/diff/eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d/eth:0x276d3730f219f7ec22274f7263180b8452B46d47). Added interop predeploy addresses. Refactoring.
+- OptimismPortal2 (v3.10.0→v3.13.0): [diff](https://disco.l2beat.com/diff/eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B/eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd). Game type changes decoupled from withdrawal invalidation via `wasRespectedGameTypeWhenCreated()`. Added EIP-7702 EOA detection. Custom errors replace `require` strings.
+- SystemConfig (v2.3.0→v2.4.0): [diff](https://disco.l2beat.com/diff/eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375/eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc). New `getAddresses()` function returning all L1 contract addresses. Removed legacy gasPayingToken fields.
+
+Replaced contracts:
+- AnchorStateRegistry: old 0x6ace93AF deleted, new 0x4279be4C created (v2.0.0→v2.2.2). [diff](https://disco.l2beat.com/diff/eth:0x6ace93AF6E8b36803577381be9f02A552e81C10D/eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61). Unified anchor state across all game types via `anchorGame` field. Added game validation functions (`isGameRegistered`, `isGameBlacklisted`, etc.).
+- PermissionedDisputeGame: old 0x8090Ac33 deleted, new 0xfFC1CC63 created. Added `closeGame()` and `credit()` functions.
+- PreimageOracle: old 0x9c065e11 deleted, new 0x1fb8cdFc created (standard shared).
+- MIPS: old 0x5fE03a12 deleted, new 0xaA59A077 created (v1.2.1→v1.3.0). Bug fix in `isSigned` check: `(_dat >> (_idx - 1)) != 0` → `(_dat >> (_idx - 1)) & 1 != 0`.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x0D8a607F3d2de86adD04Df00f06794cB339A40de) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735","role":".proposer"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) {
+    +++ description: None
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61","role":"admin"}
+      directlyReceivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x6ace93AF6E8b36803577381be9f02A552e81C10D","role":"admin"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2b18602877181C3cB72C687E2A771E123A3788E3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0xfaa50769db48b1d2c04c06a8a0a4771b87b3c0ff20a508115bfdb2b576fdb454"
+      values.$implementation:
+-        "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
++        "eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"
+      values.$pastUpgrades.3:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "2.3.0"
++        "2.5.0"
+      implementationNames.eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      sourceHashes.1:
+-        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
++        "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
+      values.$implementation:
+-        "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
++        "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"
+      values.$pastUpgrades.1:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.gameImpls.1:
+-        "eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A"
++        "eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735"
+      values.version:
+-        "1.0.0"
++        "1.0.1"
+      implementationNames.eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x319322906beAdf69dF5d4607169c63D692B1aDC1) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
+      values.$implementation:
+-        "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
++        "eth:0x5493f4677A186f64805fe7317D6993ba4863988F"
+      values.$pastUpgrades.2:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x5493f4677A186f64805fe7317D6993ba4863988F"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.version:
+-        "1.9.0"
++        "1.10.1"
+      implementationNames.eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0x5493f4677A186f64805fe7317D6993ba4863988F:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract L1StandardBridge (eth:0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0x4a2d83507f25be218f504b76815e4494138af88734cc54d34666c631aea88af5"
+      values.$implementation:
+-        "eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
++        "eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6"
+      values.version:
+-        "2.1.0"
++        "2.2.2"
+      implementationNames.eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF:
+-        "L1StandardBridge"
+      implementationNames.eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (eth:0x6ace93AF6E8b36803577381be9f02A552e81C10D)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract DelayedWETH (eth:0x846d9469BAaF481f8516f7c1d03990672B68CB09) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      sourceHashes.1:
+-        "0xfff6f4cca21febd4323222e2ca87ec8b78edfdeeca942468fbf331e537815484"
++        "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a"
+      values.$implementation:
+-        "eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
++        "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e"
+      values.$pastUpgrades.1:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.delay:
+-        604800
++        302400
+      values.version:
+-        "1.1.0"
++        "1.3.0"
+      implementationNames.eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087:
+-        "DelayedWETH"
+      implementationNames.eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e:
++        "DelayedWETH"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735","role":".challenger"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61","role":"admin","via":[{"address":"eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x6ace93AF6E8b36803577381be9f02A552e81C10D","role":"admin","via":[{"address":"eth:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e"}]}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xe9d3E49b0636016c5fE9eaA2347948D0bA9f15Af) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c"
+      values.$implementation:
+-        "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
++        "eth:0x276d3730f219f7ec22274f7263180b8452B46d47"
+      values.$pastUpgrades.3:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x276d3730f219f7ec22274f7263180b8452B46d47"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "2.1.0"
++        "2.3.1"
+      implementationNames.eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x276d3730f219f7ec22274f7263180b8452B46d47:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0xEB06fFa16011B5628BaB98E29776361c83741dd3) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      sourceHashes.1:
+-        "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
++        "0x67ee16b5b6c32cdcc862bea390e45017908e6945cfaa01d3ef75dc9de7c9d946"
+      values.$implementation:
+-        "eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"
++        "eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"
+      values.$pastUpgrades.3:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "3.10.0"
++        "3.13.0"
+      implementationNames.eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B:
+-        "OptimismPortal2"
+      implementationNames.eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xf2ca03f1fb80fdb3c1281ea41b46245c8e6811a03a9ad7129f60cfedaac0e231"
++        "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774"
+      values.$implementation:
+-        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"
+      values.$pastUpgrades.5:
++        ["2026-03-09T11:22:23.000Z","0x50f843acc6d991947cff0487a92a7537852ba2ab64f1b16648e4405288345448",["eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.gasPayingToken:
+-        {"addr_":"eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.isCustomGasToken:
+-        false
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"eth:0x2b18602877181C3cB72C687E2A771E123A3788E3","l1ERC721Bridge":"eth:0xe9d3E49b0636016c5fE9eaA2347948D0bA9f15Af","l1StandardBridge":"eth:0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B","disputeGameFactory":"eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952","optimismPortal":"eth:0xEB06fFa16011B5628BaB98E29776361c83741dd3","optimismMintableERC20Factory":"eth:0x319322906beAdf69dF5d4607169c63D692B1aDC1"}
+      implementationNames.eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375:
+-        "SystemConfig"
+      implementationNames.eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc:
++        "SystemConfig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0x4279be4CCbFd62FA8f7adE5A30F98d601101CF61)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0xfFC1CC63846dac521FB173dE86d0D765Df4DF735)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  292 ++--
+ .../DelayedWETH/DelayedWETH.sol                    |  231 ++--
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  240 ++--
+ .../L1CrossDomainMessenger.sol                     |  400 ++++--
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  413 +++---
+ .../L1StandardBridge/L1StandardBridge.sol          |  503 ++++---
+ .../shape/{.flat@1772654729 => .flat}/MIPS.sol     |   75 +-
+ .../OptimismMintableERC20Factory.sol               |   30 +-
+ .../OptimismPortal2/OptimismPortal2.sol            |  439 ++++--
+ .../PermissionedDisputeGame.sol                    |  267 ++--
+ .../{.flat@1772654729 => .flat}/PreimageOracle.sol |  216 ++-
+ .../SystemConfig/SystemConfig.sol                  | 1414 +-------------------
+ 12 files changed, 1898 insertions(+), 2622 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772654729 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0D8a607F3d2de86adD04Df00f06794cB339A40de) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A","role":".proposer"}]
+    }
+```
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A","role":".challenger"}
+    }
+```
+
+Generated with discovered.json: 0xd45842f4a2e196079c867ba1f5a6287592a79218
+
+# Diff at Wed, 04 Mar 2026 20:07:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1f42a041d14cb36a5f8712dbec0c3046cea37573 block: 1772198391
+- current timestamp: 1772654729
+
+## Description
+
+One member of the Alchemy Multisig 1 (5/8 threshold) was rotated: 0xA351...700a replaced by 0x04a2...7Bd.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
++        "eth:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd"
+    }
+```
+
+Generated with discovered.json: 0xcedd2888975bae0de4e095ba9cde516fa93fcd12
+
+# Diff at Fri, 27 Feb 2026 13:25:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769272387
+- current timestamp: 1772198391
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
+Generated with discovered.json: 0xa7e5e45cc439a2557d131c8ffb900350e0fc8d4f
+
+# Diff at Fri, 13 Feb 2026 11:33:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@55ab80636f1e0c000e757a7a146f11035a19e9c0 block: 1769272387
+- current timestamp: 1769272387
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769272387 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (eth:0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.challengerFromDGF:
++        "UNRESOLVED"
+      values.permissionedGameArgs:
++        "EXPECT_REVERT"
+      values.proposerFromDGF:
++        "UNRESOLVED"
+      values.wethFromDGF:
++        "UNRESOLVED"
+      usedTypes:
++        [{"typeCaster":"SliceAddress","arg":{"offset":124}},{"typeCaster":"SliceAddress","arg":{"offset":144}},{"typeCaster":"SliceAddress","arg":{"offset":72}}]
+    }
+```
+
 Generated with discovered.json: 0x5d3d318a6f1348b770d78010129b3ffe583c12b5
 
 # Diff at Mon, 26 Jan 2026 09:08:13 GMT:
