@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
@@ -36,10 +37,10 @@ export async function getVerifiersSection(
       }
     })
 
-    // todo: maciek pls fix
     const knownDeployments = verifier.knownDeployments.map((d) => {
-      const explorerUrl = projects.find((p) => p.id === d.chain)?.chainConfig
-        .explorerUrl
+      const explorerUrl = projects.find(
+        (p) => p.id === ChainSpecificAddress.longChain(d.address),
+      )?.chainConfig.explorerUrl
       return {
         url: explorerUrl
           ? `${explorerUrl}/address/${d.address}#code`
@@ -47,7 +48,11 @@ export async function getVerifiersSection(
         address: d.address,
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(project.id, d.chain, d.address)
+          : contractUtils.getUsedIn(
+              project.id,
+              ChainSpecificAddress.longChain(d.address),
+              ChainSpecificAddress.address(d.address),
+            )
         ).sort(tvsComparator(allProjects, tvs)),
       }
     })

@@ -4,7 +4,11 @@ import type {
   TrustedSetup,
   ZkCatalogTag,
 } from '@l2beat/config'
-import { notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  notUndefined,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -130,7 +134,6 @@ function uniqAndSortProjectsUsedIn(
   )
 }
 
-// todo: maciek pls fix
 function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
@@ -144,7 +147,11 @@ function getVerifiersWithProcessedUsedIn(
       usedIn: v.knownDeployments.flatMap((d) =>
         d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(project.id, d.chain, d.address),
+          : contractUtils.getUsedIn(
+              project.id,
+              ChainSpecificAddress.longChain(d.address),
+              ChainSpecificAddress.address(d.address),
+            ),
       ),
     }))
 }
