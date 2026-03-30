@@ -57,7 +57,10 @@
     },
     "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": {
       "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
-      "ignoreInWatchMode": ["sequencerMessageCount", "sequencerReportedSubMessageCount"]
+      "ignoreInWatchMode": [
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
     },
     "eth:0x1bAB804803159aD84b8854581AA53AC72455614E": {
       "ignoreMethods": ["getPastTotalSupply"],
