@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x18eed056c4e188a59c335944bfbb1e761b078a4f
+
+# Diff at Fri, 27 Mar 2026 13:19:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773666062
+- current timestamp: 1774609123
+
+## Description
+
+Rollup upgrade to make commitBatchWithProof() permissionless under any of these conditions:
+- The last committed batch has a timestamp that is > 7d ago (rollupDelayPeriod)
+- The first message in the forced tx queue is more than 7d old
+
+this moves sequencer failure and proposer failure to green.
+
+for stage 1 at least an SC as upgrader is needed. because of the forced queue and the `rollupDelayPeriod` mechanic, the proof system might already be good for stage 1.
+
+https://disco.l2beat.com/diff/eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3/eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      template:
+-        "morph/MorphOldRollup"
++        "morph/Rollup"
+      sourceHashes.1:
+-        "0x8918639fcac94fac40711260ca7cb4027dbac6a2a48b10cd380818ede6636206"
++        "0x1d0f1289361a17ee6c79d7879b1c620c7cee6f143ec4d14090b6aeedb6ed730a"
+      description:
+-        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors."
++        "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`."
+      values.$implementation:
+-        "eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3"
++        "eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF"
+      values.$pastUpgrades.8:
++        ["2026-03-27T01:34:11.000Z","0x8eec835066ebedafa6430fc7b0cd1de2b7a46eb09e56519868ca9dbb938f4c8f",["eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF"]]
+      values.$upgradeCount:
+-        8
++        9
+      implementationNames.eth:0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3:
+-        "Rollup"
+      implementationNames.eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF:
++        "Rollup"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1773666062 => .flat}/Rollup/Rollup.sol   | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773666062 (main branch discovery), not current.
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the challenge mechanism along with the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. Although the contract exposes the external function commitBatchWithProof(), it currently reverts for non-whitelisted actors.
+      template:
+-        "morph/MorphRollup"
++        "morph/MorphOldRollup"
+    }
+```
+
 Generated with discovered.json: 0xca99e6f0b6da64033345b6c25166312e537b8896
 
 # Diff at Mon, 16 Mar 2026 13:46:23 GMT:

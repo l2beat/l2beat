@@ -104,9 +104,9 @@ export const morph: ScalingProject = {
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
         noRedTrustedSetups: true,
-        programHashesReproducible: null,
+        programHashesReproducible: true,
         proverSourcePublished: true,
-        verifierContractsReproducible: null,
+        verifierContractsReproducible: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -185,12 +185,16 @@ export const morph: ScalingProject = {
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
-      value: 'Enqueue via L1',
-      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors for ${formatSeconds(rollupDelayPeriod)}, any new proposal must include at least 1 transaction from the queue. Self-proposing is not possible if the sequencer is down.`,
-      sentiment: 'warning',
-      orderHint: rollupDelayPeriod,
+      ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1(rollupDelayPeriod),
+      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors or is down for ${formatSeconds(rollupDelayPeriod)}, new L1 batches must include at least 1 transaction from the queue.`,
     },
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(rollupDelayPeriod),
+      description:
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(rollupDelayPeriod)
+          .description +
+        ' This requires using the source-available prover to submit a zk proof of validity for the proposal.',
+    },
   },
   chainConfig: {
     name: 'morph',
@@ -221,8 +225,8 @@ export const morph: ScalingProject = {
         title: 'Fraud proofs',
         description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
           can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
-          delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 from Succinct.\
-          If the valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
+          delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 by Succinct.\
+          If a valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
         references: [
           {
             title: 'Whitelisted Challengers - Morph Docs',
@@ -231,7 +235,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3',
+            url: 'https://etherscan.io/address/0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF',
           },
         ],
         risks: [
@@ -255,28 +259,22 @@ export const morph: ScalingProject = {
       ],
     },
     operator: {
-      name: 'Morph uses a decentralised sequencer network',
-      description: `The system uses a decentralised sequencer/proposer network. At the moment all sequencers are run by Morph and - from the point of Ethereum - they don't need \
-        to reach consensus on a block as any one of them can propose a block with an L2 state root on Ethereum. There is a plan to use tendermint with BLS signatures to verify \
-        consensus after Petra upgrade.`,
+      name: 'Decentralised sequencer network',
+      description:
+        'BLS signatures of the Sequencers are not verified onchain. Sequencing is centralized an permissioned to the listed sequencers in practice.',
       references: [
         {
           title:
-            'L1Staking.sol - Etherscan source code, verifySignature() function',
-          url: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
+            'L1Staking.sol - Etherscan source code, verifySignature() stub',
+          url: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code#F1#L340',
         },
       ],
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
-      name: 'Users can enqueue transactions',
-      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors for ${formatSeconds(rollupDelayPeriod)}, any new proposal must include at least 1 transaction from the queue. Self-proposing is not possible if the sequencer is down.`,
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'the operator is offline.',
-        },
-      ],
+      name: 'Users can force transactions',
+      description: `Users can force the sequencer to include a transaction by submitting a request through L1. If the sequencer censors such a request or is down for ${formatSeconds(rollupDelayPeriod)}, any new proposal must include at least 1 transaction from the queue. Proposing is permissionless under these conditions if proven immediately.`,
+      risks: [],
       references: [
         {
           title: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
@@ -286,17 +284,12 @@ export const morph: ScalingProject = {
           title: 'EnforcedTxGateway.sol implementation - Etherscan source code',
           url: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
-        {
-          title:
-            'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
-          url: 'https://etherscan.io/address/0x1320d6A438d268044c8EEff0eE6B24E5EC9584e3#code#F1#L678',
-        },
       ],
     },
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('optimistic', challengeWindow),
-        risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
+        risks: [],
         references: [
           {
             title:
