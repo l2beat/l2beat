@@ -119,13 +119,13 @@ export function TokensDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="primary-card max-h-[450px] w-[1040px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="primary-card w-[1040px] max-w-[calc(100vw-1rem)] gap-0 bg-surface-primary px-0 pt-0 pb-3">
         <Tabs
           name="tokens"
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as ActiveTab)}
           variant="highlighted"
-          className="min-w-0"
+          className="max-h-[450px] min-w-0 overflow-y-auto"
         >
           <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
             <DialogTitle>{title}</DialogTitle>
