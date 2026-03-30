@@ -83,10 +83,6 @@ export function createInteropModule({
   )
 
   let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
-  const aggregationStatusProvider = {
-    isAggregationInProgress: () =>
-      interopAggregatingIndexer?.isAggregationInProgress() ?? false,
-  }
 
   const syncersManager = new InteropSyncersManager(
     pluginsAsClusters(plugins.eventPlugins),
@@ -95,7 +91,6 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
-    aggregationStatusProvider,
   )
 
   const processors = []

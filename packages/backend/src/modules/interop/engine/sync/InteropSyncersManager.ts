@@ -8,10 +8,7 @@ import type { PluginCluster } from '../../plugins'
 import { isPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
-import {
-  type AggregationStatusProvider,
-  InteropEventSyncer,
-} from './InteropEventSyncer'
+import { InteropEventSyncer } from './InteropEventSyncer'
 
 export type PluginSyncStatus = {
   pluginName: string
@@ -39,7 +36,6 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
-    private readonly aggregationStatusProvider?: AggregationStatusProvider,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -67,7 +63,6 @@ export class InteropSyncersManager {
           eventStore,
           db,
           logger,
-          this.aggregationStatusProvider,
         )
         clusterSyncers.push(eventSyncer)
         this.syncers
@@ -103,7 +98,11 @@ export class InteropSyncersManager {
   areAllSyncersFollowing(): boolean {
     for (const byChain of this.syncers.values()) {
       for (const syncer of byChain.values()) {
-        if (syncer.state.name !== 'following') {
+        if (
+          syncer.state.name !== 'following' ||
+          syncer.state.status === 'starting' ||
+          syncer.hasError
+        ) {
           return false
         }
       }

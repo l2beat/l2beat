@@ -59,11 +59,6 @@ export class CatchingUpState implements TimeloopState {
 
   async catchUp(): Promise<SyncerState> {
     while (true) {
-      if (this.syncer.isAggregationInProgress()) {
-        this.setStatus('waiting for aggregation')
-        return this
-      }
-
       const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
       if (wipeRequired) {
         this.syncer.waitingForWipe = true

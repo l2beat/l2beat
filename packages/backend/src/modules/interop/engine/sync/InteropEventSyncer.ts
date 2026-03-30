@@ -136,10 +136,6 @@ export interface BlockProcessorState {
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
 }
 
-export interface AggregationStatusProvider {
-  isAggregationInProgress(): boolean
-}
-
 export interface TxCaptureResult {
   events: InteropEvent[]
   fulfilledCreatorEvents: InteropEvent[]
@@ -149,6 +145,7 @@ export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
   public waitingForWipe = false
+  public hasError = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
   private readonly exclusiveExecutionMutex = new AsyncMutex()
@@ -160,7 +157,6 @@ export class InteropEventSyncer extends TimeLoop {
     readonly store: InteropEventStore,
     readonly db: Database,
     protected logger: Logger,
-    private readonly aggregationStatusProvider?: AggregationStatusProvider,
     intervalMs = 10000,
   ) {
     super({ intervalMs })
@@ -178,7 +174,9 @@ export class InteropEventSyncer extends TimeLoop {
         await this.clearChainSyncError()
       }
       this.state = await fn(state)
+      this.hasError = false
     } catch (error) {
+      this.hasError = true
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -218,10 +216,6 @@ export class InteropEventSyncer extends TimeLoop {
         )
       }
     })
-  }
-
-  isAggregationInProgress(): boolean {
-    return this.aggregationStatusProvider?.isAggregationInProgress() ?? false
   }
 
   captureLog(logToCapture: LogToCapture) {
