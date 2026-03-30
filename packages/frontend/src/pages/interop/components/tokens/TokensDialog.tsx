@@ -70,7 +70,7 @@ export function TokensDialog({
           checked={hideSameToken}
           onCheckedChange={(checked) => setHideSameToken(checked === true)}
         >
-          Hide same-token pairsame token
+          Hide pairs with same token
         </Checkbox>
       )}
     </>
