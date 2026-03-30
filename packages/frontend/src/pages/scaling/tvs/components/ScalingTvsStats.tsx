@@ -36,7 +36,7 @@ export function ScalingTvsStats() {
   const stats = getStats(data?.chart)
 
   return (
-    <StatsGrid columns={4} columnsMobile={2}>
+    <StatsGrid>
       <Stat
         type="rollups"
         value={stats?.rollups.value}

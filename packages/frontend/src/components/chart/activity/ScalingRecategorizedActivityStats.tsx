@@ -27,7 +27,7 @@ export function ScalingRecategorizedActivityStats({ entries }: Props) {
   })
 
   return (
-    <StatsGrid columns={4} columnsMobile={2}>
+    <StatsGrid>
       <Stat
         type="rollups"
         metric={metric}
