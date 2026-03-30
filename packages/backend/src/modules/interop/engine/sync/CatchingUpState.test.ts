@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { CatchingUpState } from './CatchingUpState'
@@ -422,11 +422,80 @@ describe(CatchingUpState.name, () => {
 
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'canonical')
       expect(captured?.tx.hash).toEqual(txHash)
-      expect(captured?.tx.data).toEqual(transaction.input)
-      expect(captured?.tx.value).toEqual(transaction.value)
+      expect(captured?.tx.data).toEqual(transaction.input!)
+      expect(captured?.tx.value).toEqual(transaction.value!)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
+    })
+
+    it('maps call-only bundle transaction fields for includeTx', async () => {
+      const baseTopic0 = '0xaaa'
+      const txHash = `0x${'23'.repeat(32)}`
+
+      const captureLog = mockFn().returns(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const logQuery = new LogQuery()
+      addAddress(logQuery, EthereumAddress.random())
+      logQuery.topic0s.add(baseTopic0)
+      logQuery.topic0sWithTx.add(baseTopic0)
+
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+      ])
+
+      const callTo = EthereumAddress.random()
+      const transaction = makeRpcTransaction({
+        hash: txHash,
+        type: 118n,
+        to: null,
+        input: undefined,
+        value: undefined,
+        calls: [
+          {
+            to: callTo,
+            value: 321n,
+            input: '0xabc',
+          },
+        ],
+      })
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        getTransactionByHash,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
+      const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'bundle')
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.calls).toEqual([
+        {
+          to: callTo,
+          value: 321n,
+          data: '0xabc',
+        },
+      ])
     })
 
     it('retries with smaller ranges after log response size exceeded', async () => {
@@ -596,6 +665,7 @@ function makeRpcTransaction(
   overrides: Partial<RpcTransaction> = {},
 ): RpcTransaction {
   return {
+    type: 1n,
     blockHash: ZERO_HASH,
     blockNumber: 1n,
     from: EthereumAddress.random(),

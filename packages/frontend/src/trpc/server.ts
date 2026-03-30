@@ -7,7 +7,7 @@ export const getSsrHelpers = () =>
   createServerSideHelpers({
     router: appRouter,
     queryClient: createQueryClient(),
-    ctx: { headers: new Headers() },
+    ctx: { headers: new Headers({ 'x-trpc-source': 'server' }) },
     // Do not serialize data to JSON, because it will be serialized again by the render function
     //     .replace(
     //       `<!--ssr-data-->`,
