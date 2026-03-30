@@ -171,6 +171,7 @@ function MilestoneTooltipItem({
   milestonesOnDateCount: number
 }) {
   const useArrowLink = shouldUseArrowLink(milestone, milestonesOnDateCount)
+  const label = getMilestoneLinkLabel(milestone)
 
   return (
     <div className={cn(useArrowLink && 'flex gap-2')}>
@@ -183,20 +184,23 @@ function MilestoneTooltipItem({
           <div className="mt-1 max-w-[216px]">{milestone.description}</div>
         )}
         {!useArrowLink && (
-          <MilestoneLink
-            milestone={milestone}
-            variant="text"
+          <CustomLink
+            href={milestone.url}
             className="mt-1 ml-auto block w-fit text-[12px]"
-          />
+          >
+            {label}
+          </CustomLink>
         )}
       </div>
       {useArrowLink && (
-        <MilestoneLink
-          milestone={milestone}
-          variant="arrow"
+        <CustomLink
+          href={milestone.url}
+          underline={false}
           className="flex shrink-0 self-center text-[12px]"
-          iconClassName="size-3.5"
-        />
+          aria-label={label}
+        >
+          <ArrowRightIcon className="size-3.5" />
+        </CustomLink>
       )}
     </div>
   )
@@ -355,37 +359,4 @@ function shouldUseArrowLink(
   milestonesOnDateCount: number,
 ) {
   return milestone.type === 'project' || milestonesOnDateCount > 1
-}
-
-function MilestoneLink({
-  milestone,
-  variant = 'text',
-  className,
-  iconClassName,
-}: {
-  milestone: Pick<Milestone, 'url' | 'linkLabel'>
-  variant: 'text' | 'arrow'
-  className?: string
-  iconClassName?: string
-}) {
-  const label = getMilestoneLinkLabel(milestone)
-
-  if (variant === 'arrow') {
-    return (
-      <CustomLink
-        href={milestone.url}
-        underline={false}
-        className={className}
-        aria-label={label}
-      >
-        <ArrowRightIcon className={iconClassName} />
-      </CustomLink>
-    )
-  }
-
-  return (
-    <CustomLink href={milestone.url} className={className}>
-      {label}
-    </CustomLink>
-  )
 }
