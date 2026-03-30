@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -134,10 +134,10 @@ export const boojum: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xE3743181a4b0A0C1260826105c6BBA4b6e18D79d',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -244,10 +244,10 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -378,10 +378,10 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xB3f4396C2040e502d0556Cbb16C0B22fE777A026',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -488,10 +488,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -629,10 +629,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'linea',
               '0x902C3806A84f4e855a8746e92d7F1C9a51400458',
             ),
-            chain: 'linea',
           },
         ],
         verificationStatus: 'notVerified',
@@ -645,10 +645,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xD324a7c8556A059371B207fB96FD77bE24E2042c',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -755,10 +755,10 @@ The output of the last command will contain the required \`fflonk_snark_wrapper\
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -865,10 +865,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x7f33D100f482093182111d69a4a457289e99f4ec',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',
@@ -969,10 +969,10 @@ The output of the last command will contain the required \`snark_wrapper\` value
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',

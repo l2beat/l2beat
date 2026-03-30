@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xee072f21cdc2853ab5e44984cee83ad076233a61
+
+# Diff at Tue, 24 Mar 2026 14:28:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0f2989bd93540d1da7b1b07eb7ab704c5a9355e8 block: 1771497368
+- current timestamp: 1771497368
+
+## Description
+
+Renamed SP1VerifierGateway on other chains for convenient processing of Ethereum-based contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771497368 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayArb"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayBase"
+    }
+```
+
 Generated with discovered.json: 0x7ad39bdc8dcc0c4b78308517adcbb95572485aa8
 
 # Diff at Thu, 19 Feb 2026 10:37:18 GMT:

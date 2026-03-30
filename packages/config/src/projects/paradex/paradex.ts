@@ -279,6 +279,8 @@ export const paradex: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: paradexProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stwo verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2025_11').address],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

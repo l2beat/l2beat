@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe046aa4210694b96ecaa1e32858ca44579e0333d
+
+# Diff at Tue, 24 Mar 2026 10:43:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0f2989bd93540d1da7b1b07eb7ab704c5a9355e8 block: 1774022071
+- current timestamp: 1774022071
+
+## Description
+
+Removed custom Plonk verifier name from config.jsonc since now the contract is verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774022071 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncOSVerifierPlonk (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) {
+    +++ description: None
+      name:
+-        "ADI PlonkVerifier"
++        "ZKsyncOSVerifierPlonk"
+    }
+```
+
 Generated with discovered.json: 0x94a7f197b9094036a5bf152ba0e4a34d2b78330e
 
 # Diff at Fri, 20 Mar 2026 15:55:35 GMT:

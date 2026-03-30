@@ -304,6 +304,7 @@ export const morph: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: getMorphVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
@@ -321,4 +322,11 @@ function getMorphVKeys(): string[] {
   }
 
   return vkeys
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const latestVerifiers = discovery.getContractValue<
+    { startBatchIndex: number; verifier: ChainSpecificAddress }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+  return latestVerifiers.map((el) => el.verifier)
 }
