@@ -1,9 +1,5 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import {
-  FailedRelayedMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { PortalDepositFinalized, TransactionDeposited } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -110,35 +106,32 @@ export class BeefyBridgePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [BridgedIn, FailedRelayedMessage]
+  matchTypes = [BridgedIn]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (BridgedIn.checkType(event)) {
-      // L2: BridgedIn → RelayedMessage (offset +1)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: 'optimism',
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      // L1: Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: 'optimism',
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → BridgedOut (N+2)
       const bridgedOut = db.find(BridgedOut, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!bridgedOut) return
 
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'beefy-bridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents: [bridgedOut, event],
         }),
         Result.Transfer('beefy-bridge.L1ToL2Transfer', {
@@ -150,30 +143,6 @@ export class BeefyBridgePlugin implements InteropPluginResyncable {
           dstAmount: event.args.amount,
           dstTokenAddress: L2_BIFI_TOKEN,
           dstWasMinted: true,
-        }),
-      ]
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      if (event.args.chain !== 'optimism') return
-
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: 'optimism',
-      })
-      if (!sentMessage) return
-
-      const bridgedOut = db.find(BridgedOut, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!bridgedOut) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'beefy-bridge',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [bridgedOut],
         }),
       ]
     }

@@ -3,6 +3,7 @@ import type { TRPCError } from '@trpc/server'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
 import { appRouter } from '~/server/trpc/root'
+import { getRequestId } from '../middlewares/RequestIdMiddleware'
 import { getLogger } from '../utils/logger'
 
 const logger = getLogger().for('TrpcRouter')
@@ -22,6 +23,11 @@ export function createTrpcRouter() {
       onError: (opts) => {
         const logFn = getLogFn(opts.error)
         logFn(opts.error.message, {
+          requestId: getRequestId(opts.req),
+          method: opts.req.method,
+          url: opts.req.originalUrl,
+          referer: opts.req.headers.referer ?? 'unknown',
+          userAgent: opts.req.headers['user-agent'] ?? 'unknown',
           path: opts.path,
           stack: opts.error.stack,
           code: opts.error.code,

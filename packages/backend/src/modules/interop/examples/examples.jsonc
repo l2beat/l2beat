@@ -1873,8 +1873,8 @@
       }
     ],
     "events": [
-      "opstack.SentMessage",
-      "opstack.RelayedMessage",
+      "opstack.TransactionDeposited",
+      "opstack.PortalDepositFinalized",
       "opstack.MessagePassed",
       "opstack.WithdrawalFinalized"
     ],
@@ -2071,10 +2071,10 @@
     ],
     "expects": {
       "events": [
-        { "type": "opstack.SentMessage" },
+        { "type": "opstack.TransactionDeposited" },
         { "type": "synthetix-bridge.InitiateL1" },
         { "type": "synthetix-bridge.FinalizeL2" },
-        { "type": "opstack.RelayedMessage" },
+        { "type": "opstack.PortalDepositFinalized" },
         { "type": "opstack.MessagePassed" },
         { "type": "synthetix-bridge.InitiateL2" },
         { "type": "synthetix-bridge.FinalizeL1" },
@@ -2136,12 +2136,12 @@
     "description": "ethereum -> optimism (erc20)",
     "txs": [
       {
-        "chain": "optimism",
-        "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x9f9cecab9bf6d4a8b295fbb57b3cc2e398cccf49d059b6b5e37501b53af4f46f"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0xd71c9361ee8254b6c923758bf328fea56b5e27557c69f81c0b418d992eb9c7d4"
       }
     ],
     "messages": [
@@ -2154,12 +2154,12 @@
     "description": "ethereum -> optimism (eth)",
     "txs": [
       {
-        "chain": "optimism",
-        "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
-      },
-      {
         "chain": "ethereum",
         "tx": "0xd10a51b5c75c3ebb11df7843e5e90157bb7afea9e10f08512d122865b259fc95"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x40eac085ba9b59d0c8bf8ed9a4d864a1c75a1babd15c7aac0ce685e592bec95a"
       }
     ],
     "messages": [
@@ -2208,12 +2208,12 @@
     "description": "ethereum -> base (eth)",
     "txs": [
       {
-        "chain": "base",
-        "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x2137d5f901a6dd9f93d3f768ac484f127a6f31c1ff9109c944e603429d50e3cc"
+      },
+      {
+        "chain": "base",
+        "tx": "0x5f8bfeb2cf0ef450664c4517c50e4645ab1478f1beb2d5d1b062aaaff17fa0ac"
       }
     ],
     "messages": [
@@ -2226,12 +2226,12 @@
     "description": "ethereum -> base (erc20)",
     "txs": [
       {
-        "chain": "base",
-        "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
-      },
-      {
         "chain": "ethereum",
         "tx": "0x6f1c5958f534d458c7a26897de793c979724e159147daa156a6687eea1123771"
+      },
+      {
+        "chain": "base",
+        "tx": "0xbfc1ae0118272ff738280f1f80751153ac556e4979a82953f2d2103b914edcac"
       }
     ],
     "messages": [
@@ -2265,10 +2265,10 @@
     "expects": {
       "events": [
         { "type": "opstack.ETHBridgeInitiatedL1" },
-        { "type": "opstack.SentMessage" },
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" },
         { "type": "opstack.DepositFinalized" },
         { "type": "opstack.ETHBridgeFinalizedL2" },
-        { "type": "opstack.RelayedMessage" },
         { "type": "opstack.ETHBridgeInitiatedL2" },
         { "type": "opstack.MessagePassed" },
         { "type": "opstack.ETHBridgeFinalizedL1" },
@@ -3251,6 +3251,24 @@
       {
         "chain": "bsc",
         "tx": "0xaff43779f880b234ea7147b777ab866f4e645ec5411b9c4111571b33ff8a6ca3"
+      },
+      // oUSDT OP → Celo
+      {
+        "chain": "optimism",
+        "tx": "0x945a08664172d1c9ded720eedcd534121df73af4030ff62d6967bebdcf385274"
+      },
+      {
+        "chain": "celo",
+        "tx": "0xeb399b9dd3f14c3dbb862f3a1ba3230415af95339c67d314b92bf0ab227a2a41"
+      },
+      // USDT Celo → OP (lock and mint)
+      {
+        "chain": "celo",
+        "tx": "0x999ad1725555b864d682090fbbde15c382a8431b7604001a720f9a47e951050b"
+      },
+      {
+        "chain": "optimism",
+        "tx": "0x511e35b924f9c1da4845d0b6668870372dfcc925e1c8d931d4a27effe16e3184"
       }
     ],
     "expects": {
@@ -3274,6 +3292,16 @@
         {
           "type": "hyperlaneHwr.Transfer",
           "bridgeType": "burnAndMint"
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "oUSDT", "amount": 195.463566 } },
+          "dst": { "financials": { "symbol": "USD₮", "amount": 195.463566 } }
+        },
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "src": { "financials": { "symbol": "USD₮", "amount": 1000 } },
+          "dst": { "financials": { "symbol": "oUSDT", "amount": 1000 } }
         }
       ],
       "messages": [
@@ -4247,5 +4275,127 @@
     "events": ["agglayer.BridgeEvent", "agglayer.ClaimEvent"],
     "messages": [{ "type": "agglayer.Message", "app": "canonical-asset" }],
     "transfers": ["agglayer.Transfer"]
+  },
+  "opstack-derived-tx-base-deposit": {
+    "description": "Ethereum -> Base OptimismPortal deposit with derived destination tx hash",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7c76adb9ebe70dfdb57f495c7172b308879f87416ebcc9f2e0438d7fe86a1bee"
+      },
+      {
+        "chain": "base",
+        "tx": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "opstack.TransactionDeposited",
+          "args": {
+            "chain": "base",
+            "l2TxHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          }
+        },
+        {
+          "type": "opstack.PortalDepositFinalized",
+          "ctx": {
+            "chain": "base",
+            "txHash": "0x95e44b32a03c8e146a9b4a70b3934b4efb48f3f2188e4304dc6e66f52ce4d8b8"
+          },
+          "args": {
+            "chain": "base",
+            "sourceHash": "0xb613781250a490c408694b600c1443b4b0f12e13792551b9aa12703dfb17f879"
+          }
+        }
+      ]
+    }
+  },
+  "opstack-derived-tx-base-deposit-eth": {
+    "description": "Ethereum -> Base direct OptimismPortal ETH deposit (no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xedf08a2d003cc28f6cd48297b9e6ac35445bcf525ac22e413e57a343879606eb"
+      },
+      {
+        "chain": "base",
+        "tx": "0xb3abc835cdc1bfe9e36725a843c3f0abf30c2dbea58f1a7e1bcc909f7d259ffa"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "ETH" } },
+          "dst": { "financials": { "symbol": "ETH" } }
+        }
+      ]
+    }
+  },
+  "opstack-derived-tx-celo-deposit": {
+    "description": "Ethereum -> Celo OptimismPortal deposit with custom gas token (direct, no CDM)",
+    "tags": ["opstack", "derived-transaction"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x08fa9d296ebb3b9809e7ba4eae0e7ef6b67a32f16483628eba7e30413a454bbf"
+      },
+      {
+        "chain": "celo",
+        "tx": "0x0662930a5d5cd3193fa428fb18fff5304cf36ed08b2b3a54019c8009cb286d30"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.TransactionDeposited" },
+        { "type": "opstack.PortalDepositFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L1ToL2Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L1ToL2Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
+  },
+  // Celo uses a custom gas token (CELO), so native withdrawals should track
+  // the CELO ERC-20 on L1 (0x057898f3c43f129a17517b9056d23851f124b19f), not ETH.
+  "opstack-celo-native-withdrawal": {
+    "tags": ["opstack"],
+    "description": "Celo native CELO token withdrawal (custom gas token)",
+    "txs": [
+      {
+        "chain": "celo",
+        "tx": "0x4bae06b998b57428a9affdc62318dccc80ab4a44c50b2b0965a15b31e09de033"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x0ac472f9dbdcc7699b237512337c17fda541e1978921a44291d0f788e12094c6"
+      }
+    ],
+    "expects": {
+      "events": [
+        { "type": "opstack.MessagePassed" },
+        { "type": "opstack.WithdrawalFinalized" }
+      ],
+      "messages": [{ "type": "opstack.L2ToL1Message", "app": "unknown" }],
+      "transfers": [
+        {
+          "type": "opstack.L2ToL1Transfer",
+          "src": { "financials": { "symbol": "CELO" } },
+          "dst": { "financials": { "symbol": "CELO" } }
+        }
+      ]
+    }
   }
 }

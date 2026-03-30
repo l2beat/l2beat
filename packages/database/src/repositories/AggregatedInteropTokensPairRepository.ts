@@ -92,9 +92,9 @@ export class AggregatedInteropTokensPairRepository extends BaseRepository {
 
   async getByChainsIdAndTimestamp(
     timestamp: UnixTime,
-    id: string,
     sourceChains: string[],
     destinationChains: string[],
+    id?: string,
     type?: InteropBridgeType,
     options?: {
       includeSameChainTransfers?: boolean
@@ -110,7 +110,10 @@ export class AggregatedInteropTokensPairRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
-      .where('id', '=', id)
+
+    if (id) {
+      query = query.where('id', '=', id)
+    }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')

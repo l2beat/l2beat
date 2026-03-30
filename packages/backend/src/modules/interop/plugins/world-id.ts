@@ -1,9 +1,5 @@
 import { Address32, ChainSpecificAddress } from '@l2beat/shared-pure'
-import {
-  FailedRelayedMessage,
-  RelayedMessage,
-  SentMessage,
-} from './opstack/opstack'
+import { PortalDepositFinalized, TransactionDeposited } from './opstack/opstack'
 import {
   createEventParser,
   createInteropEventType,
@@ -52,41 +48,41 @@ export class WorldIdPlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [RelayedMessage, FailedRelayedMessage]
+  matchTypes = [PortalDepositFinalized]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
-    if (RelayedMessage.checkType(event)) {
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
+    if (PortalDepositFinalized.checkType(event)) {
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: event.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // Find RootPropagated at exact offset from SentMessage
-      // Pattern: SentMessage (N) → SentMessageExtension1 (N+1) → RootPropagated (N+2)
+      // Find RootPropagated at exact offset from TransactionDeposited
+      // Pattern: TransactionDeposited (N) → SentMessage (N+1) → SentMessageExtension1 (N+2) → RootPropagated (N+3)
       const rootPropagated = db.find(RootPropagated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
       })
       if (!rootPropagated) return
 
       const results: MatchResult = [
         Result.Message('opstack.L1ToL2Message', {
           app: 'world-id',
-          srcEvent: sentMessage,
+          srcEvent: transactionDeposited,
           dstEvent: event,
           extraEvents: [rootPropagated],
         }),
       ]
 
-      if (sentMessage.args.value > 0n) {
+      if (transactionDeposited.args.mint > 0n) {
         results.push(
           Result.Transfer('world-id.L1ToL2Transfer', {
-            srcEvent: sentMessage,
-            srcAmount: sentMessage.args.value,
+            srcEvent: transactionDeposited,
+            srcAmount: transactionDeposited.args.mint,
             srcTokenAddress: Address32.NATIVE,
             srcWasBurned: false,
             dstEvent: event,
-            dstAmount: sentMessage.args.value,
+            dstAmount: transactionDeposited.args.mint,
             dstTokenAddress: Address32.NATIVE,
             dstWasMinted: false,
             extraEvents: [rootPropagated],
@@ -95,28 +91,6 @@ export class WorldIdPlugin implements InteropPluginResyncable {
       }
 
       return results
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      const rootPropagated = db.find(RootPropagated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-      })
-      if (!rootPropagated) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'world-id',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [rootPropagated],
-        }),
-      ]
     }
   }
 }

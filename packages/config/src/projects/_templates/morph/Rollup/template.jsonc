@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > {{getMinDelayFormatted}} old. If the Sequencers are censoring or down for more than {{getMinDelayFormatted}}, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
+  "ignoreMethods": [
+    "batchChallengedSuccess",
+    "batchDataStore",
+    "batchExist",
+    "batchInChallenge",
+    "batchInsideChallengeWindow",
+    "challenges",
+    "committedBatches",
+    "finalizedStateRoots",
+    "isBatchFinalized",
+    "committedStateRoots"
+  ],
+  "ignoreInWatchMode": [
+    "batchChallenged",
+    "lastCommittedBatchIndex",
+    "lastFinalizedBatchIndex"
+  ],
+  "fields": {
+    "challengers": {
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "UpdateChallenger", "where": ["=", "#status", true] },
+        "remove": {
+          "event": "UpdateChallenger",
+          "where": ["!=", "#status", true]
+        }
+      },
+      "permissions": [{ "type": "challenge" }]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address."
+        }
+      ]
+    },
+    "getMinDelayFormatted": {
+      "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now",
+      "handler": { "type": "call", "method": "rollupDelayPeriod", "args": [] },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

@@ -26,6 +26,7 @@ export interface Config {
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
+  readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -177,7 +178,6 @@ export interface UpdateMonitorConfig {
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
-  readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
     readonly workerCount: number
@@ -186,14 +186,30 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface DiscordConfig {
-  readonly token: string
-  readonly internalChannelId: string
-  readonly callsPerMinute: number
+export interface NotificationsConfig {
+  readonly updateMonitor:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly anomalies:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly interop:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly ethereumBlobs:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
-  readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
 
@@ -231,13 +247,6 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
-  notifications:
-    | {
-        discordWebhookUrl: string
-      }
-    | false
-
-  /** List of chains plugins are allowed to create partial from/to transfers for  */
   oneSidedChains: string[]
 }
 
@@ -316,7 +325,6 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
-  readonly ethereumNotifierDiscordWebhookUrl?: string
 }
 
 export interface BlockSyncModuleConfig {
