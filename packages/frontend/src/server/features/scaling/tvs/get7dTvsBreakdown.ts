@@ -76,8 +76,9 @@ export async function get7dTvsBreakdown(
     createTvsBreakdownProjectFilter(params),
   )
 
-  const range = optionToRange('7d')
-  const [from, to] = await getFullySyncedTvsRange(range)
+  const [from, to] = params.customTarget
+    ? [params.customTarget - 7 * UnixTime.DAY, params.customTarget]
+    : await getFullySyncedTvsRange(optionToRange('7d'))
   assert(from !== null, 'from is null')
   const [values, syncMetadataRecords] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectForRange(
