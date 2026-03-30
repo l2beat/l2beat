@@ -24,7 +24,7 @@ type InteropTopItemsCellProps = {
 const buttonVariants = cva('group/dialog-trigger', {
   variants: {
     type: {
-      default: 'flex items-center gap-2',
+      default: 'grid grid-cols-[max-content_max-content] items-center gap-3',
       cell: 'grid grid-cols-[46px_30px] items-center gap-1',
     },
   },
@@ -42,11 +42,20 @@ const remainingCountVariants = cva(
   },
 )
 
+const iconListVariants = cva('', {
+  variants: {
+    type: {
+      default: 'grid auto-cols-[22px] grid-flow-col items-center',
+      cell: 'grid auto-cols-[14px] grid-flow-col items-center',
+    },
+  },
+})
+
 const iconVariants = cva('rounded-full bg-white', {
   variants: {
     type: {
-      default: 'size-7 min-w-7 border border-divider shadow-sm',
-      cell: 'relative size-5 min-w-5 shadow',
+      default: 'row-start-1 size-7 min-w-7 border border-divider shadow-sm',
+      cell: 'relative row-start-1 size-5 min-w-5 shadow',
     },
   },
 })
@@ -67,7 +76,7 @@ export function InteropTopItems({
       onClick={() => setIsOpen(true)}
       {...rest}
     >
-      <div className="-space-x-1.5 flex items-center">
+      <div className={iconListVariants({ type })}>
         {topItems.items.map((item, i) => (
           <ItemIconWithTooltip
             key={item.id}
@@ -114,7 +123,7 @@ function ItemIconWithTooltip({
           src={item.iconUrl}
           alt={item.displayName}
           className={iconVariants({ type })}
-          style={{ zIndex: 5 - index }}
+          style={{ zIndex: 5 - index, gridColumnStart: index + 1 }}
         />
       </TooltipTrigger>
       <TooltipContent>
