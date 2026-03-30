@@ -24,9 +24,7 @@ export function StatCard({
 }: StatCardProps) {
   const body = (
     <>
-      <div
-        className="text-center font-medium text-label-value-13 md:text-label-value-14 lg:text-label-value-16"
-      >
+      <div className="text-center font-medium text-label-value-13 md:text-label-value-14 lg:text-label-value-16">
         {title}
       </div>
       <div className="flex flex-col items-center justify-center pt-2">
