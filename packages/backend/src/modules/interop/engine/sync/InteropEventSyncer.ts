@@ -25,6 +25,7 @@ import {
 } from '@l2beat/shared-pure'
 import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
+import { toInteropTransaction } from '../../dto/interopTransaction'
 import type {
   InteropEvent,
   InteropPluginResyncable,
@@ -400,14 +401,7 @@ export class InteropEventSyncer extends TimeLoop {
 }
 
 function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  return {
-    hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
-    data: tx.input,
-    type: tx.type?.toString(),
-    value: tx.value,
-  }
+  return toInteropTransaction(tx)
 }
 
 function toBlock(block: RpcBlock): TxToCapture['block'] {

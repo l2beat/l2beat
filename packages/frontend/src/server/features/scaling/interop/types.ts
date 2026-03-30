@@ -93,6 +93,16 @@ export const InteropProtocolTokensParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
+export const InteropTopItemsParams = v.object({
+  id: v.union([
+    v.string().transform((value) => ProjectId(value)),
+    v.undefined(),
+  ]),
+  ...InteropSelectionInputShape,
+  type: KnownInteropBridgeType.optional(),
+})
+
 export type InteropProtocolTransfersParams = v.infer<
   typeof InteropProtocolTransfersParams
 >
@@ -173,6 +183,20 @@ export type TokenData = {
   symbol: string
   issuer: string | null
   iconUrl: string
+  volume: number | null
+  transferCount: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  netMintedValue: number | undefined
+  flows: TokenFlowData[]
+}
+
+export type TokensPairData = {
+  id: string
+  tokenA: { symbol: string; iconUrl: string }
+  tokenB: { symbol: string; iconUrl: string }
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
