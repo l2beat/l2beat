@@ -467,7 +467,7 @@ export const aztecnetwork: ScalingProject = {
         ...EXITS.REGULAR_MESSAGING('zk'),
         description:
           EXITS.REGULAR_MESSAGING('zk').description +
-          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be triggered privately on L2, revealing only the L1 part of the withdrawal.',
+          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be triggered privately on L2, revealing only the L1 part of the withdrawal. There is no canonical bridge escrow, meaning that only the canonical messaging is immutable and each token bridged with a locking escrow may introduce additional trust assumptions of this escrow.',
         references: [
           {
             title: 'Rollup.sol - submitEpochRootProof() on Etherscan',
@@ -494,6 +494,22 @@ export const aztecnetwork: ScalingProject = {
           {
             title: 'Governance.sol - execute() on Etherscan',
             url: `https://etherscan.io/address/${governanceAddress.toString()}#code`,
+          },
+        ],
+        risks: [],
+      },
+      {
+        name: 'No canonical bridge escrow',
+        description:
+          'There is no default canonical escrow. The rollup is only deployed with an immutable canonical messaging bridge that can be used by any escrow. This means each token bridged to Aztec by lock-minting from Ethereum needs to be assessed separately by looking at its locking escrow. The trust assumptions can be different to the immutable rollup. Gas tokens are bridged via the FeeJuicePortal, which is an immutable one-way portal that can only bridge to public L2 addresses. While the rollup and its canonical messaging are immutable, an upgradeable escrow could potentially migrate its funds to a new rollup version witthout users having to migrate, trading immutability for convenience.',
+        references: [
+          {
+            title: 'FeeJuicePortal.sol - on Etherscan',
+            url: `https://etherscan.io/address/${feeJuicePortal.address.toString()}#code`,
+          },
+          {
+            title: 'Outbox.sol - on Etherscan',
+            url: `https://etherscan.io/address/${outboxAddress.toString()}#code`,
           },
         ],
         risks: [],
