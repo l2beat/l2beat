@@ -345,7 +345,7 @@
   "static/images/architecture/loopring.png": "72b55764cd29bcdecd5b42214508231c",
   "static/images/architecture/mantle.png": "94f25149f92ede912dc03a3505012af5",
   "static/images/architecture/metis.png": "a883bc132c02a870a3ce408400e53f66",
-  "static/images/architecture/morph.png": "3325c88c8850cedbfd1c2150ad3fd56d",
+  "static/images/architecture/morph.png": "5b7287166d73e258658b52a2c73ed721",
   "static/images/architecture/near.png": "6a02b6ef345ce62f36f9310b189f7d57",
   "static/images/architecture/op-mainnet.png": "b6a673a70f82290d9572e5e7fc52ea16",
   "static/images/architecture/opstack-dachallenge.png": "922f0e294c435984e7a688d42e51c5da",
@@ -1478,5 +1478,9 @@
   "static/icons/tempo.png": "36b7170affa5843454d082c3cfac7197",
   "static/meta-images/publications/governance-review-89.png": "f9eafe31357bec64dfb688c81a7d7123",
   "static/icons/freetunnel.png": "9e92d7f078900c18fe82d44de5b78873",
-  "static/meta-images/interop/projects/freetunnel/opengraph-image.png": "541edf13ac6478efdc37e397377a95a5"
+  "static/meta-images/interop/projects/freetunnel/opengraph-image.png": "541edf13ac6478efdc37e397377a95a5",
+  "static/brand-kit/logo-dark.png": "71084ad4affabc92a0c22272f2c8f2fb",
+  "static/brand-kit/logo-light.png": "b4d330df03ffb966015eb2a5e34374ef",
+  "static/brand-kit/symbol-dark.png": "e97944b745a9b9d4fe3e507dc3befa05",
+  "static/brand-kit/symbol-light.png": "94e532c9e49e1028685c6e8a8c743129"
 }

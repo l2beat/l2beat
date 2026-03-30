@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { DiscordClient } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
-import type { DiscordWebhookClient } from '../../../anomalies/clients/DiscordWebhookClient'
 import { InteropNotifier } from './InteropNotifier'
 
 describe(InteropNotifier.name, () => {
   it('queues and sends a markdown diff message', async () => {
-    const webhookClient = mockObject<DiscordWebhookClient>({
+    const webhookClient = mockObject<DiscordClient>({
       sendMessage: async () => '1',
     })
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
@@ -24,7 +24,7 @@ describe(InteropNotifier.name, () => {
   })
 
   it('does not send message when diff is empty after undefined normalization', async () => {
-    const webhookClient = mockObject<DiscordWebhookClient>({
+    const webhookClient = mockObject<DiscordClient>({
       sendMessage: async () => '1',
     })
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
@@ -41,7 +41,7 @@ describe(InteropNotifier.name, () => {
 
   it('preserves message order in queue', async () => {
     const sent: string[] = []
-    const webhookClient = mockObject<DiscordWebhookClient>({
+    const webhookClient = mockObject<DiscordClient>({
       sendMessage: async (message) => {
         sent.push(message)
         return `${sent.length}`

@@ -97,29 +97,33 @@ export function initTvsModule({
 
   const amountIndexers = new Map<string, Indexer>()
 
-  const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer(
-    {
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: config.tvs.amounts
-        .filter((a) => a.type === 'circulatingSupply')
-        .map((amount) => ({
-          // configurationId has to be 12 characters long so we cannot use the apiId directly
-          id: amount.id,
-          minHeight: amount.sinceTimestamp,
-          maxHeight: amount.untilTimestamp ?? null,
-          properties: amount,
-        })),
-      circulatingSupplyProvider: providers.circulatingSupply,
-      syncOptimizer,
-      db: db,
-    },
-    logger,
-  )
-  amountIndexers.set(
-    CirculatingSupplyAmountIndexer.SOURCE(),
-    circulatingSupplyIndexer,
-  )
+  const circulatingSupplyConfigurations = config.tvs.amounts
+    .filter((a) => a.type === 'circulatingSupply')
+    .map((amount) => ({
+      // configurationId has to be 12 characters long so we cannot use the apiId directly
+      id: amount.id,
+      minHeight: amount.sinceTimestamp,
+      maxHeight: amount.untilTimestamp ?? null,
+      properties: amount,
+    }))
+
+  if (circulatingSupplyConfigurations.length > 0) {
+    const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        configurations: circulatingSupplyConfigurations,
+        circulatingSupplyProvider: providers.circulatingSupply,
+        syncOptimizer,
+        db: db,
+      },
+      logger,
+    )
+    amountIndexers.set(
+      CirculatingSupplyAmountIndexer.SOURCE(),
+      circulatingSupplyIndexer,
+    )
+  }
 
   const blockTimestampIndexers = new Map<string, Indexer>()
 

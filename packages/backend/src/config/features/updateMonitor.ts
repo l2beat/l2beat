@@ -7,7 +7,7 @@ import {
   getMulticall3Config,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { DiscordConfig, UpdateMonitorConfig } from '../Config'
+import type { UpdateMonitorConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export function getUpdateMonitorConfig(
@@ -46,7 +46,6 @@ export function getUpdateMonitorConfig(
       ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
       : undefined,
     updateDifferEnabled: flags.isEnabled('updateMonitor', 'updateDiffer'),
-    discord: getDiscordConfig(env),
     chains: enabledChains.map((chain) =>
       getChainDiscoveryConfig(env, chain, chains),
     ),
@@ -70,21 +69,6 @@ export function getUpdateMonitorConfig(
       ),
     },
   }
-}
-
-function getDiscordConfig(env: Env): DiscordConfig | false {
-  const token = env.optionalString('DISCORD_TOKEN')
-  const internalChannelId = env.optionalString('INTERNAL_DISCORD_CHANNEL_ID')
-
-  const discordEnabled = !!token && !!internalChannelId
-
-  return (
-    discordEnabled && {
-      token,
-      internalChannelId,
-      callsPerMinute: 3000,
-    }
-  )
 }
 
 function getChainDiscoveryConfig(
