@@ -503,7 +503,7 @@ export const aztecnetwork: ScalingProject = {
       {
         name: 'No canonical bridge escrow',
         description:
-          'There is no default canonical escrow. The rollup is only deployed with an immutable canonical messaging bridge that can be used by any escrow. This means each token bridged to Aztec by lock-minting from Ethereum needs to be assessed separately by looking at its locking escrow. The trust assumptions can be different to the immutable rollup. Gas tokens are bridged via the FeeJuicePortal, which is an immutable one-way portal that can only bridge to public L2 addresses. While the rollup and its canonical messaging are immutable, an upgradeable escrow could potentially migrate its funds to a new rollup version witthout users having to migrate, trading immutability for convenience.',
+          'There is no default canonical escrow. The rollup is only deployed with an immutable canonical messaging bridge that can be used by any escrow. This means each token bridged to Aztec by lock-minting from Ethereum needs to be assessed separately by looking at its locking escrow. The trust assumptions can be different to the immutable rollup. Gas tokens are bridged via the FeeJuicePortal, which is an immutable one-way portal that can only bridge to public L2 addresses. While the rollup and its canonical messaging are immutable, an upgradeable escrow could potentially migrate its funds to a new rollup version without users having to migrate, trading immutability for convenience.',
         references: [
           {
             title: 'FeeJuicePortal.sol - on Etherscan',
