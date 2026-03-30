@@ -258,7 +258,12 @@ export const aztecnetwork: ScalingProject = {
   id: ProjectId('aztecnetwork'),
   capability: 'universal',
   addedAt: UnixTime(1773405732),
-  badges: [BADGES.VM.AztecVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance], // TODO: redesign AVM badge and add native pricate tx badge
+  badges: [
+    BADGES.VM.AztecVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Other.Privacy,
+    BADGES.Other.Governance,
+  ],
   display: {
     name: 'Aztec Network',
     shortName: 'Aztec',
