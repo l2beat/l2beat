@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc3dcc066de5afd0c8a351cd61e407aa071cadf74
+Generated with discovered.json: 0xf263f443d1cec2491a57202ddea808aebdb38f91
 
-# Diff at Mon, 30 Mar 2026 05:07:41 GMT:
+# Diff at Mon, 30 Mar 2026 08:14:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@35f051c109c121fedbfd19e43e7e95d1b55b6f71 block: 1771254730
+- comparing to: main@b1ff5834aabb37db8fbf706acb0f44634c2e7cd4 block: 1771254730
 - current timestamp: 1774847186
 
 ## Description
@@ -30,11 +30,18 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       values.proposalCount:
 -        2
 +        3
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","description":"slash sequencers from the active set.","role":".GOVERNANCE"}
-      receivedPermissions.4:
+      receivedPermissions.1.from:
+-        "eth:0x91A3745c685c220595B997E53311EbF660144889"
++        "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb"
+      receivedPermissions.3:
 +        {"permission":"interact","from":"eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962","description":"change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations.","role":".owner"}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (eth:0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee)
+    +++ description: Handles L1-to-L2 messaging. Users deposit funds or send messages here, which are organized into a Merkle tree for the sequencer to include in an L2 block.
 ```
 
 ```diff
@@ -61,13 +68,9 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 ```
 
 ```diff
-    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12) {
+-   Status: DELETED
+    contract Rollup (eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12)
     +++ description: Core rollup logic contract. It processes block proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
-+++ description: number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed
-      values.getEntryQueueFlushSize:
--        4
-+        1
-    }
 ```
 
 ```diff
@@ -77,6 +80,30 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 -        1799366400
 +        1795150800
     }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardBooster (eth:0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4)
+    +++ description: Calculates 'boosted' reward shares for active provers based on a configured curve, incentivizing consistent participation.
+```
+
+```diff
+-   Status: DELETED
+    contract HonkVerifier (eth:0x77e3bA096355510e0E9f60D292010B42d662d2B5)
+    +++ description: ZK proof verification contract.
+```
+
+```diff
+-   Status: DELETED
+    contract TallySlashingProposer (eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189)
+    +++ description: Allows the validator committee to vote on slashing a specific peer. Once a quorum is reached, it proposes a slash action to the Slasher.
+```
+
+```diff
+-   Status: DELETED
+    contract SlashPayloadCloneable (eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4)
+    +++ description: A template for specific slashing payload contracts deployed deterministically to encode a slashing action (who to slash and how much) that the Slasher executes.
 ```
 
 ```diff
@@ -111,6 +138,12 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
       category:
 +        {"name":"Local Infrastructure","priority":5}
     }
+```
+
+```diff
+-   Status: DELETED
+    contract Slasher (eth:0x91A3745c685c220595B997E53311EbF660144889)
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
 ```
 
 ```diff
@@ -153,8 +186,9 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 ```diff
     contract SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) {
     +++ description: None
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb","description":"veto specific slashing payloads and/or disable all slashing for 3d at a time.","role":".VETOER"}
+      receivedPermissions.0.from:
+-        "eth:0x91A3745c685c220595B997E53311EbF660144889"
++        "eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb"
     }
 ```
 
@@ -175,6 +209,18 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 -        1798761600
 +        1794546000
     }
+```
+
+```diff
+-   Status: DELETED
+    contract FeeJuicePortal (eth:0xe05dc9D5969272831757181fFf1532B066254bf1)
+    +++ description: A one-way public bridge to deposit AZTEC tokens to the Rollup.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (eth:0xf006c41097861AFeb18b05e586B921c081411Ee9)
+    +++ description: Handles L2-to-L1 messaging. It stores Merkle roots of messages exiting the rollup, allowing users to prove inclusion and finalize withdrawals or actions on L1.
 ```
 
 ```diff
@@ -228,26 +274,16 @@ config: forcibly register post-alpha contracts. remove from config.jsonc as soon
 ## Source code changes
 
 ```diff
-.../projects/aztecnetwork/.flat/EscapeHatch.sol    |  3918 +++++++
- ...:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617.sol |   656 ++
- ...0xe05dc9D5969272831757181fFf1532B066254bf1.sol} |     0
- ...:0x70aEDda427f26480D240bc0f4308ceDec8d31348.sol |  2165 ++++
- ...0x77e3bA096355510e0E9f60D292010B42d662d2B5.sol} |     0
- ...0x15c718C05B8c0dbec4D648b6711d6Ce8793969Ee.sol} |     0
- ...:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578.sol |  1857 +++
- ...:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0.sol |   628 +
- ...0xf006c41097861AFeb18b05e586B921c081411Ee9.sol} |     0
- ...:0x1CbB707Bd7b4Fd2BcED6D96d84372fb428e93D80.sol |  2269 ++++
- ...0x7101a6703491A4D808aeAbE9F62bC1Dc6a20bdf4.sol} |     0
- ...0x603bb2c05D474794ea97805e8De69bCcFb3bCA12.sol} |     0
- ...:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962.sol | 11484 +++++++++++++++++++
- ...0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4.sol} |     0
- ...:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445.sol |   445 +
- ...0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb.sol} |     0
- ...:0x91A3745c685c220595B997E53311EbF660144889.sol |    80 +
- ...0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189.sol} |     0
- ...:0xa4a38fD0108C00983E75616b638Ff3321FD26958.sol |  4765 ++++++++
- 19 files changed, 28267 insertions(+)
+.../projects/aztecnetwork/.flat/EscapeHatch.sol    | 3918 +++++++++
+ .../{.flat@1771254730 => .flat}/FeeJuicePortal.sol |   91 +-
+ .../{.flat@1771254730 => .flat}/HonkVerifier.sol   | 3866 ++++-----
+ .../{.flat@1771254730 => .flat}/Inbox.sol          |  605 +-
+ .../{.flat@1771254730 => .flat}/Outbox.sol         |  173 +-
+ .../{.flat@1771254730 => .flat}/RewardBooster.sol  |  242 +-
+ .../{.flat@1771254730 => .flat}/Rollup.sol         | 9087 ++++++++++----------
+ .../SlashPayloadCloneable.sol                      |   23 +-
+ .../TallySlashingProposer.sol                      |  515 +-
+ 9 files changed, 11157 insertions(+), 7363 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -292,6 +328,8 @@ discovery. Values are for block 1771254730 (main branch discovery), not current.
 ```diff
     contract Registry (eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298) {
     +++ description: Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.
+      values.getRollup:
+-        ["eth:0x603bb2c05D474794ea97805e8De69bCcFb3bCA12"]
       category:
 +        {"name":"Governance","priority":3}
     }
