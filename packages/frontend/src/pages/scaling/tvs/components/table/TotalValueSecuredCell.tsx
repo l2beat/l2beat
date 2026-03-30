@@ -53,9 +53,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <TableLink
-          href={props.href}
-        >
+        <TableLink href={props.href}>
           <div className="flex flex-col items-end max-md:py-1">
             <div className="flex items-center gap-1">
               {tvsWarnings.length ? (
