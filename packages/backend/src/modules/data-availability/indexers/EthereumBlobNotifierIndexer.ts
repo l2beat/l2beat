@@ -1,22 +1,19 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import {
-  DISCORD_MAX_MESSAGE_LENGTH,
-  type DiscordWebhookClient,
-} from '../../anomalies/clients/DiscordWebhookClient'
 import { matchEthereumProject } from '../services/DaService'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configurations: EthereumDaTrackingConfig[]
-  discordClient: DiscordWebhookClient
+  discordClient: DiscordClient
 }
 
 export interface UnmatchedBlobPair {

@@ -30,6 +30,7 @@
 
 # L2BEAT specs
 
+- [Interop](./l2b_specs/interop.md)
 - [Permissions section](./l2b_specs/permissions.md)
 - [Contracts section](./l2b_specs/contracts.md)
 - [Finality page](./l2b_specs/finality.md)

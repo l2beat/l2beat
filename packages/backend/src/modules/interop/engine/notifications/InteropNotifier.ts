@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { DISCORD_MAX_MESSAGE_LENGTH } from '@l2beat/shared'
+import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
 import { TaskQueue } from '../../../../tools/queue/TaskQueue'
-import type { DiscordWebhookClient } from '../../../anomalies/clients/DiscordWebhookClient'
 import {
   diffInteropConfig,
   type InteropConfigDiff,
@@ -16,7 +15,7 @@ export class InteropNotifier {
   private readonly messageQueue: TaskQueue<string>
 
   constructor(
-    private readonly client: DiscordWebhookClient,
+    private readonly client: DiscordClient,
     private readonly logger: Logger,
   ) {
     this.logger = logger.for(this)

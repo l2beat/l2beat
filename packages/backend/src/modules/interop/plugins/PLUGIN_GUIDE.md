@@ -169,6 +169,33 @@ fields like `data` or `value` during resync:
 }
 ```
 
+### Log Scanning Utilities (`logScan.ts`)
+
+**Never use `txLogs.find()`** to locate related logs. In batch transactions it always
+returns the first match, pairing every event with the same log. Use `logScan.ts` instead,
+which searches outward from the current log's position.
+
+| Function | Direction | Returns |
+|----------|-----------|---------|
+| `findParsedBefore(logs, logIndex, transform)` | backward | First non-undefined transform result |
+| `findParsedAfter(logs, logIndex, transform)` | forward | Same |
+| `findParsedAround(logs, logIndex, transform)` | both (closest first) | Same |
+| `findTransferLogBefore(logs, logIndex, parse, predicate)` | backward | `{ transfer?, hasTransfer }` |
+| `findTransferLogAfter(...)` / `findTransferLogAround(...)` | forward / both | Same |
+| `iterateLogs(logs, logIndex, direction)` | any | Generator of `[log, index]` pairs |
+
+```ts
+import { findParsedBefore } from '../logScan'
+
+const outBoxTx = findParsedBefore(
+  input.txLogs,
+  input.log.logIndex ?? -1,
+  (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
+)
+```
+
+Reference: `orbitstack-standardgateway.ts`, `orbitstack-wethgateway.ts`
+
 ### Synthetic Matching Keys
 
 If the two sides do not share a hash/nonce, build the most robust synthetic key:

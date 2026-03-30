@@ -14,6 +14,7 @@ import { cn } from '~/utils/cn'
 interface Props {
   data: ZkCatalogEntry['trustedSetupsByProofSystem'][string]['verifiers']
   horizontal?: boolean
+  hideCount?: boolean
 }
 
 export const VERIFIER_STATUS_ORDER = [
@@ -24,7 +25,11 @@ export const VERIFIER_STATUS_ORDER = [
 
 export type VerifierStatus = (typeof VERIFIER_STATUS_ORDER)[number]
 
-export function VerifiedCountWithDetails({ data, horizontal }: Props) {
+export function VerifiedCountWithDetails({
+  data,
+  horizontal,
+  hideCount,
+}: Props) {
   const totalCount =
     (data.successful?.count ?? 0) +
     (data.unsuccessful?.count ?? 0) +
@@ -50,6 +55,7 @@ export function VerifiedCountWithDetails({ data, horizontal }: Props) {
             count={config.count ?? 0}
             attesters={config.attesters}
             type={config.type}
+            hideCount={hideCount}
           />
           {horizontal && index < elements.length - 1 && (
             <span className="mx-2 text-secondary">•</span>

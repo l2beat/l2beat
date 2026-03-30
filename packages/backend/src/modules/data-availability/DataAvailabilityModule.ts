@@ -1,9 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { DiscordClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import uniqBy from 'lodash/uniqBy'
-import type { DataAvailabilityTrackingConfig } from '../../config/Config'
+import type {
+  DataAvailabilityTrackingConfig,
+  NotificationsConfig,
+} from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -36,7 +40,14 @@ export function initDataAvailabilityModule({
   })
 
   const { targetIndexers, daIndexers, eigenIndexers, notificationIndexers } =
-    createIndexers(config.da, clock, db, logger, providers)
+    createIndexers(
+      config.da,
+      config.notifications,
+      clock,
+      db,
+      logger,
+      providers,
+    )
 
   return {
     start: async () => {
@@ -88,6 +99,7 @@ export function initDataAvailabilityModule({
 
 function createIndexers(
   config: DataAvailabilityTrackingConfig,
+  notifications: NotificationsConfig | false,
   clock: Clock,
   database: Database,
   logger: Logger,
@@ -150,7 +162,7 @@ function createIndexers(
       )
       daIndexers.push(blobIndexer)
 
-      if (providers.clients.blobNotifierDiscord) {
+      if (notifications && notifications.ethereumBlobs) {
         const hourlyIndexer = new HourlyIndexer(logger, clock)
         notificationIndexers.push(hourlyIndexer)
 
@@ -158,7 +170,9 @@ function createIndexers(
           {
             db: database,
             configurations: configurations.filter((c) => c.type === 'ethereum'),
-            discordClient: providers.clients.blobNotifierDiscord,
+            discordClient: new DiscordClient(
+              notifications.ethereumBlobs.discordWebhookUrl,
+            ),
             indexerService,
             minHeight: 0,
             parents: [hourlyIndexer],

@@ -44,9 +44,8 @@ jobs:
         id: publish
         if: steps.diff.outputs.has_changes != '1'
         run: |
-          URL="https://config-diff.l2beat.com/upload/pr-${{ github.event.pull_request.number }}/"
-          curl -u "${{ secrets.CONFIG_DIFF_AUTH }}" -X MKCOL $URL
-          curl -u "${{ secrets.CONFIG_DIFF_AUTH }}" -T /tmp/compare/out/index.html $URL/index.html
+          URL="https://config-diff-v2.l2beat.com/upload/pr-${{ github.event.pull_request.number }}/"
+          curl -f -u "${{ secrets.CONFIG_DIFF_AUTH }}" -T /tmp/compare/out/index.html $URL/index.html
           echo "domain=$URL" >> $GITHUB_OUTPUT
 
       - name: Find Comment
