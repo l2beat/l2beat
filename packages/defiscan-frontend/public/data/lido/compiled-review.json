@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-30T14:02:07.869Z",
+  "compiledAt": "2026-03-30T15:41:03.861Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -13,7 +13,7 @@
   "totals": {
     "contractCount": 69,
     "permissionedFunctionCount": 463,
-    "scoredFunctionCount": 199,
+    "scoredFunctionCount": 214,
     "adminCount": 55,
     "dependencyCount": 1,
     "totalCapitalAtRisk": 18141888346.171436,
@@ -704,24 +704,10 @@
           "contractAddress": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
           "contractName": "HashConsensus",
           "functionName": "updateInitialEpoch",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
-              "name": "ValidatorsExitBusOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "submitReportData",
-                "submitConsensusReport",
-                "discardConsensusReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
@@ -842,23 +828,10 @@
           "contractAddress": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
           "contractName": "HashConsensus",
           "functionName": "updateInitialEpoch",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "submitConsensusReport",
-                "discardConsensusReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
@@ -1188,7 +1161,20 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "discovered",
+                "value": "MIN_BOND_LOCK_PERIOD"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_BOND_LOCK_PERIOD"
+              }
+            }
+          ]
         },
         {
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
@@ -1251,7 +1237,14 @@
           "impact": "critical",
           "directFundsUsd": 0.00002161024242906165,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
@@ -1260,7 +1253,14 @@
           "impact": "critical",
           "directFundsUsd": 0.00002161024242906165,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
@@ -1482,7 +1482,7 @@
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
           "contractName": "AccountingOracle",
           "functionName": "initialize",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -1491,7 +1491,7 @@
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
           "contractName": "AccountingOracle",
           "functionName": "initializeWithoutMigration",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -1500,7 +1500,7 @@
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
           "contractName": "AccountingOracle",
           "functionName": "finalizeUpgrade_v2",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -1509,7 +1509,7 @@
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
           "contractName": "AccountingOracle",
           "functionName": "finalizeUpgrade_v3",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -1849,230 +1849,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
@@ -2085,230 +1889,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
@@ -2321,230 +1929,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
@@ -2557,230 +1969,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
@@ -2793,230 +2009,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389",
@@ -3029,230 +2049,34 @@
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "pauseDeposits",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "depositBufferedEther",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
-              "name": "DepositContract",
-              "viewOnlyPath": true,
-              "calledFunctions": [
-                "get_deposit_root"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator",
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
           "contractName": "DepositSecurityModule",
           "functionName": "unvetSigningKeys",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "decreaseStakingModuleVettedKeysCountByNodeOperator"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 17939308013.152424,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
@@ -5514,7 +4338,7 @@
           "contractAddress": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
           "contractName": "Burner",
           "functionName": "commitSharesToBurn",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -5541,8 +4365,8 @@
           "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
           "contractName": "StakingRouter",
           "functionName": "deposit",
-          "impact": "critical",
-          "directFundsUsd": 0.00002161024242906165,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -6452,6 +5276,19 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_AFTER_SUBMIT_DELAY"
+              }
+            }
           ]
         },
         {
@@ -6783,6 +5620,19 @@
               "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_AFTER_SCHEDULE_DELAY"
+              }
             }
           ]
         },
@@ -8112,6 +6962,19 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_EMERGENCY_PROTECTION_DURATION"
+              }
+            }
           ]
         },
         {
@@ -8443,6 +7306,19 @@
               "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_EMERGENCY_MODE_DURATION"
+              }
             }
           ]
         },
@@ -12454,6 +11330,19 @@
               "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "discovered",
+                "value": "MIN_TIEBREAKER_ACTIVATION_TIMEOUT"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_TIEBREAKER_ACTIVATION_TIMEOUT"
+              }
             }
           ]
         },
@@ -20971,6 +19860,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -20994,6 +19890,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21016,6 +19919,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21025,7 +19935,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21034,7 +19951,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21043,7 +19967,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21078,6 +20009,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21101,6 +20039,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21123,6 +20068,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21132,7 +20084,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21141,7 +20100,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21150,7 +20116,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21185,6 +20158,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21208,6 +20188,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21230,6 +20217,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21239,7 +20233,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21248,7 +20249,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21257,7 +20265,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21292,6 +20307,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21315,6 +20337,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21337,6 +20366,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21346,7 +20382,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21355,7 +20398,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21364,7 +20414,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21399,6 +20456,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21422,6 +20486,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21444,6 +20515,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21453,7 +20531,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21462,7 +20547,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21471,7 +20563,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21506,6 +20605,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21529,6 +20635,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21551,6 +20664,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21560,7 +20680,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21569,7 +20696,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21578,7 +20712,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21613,6 +20754,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21636,6 +20784,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21658,6 +20813,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21667,7 +20829,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21676,7 +20845,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21685,7 +20861,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21720,6 +20903,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21743,6 +20933,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21765,6 +20962,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21774,7 +20978,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21783,7 +20994,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21792,7 +21010,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -21827,6 +21052,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21850,6 +21082,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21872,6 +21111,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
           ]
         },
         {
@@ -21881,7 +21127,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21890,7 +21143,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -21899,7 +21159,14 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ]
         }
       ],
       "totalDirectCapital": 0,
@@ -22076,7 +21343,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "depositETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22085,7 +21352,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "depositStETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22094,7 +21361,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "depositWstETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22103,7 +21370,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "lockBondETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22112,7 +21379,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "releaseLockedBondETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22121,7 +21388,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "compensateLockedBondETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22130,7 +21397,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "settleLockedBondETH",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22139,7 +21406,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "penalize",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22148,7 +21415,7 @@
           "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
           "contractName": "CSAccounting",
           "functionName": "chargeFee",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -22229,7 +21496,7 @@
     {
       "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
       "name": "LidoExecutionLayerRewardsVault",
-      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $2.36M in direct capital.",
+      "description": "Immutable vault that collects execution layer rewards (MEV, priority fees) and forwards them to the stETH token contract via receiveELRewards. Controls $0 in direct capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -22237,21 +21504,21 @@
           "contractAddress": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "receiveELRewards",
-          "impact": "critical",
-          "directFundsUsd": 18582344.672485378,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 2361224.8684909153,
-      "totalDirectTokenValue": 18417575522.910305,
-      "totalReachableCapital": 2361224.8684909153,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
       "name": "WithdrawalVault",
-      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $2.36M in direct capital.",
+      "description": "Upgradeable vault that receives withdrawals from the Beacon Chain and forwards them to the stETH token contract via receiveWithdrawals. Proxy admin is Lido DAO Agent. Controls $0 in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -22259,21 +21526,21 @@
           "contractAddress": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "receiveWithdrawals",
-          "impact": "critical",
-          "directFundsUsd": 18582344.672485378,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 2361224.8684909153,
-      "totalDirectTokenValue": 18417575522.910305,
-      "totalReachableCapital": 2361224.8684909153,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalDirectCapital": 0,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "name": "AccountingOracle",
-      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $2.36M in reachable capital.",
+      "description": "Oracle contract that reports validator balances and staking rewards to the stETH token contract. Triggers handleOracleReport which rebases stETH, updates exited validator counts, and manages staking module reward distribution. Controls $0.00 in reachable capital.",
       "adminType": "Contract",
       "isGovernance": false,
       "functions": [
@@ -22281,8 +21548,8 @@
           "contractAddress": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "handleOracleReport",
-          "impact": "critical",
-          "directFundsUsd": 18582344.672485378,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22323,15 +21590,15 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 2361224.8685156493,
-      "totalDirectTokenValue": 18417575522.910305,
-      "totalReachableCapital": 2361224.8685156493,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalDirectCapital": 0.000024734055312888012,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0.000024734055312888012,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "name": "DepositSecurityModule",
-      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $2.36M in reachable capital.",
+      "description": "Immutable module that gates ETH deposits to the Beacon Chain DepositContract. Requires a quorum of guardian signatures to authorize deposits, protecting against deposit front-running attacks. Can also decrease vetted signing keys on the StakingRouter. Controls $0.00 in reachable capital.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -22339,8 +21606,8 @@
           "contractAddress": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
           "contractName": "Liquid staked Ether 2.0 Token",
           "functionName": "deposit",
-          "impact": "critical",
-          "directFundsUsd": 18582344.672485378,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -22354,10 +21621,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 2361224.8685156493,
-      "totalDirectTokenValue": 18417575522.910305,
-      "totalReachableCapital": 2361224.8685156493,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalDirectCapital": 0.000024734055312888012,
+      "totalDirectTokenValue": 0,
+      "totalReachableCapital": 0.000024734055312888012,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
@@ -24924,6 +24191,13 @@
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "protected period",
+              "description": "Emergency mode can only be activated before the emergency protection end date (currently 2026-04-19). After that date, this function becomes permanently inoperable."
+            }
           ]
         },
         {
@@ -25629,8 +24903,8 @@
           "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
           "contractName": "StakingRouter",
           "functionName": "initialize",
-          "impact": "critical",
-          "directFundsUsd": 0.00002161024242906165,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -25638,15 +24912,15 @@
           "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
           "contractName": "StakingRouter",
           "functionName": "finalizeUpgrade_v3",
-          "impact": "critical",
-          "directFundsUsd": 0.00002161024242906165,
+          "impact": "no-impact",
+          "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000024734055312888012,
+      "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000024734055312888012,
+      "totalReachableCapital": 0,
       "totalReachableTokenValue": 0
     },
     {
@@ -26396,679 +25670,25 @@
           "contractAddress": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
           "contractName": "DualGovernance",
           "functionName": "resealSealable",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24",
-              "name": "ResealManager",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "reseal",
-                "resume"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
-              "name": "Escrow",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "startRageQuit",
-                "ESCROW_MASTER_COPY",
-                "initialize",
-                "getRageQuitSupport",
-                "isRageQuitFinalized",
-                "setMinAssetsLockDuration",
-                "getMinAssetsLockDuration"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF",
-              "name": "ImmutableDualGovernanceConfigProvider",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getDualGovernanceConfig"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-              "name": "EmergencyProtectedTimelock",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "submit",
-                "schedule",
-                "cancelAllNonExecutedProposals",
-                "getGovernance",
-                "setGovernance",
-                "setAfterSubmitDelay",
-                "setAfterScheduleDelay",
-                "transferExecutorOwnership",
-                "setEmergencyProtectionActivationCommittee",
-                "setEmergencyProtectionExecutionCommittee",
-                "setEmergencyProtectionEndDate",
-                "setEmergencyModeDuration",
-                "setEmergencyGovernance",
-                "deactivateEmergencyMode",
-                "setAdminExecutor",
-                "getAdminExecutor"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
-              "name": "CSEjector",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getResumeSinceTimestamp"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
-              "name": "CSAccounting",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "resume",
-                "pauseFor"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-              "name": "WithdrawalQueueERC721",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastRequestId"
-              ],
-              "fundsUsd": 202579639.28687963,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "approve",
-                "getPooledEthByShares",
-                "totalSupply",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
-              "name": "Executor",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "execute",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "name": "Lido Dao Agent",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "execute",
-                "forward"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0",
-              "name": "TiebreakerCoreCommittee",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "addMembers",
-                "removeMembers",
-                "setTimelockDuration",
-                "setQuorum",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
-              "name": "TiebreakerCoreCommittee",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "addMembers",
-                "removeMembers",
-                "setTimelockDuration",
-                "setQuorum",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db",
-              "name": "DualGovernance",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "setConfigProvider",
-                "setProposalsCanceller",
-                "registerProposer",
-                "setProposerExecutor",
-                "unregisterProposer",
-                "addTiebreakerSealableWithdrawalBlocker",
-                "removeTiebreakerSealableWithdrawalBlocker",
-                "setTiebreakerCommittee",
-                "setTiebreakerActivationTimeout",
-                "setResealCommittee",
-                "setResealManager",
-                "tiebreakerScheduleProposal",
-                "tiebreakerResumeSealable"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8",
-              "name": "Escrow",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "initialize",
-                "startRageQuit",
-                "setMinAssetsLockDuration"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db",
           "contractName": "DualGovernance",
           "functionName": "resealSealable",
-          "impact": "critical",
+          "impact": "no-impact",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24",
-              "name": "ResealManager",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "reseal",
-                "resume"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
-              "name": "Escrow",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "startRageQuit",
-                "ESCROW_MASTER_COPY",
-                "initialize",
-                "getRageQuitSupport",
-                "isRageQuitFinalized",
-                "getMinAssetsLockDuration",
-                "setMinAssetsLockDuration"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF",
-              "name": "ImmutableDualGovernanceConfigProvider",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getDualGovernanceConfig"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8",
-              "name": "Escrow",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "initialize",
-                "startRageQuit",
-                "setMinAssetsLockDuration"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
-              "name": "CSEjector",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getResumeSinceTimestamp"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-              "name": "EmergencyProtectedTimelock",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getGovernance",
-                "setGovernance",
-                "setAfterSubmitDelay",
-                "setAfterScheduleDelay",
-                "transferExecutorOwnership",
-                "setEmergencyProtectionActivationCommittee",
-                "setEmergencyProtectionExecutionCommittee",
-                "setEmergencyProtectionEndDate",
-                "setEmergencyModeDuration",
-                "setEmergencyGovernance",
-                "deactivateEmergencyMode",
-                "setAdminExecutor",
-                "getAdminExecutor",
-                "submit",
-                "schedule",
-                "cancelAllNonExecutedProposals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
-              "name": "CSAccounting",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "resume",
-                "pauseFor"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-              "name": "WithdrawalQueueERC721",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastRequestId"
-              ],
-              "fundsUsd": 202579639.28687963,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "approve",
-                "getPooledEthByShares",
-                "totalSupply",
-                "receiveELRewards",
-                "handleOracleReport"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
-              "name": "Executor",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "execute",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-              "name": "Burner",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "requestBurnSharesForCover",
-                "requestBurnShares",
-                "commitSharesToBurn"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-              "name": "WithdrawalVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawWithdrawals"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "reportRewardsMinted",
-                "deposit",
-                "updateExitedValidatorsCountByStakingModule",
-                "reportStakingModuleExitedValidatorsCountByNodeOperator",
-                "onValidatorsCountsByNodeOperatorReportingFinished"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-              "name": "LidoExecutionLayerRewardsVault",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "withdrawRewards"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-              "name": "TokenRateNotifier",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
-              "name": "LegacyOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "handlePostTokenRebase",
-                "handleConsensusLayerReport"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-              "name": "Lido Dao Agent",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "execute",
-                "forward"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
-              "name": "DualGovernance",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "setConfigProvider",
-                "setProposalsCanceller",
-                "registerProposer",
-                "setProposerExecutor",
-                "unregisterProposer",
-                "addTiebreakerSealableWithdrawalBlocker",
-                "removeTiebreakerSealableWithdrawalBlocker",
-                "setTiebreakerCommittee",
-                "setTiebreakerActivationTimeout",
-                "setResealCommittee",
-                "setResealManager",
-                "tiebreakerScheduleProposal",
-                "tiebreakerResumeSealable"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0",
-              "name": "TiebreakerCoreCommittee",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "addMembers",
-                "removeMembers",
-                "setTimelockDuration",
-                "setQuorum",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5",
-              "name": "TiebreakerCoreCommittee",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "addMembers",
-                "removeMembers",
-                "setTimelockDuration",
-                "setQuorum",
-                "renounceOwnership",
-                "transferOwnership"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
-              "name": "OpStackTokenRatePusher",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "pushTokenRate"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-              "name": "Wrapped liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStETHByWstETH"
-              ],
-              "fundsUsd": 17936946788.28391,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-              "name": "AccountingOracle",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getLastProcessingRefSlot"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendMessage",
-                "xDomainMessageSender"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 18141887652.439304,
-      "totalReachableTokenValue": 18417575522.910305
+      "totalReachableCapital": 0,
+      "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x74836470337Ba5d2a92fe16E44AD862E28fcf9B3",
@@ -32275,38 +30895,11 @@
           "viewOnlyPath": true,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-              "name": "Liquid staked Ether 2.0 Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deposit"
-              ],
-              "fundsUsd": 2361224.8684909153,
-              "tokenValueUsd": 18417575522.910305,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-              "name": "StakingRouter",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getStakingModuleNonce",
-                "getStakingModuleIsActive",
-                "getStakingModuleMaxDepositsPerBlock",
-                "getStakingModuleLastDepositBlock",
-                "getStakingModuleMinDepositBlockDistance"
-              ],
-              "fundsUsd": 0.000024734055312888012,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 2361224.8685156493,
-      "totalTokenValueAtRisk": 18417575522.910305
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
     }
   ],
   "funds": [
@@ -32575,7 +31168,7 @@
       "contractAddress": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
       "contractName": "HashConsensus",
       "functionName": "updateInitialEpoch",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
@@ -32611,7 +31204,7 @@
       "contractAddress": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
       "contractName": "HashConsensus",
       "functionName": "updateInitialEpoch",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
@@ -32737,7 +31330,20 @@
       "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
       "contractName": "CSAccounting",
       "functionName": "setBondLockPeriod",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "valueRange",
+          "min": {
+            "mode": "discovered",
+            "value": "MIN_BOND_LOCK_PERIOD"
+          },
+          "max": {
+            "mode": "discovered",
+            "value": "MAX_BOND_LOCK_PERIOD"
+          }
+        }
+      ]
     },
     {
       "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
@@ -32779,13 +31385,27 @@
       "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
       "contractName": "StakingRouter",
       "functionName": "addStakingModule",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "basis points cap",
+          "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
       "contractName": "StakingRouter",
       "functionName": "updateStakingModule",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "basis points cap",
+          "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0x226f9265CBC37231882b7409658C18bB7738173A",
@@ -32839,25 +31459,25 @@
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "initialize",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "initializeWithoutMigration",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "finalizeUpgrade_v2",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "finalizeUpgrade_v3",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
@@ -33043,19 +31663,19 @@
       "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "contractName": "DepositSecurityModule",
       "functionName": "pauseDeposits",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "contractName": "DepositSecurityModule",
       "functionName": "depositBufferedEther",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "contractName": "DepositSecurityModule",
       "functionName": "unvetSigningKeys",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
@@ -33067,37 +31687,79 @@
       "contractAddress": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
       "contractName": "HashConsensus",
       "functionName": "submitReport",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
       "contractName": "HashConsensus",
       "functionName": "submitReport",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
       "contractName": "HashConsensus",
       "functionName": "submitReport",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "submitReportData",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "submitReportExtraDataEmpty",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "contractName": "AccountingOracle",
       "functionName": "submitReportExtraDataList",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "consensus hash",
+          "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449",
@@ -33157,13 +31819,20 @@
       "contractAddress": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
       "contractName": "Liquid staked Ether 2.0 Token",
       "functionName": "receiveWithdrawals",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "functionName": "activateEmergencyMode",
-      "impact": "critical"
+      "impact": "critical",
+      "mitigations": [
+        {
+          "type": "other",
+          "label": "protected period",
+          "description": "Emergency mode can only be activated before the emergency protection end date (currently 2026-04-19). After that date, this function becomes permanently inoperable."
+        }
+      ]
     },
     {
       "contractAddress": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
@@ -33181,13 +31850,13 @@
       "contractAddress": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
       "contractName": "DualGovernance",
       "functionName": "resealSealable",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db",
       "contractName": "DualGovernance",
       "functionName": "resealSealable",
-      "impact": "critical"
+      "impact": "no-impact"
     },
     {
       "contractAddress": "eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8",

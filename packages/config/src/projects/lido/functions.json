@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-22T15:16:35.476Z",
+  "lastModified": "2026-03-30T15:40:56.219Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -99,14 +99,18 @@
           "functionName": "pauseDeposits",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Pauses the deposits. Funds can no longer be deposited into new validators until deposits are unpaused. This can be called by any guardian when a frontrunning by a node operator is suspected and prevents the loss of user funds through deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
           ],
-          "timestamp": "2025-11-10T18:29:08.594Z"
+          "timestamp": "2026-03-30T14:19:42.236Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:19:42.236Z"
+          }
         },
         {
           "functionName": "unpauseDeposits",
@@ -125,7 +129,7 @@
           "functionName": "depositBufferedEther",
           "isPermissioned": true,
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Deposits ETH into a given validator using `Lido.deposit`. The message must include at least 4/6 signatures from guardians for it to be valid.",
           "ownerDefinitions": [
             {
@@ -137,20 +141,28 @@
               "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
             }
           ],
-          "timestamp": "2025-11-10T18:29:11.429Z"
+          "timestamp": "2026-03-30T14:17:37.237Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:17:37.237Z"
+          }
         },
         {
           "functionName": "unvetSigningKeys",
           "isPermissioned": true,
-          "timestamp": "2025-10-06T15:05:48.571Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Unvets signing keys for the given node operators. This can be called by any guardian when a frontrunning by a node operator is suspectedand prevents the loss of user funds through deposits.",
           "ownerDefinitions": [
             {
               "path": "$self.getGuardians"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:20:37.680Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:20:37.680Z"
+          }
         }
       ]
     },
@@ -571,30 +583,49 @@
         {
           "functionName": "recoverExcessStETH",
           "isPermissioned": false,
-          "timestamp": "2025-10-02T15:54:05.788Z"
+          "score": "no-impact",
+          "timestamp": "2026-03-30T14:44:57.639Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:44:57.639Z"
+          }
         },
         {
           "functionName": "recoverERC20",
           "isPermissioned": false,
-          "timestamp": "2025-10-02T15:54:05.797Z"
+          "score": "no-impact",
+          "timestamp": "2026-03-30T14:44:57.674Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:44:57.674Z"
+          }
         },
         {
           "functionName": "recoverERC721",
           "isPermissioned": false,
-          "timestamp": "2025-10-02T15:54:05.798Z"
+          "score": "no-impact",
+          "timestamp": "2026-03-30T14:44:57.731Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:44:57.731Z"
+          }
         },
         {
           "functionName": "commitSharesToBurn",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T00:16:58.886Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Marks previously requested to burn cover and non-cover shares as burnt. This function is meant to be called by the Lido contract in the same tx as the share burning it actually done.\t",
           "ownerDefinitions": [
             {
               "path": "$self.STETH"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:44:57.793Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:44:57.793Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -663,10 +694,17 @@
               "path": "@acl.permissions[eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c].SAFE_EXECUTE_ROLE"
             }
           ],
-          "timestamp": "2026-03-22T15:15:55.098Z",
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "token balances",
+              "description": "After execution, all protected token balances must be at least as large as before the call. Protected tokens cannot be drained through this function."
+            }
+          ],
+          "timestamp": "2026-03-30T15:24:37.505Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:15:55.098Z"
+            "date": "2026-03-30T15:24:37.505Z"
           }
         },
         {
@@ -795,43 +833,46 @@
         {
           "functionName": "proxy__ossify",
           "isPermissioned": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-03-22T15:09:11.143Z",
+          "timestamp": "2026-03-30T15:20:25.464Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:09:11.143Z"
+            "date": "2026-03-30T15:20:25.464Z"
           }
         },
         {
           "functionName": "proxy__changeAdmin",
           "isPermissioned": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-03-22T15:09:12.079Z",
+          "timestamp": "2026-03-30T15:20:25.508Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:09:12.079Z"
+            "date": "2026-03-30T15:20:25.508Z"
           }
         },
         {
           "functionName": "proxy__upgradeToAndCall",
           "isPermissioned": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
           ],
-          "timestamp": "2026-03-22T15:09:13.220Z",
+          "timestamp": "2026-03-30T15:20:25.544Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:09:13.220Z"
+            "date": "2026-03-30T15:20:25.544Z"
           }
         }
       ]
@@ -841,8 +882,19 @@
         {
           "functionName": "addNodeOperatorStETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-02T21:26:35.194Z",
-          "score": "critical"
+          "score": "critical",
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "merkle proof",
+              "description": "Caller must provide a valid Merkle proof from the VettedGate's whitelist. Only whitelisted addresses can invoke this function."
+            }
+          ],
+          "timestamp": "2026-03-30T15:29:12.867Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:29:12.867Z"
+          }
         }
       ]
     },
@@ -1025,7 +1077,6 @@
         {
           "functionName": "submitReport",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T00:32:20.266Z",
           "checked": true,
           "score": "critical",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -1033,7 +1084,19 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
+          ],
+          "timestamp": "2026-03-30T15:23:33.876Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:23:33.876Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -1069,16 +1132,16 @@
           "functionName": "updateInitialEpoch",
           "isPermissioned": true,
           "checked": false,
-          "score": "unscored",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:06.314Z",
+          "timestamp": "2026-03-30T15:23:23.652Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:06.314Z"
+            "date": "2026-03-30T15:23:23.652Z"
           }
         },
         {
@@ -1175,7 +1238,6 @@
         {
           "functionName": "submitReport",
           "isPermissioned": true,
-          "timestamp": "2025-10-03T14:58:41.706Z",
           "checked": true,
           "score": "critical",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -1183,7 +1245,19 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
+          ],
+          "timestamp": "2026-03-30T15:23:33.907Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:23:33.907Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -1219,16 +1293,16 @@
           "functionName": "updateInitialEpoch",
           "isPermissioned": true,
           "checked": false,
-          "score": "unscored",
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:07.613Z",
+          "timestamp": "2026-03-30T15:23:23.687Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:07.613Z"
+            "date": "2026-03-30T15:23:23.687Z"
           }
         },
         {
@@ -1325,7 +1399,6 @@
         {
           "functionName": "submitReport",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T00:35:08.000Z",
           "checked": true,
           "score": "critical",
           "description": "Used by oracle members to submit hash of the data calculated for the given reference slot. If consensus is reached (more submissions of the same report than the quorum amount) the HashConsensus contract submits this report to the processing contract (either AccountingOracle or ValidatorsExitBusOracle) to enable processing.\t",
@@ -1333,7 +1406,19 @@
             {
               "path": "$self.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "A submitted report only triggers the report processor when a quorum of oracle members has submitted the same hash. A single member cannot unilaterally influence the outcome."
+            }
+          ],
+          "timestamp": "2026-03-30T15:23:33.938Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:23:33.938Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -1424,12 +1509,17 @@
         {
           "functionName": "proxy__ossify",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T14:06:47.587Z",
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:20:25.381Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:20:25.381Z"
+          }
         },
         {
           "functionName": "proxy__changeAdmin",
@@ -1447,22 +1537,32 @@
         {
           "functionName": "proxy__upgradeTo",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T14:06:47.596Z",
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:20:25.405Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:20:25.405Z"
+          }
         },
         {
           "functionName": "proxy__upgradeToAndCall",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T14:06:47.597Z",
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.$admin"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:20:25.435Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:20:25.435Z"
+          }
         }
       ]
     },
@@ -1676,7 +1776,6 @@
         {
           "functionName": "setBondLockPeriod",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:02:11.156Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the period (in seconds) to retain the bond lock.\t",
@@ -1684,7 +1783,25 @@
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "discovered",
+                "value": "MIN_BOND_LOCK_PERIOD"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_BOND_LOCK_PERIOD"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T14:54:26.397Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.397Z"
+          }
         },
         {
           "functionName": "addBondCurve",
@@ -1728,119 +1845,155 @@
         {
           "functionName": "depositETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:52:11.687Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Stake ETH with Lido and deposit stETH to the a node operator's bond.\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.032Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.032Z"
+          }
         },
         {
           "functionName": "depositStETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:52:26.023Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Deposit stETH to the a node operator's bond.\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.071Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.071Z"
+          }
         },
         {
           "functionName": "depositWstETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:52:37.195Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Unwarps wstETH and deposit stETH to a node operator's bond.\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.099Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.099Z"
+          }
         },
         {
           "functionName": "lockBondETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:57:30.728Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Locks an amount in ETH from a node operator's bond. (see CSModule)\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.134Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.134Z"
+          }
         },
         {
           "functionName": "releaseLockedBondETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:57:48.125Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Releases a node operator's locked bond. (see CSModule)\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.162Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.162Z"
+          }
         },
         {
           "functionName": "compensateLockedBondETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:51:54.934Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Compensates a locked bond for the given node operator (see CSModule)\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.201Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.201Z"
+          }
         },
         {
           "functionName": "settleLockedBondETH",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:58:14.199Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Settle a locked bond for the given node operator. (see CSModule)\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.262Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.262Z"
+          }
         },
         {
           "functionName": "penalize",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:58:34.173Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Penalize a bond by burning stETH shares of the node operator.\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.318Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.318Z"
+          }
         },
         {
           "functionName": "chargeFee",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T15:51:35.781Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Charge a fee from the bond by transfering stETH to the charge recipient.\t",
           "ownerDefinitions": [
             {
               "path": "$self.MODULE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T14:54:26.356Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.356Z"
+          }
         },
         {
           "functionName": "recoverERC20",
@@ -1858,7 +2011,6 @@
         {
           "functionName": "recoverStETHShares",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:05:14.117Z",
           "checked": true,
           "score": "critical",
           "description": "Recovers all stETH shares from the contract (except bonds).",
@@ -1866,7 +2018,19 @@
             {
               "path": "$self.accessControl.RECOVERER_ROLE.members"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "excess only",
+              "description": "Can only recover stETH shares in excess of totalBondShares() — node operator bond funds are protected from recovery."
+            }
+          ],
+          "timestamp": "2026-03-30T14:54:26.424Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:54:26.424Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -1957,15 +2121,19 @@
         {
           "functionName": "mint",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:27:58.298Z",
           "checked": true,
-          "score": "unscored",
+          "score": "critical",
           "description": "Mints a given amount of LDO token to a specified address.\t",
           "ownerDefinitions": [
             {
               "path": "@acl.permissions[0xf73a1260d222f447210581DDf212D915c09a3249].MINT_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:29:29.129Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:29:29.129Z"
+          }
         },
         {
           "functionName": "issue",
@@ -2035,11 +2203,15 @@
         {
           "functionName": "forward",
           "isPermissioned": false,
-          "timestamp": "2025-10-08T16:28:45.040Z",
           "checked": true,
-          "score": "unscored",
+          "score": "critical",
           "description": "Runs an Aragon EVM script on behalf of a token holder. The token holder needs to have permission and the contract uses a blacklist to prevent the holder from executing actions on behalf of the TokenManager.\t",
-          "ownerDefinitions": []
+          "ownerDefinitions": [],
+          "timestamp": "2026-03-30T15:29:29.177Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:29:29.177Z"
+          }
         }
       ]
     },
@@ -2211,67 +2383,87 @@
         {
           "functionName": "transferToVault",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:10:16.817Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Default recovery function in Aragon Apps. Irreversably disabled.\t",
           "ownerDefinitions": [
             {
               "path": "0x0"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:25:39.637Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:25:39.637Z"
+          }
         },
         {
           "functionName": "receiveELRewards",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:20:58.726Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "A function to allow the rewards vault to send rewards to this contract without them being considered user deposits.\t",
           "ownerDefinitions": [
             {
               "path": "@getLidoLocator.elRewardsVault"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:25:39.671Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:25:39.671Z"
+          }
         },
         {
           "functionName": "receiveWithdrawals",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:22:33.790Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "A function to allow the WithdrawalVault to receive funds from exited validators without them being considered user deposits.\t",
           "ownerDefinitions": [
             {
               "path": "@getLidoLocator.withdrawalVault"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:25:39.714Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:25:39.714Z"
+          }
         },
         {
           "functionName": "handleOracleReport",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:25:50.042Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Handles the oracle data and takes a series of actions accordingly. Actions include process withdrawals, burning shares, distribute rewards, and rebase tokens. Malicious or wrong data reporting could lead to accounting errors and potential loss of user funds and unclaimed yield.\t",
           "ownerDefinitions": [
             {
               "path": "@getLidoLocator.accountingOracle"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:25:57.269Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:25:57.269Z"
+          }
         },
         {
           "functionName": "deposit",
           "isPermissioned": true,
-          "timestamp": "2025-10-09T16:27:33.055Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Deposits a multiple of DEPOSIT_SIZE ETH into the ethereum staking contract to create a new validator. This can only be called by the DepositSecurityModule which will make sure the call reverts if the state of the deposit contract has changed between the submission and execution of the deposit.\t",
           "ownerDefinitions": [
             {
               "path": "@getLidoLocator.depositSecurityModule"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:25:39.755Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:25:39.755Z"
+          }
         }
       ]
     },
@@ -2375,7 +2567,6 @@
         {
           "functionName": "setAfterSubmitDelay",
           "isPermissioned": true,
-          "timestamp": "2025-10-12T22:58:01.259Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the delay period after a proposal is submitted before it can be scheduled for execution. The current delay is 72 hours and is capped at 720 hours.",
@@ -2383,12 +2574,29 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_AFTER_SUBMIT_DELAY"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T15:22:18.387Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:22:18.387Z"
+          }
         },
         {
           "functionName": "setAfterScheduleDelay",
           "isPermissioned": true,
-          "timestamp": "2025-10-12T22:57:31.196Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the delay that needs to pass once a proposal has been scheduled, before it can be executed. There is a hardcoded limit of 240 hours, the current delay is 24 hours.",
@@ -2396,7 +2604,25 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_AFTER_SCHEDULE_DELAY"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T15:22:18.430Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:22:18.430Z"
+          }
         },
         {
           "functionName": "transferExecutorOwnership",
@@ -2440,7 +2666,6 @@
         {
           "functionName": "setEmergencyProtectionEndDate",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T15:51:47.818Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the end date of the emergency protection. Past this date the emergency activation committee can no longer activate the emergency mode. The current date is June 20th, 2026.",
@@ -2448,12 +2673,29 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_EMERGENCY_PROTECTION_DURATION"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T15:22:18.534Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:22:18.534Z"
+          }
         },
         {
           "functionName": "setEmergencyModeDuration",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T14:52:04.421Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the duration of the emergency mode. The current duration is 30 days and the value is capped at 365 days.",
@@ -2461,7 +2703,25 @@
             {
               "path": "$self.getAdminExecutor"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "hardcoded",
+                "value": "0"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_EMERGENCY_MODE_DURATION"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T15:22:18.477Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:22:18.477Z"
+          }
         },
         {
           "functionName": "setEmergencyGovernance",
@@ -2479,7 +2739,6 @@
         {
           "functionName": "activateEmergencyMode",
           "isPermissioned": true,
-          "timestamp": "2025-10-11T19:45:14.208Z",
           "checked": true,
           "score": "critical",
           "description": "Function that activates the emergency mode. The emergency mode can only be activated once and before a set timestamp after which it expires. In the emergency mode, the committee can perform two actions: pass proposals (any), or disable de Dual Governance (and go back to the previous model). This mode is meant as a protection in case of an adversarial proposalthat would exploit a bug in the Dual Governance contracts.",
@@ -2487,7 +2746,19 @@
             {
               "path": "$self.getEmergencyActivationCommittee"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "protected period",
+              "description": "Emergency mode can only be activated before the emergency protection end date (currently 2026-04-19). After that date, this function becomes permanently inoperable."
+            }
+          ],
+          "timestamp": "2026-03-30T15:22:33.675Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:22:33.675Z"
+          }
         },
         {
           "functionName": "emergencyExecute",
@@ -2561,10 +2832,14 @@
         {
           "functionName": "scheduleProposal",
           "isPermissioned": false,
-          "timestamp": "2025-10-13T16:05:46.937Z",
           "checked": false,
-          "score": "unscored",
-          "ownerDefinitions": []
+          "score": "no-impact",
+          "ownerDefinitions": [],
+          "timestamp": "2026-03-30T15:28:29.591Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:29.591Z"
+          }
         },
         {
           "functionName": "submitProposal",
@@ -2716,6 +2991,140 @@
               "path": "$self.$admin"
             }
           ]
+        },
+        {
+          "functionName": "initialize",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-30T15:26:20.049Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:26:20.049Z"
+          }
+        },
+        {
+          "functionName": "finalizeUpgrade_v3",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-30T15:26:20.097Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:26:20.097Z"
+          }
+        },
+        {
+          "functionName": "addStakingModule",
+          "isPermissioned": false,
+          "score": "critical",
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ],
+          "timestamp": "2026-03-30T15:28:04.542Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.542Z"
+          }
+        },
+        {
+          "functionName": "updateStakingModule",
+          "isPermissioned": false,
+          "score": "critical",
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ],
+          "timestamp": "2026-03-30T15:28:04.568Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.568Z"
+          }
+        },
+        {
+          "functionName": "updateTargetValidatorsLimits",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.609Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.609Z"
+          }
+        },
+        {
+          "functionName": "reportRewardsMinted",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.679Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.679Z"
+          }
+        },
+        {
+          "functionName": "updateExitedValidatorsCountByStakingModule",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.747Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.747Z"
+          }
+        },
+        {
+          "functionName": "reportStakingModuleExitedValidatorsCountByNodeOperator",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.810Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.810Z"
+          }
+        },
+        {
+          "functionName": "setStakingModuleStatus",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.875Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.875Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:04.929Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:04.929Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": false,
+          "score": "critical",
+          "timestamp": "2026-03-30T15:28:05.001Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:28:05.001Z"
+          }
+        },
+        {
+          "functionName": "deposit",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-03-30T15:31:55.295Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:31:55.295Z"
+          }
         }
       ]
     },
@@ -2724,35 +3133,36 @@
         {
           "functionName": "initialize",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self"
             }
           ],
-          "timestamp": "2026-03-22T15:08:37.247Z",
+          "timestamp": "2026-03-30T15:26:19.976Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:37.247Z"
+            "date": "2026-03-30T15:26:19.976Z"
           }
         },
         {
           "functionName": "finalizeUpgrade_v3",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self"
             }
           ],
-          "timestamp": "2026-03-22T15:08:38.551Z",
+          "timestamp": "2026-03-30T15:26:20.016Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:38.551Z"
+            "date": "2026-03-30T15:26:20.016Z"
           }
         },
         {
           "functionName": "addStakingModule",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:12:48.954Z",
           "checked": true,
           "score": "critical",
           "description": "Registers a staking module specifying a name, contract, fee settings, and limits on the shares and validators. The new module can receive ETH deposits. Adding a malicious staking modules could lead to the loss of vunds allocated to new deposits.\t",
@@ -2760,12 +3170,23 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ],
+          "timestamp": "2026-03-30T15:27:43.864Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:27:43.864Z"
+          }
         },
         {
           "functionName": "updateStakingModule",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:28:49.597Z",
           "checked": true,
           "score": "critical",
           "description": "Updates the settings of an existing Staking Module. This can change the fees or the limits set on deposits and staking shares.\t",
@@ -2773,7 +3194,19 @@
             {
               "path": "$self.accessControl.STAKING_MODULE_MANAGE_ROLE.members"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "basis points cap",
+              "description": "Fee and share limit parameters are capped at 10,000 basis points (100%). Fees cannot be set to extract more than 100% of rewards."
+            }
+          ],
+          "timestamp": "2026-03-30T15:27:43.900Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:27:43.900Z"
+          }
         },
         {
           "functionName": "updateTargetValidatorsLimits",
@@ -2921,15 +3354,19 @@
         {
           "functionName": "deposit",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:15:06.751Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Deposits ETH to create validators in a given staking module. The staking module is specified by the Lido contract which is the only possible caller, and the underlaying staking module constract specifies the node operator public keys.\t",
           "ownerDefinitions": [
             {
               "path": "$self.getLido"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:31:55.243Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:31:55.243Z"
+          }
         },
         {
           "functionName": "grantRole",
@@ -3020,63 +3457,66 @@
         {
           "functionName": "initialize",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:08:40.802Z",
+          "timestamp": "2026-03-30T14:39:56.099Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:40.802Z"
+            "date": "2026-03-30T14:39:56.099Z"
           }
         },
         {
           "functionName": "initializeWithoutMigration",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:08:41.717Z",
+          "timestamp": "2026-03-30T14:39:56.132Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:41.717Z"
+            "date": "2026-03-30T14:39:56.132Z"
           }
         },
         {
           "functionName": "finalizeUpgrade_v2",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:08:43.014Z",
+          "timestamp": "2026-03-30T14:39:56.161Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:43.014Z"
+            "date": "2026-03-30T14:39:56.161Z"
           }
         },
         {
           "functionName": "finalizeUpgrade_v3",
           "isPermissioned": false,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:08:43.742Z",
+          "timestamp": "2026-03-30T14:39:56.191Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:43.742Z"
+            "date": "2026-03-30T14:39:56.191Z"
           }
         },
         {
           "functionName": "submitReportData",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:46:25.997Z",
           "checked": true,
           "score": "critical",
           "description": "Submits a report for a given reference slot on the beacon chain. This report includes information on the number of Lido validators on the consensus layer, their cumulative balance, exited validators, balance of the rewards and withdrawal vaults, and the simulated share rate (total ether / all shares emitted). This information is then processed and transmitted to other Lido contracts. It will influence how shares are rebased and whether validators will be exited/created in future slots. The report of wrong data could therefore lead to the loss of unclaimed yield or loss of user funds.\t",
@@ -3087,12 +3527,23 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ],
+          "timestamp": "2026-03-30T14:40:04.384Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:40:04.384Z"
+          }
         },
         {
           "functionName": "submitReportExtraDataEmpty",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:47:03.041Z",
           "checked": true,
           "score": "critical",
           "description": "Informs that no extra data is submitted for the given slot.\t",
@@ -3103,12 +3554,23 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ],
+          "timestamp": "2026-03-30T14:40:04.418Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:40:04.418Z"
+          }
         },
         {
           "functionName": "submitReportExtraDataList",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T18:47:25.923Z",
           "checked": true,
           "score": "critical",
           "description": "Submits extra data for a slot. This allows the consensus committee to compute the extra data asynchronously and report it later than the main report data. If the deadline has passed or the next report has started then no more extra data can be added for a slot.\t",
@@ -3119,7 +3581,19 @@
             {
               "path": "@getConsensusContract.getMembers.addresses"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "other",
+              "label": "consensus hash",
+              "description": "Submitted data must match the hash pre-approved by the HashConsensus committee quorum before it can be processed."
+            }
+          ],
+          "timestamp": "2026-03-30T14:40:04.446Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T14:40:04.446Z"
+          }
         },
         {
           "functionName": "revokeRole",
@@ -3310,7 +3784,6 @@
         {
           "functionName": "setTiebreakerActivationTimeout",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T21:17:25.731Z",
           "checked": true,
           "score": "critical",
           "description": "Sets the tiebreaker activatioin timeout. This is the delay before which the tiebreaker committee can perform any action, once it's activated.",
@@ -3318,7 +3791,25 @@
             {
               "path": "@TIMELOCK.getAdminExecutor"
             }
-          ]
+          ],
+          "mitigations": [
+            {
+              "type": "valueRange",
+              "min": {
+                "mode": "discovered",
+                "value": "MIN_TIEBREAKER_ACTIVATION_TIMEOUT"
+              },
+              "max": {
+                "mode": "discovered",
+                "value": "MAX_TIEBREAKER_ACTIVATION_TIMEOUT"
+              }
+            }
+          ],
+          "timestamp": "2026-03-30T15:21:33.656Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:21:33.656Z"
+          }
         },
         {
           "functionName": "setResealCommittee",
@@ -3375,29 +3866,33 @@
         {
           "functionName": "resealSealable",
           "isPermissioned": true,
-          "timestamp": "2025-10-13T21:22:44.448Z",
           "checked": true,
-          "score": "critical",
+          "score": "no-impact",
           "description": "Allows the reseal committee to \"reseal\" (pause indefinitely) an instance of a sealable contract that is currently paused for a limited duration. This is done using the ResealManager contract.",
           "ownerDefinitions": [
             {
               "path": "$self.getResealCommittee"
             }
-          ]
+          ],
+          "timestamp": "2026-03-30T15:40:29.531Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:40:29.531Z"
+          }
         },
         {
           "functionName": "cancelAllPendingProposals",
           "isPermissioned": true,
-          "score": "unscored",
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.getProposalsCanceller"
             }
           ],
-          "timestamp": "2026-03-22T15:07:09.919Z",
+          "timestamp": "2026-03-30T15:20:57.975Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:09.919Z"
+            "date": "2026-03-30T15:20:57.975Z"
           }
         },
         {
@@ -3416,8 +3911,12 @@
         {
           "functionName": "scheduleProposal",
           "isPermissioned": false,
-          "timestamp": "2025-10-13T21:31:13.236Z",
-          "score": "unscored"
+          "score": "no-impact",
+          "timestamp": "2026-03-30T15:20:58.006Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:20:58.006Z"
+          }
         }
       ]
     },
@@ -3448,12 +3947,17 @@
         {
           "functionName": "reseal",
           "isPermissioned": true,
+          "score": "unscored",
           "ownerDefinitions": [
             {
               "path": "@EMERGENCY_PROTECTED_TIMELOCK.governance"
             }
           ],
-          "timestamp": "2025-11-13T14:26:01.394Z"
+          "timestamp": "2026-03-30T15:39:51.655Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-03-30T15:39:51.655Z"
+          }
         },
         {
           "functionName": "resume",
@@ -3856,57 +4360,61 @@
         {
           "functionName": "addToken",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.ADD_TOKEN_TO_ALLOWED_LIST_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:38.267Z",
+          "timestamp": "2026-03-30T14:42:17.159Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:38.267Z"
+            "date": "2026-03-30T14:42:17.159Z"
           }
         },
         {
           "functionName": "removeToken",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.REMOVE_TOKEN_FROM_ALLOWED_LIST_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:39.563Z",
+          "timestamp": "2026-03-30T14:42:17.197Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:39.563Z"
+            "date": "2026-03-30T14:42:17.197Z"
           }
         },
         {
           "functionName": "grantRole",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:40.890Z",
+          "timestamp": "2026-03-30T14:42:17.243Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:40.890Z"
+            "date": "2026-03-30T14:42:17.243Z"
           }
         },
         {
           "functionName": "revokeRole",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
             }
           ],
-          "timestamp": "2026-03-22T15:07:41.872Z",
+          "timestamp": "2026-03-30T14:42:17.279Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:07:41.872Z"
+            "date": "2026-03-30T14:42:17.279Z"
           }
         }
       ]
@@ -4098,15 +4606,16 @@
         {
           "functionName": "resealSealable",
           "isPermissioned": true,
+          "score": "no-impact",
           "ownerDefinitions": [
             {
               "path": "$self.getResealCommittee"
             }
           ],
-          "timestamp": "2026-03-22T15:08:05.532Z",
+          "timestamp": "2026-03-30T15:40:56.219Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-22T15:08:05.532Z"
+            "date": "2026-03-30T15:40:56.219Z"
           }
         },
         {

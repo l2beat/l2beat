@@ -1,12 +1,12 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-24T12:37:20.644Z",
+  "lastModified": "2026-03-30T14:23:27.171Z",
   "tags": [
     {
       "contractAddress": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "isExternal": true,
-      "timestamp": "2025-11-06T14:30:48.727Z",
-      "centralization": "immutable"
+      "entity": "Ethereum Deposit Contract",
+      "timestamp": "2026-03-30T14:23:27.171Z"
     },
     {
       "contractAddress": "eth:0x00000000219ab540356cbb839cbe05303d7705fa",
