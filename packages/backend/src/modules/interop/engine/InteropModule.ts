@@ -202,6 +202,9 @@ export function createInteropModule({
     if (config.interop && config.interop.cleaner) {
       cleaner.start()
     }
+    if (config.interop && config.interop.capture.enabled) {
+      syncersManager.start()
+    }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
       await interopAggregatingIndexer?.start()
@@ -221,10 +224,6 @@ export function createInteropModule({
       configPlugins: plugins.configPlugins.length,
       eventPlugins: eventPlugins.length,
     })
-
-    if (config.interop && config.interop.capture.enabled) {
-      syncersManager.start()
-    }
   }
 
   return { routers: [router], start }

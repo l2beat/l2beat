@@ -30,6 +30,8 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
       this.logger.info(
         'Skipping aggregation - not all syncers are following the tip',
       )
+      // This is a deliberate no-op: aggregates are best-effort hourly snapshots.
+      // If syncers are behind, we leave this hour empty and try again next hour.
       return to
     }
 
