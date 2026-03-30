@@ -110,6 +110,7 @@ function quoteForEnv(value: string) {
     .replaceAll('\\', '\\\\')
     .replaceAll('"', '\\"')
     .replaceAll('$', '\\$')
+    .replaceAll('`', '\\`')
   return `"${escaped}"`
 }
 
