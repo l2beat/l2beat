@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -94,10 +94,10 @@ Stwo is a STARK (transparent SNARK) that does not perform a wrap in a SNARK, so 
         proofSystem: ZK_CATALOG_TAGS.STARK.Stwo,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x13e120F6c8E747983F7aaF0f7731796bfcb0D934',
             ),
-            chain: 'ethereum',
             overrideUsedIn: [ProjectId('starknet'), ProjectId('paradex')],
           },
         ],

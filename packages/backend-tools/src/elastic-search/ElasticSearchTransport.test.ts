@@ -1,4 +1,5 @@
 import { expect, type MockObject, mockFn, mockObject } from 'earl'
+import { describe } from 'mocha'
 import type { ElasticSearchClient } from './ElasticSearchClient'
 import {
   ElasticSearchTransport,
@@ -56,7 +57,64 @@ describe(ElasticSearchTransport.name, () => {
       indexName,
     )
   })
+
+  it('merges flushFailureContext into the diagnostic log when bulk fails', async () => {
+    const clientMock = createFailThenSucceedClientMock()
+
+    const transport = createTransportMock(clientMock, {
+      flushFailureContext: (batch) => ({
+        correlationSample: batch.length,
+      }),
+    })
+
+    transport.push(JSON.stringify(log))
+    transport.push(JSON.stringify(log))
+
+    await transport.flush()
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    const diagnosticDoc = clientMock.bulk.calls[1]!.args[0][0] as {
+      parameters?: { correlationSample?: number; batchLogCount?: number }
+    }
+    expect(diagnosticDoc.parameters?.correlationSample).toEqual(2)
+    expect(diagnosticDoc.parameters?.batchLogCount).toEqual(2)
+  })
+
+  it('still sends diagnostic log when flushFailureContext throws', async () => {
+    const clientMock = createFailThenSucceedClientMock()
+
+    const transport = createTransportMock(clientMock, {
+      flushFailureContext: () => {
+        throw new Error('callback bug')
+      },
+    })
+
+    transport.push(JSON.stringify(log))
+
+    await transport.flush()
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    const diagnosticDoc = clientMock.bulk.calls[1]!.args[0][0] as {
+      parameters?: { batchLogCount?: number }
+    }
+    expect(diagnosticDoc.parameters?.batchLogCount).toEqual(1)
+  })
 })
+
+function createFailThenSucceedClientMock() {
+  let bulkCalls = 0
+  return mockObject<ElasticSearchClient>({
+    indexExist: mockFn(async (_: string): Promise<boolean> => false),
+    indexCreate: mockFn(async (_: string): Promise<void> => {}),
+    bulk: mockFn(async () => {
+      bulkCalls++
+      if (bulkCalls === 1) {
+        return { isSuccess: false as const, errors: [] }
+      }
+      return { isSuccess: true as const }
+    }),
+  })
+}
 
 function createClientMock(indexExist = true) {
   return mockObject<ElasticSearchClient>({
@@ -68,7 +126,10 @@ function createClientMock(indexExist = true) {
   })
 }
 
-function createTransportMock(clientMock: MockObject<ElasticSearchClient>) {
+function createTransportMock(
+  clientMock: MockObject<ElasticSearchClient>,
+  extraOptions: Partial<ElasticSearchTransportOptions> = {},
+) {
   const uuidProviderMock: UuidProvider = () => id
 
   const options: ElasticSearchTransportOptions = {
@@ -76,6 +137,7 @@ function createTransportMock(clientMock: MockObject<ElasticSearchClient>) {
     apiKey: 'apiKey',
     indexPrefix,
     flushInterval,
+    ...extraOptions,
   }
 
   return new ElasticSearchTransport(options, clientMock, uuidProviderMock)

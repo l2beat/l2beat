@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -131,6 +131,7 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('galxegravity'),
         sinceTimestamp: UnixTime(1745880540),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('rari'),
@@ -235,16 +236,22 @@ export const sp1turbo: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xFF5Adab685362DC4C33536a65aF5873738D1216B',
             ),
-            chain: 'ethereum',
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+            ),
           },
         ],
         verificationStatus: 'successful',
@@ -290,10 +297,10 @@ The script will generate Plonk verifier smart contract with verification keys an
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -345,16 +352,16 @@ make build-circuits
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x045d4BC73Bd1918192f34e98532A5272Ef620423',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

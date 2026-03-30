@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -83,10 +83,10 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',
@@ -151,10 +151,10 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xd4460475F00307845082d3a146f36661354FBc67',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',

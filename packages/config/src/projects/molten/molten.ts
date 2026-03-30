@@ -100,4 +100,12 @@ export const molten: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
+  nonTemplateZkVerifiers: getVerifiers(),
 })
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGatewayArb', 'activeVerifiers')
+  return activeVerifiers.map((el) => el.verifier)
+}

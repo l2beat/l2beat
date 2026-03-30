@@ -218,8 +218,8 @@
       "symbol": "AMO",
       "decimals": 18,
       "deploymentTimestamp": 1698365339,
-      "untilTimestamp": 1747440000,
       "coingeckoListingTimestamp": 1698969600,
+      "untilTimestamp": 1747440000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
       "chainId": 1,
@@ -10493,6 +10493,72 @@
       }
     },
     {
+      "name": "Cap USD",
+      "coingeckoId": "cap-usd",
+      "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+      "symbol": "cUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1767034034,
+      "coingeckoListingTimestamp": 1756339200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68272/large/cUSD_ab_500%C3%97500.png?1755232868",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MegaUSD",
+      "coingeckoId": "megausd",
+      "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+      "symbol": "USDm",
+      "decimals": 18,
+      "deploymentTimestamp": 1767518517,
+      "coingeckoListingTimestamp": 1770249600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69955/large/USDm.png?1760170136",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1767074275,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Catizen",
       "coingeckoId": "catizen",
       "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
@@ -14088,6 +14154,20 @@
       "supply": "zero"
     },
     {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1716405493,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Celo Brazilian Real",
       "coingeckoId": "celo-real-creal",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
@@ -14194,6 +14274,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Mento British Pound",
+      "coingeckoId": "celo-british-pound",
+      "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+      "symbol": "GBPm",
+      "decimals": 18,
+      "deploymentTimestamp": 1742684383,
+      "coingeckoListingTimestamp": 1745798400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55374/large/GBPm__%28Mento_British_Pound%29.png?1769111439",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "PLASTIK Token",
       "coingeckoId": "plastiks",
       "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
@@ -14292,6 +14386,27 @@
       "chainId": 42766,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Bridged USDC (VIA Labs)",
+      "coingeckoId": "usd-coin",
+      "address": "0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1730731277,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Proto-CCTP (not Circle)"
+          }
+        ]
+      }
     },
     {
       "name": "ENA",

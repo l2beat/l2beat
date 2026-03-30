@@ -199,7 +199,10 @@ const DEST_TOKEN_POOL_EVENTS = [
 export class CCIPPlugin implements InteropPluginResyncable {
   readonly name = 'ccip'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCIPConfig)?.networks ?? []
@@ -652,26 +655,61 @@ export class CCIPPlugin implements InteropPluginResyncable {
     return result
   }
 
-  matchTypes = [ExecutionStateChanged]
+  private normalizeOneSidedChain(chain: string): string | undefined {
+    const normalized = chain.replace(/^Unknown_/, '')
+    return this.oneSidedChains.includes(normalized) ? normalized : undefined
+  }
+
+  matchTypes = [ExecutionStateChanged, CCIPSendRequested]
 
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (ExecutionStateChanged.checkType(delivery)) {
+      return this.matchExecution(delivery, db)
+    }
+
+    if (CCIPSendRequested.checkType(delivery)) {
+      return this.matchSend(delivery, db)
+    }
+  }
+
+  private matchExecution(
+    delivery: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!ExecutionStateChanged.checkType(delivery)) return
 
     const sendRequests = db.findAll(CCIPSendRequested, {
       messageId: delivery.args.messageId,
     })
-    if (sendRequests.length === 0) return
+
+    if (sendRequests.length === 0) {
+      const rawSrcChain = delivery.args.$srcChain
+      const srcChain = rawSrcChain && this.normalizeOneSidedChain(rawSrcChain)
+      if (!srcChain) return
+
+      const result: MatchResult = []
+      const dstTokens = delivery.args.dstTokens ?? []
+      for (const dstToken of dstTokens) {
+        result.push(
+          Result.Transfer('ccip.Transfer', {
+            srcChain,
+            dstEvent: delivery,
+            dstTokenAddress: dstToken.address,
+            dstAmount: dstToken.amount,
+            dstWasMinted: dstToken.wasMinted,
+          }),
+        )
+      }
+      return result
+    }
 
     const result: MatchResult = []
     const dstTokens = delivery.args.dstTokens ?? []
 
-    // Match transfers by index — tokenAmounts[] and TokenPool events
-    // are emitted in the same order on both source and destination
     for (let i = 0; i < dstTokens.length; i++) {
       const dstToken = dstTokens[i]
       const matched = sendRequests.find((req) => req.args.index === i)
       if (!matched) continue
-      // CCTP-backed tokens (e.g. USDC) are handled by the CCTP plugin
       if (matched.args.isCctpBacked) continue
       result.push(
         Result.Transfer('ccip.Transfer', {
@@ -698,5 +736,34 @@ export class CCIPPlugin implements InteropPluginResyncable {
       }),
     )
     return result
+  }
+
+  private matchSend(
+    delivery: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    if (!CCIPSendRequested.checkType(delivery)) return
+
+    const rawDstChain = delivery.args.$dstChain
+    const dstChain = rawDstChain && this.normalizeOneSidedChain(rawDstChain)
+    if (!dstChain) return
+
+    const hasCounterpart = db.find(ExecutionStateChanged, {
+      messageId: delivery.args.messageId,
+    })
+    if (hasCounterpart) return
+
+    if (delivery.args.token === undefined) return
+    if (delivery.args.isCctpBacked) return
+
+    return [
+      Result.Transfer('ccip.Transfer', {
+        srcEvent: delivery,
+        dstChain,
+        srcTokenAddress: delivery.args.token,
+        srcAmount: delivery.args.amount,
+        srcWasBurned: delivery.args.wasBurned,
+      }),
+    ]
   }
 }

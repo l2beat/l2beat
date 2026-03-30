@@ -39,6 +39,7 @@ export function getLogger(): Logger {
       apiKey: env.ES_API_KEY,
       indexPrefix: env.ES_INDEX_PREFIX,
       flushInterval: env.ES_FLUSH_INTERVAL,
+      flushFailureContext,
     }
 
     loggerTransports.push(new ElasticSearchTransport(options))
@@ -51,4 +52,29 @@ export function getLogger(): Logger {
 
   logger = new Logger(options)
   return logger
+}
+
+function flushFailureContext(batch: string[]): Record<string, unknown> {
+  const requestIds = collectUniqueRequestIdsFromEcsBatchLines(batch)
+  return requestIds.length > 0 ? { requestIds } : {}
+}
+
+function collectUniqueRequestIdsFromEcsBatchLines(lines: string[]): string[] {
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const line of lines) {
+    try {
+      const doc = JSON.parse(line) as {
+        parameters?: { requestId?: unknown }
+      }
+      const id = doc.parameters?.requestId
+      if (typeof id === 'string' && id.trim() && !seen.has(id)) {
+        seen.add(id)
+        out.push(id.trim())
+      }
+    } catch {
+      // ignore malformed lines
+    }
+  }
+  return out
 }

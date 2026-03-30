@@ -1,5 +1,6 @@
 import type { Block, Log } from '@l2beat/shared-pure'
 import type { Log as ViemLog } from 'viem'
+import { toInteropTransaction } from '../../dto/interopTransaction'
 import type { LogToCapture, TxToCapture } from '../../plugins/types'
 
 export function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
@@ -10,7 +11,7 @@ export function getItemsToCapture(chain: string, block: Block, logs: Log[]) {
     .map(
       (tx): TxToCapture => ({
         block,
-        tx,
+        tx: toInteropTransaction(tx),
         chain,
         txLogs: viemLogs.filter((log) => log.transactionHash === tx.hash),
       }),

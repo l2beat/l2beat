@@ -10,9 +10,9 @@
     "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
   ],
   "names": {
-    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGatewayArb",
     "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
-    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGatewayBase",
     "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
     "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
     "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",

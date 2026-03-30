@@ -21,6 +21,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -449,6 +450,8 @@ export const taiko: ScalingProject = {
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    programHashes: getTaikoVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
@@ -507,4 +510,34 @@ export const taiko: ScalingProject = {
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getTaikoVKeys(): string[] {
+  const sp1Programs = discovery.getContractValue<string[]>(
+    'SP1VerifierGateway',
+    'trustedPrograms',
+  )
+  return sp1Programs.concat(
+    discovery.getContractValue<string[]>(
+      'Risc0VerifierGateway',
+      'trustedImages',
+    ),
+  )
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const result: ChainSpecificAddress[] = []
+  result.push(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'SP1VerifierGateway',
+      'sp1RemoteVerifier',
+    ),
+  )
+  result.push(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Risc0VerifierGateway',
+      'riscoGroth16Verifier',
+    ),
+  )
+  return result
 }

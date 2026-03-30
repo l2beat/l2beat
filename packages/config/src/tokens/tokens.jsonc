@@ -2149,6 +2149,21 @@
   ],
   "zircuit": [
     {
+      "symbol": "USDC.e",
+      "coingeckoId": "usd-coin",
+      "address": "0x3b952c8c9c44e8fe201e2b26f6b2200203214cff",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Proto-CCTP (not Circle)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -7769,6 +7784,20 @@
   ],
   "celo": [
     {
+      "symbol": "GBPm",
+      "address": "0xccf663b1ff11028f0b19058d0f7b674004a40746",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "BRLA",
+      "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "USDGLO",
       "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
       "category": "stablecoin",
@@ -8319,6 +8348,54 @@
         "bridges": [
           {
             "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
+  "megaeth": [
+    {
+      "symbol": "cUSD",
+      "coingeckoId": "cap-usd",
+      "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDm", // EOA 'escrow' on ethereum: https://etherscan.io/address/0x343c18b0f1710b65ce33a7ce720b5d540215d343
+      "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
           }
         ]
