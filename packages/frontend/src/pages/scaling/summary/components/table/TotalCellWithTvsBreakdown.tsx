@@ -84,8 +84,10 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger disabledOnMobile className="h-full">
-        <TableLink href={props.href}>
-          <div className="flex flex-col items-end">
+        <TableLink
+          href={props.href}
+        >
+          <div className="flex flex-col items-end max-md:py-1">
             <div className="flex items-center">
               {icon}
               <ValueWithPercentageChange change={props.change}>
