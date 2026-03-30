@@ -451,7 +451,7 @@ export const aztecnetwork: ScalingProject = {
     },
     sequencing: {
       name: 'Transactions are ordered by a staked committee',
-      description: `Joining the sequecer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committe and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
+      description: `Joining the sequencer set is permissionless and requires staking ${activationThresholdString}. For each epoch, the rollup samples a ${targetCommitteeSize}-member committee from the active sequencer set of ${activeSequencerCount} and selects one proposer per slot. The committee and regular sequencer set can be circumvented via the escape hatch, which designates a bonded proposer (via RANDAO) who can publish checkpoints without committee attestations.`,
       references: [
         {
           title: 'Rollup.sol - getProposerAt() on Etherscan',
