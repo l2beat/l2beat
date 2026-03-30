@@ -58,7 +58,9 @@ export const TvsBreakdownProjectFilter = v.union([
     ...TvsAdditionalProps,
   }),
 ])
-type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
+export type TvsBreakdownProjectFilter = v.infer<
+  typeof TvsBreakdownProjectFilter
+>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
@@ -186,7 +188,7 @@ export async function get7dTvsBreakdown(
   }
 }
 
-function createTvsBreakdownProjectFilter(
+export function createTvsBreakdownProjectFilter(
   filter: TvsBreakdownProjectFilter,
 ): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {

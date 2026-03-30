@@ -1,22 +1,20 @@
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
+import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
 export function toTableRows({
   projects,
-  sevenDayBreakdown,
+  tvsTableData,
 }: {
   projects: ScalingTvsEntry[]
-  sevenDayBreakdown: SevenDayTvsBreakdown | undefined
+  tvsTableData: TvsTableData | undefined
 }) {
   return projects.map((project) => {
-    const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]
+    const tvsTableProjectData = tvsTableData?.[project.id]
     return {
       ...project,
       tvs: {
         ...project.tvs,
-        data: sevenDayBreakdownProject && {
-          ...sevenDayBreakdownProject,
-        },
+        data: tvsTableProjectData,
       },
     }
   })

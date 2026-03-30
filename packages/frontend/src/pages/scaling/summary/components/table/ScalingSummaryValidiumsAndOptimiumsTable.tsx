@@ -28,10 +28,9 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
     () =>
       toTableRows({
         projects: entries,
-        sevenDayBreakdown: data,
-        excludeAssociatedTokens: display.excludeAssociatedTokens,
+        tvsTableData: data,
       }),
-    [entries, display, data],
+    [entries, data],
   )
 
   const columns = useMemo(

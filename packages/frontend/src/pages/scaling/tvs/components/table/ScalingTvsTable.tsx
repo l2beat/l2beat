@@ -26,7 +26,7 @@ export function ScalingTvsTable({
   const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
+  const { data: tvsTableData, isLoading: isTvsLoading } =
     api.tvs.table.useQuery({
       type: tab,
       excludeAssociatedTokens: display.excludeAssociatedTokens,
@@ -37,9 +37,9 @@ export function ScalingTvsTable({
     () =>
       toTableRows({
         projects: entries,
-        sevenDayBreakdown,
+        tvsTableData,
       }),
-    [entries, sevenDayBreakdown],
+    [entries, tvsTableData],
   )
 
   const columns = useMemo(

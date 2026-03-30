@@ -1,25 +1,25 @@
+import compact from 'lodash/compact'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
 export function toTableRows({
   projects,
-  sevenDayBreakdown,
-  excludeAssociatedTokens,
+  tvsTableData,
 }: {
   projects: ScalingSummaryEntry[]
-  sevenDayBreakdown: SevenDayTvsBreakdown | undefined
-  excludeAssociatedTokens: boolean | undefined
+  tvsTableData: TvsTableData | undefined
 }) {
   return projects.map((project) => {
-    const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]
+    const tvsTableProjectData = tvsTableData?.[project.id]
     return {
       ...project,
       tvs: {
+        ...tvsTableProjectData,
         associatedTokens: project.tvs.associatedTokens,
-        ...sevenDayBreakdownProject,
-        warnings: excludeAssociatedTokens
-          ? project.tvs.associatedTokensExcludedWarnings
-          : project.tvs.warnings,
+        warnings: compact([
+          ...project.tvs.warnings,
+          tvsTableData?.[project.id]?.associatedTokenWarning,
+        ]),
       },
     }
   })

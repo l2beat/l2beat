@@ -28,10 +28,9 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     () =>
       toTableRows({
         projects: entries,
-        excludeAssociatedTokens: display.excludeAssociatedTokens,
-        sevenDayBreakdown: data,
+        tvsTableData: data,
       }),
-    [entries, display, data],
+    [entries, data],
   )
 
   const columns = useMemo(
