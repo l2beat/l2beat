@@ -49,6 +49,31 @@ Optionally if you want to speed up the price collection obtain an api key from:
 Once you have everything create a `.env` file that configures the app's environment variables. One
 variable per line `KEY=value`.
 
+You can also sync a shared block of non-sensitive env values from Google Sheets with:
+
+```sh
+pnpm env:sync
+```
+
+The command opens a browser login on every run, reads the spreadsheet tab from
+`GOOGLE_SHEETS_ENV_URL`, rewrites only the managed block in `.env`, and then revokes the OAuth
+token.
+
+To use it, add the following local config below the managed block in `.env`:
+
+```sh
+GOOGLE_SHEETS_CLIENT_ID='replace-me.apps.googleusercontent.com'
+GOOGLE_SHEETS_CLIENT_SECRET='replace-me-if-your-downloaded-json-has-one'
+GOOGLE_SHEETS_ENV_URL='https://docs.google.com/spreadsheets/d/replace-me/edit#gid=0'
+```
+
+Create the client ID as a Google OAuth Desktop app and enable the Google Sheets API for that
+project. If the downloaded Google OAuth JSON also contains a `client_secret`, put it in
+`GOOGLE_SHEETS_CLIENT_SECRET`. Note: for desktop OAuth apps Google requires the client secret but
+does not consider it confidential — the real security comes from the browser login and PKCE, so it
+is safe to share alongside the client ID. The full sheet URL is used so the sync script knows which
+spreadsheet tab to read.
+
 ### Database
 
 For local development you set the following variables:
