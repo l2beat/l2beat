@@ -294,22 +294,22 @@ function getTvsSyncState({
   to: UnixTime
 }): SyncState | undefined {
   const projectSyncMetadataRecords = syncMetadataRecords.filter((r) =>
-    r.id.startsWith(projectId),
+    // Sync metadata records are stored per token in the database in format of <projectId>-<tokenId> (i.e. "arbitrum-USDC")
+    r.id.startsWith(`${projectId}-`),
   )
   if (projectSyncMetadataRecords.length === 0) {
     return
   }
 
+  const syncedUntils = projectSyncMetadataRecords
+    .map((r) => r.syncedUntil)
+    .filter((r) => r !== null)
   // Records for TVS are stored per token in the database, so we need to get the max target and syncedUntil for the project
   const record = {
     feature: 'tvs' as const,
     id: projectId,
     target: Math.max(...projectSyncMetadataRecords.map((r) => r.target)),
-    syncedUntil: Math.max(
-      ...projectSyncMetadataRecords
-        .map((r) => r.syncedUntil)
-        .filter((r) => r !== null),
-    ),
+    syncedUntil: syncedUntils.length > 0 ? Math.max(...syncedUntils) : null,
     blockTarget: null,
     blockSyncedUntil: null,
   }
