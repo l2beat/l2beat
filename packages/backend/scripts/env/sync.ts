@@ -4,6 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import path from 'node:path'
+import { getEnv } from '@l2beat/backend-tools'
 import {
   parseGoogleSheetRows,
   upsertGoogleSheetsEnvSection,
@@ -34,9 +35,10 @@ interface SpreadsheetMetadataResponse {
 }
 
 async function main() {
-  const clientId = requiredEnvironmentVariable('GOOGLE_SHEETS_CLIENT_ID')
-  const clientSecret = process.env.GOOGLE_SHEETS_CLIENT_SECRET
-  const sheetUrl = requiredEnvironmentVariable('GOOGLE_SHEETS_ENV_URL')
+  const env = getEnv()
+  const clientId = env.string('GOOGLE_SHEETS_CLIENT_ID')
+  const clientSecret = env.optionalString('GOOGLE_SHEETS_CLIENT_SECRET')
+  const sheetUrl = env.string('GOOGLE_SHEETS_ENV_URL')
   const currentEnv = existsSync(ENV_PATH) ? readFileSync(ENV_PATH, 'utf8') : ''
   const { spreadsheetId, sheetId } = parseSpreadsheetUrl(sheetUrl)
 
@@ -302,14 +304,6 @@ function parseSpreadsheetUrl(rawUrl: string) {
 
 function toA1SheetName(title: string) {
   return `'${title.replaceAll("'", "''")}'`
-}
-
-function requiredEnvironmentVariable(name: string) {
-  const value = process.env[name]
-  if (!value) {
-    throw new Error(`Missing ${name} in packages/backend/.env`)
-  }
-  return value
 }
 
 function base64Url(buffer: Buffer) {

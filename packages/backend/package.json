@@ -25,7 +25,7 @@
     "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
     "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
-    "env:sync": "set -a; [ -f ./.env ] && . ./.env; set +a; ts-node ./scripts/env/sync.ts",
+    "env:sync": "ts-node ./scripts/env/sync.ts",
     "starkware-costs": "ts-node --transpile-only scripts/starkwareCosts.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
