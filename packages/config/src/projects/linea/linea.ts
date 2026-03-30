@@ -548,6 +548,7 @@ export const linea: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
+    zkVerifiers: getVerifiers(),
   },
   stateDerivation: {
     nodeSoftware:
@@ -645,4 +646,14 @@ export const linea: ScalingProject = {
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifiersArray = discovery.getContractValue<ChainSpecificAddress[]>(
+    'LineaRollup',
+    'verifiers',
+  )
+  return verifiersArray.filter(
+    (v) => ChainSpecificAddress.address(v) !== EthereumAddress.ZERO,
+  )
 }

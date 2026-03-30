@@ -441,6 +441,8 @@ export const degate3: ScalingProject = {
       ],
     },
     risks: [],
+    // project is archived so we don't bother with verifiers
+    // zkVerifiers: [discovery.getContractValue<ChainSpecificAddress>('LoopringV3', 'blockVerifierAddress')],
   },
   milestones: [
     {

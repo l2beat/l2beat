@@ -17,6 +17,7 @@ import type { RenderData, ServerRenderFunction } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { RequestIdMiddleware } from './middlewares/RequestIdMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
@@ -79,6 +80,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
 
   app.use(timeout('25s'))
   app.use(SafeSendHandler)
+  app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
   app.use('/', createMigratedProjectsRouter())

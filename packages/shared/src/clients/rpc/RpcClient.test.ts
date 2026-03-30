@@ -896,6 +896,7 @@ const mockTx = (to: string | undefined) => ({
   to,
   data: '0x1',
   type: '2',
+  calls: undefined,
   blockNumber: 100,
   blobVersionedHashes: ['0x1', '0x2'],
 })

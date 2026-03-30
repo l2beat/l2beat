@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -134,10 +134,10 @@ export const risc0: BaseProject = {
           {
             // Based on standard Risc0 verifier architecture, this contract should be
             // a verifier router that points to an actual verifier. But it's unverified, so idk
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',
@@ -151,10 +151,10 @@ export const risc0: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -173,22 +173,22 @@ export const risc0: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

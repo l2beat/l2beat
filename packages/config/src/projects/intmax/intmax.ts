@@ -209,6 +209,7 @@ export const intmax: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -223,4 +224,18 @@ export const intmax: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  uniqueVerifierAddresses.add(
+    discovery.getContractValue<ChainSpecificAddress>('Claim', 'claimVerifier'),
+  )
+  uniqueVerifierAddresses.add(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Withdrawal',
+      'withdrawalVerifier',
+    ),
+  )
+  return Array.from(uniqueVerifierAddresses)
 }
