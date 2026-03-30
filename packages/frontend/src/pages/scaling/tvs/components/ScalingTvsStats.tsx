@@ -114,10 +114,13 @@ function getStats(
   const newest = chart?.at(-1)
   if (!oldest || !newest) return undefined
 
-  const [, oldestRollups, oldestValidiumsAndOptimiums, oldestOthers] =
-    oldest as [number, number, number, number]
-  const [, newestRollups, newestValidiumsAndOptimiums, newestOthers] =
-    newest as [number, number, number, number]
+  const oldestRollups = oldest[1] ?? 0
+  const oldestValidiumsAndOptimiums = oldest[2] ?? 0
+  const oldestOthers = oldest[3] ?? 0
+
+  const newestRollups = newest[1] ?? 0
+  const newestValidiumsAndOptimiums = newest[2] ?? 0
+  const newestOthers = newest[3] ?? 0
 
   const stat = (now: number, then: number) => ({
     value: now,
