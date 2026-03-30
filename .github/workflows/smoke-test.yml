@@ -69,21 +69,26 @@ jobs:
         run: pnpm build:dependencies
         working-directory: packages/backend
 
-      - name: Install and setup Coolify CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/coollabsio/coolify-cli/main/scripts/install.sh | bash
-          coolify context add l2beat "$COOLIFY_SERVER" "$COOLIFY_API_KEY"
-          coolify context use l2beat
-
       - name: Validate COOLIFY_APP_ID
         run: |
           if [[ -z "$COOLIFY_APP_ID" ]]; then
-            echo "Missing COOLIFY_APP_ID for ${matrix.service}/${matrix.environment}"
+            echo "Missing COOLIFY_APP_ID for ${{ matrix.service }}/${{ matrix.environment }}"
             exit 1
           fi
 
       - name: Pull ${{ matrix.environment }} ${{ matrix.service }} configuration
-        run: coolify app env list "$COOLIFY_APP_ID" -s --format json | jq -r '.[]|(.key + "=" + .real_value)' > .env
+        run: |
+          response="$(
+            curl --fail-with-body --silent --show-error \
+              --retry 3 \
+              --retry-delay 5 \
+              --retry-all-errors \
+              --header "Authorization: Bearer $COOLIFY_API_KEY" \
+              --header "Accept: application/json" \
+              "$COOLIFY_SERVER/api/v1/applications/$COOLIFY_APP_ID/envs"
+          )"
+
+          echo "$response" | jq -r '.[]|(.key + "=" + .real_value)' > .env
         working-directory: packages/backend
 
       - name: Run ${{ matrix.environment }} ${{ matrix.service }} smoke test
