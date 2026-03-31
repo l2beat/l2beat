@@ -10,6 +10,13 @@ Generated with discovered.json: 0x67dc48feab87463fbb75cbda313a84194cf7c1c3
 
 Upgrade 14: Isthmus L1 Contracts + MT-Cannon. https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796
 
+Implementation diffs:
+- SystemConfig (2.4.0 → 2.5.0): [diff](https://disco.l2beat.com/diff/eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647)
+- L1CrossDomainMessenger (2.5.0 → 2.6.0): [diff](https://disco.l2beat.com/diff/eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231/eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B)
+- OptimismPortal2 (3.13.0 → 3.14.0): [diff](https://disco.l2beat.com/diff/eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4)
+- L1ERC721Bridge (2.3.1 → 2.4.0): [diff](https://disco.l2beat.com/diff/eth:0x276d3730f219f7ec22274f7263180b8452B46d47/eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013)
+- L1StandardBridge (2.2.2 → 2.3.0): [diff](https://disco.l2beat.com/diff/eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A)
+
 ## Watched changes
 
 ```diff
