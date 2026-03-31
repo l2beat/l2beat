@@ -953,7 +953,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
           ])
         })
 
-        it('includes custom-canonical tokens in the canonical sum', async () => {
+        it('tracks custom-canonical tokens separately from the canonical sum', async () => {
           // Add a custom-canonical token on top of existing data
           await metadataRepository.insertMany([
             {
@@ -993,8 +993,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(100),
               // a (canonical-ether) + b (canonical-stablecoin) + c (external-btc) + d (native-other) + e (canonical-ether-associated) + cc (custom-canonical-stablecoin)
               value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
-              // canonical includes both canonical and custom-canonical tokens
-              canonical: 8000.5 + 16000.25 + 800.25 + 4000,
+              // canonical excludes custom-canonical, which is tracked separately
+              canonical: 8000.5 + 16000.25 + 800.25,
               customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,

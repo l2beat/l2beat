@@ -151,7 +151,7 @@ export function ProjectScalingSummary({ project }: Props) {
                         : undefined
                     }
                   >
-                    <div className="inline-flex w-full flex-col items-end gap-1">
+                    <div className="flex w-full flex-col items-end gap-1">
                       <ValueSecuredBreakdown
                         canonical={
                           project.header.tvs?.breakdown?.canonical ?? 0
