@@ -268,6 +268,8 @@ export const aztecnetwork: ScalingProject = {
     description:
       'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum.',
     purposes: ['Universal', 'Privacy'],
+    warning:
+      'Aztec v4 has [know security vulnerabilities](https://aztec.network/blog/critical-vulnerability-in-alpha-v4) that can only be fixed in a new deployment.',
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
@@ -629,4 +631,22 @@ There is a protective **Vetoer** role held by the SlashVeto Council. The Council
 *   **Coin Issuer:** The \`CoinIssuer\` contract is owned by Governance and is authorized to mint new AZTEC tokens up to a cap of ${coinIssuerNominalAnnualPercentageCapString}.
 *   **Protocol Treasury:** Funds owned by the DAO sit in the \`ProtocolTreasury\`. The Treasury has a hardcoded timestamp (approx. ${protocolTreasuryGatedUntilString}). Before this date, the DAO cannot spend Treasury funds. After this date, Treasury funds and token ownership can be moved with a Governance Proposal.`,
   discoveryInfo: getDiscoveryInfo([discovery]),
+  milestones: [
+    {
+      title: 'v4 Vulnerabilities',
+      url: 'https://aztec.network/blog/critical-vulnerability-in-alpha-v4',
+      date: '2026-03-31T00:00:00Z',
+      description:
+        'Aztec warns about critical security vulnerabilities that can lead to theft of funds.',
+      type: 'incident',
+    },
+    {
+      title: 'Aztec Alpha (v4) Launch',
+      url: 'https://aztec.network/blog/announcing-the-alpha-network',
+      date: '2026-03-30T00:00:00Z',
+      description:
+        'Aztec launches its feature-complete Alpha network, allowing developers to deploy the first apps.',
+      type: 'general',
+    },
+  ],
 }
