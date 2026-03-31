@@ -161,7 +161,8 @@ export function ProjectScalingSummary({ project }: Props) {
                         className="h-1.5 w-full"
                       />
                       {project.header.tvs
-                        ?.additionalTrustAssumptionsPercentage && (
+                        ?.additionalTrustAssumptionsPercentage !==
+                        undefined && (
                         <AdditionalTrustAssumptionsText
                           percentage={
                             project.header.tvs

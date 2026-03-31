@@ -510,6 +510,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
           category: 'ether',
           isAssociated: true,
         },
+        {
+          projectId: 'ethereum',
+          tokenId: 'i', // eth-custom-canonical-stablecoin
+          source: 'custom-canonical',
+          category: 'stablecoin',
+          isAssociated: false,
+        },
         // Arbitrum tokens
         {
           projectId: 'arbitrum',
@@ -586,6 +593,16 @@ describeDatabase(TokenValueRepository.name, (db) => {
           800.25,
           500.5,
           97.5,
+        ),
+        tokenValue(
+          'i', // eth-custom-canonical-stablecoin
+          'ethereum',
+          UnixTime(100),
+          50,
+          5000,
+          4000,
+          3000,
+          100,
         ),
         tokenValue(
           'f', // arb-canonical-ether
@@ -672,13 +689,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 12000.25,
+              value:
+                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
-              customCanonical: 0,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -730,13 +748,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 7500.75,
+              value:
+                5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000 + 7500.75,
               canonical: 5000.25 + 10000.5 + 500.5 + 7500.75,
-              customCanonical: 0,
+              customCanonical: 3000,
               external: 2500.5,
               native: 1500.75,
               ether: 5000.25 + 500.5 + 7500.75,
-              stablecoin: 10000.5,
+              stablecoin: 10000.5 + 3000,
               btc: 2500.5,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -832,13 +851,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 12000.25,
+              value:
+                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
-              customCanonical: 0,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -876,13 +896,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 12000.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 12000.25,
-              customCanonical: 0,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -952,61 +972,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           ])
         })
-
-        it('tracks custom-canonical tokens separately from the canonical sum', async () => {
-          // Add a custom-canonical token on top of existing data
-          await metadataRepository.insertMany([
-            {
-              projectId: 'ethereum',
-              tokenId: 'i',
-              source: 'custom-canonical',
-              category: 'stablecoin',
-              isAssociated: false,
-            },
-          ])
-          await repository.upsertMany([
-            tokenValue(
-              'i',
-              'ethereum',
-              UnixTime(100),
-              50,
-              5000,
-              4000,
-              3000,
-              100,
-            ),
-          ])
-
-          const result = await repository.getSummedByTimestampByProjects(
-            ['ethereum'],
-            UnixTime(100),
-            UnixTime(100),
-            {
-              forSummary: false,
-              excludeAssociated: false,
-              excludeRwaRestrictedTokens: false,
-            },
-          )
-
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              // a (canonical-ether) + b (canonical-stablecoin) + c (external-btc) + d (native-other) + e (canonical-ether-associated) + cc (custom-canonical-stablecoin)
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
-              // canonical excludes custom-canonical, which is tracked separately
-              canonical: 8000.5 + 16000.25 + 800.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 800.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-          ])
-        })
       },
     )
 
@@ -1048,13 +1013,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum tokens at timestamp 100
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
               canonical: 8000.5 + 16000.25 + 800.25,
-              customCanonical: 0,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1300,13 +1265,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
               canonical: 8000.5 + 16000.25 + 800.25,
-              customCanonical: 0,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1354,13 +1319,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
-              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5,
+              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000,
               canonical: 5000.25 + 10000.5 + 500.5,
-              customCanonical: 0,
+              customCanonical: 3000,
               external: 2500.5,
               native: 1500.75,
               ether: 5000.25 + 500.5,
-              stablecoin: 10000.5,
+              stablecoin: 10000.5 + 3000,
               btc: 2500.5,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1431,13 +1396,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Excludes token 'e' (associated token with valueForProject 800.25)
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i
               canonical: 8000.5 + 16000.25, // a + b
-              customCanonical: 0,
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5, // a
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1466,13 +1431,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25, // a + b + c + d + e valueForProject
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000, // a + b + c + d + e + i valueForProject
               canonical: 8000.5 + 16000.25 + 800.25, // a + b + e
-              customCanonical: 0,
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5 + 800.25, // a + e
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1545,13 +1510,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d (excluding e)
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i (excluding e)
               canonical: 8000.5 + 16000.25, // a + b (excluding e)
-              customCanonical: 0,
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5, // a (excluding e)
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,

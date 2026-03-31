@@ -29,20 +29,6 @@ const additionalTrustPercentVariants = cva('font-bold', {
   },
 })
 
-type AdditionalTrustSentiment = 'good' | 'warning' | 'bad'
-
-function getAdditionalTrustSentiment(
-  percentage: number,
-): AdditionalTrustSentiment {
-  if (percentage <= 0.2) {
-    return 'good'
-  }
-  if (percentage >= 0.8) {
-    return 'bad'
-  }
-  return 'warning'
-}
-
 export function AdditionalTrustAssumptionsText({
   percentage,
 }: AdditionalTrustAssumptionsProps) {
@@ -89,4 +75,18 @@ function AdditionalTrustAssumptionsContent({
       {children}
     </>
   )
+}
+
+type AdditionalTrustSentiment = 'good' | 'warning' | 'bad'
+
+function getAdditionalTrustSentiment(
+  percentage: number,
+): AdditionalTrustSentiment {
+  if (percentage <= 0.2) {
+    return 'good'
+  }
+  if (percentage >= 0.8) {
+    return 'bad'
+  }
+  return 'warning'
 }
