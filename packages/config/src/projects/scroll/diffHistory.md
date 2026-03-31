@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x21c7de5f211464d47e2c1ee829024203edbc9d6c
+
+# Diff at Mon, 30 Mar 2026 17:31:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773160450
+- current timestamp: 1774891705
+
+## Description
+
+Four new minters added to the Euro Coin Token (EURC) contract. Unrelated to Scroll itself — this is a change to a bridged token tracked by discovery.
+
+## Watched changes
+
+```diff
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c) {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.6:
++        "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.7:
++        "eth:0x55FE002aefF02F77364de339a1292923A15844B8"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.8:
++        "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.9:
++        "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F"
+    }
+```
+
 Generated with discovered.json: 0x476514734aad2706f87307396942309a909b724d
 
 # Diff at Mon, 23 Feb 2026 14:45:29 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1773160450,
+  "timestamp": 1774891705,
   "configHash": "0xcac3dfff45dda99994b63f5a4fc8a96bc864bbf7c6512b6fa7202fe6e1e1e842",
   "entries": [
     {
@@ -634,7 +634,11 @@
           "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
           "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
           "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
-          "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd"
+          "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
+          "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
+          "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
+          "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
+          "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F"
         ],
         "name": "Euro Coin",
         "owner": "eth:0x3101386A38bEf8b79e49f12dEA12938a30E8af96",
@@ -644,7 +648,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "EURC",
-        "totalSupply": 265610360270000,
+        "totalSupply": 244450596810000,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -747,6 +751,11 @@
     },
     {
       "address": "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1109,6 +1118,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1MessageQueueV2",
       "address": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
       "type": "Contract",
@@ -1149,11 +1163,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1773155471,
+        "getFirstUnfinalizedMessageEnqueueTime": 1774886927,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 991722,
-        "nextUnfinalizedQueueIndex": 991704,
+        "nextCrossDomainMessageIndex": 995193,
+        "nextUnfinalizedQueueIndex": 995175,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -2060,6 +2074,11 @@
       ]
     },
     {
+      "address": "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2344,14 +2363,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 513825,
+        "lastFinalizedBatchIndex": 515961,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 513831,
-          "lastFinalizedBatchIndex": 513825,
-          "lastFinalizeTimestamp": 1773160427,
+          "lastCommittedBatchIndex": 515964,
+          "lastFinalizedBatchIndex": 515961,
+          "lastFinalizeTimestamp": 1774890563,
           "flags": 1,
           "reserved": 0
         },
@@ -2595,7 +2614,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 9861943,
+        "totalBridgedUSDC": 11742224,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -2863,6 +2882,11 @@
     },
     {
       "address": "eth:0xDFEA658fa9BD311d6629f46BAA775580A7fF80Ad",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3168,7 +3192,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 26000555453404,
+        "totalBridgedUSDC": 28888117423424,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4181,9 +4205,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x32687f32a54aec126f6ab3a636313a2d0689542746dff7d41a3274d020d0a8e8",
+        "messageRoot": "0x4233e4d8483b64b3c78f0ba26204a7bfe0ceabfde78547fc6d96a56e5ca5765f",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 221276,
+        "nextMessageIndex": 221913,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -5429,7 +5453,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 29,
+        "nonce": 30,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7965,6 +7989,6 @@
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97"
   },
-  "usedBlockNumbers": { "ethereum": 24628287, "scroll": 31667799 },
-  "permissionsConfigHash": "0xbb8682e2fdbbb86e1fbea2669a85765bd4b32e8a72c2b3ef0357705595548ca8"
+  "usedBlockNumbers": { "ethereum": 24771908, "scroll": 32810317 },
+  "permissionsConfigHash": "0xfb45d8b4327b186c9617a9e4327179828436b0442997f52475bc2b07fed6b182"
 }
