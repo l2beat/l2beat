@@ -12,6 +12,7 @@ import {
 } from '@l2beat/shared'
 import { assert, unique } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
+import { toInteropTransaction } from '../dto/interopTransaction'
 import { logToViemLog } from '../engine/capture/getItemsToCapture'
 import { InteropEventStore } from '../engine/capture/InteropEventStore'
 import { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -112,9 +113,10 @@ export class ExampleRunner {
         .map(logToViemLog)
       const newEvents: InteropEvent[] = []
       const fulfilledCreatorEvents: InteropEvent[] = []
+
       const txToCapture = {
         chain: txEntry.chain,
-        tx,
+        tx: toInteropTransaction(tx),
         block,
         txLogs,
       }
@@ -123,6 +125,7 @@ export class ExampleRunner {
         if (!plugin.captureTx) {
           continue
         }
+
         const creatorEvents = tx.hash
           ? eventStore.derivedTxStore.getCreatorEvents(
               txEntry.chain,
@@ -148,7 +151,7 @@ export class ExampleRunner {
           const captured = plugin.capture({
             chain: txEntry.chain,
             log: log,
-            tx,
+            tx: toInteropTransaction(tx),
             block,
             txLogs,
           })

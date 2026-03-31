@@ -119,21 +119,21 @@ export function TokensDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="primary-card max-h-[450px] w-[1040px] max-w-[calc(100vw-1rem)] gap-0 overflow-y-auto bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="primary-card flex max-h-3/5 w-[1040px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
         <Tabs
           name="tokens"
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as ActiveTab)}
           variant="highlighted"
-          className="min-w-0"
+          className="flex min-h-0 flex-1 flex-col"
         >
-          <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-20 bg-surface-primary px-6 pt-6 pb-4">
+          <DialogHeader className="fade-out-to-bottom-3 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-4">
             <DialogTitle>{title}</DialogTitle>
             <BetweenChainsInfo className="mt-1" />
             {tabsList}
           </DialogHeader>
-          <div className="overflow-x-auto">
-            <div className="mx-6">{tabsContent}</div>
+          <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">
+            <div className="mx-6 pb-3">{tabsContent}</div>
           </div>
         </Tabs>
       </DialogContent>

@@ -4,13 +4,16 @@ import {
   getBlockNumberAtOrBefore,
   isLimitExceededError,
   type RpcLog,
-  type RpcTransaction,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
+import {
+  type InteropTransaction,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
@@ -221,7 +224,7 @@ export class CatchingUpState implements TimeloopState {
       if (!transaction) {
         continue
       }
-      txsByHash.set(txHash, toTransaction(transaction))
+      txsByHash.set(txHash, toInteropTransaction(transaction))
     }
 
     this.setStatus('capturing logs', rangeData, `${logs.length} logs`)
@@ -237,7 +240,10 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: txsByHash.get(log.transactionHash) ?? { hash: log.transactionHash },
+        tx:
+          txsByHash.get(log.transactionHash) ??
+          // FIXME: risky?
+          ({ hash: log.transactionHash } as InteropTransaction),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -384,16 +390,5 @@ export class CatchingUpState implements TimeloopState {
       progress.push(detail)
     }
     this.currentStatus = `${parts.join(' ')} (${progress.join(', ')})${dividerInfo}`
-  }
-}
-
-function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  return {
-    hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
-    data: tx.input,
-    type: tx.type?.toString(),
-    value: tx.value,
   }
 }

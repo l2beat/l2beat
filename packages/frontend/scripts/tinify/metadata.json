@@ -390,7 +390,7 @@
   "static/images/badges/Arbitrum.png": "8ac6aaa90179df202c08dfceae0eb73d",
   "static/images/badges/Avail.png": "4c47e95ea8ab40698fdae5326acffb1f",
   "static/images/badges/AvailVector.png": "38fc182c2cb526d5871f486ab4a68d23",
-  "static/images/badges/AztecVM.png": "730a8a2c8502ce5bf9a16e267d04e75e",
+  "static/images/badges/AztecVM.png": "0f8dfee9cb685955186ca87b366edc9a",
   "static/images/badges/Base.png": "be15bbfba4d003a74d0775e868fe4053",
   "static/images/badges/BasedSequencing.png": "02c217e164261dd1ecf9efe2d2c0f0b6",
   "static/images/badges/CairoVM.png": "83b9ed1015310caa78acefca57cf2693",
@@ -1482,5 +1482,6 @@
   "static/brand-kit/logo-dark.png": "71084ad4affabc92a0c22272f2c8f2fb",
   "static/brand-kit/logo-light.png": "b4d330df03ffb966015eb2a5e34374ef",
   "static/brand-kit/symbol-dark.png": "e97944b745a9b9d4fe3e507dc3befa05",
-  "static/brand-kit/symbol-light.png": "94e532c9e49e1028685c6e8a8c743129"
+  "static/brand-kit/symbol-light.png": "94e532c9e49e1028685c6e8a8c743129",
+  "static/images/badges/Privacy.png": "9dc11a22aabcbe9475c9ecff12e21674"
 }

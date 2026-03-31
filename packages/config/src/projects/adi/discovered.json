@@ -316,7 +316,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ADI PlonkVerifier",
+      "name": "ZKsyncOSVerifierPlonk",
       "address": "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F",
       "type": "Contract",
       "sourceHashes": [
@@ -2752,5 +2752,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24699739 },
-  "permissionsConfigHash": "0xb7ba2597ac3f335c0d4afa237493b92a5e535c4c3c124919fcf5f1510987ed99"
+  "permissionsConfigHash": "0x29f4991d67d4df8419a239190feb5b6687748fad792b610da03b0f73935d4469"
 }
