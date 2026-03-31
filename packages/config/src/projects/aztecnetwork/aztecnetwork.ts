@@ -313,7 +313,6 @@ export const aztecnetwork: ScalingProject = {
     notInScope: [
       SOA.l2Contracts,
       SOA.nonGasTokens,
-      SOA.trustedSetup,
       SOA.specToSourceCode,
     ],
   },
