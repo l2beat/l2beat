@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x15d319c29f4119eff0a8419a1b6299894cdf0ef1
+Generated with discovered.json: 0xcdd03d7afe7404d2c7393488325d9d1c192626ac
 
-# Diff at Tue, 31 Mar 2026 10:37:41 GMT:
+# Diff at Tue, 31 Mar 2026 10:43:47 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773160450
-- current timestamp: 1774953378
+- current timestamp: 1774953745
 
 ## Description
 
-Four new minters added to the Euro Coin Token (EURC) contract. Unrelated to Scroll itself — this is a change to a bridged token tracked by discovery.
+Removed Euro Coin Token (EURC) and its MasterMinter from discovery scope. These are Circle-operated contracts unrelated to Scroll, tracked only because the L1USDCGateway references them.
 
 ## Config/verification related changes
 

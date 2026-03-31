@@ -1,6 +1,6 @@
 {
   "name": "scroll",
-  "timestamp": 1774953378,
+  "timestamp": 1774953745,
   "configHash": "0x744ac5cf8fecc7d62eb30f5b7e47f6de644ef67d6aa725d9c9c77fa07bc2809e",
   "entries": [
     {
@@ -1014,7 +1014,7 @@
         "getFirstUnfinalizedMessageEnqueueTime": 1774948919,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 995327,
+        "nextCrossDomainMessageIndex": 995329,
         "nextUnfinalizedQueueIndex": 995315,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -2984,7 +2984,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 30476470589203,
+        "totalBridgedUSDC": 30500267386633,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -7674,6 +7674,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24777030, "scroll": 32846513 },
+  "usedBlockNumbers": { "ethereum": 24777061, "scroll": 32846778 },
   "permissionsConfigHash": "0x9a64038c24bc1127f373994a1ec9de2a28f8af8f1a1aa40a426f14e8450f8ba0"
 }
