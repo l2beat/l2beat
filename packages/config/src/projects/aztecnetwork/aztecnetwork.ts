@@ -511,6 +511,17 @@ export const aztecnetwork: ScalingProject = {
         ],
         risks: [],
       },
+      {
+        name: 'Inclusion is probabilistic',
+        description: `All censorship resistance tools that are part of the protocol rely on probabilistic inclusion. In contrast to "forced transactions", there is no simple deterministic inclusion after some maximum delay, but rather different inclusion probabilities after different time horizons. The "time needed to exit" of ${formatSeconds(hardCodedExitSimTime)} for the exit window was simulated by using a simple model of the decentralized sequencer set at launch. The escape hatch and private transactions can give additional inclusion guarantees.`,
+        references: [
+          {
+            title: 'CRsim - Simulated inclusion probability on Aztec',
+            url: 'https://sekuba.github.io/crsim',
+          },
+        ],
+        risks: [],
+      },
     ],
   },
   stateValidation: {
