@@ -22,6 +22,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('facet')
 
@@ -361,6 +362,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: facetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

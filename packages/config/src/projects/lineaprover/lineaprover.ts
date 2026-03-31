@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -102,10 +102,10 @@ export const lineaprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xC83ed08E2262fBa264D528C749c051f8fC526897',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -118,10 +118,10 @@ export const lineaprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x66355689a9f067eeb9dc9d899E4192676988279C',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

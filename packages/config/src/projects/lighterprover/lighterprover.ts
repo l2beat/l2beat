@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -77,16 +77,16 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0x8dcfa8132726f2dcc75e6b791c48f5e5b375e6ea78a5e161e75b657195192b9d',
+        hash: '0x8d5bf346c2d12732ea0b947623dcb66bfffa532e8c33d0b9493cffca41c8fa39',
         name: 'Lighter verifier',
         sourceLink: 'https://github.com/elliottech/lighter-prover/tree/main',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xb20De28D78b63bc0c94eef89Db53F6338af17825',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',
@@ -151,10 +151,10 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xd4460475F00307845082d3a146f36661354FBc67',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',

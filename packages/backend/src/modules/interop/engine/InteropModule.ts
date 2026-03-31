@@ -82,6 +82,8 @@ export function createInteropModule({
     eventPlugins.filter(isPluginResyncable),
   )
 
+  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
+
   const syncersManager = new InteropSyncersManager(
     pluginsAsClusters(plugins.eventPlugins),
     config.interop.capture.chains.map((c) => c.id as LongChainName),
@@ -164,7 +166,6 @@ export function createInteropModule({
     logger,
   )
 
-  let interopAggregatingIndexer: InteropAggregatingIndexer | undefined
   if (config.interop.aggregation) {
     const classifier = new InteropTransferClassifier()
     const aggregationService = new InteropAggregationService(classifier)
@@ -176,6 +177,7 @@ export function createInteropModule({
         indexerService,
         parents: [hourlyIndexer],
         minHeight: 1,
+        syncersManager,
       },
       logger,
     )
@@ -200,6 +202,9 @@ export function createInteropModule({
     if (config.interop && config.interop.cleaner) {
       cleaner.start()
     }
+    if (config.interop && config.interop.capture.enabled) {
+      syncersManager.start()
+    }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
       await interopAggregatingIndexer?.start()
@@ -219,10 +224,6 @@ export function createInteropModule({
       configPlugins: plugins.configPlugins.length,
       eventPlugins: eventPlugins.length,
     })
-
-    if (config.interop && config.interop.capture.enabled) {
-      syncersManager.start()
-    }
   }
 
   return { routers: [router], start }

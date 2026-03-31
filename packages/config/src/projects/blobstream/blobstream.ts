@@ -12,6 +12,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('blobstream')
@@ -148,6 +149,7 @@ export const blobstream: BaseProject = {
       },
     ],
     programHashes: getBlobstreamVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   milestones: [
     {

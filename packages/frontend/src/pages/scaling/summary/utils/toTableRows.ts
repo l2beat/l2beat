@@ -1,25 +1,36 @@
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
 export function toTableRows({
-  projects,
-  sevenDayBreakdown,
-  excludeAssociatedTokens,
+  entries,
+  data,
 }: {
-  projects: ScalingSummaryEntry[]
-  sevenDayBreakdown: SevenDayTvsBreakdown | undefined
-  excludeAssociatedTokens: boolean | undefined
+  entries: ScalingSummaryEntry[]
+  data: TvsTableData | undefined
 }) {
-  return projects.map((project) => {
-    const sevenDayBreakdownProject = sevenDayBreakdown?.projects[project.id]
+  return entries.map((entry) => {
+    const projectData = data?.[entry.id]
+
+    if (!projectData) {
+      return {
+        ...entry,
+        tvs: {
+          ...entry.tvs,
+          breakdown: undefined,
+          change: undefined,
+        },
+      }
+    }
+
+    const { warnings, breakdown, change } = projectData
+
     return {
-      ...project,
+      ...entry,
       tvs: {
-        associatedTokens: project.tvs.associatedTokens,
-        ...sevenDayBreakdownProject,
-        warnings: excludeAssociatedTokens
-          ? project.tvs.associatedTokensExcludedWarnings
-          : project.tvs.warnings,
+        ...entry.tvs,
+        breakdown,
+        change,
+        warnings: [...entry.tvs.warnings, ...warnings],
       },
     }
   })

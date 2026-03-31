@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -80,10 +80,10 @@ export const espressoprover: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Jellyfish,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x098c593361d12dd638ce7dbf34c8c6a655f8274c',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

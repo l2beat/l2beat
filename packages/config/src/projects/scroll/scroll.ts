@@ -496,6 +496,7 @@ export const scroll: ScalingProject = {
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: getScrollVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -638,4 +639,26 @@ function getScrollVKeys(): string[] {
     }
   }
   return Array.from(vKeys)
+}
+
+// gets all verifiers that could be used to check STF of Scroll L2
+function getVerifiers(): ChainSpecificAddress[] {
+  const uniqueVerifierAddresses = new Set<ChainSpecificAddress>()
+  const verifiers = discovery.getContractValue<
+    { startBatchIndex: number; verifier: string }[]
+  >('MultipleVersionRollupVerifier', 'latestVerifier')
+
+  // Verifiers of version before 7 can not be used by scroll
+  // Confusingly enough, version 7 is at index 6 because version 5 is skipped
+  for (const verifier of verifiers.slice(6)) {
+    const plonkVerifier =
+      discovery.getContractValueOrUndefined<ChainSpecificAddress>(
+        verifier.verifier,
+        'plonkVerifier',
+      )
+    if (plonkVerifier) {
+      uniqueVerifierAddresses.add(plonkVerifier)
+    }
+  }
+  return Array.from(uniqueVerifierAddresses)
 }
