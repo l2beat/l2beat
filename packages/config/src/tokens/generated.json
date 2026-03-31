@@ -7754,6 +7754,76 @@
       }
     },
     {
+      "name": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1735492876,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xE6A537a407488807F0bbeb0038B79004f19DDDFb",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1681858398,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRZ Token",
+      "coingeckoId": "brz",
+      "address": "0x4eD141110F6EeeAbA9A1df36d8c26f684d2475Dc",
+      "symbol": "BRZ",
+      "decimals": 18,
+      "deploymentTimestamp": 1687282016,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8472/large/MicrosoftTeams-image_%286%29.png?1696508657",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1689890042,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDT0",
       "coingeckoId": "usdt0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -7774,6 +7844,34 @@
           }
         ]
       }
+    },
+    {
+      "name": "Worldwide USD",
+      "coingeckoId": "worldwide-usd",
+      "address": "0x7Cd017ca5ddb86861FA983a34b5F495C6F898c41",
+      "symbol": "WUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1734057669,
+      "coingeckoListingTimestamp": 1708300800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35358/large/WUSD-logo.png?1755754866",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "XSGD",
+      "coingeckoId": "xsgd",
+      "address": "0xDC3326e71D45186F113a2F448984CA0e8D201995",
+      "symbol": "XSGD",
+      "decimals": 6,
+      "deploymentTimestamp": 1648632579,
+      "coingeckoListingTimestamp": 1602806400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12832/large/XSGD_Logo_Full_Colour_1.png?1772634156",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Ether",
