@@ -13,7 +13,7 @@ export function getEventKindLabel(kind: InteropEventKind) {
 }
 
 export function formatEventTimestamp(timestamp: number) {
-  return new Date(timestamp * 1000).toLocaleString()
+  return `${toCsvIsoTimestamp(timestamp).slice(0, 19).replace('T', ' ')}`
 }
 
 export function toCsvIsoTimestamp(timestamp: number) {
