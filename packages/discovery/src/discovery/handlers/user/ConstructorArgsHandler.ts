@@ -196,9 +196,8 @@ function nameWithFragments(
   inputs: ethers.utils.ParamType[],
 ): Record<string, ContractValue> {
   const result: Record<string, ContractValue> = {}
-  for (let i = 0; i < inputs.length; i++) {
-    const input = inputs[i]!
-    let value = values[i]!
+  for (const [i, input] of inputs.entries()) {
+    let value = values[i] ?? 0
     if (input.components && Array.isArray(value)) {
       value = nameWithFragments(value, input.components)
     }
