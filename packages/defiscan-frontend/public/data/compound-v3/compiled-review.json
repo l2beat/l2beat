@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-03-30T14:02:00.225Z",
+  "compiledAt": "2026-03-31T08:18:06.618Z",
   "project": "compound-v3",
   "metadata": {
     "protocolName": "Compound V3",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "lending",
     "tokenName": "COMP",
-    "description": "Compound V3 (Comet) is a lending protocol that operates isolated markets for individual base assets (USDC, USDT, WETH), each accepting a curated set of collateral tokens. Unlike Compound V2's shared-pool model, V3 isolates risk per market: suppliers lend a single base asset and borrowers post collateral against it. All three Ethereum markets are upgradeable EIP-1967 proxies controlled by a Compound governance Timelock with a 48-hour delay, with $862.06M in total capital at risk across all admin-controlled contracts. The protocol depends on Chainlink price feeds and a ConstantPriceFeed for USDT pricing."
+    "description": "Compound V3 (Comet) is a lending protocol that operates isolated markets for individual base assets (USDC, USDT, WETH), each accepting a curated set of collateral tokens. Unlike Compound V2's shared-pool model, V3 isolates risk per market: suppliers lend a single base asset and borrowers post collateral against it. All three Ethereum markets are upgradeable EIP-1967 proxies controlled by a Compound governance Timelock with a 48-hour delay, with $765.32M in total capital at risk across all admin-controlled contracts. The protocol depends on Chainlink price feeds and a ConstantPriceFeed for USDT pricing."
   },
   "totals": {
     "contractCount": 22,
@@ -16,15 +16,15 @@
     "scoredFunctionCount": 11,
     "adminCount": 5,
     "dependencyCount": 5,
-    "totalCapitalAtRisk": 862063927.436899,
+    "totalCapitalAtRisk": 765324155.7648171,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 194400000
+    "totalTokenValue": 176700000.00000003
   },
   "admins": [
     {
       "address": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
       "name": "CometProxyAdmin",
-      "description": "Immutable proxy admin contract owned by the Governance Timelock. Can upgrade, deploy-and-upgrade, and change the admin of the three market proxy contracts (cUSDCv3, cUSDTv3, cWETHv3) via upgrade, upgradeAndCall, deployAndUpgradeTo, deployUpgradeToAndCall, and changeProxyAdmin. Controls $862.06M in direct capital across the three market contracts.",
+      "description": "Immutable proxy admin contract owned by the Governance Timelock. Can upgrade, deploy-and-upgrade, and change the admin of the three market proxy contracts (cUSDCv3, cUSDTv3, cWETHv3) via upgrade, upgradeAndCall, deployAndUpgradeTo, deployUpgradeToAndCall, and changeProxyAdmin. Controls $765.32M in direct capital across the three market contracts.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -33,9 +33,47 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeToAndCall",
           "impact": "critical",
-          "directFundsUsd": 735580375.3835825,
+          "isUpgrade": true,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
-          "reachableContracts": [],
+          "reachableContracts": [
+            {
+              "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "latestRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+              "name": "AssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getAssetInfo"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "name": "USD Coin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "approve",
+                "balanceOf",
+                "transferFrom",
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ],
           "mitigations": [
             {
               "type": "delay",
@@ -53,7 +91,7 @@
           "contractName": "cUSDCv3",
           "functionName": "changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -73,9 +111,47 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeTo",
           "impact": "critical",
-          "directFundsUsd": 735580375.3835825,
+          "isUpgrade": true,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
-          "reachableContracts": [],
+          "reachableContracts": [
+            {
+              "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+              "name": "EACAggregatorProxy",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "latestRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
+              "name": "AssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getAssetInfo"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "name": "USD Coin Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "approve",
+                "balanceOf",
+                "transferFrom",
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ],
           "mitigations": [
             {
               "type": "delay",
@@ -113,6 +189,7 @@
           "contractName": "cWETHv3",
           "functionName": "upgradeTo",
           "impact": "critical",
+          "isUpgrade": true,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
@@ -133,6 +210,7 @@
           "contractName": "cWETHv3",
           "functionName": "upgradeToAndCall",
           "impact": "critical",
+          "isUpgrade": true,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
@@ -153,7 +231,7 @@
           "contractName": "cUSDTv3",
           "functionName": "admin",
           "impact": "critical",
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -173,7 +251,7 @@
           "contractName": "cUSDTv3",
           "functionName": "implementation",
           "impact": "critical",
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -193,7 +271,7 @@
           "contractName": "cUSDTv3",
           "functionName": "changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -213,9 +291,57 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeTo",
           "impact": "critical",
-          "directFundsUsd": 126483552.05331646,
+          "isUpgrade": true,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
-          "reachableContracts": [],
+          "reachableContracts": [
+            {
+              "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
+              "name": "ConstantPriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "latestRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+              "name": "AssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getAssetInfo"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3",
+              "name": "CometExtAssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "name": "Wrapped Ether Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "transferFrom",
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ],
           "mitigations": [
             {
               "type": "delay",
@@ -233,9 +359,57 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeToAndCall",
           "impact": "critical",
-          "directFundsUsd": 126483552.05331646,
+          "isUpgrade": true,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
-          "reachableContracts": [],
+          "reachableContracts": [
+            {
+              "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
+              "name": "ConstantPriceFeed",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "latestRoundData"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
+              "name": "AssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getAssetInfo"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3",
+              "name": "CometExtAssetList",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "approve"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "name": "Wrapped Ether Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "transferFrom",
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ],
           "mitigations": [
             {
               "type": "delay",
@@ -249,15 +423,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 862063927.436899,
+      "totalDirectCapital": 765324155.7648171,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 862063927.436899,
+      "totalReachableCapital": 765324155.7648171,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "name": "Compound Governance Timelock (48h)",
-      "description": "Central admin of the protocol with a 48-hour execution delay. Controls 40 permissioned functions across 10 contracts, including all market parameter changes (interest rates, collateral factors, supply caps, reserve targets), asset listing via addAsset/updateAsset, price feed configuration, factory and extension delegate settings, governor transfer, and reserve withdrawals via withdrawReserves and approveThis. Also owns the CometProxyAdmin, giving it indirect upgrade authority over all three market proxies. Governed by CompoundGovernor, which routes COMP token holder votes through this timelock. Controls $862.06M in direct capital exposure.",
+      "description": "Central admin of the protocol with a 48-hour execution delay. Controls 40 permissioned functions across 10 contracts, including all market parameter changes (interest rates, collateral factors, supply caps, reserve targets), asset listing via addAsset/updateAsset, price feed configuration, factory and extension delegate settings, governor transfer, and reserve withdrawals via withdrawReserves and approveThis. Also owns the CometProxyAdmin, giving it indirect upgrade authority over all three market proxies. Governed by CompoundGovernor, which routes COMP token holder votes through this timelock. Controls $765.32M in direct capital exposure.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -340,7 +514,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -355,7 +529,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -464,7 +638,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -479,7 +653,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1097,7 +1271,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1125,7 +1299,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1170,7 +1344,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1198,7 +1372,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1244,7 +1418,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1272,7 +1446,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1331,7 +1505,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1346,7 +1520,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1406,7 +1580,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1421,7 +1595,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1528,9 +1702,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 862063927.436899,
+      "totalDirectCapital": 765324155.7648171,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 862063927.436899,
+      "totalReachableCapital": 765324155.7648171,
       "totalReachableTokenValue": 0
     },
     {
@@ -1619,7 +1793,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1634,7 +1808,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1667,7 +1841,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 862063927.436899,
+      "totalReachableCapital": 765324155.7648171,
       "totalReachableTokenValue": 0
     },
     {
@@ -1774,7 +1948,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 126483552.05331646,
+              "fundsUsd": 129943723.77549978,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1789,7 +1963,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 735580375.3835825,
+              "fundsUsd": 635380431.9893173,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1833,13 +2007,13 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 862063927.436899,
+      "totalReachableCapital": 765324155.7648171,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
       "name": "Pause Guardian 5/8 Multisig",
-      "description": "A 5-of-8 Gnosis Safe multisig that serves as the pause guardian for the cUSDCv3 and cUSDTv3 markets. Can call pause to halt supply, transfer, withdraw, absorb, and buyCollateral operations without timelock delay. One of its 8 signers is itself a 2/7 multisig (0xeB5f...d627). Controls $862.06M in direct capital exposure. Cannot unpause markets or modify any other parameters.",
+      "description": "A 5-of-8 Gnosis Safe multisig that serves as the pause guardian for the cUSDCv3 and cUSDTv3 markets. Can call pause to halt supply, transfer, withdraw, absorb, and buyCollateral operations without timelock delay. One of its 8 signers is itself a 2/7 multisig (0xeB5f...d627). Controls $765.32M in direct capital exposure. Cannot unpause markets or modify any other parameters.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -1862,9 +2036,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 862063927.436899,
+      "totalDirectCapital": 765324155.7648171,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 862063927.436899,
+      "totalReachableCapital": 765324155.7648171,
       "totalReachableTokenValue": 0
     }
   ],
@@ -1875,7 +2049,7 @@
       "description": "An immutable contract that returns a constant price, used as the base token price feed for the cUSDTv3 market. Referenced by 9 functions including absorb, buyCollateral, transfer, supply, and withdraw. Since USDT is the base asset, a constant $1 price avoids oracle dependency for the base token itself.",
       "entity": null,
       "isAutoDetected": true,
-      "viewOnlyPath": true,
+      "viewOnlyPath": false,
       "calledFunctions": [
         "latestRoundData"
       ],
@@ -1883,9 +2057,49 @@
         {
           "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
           "contractName": "cUSDTv3",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 129943723.77549978,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+          "contractName": "cUSDTv3",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 129943723.77549978,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+          "contractName": "cUSDTv3",
           "functionName": "absorb",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1894,7 +2108,7 @@
           "contractName": "cUSDTv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1903,7 +2117,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transfer",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1912,7 +2126,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferAsset",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1921,7 +2135,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferAssetFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1930,7 +2144,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1939,7 +2153,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdraw",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1948,7 +2162,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1957,12 +2171,12 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": true,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 126483552.05331646,
+      "totalFundsAtRisk": 129943723.77549978,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -1982,9 +2196,49 @@
         {
           "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
           "contractName": "cUSDTv3",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 129943723.77549978,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+          "contractName": "cUSDTv3",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 129943723.77549978,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+          "contractName": "cUSDTv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1993,7 +2247,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supply",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2002,7 +2256,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supplyFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2011,7 +2265,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supplyTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2020,7 +2274,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2029,7 +2283,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2038,7 +2292,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawReserves",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2047,12 +2301,12 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 126483552.05331646,
+          "directFundsUsd": 129943723.77549978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 126483552.05331646,
+      "totalFundsAtRisk": 129943723.77549978,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -2123,7 +2377,7 @@
       "description": "",
       "entity": "Chainlink",
       "isAutoDetected": true,
-      "viewOnlyPath": true,
+      "viewOnlyPath": false,
       "calledFunctions": [
         "latestRoundData"
       ],
@@ -2131,9 +2385,49 @@
         {
           "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
           "contractName": "cUSDCv3",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 635380431.9893173,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+          "contractName": "cUSDCv3",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 635380431.9893173,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+          "contractName": "cUSDCv3",
           "functionName": "absorb",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2142,7 +2436,7 @@
           "contractName": "cUSDCv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2151,7 +2445,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transfer",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2160,7 +2454,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferAsset",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2169,7 +2463,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferAssetFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2178,7 +2472,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2187,7 +2481,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdraw",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2196,7 +2490,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2205,12 +2499,12 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": true,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 735580375.3835825,
+      "totalFundsAtRisk": 635380431.9893173,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -2231,9 +2525,49 @@
         {
           "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
           "contractName": "cUSDCv3",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 635380431.9893173,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+          "contractName": "cUSDCv3",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 635380431.9893173,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+          "contractName": "cUSDCv3",
           "functionName": "approveThis",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2242,7 +2576,7 @@
           "contractName": "cUSDCv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2251,7 +2585,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supply",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2260,7 +2594,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supplyFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2269,7 +2603,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supplyTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2278,7 +2612,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2287,7 +2621,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2296,7 +2630,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawReserves",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2305,12 +2639,12 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 735580375.3835825,
+          "directFundsUsd": 635380431.9893173,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 735580375.3835825,
+      "totalFundsAtRisk": 635380431.9893173,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -2319,9 +2653,9 @@
     {
       "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "name": "cUSDCv3 Market",
-      "description": "The main Compound V3 USDC lending market. Holds $735.58M in deposited assets including USDC (base), WBTC, wstETH, WETH, LINK, UNI, COMP, cbBTC, weETH, tBTC, and rsETH collateral. This is the largest Compound V3 market by TVL.",
+      "description": "The main Compound V3 USDC lending market. Holds $635.38M in deposited assets including USDC (base), WBTC, wstETH, WETH, LINK, UNI, COMP, cbBTC, weETH, tBTC, and rsETH collateral. This is the largest Compound V3 market by TVL.",
       "balances": {
-        "totalUsdValue": 735580375.3835825
+        "totalUsdValue": 635380431.9893173
       },
       "positions": null,
       "tokenInfo": null,
@@ -2330,9 +2664,9 @@
     {
       "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
       "name": "cUSDTv3 Market",
-      "description": "The Compound V3 USDT lending market. Holds $126.48M in deposited assets including USDT (base), wstETH, ezETH, WETH, rsETH, weETH, tETH, and other ETH-derivative collateral tokens.",
+      "description": "The Compound V3 USDT lending market. Holds $129.94M in deposited assets including USDT (base), wstETH, ezETH, WETH, rsETH, weETH, tETH, and other ETH-derivative collateral tokens.",
       "balances": {
-        "totalUsdValue": 126483552.05331646
+        "totalUsdValue": 129943723.77549978
       },
       "positions": null,
       "tokenInfo": null,
@@ -2341,14 +2675,14 @@
     {
       "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "name": "COMP Governance Token",
-      "description": "The Compound governance token used for voting in CompoundGovernor proposals. Has a market capitalization of $194.40M.",
+      "description": "The Compound governance token used for voting in CompoundGovernor proposals. Has a market capitalization of $176.70M.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "COMP",
-        "price": 19.44,
+        "price": 17.67,
         "totalSupply": "10000000000000000000000000",
-        "tokenValue": 194400000
+        "tokenValue": 176700000.00000003
       },
       "aggregate": null
     }
