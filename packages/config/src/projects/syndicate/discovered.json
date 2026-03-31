@@ -1,6 +1,6 @@
 {
   "name": "syndicate",
-  "timestamp": 1774943615,
+  "timestamp": 1774882415,
   "configHash": "0x3c89f184f11f0078f8d493eb505fc2761886a3ed0678d06dd176f0875c5ba077",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -146,7 +146,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 38,
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -517,7 +517,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6375,
+        "batchCount": 6358,
         "batchPosterManager": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
         "batchPosters": ["eth:0x54dD1659c232DEC31386C52507982a4983D9BCb8"],
         "bridge": "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277",
@@ -689,7 +689,7 @@
         "$immutable": true,
         "AIRDROP_MANAGER_ROLE": "0x84fe74c71a28b69aa960486ca0e8c1418c86e9ea2cd6b5849b95e2c8f407a674",
         "BRIDGE_MANAGER_ROLE": "0xcce296b040332a080e6df13515a3ec2869e21cd20f7344af0987ddb938d8bd21",
-        "clock": 24776221,
+        "clock": 24771137,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -867,8 +867,8 @@
         "nativeTokenDecimals": 18,
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
         "sequencerInbox": "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
-        "sequencerMessageCount": 6375,
-        "sequencerReportedSubMessageCount": 1644293
+        "sequencerMessageCount": 6358,
+        "sequencerReportedSubMessageCount": 1639287
       },
       "implementationNames": {
         "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": "",
@@ -925,12 +925,12 @@
         "confirmPeriodBlocks": 50400,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5463,
+        "firstUnresolvedNode": 5447,
         "inbox": "eth:0x5EA55Fd41D42Eb307D281bdE78E4e7572A35ea13",
         "isPostBoLD": false,
         "lastStakeBlock": 23028349,
-        "latestConfirmed": 5462,
-        "latestNodeCreated": 5629,
+        "latestConfirmed": 5446,
+        "latestNodeCreated": 5612,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C",
@@ -1757,7 +1757,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 44,
+        "nonce": 42,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3549,6 +3549,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24776221 },
+  "usedBlockNumbers": { "ethereum": 24771137 },
   "permissionsConfigHash": "0xffc8b9f4d1fe16372fdc843b8370de1ee9529562d5fb0fcf43eaf04503c440df"
 }

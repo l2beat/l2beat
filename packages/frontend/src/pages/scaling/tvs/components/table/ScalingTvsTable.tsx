@@ -7,7 +7,7 @@ import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { api } from '~/trpc/React'
-import { toTableRows } from '../../utils/ToTableRows'
+import { toTableRows } from '../../utils/toTableRows'
 import { getScalingTvsColumns } from './columns'
 
 interface Props {
@@ -26,20 +26,19 @@ export function ScalingTvsTable({
   const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data: sevenDayBreakdown, isLoading: isTvsLoading } =
-    api.tvs.table.useQuery({
-      type: tab,
-      excludeAssociatedTokens: display.excludeAssociatedTokens,
-      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-    })
+  const { data, isLoading: isTvsLoading } = api.tvs.table.useQuery({
+    type: tab,
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+  })
 
-  const data = useMemo(
+  const tableRows = useMemo(
     () =>
       toTableRows({
-        projects: entries,
-        sevenDayBreakdown,
+        entries,
+        data,
       }),
-    [entries, sevenDayBreakdown],
+    [entries, data],
   )
 
   const columns = useMemo(
@@ -54,7 +53,7 @@ export function ScalingTvsTable({
   )
 
   const table = useTable({
-    data,
+    data: tableRows,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

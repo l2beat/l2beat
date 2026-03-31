@@ -3,7 +3,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import pick from 'lodash/pick'
 import { env } from '~/env'
-import { ps } from '~/server/projects'
 import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { getTvsProjects } from './utils/getTvsProjects'
@@ -58,13 +57,15 @@ export const TvsBreakdownProjectFilter = v.union([
     ...TvsAdditionalProps,
   }),
 ])
-type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
+export type TvsBreakdownProjectFilter = v.infer<
+  typeof TvsBreakdownProjectFilter
+>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
-    return getMockTvsBreakdownData()
+    return getMockTvsBreakdownData(props)
   }
 
   const target = props.customTarget ?? getTvsTargetTimestamp()
@@ -186,7 +187,7 @@ export async function get7dTvsBreakdown(
   }
 }
 
-function createTvsBreakdownProjectFilter(
+export function createTvsBreakdownProjectFilter(
   filter: TvsBreakdownProjectFilter,
 ): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {
@@ -219,13 +220,15 @@ function createTvsBreakdownProjectFilter(
   }
 }
 
-async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
-  const projects = await ps.getProjects({ where: ['tvsConfig'] })
+async function getMockTvsBreakdownData(
+  props: TvsBreakdownProjectFilter,
+): Promise<SevenDayTvsBreakdown> {
+  const projects = await getTvsProjects(createTvsBreakdownProjectFilter(props))
   return {
     total: 1000,
     projects: Object.fromEntries(
       projects.map((project) => [
-        project.id,
+        project.projectId,
         {
           breakdown: {
             total: 60,

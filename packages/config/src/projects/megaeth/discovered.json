@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1774891641,
+  "timestamp": 1774882403,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -146,7 +146,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 38,
+        "nonce": 37,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1381,7 +1381,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664546",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664540",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1542,7 +1542,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24771852
+          "prevBlockNum": 24771042
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1681,7 +1681,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3360,
+        "gameCount": 3357,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2655,7 +2655,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x8D4eF94b7bf7021030504f439D7a8D7Fc3661583",
+        "lastResolved": "eth:0x876DcB33eaC9cF9B7B774a035c9D525965Ab7B33",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -4503,6 +4503,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24771902 },
+  "usedBlockNumbers": { "ethereum": 24771136 },
   "permissionsConfigHash": "0xec85a43227380cee07e3b312e84c71a5ffc4ee79d9aa41017950d223e15464c1"
 }
