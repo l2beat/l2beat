@@ -9,12 +9,29 @@ export function toTableRows({
   data: TvsTableData | undefined
 }) {
   return entries.map((project) => {
-    const tvsTableProjectData = data?.[project.id]
+    const projectData = data?.[project.id]
+
+    if (!projectData) {
+      return {
+        ...project,
+        tvs: {
+          ...project.tvs,
+          data: undefined,
+        },
+      }
+    }
+
+    const { warnings, breakdown, change } = projectData
+
     return {
       ...project,
       tvs: {
         ...project.tvs,
-        data: tvsTableProjectData,
+        data: {
+          breakdown,
+          change,
+        },
+        warnings: [...project.tvs.warnings, ...warnings],
       },
     }
   })

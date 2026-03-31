@@ -1,4 +1,3 @@
-import compact from 'lodash/compact'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
@@ -11,15 +10,27 @@ export function toTableRows({
 }) {
   return entries.map((entry) => {
     const projectData = data?.[entry.id]
+
+    if (!projectData) {
+      return {
+        ...entry,
+        tvs: {
+          ...entry.tvs,
+          breakdown: undefined,
+          change: undefined,
+        },
+      }
+    }
+
+    const { warnings, breakdown, change } = projectData
+
     return {
       ...entry,
       tvs: {
-        ...projectData,
-        associatedTokens: entry.tvs.associatedTokens,
-        warnings: compact([
-          ...entry.tvs.warnings,
-          ...(projectData?.warnings ?? []),
-        ]),
+        ...entry.tvs,
+        breakdown,
+        change,
+        warnings: [...entry.tvs.warnings, ...warnings],
       },
     }
   })
