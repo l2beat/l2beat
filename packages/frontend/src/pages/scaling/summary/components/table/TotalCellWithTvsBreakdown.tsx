@@ -4,6 +4,10 @@ import type {
 } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   ValueSecuredBreakdown,
   ValueSecuredBreakdownTooltipContent,
 } from '~/components/breakdown/ValueSecuredBreakdown'
@@ -92,14 +96,18 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
                 {formatDollarValueNumber(totalTvs)}
               </ValueWithPercentageChange>
             </div>
-            <ValueSecuredBreakdown
-              canonical={props.breakdown.canonical}
-              external={props.breakdown.external}
-              native={props.breakdown.native}
-              additionalTrustAssumptionsPercentage={
-                props.additionalTrustAssumptionsPercentage
-              }
-            />
+            <div className="inline-flex flex-col items-end gap-1">
+              <ValueSecuredBreakdown
+                canonical={props.breakdown.canonical}
+                external={props.breakdown.external}
+                native={props.breakdown.native}
+              />
+              {props.additionalTrustAssumptionsPercentage !== undefined && (
+                <AdditionalTrustAssumptionsText
+                  percentage={props.additionalTrustAssumptionsPercentage}
+                />
+              )}
+            </div>
           </div>
         </TableLink>
       </TooltipTrigger>
@@ -108,12 +116,14 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
-          additionalTrustAssumptionsPercentage={
-            props.additionalTrustAssumptionsPercentage
-          }
           change={props.change}
           tvsWarnings={tvsWarnings}
         />
+        {props.additionalTrustAssumptionsPercentage !== undefined && (
+          <AdditionalTrustAssumptionsBanner
+            percentage={props.additionalTrustAssumptionsPercentage}
+          />
+        )}
       </TooltipContent>
     </Tooltip>
   )

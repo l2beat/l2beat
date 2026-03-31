@@ -3,6 +3,10 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
 } from '~/components/breakdown/TokenBreakdown'
@@ -67,14 +71,16 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
               </ValueWithPercentageChange>
             </div>
             {props.breakdown.type === 'bridgeType' ? (
-              <ValueSecuredBreakdown
-                canonical={props.breakdown.canonical}
-                external={props.breakdown.external}
-                native={props.breakdown.native}
-                additionalTrustAssumptionsPercentage={
-                  props.additionalTrustAssumptionsPercentage
-                }
-              />
+              <div className="inline-flex flex-col items-end gap-1">
+                <ValueSecuredBreakdown
+                  canonical={props.breakdown.canonical}
+                  external={props.breakdown.external}
+                  native={props.breakdown.native}
+                />
+                <AdditionalTrustAssumptionsText
+                  percentage={props.additionalTrustAssumptionsPercentage}
+                />
+              </div>
             ) : (
               <TokenBreakdown
                 total={props.total}
@@ -92,19 +98,21 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
       </TooltipTrigger>
       <TooltipContent fitContent className="flex flex-col gap-2">
         {props.breakdown.type === 'bridgeType' ? (
-          <ValueSecuredBreakdownTooltipContent
-            canonical={props.breakdown.canonical}
-            external={props.breakdown.external}
-            native={props.breakdown.native}
-            change={props.change}
-            additionalTrustAssumptionsPercentage={
-              props.additionalTrustAssumptionsPercentage
-            }
-            tvsWarnings={tvsWarnings}
-            associatedTokenSymbols={props.associatedTokens?.map(
-              (t) => t.symbol,
-            )}
-          />
+          <>
+            <ValueSecuredBreakdownTooltipContent
+              canonical={props.breakdown.canonical}
+              external={props.breakdown.external}
+              native={props.breakdown.native}
+              change={props.change}
+              tvsWarnings={tvsWarnings}
+              associatedTokenSymbols={props.associatedTokens?.map(
+                (t) => t.symbol,
+              )}
+            />
+            <AdditionalTrustAssumptionsBanner
+              percentage={props.additionalTrustAssumptionsPercentage}
+            />
+          </>
         ) : (
           <TokenBreakdownTooltipContent
             total={props.total}
