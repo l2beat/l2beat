@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of {{getBondSizeFmt}} AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any bonded candidates.",
+  "description": "Provides a fallback mechanism for block production if the primary sequencer committee fails or censors. The committee is circumvented by allowing proposals by anyone who is able to post a large bond of {{getBondSizeFmt}} AZTEC. It maintains a set of bonded candidates and deterministically selects a designated proposer for a given 'hatch' period using RANDAO. If the designated proposer fails to propose and prove, their bond is slashed by {{getFailedHatchPunishmentFmt}} AZTEC. The minimum tax deducted from their bond is {{getWithdrawalTaxFmt}} AZTEC, even if the proposal is successful. The escape hatch regularly opens every {{getFrequency}} epochs, given there are any bonded candidates.",
   "ignoreMethods": [
     "getCandidateAtIndex",
     "getCandidateAtIndexForHatch",
@@ -27,6 +27,15 @@
       "edit": ["format", "Undecimal18"],
       "description": "The amount of tokens required to join the candidate set."
     },
+    "getWithdrawalTaxFmt": {
+      "description": "The amount deducted from the bond when a candidate exits the candidate set. This is the minimum that a candidate loses of their bond by becoming a candidate and cannot be circumvented.",
+      "handler": {
+        "type": "call",
+        "method": "function getWithdrawalTax() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
     "getCandidateCount": {
       "description": "Hatch proposer candidates who posted the bond.",
       "severity": "HIGH"
@@ -42,9 +51,6 @@
       },
       "edit": ["format", "Undecimal18"],
       "description": "The amount deducted from the bond if the designated proposer fails to fulfill their duties."
-    },
-    "getWithdrawalTax": {
-      "description": "The amount deducted from the bond when a candidate voluntarily exits the active set."
     },
     "getFrequency": {
       "description": "The number of epochs between escape hatch windows."
@@ -65,5 +71,6 @@
       "description": "The number of epochs to look back from the start of the hatch to snapshot the stable candidate set."
     },
     "getRollup": { "description": "The address of the core Rollup contract." }
-  }
+  },
+  "category": "core"
 }

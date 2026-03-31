@@ -593,6 +593,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'Fraud proofs'
     // Other
     | 'No state validation'
+    | 'Slashing'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]

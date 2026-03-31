@@ -16,7 +16,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@l2beat/interop-backoffice": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
@@ -47,6 +46,7 @@
     "tailwindcss": "4.1.11"
   },
   "devDependencies": {
+    "@l2beat/backend": "workspace:*",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react-swc": "^3.7.1",

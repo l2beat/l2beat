@@ -72,9 +72,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/interop-backoffice':
-        specifier: workspace:*
-        version: link:../interop-backoffice
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
@@ -90,6 +87,9 @@ importers:
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
+      '@trpc/server':
+        specifier: ^11.0.0-rc.446
+        version: 11.0.0-rc.599
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
@@ -144,6 +144,9 @@ importers:
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
+      superjson:
+        specifier: ^2.2.6
+        version: 2.2.6
       viem:
         specifier: ^2.31.6
         version: 2.31.6(typescript@5.6.3)(zod@3.24.1)
@@ -686,48 +689,8 @@ importers:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
 
-  packages/interop-backoffice:
-    dependencies:
-      '@l2beat/database':
-        specifier: workspace:*
-        version: link:../database
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@trpc/server':
-        specifier: ^11.0.0-rc.446
-        version: 11.0.0-rc.599
-      superjson:
-        specifier: ^2.2.6
-        version: 2.2.6
-    devDependencies:
-      '@types/express':
-        specifier: ^5.0.0
-        version: 5.0.0
-      '@types/koa':
-        specifier: ^2.13.5
-        version: 2.15.0
-      '@types/mocha':
-        specifier: ^10.0.6
-        version: 10.0.9
-      dotenv:
-        specifier: ^17.2.3
-        version: 17.2.3
-      earl:
-        specifier: ^1.1.0
-        version: 1.3.0
-      koa:
-        specifier: ^2.14.1
-        version: 2.16.0
-      mocha:
-        specifier: ^10.2.0
-        version: 10.7.3
-
   packages/interop-backoffice-ui:
     dependencies:
-      '@l2beat/interop-backoffice':
-        specifier: workspace:*
-        version: link:../interop-backoffice
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
@@ -813,6 +776,9 @@ importers:
         specifier: 4.1.11
         version: 4.1.11
     devDependencies:
+      '@l2beat/backend':
+        specifier: workspace:*
+        version: link:../backend
       '@types/react':
         specifier: 19.0.10
         version: 19.0.10

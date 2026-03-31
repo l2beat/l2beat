@@ -3,5 +3,10 @@
     "hash": "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431",
     "address": "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
     "blockNumber": 322488866
+  },
+  "L2ArbitrumGovernor_DVP": {
+    "hash": "0xe40be3b5838593c8514cc9b6f9df16c4b85fc87bbb9b87f2841837c35b98b027",
+    "address": "arb1:0x46AF4EDFDb689C30560D11052056d603d05b5aE0",
+    "blockNumber": 322488866
   }
 }

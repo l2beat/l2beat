@@ -1,4 +1,4 @@
-import type { InteropTrpcRouter } from '@l2beat/interop-backoffice'
+import type { InteropTrpcRouter } from '@l2beat/backend/interop-trpc'
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
