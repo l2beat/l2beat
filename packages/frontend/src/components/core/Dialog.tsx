@@ -9,7 +9,21 @@ const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
-const DialogClose = DialogPrimitive.Close
+const DialogClose = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Close>) => (
+  <DialogPrimitive.Close
+    ref={ref}
+    className={cn(
+      'absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none',
+      className,
+    )}
+    {...props}
+  />
+)
+DialogClose.displayName = DialogPrimitive.Close.displayName
 
 const DialogOverlay = ({
   ref,

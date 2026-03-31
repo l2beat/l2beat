@@ -71,9 +71,8 @@ export function PastUpgradesDialog({
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
         <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
-          <DialogClose className="absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none">
+          <DialogClose>
             <CloseIcon className="size-4 fill-primary" />
-            <span className="sr-only">Close</span>
           </DialogClose>
           <DialogHeader>
             <DialogTitle>Past upgrades</DialogTitle>
