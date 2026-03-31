@@ -31,9 +31,4 @@ export const trcpRoot = initTRPC.context<Context>().create({
 
 export const router = trcpRoot.router
 
-/**
- * Create a server-side caller.
- *
- * @see https://trpc.io/docs/server/server-side-calls
- */
 export const createCallerFactory = trcpRoot.createCallerFactory
