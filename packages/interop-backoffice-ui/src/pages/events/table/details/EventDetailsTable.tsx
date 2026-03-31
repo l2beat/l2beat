@@ -25,7 +25,7 @@ export function EventDetailsTable({
 
   const {
     filteredRowsCount,
-    isFuzzySearchEnabled,
+    isSearchEnabled,
     isSearchPending,
     pageSizeOption,
     searchPlaceholder,
@@ -55,8 +55,8 @@ export function EventDetailsTable({
       rowClassName="odd:bg-muted/20 hover:bg-muted/70"
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}
-      searchValue={isFuzzySearchEnabled ? searchValue : undefined}
-      onSearchValueChange={isFuzzySearchEnabled ? setSearchValue : undefined}
+      searchValue={isSearchEnabled ? searchValue : undefined}
+      onSearchValueChange={isSearchEnabled ? setSearchValue : undefined}
       searchPlaceholder={searchPlaceholder}
       isSearchPending={isSearchPending}
     />

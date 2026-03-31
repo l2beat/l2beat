@@ -1,15 +1,5 @@
 import type { Row, RowData } from '@tanstack/react-table'
 
-type SearchValue =
-  | string
-  | number
-  | boolean
-  | bigint
-  | null
-  | undefined
-  | readonly unknown[]
-  | Record<string, unknown>
-
 interface CsvValueContext<TData extends RowData, TValue> {
   row: Row<TData>
   value: TValue
@@ -26,7 +16,7 @@ declare module '@tanstack/react-table' {
     csvHeader?: string
     getCsvValue?: (args: CsvValueContext<TData, TValue>) => string
     searchable?: boolean
-    getSearchValue?: (args: SearchValueContext<TData, TValue>) => SearchValue
+    getSearchValue?: (args: SearchValueContext<TData, TValue>) => string
   }
 }
 
