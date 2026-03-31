@@ -1,5 +1,6 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import compact from 'lodash/compact'
 import {
   createTvsBreakdownProjectFilter,
   get7dTvsBreakdown,
@@ -12,7 +13,7 @@ import { getTvsProjects } from './utils/getTvsProjects'
 export type TvsTableData = Record<string, TvsTableProjectData>
 
 interface TvsTableProjectData extends ProjectSevenDayTvsBreakdown {
-  associatedTokenWarning: WarningWithSentiment | undefined
+  warnings: WarningWithSentiment[]
 }
 
 export async function getTvsTableData(
@@ -28,7 +29,7 @@ export async function getTvsTableData(
     const project = tvsProjects.find((p) => p.projectId === projectId)
     assert(project, `project ${projectId} is undefined`)
     const associatedTokenWarning =
-      values.breakdown.total > 0 && !params.excludeAssociatedTokens
+      !params.excludeAssociatedTokens && values.breakdown.total > 0
         ? getAssociatedTokenWarning({
             associatedRatio:
               values.breakdown.associated / values.breakdown.total,
@@ -39,7 +40,7 @@ export async function getTvsTableData(
 
     result[projectId] = {
       ...values,
-      associatedTokenWarning,
+      warnings: compact([associatedTokenWarning]),
     }
   }
 

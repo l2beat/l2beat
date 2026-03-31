@@ -18,7 +18,7 @@ export function toTableRows({
         associatedTokens: entry.tvs.associatedTokens,
         warnings: compact([
           ...entry.tvs.warnings,
-          data?.[entry.id]?.associatedTokenWarning,
+          ...(projectData?.warnings ?? []),
         ]),
       },
     }
