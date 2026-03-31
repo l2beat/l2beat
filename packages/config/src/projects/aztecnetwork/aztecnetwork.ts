@@ -310,11 +310,7 @@ export const aztecnetwork: ScalingProject = {
       SOA.sequencerPolicy,
       SOA.trustedSetup,
     ],
-    notInScope: [
-      SOA.l2Contracts,
-      SOA.nonGasTokens,
-      SOA.specToSourceCode,
-    ],
+    notInScope: [SOA.l2Contracts, SOA.nonGasTokens, SOA.specToSourceCode],
   },
   config: {
     associatedTokens: ['AZTEC'],
