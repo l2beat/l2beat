@@ -16,6 +16,8 @@ Implementation diffs:
 - OptimismPortal2 (3.13.0 → 3.14.0): [diff](https://disco.l2beat.com/diff/eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4)
 - L1ERC721Bridge (2.3.1 → 2.4.0): [diff](https://disco.l2beat.com/diff/eth:0x276d3730f219f7ec22274f7263180b8452B46d47/eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013)
 - L1StandardBridge (2.2.2 → 2.3.0): [diff](https://disco.l2beat.com/diff/eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A)
+- MIPS → MIPS64 (MT-Cannon, MIPS32 single-threaded replaced by MIPS64 multi-threaded): [diff](https://disco.l2beat.com/diff/eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a/eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1)
+- PermissionedDisputeGame (replaced): [diff](https://disco.l2beat.com/diff/eth:0x43Acf69Ab2d79e0608ec3593343e7f3A88F034f2/eth:0x9bF49c12BAf9FDca154c3C917591f79c7DA5a1F4)
 
 ## Watched changes
 

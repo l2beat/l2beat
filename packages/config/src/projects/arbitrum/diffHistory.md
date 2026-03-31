@@ -10,7 +10,7 @@ Generated with discovered.json: 0x92bbf302f62eca8046c2f00d3f65c8867cce985c
 
 Constitutional AIP: DVP Quorum & Proposal Cancellation. https://forum.arbitrum.foundation/t/constitutional-aip-dvp-quorum/30053
 
-Quorum calculation changed from percentage of total voteable supply to percentage of Delegated Voting Power (DVP) with floor/ceiling bounds. CoreGovernor: 50% of DVP, min 150M / max 450M ARB. TreasuryGovernor: 40% of DVP, min 100M / max 300M ARB. Despite higher numerators (300→4000, 450→5000), actual quorum in ARB terms decreased because DVP (~324M) is much smaller than total voteable supply (~10B). L2ArbitrumToken upgraded to track total delegated voting power. ConstitutionHash updated. Governors also gain proposal cancellation functionality.
+Quorum calculation changed from percentage of total voteable supply to percentage of Delegated Voting Power (DVP) with floor/ceiling bounds. CoreGovernor: 50% of DVP, min 150M / max 450M ARB. TreasuryGovernor: 40% of DVP, min 100M / max 300M ARB. L2ArbitrumToken upgraded to track total delegated voting power. ConstitutionHash updated. Governors also gain proposal cancellation functionality.
 
 Implementation diff (CoreGovernor/TreasuryGovernor share impl): [diff](https://disco.l2beat.com/diff/arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9/arb1:0x46AF4EDFDb689C30560D11052056d603d05b5aE0)
 L2ArbitrumToken: [diff](https://disco.l2beat.com/diff/arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882/arb1:0xd47D14a315394ddf063174f2286Ab4Eb7C507fa0)
