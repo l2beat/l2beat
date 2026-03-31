@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -94,10 +94,10 @@ All Barretenberg proving systems extend Plonk, which is based on KZG commitment 
         proofSystem: ZK_CATALOG_TAGS.Plonk.UltraHonk,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x70aEDda427f26480D240bc0f4308ceDec8d31348',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',
