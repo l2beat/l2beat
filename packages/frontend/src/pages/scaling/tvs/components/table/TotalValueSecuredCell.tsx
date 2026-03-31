@@ -71,7 +71,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 canonical={props.breakdown.canonical}
                 external={props.breakdown.external}
                 native={props.breakdown.native}
-                additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
+                additionalTrustAssumptionsPercentage={
+                  props.additionalTrustAssumptionsPercentage
+                }
               />
             ) : (
               <TokenBreakdown
@@ -95,7 +97,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             external={props.breakdown.external}
             native={props.breakdown.native}
             change={props.change}
-            additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
+            additionalTrustAssumptionsPercentage={
+              props.additionalTrustAssumptionsPercentage
+            }
             tvsWarnings={tvsWarnings}
             associatedTokenSymbols={props.associatedTokens?.map(
               (t) => t.symbol,

@@ -96,7 +96,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
               canonical={props.breakdown.canonical}
               external={props.breakdown.external}
               native={props.breakdown.native}
-              additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
+              additionalTrustAssumptionsPercentage={
+                props.additionalTrustAssumptionsPercentage
+              }
             />
           </div>
         </TableLink>
@@ -106,7 +108,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
-          additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
+          additionalTrustAssumptionsPercentage={
+            props.additionalTrustAssumptionsPercentage
+          }
           change={props.change}
           tvsWarnings={tvsWarnings}
         />

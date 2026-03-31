@@ -111,7 +111,9 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
               associatedTokens={value.associatedTokens}
               tvsWarnings={value.warnings}
               breakdown={value.breakdown}
-              additionalTrustAssumptionsPercentage={value.additionalTrustAssumptionsPercentage}
+              additionalTrustAssumptionsPercentage={
+                value.additionalTrustAssumptionsPercentage
+              }
               change={value.change?.total}
             />
           )

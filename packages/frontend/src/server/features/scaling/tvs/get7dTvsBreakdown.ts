@@ -5,7 +5,7 @@ import pick from 'lodash/pick'
 import { env } from '~/env'
 import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage';
+import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
@@ -128,8 +128,12 @@ export async function get7dTvsBreakdown(
       oldestAssociated,
     ] = oldestValueRecord
 
-    const additionalTrustAssumptionsPercentage = getAdditionalTrustAssumptionsPercentage({total:latestValue, customCanonical:latestCustomCanonical, external:latestExternal})
-
+    const additionalTrustAssumptionsPercentage =
+      getAdditionalTrustAssumptionsPercentage({
+        total: latestValue,
+        customCanonical: latestCustomCanonical,
+        external: latestExternal,
+      })
 
     const canonical = latestCanonical + latestCustomCanonical
     const sevenDaysAgoCanonical = oldestCanonical + oldestCustomCanonical
@@ -183,7 +187,7 @@ export async function get7dTvsBreakdown(
           oldestAssociated,
         ),
       },
-      additionalTrustAssumptionsPercentage
+      additionalTrustAssumptionsPercentage,
     }
   }
 
@@ -283,7 +287,8 @@ async function getMockTvsBreakdownData(
             rwaPublic: 0.25,
             associated: 0.25,
           },
-          additionalTrustAssumptionsPercentage: project.projectId === 'base' ? 0.8 : 0 
+          additionalTrustAssumptionsPercentage:
+            project.projectId === 'base' ? 0.8 : 0,
         },
       ]),
     ),

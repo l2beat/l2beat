@@ -38,7 +38,6 @@ export async function getTvsTableData(
           })
         : undefined
 
-
     result[projectId] = {
       ...values,
       warnings: compact([

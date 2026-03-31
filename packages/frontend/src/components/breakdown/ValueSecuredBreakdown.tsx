@@ -45,22 +45,29 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
         className={cn('opacity-80', 'h-[3px] w-[200px]', props.className)}
       />
       {props.additionalTrustAssumptionsPercentage !== undefined && (
-        <AdditionalTrustAssumptionsText percentage={props.additionalTrustAssumptionsPercentage}/>
+        <AdditionalTrustAssumptionsText
+          percentage={props.additionalTrustAssumptionsPercentage}
+        />
       )}
     </div>
   )
 }
 
-function AdditionalTrustAssumptionsText({ percentage} : {percentage: number}){
+function AdditionalTrustAssumptionsText({
+  percentage,
+}: {
+  percentage: number
+}) {
   const sentiment = getAdditionalTrustSentiment(percentage)
 
-  return  <div className="text-right font-medium text-[11px] text-secondary leading-none">
-  <span className={additionalTrustPercentVariants({ sentiment })}>
-    {formatPercent(percentage)}
-  </span>{' '}
-  with additional trust assumptions
-</div>
-  
+  return (
+    <div className="text-right font-medium text-[11px] text-secondary leading-none">
+      <span className={additionalTrustPercentVariants({ sentiment })}>
+        {formatPercent(percentage)}
+      </span>{' '}
+      with additional trust assumptions
+    </div>
+  )
 }
 
 export function ValueSecuredBreakdownTooltipContent({
@@ -180,7 +187,9 @@ const additionalTrustPercentVariants = cva('font-bold', {
 })
 
 type AdditionalTrustSentiment = 'good' | 'warning' | 'bad'
-function getAdditionalTrustSentiment(percentage: number): AdditionalTrustSentiment {
+function getAdditionalTrustSentiment(
+  percentage: number,
+): AdditionalTrustSentiment {
   if (percentage <= 0.2) {
     return 'good'
   }
@@ -190,12 +199,16 @@ function getAdditionalTrustSentiment(percentage: number): AdditionalTrustSentime
   return 'warning'
 }
 
-function AdditionalTrustAssumptionsBanner({ percentage }: { percentage: number }) {
+function AdditionalTrustAssumptionsBanner({
+  percentage,
+}: {
+  percentage: number
+}) {
   const sentiment = getAdditionalTrustSentiment(percentage)
   return (
-    <div className={additionalTrustBannerVariants({sentiment})}>
+    <div className={additionalTrustBannerVariants({ sentiment })}>
       <p className="text-right text-label-value-13 text-primary leading-snug">
-        <span className={additionalTrustPercentVariants({sentiment})}>
+        <span className={additionalTrustPercentVariants({ sentiment })}>
           {formatPercent(percentage)}
         </span>{' '}
         <span className="font-normal">
