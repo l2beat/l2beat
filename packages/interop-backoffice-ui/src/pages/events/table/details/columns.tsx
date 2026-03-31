@@ -108,9 +108,12 @@ export function createEventDetailsColumns(options: {
       accessorKey: 'args',
       header: (props) => <SortableHeader {...props} label="Args" />,
       cell: ({ row }) => (
-        <pre className="max-w-[560px] whitespace-pre-wrap break-all font-mono text-muted-foreground text-xs">
+        <code
+          className="whitespace-nowrap font-mono text-muted-foreground text-xs"
+          title={row.original.args}
+        >
           {row.original.args}
-        </pre>
+        </code>
       ),
       meta: {
         csvHeader: 'Args',
