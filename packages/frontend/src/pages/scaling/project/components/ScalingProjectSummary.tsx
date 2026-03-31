@@ -180,7 +180,8 @@ export function ProjectScalingSummary({ project }: Props) {
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
                     tvsWarnings={[]}
                   />
-                  {project.header.tvs?.additionalTrustAssumptionsPercentage !== undefined && (
+                  {project.header.tvs?.additionalTrustAssumptionsPercentage !==
+                    undefined && (
                     <AdditionalTrustAssumptionsBanner
                       percentage={
                         project.header.tvs.additionalTrustAssumptionsPercentage
