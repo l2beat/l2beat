@@ -8322,7 +8322,6 @@
     {
       "symbol": "USDT0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -8338,7 +8337,6 @@
     {
       "symbol": "USDC",
       "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-      "coingeckoId": "usd-coin",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -8353,15 +8351,20 @@
     {
       "symbol": "BRZ",
       "address": "0x4eD141110F6EeeAbA9A1Df36d8c26f684d2475dc",
-      "coingeckoId": "brz",
       "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT"
+          }
+        ]
+      }
     },
     {
       "symbol": "WUSD",
       "address": "0x7Cd017CA5DDb86861fA983A34b5F495C6F898c41",
-      "coingeckoId": "worldwide-usd",
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
@@ -8369,7 +8372,6 @@
     {
       "symbol": "AUSD",
       "address": "0x00000000eFE302BEAA2b3e6e1b18D08D69a9012a",
-      "coingeckoId": "agora-usd",
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
@@ -8377,7 +8379,6 @@
     {
       "symbol": "BRLA",
       "address": "0xe6a537a407488807F0bbEB0038B79004f19DDDfb",
-      "coingeckoId": "brla-digital-brla",
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
