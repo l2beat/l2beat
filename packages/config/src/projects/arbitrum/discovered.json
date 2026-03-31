@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1774944992,
+  "timestamp": 1774947622,
   "configHash": "0x80f2fae8523f48eea7d3bdac3edd3cc3c73bce5551d59a66bc527c130040fe90",
   "entries": [
     {
@@ -62,7 +62,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 42052,
+        "exitNum": 42053,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -802,6 +802,7 @@
         "dvpQuorumStartBlock": 24770125,
         "EXCLUDE_ADDRESS": "arb1:0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "l2TreasuryQuorumPercent": "40",
         "lateQuorumVoteExtension": 14400,
         "name": "L2ArbitrumGovernor",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
@@ -815,10 +816,16 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "fieldMeta": {
+        "l2TreasuryQuorumPercent": {
+          "description": "The percentage of total Delegated Voting Power (DVP) required to pass a treasury proposal."
+        }
+      },
       "implementationNames": {
         "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TransparentUpgradeableProxy",
         "arb1:0x46AF4EDFDb689C30560D11052056d603d05b5aE0": "L2ArbitrumGovernor"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -933,7 +940,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5477811672543829081411836590",
+        "getTotalDelegation": "5477811750929816380017089376",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -2481,6 +2488,7 @@
         "dvpQuorumStartBlock": 24770125,
         "EXCLUDE_ADDRESS": "arb1:0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "l2CoreQuorumPercent": "50",
         "lateQuorumVoteExtension": 14400,
         "name": "L2ArbitrumGovernor",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
@@ -2494,10 +2502,16 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "fieldMeta": {
+        "l2CoreQuorumPercent": {
+          "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
+        }
+      },
       "implementationNames": {
         "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "TransparentUpgradeableProxy",
         "arb1:0x46AF4EDFDb689C30560D11052056d603d05b5aE0": "L2ArbitrumGovernor"
       },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -2919,7 +2933,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1215643,
+        "batchCount": 1215669,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -2932,9 +2946,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 24776211,
+          "prevBlockNumber": 24776407,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 24776275
+          "prevSequencedBlockNumber": 24776468
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -2960,7 +2974,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2397294,
+        "totalDelayedMessagesRead": 2397324,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3765,7 +3779,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2397300,
+        "delayedMessageCount": 2397333,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3779,8 +3793,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1215643,
-        "sequencerReportedSubMessageCount": 425302459
+        "sequencerMessageCount": 1215669,
+        "sequencerReportedSubMessageCount": 425312954
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -6723,7 +6737,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/L1DaiGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/layer2/ConstitutionHash": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/layer2/CoreGovernor": "0x9d574a84f96c847b18cc7e36bc0236514ffe1ab6a65322910596e38fdbf9971a",
+    "orbitstack/layer2/CoreGovernor": "0x18f6940d82ef09bfc0a98733b1a89ff6ccc482d87e11803c91a19ec56fb00551",
     "orbitstack/layer2/L2ARBGateway": "0x057a08e3ebdc17e381b641116fbe4420b0a5ee84271562870b462f7e33d5d685",
     "orbitstack/layer2/L2ArbitrumToken": "0xd0b7dd39b3c51a7612bef7e5de0cb4077cf86c22878b10494e7d296fe3638be8",
     "orbitstack/layer2/L2BaseFee": "0x35909e6c98ff9dc33cebb87d3a2b06a219f78e429c555102d9be6eaa65d55fa4",
@@ -6742,7 +6756,7 @@
     "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x14a17e91d1be3b088060733309d1abb417edadcd40ccdb1de08d3f889909a0b3",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x7a9a00e005e74d2ab1c54b395270e1d79380ed7f3ddbcef9110218412fd87144",
     "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0x2378f27da56189879226a19528e072a2896751bbd4271b1c648ed5f1826d2800",
-    "orbitstack/layer2/TreasuryGovernor": "0x9d574a84f96c847b18cc7e36bc0236514ffe1ab6a65322910596e38fdbf9971a",
+    "orbitstack/layer2/TreasuryGovernor": "0x7721d2e302c1aa23b518e04c2edc28501d6c7a9aaba9f5ed9f3434d99fdc162e",
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -6759,6 +6773,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 447510412, "ethereum": 24776335 },
+  "usedBlockNumbers": { "arbitrum": 447520929, "ethereum": 24776554 },
   "permissionsConfigHash": "0xd8a573ce6c6928a9c85839f37fd5a49edc493693ee94e8e81e7934853c2e3553"
 }

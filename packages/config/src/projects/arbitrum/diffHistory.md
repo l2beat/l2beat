@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa737acab90cc9b44ad04a8cd360a1ec841844472
+Generated with discovered.json: 0x92bbf302f62eca8046c2f00d3f65c8867cce985c
 
-# Diff at Tue, 31 Mar 2026 08:17:44 GMT:
+# Diff at Tue, 31 Mar 2026 09:01:35 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774387655
-- current timestamp: 1774944992
+- current timestamp: 1774947622
 
 ## Description
 
@@ -40,6 +40,10 @@ L2ArbitrumToken: [diff](https://disco.l2beat.com/diff/arb1:0xC4ed0A9Ea70d5bCC69f
       values.$upgradeCount:
 -        1
 +        2
++++ description: The percentage of total Delegated Voting Power (DVP) required to pass a treasury proposal.
+      values.l2TreasuryQuorumPercent:
+-        "3"
++        "40"
       values.quorumNumerator:
 -        300
 +        4000
@@ -67,7 +71,7 @@ L2ArbitrumToken: [diff](https://disco.l2beat.com/diff/arb1:0xC4ed0A9Ea70d5bCC69f
 -        1
 +        2
       values.getTotalDelegation:
-+        "5477811672543829081411836590"
++        "5477811750929816380017089376"
       implementationNames.arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882:
 -        "L2ArbitrumToken"
       implementationNames.arb1:0xd47D14a315394ddf063174f2286Ab4Eb7C507fa0:
@@ -89,6 +93,10 @@ L2ArbitrumToken: [diff](https://disco.l2beat.com/diff/arb1:0xC4ed0A9Ea70d5bCC69f
       values.$upgradeCount:
 -        1
 +        2
++++ description: The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal.
+      values.l2CoreQuorumPercent:
+-        "4.5"
++        "50"
       values.quorumNumerator:
 -        450
 +        5000
@@ -122,12 +130,9 @@ discovery. Values are for block 1774387655 (main branch discovery), not current.
       description:
 -        "Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
 +        "Token governance contract used for creating non-constitutional AIPs (treasury proposals), e.g., transferring funds out of the DAO Treasury. Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds)."
-      values.l2TreasuryQuorumPercent:
--        "3"
-      fieldMeta:
--        {"l2TreasuryQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
-      usedTypes:
--        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
+      fieldMeta.l2TreasuryQuorumPercent.description:
+-        "The percentage of the total supply that is required to pass a proposal."
++        "The percentage of total Delegated Voting Power (DVP) required to pass a treasury proposal."
     }
 ```
 
@@ -137,12 +142,9 @@ discovery. Values are for block 1774387655 (main branch discovery), not current.
       description:
 -        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 4.5% quorum for proposals."
 +        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds)."
-      values.l2CoreQuorumPercent:
--        "4.5"
-      fieldMeta:
--        {"l2CoreQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
-      usedTypes:
--        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
+      fieldMeta.l2CoreQuorumPercent.description:
+-        "The percentage of the total supply that is required to pass a proposal."
++        "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
     }
 ```
 

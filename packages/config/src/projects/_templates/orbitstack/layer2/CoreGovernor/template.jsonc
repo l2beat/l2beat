@@ -13,5 +13,16 @@
     "proposalSnapshot",
     "proposalVotes",
     "quorum"
-  ]
+  ],
+  "fields": {
+    "l2CoreQuorumPercent": {
+      "handler": {
+        "type": "call",
+        "method": "quorumNumerator",
+        "args": []
+      },
+      "edit": ["format", "Undecimal2"],
+      "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
+    }
+  }
 }
