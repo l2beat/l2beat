@@ -3,22 +3,22 @@ import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getS
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
 export function toTableRows({
-  projects,
-  tvsTableData,
+  entries,
+  data,
 }: {
-  projects: ScalingSummaryEntry[]
-  tvsTableData: TvsTableData | undefined
+  entries: ScalingSummaryEntry[]
+  data: TvsTableData | undefined
 }) {
-  return projects.map((project) => {
-    const tvsTableProjectData = tvsTableData?.[project.id]
+  return entries.map((entry) => {
+    const projectData = data?.[entry.id]
     return {
-      ...project,
+      ...entry,
       tvs: {
-        ...tvsTableProjectData,
-        associatedTokens: project.tvs.associatedTokens,
+        ...projectData,
+        associatedTokens: entry.tvs.associatedTokens,
         warnings: compact([
-          ...project.tvs.warnings,
-          tvsTableData?.[project.id]?.associatedTokenWarning,
+          ...entry.tvs.warnings,
+          data?.[entry.id]?.associatedTokenWarning,
         ]),
       },
     }
