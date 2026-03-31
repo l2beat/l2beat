@@ -49,7 +49,6 @@ const items = [
         title: 'Events',
         url: '/events',
         icon: InboxIcon,
-        isUpcoming: true,
       },
       {
         title: 'Messages',

@@ -745,6 +745,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      fuzzysort:
+        specifier: ^3.1.0
+        version: 3.1.0
       lucide-react:
         specifier: ^0.544.0
         version: 0.544.0(react@19.0.0)

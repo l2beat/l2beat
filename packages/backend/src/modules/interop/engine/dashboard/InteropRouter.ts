@@ -48,7 +48,13 @@ export function createInteropRouter(
 
   router.all(
     ['/interop/trpc', '/interop/trpc/(.*)'],
-    createInteropTrpc({ db }, { prefix: '/interop/trpc' }),
+    createInteropTrpc(
+      {
+        db,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      },
+      { prefix: '/interop/trpc' },
+    ),
   )
 
   router.get('/interop', async (ctx) => {
