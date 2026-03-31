@@ -395,7 +395,7 @@ export const aztecnetwork: ScalingProject = {
         principle: true, // assuming the probabilistic inclusion provides the 7d exit window, also there is no SC
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: null, // TODO: does it count as an SC?
+        securityCouncilProperlySetUp: null,
         noRedTrustedSetups: true,
         programHashesReproducible: null,
         proverSourcePublished: true,
