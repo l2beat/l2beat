@@ -469,7 +469,7 @@ export const aztecnetwork: ScalingProject = {
         ...EXITS.REGULAR_MESSAGING('zk'),
         description:
           EXITS.REGULAR_MESSAGING('zk').description +
-          ' Once the epoch root proof is verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be triggered privately on L2, revealing only the L1 part of the withdrawal. There is no canonical bridge escrow, meaning that only the canonical messaging is immutable and each token bridged with a locking escrow may introduce additional trust assumptions of this escrow.',
+          ' Once the epoch root proof has been verified, the rollup inserts the epoch root into the Outbox, from which withdrawals and other L2->L1 messages can be consumed on Ethereum. Withdrawals can be initiated privately on L2, revealing only the L1-facing portion of the transaction. There is no canonical bridge escrow: only the canonical messaging layer is immutable, while each token bridged through a locking escrow may introduce additional trust assumptions tied to that specific escrow.',
         references: [
           {
             title: 'Rollup.sol - submitEpochRootProof() on Etherscan',
@@ -503,7 +503,7 @@ export const aztecnetwork: ScalingProject = {
       {
         name: 'No canonical bridge escrow',
         description:
-          'There is no default canonical escrow. The rollup is only deployed with an immutable canonical messaging bridge that can be used by any escrow. This means each token bridged to Aztec by lock-minting from Ethereum needs to be assessed separately by looking at its locking escrow. The trust assumptions can be different to the immutable rollup. Gas tokens are bridged via the FeeJuicePortal, which is an immutable one-way portal that can only bridge to public L2 addresses. While the rollup and its canonical messaging are immutable, an upgradeable escrow could potentially migrate its funds to a new rollup version without users having to migrate, trading immutability for convenience.',
+          'There is no default canonical escrow. The rollup is deployed only with an immutable canonical messaging bridge, which can be used by any escrow. As a result, each token bridged to Aztec via Ethereum lock-mint must be assessed individually by examining its specific locking escrow. The trust assumptions of a given escrow may differ from those of the immutable rollup itself. Gas tokens are bridged through the FeeJuicePortal, an immutable one-way portal that only supports bridging to public L2 addresses. Although the rollup and its canonical messaging bridge are immutable, an upgradeable escrow could migrate its funds to a new rollup version without requiring users to migrate, effectively trading immutability for convenience.',
         references: [
           {
             title: 'FeeJuicePortal.sol - on Etherscan',
