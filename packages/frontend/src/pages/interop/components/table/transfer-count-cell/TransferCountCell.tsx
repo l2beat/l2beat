@@ -15,9 +15,9 @@ import {
   DrawerTitle,
 } from '~/components/core/Drawer'
 import { BasicTable } from '~/components/table/BasicTable'
-import { CloseIcon } from '~/icons/Close'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
+import { CloseIcon } from '~/icons/Close'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'

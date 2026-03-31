@@ -20,8 +20,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
-import { CloseIcon } from '~/icons/Close'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
+import { CloseIcon } from '~/icons/Close'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
