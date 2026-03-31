@@ -44,7 +44,6 @@
     "watch:dependencies:config": "turbo watch build --filter=@l2beat/config^... --ui tui",
     "watch:dependencies:public-api": "turbo watch build --filter=@l2beat/public-api^... --ui tui",
     "watch:dependencies:token-backend": "turbo watch build --filter=@l2beat/token-backend^... --ui tui",
-    "watch:dependencies:": "turbo watch build --filter=@l2beat/interop-backoffice^... --ui tui",
     "watch:dependencies:interop-backoffice-ui": "turbo watch build --filter=@l2beat/interop-backoffice-ui^... --ui tui",
     "clean": "turbo run clean",
     "fix": "pnpm lint:fix && pnpm format:fix",
