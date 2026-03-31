@@ -2,14 +2,14 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTv
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 
 export function toTableRows({
-  projects,
-  tvsTableData,
+  entries,
+  data,
 }: {
-  projects: ScalingTvsEntry[]
-  tvsTableData: TvsTableData | undefined
+  entries: ScalingTvsEntry[]
+  data: TvsTableData | undefined
 }) {
-  return projects.map((project) => {
-    const tvsTableProjectData = tvsTableData?.[project.id]
+  return entries.map((project) => {
+    const tvsTableProjectData = data?.[project.id]
     return {
       ...project,
       tvs: {
