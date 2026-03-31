@@ -112,7 +112,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
   return [
     columnHelper.accessor('tvs.data.breakdown.canonical', {
       id: 'canonical',
-      header: 'Canonical',
+      header: 'Canonically bridged',
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
@@ -134,7 +134,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
     }),
     columnHelper.accessor('tvs.data.breakdown.native', {
       id: 'native',
-      header: 'Native',
+      header: 'Natively minted',
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
@@ -154,7 +154,7 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
     }),
     columnHelper.accessor('tvs.data.breakdown.external', {
       id: 'external',
-      header: 'External',
+      header: 'Externally bridged',
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
