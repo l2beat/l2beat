@@ -401,10 +401,10 @@ export const aztecnetwork: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null, // TODO: does it count as an SC?
-        noRedTrustedSetups: true, // TODO: ?
-        programHashesReproducible: true, // TODO: ?
+        noRedTrustedSetups: true,
+        programHashesReproducible: null,
         proverSourcePublished: true,
-        verifierContractsReproducible: true, // TODO: ?
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null, // there is no SC
