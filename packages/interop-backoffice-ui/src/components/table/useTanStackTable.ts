@@ -96,8 +96,8 @@ function getSearchableColumns<TData extends RowData>(
 ) {
   return getLeafColumns(columns).flatMap((column) => {
     const isSearchable =
-      column.meta?.fuzzySearch === true ||
-      column.meta?.getFuzzySearchValue !== undefined
+      column.meta?.searchable === true ||
+      column.meta?.getSearchValue !== undefined
 
     if (!isSearchable) {
       return []
@@ -107,7 +107,7 @@ function getSearchableColumns<TData extends RowData>(
       (row: TData, rowIndex: number) => {
         const accessorValue = getAccessorValue(column, row, rowIndex)
         const fuzzySearchValue =
-          column.meta?.getFuzzySearchValue?.({
+          column.meta?.getSearchValue?.({
             row,
             value: accessorValue,
             rowIndex,

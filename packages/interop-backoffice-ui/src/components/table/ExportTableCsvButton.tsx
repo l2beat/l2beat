@@ -68,7 +68,7 @@ export function exportTableToCsv<TData extends RowData>(
   const csvRows = rows.map((row) =>
     columns.map((column) => {
       const value = row.getValue(column.id)
-      const customValue = column.columnDef.meta?.csvValue
+      const customValue = column.columnDef.meta?.getCsvValue
 
       if (customValue) {
         return customValue({

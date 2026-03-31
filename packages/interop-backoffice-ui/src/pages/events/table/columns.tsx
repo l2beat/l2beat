@@ -9,7 +9,7 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     header: (props) => <SortableHeader {...props} label="Type" />,
     meta: {
       csvHeader: 'Type',
-      fuzzySearch: true,
+      searchable: true,
     },
   },
   {
@@ -18,9 +18,9 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     cell: ({ row }) => row.original.direction ?? '-',
     meta: {
       csvHeader: 'Direction',
-      csvValue: ({ row }) => row.original.direction ?? '-',
-      fuzzySearch: true,
-      getFuzzySearchValue: ({ row }) => row.direction ?? '',
+      getCsvValue: ({ row }) => row.original.direction ?? '-',
+      searchable: true,
+      getSearchValue: ({ row }) => row.direction ?? '',
     },
   },
   {

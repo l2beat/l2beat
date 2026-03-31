@@ -19,7 +19,7 @@ export function createEventDetailsColumns(options: {
       cell: ({ row }) => formatEventTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
-        csvValue: ({ row }) => toCsvIsoTimestamp(row.original.timestamp),
+        getCsvValue: ({ row }) => toCsvIsoTimestamp(row.original.timestamp),
       },
     },
     {
@@ -27,7 +27,7 @@ export function createEventDetailsColumns(options: {
       header: (props) => <SortableHeader {...props} label="Plugin" />,
       meta: {
         csvHeader: 'Plugin',
-        fuzzySearch: true,
+        searchable: true,
       },
     },
     {
@@ -35,7 +35,7 @@ export function createEventDetailsColumns(options: {
       header: (props) => <SortableHeader {...props} label="Chain" />,
       meta: {
         csvHeader: 'Chain',
-        fuzzySearch: true,
+        searchable: true,
       },
     },
     {
@@ -61,7 +61,7 @@ export function createEventDetailsColumns(options: {
       },
       meta: {
         csvHeader: 'Tx hash',
-        fuzzySearch: true,
+        searchable: true,
       },
     },
     {
@@ -77,9 +77,9 @@ export function createEventDetailsColumns(options: {
       cell: ({ row }) => row.original.direction ?? '-',
       meta: {
         csvHeader: 'Direction',
-        csvValue: ({ row }) => row.original.direction ?? '-',
-        fuzzySearch: true,
-        getFuzzySearchValue: ({ row }) => row.direction ?? '',
+        getCsvValue: ({ row }) => row.original.direction ?? '-',
+        searchable: true,
+        getSearchValue: ({ row }) => row.direction ?? '',
       },
     },
     {
@@ -88,9 +88,9 @@ export function createEventDetailsColumns(options: {
       cell: ({ row }) => row.original.srcChain ?? '-',
       meta: {
         csvHeader: '$srcChain',
-        csvValue: ({ row }) => row.original.srcChain ?? '-',
-        fuzzySearch: true,
-        getFuzzySearchValue: ({ row }) => row.srcChain ?? '',
+        getCsvValue: ({ row }) => row.original.srcChain ?? '-',
+        searchable: true,
+        getSearchValue: ({ row }) => row.srcChain ?? '',
       },
     },
     {
@@ -99,9 +99,9 @@ export function createEventDetailsColumns(options: {
       cell: ({ row }) => row.original.dstChain ?? '-',
       meta: {
         csvHeader: '$dstChain',
-        csvValue: ({ row }) => row.original.dstChain ?? '-',
-        fuzzySearch: true,
-        getFuzzySearchValue: ({ row }) => row.dstChain ?? '',
+        getCsvValue: ({ row }) => row.original.dstChain ?? '-',
+        searchable: true,
+        getSearchValue: ({ row }) => row.dstChain ?? '',
       },
     },
     {
@@ -114,8 +114,8 @@ export function createEventDetailsColumns(options: {
       ),
       meta: {
         csvHeader: 'Args',
-        fuzzySearch: true,
-        getFuzzySearchValue: ({ row }) => row.args,
+        searchable: true,
+        getSearchValue: ({ row }) => row.args,
       },
     },
   ]
