@@ -8,13 +8,7 @@ const InteropEventDetailsRequest = v.object({
   kind: v.enum(['all', 'matched', 'unmatched', 'old-unmatched', 'unsupported']),
   type: v.string(),
 })
-
-type InteropEventKind =
-  | 'all'
-  | 'matched'
-  | 'unmatched'
-  | 'old-unmatched'
-  | 'unsupported'
+type InteropEventKind = v.infer<typeof InteropEventDetailsRequest>['kind']
 
 async function getInteropEventDetails(
   db: Database,
