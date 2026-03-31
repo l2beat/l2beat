@@ -40,7 +40,9 @@ export async function getTvsTableData(
 
     result[projectId] = {
       ...values,
-      warnings: compact([associatedTokenWarning]),
+      warnings: compact([
+        associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
+      ]),
     }
   }
 
