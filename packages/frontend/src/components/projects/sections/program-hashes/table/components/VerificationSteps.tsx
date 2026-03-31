@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -13,6 +14,7 @@ import {
   DrawerTrigger,
 } from '~/components/core/Drawer'
 import { Markdown } from '~/components/markdown/Markdown'
+import { CloseIcon } from '~/icons/Close'
 
 export function VerificationSteps({
   verificationSteps,
@@ -38,6 +40,10 @@ export function VerificationSteps({
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
         <DialogContent className="md:max-w-[720px]">
+          <DialogClose className="absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none">
+            <CloseIcon className="size-4 fill-primary" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
           <DialogHeader>
             <DialogTitle>Verification steps</DialogTitle>
           </DialogHeader>

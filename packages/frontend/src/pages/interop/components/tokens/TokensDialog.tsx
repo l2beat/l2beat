@@ -3,6 +3,7 @@ import { type ReactNode, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -19,6 +20,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import { CloseIcon } from '~/icons/Close'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
@@ -120,6 +122,10 @@ export function TokensDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="primary-card flex max-h-3/5 w-[1040px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
+        <DialogClose className="absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none">
+          <CloseIcon className="size-4 fill-primary" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
         <Tabs
           name="tokens"
           value={activeTab}

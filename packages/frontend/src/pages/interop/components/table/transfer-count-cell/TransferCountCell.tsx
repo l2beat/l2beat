@@ -3,6 +3,7 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -14,6 +15,7 @@ import {
   DrawerTitle,
 } from '~/components/core/Drawer'
 import { BasicTable } from '~/components/table/BasicTable'
+import { CloseIcon } from '~/icons/Close'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
@@ -197,6 +199,10 @@ function TransferDetailsDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[560px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3">
+        <DialogClose className="absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none">
+          <CloseIcon className="size-4 fill-primary" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Transfers for </span>
