@@ -79,7 +79,8 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
       {
         hash: '0x8d5bf346c2d12732ea0b947623dcb66bfffa532e8c33d0b9493cffca41c8fa39',
         name: 'Lighter verifier',
-        sourceLink: 'https://github.com/elliottech/lighter-prover/tree/main',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/a07b2759345d53a29b22ebd97d815e4d443b59b0/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -89,61 +90,45 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
             ),
           },
         ],
-        verificationStatus: 'unsuccessful',
+        verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps:
-          'At the time of writing, the sources for this version of the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationSteps: `
+  The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+  The steps below are for Ubuntu 22.04 OS.
+
+  1. Install rust, gcc, go version 1.21 and later.
+
+  \`\`\`
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  . .cargo/env
+
+  sudo apt update
+  sudo apt install build-essential
+
+  # one way to install latest go on Ubuntu 22.04
+  wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+  sudo tar -xvf go1.21.0.linux-amd64.tar.gz
+  sudo mv go /usr/local
+  export GOROOT=/usr/local/go
+  export GOPATH=$HOME/go
+  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+  source ~/.profile
+  \`\`\`
+
+  2. Run the correct version of the script to regenerate the keys.
+
+  \`\`\`
+  git clone https://github.com/elliottech/lighter-prover.git
+  cd lighter-prover
+  git checkout a07b2759345d53a29b22ebd97d815e4d443b59b0
+  chmod +x build_circuits.sh
+  ./build_circuits.sh
+  \`\`\`
+
+  The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+    `,
       },
-      //       {
-      //         hash: '0xcc7a955cdac9c7eee6db96238adf13925fda70f0f144347170cb59c3e9f1064d',
-      //         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
-      //         knownDeployments: [
-      //           {
-      //             address: EthereumAddress(
-      //               '0xa271df8660a318f155a31e64d0529ed85c2d1616',
-      //             ),
-      //             chain: 'ethereum',
-      //           },
-      //         ],
-      //         verificationStatus: 'successful',
-      //         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-      //         verificationSteps: `
-      // The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
-
-      // The steps below are for Ubuntu 22.04 OS.
-
-      // 1. Install rust, gcc, go version 1.21 and later.
-
-      // \`\`\`
-      // curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-      // . .cargo/env
-
-      // sudo apt update
-      // sudo apt install build-essential
-
-      // # one way to install latest go on Ubuntu 22.04
-      // wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-      // sudo tar -xvf go1.21.0.linux-amd64.tar.gz
-      // sudo mv go /usr/local
-      // export GOROOT=/usr/local/go
-      // export GOPATH=$HOME/go
-      // export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-      // source ~/.profile
-      // \`\`\`
-
-      // 2. Run the correct version of the script to regenerate the keys.
-
-      // \`\`\`
-      // git clone https://github.com/elliottech/lighter-prover.git
-      // cd lighter-prover
-      // git checkout dd7d2182f7d9ec29ca452f410a5ffb1f3dc13925
-      // chmod +x build_circuits.sh
-      // ./build_circuits.sh
-      // \`\`\`
-
-      // The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
-      //   `,
-      //       },
       {
         // DesertVerifier
         hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',

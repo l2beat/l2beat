@@ -708,12 +708,90 @@ Verify:
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/sp1/guest/src/aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct commit hash in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
+    `,
   },
   '0x00b14510cec97d3449eb84b814be2f4b5dae3eb56528d6bb65e1aa8226f2bed3': {
     ...RAIKO_BATCH('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/sp1/guest/src/batch.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct commit hash in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
+    `,
+  },
+  '0x205b010d6f951ff14a29257944eea12e5554d853002190e440dc4e925ec6d6c3': {
+    ...RAIKO_AGG('v1.10.4'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/sp1/guest/src/aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
+  },
+  '0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3': {
+    ...RAIKO_BATCH('v1.10.4'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/sp1/guest/src/batch.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
   },
   '0x008f96447139673b3f2d29b30ad4b43fe6ccb3f31d40f6e61478ac5640201d9e': {
     ...RAIKO_AGG('v1.12.0'),
@@ -758,11 +836,6 @@ chmod +x script/publish-image.sh
 \`\`\`
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
     `,
-  },
-  '0x58a28867325f4d123d7097024be2f4b56d71f5ab14a35aed4bc3550426f2bed3': {
-    ...RAIKO_BATCH('v1.10.4'),
-    proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
   },
   '0x47cb22384e59cecf65a536612d4b43fe36659f987503db9828f158ac40201d9e': {
     ...RAIKO_AGG('v1.12.0'),
@@ -962,11 +1035,6 @@ chmod +x script/publish-image.sh
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
     `,
   },
-  '0x205b010d6f951ff14a29257944eea12e5554d853002190e440dc4e925ec6d6c3': {
-    ...RAIKO_AGG('v1.10.4'),
-    proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
-  },
   '0x51950ad55e9d2a6973e772f471d1b01466a1b0d95e064012726456a02b5f5be1': {
     ...RAIKO_BATCH('v1.12.0'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1129,12 +1197,46 @@ In the options choose latest tag and zk. The hash will be labeled sp1 elf vk has
   '0xe9aec1d30d25da1ccfc02a81c4b71f32e0a6f675dff4ce01fe4bd5f96ff320bd': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/risc0/guest/src/aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled risc0 elf image id and will not have \`0x\` prefix.
+    `,
   },
   '0xee950d20e2483b9b6b859272feaea2dd84cea8a9cfdf1af8834df6b75c3d715e': {
     ...RAIKO_BATCH('v1.10.4'),
     proverSystemProject: ProjectId('risc0'),
-    verificationStatus: 'notVerified',
+    programUrl:
+      'https://github.com/taikoxyz/raiko/blob/eebee8c953d5acb8fe2d97098e6cf2079b31a6b6/provers/risc0/guest/src/batch.rs',
+    verificationStatus: 'successful',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout eebee8c953d5acb8fe2d97098e6cf2079b31a6b6
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled risc0 elf image id and will not have \`0x\` prefix.
+    `,
   },
   '0x3d933868e2ac698df98209b45e6c34c435df2d3c97754bb6739d541d5fd312e3': {
     ...RAIKO_AGG('v1.12.0'),
@@ -1228,11 +1330,17 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
     ...RAIKO_BATCH('v1.9.0-rc.2'),
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
+    // verificationStatus: 'unsuccessful',
+    // verificationSteps:
+    //   'According to the Taiko team, sources for this program are missing and thus it cannot be regenerated.',
   },
   '0x0a0488e485692dd711b60258bd799099f8d1e6776cb96ede88c9fecfcc9b7e7c': {
     ...RAIKO_AGG('v1.9.0-rc.2'),
     proverSystemProject: ProjectId('risc0'),
     verificationStatus: 'notVerified',
+    // verificationStatus: 'unsuccessful',
+    // verificationSteps:
+    //   'According to the Taiko team, sources for this program are missing and thus it cannot be regenerated.',
   },
   '0xa41db9223051c1a6b046829dc372eab4989ff0a3e027c360d8c906d831ca60d4': {
     ...RAIKO_AGG('v1.10.0'),
