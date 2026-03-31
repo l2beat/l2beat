@@ -95,11 +95,11 @@ export interface ProjectScalingEntry {
         total: number
         native: number
         canonical: number
-        customCanonical: number
         external: number
         totalChange: number
       }
       warning?: WarningWithSentiment
+      additionalTrustAssumptionsPercentage: number
       tokens: {
         breakdown?: {
           total: number
@@ -203,6 +203,7 @@ export async function getScalingProjectEntry(
     (a) => a.end === undefined,
   )
 
+
   const tvsProjectStats = tvsStats.projects[project.id]
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
@@ -234,6 +235,7 @@ export async function getScalingProjectEntry(
               totalChange: tvsProjectStats.change.total,
             },
             warning: project.tvsInfo.warnings[0],
+            additionalTrustAssumptionsPercentage: tvsProjectStats.additionalTrustAssumptionsPercentage,
             tokens: {
               breakdown: tvsProjectStats.breakdown,
               warnings: compact([

@@ -23,12 +23,12 @@ interface TotalCellProps {
     | {
         total: number
         canonical: number
-        customCanonical: number
         external: number
         native: number
         associated: number
       }
     | undefined
+  additionalTrustAssumptionsPercentage: number | undefined
   associatedTokens: ProjectAssociatedToken[]
   href: string
   change?: number
@@ -94,9 +94,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
             </div>
             <ValueSecuredBreakdown
               canonical={props.breakdown.canonical}
-              customCanonical={props.breakdown.customCanonical}
               external={props.breakdown.external}
               native={props.breakdown.native}
+              additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
             />
           </div>
         </TableLink>
@@ -104,9 +104,9 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
       <TooltipContent fitContent>
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
-          customCanonical={props.breakdown.customCanonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
+          additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
           change={props.change}
           tvsWarnings={tvsWarnings}
         />

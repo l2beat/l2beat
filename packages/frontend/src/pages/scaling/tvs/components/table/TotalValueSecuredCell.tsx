@@ -28,7 +28,6 @@ interface TotalValueSecuredCellProps {
         type: 'bridgeType'
         external: number
         canonical: number
-        customCanonical: number
         native: number
       }
     | {
@@ -41,6 +40,7 @@ interface TotalValueSecuredCellProps {
         rwaPublic: number
         rwaRestricted: number
       }
+  additionalTrustAssumptionsPercentage: number
   change: number
   tvsWarnings?: WarningWithSentiment[]
   associatedTokens?: ProjectAssociatedToken[]
@@ -69,9 +69,9 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
             {props.breakdown.type === 'bridgeType' ? (
               <ValueSecuredBreakdown
                 canonical={props.breakdown.canonical}
-                customCanonical={props.breakdown.customCanonical}
                 external={props.breakdown.external}
                 native={props.breakdown.native}
+                additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
               />
             ) : (
               <TokenBreakdown
@@ -92,10 +92,10 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
         {props.breakdown.type === 'bridgeType' ? (
           <ValueSecuredBreakdownTooltipContent
             canonical={props.breakdown.canonical}
-            customCanonical={props.breakdown.customCanonical}
             external={props.breakdown.external}
             native={props.breakdown.native}
             change={props.change}
+            additionalTrustAssumptionsPercentage={props.additionalTrustAssumptionsPercentage}
             tvsWarnings={tvsWarnings}
             associatedTokenSymbols={props.associatedTokens?.map(
               (t) => t.symbol,

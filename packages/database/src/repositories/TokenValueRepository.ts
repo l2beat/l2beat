@@ -435,7 +435,7 @@ export class TokenValueRepository extends BaseRepository {
         sumBySource(
           eb,
           valueField,
-          ['canonical', 'custom-canonical'],
+          ['canonical'],
           'canonical',
         ),
         sumBySource(eb, valueField, ['custom-canonical'], 'customCanonical'),

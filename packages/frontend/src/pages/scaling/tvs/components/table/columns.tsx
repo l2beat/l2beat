@@ -71,7 +71,6 @@ export const getScalingTvsColumns = (
                     ? {
                         type: 'bridgeType',
                         canonical: data.breakdown.canonical,
-                        customCanonical: data.breakdown.customCanonical,
                         external: data.breakdown.external,
                         native: data.breakdown.native,
                       }
@@ -86,6 +85,7 @@ export const getScalingTvsColumns = (
                         rwaRestricted: data.breakdown.rwaRestricted,
                       }
                 }
+                additionalTrustAssumptionsPercentage={data.additionalTrustAssumptionsPercentage}
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
               />

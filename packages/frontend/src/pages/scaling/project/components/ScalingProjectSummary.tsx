@@ -149,11 +149,11 @@ export function ProjectScalingSummary({ project }: Props) {
                   >
                     <ValueSecuredBreakdown
                       canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                      customCanonical={
-                        project.header.tvs?.breakdown?.customCanonical ?? 0
-                      }
                       external={project.header.tvs?.breakdown?.external ?? 0}
                       native={project.header.tvs?.breakdown?.native ?? 0}
+                      additionalTrustAssumptionsPercentage={
+                        project.header.tvs?.additionalTrustAssumptionsPercentage
+                      }
                       className="h-1.5 w-full"
                     />
                   </ConditionalLink>
@@ -161,12 +161,12 @@ export function ProjectScalingSummary({ project }: Props) {
                 <TooltipContent fitContent>
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                    customCanonical={
-                      project.header.tvs?.breakdown?.customCanonical ?? 0
-                    }
                     external={project.header.tvs?.breakdown?.external ?? 0}
                     native={project.header.tvs?.breakdown?.native ?? 0}
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
+                    additionalTrustAssumptionsPercentage={
+                      project.header.tvs?.additionalTrustAssumptionsPercentage
+                    }
                     tvsWarnings={[]}
                   />
                   {project.header.tvs && (

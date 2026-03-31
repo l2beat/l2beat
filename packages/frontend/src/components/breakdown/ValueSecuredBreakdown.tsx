@@ -1,5 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
@@ -12,9 +12,9 @@ import { Breakdown } from './Breakdown'
 
 interface ValueSecuredBreakdownProps {
   canonical: number
-  customCanonical: number
   external: number
   native: number
+  additionalTrustAssumptionsPercentage: number | undefined
   className?: string
 }
 
@@ -26,10 +26,6 @@ interface ValueSecuredBreakdownTooltipContentProps
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
-  const total = props.canonical + props.external + props.native
-  const additionalTrustAssumptions = props.external + props.customCanonical
-  const trustRatio = total > 0 ? additionalTrustAssumptions / total : 0
-  const trustBand = total > 0 ? getAdditionalTrustBand(trustRatio) : 'mid'
   const values = [
     {
       value: props.canonical,
@@ -48,31 +44,39 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
         values={values}
         className={cn('opacity-80', 'h-[3px] w-[200px]', props.className)}
       />
-      {total > 0 && (
-        <div className="text-right font-medium text-[11px] text-secondary leading-none">
-          <span className={additionalTrustPercentVariants({ band: trustBand })}>
-            {formatPercent(trustRatio)}
-          </span>{' '}
-          with additional trust assumptions
-        </div>
+      {props.additionalTrustAssumptionsPercentage !== undefined && (
+        <AdditionalTrustAssumptionsText percentage={props.additionalTrustAssumptionsPercentage}/>
       )}
     </div>
   )
 }
 
+function AdditionalTrustAssumptionsText({ percentage} : {percentage: number}){
+  const sentiment = getAdditionalTrustSentiment(percentage)
+
+  return  <div className="text-right font-medium text-[11px] text-secondary leading-none">
+  <span className={additionalTrustPercentVariants({ sentiment })}>
+    {formatPercent(percentage)}
+  </span>{' '}
+  with additional trust assumptions
+</div>
+  
+}
+
 export function ValueSecuredBreakdownTooltipContent({
   canonical,
-  customCanonical,
   external,
   native,
   change,
+  additionalTrustAssumptionsPercentage,
   tvsWarnings,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
-  const additionalTrustAssumptions = external + customCanonical
+
   if (total === 0) {
     return 'No data'
   }
+
   const values = [
     {
       title: 'Canonical',
@@ -130,9 +134,9 @@ export function ValueSecuredBreakdownTooltipContent({
               ),
           )}
         </div>
-        {total > 0 && (
+        {additionalTrustAssumptionsPercentage !== undefined && (
           <AdditionalTrustAssumptionsBanner
-            ratio={additionalTrustAssumptions / total}
+            percentage={additionalTrustAssumptionsPercentage}
           />
         )}
       </div>
@@ -156,53 +160,43 @@ const additionalTrustBannerVariants = cva(
   'mt-2 w-full rounded-md px-2.5 py-2',
   {
     variants: {
-      band: {
-        low: 'bg-positive/15 dark:bg-positive/20',
-        mid: 'bg-warning/15 dark:bg-warning/20',
-        high: 'bg-negative/10 dark:bg-negative/20',
+      sentiment: {
+        good: 'bg-positive/15 dark:bg-positive/20',
+        warning: 'bg-warning/15 dark:bg-warning/20',
+        bad: 'bg-negative/10 dark:bg-negative/20',
       },
-    },
-    defaultVariants: {
-      band: 'mid',
     },
   },
 )
 
 const additionalTrustPercentVariants = cva('font-bold', {
   variants: {
-    band: {
-      low: 'text-positive',
-      mid: 'text-warning',
-      high: 'text-negative',
+    sentiment: {
+      good: 'text-positive',
+      warning: 'text-warning',
+      bad: 'text-negative',
     },
-  },
-  defaultVariants: {
-    band: 'mid',
   },
 })
 
-type AdditionalTrustBand = NonNullable<
-  VariantProps<typeof additionalTrustBannerVariants>['band']
->
-
-function getAdditionalTrustBand(ratio: number): AdditionalTrustBand {
-  const rounded = Math.round(ratio * 100)
-  if (rounded <= 20) {
-    return 'low'
+type AdditionalTrustSentiment = 'good' | 'warning' | 'bad'
+function getAdditionalTrustSentiment(percentage: number): AdditionalTrustSentiment {
+  if (percentage <= 0.2) {
+    return 'good'
   }
-  if (rounded >= 80) {
-    return 'high'
+  if (percentage >= 0.8) {
+    return 'bad'
   }
-  return 'mid'
+  return 'warning'
 }
 
-function AdditionalTrustAssumptionsBanner({ ratio }: { ratio: number }) {
-  const band = getAdditionalTrustBand(ratio)
+function AdditionalTrustAssumptionsBanner({ percentage }: { percentage: number }) {
+  const sentiment = getAdditionalTrustSentiment(percentage)
   return (
-    <div className={additionalTrustBannerVariants({ band })}>
+    <div className={additionalTrustBannerVariants({sentiment})}>
       <p className="text-right text-label-value-13 text-primary leading-snug">
-        <span className={additionalTrustPercentVariants({ band })}>
-          {formatPercent(ratio)}
+        <span className={additionalTrustPercentVariants({sentiment})}>
+          {formatPercent(percentage)}
         </span>{' '}
         <span className="font-normal">
           TVS with additional trust assumptions.
