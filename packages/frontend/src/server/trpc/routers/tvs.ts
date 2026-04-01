@@ -15,11 +15,11 @@ import {
   getTvsChart,
   TvsChartDataParams,
 } from '~/server/features/scaling/tvs/getTvsChartData'
-import { getTvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 import {
   getTvsChartStats,
   TvsChartStatsParams,
 } from '~/server/features/scaling/tvs/getTvsChartStats'
+import { getTvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 import {
   getTokenTvsChart,
   TokenTvsChartParams,
