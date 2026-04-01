@@ -51,7 +51,8 @@ export function AdditionalTrustAssumptionsBanner({
       <p className="text-right text-label-value-13 text-primary leading-snug">
         <AdditionalTrustAssumptionsContent percentage={percentage}>
           <span className="font-normal">
-            TVS with additional trust assumptions.
+            of TVS with additional trust assumptions compared to the Stage
+            assigned to the project's canonical messaging bridge.
           </span>
         </AdditionalTrustAssumptionsContent>
       </p>
