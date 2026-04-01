@@ -21,11 +21,14 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getAgglayerVerifiers } from '../../templates/agglayer'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+
+type ProgramHashDict = Record<string, Record<string, string>[]>
 
 const discovery = new ProjectDiscovery('katana')
 const upgradeDelayString = formatSeconds(
@@ -360,6 +363,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       },
     ],
     programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getAgglayerVerifiers(discovery),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -382,7 +386,6 @@ function getKatanaVKeys(): string[] {
   vKeys.push(opSuccinctConfig['rangeVkeyCommitment'])
   // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
   // Otherwise they are taken from AggchainFEP itself
-  type ProgramHashDict = Record<string, Record<string, string>[]>
   const useDefaultVkeys = discovery.getContractValue<boolean>(
     'AggchainFEP',
     'useDefaultVkeys',

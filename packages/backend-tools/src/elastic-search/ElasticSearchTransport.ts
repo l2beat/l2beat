@@ -59,11 +59,14 @@ export class ElasticSearchTransport implements LoggerTransport {
       return
     }
 
+    /** In scope for `catch` so we can correlate flush failures with batched log lines. */
+    let batch: string[] = []
+
     try {
       const index = await this.createIndex()
 
       // copy buffer contents as it may change during async operations below
-      const batch = [...this.buffer]
+      batch = [...this.buffer]
 
       //clear buffer
       this.buffer.splice(0)
@@ -76,15 +79,14 @@ export class ElasticSearchTransport implements LoggerTransport {
       const response = await this.client.bulk(documents, index)
 
       if (!response.isSuccess) {
-        throw new Error('Failed to push logs to Elastic Search node', {
+        throw new Error('Failed to push some logs to Elastic Search node', {
           cause: {
-            documentErrors: response.errors,
+            failedDocuments: JSON.stringify(response.failedDocuments),
           },
         })
       }
     } catch (error) {
       console.log(error)
-
       try {
         // We want to get notified in case there is a "push time error"
         // e.g. fields types collision https://github.com/l2beat/l2beat/pull/10136
@@ -99,7 +101,10 @@ export class ElasticSearchTransport implements LoggerTransport {
                   level: 'ERROR',
                   message: error instanceof Error ? error.message : '',
                   parameters: {
-                    cause: error instanceof Error ? (error.cause ?? '') : '',
+                    cause:
+                      error instanceof Error
+                        ? (error.cause ?? undefined)
+                        : undefined,
                   },
                 }),
               ),

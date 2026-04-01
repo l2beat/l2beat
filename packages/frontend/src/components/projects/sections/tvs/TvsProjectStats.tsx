@@ -29,7 +29,7 @@ export function TvsProjectStats({
     refetch()
   }, [range])
 
-  const projectData = data?.projects[projectId]
+  const projectData = data?.[projectId]
 
   return (
     <>

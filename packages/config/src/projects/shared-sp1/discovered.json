@@ -25,7 +25,7 @@
       }
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SP1VerifierGatewayArb",
       "address": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
@@ -209,7 +209,7 @@
       }
     },
     {
-      "name": "SP1VerifierGateway",
+      "name": "SP1VerifierGatewayBase",
       "address": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
@@ -844,5 +844,5 @@
     "base": 42354010,
     "ethereum": 24490332
   },
-  "permissionsConfigHash": "0x82971df8ac300773255c307ff4dcf207bcf1e43235251e22d681f7a2816eb223"
+  "permissionsConfigHash": "0x49dabc267fed24ffed187dc7b587e1e194b26389078986c70a1cfba7b323acee"
 }

@@ -394,6 +394,7 @@ export const zksync: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   stateDerivation: {
     nodeSoftware:
@@ -459,4 +460,12 @@ export const zksync: ScalingProject = {
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierProxyAddr = discovery.getContractValue<ChainSpecificAddress>(
+    'ZkSync',
+    'verifier',
+  )
+  return discovery.get$Implementations(verifierProxyAddr)
 }

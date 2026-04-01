@@ -1,11 +1,7 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import {
-  createInteropTrpcRouter,
-  createKoaMiddleware,
-  createTRPCContext,
-} from '@l2beat/interop-backoffice'
+
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -16,12 +12,14 @@ import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
+import { getMemoryUsage } from './impls/memory'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
 import { renderSupportChartsPage } from './SupportChartsPage'
 import { explore } from './stats'
 import { renderTransfersPage } from './TransfersPage'
+import { createInteropTrpc } from './trpc/server/middleware'
 
 export function createInteropRouter(
   db: Database,
@@ -48,34 +46,10 @@ export function createInteropRouter(
     return false
   }
 
-  // Example server side implementation
-
-  const trpcMiddleware = createKoaMiddleware({
-    router: createInteropTrpcRouter({
-      status: {
-        memory: () => {
-          const memoryUsage = process.memoryUsage()
-
-          return Promise.resolve({
-            rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`,
-            heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`,
-            heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`,
-            external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`,
-            arrayBuffers: `${(memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2)} MB`,
-          })
-        },
-      },
-    }),
-    prefix: '/interop/trpc',
-    allowMethodOverride: true,
-    createContext: ({ req }) =>
-      createTRPCContext({
-        headers: new Headers(req.headers as Record<string, string>),
-        db,
-      }),
-  })
-
-  router.all(['/interop/trpc', '/interop/trpc/(.*)'], trpcMiddleware)
+  router.all(
+    ['/interop/trpc', '/interop/trpc/(.*)'],
+    createInteropTrpc({ db }, { prefix: '/interop/trpc' }),
+  )
 
   router.get('/interop', async (ctx) => {
     const routerStart = performance.now()
@@ -280,15 +254,7 @@ export function createInteropRouter(
   router.get('/interop/coverage-pies', renderCoveragePies)
 
   router.get('/interop/memory', (ctx) => {
-    const memoryUsage = process.memoryUsage()
-
-    ctx.body = {
-      rss: `${(memoryUsage.rss / 1024 / 1024).toFixed(2)} MB`, // Resident Set Size - total memory allocated
-      heapTotal: `${(memoryUsage.heapTotal / 1024 / 1024).toFixed(2)} MB`, // Total heap size
-      heapUsed: `${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`, // Actual memory used
-      external: `${(memoryUsage.external / 1024 / 1024).toFixed(2)} MB`, // Memory used by C++ objects
-      arrayBuffers: `${(memoryUsage.arrayBuffers / 1024 / 1024).toFixed(2)} MB`, // Memory for ArrayBuffers
-    }
+    ctx.body = getMemoryUsage()
   })
 
   router.get('/interop.json', async (ctx) => {

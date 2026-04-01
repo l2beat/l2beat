@@ -16,8 +16,8 @@ import { arenaz } from '../projects/arenaz/arenaz'
 import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
 import { aztec } from '../projects/aztec/aztec'
-import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
+import { aztecnetwork } from '../projects/aztecnetwork/aztecnetwork'
 import { base } from '../projects/base/base'
 import { billions } from '../projects/billions/billions'
 import { blast } from '../projects/blast/blast'
@@ -255,8 +255,8 @@ export const layer2s: ScalingProject[] = [
   automata,
   aztecconnect,
   aztec,
+  aztecnetwork,
   primechain,
-  aztecV2,
   base,
   blast,
   bob,

@@ -26,7 +26,7 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
     const fullHourInRange = this.findFullHourInRange(from, to)
 
     if (fullHourInRange === undefined) {
-      this.logger.info('Update skipped, no full hour in range', {
+      this.logger.debug('Update skipped, no full hour in range', {
         from,
         to,
       })
@@ -34,12 +34,12 @@ export class InteropRecentPricesIndexer extends ManagedChildIndexer {
     }
 
     const coingeckoIds = await this.$.priceProvider.getAllCoingeckoIds()
-    this.logger.info('Fetched coingecko ids', { ids: coingeckoIds.length })
+    this.logger.debug('Fetched coingecko ids', { ids: coingeckoIds.length })
 
     const prices = await this.$.priceProvider.getLatestPrices(
       coingeckoIds.filter((c) => c.length <= 64), // there are random tokens with long names
     )
-    this.logger.info('Fetched prices', { prices: prices.size })
+    this.logger.debug('Fetched prices', { prices: prices.size })
 
     const records: InteropRecentPricesRecord[] = []
     for (const [coingeckoId, priceUsd] of prices.entries()) {

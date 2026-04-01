@@ -280,6 +280,72 @@ describe(InteropSyncersManager.name, () => {
     })
   })
 
+  describe(InteropSyncersManager.prototype.areAllSyncersFollowing.name, () => {
+    it('returns false when syncer has not yet initialized', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      // Syncers start in FollowingState with status 'starting'
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+
+    it('returns true when all syncers are following and idle', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'blockProcessor',
+        name: 'following',
+        status: 'idle',
+        checkStatus: async () => syncer.state,
+        processNewestBlock: async () => syncer.state,
+      }
+
+      expect(manager.areAllSyncersFollowing()).toEqual(true)
+    })
+
+    it('returns false when any syncer is catching up', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'timeLoop',
+        name: 'catchingUp',
+        status: 'waiting',
+        run: async () => syncer.state,
+      }
+
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+
+    it('returns false when any syncer has an error', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'blockProcessor',
+        name: 'following',
+        status: 'idle',
+        checkStatus: async () => syncer.state,
+        processNewestBlock: async () => syncer.state,
+      }
+      syncer.hasError = true
+
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+  })
+
   describe(InteropSyncersManager.prototype.getPluginSyncStatuses.name, () => {
     it('merges db ranges, db states, and existing syncers, then sorts the result', async () => {
       const syncedRanges: InteropPluginSyncedRangeRecord[] = [

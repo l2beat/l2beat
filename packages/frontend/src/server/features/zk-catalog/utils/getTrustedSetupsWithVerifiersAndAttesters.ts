@@ -171,7 +171,7 @@ function getVerifiersWithProcessedUsedIn(
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
           : contractUtils.getUsedIn(
               project.id,
-              deployment.chain,
+              ChainSpecificAddress.longChain(deployment.address),
               toPlainAddress(deployment.address),
             ),
       }))
@@ -195,8 +195,8 @@ function getOnchainVerifiersForProject(
         .filter((d) => d.usedIn.some((u) => u.id === targetProjectId))
         .map((d) => {
           const onchainVerifier = getOnchainVerifier(
-            d.deployment.chain,
-            d.deployment.address,
+            ChainSpecificAddress.longChain(d.deployment.address),
+            ChainSpecificAddress.address(d.deployment.address),
             contracts,
           )
 

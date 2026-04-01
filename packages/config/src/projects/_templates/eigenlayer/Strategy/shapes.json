@@ -43,5 +43,15 @@
     "hash": "0x5234a1c479bda8867e26056b51731358e59cec30e9e5f7f057e545c395f72f05",
     "address": "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780",
     "blockNumber": 24350294
+  },
+  "Strategy_v1.12.0": {
+    "hash": "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b",
+    "address": "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230",
+    "blockNumber": 24643873
+  },
+  "Strategy_bEIGEN_v1.12.0": {
+    "hash": "0xfe47d627ac94734b18f2a972ade182f47e93f82b06e081000845b09ca0de1503",
+    "address": "eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40",
+    "blockNumber": 24643873
   }
 }

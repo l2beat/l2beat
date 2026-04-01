@@ -1,0 +1,10 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
+}

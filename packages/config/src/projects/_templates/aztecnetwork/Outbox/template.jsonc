@@ -9,5 +9,6 @@
     "VERSION": {
       "description": "The identifier of the Aztec instance/version to prevent cross-instance replay attacks."
     }
-  }
+  },
+  "category": "bridge-canonical"
 }

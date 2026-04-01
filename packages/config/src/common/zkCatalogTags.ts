@@ -120,6 +120,13 @@ export const zkCatalogTags = [
     description:
       'Extensible instruction set for OpenVM zkVM developed by Axiom.',
   },
+  {
+    id: 'AVM',
+    type: ZkCatalogTagType.ISA,
+    name: 'AVM',
+    description:
+      'VM that executes the public part of Aztec L2 transactions, conceptually similar to EVM.',
+  },
   // Plonk
   {
     id: 'Bellman',
@@ -176,6 +183,20 @@ export const zkCatalogTags = [
     name: 'Jellyfish',
     description:
       'Open-source toolkit of various cryptographic primitives, including an implementation of Plonk SNARK, developed in Rust by Espresso Systems.',
+  },
+  {
+    id: 'UltraHonk',
+    type: ZkCatalogTagType.Plonk,
+    name: 'UltraHonk',
+    description:
+      'A KZG-based PLONKish proving system featuring many optimizations, including a sumcheck argument over a boolean hypercube. Developed by Aztec as a part of Barretenberg library.',
+  },
+  {
+    id: 'CHONK',
+    type: ZkCatalogTagType.Plonk,
+    name: 'CHONK',
+    description:
+      'PLONKish proving system, designed for client-side proving. Includes sumcheck argument over a hypercube, HyperNova-like folding schemes and GoblinPlonk EC operation optimization over Grumpkin curve. Developed by Aztec as a part of Barretenberg library.',
   },
   // Fflonk
   {
@@ -235,6 +256,13 @@ export const zkCatalogTags = [
     name: 'BLS12-377',
     description:
       'Pairing-friendly 377-bit prime field Weierstrass elliptic curve.',
+  },
+  {
+    id: 'Grumpkin',
+    type: ZkCatalogTagType.curve,
+    name: 'Grumpkin',
+    description:
+      'Curve that forms a curve cycle together with BN254, which allows highly efficient recursive proof composition by switching between these two curves.',
   },
   // Field
   {
