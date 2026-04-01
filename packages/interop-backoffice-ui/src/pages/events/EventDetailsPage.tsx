@@ -16,7 +16,7 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { api } from '~/react-query/trpc'
 import { EventDetailsTable } from './table/details/EventDetailsTable'
 import type { ChainMetadata, EventDetailsRow, InteropEventKind } from './types'
-import { getEventKindLabel } from './utils'
+import { getEventKindLabel } from './utils/event-labels'
 
 const INTEROP_EVENT_KINDS: readonly InteropEventKind[] = [
   'all',

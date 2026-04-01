@@ -2,11 +2,8 @@ import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventDetailsRow } from '../../types'
-import {
-  formatEventTimestamp,
-  shortenHash,
-  toCsvIsoTimestamp,
-} from '../../utils'
+import { shortenHash } from '../../utils/shorten-hash'
+import { formatEventTimestamp, toCsvIsoTimestamp } from '../../utils/timestamps'
 
 const columnHelper = createColumnHelper<EventDetailsRow>()
 
