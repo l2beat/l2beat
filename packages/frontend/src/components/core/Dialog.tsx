@@ -1,6 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import type * as React from 'react'
 
+import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 
 const Dialog = DialogPrimitive.Root
@@ -13,7 +14,9 @@ const DialogClose = ({
   ref,
   className,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) => (
+}: Omit<React.ComponentProps<typeof DialogPrimitive.Close>, 'children'> & {
+  children?: never
+}) => (
   <DialogPrimitive.Close
     ref={ref}
     className={cn(
@@ -21,7 +24,10 @@ const DialogClose = ({
       className,
     )}
     {...props}
-  />
+  >
+    <CloseIcon className="size-4 fill-primary" />
+    <span className="sr-only">Close</span>
+  </DialogPrimitive.Close>
 )
 DialogClose.displayName = DialogPrimitive.Close.displayName
 

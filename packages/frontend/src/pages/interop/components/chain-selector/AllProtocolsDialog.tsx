@@ -11,7 +11,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { CloseIcon } from '~/icons/Close'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
 
@@ -61,9 +60,7 @@ export function AllProtocolsDialog({
         </button>
       </DialogTrigger>
       <DialogContent className="gap-0 bg-surface-primary p-0 max-md:border-none md:top-1/4 md:max-w-lg">
-        <DialogClose>
-          <CloseIcon className="size-4 fill-primary" />
-        </DialogClose>
+        <DialogClose />
         <div className="max-h-[320px] overflow-y-auto">
           <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary p-4">
             <DialogTitle>List of protocols</DialogTitle>

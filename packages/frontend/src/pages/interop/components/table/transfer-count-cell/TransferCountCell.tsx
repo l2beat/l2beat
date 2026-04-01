@@ -17,7 +17,6 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import { CloseIcon } from '~/icons/Close'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
@@ -199,9 +198,7 @@ function TransferDetailsDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[560px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3">
-        <DialogClose>
-          <CloseIcon className="size-4 fill-primary" />
-        </DialogClose>
+        <DialogClose />
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Transfers for </span>

@@ -21,7 +21,6 @@ import {
   TabsTrigger,
 } from '~/components/core/Tabs'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import { CloseIcon } from '~/icons/Close'
 import { api } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../BetweenChainsInfo'
@@ -122,9 +121,7 @@ export function TokensDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="primary-card flex max-h-3/5 w-[1040px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
-        <DialogClose>
-          <CloseIcon className="size-4 fill-primary" />
-        </DialogClose>
+        <DialogClose />
         <Tabs
           name="tokens"
           value={activeTab}

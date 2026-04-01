@@ -21,7 +21,6 @@ import {
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
-import { CloseIcon } from '~/icons/Close'
 import { DiffoIcon } from '~/icons/Diffo'
 import { HistoryClockIcon } from '~/icons/HistoryClock'
 import { cn } from '~/utils/cn'
@@ -71,9 +70,7 @@ export function PastUpgradesDialog({
       <Dialog>
         <DialogTrigger className="max-md:hidden">{trigger}</DialogTrigger>
         <DialogContent className="flex max-h-[90dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
-          <DialogClose>
-            <CloseIcon className="size-4 fill-primary" />
-          </DialogClose>
+          <DialogClose />
           <DialogHeader>
             <DialogTitle>Past upgrades</DialogTitle>
             <DialogDescription className="sr-only">
