@@ -88,6 +88,7 @@ function mapArrayToObject([
   timestamp,
   value,
   canonical,
+  customCanonical,
   external,
   native,
   ether,
@@ -100,7 +101,7 @@ function mapArrayToObject([
   return {
     timestamp,
     value,
-    canonical,
+    canonical: canonical + customCanonical,
     external,
     native,
     ether,

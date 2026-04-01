@@ -85,6 +85,9 @@ export const getScalingTvsColumns = (
                         rwaRestricted: data.breakdown.rwaRestricted,
                       }
                 }
+                additionalTrustAssumptionsPercentage={
+                  data.additionalTrustAssumptionsPercentage
+                }
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
               />

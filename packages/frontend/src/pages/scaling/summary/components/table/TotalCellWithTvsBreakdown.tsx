@@ -4,6 +4,10 @@ import type {
 } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   ValueSecuredBreakdown,
   ValueSecuredBreakdownTooltipContent,
 } from '~/components/breakdown/ValueSecuredBreakdown'
@@ -28,6 +32,7 @@ interface TotalCellProps {
         associated: number
       }
     | undefined
+  additionalTrustAssumptionsPercentage: number | undefined
   associatedTokens: ProjectAssociatedToken[]
   href: string
   change?: number
@@ -84,30 +89,41 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
     <Tooltip>
       <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={props.href}>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end max-md:py-1">
             <div className="flex items-center">
               {icon}
               <ValueWithPercentageChange change={props.change}>
                 {formatDollarValueNumber(totalTvs)}
               </ValueWithPercentageChange>
             </div>
-            <ValueSecuredBreakdown
-              canonical={props.breakdown.canonical}
-              external={props.breakdown.external}
-              native={props.breakdown.native}
-              className="h-[3px] w-[180px]"
-            />
+            <div className="inline-flex flex-col items-end gap-1">
+              <ValueSecuredBreakdown
+                canonical={props.breakdown.canonical}
+                external={props.breakdown.external}
+                native={props.breakdown.native}
+              />
+              {props.additionalTrustAssumptionsPercentage !== undefined && (
+                <AdditionalTrustAssumptionsText
+                  percentage={props.additionalTrustAssumptionsPercentage}
+                />
+              )}
+            </div>
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent fitContent>
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
+          change={props.change}
           tvsWarnings={tvsWarnings}
-          hideTotal
         />
+        {props.additionalTrustAssumptionsPercentage !== undefined && (
+          <AdditionalTrustAssumptionsBanner
+            percentage={props.additionalTrustAssumptionsPercentage}
+          />
+        )}
       </TooltipContent>
     </Tooltip>
   )
