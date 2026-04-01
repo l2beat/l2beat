@@ -127,7 +127,7 @@ export function TokensDialog({
           variant="highlighted"
           className="flex min-h-0 flex-1 flex-col"
         >
-          <DialogHeader className="fade-out-to-bottom-3 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-4">
+          <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">
             <DialogTitle>{title}</DialogTitle>
             <BetweenChainsInfo className="mt-1" />
             {tabsList}
