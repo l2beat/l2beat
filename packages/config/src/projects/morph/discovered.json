@@ -782,13 +782,6 @@
           ]
         ],
         "$upgradeCount": 10,
-        "batchBlobVersionedHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "batchChallenged": 47101,
         "challengers": [
           "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -847,7 +840,6 @@
         "rollupDelayPeriod": 604800,
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
-      "errors": { "batchBlobVersionedHashes": "Processing error occurred." },
       "fieldMeta": {
         "getMinDelayFormatted": {
           "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now"
@@ -2160,7 +2152,7 @@
     "morph/L1Staking": "0x3628b27131bceae20a3ba1e6858e52dc3afb537e7624b0d369b877bbca4d9830",
     "morph/L1StandardERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
-    "morph/Rollup": "0x1b078c9aaf6b684cfb48b5b25cefa883a6532f61ee6c6e6ba2946fcec6699cb7",
+    "morph/Rollup": "0xebf506a5dc75ed310a1a6d083343337d766e473d2fff9c4647dfea249d5d206b",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },

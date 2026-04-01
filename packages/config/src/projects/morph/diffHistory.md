@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x974ae183e157393efa3376d392cb21d5033f326c
+Generated with discovered.json: 0xf903b1e901704fc1b25dcb9507716c6ba10b0867
 
-# Diff at Wed, 01 Apr 2026 14:09:05 GMT:
+# Diff at Wed, 01 Apr 2026 15:00:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@3549fc2f02802f920fe5b609f100b19b568ec7dc block: 1774609123
@@ -34,14 +34,10 @@ even ..withProof() reverts because of the existing blob data
       values.$upgradeCount:
 -        9
 +        10
-      values.batchBlobVersionedHashes:
-+        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
       implementationNames.eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF:
 -        "Rollup"
       implementationNames.eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2:
 +        "Rollup"
-      errors:
-+        {"batchBlobVersionedHashes":"Processing error occurred."}
     }
 ```
 
