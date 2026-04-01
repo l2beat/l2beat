@@ -40,6 +40,7 @@ export const megaeth: ScalingProject = opStackL2({
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],
+
   architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
   display: {
@@ -90,6 +91,7 @@ export const megaeth: ScalingProject = opStackL2({
     chainId: 4326,
     explorerUrl: 'https://megaeth.blockscout.com',
     sinceTimestamp: UnixTime(1762797011), // block 1
+    coingeckoPlatform: 'megaeth',
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -194,4 +196,10 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'RiscZeroVerifierRouter',
+      'verifier',
+    ),
+  ],
 })

@@ -19,6 +19,7 @@ export const soon: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+
   display: {
     name: 'Soon Alpha Mainnet',
     shortName: 'Soon',
@@ -98,5 +99,11 @@ export const soon: ScalingProject = opStackL2({
       sinceTimestamp: UnixTime(1753412400),
       customerId: '0x420ad2641f22bf6f180c52d0b0566e7ec701c45a',
     },
+  ],
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'KailuaTreasury',
+      'RISC_ZERO_VERIFIER',
+    ),
   ],
 })

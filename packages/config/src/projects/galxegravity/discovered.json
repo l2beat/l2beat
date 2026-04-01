@@ -1,8 +1,7 @@
 {
   "name": "galxegravity",
   "timestamp": 1770823993,
-  "configHash": "0x1546187ee54b047337649d196c484a6fae966c6dc00f6623de27edacd42c3006",
-  "sharedModules": ["shared-sp1", "blobstream"],
+  "configHash": "0x0886f503c325fc2a45ae5592466da0b9ba3a60036e34cb1fea645138f791517c",
   "entries": [
     {
       "name": "EdgeChallengeManager",

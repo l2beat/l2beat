@@ -95,6 +95,21 @@ export class InteropSyncersManager {
     }
   }
 
+  areAllSyncersFollowing(): boolean {
+    for (const byChain of this.syncers.values()) {
+      for (const syncer of byChain.values()) {
+        if (
+          syncer.state.name !== 'following' ||
+          syncer.state.status === 'starting' ||
+          syncer.hasError
+        ) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   getSyncer(
     plugin: string,
     chain: LongChainName,

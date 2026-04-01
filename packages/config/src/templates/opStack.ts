@@ -213,6 +213,7 @@ interface OpStackConfigCommon {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  nonTemplateZkVerifiers?: ChainSpecificAddress[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -458,6 +459,9 @@ function opStackCommon(
       risks: nativeContractRisks,
       programHashes:
         templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars),
+      zkVerifiers:
+        templateVars.nonTemplateZkVerifiers ??
+        getOPStackVerifiers(templateVars.discovery),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -2428,4 +2432,24 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     technology: hostDaTech,
     badge: DABadge,
   }
+}
+
+// returns addresses of all active verifiers on SP1VerifierGateway in a given discovery
+export function getSP1Verifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGateway', 'activeVerifiers')
+  return activeVerifiers.map((el) => el.verifier)
+}
+
+function getOPStackVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    return getSP1Verifiers(discovery)
+  }
+  // kailua cases look more diverse and challenging to automate. Use nonTemplateZkVerifiers
+  return []
 }

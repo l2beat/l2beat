@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -119,10 +119,10 @@ export const stone: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
             ),
-            chain: 'ethereum',
             overrideUsedIn: [
               ProjectId('edgex'),
               ProjectId('myria'),

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -375,6 +380,12 @@ export const loopring: ScalingProject = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'LoopringV3',
+        'blockVerifierAddress',
+      ),
+    ],
   },
   stateValidation: {
     description:

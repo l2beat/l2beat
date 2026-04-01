@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xcdd03d7afe7404d2c7393488325d9d1c192626ac
+
+# Diff at Tue, 31 Mar 2026 10:43:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773160450
+- current timestamp: 1774953745
+
+## Description
+
+Removed Euro Coin Token (EURC) and its MasterMinter from discovery scope. These are Circle-operated contracts unrelated to Scroll, tracked only because the L1USDCGateway references them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773160450 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (eth:0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x476514734aad2706f87307396942309a909b724d
 
 # Diff at Mon, 23 Feb 2026 14:45:29 GMT:

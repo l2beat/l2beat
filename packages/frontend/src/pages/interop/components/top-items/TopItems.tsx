@@ -6,6 +6,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 type TopItem = {
@@ -21,11 +22,11 @@ type InteropTopItemsCellProps = {
   setIsOpen: (isOpen: boolean) => void
 }
 
-const buttonVariants = cva('group/dialog-trigger', {
+const buttonVariants = cva('group/dialog-trigger flex items-center', {
   variants: {
     type: {
-      default: 'flex items-center gap-2',
-      cell: 'grid grid-cols-[46px_30px] items-center gap-1',
+      default: 'gap-2',
+      cell: 'gap-1',
     },
   },
 })
@@ -67,13 +68,14 @@ export function InteropTopItems({
       onClick={() => setIsOpen(true)}
       {...rest}
     >
-      <div className="-space-x-1.5 flex items-center">
+      <div className="flex items-center">
         {topItems.items.map((item, i) => (
           <ItemIconWithTooltip
             key={item.id}
             item={item}
             index={i}
             type={type}
+            className={cn(i !== topItems.items.length - 1 && '-mr-1.5')}
           />
         ))}
       </div>
@@ -102,9 +104,11 @@ function ItemIconWithTooltip({
   item,
   index,
   type,
+  className,
 }: {
   item: TopItem
   index: number
+  className?: string
 } & VariantProps<typeof iconVariants>) {
   return (
     <Tooltip>
@@ -113,7 +117,7 @@ function ItemIconWithTooltip({
           key={item.id}
           src={item.iconUrl}
           alt={item.displayName}
-          className={iconVariants({ type })}
+          className={iconVariants({ type, className })}
           style={{ zIndex: 5 - index }}
         />
       </TooltipTrigger>

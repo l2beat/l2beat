@@ -21,7 +21,6 @@ interface ValueSecuredBreakdownTooltipContentProps
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]
   change?: number
-  hideTotal?: boolean
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
@@ -38,7 +37,10 @@ export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
   ]
 
   return (
-    <Breakdown values={values} className={cn('opacity-80', props.className)} />
+    <Breakdown
+      values={values}
+      className={cn('opacity-80', 'h-[3px] w-[197px]', props.className)}
+    />
   )
 }
 
@@ -48,12 +50,13 @@ export function ValueSecuredBreakdownTooltipContent({
   native,
   change,
   tvsWarnings,
-  hideTotal,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
+
   if (total === 0) {
     return 'No data'
   }
+
   const values = [
     {
       title: 'Canonically bridged',
@@ -72,26 +75,22 @@ export function ValueSecuredBreakdownTooltipContent({
     },
   ] as const
   return (
-    <div className="space-y-2">
+    <div className="w-max space-y-2">
       <div>
-        {!hideTotal && (
-          <>
-            <div className="flex items-center justify-between gap-1">
-              <span className="text-heading-16">TVS</span>
-              <ValueWithPercentageChange change={change}>
-                {formatCurrency(total, 'usd')}
-              </ValueWithPercentageChange>
-            </div>
-            <HorizontalSeparator className="mt-1.5 mb-3" />
-          </>
-        )}
+        <div className="flex items-center justify-between gap-4">
+          <span className="text-heading-16">TVS</span>
+          <ValueWithPercentageChange change={change}>
+            {formatCurrency(total, 'usd')}
+          </ValueWithPercentageChange>
+        </div>
+        <HorizontalSeparator className="mt-1.5 mb-3" />
         <div className="space-y-1">
           {values.map(
             (v, i) =>
               v.value > 0 && (
                 <div
                   key={i}
-                  className="flex items-center justify-between gap-x-6"
+                  className="flex items-center justify-between gap-x-3"
                 >
                   <span className="flex items-center gap-1">
                     <Square

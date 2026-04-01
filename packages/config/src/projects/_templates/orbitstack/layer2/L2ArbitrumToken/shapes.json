@@ -3,5 +3,10 @@
     "hash": "0x637d7a1e879804c928473dab6d06d80f9fd85ea5d889c3d5fac43411f6e59346",
     "address": "arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
     "blockNumber": 322488866
+  },
+  "L2ArbitrumToken_DVP": {
+    "hash": "0x81f61863f4f68a0a85c555c0e2ceab81eecd68a77f2c9d290f4caaca4d53aad9",
+    "address": "arb1:0xd47D14a315394ddf063174f2286Ab4Eb7C507fa0",
+    "blockNumber": 322488866
   }
 }

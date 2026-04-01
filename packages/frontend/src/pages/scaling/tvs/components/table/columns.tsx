@@ -10,7 +10,7 @@ import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/component
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { TableLink } from '../../../../../components/table/TableLink'
-import type { ScalingTvsTableRow } from '../../utils/ToTableRows'
+import type { ScalingTvsTableRow } from '../../utils/toTableRows'
 import { TotalValueSecuredCell } from './TotalValueSecuredCell'
 import { ValueSecuredCell } from './ValueSecuredCell'
 
@@ -84,6 +84,9 @@ export const getScalingTvsColumns = (
                         rwaPublic: data.breakdown.rwaPublic,
                         rwaRestricted: data.breakdown.rwaRestricted,
                       }
+                }
+                additionalTrustAssumptionsPercentage={
+                  data.additionalTrustAssumptionsPercentage
                 }
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}

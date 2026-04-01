@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -114,10 +114,10 @@ export const airbender: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -128,10 +128,10 @@ export const airbender: BaseProject = {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x08513A4646d1Bc8c348C67A3680bb19626E7F13F',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

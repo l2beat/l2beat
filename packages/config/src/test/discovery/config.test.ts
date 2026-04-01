@@ -37,8 +37,6 @@ export const onChainProjects: string[] = [
   'tokens',
   'gateway',
   'opcm16',
-  'aztecnetwork',
-  'aztecnetwork-alphapayload',
   'debridge',
   ...configReader.getProjectsInGroup('tokens'),
 ]

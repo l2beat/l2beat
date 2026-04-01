@@ -145,6 +145,7 @@ export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
   public waitingForWipe = false
+  public hasError = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
   private readonly exclusiveExecutionMutex = new AsyncMutex()
@@ -173,7 +174,9 @@ export class InteropEventSyncer extends TimeLoop {
         await this.clearChainSyncError()
       }
       this.state = await fn(state)
+      this.hasError = false
     } catch (error) {
+      this.hasError = true
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
         chain: this.chain,

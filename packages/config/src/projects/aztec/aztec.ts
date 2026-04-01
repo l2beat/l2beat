@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -321,6 +322,12 @@ export const aztec: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'RollupProcessor',
+        'verifier',
+      ),
+    ],
   },
   permissions: {
     ethereum: {

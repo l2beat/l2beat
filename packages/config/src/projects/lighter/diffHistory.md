@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xdc15817399e0dd691dbba44daabf025c72233b70
+
+# Diff at Mon, 30 Mar 2026 14:47:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b5657976f9d454d5888a0b417a0c3fc9c8226d31 block: 1773307725
+- current timestamp: 1774881277
+
+## Description
+
+Lighter verifier upgraded.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        45
++        47
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x4b84ec2617ebb82301e3dd281aa9b96b8b0d157cc7d8b3d6232bdcc01f2592ad"
++        "0x5e3d7b6d29089561516de79ebfb16ec22a67f997f4b1b656f9ba7c4caec453d7"
+      values.$implementation:
+-        "eth:0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8"
++        "eth:0xb20De28D78b63bc0c94eef89Db53F6338af17825"
+      values.getTarget:
+-        "eth:0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8"
++        "eth:0xb20De28D78b63bc0c94eef89Db53F6338af17825"
+      implementationNames.eth:0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xb20De28D78b63bc0c94eef89Db53F6338af17825:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x372aa3fa417269196cc35e9aeadef96db8e2a0fc
 
 # Diff at Thu, 12 Mar 2026 09:32:03 GMT:
