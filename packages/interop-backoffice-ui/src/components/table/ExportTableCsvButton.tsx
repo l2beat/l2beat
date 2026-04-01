@@ -2,8 +2,6 @@ import type { RowData, Table } from '@tanstack/react-table'
 import { DownloadIcon } from 'lucide-react'
 import { Button } from '~/components/core/Button'
 
-type CsvRowModel = 'sorted' | 'all' | 'filtered' | 'page'
-
 function escapeCsvCell(value: string) {
   return `"${value.replaceAll('"', '""')}"`
 }
@@ -27,31 +25,13 @@ function stringifyCsvValue(value: unknown) {
   }
 }
 
-function getRowsForModel<TData extends RowData>(
-  table: Table<TData>,
-  rowModel: CsvRowModel,
-) {
-  if (rowModel === 'all') {
-    return table.getCoreRowModel().rows
-  }
-  if (rowModel === 'filtered') {
-    return table.getFilteredRowModel().rows
-  }
-  if (rowModel === 'page') {
-    return table.getPaginationRowModel().rows
-  }
-  return table.getSortedRowModel().rows
-}
-
 export function exportTableToCsv<TData extends RowData>(
   table: Table<TData>,
   options?: {
     filename?: string
-    rowModel?: CsvRowModel
   },
 ) {
-  const rowModel = options?.rowModel ?? 'sorted'
-  const rows = getRowsForModel(table, rowModel)
+  const rows = table.getRowModel().rows
   const columns = table
     .getVisibleLeafColumns()
     .filter((column) => column.getIsVisible())
@@ -102,7 +82,6 @@ export function exportTableToCsv<TData extends RowData>(
 
 interface ExportTableCsvButtonProps<TData extends RowData> {
   table: Table<TData>
-  rowModel?: CsvRowModel
   filename?: string
   getFilename?: () => string
   disabled?: boolean
@@ -111,7 +90,6 @@ interface ExportTableCsvButtonProps<TData extends RowData> {
 
 export function ExportTableCsvButton<TData extends RowData>({
   table,
-  rowModel = 'sorted',
   filename,
   getFilename,
   disabled = false,
@@ -125,7 +103,6 @@ export function ExportTableCsvButton<TData extends RowData>({
       onClick={() => {
         const resolvedFilename = getFilename?.() ?? filename
         exportTableToCsv(table, {
-          rowModel,
           filename: resolvedFilename,
         })
       }}
