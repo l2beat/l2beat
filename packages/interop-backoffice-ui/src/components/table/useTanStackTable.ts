@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { useTableSearch } from './search'
+import { useTableSearch } from './hooks/useTableSearch'
 
 export type PageSizeOption = '10' | '25' | '50' | '100' | 'all'
 
@@ -35,7 +35,7 @@ export function useTanStackTable<TData extends RowData>({
   getRowId,
   initialSorting = [],
   initialPageSizeOption = '100',
-  searchPlaceholder = 'Fuzzy search',
+  searchPlaceholder = 'Search',
 }: UseTanStackTableOptions<TData>) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
   const [pageSizeOption, setPageSizeOption] = useState<PageSizeOption>(

@@ -64,7 +64,7 @@ export function TanStackTable<TData extends RowData>({
   filteredRowsCount,
   searchValue,
   onSearchValueChange,
-  searchPlaceholder = 'Fuzzy search',
+  searchPlaceholder = 'Search',
   isSearchPending = false,
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)

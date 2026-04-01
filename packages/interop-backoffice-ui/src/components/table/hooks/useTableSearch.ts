@@ -1,7 +1,7 @@
 import type { ColumnDef, RowData } from '@tanstack/react-table'
 import fuzzysort from 'fuzzysort'
 import { useMemo } from 'react'
-import { getAccessorValue, getLeafColumns } from './utils'
+import { getAccessorValue, getLeafColumns } from '../utils'
 
 type TableSearchProps<TData extends RowData> = {
   data: TData[]
