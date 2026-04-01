@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import type { CommonProjectColumnsOptions } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
@@ -13,7 +14,6 @@ import { TableLink } from '../../../../../components/table/TableLink'
 import type { ScalingTvsTableRow } from '../../utils/toTableRows'
 import { TotalValueSecuredCell } from './TotalValueSecuredCell'
 import { ValueSecuredCell } from './ValueSecuredCell'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
