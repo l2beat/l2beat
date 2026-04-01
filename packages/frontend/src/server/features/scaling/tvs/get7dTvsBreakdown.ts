@@ -71,7 +71,7 @@ export async function get7dTvsBreakdown(
   params: TvsBreakdownProjectFilter,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
-    return getMockTvsBreakdownData(props)
+    return getMockTvsBreakdownData(params)
   }
 
   const db = getDb()
@@ -188,20 +188,23 @@ export async function get7dTvsBreakdown(
       continue
     }
 
-    const [
-      oldestValue,
-      oldestCanonical,
-      oldestCustomCanonical,
-      oldestExternal,
-      oldestNative,
-      oldestEther,
-      oldestStablecoin,
-      oldestBtc,
-      oldestRwaRestricted,
-      oldestRwaPublic,
-      oldestOther,
-      oldestAssociated,
-    ] = sevenDaysAgoValues
+    const sevenDaysAgoValue = sevenDaysAgoValues.at(-1)
+    assert(sevenDaysAgoValue, 'sevenDaysAgoValue is undefined')
+
+    const {
+      value: oldestValue,
+      canonical: oldestCanonical,
+      customCanonical: oldestCustomCanonical,
+      external: oldestExternal,
+      native: oldestNative,
+      ether: oldestEther,
+      stablecoin: oldestStablecoin,
+      btc: oldestBtc,
+      rwaRestricted: oldestRwaRestricted,
+      rwaPublic: oldestRwaPublic,
+      other: oldestOther,
+      associated: oldestAssociated,
+    } = sevenDaysAgoValue
 
     const canonical = latestCanonical + latestCustomCanonical
     const sevenDaysAgoCanonical = oldestCanonical + oldestCustomCanonical

@@ -505,6 +505,7 @@ export class TokenValueRepository extends BaseRepository {
       project: string
       value: number
       canonical: number
+      customCanonical: number
       external: number
       native: number
       ether: number
@@ -531,14 +532,10 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(
-          eb,
-          valueField,
-          ['canonical', 'custom-canonical'],
-          'canonical',
-        ),
-        sumBySource(eb, valueField, ['external'], 'external'),
-        sumBySource(eb, valueField, ['native'], 'native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -583,6 +580,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
