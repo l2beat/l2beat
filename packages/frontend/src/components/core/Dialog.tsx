@@ -14,9 +14,7 @@ const DialogClose = ({
   ref,
   className,
   ...props
-}: Omit<React.ComponentProps<typeof DialogPrimitive.Close>, 'children'> & {
-  children?: never
-}) => (
+}: Omit<React.ComponentProps<typeof DialogPrimitive.Close>, 'children'>) => (
   <DialogPrimitive.Close
     ref={ref}
     className={cn(
