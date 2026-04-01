@@ -1,7 +1,16 @@
+import { v } from '@l2beat/validate'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
 import { getRecategorisedTvsChart } from './getRecategorisedTvsChartData'
-import type { TvsProjectFilter } from './utils/projectFilterUtils'
+import { TvsProjectFilter } from './utils/projectFilterUtils'
+
+export const TvsChartStatsParams = v.object({
+  filter: TvsProjectFilter,
+  excludeAssociatedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
+})
+
+export type TvsChartStatsParams = v.infer<typeof TvsChartStatsParams>
 
 export type TvsChartStats = {
   total: TvsStat
@@ -15,11 +24,15 @@ type TvsStat = {
   change: number | undefined
 }
 
-export async function getTvsChartStats(
-  filter: TvsProjectFilter,
-): Promise<TvsChartStats | undefined> {
+export async function getTvsChartStats({
+  filter,
+  excludeAssociatedTokens,
+  excludeRwaRestrictedTokens,
+}: TvsChartStatsParams): Promise<TvsChartStats | undefined> {
   const { chart } = await getRecategorisedTvsChart({
     range: optionToRange('7d'),
+    excludeAssociatedTokens,
+    excludeRwaRestrictedTokens,
     filter,
   })
 

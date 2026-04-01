@@ -2,6 +2,8 @@ import { StatCard } from '~/components/chart/stats/StatCard'
 import { StatsGrid } from '~/components/chart/stats/StatsGrid'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
+import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
@@ -25,9 +27,27 @@ const statsMeta: Record<StatType, { label: string; color: string }> = {
   },
 }
 
-export function ScalingTvsStats() {
+export function ScalingTvsStats({
+  entries,
+}: {
+  entries: {
+    rollups: ScalingTvsEntry[]
+    validiumsAndOptimiums: ScalingTvsEntry[]
+    others: ScalingTvsEntry[]
+  }
+}) {
+  const { display } = useTvsDisplayControlsContext()
   const { data, isLoading } = api.tvs.chartStats.useQuery({
-    filter: { type: 'layer2' },
+    filter: {
+      type: 'projects',
+      projectIds: [
+        ...entries.rollups,
+        ...entries.validiumsAndOptimiums,
+        ...entries.others,
+      ].map((entry) => entry.id),
+    },
+    excludeAssociatedTokens: display.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
   })
   const stats = data
 

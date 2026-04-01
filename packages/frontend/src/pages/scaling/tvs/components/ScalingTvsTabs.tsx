@@ -71,7 +71,7 @@ export function ScalingTvsTabs(props: Props) {
         </div>
       </div>
       <div className="mt-4">
-        <ScalingTvsStats />
+        <ScalingTvsStats entries={entries} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

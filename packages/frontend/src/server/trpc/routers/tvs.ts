@@ -1,4 +1,3 @@
-import { v } from '@l2beat/validate'
 import {
   get7dTvsBreakdown,
   TvsBreakdownProjectFilter,
@@ -19,12 +18,14 @@ import {
   getTvsChart,
   TvsChartDataParams,
 } from '~/server/features/scaling/tvs/getTvsChartData'
-import { getTvsChartStats } from '~/server/features/scaling/tvs/getTvsChartStats'
+import {
+  getTvsChartStats,
+  TvsChartStatsParams,
+} from '~/server/features/scaling/tvs/getTvsChartStats'
 import {
   getTokenTvsChart,
   TokenTvsChartParams,
 } from '~/server/features/scaling/tvs/tokens/getTokenTvsChart'
-import { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import { procedure, router } from '../trpc'
 
 export const tvsRouter = router({
@@ -41,12 +42,8 @@ export const tvsRouter = router({
     .input(RecategorisedTvsChartDataParams)
     .query(({ input }) => getRecategorisedTvsChart(input)),
   chartStats: procedure
-    .input(
-      v.object({
-        filter: TvsProjectFilter,
-      }),
-    )
-    .query(({ input }) => getTvsChartStats(input.filter)),
+    .input(TvsChartStatsParams)
+    .query(({ input }) => getTvsChartStats(input)),
   tokenChart: procedure
     .input(TokenTvsChartParams)
     .query(({ input }) => getTokenTvsChart(input)),

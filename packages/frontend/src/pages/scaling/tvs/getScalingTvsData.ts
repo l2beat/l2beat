@@ -59,17 +59,16 @@ async function getCachedData(
   cache: InMemoryCache,
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
-  const [entries, queryState] = await Promise.all([
-    getScalingTvsEntries(),
-    cache.get(
-      {
-        key: ['scaling', 'tvs', 'data', 'query-state', tab],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getQueryState(tab),
-    ),
-  ])
+  const entries = await getScalingTvsEntries()
+
+  const queryState = await cache.get(
+    {
+      key: ['scaling', 'tvs', 'data', 'query-state', tab],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getQueryState(tab, entries),
+  )
 
   return {
     entries,
@@ -79,6 +78,7 @@ async function getCachedData(
 
 async function getQueryState(
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  entries: Awaited<ReturnType<typeof getScalingTvsEntries>>,
 ) {
   const helpers = getSsrHelpers()
 
@@ -103,10 +103,21 @@ async function getQueryState(
     }),
     helpers.tvs.recategorisedChart.prefetch({
       range: optionToRange('7d'),
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
     }),
     helpers.tvs.chartStats.prefetch({
-      filter: { type: 'layer2' },
+      filter: {
+        type: 'projects',
+        projectIds: [
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
+        ].map((entry) => entry.id),
+      },
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }),
   ])
   return helpers.dehydrate()
