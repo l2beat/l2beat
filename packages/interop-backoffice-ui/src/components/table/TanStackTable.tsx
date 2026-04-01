@@ -4,6 +4,7 @@ import {
   type RowData,
   type Table,
 } from '@tanstack/react-table'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -70,12 +71,28 @@ export function TanStackTable<TData extends RowData>({
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex
   const headerGroups = table.getHeaderGroups()
+  const rows = table.getRowModel().rows
   const headerHeightPx = headerGroups.length * 40
   const scrollViewportRef = useRef<HTMLDivElement>(null)
   const [scrollState, setScrollState] = useState({
     showHeaderShadow: false,
     scrollWidth: 0,
   })
+  const rowVirtualizer = useVirtualizer({
+    count: rows.length,
+    estimateSize: () => 41,
+    getItemKey: (index) => rows[index]?.id ?? index,
+    getScrollElement: () => scrollViewportRef.current,
+    overscan: 10,
+  })
+  const virtualRows = rowVirtualizer.getVirtualItems()
+  const firstVirtualRow = virtualRows[0]
+  const lastVirtualRow = virtualRows[virtualRows.length - 1]
+  const virtualPaddingTop = firstVirtualRow ? firstVirtualRow.start : 0
+  const virtualPaddingBottom = lastVirtualRow
+    ? rowVirtualizer.getTotalSize() - lastVirtualRow.end
+    : 0
+  const visibleColumnsCount = Math.max(table.getVisibleLeafColumns().length, 1)
 
   const syncScrollState = useCallback((element: HTMLDivElement) => {
     const nextState = {
@@ -221,38 +238,75 @@ export function TanStackTable<TData extends RowData>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length === 0 ? (
+            {rows.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={Math.max(table.getVisibleLeafColumns().length, 1)}
+                  colSpan={visibleColumnsCount}
                   className="h-20 text-center text-muted-foreground"
                 >
                   {emptyMessage}
                 </TableCell>
               </TableRow>
             ) : (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={getRowDataState?.(row)}
-                  className={cn(
-                    typeof rowClassName === 'function'
-                      ? rowClassName(row)
-                      : rowClassName,
-                    onRowClick ? 'cursor-pointer' : undefined,
-                  )}
-                  onClick={() => onRowClick?.(row)}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
+              <>
+                {virtualPaddingTop > 0 ? (
+                  <TableRow
+                    aria-hidden="true"
+                    className="border-0 hover:bg-transparent"
+                  >
+                    <TableCell
+                      colSpan={visibleColumnsCount}
+                      className="h-0 border-0 p-0 first:pl-0 last:pr-0"
+                      style={{ height: `${virtualPaddingTop}px` }}
+                    />
+                  </TableRow>
+                ) : null}
+
+                {virtualRows.map((virtualRow) => {
+                  const row = rows[virtualRow.index]
+
+                  if (!row) {
+                    return null
+                  }
+
+                  return (
+                    <TableRow
+                      key={row.id}
+                      data-index={virtualRow.index}
+                      data-state={getRowDataState?.(row)}
+                      className={cn(
+                        typeof rowClassName === 'function'
+                          ? rowClassName(row)
+                          : rowClassName,
+                        onRowClick ? 'cursor-pointer' : undefined,
                       )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+                      onClick={() => onRowClick?.(row)}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  )
+                })}
+
+                {virtualPaddingBottom > 0 ? (
+                  <TableRow
+                    aria-hidden="true"
+                    className="border-0 hover:bg-transparent"
+                  >
+                    <TableCell
+                      colSpan={visibleColumnsCount}
+                      className="h-0 border-0 p-0 first:pl-0 last:pr-0"
+                      style={{ height: `${virtualPaddingBottom}px` }}
+                    />
+                  </TableRow>
+                ) : null}
+              </>
             )}
           </TableBody>
         </CoreTable>
