@@ -1,6 +1,7 @@
 import {
   type ColumnDef,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   type RowData,
@@ -8,8 +9,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useTableSearch } from './hooks/useTableSearch'
+import { fuzzyFilter } from './search'
 
 export type PageSizeOption = '10' | '25' | '50' | '100' | 'all'
 
@@ -41,22 +42,22 @@ export function useTanStackTable<TData extends RowData>({
   const [pageSizeOption, setPageSizeOption] = useState<PageSizeOption>(
     initialPageSizeOption,
   )
-  const [searchValue, setSearchValue] = useState('')
-  const debouncedSearchValue = useDebouncedValue(searchValue.trim(), 150)
-  const { filteredData, hasAnySearchableColumns } = useTableSearch({
-    data,
-    columns,
-    searchValue: debouncedSearchValue,
-  })
+  const { isSearchPending, globalFilter, searchValue, setSearchValue } =
+    useTableSearch()
 
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     state: {
       sorting,
+      globalFilter,
+    },
+    filterFns: {
+      fuzzy: fuzzyFilter,
     },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
@@ -68,26 +69,32 @@ export function useTanStackTable<TData extends RowData>({
     },
     getRowId,
   })
+  const filteredRowsCount = table.getFilteredRowModel().rows.length
 
   useEffect(() => {
-    const nextPageSize = toPageSize(pageSizeOption, filteredData.length)
+    const nextPageSize = toPageSize(pageSizeOption, filteredRowsCount)
     const currentPageSize = table.getState().pagination.pageSize
     if (currentPageSize !== nextPageSize) {
       table.setPageSize(nextPageSize)
       table.setPageIndex(0)
     }
-  }, [pageSizeOption, filteredData.length, table])
+  }, [pageSizeOption, filteredRowsCount, table])
 
   return {
     table,
+
     pageSizeOption,
     setPageSizeOption,
-    isSearchEnabled: hasAnySearchableColumns,
-    isSearchPending: searchValue.trim() !== debouncedSearchValue,
-    filteredRowsCount: filteredData.length,
-    searchPlaceholder,
+
     searchValue,
     setSearchValue,
+    searchPlaceholder,
+    isSearchPending,
+    isSearchEnabled: table
+      .getAllColumns()
+      .some((col) => col.getCanGlobalFilter()),
+
+    filteredRowsCount,
     totalRowsCount: data.length,
   }
 }

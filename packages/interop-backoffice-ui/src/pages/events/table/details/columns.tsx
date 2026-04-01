@@ -23,7 +23,6 @@ export function createEventDetailsColumns(options: {
       header: (props) => <SortableHeader {...props} label="Plugin" />,
       meta: {
         csvHeader: 'Plugin',
-        getSearchValue: ({ row }) => row.plugin,
       },
     }),
     columnHelper.accessor('chain', {
@@ -54,7 +53,6 @@ export function createEventDetailsColumns(options: {
       },
       meta: {
         csvHeader: 'Tx hash',
-        getSearchValue: ({ row }) => row.txHash,
       },
     }),
     columnHelper.accessor('logIndex', {
@@ -69,7 +67,6 @@ export function createEventDetailsColumns(options: {
       meta: {
         csvHeader: 'Direction',
         getCsvValue: ({ row }) => row.original.direction ?? '-',
-        getSearchValue: ({ row }) => row.direction ?? '',
       },
     }),
     columnHelper.accessor('srcChain', {
@@ -78,7 +75,6 @@ export function createEventDetailsColumns(options: {
       meta: {
         csvHeader: '$srcChain',
         getCsvValue: ({ row }) => row.original.srcChain ?? '-',
-        getSearchValue: ({ row }) => row.srcChain ?? '',
       },
     }),
     columnHelper.accessor('dstChain', {
@@ -87,7 +83,6 @@ export function createEventDetailsColumns(options: {
       meta: {
         csvHeader: '$dstChain',
         getCsvValue: ({ row }) => row.original.dstChain ?? '-',
-        getSearchValue: ({ row }) => row.dstChain ?? '',
       },
     }),
     columnHelper.accessor('args', {
@@ -102,7 +97,6 @@ export function createEventDetailsColumns(options: {
       ),
       meta: {
         csvHeader: 'Args',
-        getSearchValue: ({ row }) => row.args,
       },
     }),
   ] as unknown as ColumnDef<EventDetailsRow>[]

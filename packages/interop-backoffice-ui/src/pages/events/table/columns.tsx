@@ -10,7 +10,6 @@ export const eventStatsColumns = [
     header: (props) => <SortableHeader {...props} label="Type" />,
     meta: {
       csvHeader: 'Type',
-      getSearchValue: ({ row }) => row.type,
     },
   }),
   columnHelper.accessor('direction', {
@@ -19,7 +18,6 @@ export const eventStatsColumns = [
     meta: {
       csvHeader: 'Direction',
       getCsvValue: ({ row }) => row.original.direction ?? '-',
-      getSearchValue: ({ row }) => row.direction ?? '',
     },
   }),
   columnHelper.accessor('count', {
