@@ -14,7 +14,7 @@ export function EventsTable({
 }: EventsTableProps) {
   const {
     filteredRowsCount,
-    isFuzzySearchEnabled,
+    isSearchEnabled,
     isSearchPending,
     pageSizeOption,
     searchPlaceholder,
@@ -41,8 +41,8 @@ export function EventsTable({
       getCsvFilename={() => `interop-events-${new Date().toISOString()}.csv`}
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}
-      searchValue={isFuzzySearchEnabled ? searchValue : undefined}
-      onSearchValueChange={isFuzzySearchEnabled ? setSearchValue : undefined}
+      searchValue={isSearchEnabled ? searchValue : undefined}
+      onSearchValueChange={isSearchEnabled ? setSearchValue : undefined}
       searchPlaceholder={searchPlaceholder}
       isSearchPending={isSearchPending}
     />
