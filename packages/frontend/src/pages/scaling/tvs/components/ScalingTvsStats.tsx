@@ -3,9 +3,7 @@ import { StatsGrid } from '~/components/chart/stats/StatsGrid'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PercentChange } from '~/components/PercentChange'
 import { api } from '~/trpc/React'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { optionToRange } from '~/utils/range/range'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
 const statsMeta: Record<StatType, { label: string; color: string }> = {
@@ -28,12 +26,10 @@ const statsMeta: Record<StatType, { label: string; color: string }> = {
 }
 
 export function ScalingTvsStats() {
-  const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
-    range: optionToRange('7d'),
+  const { data, isLoading } = api.tvs.chartStats.useQuery({
     filter: { type: 'layer2' },
   })
-
-  const stats = getStats(data?.chart)
+  const stats = data
 
   return (
     <StatsGrid>
@@ -105,38 +101,4 @@ function Stat({
       </div>
     </StatCard>
   )
-}
-
-function getStats(
-  chart: [number, number | null, number | null, number | null][] | undefined,
-) {
-  const oldest = chart?.at(0)
-  const newest = chart?.at(-1)
-  if (!oldest || !newest) return undefined
-
-  const oldestRollups = oldest[1] ?? 0
-  const oldestValidiumsAndOptimiums = oldest[2] ?? 0
-  const oldestOthers = oldest[3] ?? 0
-
-  const newestRollups = newest[1] ?? 0
-  const newestValidiumsAndOptimiums = newest[2] ?? 0
-  const newestOthers = newest[3] ?? 0
-
-  const stat = (now: number, then: number) => ({
-    value: now,
-    change: calculatePercentageChange(now, then),
-  })
-
-  return {
-    total: stat(
-      newestRollups + newestValidiumsAndOptimiums + newestOthers,
-      oldestRollups + oldestValidiumsAndOptimiums + oldestOthers,
-    ),
-    rollups: stat(newestRollups, oldestRollups),
-    validiumsAndOptimiums: stat(
-      newestValidiumsAndOptimiums,
-      oldestValidiumsAndOptimiums,
-    ),
-    others: stat(newestOthers, oldestOthers),
-  }
 }

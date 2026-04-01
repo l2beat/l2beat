@@ -105,6 +105,9 @@ async function getQueryState(
       range: optionToRange('7d'),
       filter: { type: 'layer2' },
     }),
+    helpers.tvs.chartStats.prefetch({
+      filter: { type: 'layer2' },
+    }),
   ])
   return helpers.dehydrate()
 }
