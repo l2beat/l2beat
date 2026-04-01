@@ -18,7 +18,7 @@ const DialogClose = ({
   <DialogPrimitive.Close
     ref={ref}
     className={cn(
-      'absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:pointer-events-none',
+      'absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:pointer-events-none',
       className,
     )}
     {...props}
