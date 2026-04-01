@@ -19,5 +19,3 @@ declare module '@tanstack/react-table' {
     getSearchValue?: (args: SearchValueContext<TData, TValue>) => string
   }
 }
-
-export {}
