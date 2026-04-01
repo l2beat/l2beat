@@ -28,7 +28,7 @@ export function ScalingSummaryNotReviewedTable({ entries }: Props) {
     () =>
       toTableRows({
         entries,
-        data,
+        data: data?.projects,
       }),
     [entries, data],
   )

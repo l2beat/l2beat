@@ -6,18 +6,15 @@ interface AdditionalTrustAssumptionsProps {
   percentage: number
 }
 
-const additionalTrustBannerVariants = cva(
-  'mt-2 w-full rounded-md px-2.5 py-2',
-  {
-    variants: {
-      sentiment: {
-        good: 'bg-positive/15 dark:bg-positive/20',
-        warning: 'bg-warning/15 dark:bg-warning/20',
-        bad: 'bg-negative/10 dark:bg-negative/20',
-      },
+const additionalTrustBannerVariants = cva('w-full rounded-md px-2.5 py-2', {
+  variants: {
+    sentiment: {
+      good: 'bg-positive/15 dark:bg-positive/20',
+      warning: 'bg-warning/15 dark:bg-warning/20',
+      bad: 'bg-negative/10 dark:bg-negative/20',
     },
   },
-)
+})
 
 const additionalTrustPercentVariants = cva('font-bold', {
   variants: {

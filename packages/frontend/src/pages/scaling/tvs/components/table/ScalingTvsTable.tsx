@@ -36,7 +36,7 @@ export function ScalingTvsTable({
     () =>
       toTableRows({
         entries,
-        data,
+        data: data?.projects,
       }),
     [entries, data],
   )

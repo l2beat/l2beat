@@ -13,6 +13,7 @@ import { TableLink } from '../../../../../components/table/TableLink'
 import type { ScalingTvsTableRow } from '../../utils/toTableRows'
 import { TotalValueSecuredCell } from './TotalValueSecuredCell'
 import { ValueSecuredCell } from './ValueSecuredCell'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
@@ -90,6 +91,7 @@ export const getScalingTvsColumns = (
                 }
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
+                syncWarning={ctx.row.original.tvs.syncWarning}
               />
             )
           },
@@ -328,10 +330,12 @@ function BreakdownCell({
           : undefined
       }
     >
-      <ValueSecuredCell
-        value={data.breakdown[dataKey]}
-        change={data.change[dataKey]}
-      />
+      <SyncStatusWrapper isSynced={!row.tvs.syncWarning}>
+        <ValueSecuredCell
+          value={data.breakdown[dataKey]}
+          change={data.change[dataKey]}
+        />
+      </SyncStatusWrapper>
     </TableLink>
   )
 }

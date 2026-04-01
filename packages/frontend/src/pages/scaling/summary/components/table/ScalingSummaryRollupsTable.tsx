@@ -28,7 +28,7 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
     () =>
       toTableRows({
         entries,
-        data,
+        data: data?.projects,
       }),
     [entries, data],
   )

@@ -1,5 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import {
   createTvsBreakdownProjectFilter,
@@ -18,11 +18,11 @@ interface TvsTableProjectData extends ProjectSevenDayTvsBreakdown {
 
 export async function getTvsTableData(
   params: TvsBreakdownProjectFilter,
-): Promise<TvsTableData> {
+): Promise<{ total: number; projects: TvsTableData }> {
   const tvsProjects = await getTvsProjects(
     createTvsBreakdownProjectFilter(params),
   )
-  const { projects } = await get7dTvsBreakdown(params)
+  const { total, projects } = await get7dTvsBreakdown(params)
 
   const result: TvsTableData = {}
   for (const [projectId, values] of Object.entries(projects)) {
@@ -40,11 +40,20 @@ export async function getTvsTableData(
 
     result[projectId] = {
       ...values,
+      syncState:
+        project.projectId === 'optimism'
+          ? {
+              isSynced: false,
+              syncedUntil:
+                UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR,
+              target: UnixTime.toStartOf(UnixTime.now(), 'hour'),
+            }
+          : values.syncState,
       warnings: compact([
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
     }
   }
 
-  return result
+  return { total, projects: result }
 }
