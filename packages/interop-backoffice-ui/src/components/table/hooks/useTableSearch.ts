@@ -52,9 +52,7 @@ function getSearchableColumns<TData extends RowData>(
   columns: ColumnDef<TData, unknown>[],
 ) {
   return getLeafColumns(columns).flatMap((column) => {
-    const isSearchable =
-      column.meta?.searchable === true ||
-      column.meta?.getSearchValue !== undefined
+    const isSearchable = column.meta?.getSearchValue !== undefined
 
     if (!isSearchable) {
       return []

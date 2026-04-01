@@ -1,30 +1,28 @@
-import type { ColumnDef } from '@tanstack/react-table'
+import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { Link } from 'react-router-dom'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventStatsRow } from '../types'
 
-export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
-  {
-    accessorKey: 'type',
+const columnHelper = createColumnHelper<EventStatsRow>()
+
+export const eventStatsColumns = [
+  columnHelper.accessor('type', {
     header: (props) => <SortableHeader {...props} label="Type" />,
     meta: {
       csvHeader: 'Type',
-      searchable: true,
+      getSearchValue: ({ row }) => row.type,
     },
-  },
-  {
-    accessorKey: 'direction',
+  }),
+  columnHelper.accessor('direction', {
     header: (props) => <SortableHeader {...props} label="Direction" />,
     cell: ({ row }) => row.original.direction ?? '-',
     meta: {
       csvHeader: 'Direction',
       getCsvValue: ({ row }) => row.original.direction ?? '-',
-      searchable: true,
       getSearchValue: ({ row }) => row.direction ?? '',
     },
-  },
-  {
-    accessorKey: 'count',
+  }),
+  columnHelper.accessor('count', {
     header: (props) => <SortableHeader {...props} label="All" />,
     cell: ({ row }) => (
       <Link
@@ -37,9 +35,8 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     meta: {
       csvHeader: 'All',
     },
-  },
-  {
-    accessorKey: 'matched',
+  }),
+  columnHelper.accessor('matched', {
     header: (props) => <SortableHeader {...props} label="Matched" />,
     cell: ({ row }) => (
       <Link
@@ -52,9 +49,8 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     meta: {
       csvHeader: 'Matched',
     },
-  },
-  {
-    accessorKey: 'unmatched',
+  }),
+  columnHelper.accessor('unmatched', {
     header: (props) => <SortableHeader {...props} label="Unmatched" />,
     cell: ({ row }) => (
       <Link
@@ -67,9 +63,8 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     meta: {
       csvHeader: 'Unmatched',
     },
-  },
-  {
-    accessorKey: 'oldUnmatched',
+  }),
+  columnHelper.accessor('oldUnmatched', {
     header: (props) => (
       <SortableHeader {...props} label="Unmatched (>2h ago)" />
     ),
@@ -84,9 +79,8 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     meta: {
       csvHeader: 'Unmatched (>2h ago)',
     },
-  },
-  {
-    accessorKey: 'unsupported',
+  }),
+  columnHelper.accessor('unsupported', {
     header: (props) => <SortableHeader {...props} label="Unsupported" />,
     cell: ({ row }) => (
       <Link
@@ -99,5 +93,5 @@ export const eventStatsColumns: ColumnDef<EventStatsRow>[] = [
     meta: {
       csvHeader: 'Unsupported',
     },
-  },
-]
+  }),
+] as unknown as ColumnDef<EventStatsRow>[]

@@ -1,4 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table'
+import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventDetailsRow } from '../../types'
@@ -8,41 +8,37 @@ import {
   toCsvIsoTimestamp,
 } from '../../utils'
 
+const columnHelper = createColumnHelper<EventDetailsRow>()
+
 export function createEventDetailsColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
 }): ColumnDef<EventDetailsRow>[] {
   return [
-    {
-      id: 'timestamp',
-      accessorFn: (row) => row.timestamp,
+    columnHelper.accessor('timestamp', {
       header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
       cell: ({ row }) => formatEventTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
         getCsvValue: ({ row }) => toCsvIsoTimestamp(row.original.timestamp),
       },
-    },
-    {
-      accessorKey: 'plugin',
+    }),
+    columnHelper.accessor('plugin', {
       header: (props) => <SortableHeader {...props} label="Plugin" />,
       meta: {
         csvHeader: 'Plugin',
-        searchable: true,
+        getSearchValue: ({ row }) => row.plugin,
       },
-    },
-    {
-      accessorKey: 'chain',
+    }),
+    columnHelper.accessor('chain', {
       header: (props) => <SortableHeader {...props} label="Chain" />,
       meta: {
         csvHeader: 'Chain',
-        searchable: true,
       },
-    },
-    {
-      accessorKey: 'txHash',
+    }),
+    columnHelper.accessor('txHash', {
       header: (props) => <SortableHeader {...props} label="Tx hash" />,
-      cell: ({ row }) => {
-        const hash = row.original.txHash
+      cell: ({ getValue, row }) => {
+        const hash = getValue()
         const explorerUrl = options.getExplorerUrl(row.original.chain)
         const label = shortenHash(hash)
 
@@ -61,51 +57,43 @@ export function createEventDetailsColumns(options: {
       },
       meta: {
         csvHeader: 'Tx hash',
-        searchable: true,
+        getSearchValue: ({ row }) => row.txHash,
       },
-    },
-    {
-      accessorKey: 'logIndex',
+    }),
+    columnHelper.accessor('logIndex', {
       header: (props) => <SortableHeader {...props} label="Log index" />,
       meta: {
         csvHeader: 'Log index',
       },
-    },
-    {
-      accessorKey: 'direction',
+    }),
+    columnHelper.accessor('direction', {
       header: (props) => <SortableHeader {...props} label="Direction" />,
       cell: ({ row }) => row.original.direction ?? '-',
       meta: {
         csvHeader: 'Direction',
         getCsvValue: ({ row }) => row.original.direction ?? '-',
-        searchable: true,
         getSearchValue: ({ row }) => row.direction ?? '',
       },
-    },
-    {
-      accessorKey: 'srcChain',
+    }),
+    columnHelper.accessor('srcChain', {
       header: (props) => <SortableHeader {...props} label="$srcChain" />,
       cell: ({ row }) => row.original.srcChain ?? '-',
       meta: {
         csvHeader: '$srcChain',
         getCsvValue: ({ row }) => row.original.srcChain ?? '-',
-        searchable: true,
         getSearchValue: ({ row }) => row.srcChain ?? '',
       },
-    },
-    {
-      accessorKey: 'dstChain',
+    }),
+    columnHelper.accessor('dstChain', {
       header: (props) => <SortableHeader {...props} label="$dstChain" />,
       cell: ({ row }) => row.original.dstChain ?? '-',
       meta: {
         csvHeader: '$dstChain',
         getCsvValue: ({ row }) => row.original.dstChain ?? '-',
-        searchable: true,
         getSearchValue: ({ row }) => row.dstChain ?? '',
       },
-    },
-    {
-      accessorKey: 'args',
+    }),
+    columnHelper.accessor('args', {
       header: (props) => <SortableHeader {...props} label="Args" />,
       cell: ({ row }) => (
         <code
@@ -117,9 +105,8 @@ export function createEventDetailsColumns(options: {
       ),
       meta: {
         csvHeader: 'Args',
-        searchable: true,
         getSearchValue: ({ row }) => row.args,
       },
-    },
-  ]
+    }),
+  ] as unknown as ColumnDef<EventDetailsRow>[]
 }

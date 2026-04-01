@@ -15,7 +15,6 @@ declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     csvHeader?: string
     getCsvValue?: (args: CsvValueContext<TData, TValue>) => string
-    searchable?: boolean
     getSearchValue?: (args: SearchValueContext<TData, TValue>) => string
   }
 }

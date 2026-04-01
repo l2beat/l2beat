@@ -2,15 +2,15 @@ import type { HeaderContext, RowData } from '@tanstack/react-table'
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
 import { Button } from '~/components/core/Button'
 
-interface SortableHeaderProps<TData extends RowData>
-  extends HeaderContext<TData, unknown> {
+interface SortableHeaderProps<TData extends RowData, TValue>
+  extends HeaderContext<TData, TValue> {
   label: string
 }
 
-export function SortableHeader<TData extends RowData>({
+export function SortableHeader<TData extends RowData, TValue>({
   column,
   label,
-}: SortableHeaderProps<TData>) {
+}: SortableHeaderProps<TData, TValue>) {
   const sortState = column.getIsSorted()
 
   return (
