@@ -170,8 +170,8 @@ function NameWithProjectInfoTooltip({
 
   return (
     <Tooltip>
-      <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipContent className="flex flex-col gap-2">
+      <TooltipTrigger className="">{projectName}</TooltipTrigger>
+      <TooltipContent sideOffset={15} className="flex flex-col gap-2">
         <span className="text-heading-18">What is {projectName}?</span>
         <p>{project.description}</p>
         <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
