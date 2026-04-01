@@ -8,7 +8,6 @@ interface StatCardProps {
   className?: string
   title: ReactNode
   isLoading: boolean
-  loadingContent?: ReactNode
   children?: ReactNode
   footer?: ReactNode
 }
@@ -18,7 +17,6 @@ export function StatCard({
   className,
   title,
   isLoading,
-  loadingContent,
   children,
   footer,
 }: StatCardProps) {
@@ -28,11 +26,11 @@ export function StatCard({
         {title}
       </div>
       <div className="flex flex-col items-center justify-center pt-2">
-        {isLoading
-          ? (loadingContent ?? (
-              <Skeleton className="min-h-[23px] w-[4.75rem] shrink-0 md:min-h-7 md:w-[6rem]" />
-            ))
-          : children}
+        {isLoading ? (
+          <Skeleton className="min-h-[24px] w-24 shrink-0 md:min-h-7 md:w-32" />
+        ) : (
+          children
+        )}
         {footer}
       </div>
     </>
@@ -55,7 +53,7 @@ export function StatCard({
     <CssVariables variables={{ 'stat-color': color }}>
       <div
         className={cn(
-          'flex h-full flex-col items-center justify-center rounded-lg border border-[var(--stat-color)] p-2 md:p-4',
+          'flex h-full min-h-20 flex-col items-center justify-center rounded-lg border border-[var(--stat-color)] p-2 md:h-24 md:p-4 lg:h-28',
           className,
         )}
         style={{

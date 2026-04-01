@@ -107,8 +107,8 @@ function Stat({
       isLoading={isLoading}
       footer={
         type !== 'rollups' ? undefined : isLoading ? (
-          <div className="flex min-h-[17px] items-center justify-center gap-1 pt-1 md:min-h-[18px]">
-            <Skeleton className="min-h-[13px] w-[10.5rem] md:min-h-4 md:w-[11.5rem]" />
+          <div className="flex min-h-[14px] items-center justify-center gap-1 pt-1 md:min-h-[14px]">
+            <Skeleton className="min-h-[12px] w-[10.5rem] md:w-[11.5rem] lg:min-h-[14px] lg:w-[11.5rem]" />
           </div>
         ) : (
           scalingFactorFooter
