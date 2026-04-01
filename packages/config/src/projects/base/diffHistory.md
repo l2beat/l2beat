@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x9c517e0124bac89a5dcd0287da1df6bb1bdf52b3
+
+# Diff at Wed, 01 Apr 2026 07:37:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774387648
+- current timestamp: 1775028919
+
+## Description
+
+Gas parameter changes: daFootprintGasScalar increased, eip1559Denominator lowered from 125 to 100 and eip1559Elasticity from 6 to 5 for quicker L2 fee adjustments.
+
+## Watched changes
+
+```diff
+    contract L1Block (base:0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.daFootprintGasScalar:
+-        139
++        148
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.daFootprintGasScalar:
+-        139
++        148
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        125
++        100
+      values.eip1559Elasticity:
+-        6
++        5
+    }
+```
+
 Generated with discovered.json: 0x5591a3365d8cc9d0d9e1d61949f341ce62f8e615
 
 # Diff at Tue, 24 Mar 2026 21:28:34 GMT:

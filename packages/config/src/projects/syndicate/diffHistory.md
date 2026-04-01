@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x9bf5abdf20dd6319000df2899c05bcf120216170
+Generated with discovered.json: 0x3dbabb4acfa0454dc40dbba1ca639fd0859f8a94
+
+# Diff at Wed, 01 Apr 2026 07:38:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773419488
+- current timestamp: 1775029020
+
+## Description
+
+Routine Syndicate Token supply increase from scheduled emissions.
+
+## Watched changes
+
+```diff
+    contract Syndicate Token (eth:0x1bAB804803159aD84b8854581AA53AC72455614E) {
+    +++ description: None
+      values.getCurrentTotalSupply:
+-        "928333333333333333333333330"
++        "929999999999999999999999996"
+      values.totalSupply:
+-        "928333333333333333333333330"
++        "929999999999999999999999996"
+    }
+```
+
+Generated with discovered.json: 0xf3a7f8351eadbaf7dfe531be57ecd366197dd9da
 
 # Diff at Fri, 13 Mar 2026 16:32:38 GMT:
 

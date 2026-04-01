@@ -134,5 +134,11 @@
     "address": "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0",
     "chain": "ethereum",
     "blockNumber": 23881654
+  },
+  "L1CrossDomainMessenger.sol": {
+    "hash": "0x9db9942f58670bab2d2f04cd659483dd804b63208c5c83a704972a47b551b85e",
+    "address": "eth:0xE45D2d835d0b2D3C7f4fEe1eaa19A068d0ba8A88",
+    "chain": "ethereum",
+    "blockNumber": 24783311
   }
 }
