@@ -96,7 +96,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent fitContent className="flex flex-col gap-2">
+      <TooltipContent className="flex flex-col gap-2">
         {props.breakdown.type === 'bridgeType' ? (
           <>
             <ValueSecuredBreakdownTooltipContent

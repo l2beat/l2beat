@@ -48,13 +48,11 @@ export function AdditionalTrustAssumptionsBanner({
 
   return (
     <div className={additionalTrustBannerVariants({ sentiment })}>
-      <p className="text-right text-label-value-13 text-primary leading-snug">
+      <p className="text-pretty text-label-value-13 text-primary leading-snug">
         <AdditionalTrustAssumptionsContent percentage={percentage}>
-          <span className="font-normal">
-            of TVS with additional trust assumptions compared to the tokens
-            involved and the Stage assigned to the project's canonical messaging
-            bridge.
-          </span>
+          of TVS with additional trust assumptions compared to the tokens
+          involved and the Stage assigned to the project's canonical messaging
+          bridge.
         </AdditionalTrustAssumptionsContent>
       </p>
     </div>

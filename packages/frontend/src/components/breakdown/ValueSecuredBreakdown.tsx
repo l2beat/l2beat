@@ -75,7 +75,7 @@ export function ValueSecuredBreakdownTooltipContent({
     },
   ] as const
   return (
-    <div className="w-max space-y-2">
+    <div className="space-y-2">
       <div>
         <div className="flex items-center justify-between gap-4">
           <span className="text-heading-16">TVS</span>
