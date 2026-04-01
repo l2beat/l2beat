@@ -11,6 +11,10 @@ import {
   parseAbi,
   parseAbiParameters,
 } from 'viem'
+import {
+  getInteropTransactionDataCandidates,
+  getInteropTransactionTargetCallValue,
+} from '../dto/interopTransaction'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
 import { CCTPV1Config, CCTPV2Config } from './cctp/cctp.config'
 import { findParsedBefore } from './logScan'
@@ -206,16 +210,17 @@ export function findNativeAmountInTx(
   input: Pick<LogToCapture, 'tx' | 'txLogs' | 'log' | 'chain'>,
   targets: EthereumAddress[],
 ): bigint | undefined {
-  const txValue = input.tx.value
-  if (txValue !== undefined && txValue > 0n) return txValue
+  const callValue = getInteropTransactionTargetCallValue(input.tx, targets)
+  if (callValue !== undefined && callValue > 0n) {
+    return callValue
+  }
 
-  const nestedValue = findExecuteCallValue(
-    typeof input.tx.data === 'string'
-      ? (input.tx.data as `0x${string}`)
-      : undefined,
-    targets,
-  )
-  if (nestedValue !== undefined && nestedValue > 0n) return nestedValue
+  for (const txData of getInteropTransactionDataCandidates(input.tx)) {
+    const nestedValue = findExecuteCallValue(txData as `0x${string}`, targets)
+    if (nestedValue !== undefined && nestedValue > 0n) {
+      return nestedValue
+    }
+  }
 
   const wrappedNative = MAYAN_WRAPPED_NATIVE_ADDRESSES[input.chain]
   if (!wrappedNative) return undefined

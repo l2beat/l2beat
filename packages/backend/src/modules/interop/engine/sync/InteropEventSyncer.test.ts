@@ -1079,6 +1079,7 @@ function makeRpcTransaction(
   overrides: Partial<RpcTransaction> = {},
 ): RpcTransaction {
   return {
+    type: 1n,
     blockHash: ZERO_HASH,
     blockNumber: 1n,
     from: EthereumAddress.random(),

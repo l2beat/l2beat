@@ -50,6 +50,14 @@
         "value": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348"
       }
     },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the escape hatch address and disable the escape hatch, change the slasher address which can slash arbitrary sequencers, change the sequencer queue config and disallow new sequencers joining, set the ejection threshold that exits sequencers from the active set, change various critical fee and reward configurations."
+        }
+      ]
+    },
     "getManaLimit": { "description": "gas limit" },
     "getEntryQueueFlushSize": {
       "description": "number of sequencers flushable per epoch: will move from the entry queue to the active validator set if flushed"
@@ -65,6 +73,20 @@
     },
     "getLagInEpochsForRandao": {
       "description": "The delay in epochs for the RANDAO seed to be applied to validator selection to prevent manipulation."
+    },
+    "constructorArgs": {
+      "description": "Full deployment configuration including slashing, fee, reward, and staking queue parameters.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "getManaTarget": {
+      "description": "The `updateManaTarget` function can only increase the target, not decrease it."
+    },
+    "getLocalEjectionThreshold": {
+      "description": "Minimum stake before ejection. If slashed below this threshold, the validator is fully ejected. The value can be modified by governance with no bounds."
+    },
+    "getActivationThreshold": {
+      "description": "Stake needed to join as a sequencer."
     }
-  }
+  },
+  "category": "core"
 }

@@ -9,6 +9,7 @@ type SummedByTimestampTvsPerProject = Record<
 export type SummedByTimestampTvsValuesRecord = [
   value: number,
   canonical: number,
+  customCanonical: number,
   external: number,
   native: number,
   ether: number,
@@ -55,6 +56,7 @@ function mapValue(v: {
   project: string
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -68,6 +70,7 @@ function mapValue(v: {
   return [
     v.value,
     v.canonical,
+    v.customCanonical,
     v.external,
     v.native,
     v.ether,

@@ -746,6 +746,17 @@ export const badges = [
     },
   },
   {
+    id: 'Privacy',
+    type: BadgeType.Other,
+    name: 'Privacy',
+    description: 'This project supports private transactions natively',
+    action: {
+      type: 'scalingFilter',
+      id: 'other',
+      value: 'Privacy',
+    },
+  },
+  {
     id: 'Espresso',
     type: BadgeType.DA,
     name: 'Espresso',

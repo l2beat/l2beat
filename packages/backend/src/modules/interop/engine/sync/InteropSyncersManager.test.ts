@@ -209,6 +209,54 @@ describe(InteropSyncersManager.name, () => {
       expect(bEthProcess).toHaveBeenCalledWith(block, logs)
       expect(aArbProcess).not.toHaveBeenCalled()
     })
+
+    it('starts all target-chain syncers and waits for them to settle before rethrowing', async () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a'), makeCluster('cluster-b')],
+        chains: ['ethereum'],
+      })
+
+      const block = makeBlock(10)
+      const logs: Log[] = []
+      const error = new Error('boom')
+      const aPending = deferred<void>()
+      const bPending = deferred<void>()
+
+      const aEth = manager.getSyncer('cluster-a', 'ethereum')
+      const bEth = manager.getSyncer('cluster-b', 'ethereum')
+
+      const aEthProcess = mockFn().executes(async () => await aPending.promise)
+      const bEthProcess = mockFn().executes(async () => await bPending.promise)
+
+      if (aEth) aEth.processNewestBlock = aEthProcess
+      if (bEth) bEth.processNewestBlock = bEthProcess
+
+      let settled = false
+      const promise = manager.processNewestBlock('ethereum', block, logs)
+      promise.then(
+        () => {
+          settled = true
+        },
+        () => {
+          settled = true
+        },
+      )
+
+      await new Promise<void>((resolve) => setImmediate(resolve))
+
+      expect(aEthProcess).toHaveBeenCalledWith(block, logs)
+      expect(bEthProcess).toHaveBeenCalledWith(block, logs)
+
+      aPending.reject(error)
+
+      await new Promise<void>((resolve) => setImmediate(resolve))
+
+      expect(settled).toEqual(false)
+
+      bPending.resolve(undefined)
+
+      await expect(promise).toBeRejectedWith('boom')
+    })
   })
 
   describe(InteropSyncersManager.prototype.getBlockProcessor.name, () => {
@@ -229,6 +277,72 @@ describe(InteropSyncersManager.name, () => {
 
       expect(processor.chain).toEqual('ethereum')
       expect(processNewestBlock).toHaveBeenCalledWith('ethereum', block, logs)
+    })
+  })
+
+  describe(InteropSyncersManager.prototype.areAllSyncersFollowing.name, () => {
+    it('returns false when syncer has not yet initialized', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      // Syncers start in FollowingState with status 'starting'
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+
+    it('returns true when all syncers are following and idle', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'blockProcessor',
+        name: 'following',
+        status: 'idle',
+        checkStatus: async () => syncer.state,
+        processNewestBlock: async () => syncer.state,
+      }
+
+      expect(manager.areAllSyncersFollowing()).toEqual(true)
+    })
+
+    it('returns false when any syncer is catching up', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'timeLoop',
+        name: 'catchingUp',
+        status: 'waiting',
+        run: async () => syncer.state,
+      }
+
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
+    })
+
+    it('returns false when any syncer has an error', () => {
+      const manager = makeManager({
+        clusters: [makeCluster('cluster-a')],
+        chains: ['ethereum'],
+      })
+
+      const syncer = manager.getSyncer('cluster-a', 'ethereum')!
+      syncer.state = {
+        type: 'blockProcessor',
+        name: 'following',
+        status: 'idle',
+        checkStatus: async () => syncer.state,
+        processNewestBlock: async () => syncer.state,
+      }
+      syncer.hasError = true
+
+      expect(manager.areAllSyncersFollowing()).toEqual(false)
     })
   })
 
@@ -428,4 +542,20 @@ function mockDb(params?: {
       deleteForPlugin: mockFn().resolvesTo(undefined),
     }),
   })
+}
+
+function deferred<T>() {
+  let resolve!: (value: T) => void
+  let reject!: (reason?: unknown) => void
+
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+
+  return {
+    promise,
+    resolve,
+    reject,
+  }
 }

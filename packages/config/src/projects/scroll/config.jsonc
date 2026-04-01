@@ -81,6 +81,10 @@
     "scr:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": "L2WETHGatewayCounterpart"
   },
   "overrides": {
+    "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c": {
+      // Euro Coin Token (EURC) - tracked via L1USDCGateway reference, changes are Circle ops not Scroll
+      "ignoreDiscovery": true
+    },
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
       "references": [
         {

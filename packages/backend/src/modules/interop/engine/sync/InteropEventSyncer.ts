@@ -25,6 +25,7 @@ import {
 } from '@l2beat/shared-pure'
 import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
+import { toInteropTransaction } from '../../dto/interopTransaction'
 import type {
   InteropEvent,
   InteropPluginResyncable,
@@ -144,6 +145,7 @@ export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
   public waitingForWipe = false
+  public hasError = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
   private readonly exclusiveExecutionMutex = new AsyncMutex()
@@ -172,7 +174,9 @@ export class InteropEventSyncer extends TimeLoop {
         await this.clearChainSyncError()
       }
       this.state = await fn(state)
+      this.hasError = false
     } catch (error) {
+      this.hasError = true
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -312,7 +316,7 @@ export class InteropEventSyncer extends TimeLoop {
       await this.clearChainSyncError()
     })
 
-    this.logger.info('Events captured for resyncable cluster', {
+    this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
       chain: this.chain,
       blockNumber: fullRange.toBlock,
@@ -400,14 +404,7 @@ export class InteropEventSyncer extends TimeLoop {
 }
 
 function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  return {
-    hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
-    data: tx.input,
-    type: tx.type?.toString(),
-    value: tx.value,
-  }
+  return toInteropTransaction(tx)
 }
 
 function toBlock(block: RpcBlock): TxToCapture['block'] {

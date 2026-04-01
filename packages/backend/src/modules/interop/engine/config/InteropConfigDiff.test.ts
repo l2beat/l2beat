@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import {
+  diffInteropConfig,
   diffInteropConfigValues,
   type InteropConfigDiff,
   type InteropConfigDiffFilters,
@@ -28,6 +29,34 @@ describe('InteropConfigDiff', () => {
     const entries = diffInteropConfigValues(previous, current)
 
     expect(entries.length).toEqual(0)
+  })
+
+  it('ignores order-only changes in arrays of objects', () => {
+    const previous = [
+      {
+        chain: 'ethereum',
+        chainId: 1,
+        domain: 0,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+      {
+        chain: 'linea',
+        chainId: 59144,
+        domain: 11,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+      {
+        chain: 'optimism',
+        chainId: 10,
+        domain: 2,
+        messageTransmitter: '0x81D40F21F12A8F0E3252Bccb954D722d4c464B64',
+      },
+    ]
+    const current = [previous[1], previous[2], previous[0]]
+
+    const interopDiff = diffInteropConfig('cctp-v2', previous, current)
+
+    expect(interopDiff.entries.length).toEqual(0)
   })
 
   it('formats a readable markdown diff', () => {

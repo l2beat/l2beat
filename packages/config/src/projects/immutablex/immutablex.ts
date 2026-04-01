@@ -150,6 +150,7 @@ export const immutablex: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
     programHashes: immutablexProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

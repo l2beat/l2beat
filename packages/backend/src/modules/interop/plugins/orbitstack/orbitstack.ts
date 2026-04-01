@@ -207,6 +207,10 @@ export class OrbitStackPlugin implements InteropPlugin {
   readonly name = 'orbitstack'
 
   capture(input: LogToCapture) {
+    if (input.tx.kind !== 'canonical') {
+      return
+    }
+
     if (input.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.outbox === EthereumAddress(input.log.address),

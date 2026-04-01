@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "shared-eigenlayer",
   "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 110,
   "initialAddresses": [
     "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
     "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
@@ -40,9 +41,18 @@
     "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563": "TokenHopper",
     "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE": "RewardAllStakersActionGenerator",
     "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": "TimelockControllerBeigen",
-    "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning"
+    "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
+    "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": "EmissionsController"
   },
   "overrides": {
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      // AVSDirectory.avs lists all 81 registered AVSs - don't follow them
+      "ignoreRelatives": ["avs"]
+    },
+    "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": {
+      // EmissionsController.getDistribution references AVS addresses (e.g. EigenDAServiceManager) - don't follow
+      "ignoreRelatives": ["getDistribution"]
+    },
     "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": {
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },

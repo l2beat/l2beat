@@ -1,4 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO."
+  "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
+  "fields": {
+    "GOVERNANCE": {
+      "permissions": [
+        { "type": "act", "condition": "the GATED_UNTIL timestamp has passed." }
+      ]
+    }
+  }
 }

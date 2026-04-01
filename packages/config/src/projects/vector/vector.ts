@@ -8,6 +8,7 @@ import { linkByDA } from '../../common/linkByDA'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
@@ -141,6 +142,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
       },
     ],
     programHashes: [PROGRAM_HASHES(vectorProgramHash)],
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
