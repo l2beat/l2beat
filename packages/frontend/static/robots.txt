@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dev/
+Sitemap: https://l2beat.com/sitemap.xml

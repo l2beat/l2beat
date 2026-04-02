@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf903b1e901704fc1b25dcb9507716c6ba10b0867
+
+# Diff at Wed, 01 Apr 2026 15:00:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3549fc2f02802f920fe5b609f100b19b568ec7dc block: 1774609123
+- current timestamp: 1775051589
+
+## Description
+
+New upgrade, introduces mandatory reuse of blob data after reverting a batch.
+
+attack:
+1. use commitBatches() with garbage in blob data
+2. ...
+3. brick (liveness)
+- nobody can prove
+- nobody can revert the blob part
+even ..withProof() reverts because of the existing blob data
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      sourceHashes.1:
+-        "0x1d0f1289361a17ee6c79d7879b1c620c7cee6f143ec4d14090b6aeedb6ed730a"
++        "0x4ae0d375d97899b0fd3cb34e7aa502f2b652e417b27b23df262734b951560256"
+      values.$implementation:
+-        "eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF"
++        "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2"
+      values.$pastUpgrades.9:
++        ["2026-03-30T09:36:47.000Z","0xd2892f5b4e5c8fe4bd476e83689b21f4716a38185a3923bd1fcbcf61deefb8f9",["eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2"]]
+      values.$upgradeCount:
+-        9
++        10
+      implementationNames.eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF:
+-        "Rollup"
+      implementationNames.eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2:
++        "Rollup"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1774609123 => .flat}/Rollup/Rollup.sol  | 68 +++++++++++++++++++---
+ 1 file changed, 60 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0x18eed056c4e188a59c335944bfbb1e761b078a4f
 
 # Diff at Fri, 27 Mar 2026 13:19:04 GMT:

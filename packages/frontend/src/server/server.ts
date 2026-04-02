@@ -22,6 +22,7 @@ import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
+import { createSitemapRouter } from './routers/SitemapRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const port = process.env.PORT ?? 3000
@@ -83,6 +84,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
+  app.use('/', createSitemapRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
