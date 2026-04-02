@@ -101,12 +101,6 @@ async function getQueryState(
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),
-    helpers.tvs.recategorisedChart.prefetch({
-      range: optionToRange('7d'),
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-      filter: { type: 'layer2' },
-    }),
     helpers.tvs.chartStats.prefetch({
       filter: {
         type: 'projects',

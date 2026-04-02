@@ -27,7 +27,7 @@ export function StatCard({
       </div>
       <div className="flex flex-col items-center justify-center pt-2">
         {isLoading ? (
-          <Skeleton className="min-h-[24px] w-24 shrink-0 md:min-h-7 md:w-32" />
+          <Skeleton className="h-6 w-24 shrink-0 md:min-h-7 md:w-32" />
         ) : (
           children
         )}
