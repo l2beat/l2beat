@@ -247,6 +247,12 @@
           "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "description": "can pause the bridge.",
           "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
         }
       ]
     },
@@ -625,6 +631,12 @@
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
           "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
         },
         {
           "permission": "interact",
@@ -1120,6 +1132,7 @@
         },
         "CONTRACT_VERSION": "7.1",
         "COOLDOWN_DURATION": 172800,
+        "COOLDOWN_DURATION_fmt": "2d",
         "currentFinalizedShnarf": "0xb7073776eba9782bf219fb0d3e3b8fd0a0aff6a9392cd2369a0905f62806e6b2",
         "currentFinalizedState": "0xed5fb64354fba6a8a9ef1d2ac60fa4ca874a4dda8db3c46a83434c617504af6c",
         "currentPeriodAmountInWei": "100649900000000000000",
@@ -1161,6 +1174,11 @@
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
         "PAUSE_NATIVE_YIELD_STAKING_ROLE": "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450",
         "PAUSE_STATE_DATA_SUBMISSION_ROLE": "0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55",
+        "pauseAllAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+        ],
+        "pauseDuration_fmt": "2d",
         "periodInSeconds": 86400,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
         "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
@@ -1226,8 +1244,11 @@
         "limitInWei": {
           "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
         },
-        "periodInSeconds": {
+        "pauseDuration_fmt": {
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+        },
+        "COOLDOWN_DURATION_fmt": {
+          "description": "The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."
         },
         "shnarfProvider": {
           "severity": "HIGH",
@@ -4025,11 +4046,11 @@
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/L2MessageService_v1_0": "0xaa6a49f15c42e763f232df26b0c23e0aede0af912ff884a6b4bb094a27e30601",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
-    "linea/LineaRollup_NativeYield_v7_1": "0xbb46d22744782aeec55221d48e0e55c2b28604ab5423eb7a90bc028489bc27c2",
+    "linea/LineaRollup_NativeYield_v7_1": "0x32ac09897450f6f3aa651ca8d4421a08adb045c30651edcdbd6dbf04f4732452",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
   "usedBlockNumbers": { "ethereum": 24784001, "linea": 30004738 },
-  "permissionsConfigHash": "0x80db2b7e3b021cda698dd2de17c969076c6bc0a377266f55f9b70e229e7bbc49"
+  "permissionsConfigHash": "0xa4613689df43accb1a3b7d1499e799cf965e490f84cabeec9f850b4dea38f3e1"
 }

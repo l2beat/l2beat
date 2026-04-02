@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x236acf912de8a5f15c87612ffbd7f0540a176b76
+Generated with discovered.json: 0x495e92b69516d7f7ce306b27fbc4565c1972eaeb
 
-# Diff at Thu, 02 Apr 2026 10:49:17 GMT:
+# Diff at Thu, 02 Apr 2026 11:09:54 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@5445bef09c974966a397a84d1af27e8a50f5ae3e block: 1774434780
@@ -132,6 +132,8 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
       receivedPermissions.10:
 -        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set the contract that is recognized to be the token bridge contract on the other side.","role":".remoteTokenBridgeSetters"}
       receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.","role":".pauseAllAC"}
+      receivedPermissions.18:
 +        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"pause the rollup indefinitely.","role":".securityCouncilAC"}
     }
 ```
@@ -188,6 +190,9 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 +        "eth:0x1442833180e253844897339aFb5800c797547987"
       values.COOLDOWN_DURATION:
 +        172800
++++ description: The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely.
+      values.COOLDOWN_DURATION_fmt:
++        "2d"
 +++ severity: HIGH
       values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
 +        false
@@ -214,6 +219,11 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 +        172800
       values.PAUSE_STATE_DATA_SUBMISSION_ROLE:
 +        "0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55"
+      values.pauseAllAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"]
++++ description: The duration of the rate limit window over which the withdrawal amounts are accumulated.
+      values.pauseDuration_fmt:
++        "2d"
       values.SECURITY_COUNCIL_ROLE:
 +        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
       values.securityCouncilAC:
@@ -228,6 +238,8 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 -        {"severity":"HIGH"}
       fieldMeta.isPaused_CALLDATA_SUBMISSION:
 -        {"severity":"HIGH"}
+      fieldMeta.periodInSeconds:
+-        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
       fieldMeta.livenessRecoveryOperator:
 +        {"severity":"HIGH"}
       fieldMeta.isPaused_NATIVE_YIELD_STAKING:
@@ -240,6 +252,10 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 +        {"severity":"HIGH"}
       fieldMeta.isPaused_STATE_DATA_SUBMISSION:
 +        {"severity":"HIGH"}
+      fieldMeta.pauseDuration_fmt:
++        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
+      fieldMeta.COOLDOWN_DURATION_fmt:
++        {"description":"The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."}
       fieldMeta.shnarfProvider:
 +        {"severity":"HIGH","description":"Smart contract that attests existence of blob commitments (shnarfs)."}
       fieldMeta.nonSecurityCouncilCooldownEnd:

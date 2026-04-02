@@ -82,6 +82,18 @@
         }
       ]
     },
+    "pauseAllAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSE_ALL_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the rollup for {{pauseDuration_fmt}}, followed by {{COOLDOWN_DURATION_fmt}} cooldown, during which the rollup cannot be paused, except by the Security Council."
+        }
+      ]
+    },
     "yieldManagerSetterAC": {
       "handler": {
         "type": "accessControl",
@@ -224,8 +236,23 @@
     "limitInWei": {
       "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
     },
-    "periodInSeconds": {
+    "pauseDuration_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "PAUSE_DURATION",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+    },
+    "COOLDOWN_DURATION_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "COOLDOWN_DURATION",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."
     },
     "shnarfProvider": {
       "severity": "HIGH",
