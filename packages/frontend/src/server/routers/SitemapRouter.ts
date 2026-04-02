@@ -49,7 +49,10 @@ export function createSitemapRouter() {
     const allPaths = [...STATIC_PATHS, ...dynamicPaths]
 
     const urls = allPaths
-      .map((path) => `  <url>\n    <loc>${BASE_URL}${path}</loc>\n  </url>`)
+      .map(
+        (path) =>
+          `  <url>\n    <loc>${escapeXml(BASE_URL + path)}</loc>\n  </url>`,
+      )
       .join('\n')
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -74,7 +77,11 @@ async function getDynamicPaths(): Promise<string[]> {
     daLayers,
     daBridges,
   ] = await Promise.all([
-    ps.getProjects({ where: ['isScaling'], whereNot: ['archivedAt'] }),
+    ps.getProjects({
+      where: ['isScaling'],
+      whereNot: ['archivedAt'],
+      optional: ['tvsConfig'],
+    }),
     ps.getProjects({ select: ['zkCatalogInfo'] }),
     ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
@@ -85,7 +92,9 @@ async function getDynamicPaths(): Promise<string[]> {
 
   for (const project of scalingProjects) {
     paths.push(`/scaling/projects/${project.slug}`)
-    paths.push(`/scaling/projects/${project.slug}/tvs-breakdown`)
+    if (project.tvsConfig) {
+      paths.push(`/scaling/projects/${project.slug}/tvs-breakdown`)
+    }
   }
 
   for (const project of zkCatalogProjects) {
@@ -122,4 +131,13 @@ async function getDynamicPaths(): Promise<string[]> {
   }
 
   return paths
+}
+
+function escapeXml(str: string): string {
+  return str
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll("'", '&apos;')
+    .replaceAll('"', '&quot;')
 }
