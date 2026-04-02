@@ -79,8 +79,8 @@ const inclusionDelay = discovery.getContractValue<PacayaConfig>(
 
 const whitelistedOperatorsCount = discovery.getContractValue<PacayaConfig>(
   'PreconfWhitelist',
-  'registeredOperators',
-).length
+  'operatorCount',
+)
 
 const chainId = 167000
 
@@ -342,7 +342,7 @@ export const taiko: ScalingProject = {
       ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
       description:
         RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
-        ' Proofs can only be submitted for blocks sequenced by whitelisted operators. Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the initial proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
+        ` The initial whitelisted batch sequencer has a ${formatSeconds(taikoChainConfig.provingWindow)} proving window in which they must propose a state root and prove their own batch. After that, they forfeit half of their liveness bond and the other half can be claimed permissionlessly by any proposer who can supply proofs.`,
     },
   },
   stage: getStage(
@@ -383,7 +383,7 @@ export const taiko: ScalingProject = {
         references: [
           {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-            url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
+            url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
           },
         ],
         risks: [
@@ -413,11 +413,11 @@ export const taiko: ScalingProject = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
-          url: 'https://etherscan.io/address/0xB0600e011e02eD35A142B45B506B16A35493c3F5#code',
+          url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
         },
         {
           title: 'PreconfWhitelist.sol - Etherscan source code',
-          url: 'https://etherscan.io/address/0xFD019460881e6EeC632258222393d5821029b2ac#code',
+          url: 'https://etherscan.io/address/0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],
