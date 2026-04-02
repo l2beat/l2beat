@@ -13,7 +13,7 @@ export const createQueryClient = () =>
           query.state.status === 'pending',
       },
       hydrate: {
-        deserializeData: JSON.stringify,
+        deserializeData: JSON.parse,
       },
     },
   })
