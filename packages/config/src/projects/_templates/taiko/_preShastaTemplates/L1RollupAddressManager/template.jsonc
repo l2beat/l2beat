@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "L1RollupAddressManager",
   "description": "This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.",
   "fields": {

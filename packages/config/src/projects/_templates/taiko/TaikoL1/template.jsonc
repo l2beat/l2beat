@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TaikoL1",
-  "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
+  "description": "The core Layer 1 entry point for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the central state machine for the L2 chain.",
   "ignoreMethods": [
     "addressManager",
     "getLastSyncedBlock",
