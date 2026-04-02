@@ -244,7 +244,7 @@ export const topTokensPairsColumns = [
               alt={`${tokenA.symbol} icon`}
             />
             <span>{tokenA.symbol}</span>
-            <BidirectionalArrowIcon className="size-4 fill-brand" />
+            <BidirectionalArrowIcon className="size-4 shrink-0 fill-brand" />
             <img
               className="size-[20px] rounded-full bg-white shadow"
               src={tokenB.iconUrl}
