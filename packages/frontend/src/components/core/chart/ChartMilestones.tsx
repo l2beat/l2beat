@@ -294,7 +294,11 @@ function ProjectMilestoneIcon({
   className?: string
 }) {
   return (
-    <img src={projectIcon} className={cn('size-5 rounded-full', className)} />
+    <img
+      src={projectIcon}
+      alt=""
+      className={cn('size-5 rounded-full', className)}
+    />
   )
 }
 
