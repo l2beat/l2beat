@@ -1,4 +1,4 @@
-import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferPairRow } from '../types'

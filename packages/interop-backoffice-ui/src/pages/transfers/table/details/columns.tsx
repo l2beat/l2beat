@@ -1,4 +1,4 @@
-import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferDetailsRow } from '../../types'
