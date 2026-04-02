@@ -5,6 +5,7 @@ import express from 'express'
 import { appRouter } from '~/server/trpc/root'
 import { getRequestId } from '../middlewares/RequestIdMiddleware'
 import { getLogger } from '../utils/logger'
+import { getRequestIp } from '../utils/getRequestIp'
 
 const logger = getLogger().for('TrpcRouter')
 
@@ -24,6 +25,7 @@ export function createTrpcRouter() {
         const logFn = getLogFn(opts.error)
         logFn(opts.error.message, {
           requestId: getRequestId(opts.req),
+          ip: getRequestIp(opts.req),
           method: opts.req.method,
           url: opts.req.originalUrl,
           referer: opts.req.headers.referer ?? 'unknown',

@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express'
 import { env } from '~/env'
 import { getLogger } from '../utils/logger'
+import { getRequestIp } from '../utils/getRequestIp'
 import { getRequestId } from './RequestIdMiddleware'
 
 export function MetricsMiddleware() {
@@ -33,6 +34,7 @@ export function MetricsMiddleware() {
 
       logger.info('Request processed', {
         requestId: getRequestId(req),
+        ip: getRequestIp(req),
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,

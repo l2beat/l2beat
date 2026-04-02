@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
 import { getLogger } from '../utils/logger'
+import { getRequestIp } from '../utils/getRequestIp'
 import { getRequestId } from './RequestIdMiddleware'
 
 export function ErrorHandler() {
@@ -15,6 +16,7 @@ export function ErrorHandler() {
 
     const body = {
       requestId: getRequestId(req),
+      ip: getRequestIp(req),
       error: err instanceof Error ? err.message : String(err),
       method: req.method,
       url: req.originalUrl,
