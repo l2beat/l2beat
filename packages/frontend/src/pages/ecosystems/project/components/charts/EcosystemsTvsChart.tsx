@@ -151,7 +151,7 @@ export function EcosystemsTvsChart({
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
-      <ChartControlsWrapper className="mt-2.5">
+      <ChartControlsWrapper className="mt-2.5 flex-wrap">
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
