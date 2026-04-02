@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1775129632,
+  "timestamp": 1775136182,
   "configHash": "0xe869c77f0093bb83388bf037849f2b814cec9ec6af1ee04cf96578e233d686b1",
   "entries": [
     {
@@ -82,15 +82,12 @@
         "0x0ac653f7058ad40c6ffac7239e47de4da0e6cb079cc88095eb2be8e359c25ef2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
+      "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the state machine for the L2.",
       "ignoreInWatchMode": [
         "getLastSyncedTransition",
-        "getLastVerifiedBlock",
         "getLastVerifiedTransition",
-        "getStateVariables",
         "getStats1",
         "getStats2",
-        "lastProposedIn",
         "state"
       ],
       "sinceTimestamp": 1714550627,
@@ -258,40 +255,40 @@
         "$upgradeCount": 31,
         "bondToken": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
         "getLastSyncedTransition": {
-          "batchId_": 1363300,
-          "blockId_": 4988642,
+          "batchId_": 1363304,
+          "blockId_": 4989089,
           "ts_": {
-            "parentHash": "0x3d03c1490feb0fe0c0e685970fd30536d4dd77950fad652510a75a475f6a7066",
-            "blockHash": "0xae756a3b74fc0c049eba23d9d51cbf4c080050721624cac2bc1b689c9b2b1564",
-            "stateRoot": "0x4231e852f947dc02829a657e09bc12b82a4ec1b6f58b05a17f19a573944c39ea",
+            "parentHash": "0x5cd8c4a4a9bc981938cf81c43a11d01234473e28775391dc81e7bf02398a6cef",
+            "blockHash": "0x2ce1ce6bc6672c5813dd89bc975a44aac0d212e7ac60ebbbea8125bc6d437e60",
+            "stateRoot": "0xa891f2205852d1cb998f394ecdf5c2d19dd3901af7368439370a2424a528081d",
             "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1775121827
+            "createdAt": 1775125175
           }
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1363300,
-          "blockId_": 4988642,
+          "batchId_": 1363306,
+          "blockId_": 4989313,
           "ts_": {
-            "parentHash": "0x3d03c1490feb0fe0c0e685970fd30536d4dd77950fad652510a75a475f6a7066",
-            "blockHash": "0xae756a3b74fc0c049eba23d9d51cbf4c080050721624cac2bc1b689c9b2b1564",
-            "stateRoot": "0x4231e852f947dc02829a657e09bc12b82a4ec1b6f58b05a17f19a573944c39ea",
+            "parentHash": "0x6929a2749e065f9612054fb00a4707a49a759e5f49936746ab3d88d3b178f612",
+            "blockHash": "0xa938e59013bd512aab56930c7f292c1c70a36ad76da32033661e4b9461cd58a1",
+            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "prover": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
             "inProvingWindow": true,
-            "createdAt": 1775121827
+            "createdAt": 1775126855
           }
         },
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1363300,
-          "lastSyncedAt": 1775129063
+          "lastSyncedBatchId": 1363304,
+          "lastSyncedAt": 1775132567
         },
         "getStats2": {
-          "numBatches": 1363310,
-          "lastVerifiedBatchId": 1363300,
+          "numBatches": 1363318,
+          "lastVerifiedBatchId": 1363306,
           "paused": false,
-          "lastProposedIn": 24791606,
+          "lastProposedIn": 24792119,
           "lastUnpausedAt": 1716571955
         },
         "impl": "eth:0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187",
@@ -337,14 +334,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1363300,
-            "lastSyncedAt": 1775129063
+            "lastSyncedBatchId": 1363304,
+            "lastSyncedAt": 1775132567
           },
           "stats2": {
-            "numBatches": 1363310,
-            "lastVerifiedBatchId": 1363300,
+            "numBatches": 1363318,
+            "lastVerifiedBatchId": 1363306,
             "paused": false,
-            "lastProposedIn": 24791606,
+            "lastProposedIn": 24792119,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -566,7 +563,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1775129627,
+        "clock": 1775136179,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1274,6 +1271,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "description": "pause and unpause the rollup system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner"
@@ -1316,8 +1319,20 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+          "description": "pause/unpause.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "description": "can update the contract address for a given name",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "pause/unpause, manage operator and ejector roles.",
           "role": ".owner"
         },
         {
@@ -1446,7 +1461,14 @@
     {
       "address": "eth:0x7A853a6480F4D7dB79AE91c16c960dBbB6710d25",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+          "role": ".fallbackPreconfer"
+        }
+      ]
     },
     {
       "name": "RiscZeroGroth16Verifier",
@@ -1506,7 +1528,6 @@
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "eth:0x0000000000000000000000000000000000000000",
         "taikoChainId": 167000,
         "taikoInbox": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -1861,6 +1882,14 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "manage the ejecter role",
+          "role": "._ejectorManager"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1714192631,
       "sinceBlock": 19744335,
@@ -1900,6 +1929,15 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "description": "pause and unpause the rollup system.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
@@ -1965,8 +2003,26 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+          "description": "pause/unpause.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "description": "can update the contract address for a given name",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "pause/unpause, manage operator and ejector roles.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
@@ -2188,6 +2244,7 @@
         "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Routes to the Shasta SignalService post shasta fork.",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
@@ -2247,11 +2304,11 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "shastaForkTimestamp": 1775135700
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "ERC1967Proxy",
         "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6": "SignalServiceForkRouter"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SgxVerifier",
@@ -2287,7 +2344,6 @@
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "eth:0x0000000000000000000000000000000000000000",
         "taikoChainId": 167000,
         "taikoInbox": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -2527,6 +2583,7 @@
         "0x9da4ee2d38b5914e0408dd1d413eef87e7f2ae62c6ca8240e657f4cc8cfaa84c"
       ],
       "proxyType": "immutable",
+      "description": "Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.",
       "sinceTimestamp": 1772642219,
       "sinceBlock": 24585333,
       "values": {
@@ -2624,7 +2681,14 @@
     {
       "address": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "role": ".operatorMapping"
+        }
+      ]
     },
     {
       "address": "eth:0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477",
@@ -2651,7 +2715,7 @@
         "0xa69b68882c2eac4ec75e64e92a7946b6311cf7e0fa7c844251baabfa7803d81b"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.",
+      "description": "Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the eth:0xFD019460881e6EeC632258222393d5821029b2ac (or a designated fallback) can successfully submit a batch.",
       "sinceTimestamp": 1753275179,
       "sinceBlock": 22981993,
       "values": {
@@ -2689,7 +2753,6 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "preconfWhitelist": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
         "proposeBatchEntrypoint": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
-        "proxiableUUID": "EXPECT_REVERT",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -2783,7 +2846,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 38928,
+        "nextMessageId": 38930,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -3070,9 +3133,16 @@
         "0x974afbdcc80d21c6158c6eb226d4a8b02a6041f7b8e9affd849a300ce70e21ef"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.",
+      "ignoreInWatchMode": [
+        "getOperatorForCurrentEpoch",
+        "getOperatorForNextEpoch",
+        "operatorCount"
+      ],
       "sinceTimestamp": 1753275179,
       "sinceBlock": 22981993,
       "values": {
+        "_ejectorManager": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "$admin": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "$pastUpgrades": [
@@ -3098,9 +3168,6 @@
           ]
         ],
         "$upgradeCount": 4,
-        "epochStartTimestamp": [
-          1775129303, 1775129687, 1775130071, 1775130455, 1775130839
-        ],
         "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "getOperatorForNextEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
@@ -3108,24 +3175,14 @@
         "latestActivationEpoch": 0,
         "OPERATOR_CHANGE_DELAY": 2,
         "operatorCount": 1,
-        "operatorMapping": [
-          "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x0000000000000000000000000000000000000000"
-        ],
+        "operatorMapping": ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "RANDOMNESS_DELAY": 2,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "errors": {
-        "epochStartTimestamp": "Processing error occurred.",
-        "operatorMapping": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
-      },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
         "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149": "PreconfWhitelist"
@@ -5761,27 +5818,27 @@
     "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
     "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "taiko/PreconfRouter": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/PreconfWhitelist": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "taiko/PreconfRouter": "0x3059d0b8f15e4a1644dc043805a89c75a6e5ad1d8b47e289356f36004ac4fb17",
+    "taiko/PreconfWhitelist": "0xc8bf10aee39f914d8f5d16e212c002a62a2efebf2fbc4088f5078ea430073d55",
     "taiko/ProverSet": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/QuotaManager": "0x60a9974b6da61ae37b06e2fc4839dece6d902b60d2baac895e8886d1609be020",
     "taiko/Risc0VerifierGateway": "0xbfa607093526a799c9cbdaa0434b29d30a484b7b6f6e7e1185d4796c6b49b574",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "taiko/SgxVerifier": "0x76591e4af9aa17fa8b64070623f9f2599e0161de42b8c518384374ca652c644e",
+    "taiko/SgxVerifier": "0xd42ec836c8b504381d98c03e28d09de32afa1e9589d105971b14fc840af60f77",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/SignalService": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "taiko/SignalServiceForkRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "taiko/SignalService": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "taiko/SignalServiceForkRouter": "0x568c79493fab52ca11cee253ad22ef20e8dd32afcde694ec673eed09a5da2016",
     "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1VerifierGateway": "0x90dec47dd072435b90c527b936ef46f8c4330db981950b20855b91a67cf1a3a7",
     "taiko/TaikoAnchor": "0xe0fd7c7cfd46807053cf50f2f122c29c522bcde9da4f26d346bee658b7687f70",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
-    "taiko/TaikoL1": "0x1c5c0d9d05b2fae60da559699fb4b2329d79068ab7105bb9ae3c72186be8bd17",
+    "taiko/TaikoL1": "0xafc592b49c9d5948deb821678eb0b3cc04ab103376aaaaa5fa3a93b1e1b508c0",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24791653, "taiko": 4989721 },
-  "permissionsConfigHash": "0x6e12ba4eaae3eb7c036928669f9d3603a2415643b95fe7a955df413c8cae7b39"
+  "usedBlockNumbers": { "ethereum": 24792198, "taiko": 4990439 },
+  "permissionsConfigHash": "0x32a66b573e18ee8e57c536a51d24c5145b5af90ffa376e6a5c310f49cb7d6c25"
 }

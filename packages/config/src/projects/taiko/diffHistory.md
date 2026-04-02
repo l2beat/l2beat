@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xeef53e79de48cb2d2bd66cda6540b9970d3ba72b
+Generated with discovered.json: 0x90c5ffe29b8fad4d476d57e117fb86eb650063b8
 
-# Diff at Thu, 02 Apr 2026 12:24:28 GMT:
+# Diff at Thu, 02 Apr 2026 13:24:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f945cbf932a38cc09f572aa1859a6c322abfc469 block: 1774353478
-- current timestamp: 1775129632
+- current timestamp: 1775136182
 
 ## Description
 
@@ -15,13 +15,13 @@ blog post: https://paragraph.com/@taiko-labs/achieving-stage-1-shasta-is-almost-
 - [MainnetSignalService](https://disco.l2beat.com/diff/eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c/eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752)
 - [PreconfWhitelist](https://disco.l2beat.com/diff/eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc/eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149)
 
-Shasta is mainly refactoring the core protocol to be simpler and more efficient.
+Shasta is mainly refactoring the core protocol to be simpler and more efficient, the proof system remains closed and SGX.
 
 ## Watched changes
 
 ```diff
     contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
-    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the state machine for the L2.
       sourceHashes.1:
 -        "0x2fc623a8d2d43eaa7b59707ea9d1f766608b3626be55f68a9617b218e44b3cd5"
 +        "0x0ac653f7058ad40c6ffac7239e47de4da0e6cb079cc88095eb2be8e359c25ef2"
@@ -56,9 +56,11 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 ```diff
     contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
     +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
-      directlyReceivedPermissions.5:
+      directlyReceivedPermissions.6:
 -        {"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner"}
-      directlyReceivedPermissions.17:
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","description":"pause/unpause, manage operator and ejector roles.","role":".owner"}
+      directlyReceivedPermissions.19:
 -        {"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin"}
     }
 ```
@@ -80,18 +82,28 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 ```
 
 ```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","description":"manage the ejecter role","role":"._ejectorManager"}]
+    }
+```
+
+```diff
     contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
     +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
-      receivedPermissions.5:
+      receivedPermissions.6:
 -        {"permission":"interact","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
-      receivedPermissions.18:
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","description":"pause/unpause, manage operator and ejector roles.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.20:
 -        {"permission":"upgrade","from":"eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
     }
 ```
 
 ```diff
     contract SignalServiceForkRouter (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
-    +++ description: None
+    +++ description: Routes to the Shasta SignalService post shasta fork.
       name:
 -        "MainnetSignalService"
 +        "SignalServiceForkRouter"
@@ -103,6 +115,7 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 +        "0x48d2edc5c332edbe5587795ecd9c72063d865a58d79f71e4fc30e28e91e88c50"
       description:
 -        "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs."
++        "Routes to the Shasta SignalService post shasta fork."
       values.$implementation:
 -        "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
 +        "eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6"
@@ -131,10 +144,6 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 -        "MainnetSignalService"
       implementationNames.eth:0x6a4B15E4b0296B2ECE03Ee9Ed74E4A3E3ECA68D6:
 +        "SignalServiceForkRouter"
-      category:
--        {"name":"Spam","priority":-1}
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -152,14 +161,15 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 ```diff
     EOA  (eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"eth:0xFD019460881e6EeC632258222393d5821029b2ac","role":".getOperatorCandidatesForCurrentEpoch"}]
+      receivedPermissions.0.role:
+-        ".getOperatorCandidatesForCurrentEpoch"
++        ".operatorMapping"
     }
 ```
 
 ```diff
     contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) {
-    +++ description: None
+    +++ description: Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.
       template:
 -        "taiko/_preShastaTemplates/PreconfWhitelist"
 +        "taiko/PreconfWhitelist"
@@ -168,6 +178,7 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 +        "0x974afbdcc80d21c6158c6eb226d4a8b02a6041f7b8e9affd849a300ce70e21ef"
       description:
 -        "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are 2 operators registered."
++        "Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness."
       values.$implementation:
 -        "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc"
 +        "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149"
@@ -180,9 +191,6 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 -        ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"]
       values.getOperatorCandidatesForNextEpoch:
 -        ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"]
-      values.getOperatorForNextEpoch:
--        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
-+        "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"
       values.havingPerfectOperators:
 -        false
       values.impl:
@@ -190,40 +198,37 @@ Shasta is mainly refactoring the core protocol to be simpler and more efficient.
 +        "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149"
       values.operatorChangeDelay:
 -        2
-      values.operatorCount:
--        3
-+        1
       values.randomnessDelay:
 -        2
       values.registeredOperators:
 -        [{"proposer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7","sequencer":"eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"},{"proposer":"eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","sequencer":"eth:0x2ABD9afD6D41d0c37b8d55df11BFc73B53c3ac61"}]
       values.registeredOperatorsCount:
 -        2
-      values.epochStartTimestamp:
-+        [1775129303,1775129687,1775130071,1775130455,1775130839]
+      values._ejectorManager:
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       values.latestActivationEpoch:
 +        0
       values.OPERATOR_CHANGE_DELAY:
 +        2
       values.operatorMapping:
-+        ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
++        ["eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d"]
       values.RANDOMNESS_DELAY:
 +        2
-      fieldMeta:
--        {"havingPerfectOperators":{"description":"tells the contract whether it can safely pick a random operator using a simple mathematical operation, or if it needs to perform a more expensive \"loop-and-check\" operation"}}
+      fieldMeta.havingPerfectOperators:
+-        {"description":"tells the contract whether it can safely pick a random operator using a simple mathematical operation, or if it needs to perform a more expensive \"loop-and-check\" operation"}
+      fieldMeta.paused:
++        {"severity":"HIGH"}
       implementationNames.eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc:
 -        "PreconfWhitelist"
       implementationNames.eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149:
 +        "PreconfWhitelist"
-      errors:
-+        {"epochStartTimestamp":"Processing error occurred.","operatorMapping":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
 ```diff
 +   Status: CREATED
     contract SignalService (eth:0xBC442F342FE247Dc7981AC7Fbe8293c8891F8752)
-    +++ description: None
+    +++ description: Facilitates secure cross-chain message passing by storing signals (messages) and state root checkpoints. It allows applications to prove that a specific L2 signal or state transition occurred via Merkle proofs.
 ```
 
 ## Source code changes
@@ -248,10 +253,13 @@ discovery. Values are for block 1774353478 (main branch discovery), not current.
 
 ```diff
     contract TaikoL1 (eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
-    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the state machine for the L2.
       template:
 -        "taiko/TaikoL1PostPacaya"
 +        "taiko/TaikoL1"
+      description:
+-        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
++        "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the state machine for the L2."
     }
 ```
 
@@ -265,11 +273,66 @@ discovery. Values are for block 1774353478 (main branch discovery), not current.
 ```
 
 ```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"pause and unpause the rollup system.","role":".owner"}
+      directlyReceivedPermissions.9:
++        {"permission":"interact","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","description":"pause/unpause.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0x7A853a6480F4D7dB79AE91c16c960dBbB6710d25) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":".fallbackPreconfer"}]
+    }
+```
+
+```diff
+    contract SgxVerifier (eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"pause and unpause the rollup system.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","description":"pause/unpause.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+    }
+```
+
+```diff
     contract MainnetSignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
     +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
       template:
 -        "taiko/SignalService"
 +        "taiko/_preShastaTemplates/SignalService"
+    }
+```
+
+```diff
+    contract SgxVerifier (eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+    }
+```
+
+```diff
+    contract PreconfRouter (eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a) {
+    +++ description: Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the eth:0xFD019460881e6EeC632258222393d5821029b2ac (or a designated fallback) can successfully submit a batch.
+      description:
+-        "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses."
++        "Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the eth:0xFD019460881e6EeC632258222393d5821029b2ac (or a designated fallback) can successfully submit a batch."
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
     }
 ```
 
