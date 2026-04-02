@@ -5,7 +5,7 @@ import { stripQueryParams } from '~/utils/stripQueryParams'
 type OpenGraph = {
   url: string
   type: 'article' | 'website'
-  image?: string
+  image: string
 }
 
 export interface Metadata {
@@ -41,6 +41,8 @@ export function getMetadata(
   }
 }
 
+const DEFAULT_OG_IMAGE = '/meta-images/scaling/summary/opengraph-image.png'
+
 function getOpenGraph(
   manifest: Manifest,
   { url, image, type }: PartialMetadata['openGraph'],
@@ -48,14 +50,14 @@ function getOpenGraph(
   const baseUrl = getBaseUrl()
   return {
     url: baseUrl + stripQueryParams(url),
-    image: image ? baseUrl + manifest.getUrl(image) : undefined,
+    image: baseUrl + manifest.getUrl(image ?? DEFAULT_OG_IMAGE),
     type: type ?? 'website',
   }
 }
 
 function getBaseUrl() {
   if (env.DEPLOYMENT_ENV === 'production') return 'https://l2beat.com'
-  if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-stag.l2beat.com/'
+  if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-stag.l2beat.com'
   if (env.COOLIFY_URL) return env.COOLIFY_URL
   return 'http://localhost:3000'
 }
