@@ -1,14 +1,1 @@
-{
-  "description": "The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.",
-  "fields": {
-    "proxiableUUID": {
-      "handler": {
-        "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
-    }
-  },
-  "category": "spam"
-}
+{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json" }
