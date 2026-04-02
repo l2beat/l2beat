@@ -1,5 +1,6 @@
 import express from 'express'
 import { getCollection } from '~/content/getCollection'
+import { shouldHaveNoBridgePage } from '~/server/features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from '~/server/projects'
 
 const BASE_URL = 'https://l2beat.com'
@@ -112,10 +113,7 @@ async function getDynamicPaths(): Promise<string[]> {
     for (const bridge of layerBridges) {
       paths.push(`/data-availability/projects/${layer.slug}/${bridge.slug}`)
     }
-    if (
-      layer.daLayer.usedWithoutBridgeIn.length > 0 ||
-      layerBridges.length === 0
-    ) {
+    if (shouldHaveNoBridgePage(layer.daLayer, layerBridges.length)) {
       paths.push(`/data-availability/projects/${layer.slug}/no-bridge`)
     }
   }
