@@ -42,11 +42,23 @@ export class LogQuery {
   addresses: Set<EthereumAddress> | '*' = new Set()
   topicToTxEvents = new UpsertMap<string, Set<string>>()
   topic0sWithTx = new Set<string>()
+  private cachedLowercaseAddresses?: Set<string>
+
   isEmpty() {
     if (this.topic0s.size === 0) {
       return true
     }
     return this.addresses === '*' ? false : this.addresses.size === 0
+  }
+
+  matchesLog(log: { topics: string[]; address: string }): boolean {
+    const topic0 = log.topics[0]
+    if (!topic0 || !this.topic0s.has(topic0)) return false
+    if (this.addresses === '*') return true
+    this.cachedLowercaseAddresses ??= new Set(
+      [...this.addresses].map((a) => a.toLowerCase()),
+    )
+    return this.cachedLowercaseAddresses.has(log.address.toLowerCase())
   }
 }
 
@@ -149,6 +161,7 @@ export class InteropEventSyncer extends TimeLoop {
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
   private readonly exclusiveExecutionMutex = new AsyncMutex()
+  private cachedLogQuery: LogQuery
 
   constructor(
     readonly chain: LongChainName,
@@ -162,6 +175,7 @@ export class InteropEventSyncer extends TimeLoop {
     super({ intervalMs })
     this.logger = logger.for(this)
     this.state = new FollowingState(this, this.logger)
+    this.cachedLogQuery = this.buildLogQuery()
   }
 
   protected async triggerState<T extends SyncerState>(
@@ -201,6 +215,7 @@ export class InteropEventSyncer extends TimeLoop {
 
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
+    this.cachedLogQuery = this.buildLogQuery()
 
     // It's fine to do this check outside of the exclusiveExecutionMutex because
     // even if we skip block, FollowingState will notice and switch to CatchingUpState
@@ -219,6 +234,9 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   captureLog(logToCapture: LogToCapture) {
+    if (!this.cachedLogQuery.matchesLog(logToCapture.log)) {
+      return
+    }
     for (const plugin of this.cluster.plugins) {
       const produced = plugin.capture(logToCapture)
       if (produced) {
