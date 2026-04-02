@@ -724,6 +724,9 @@ importers:
       '@tailwindcss/vite':
         specifier: 4.1.11
         version: 4.1.11(vite@5.4.10(@types/node@22.8.2)(lightningcss@1.30.1)(terser@5.36.0))
+      '@tanstack/match-sorter-utils':
+        specifier: ^8.19.4
+        version: 8.19.4
       '@tanstack/react-query':
         specifier: 5.59.16
         version: 5.59.16(react@19.0.0)
@@ -733,6 +736,9 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.17.3
         version: 8.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-virtual':
+        specifier: ^3.13.23
+        version: 3.13.23(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@trpc/client':
         specifier: 11.0.0-rc.599
         version: 11.0.0-rc.599(@trpc/server@11.0.0-rc.599)
@@ -745,6 +751,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      fuzzysort:
+        specifier: ^3.1.0
+        version: 3.1.0
       lucide-react:
         specifier: ^0.544.0
         version: 0.544.0(react@19.0.0)
@@ -4206,6 +4215,10 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7
 
+  '@tanstack/match-sorter-utils@8.19.4':
+    resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
+    engines: {node: '>=12'}
+
   '@tanstack/query-core@5.59.16':
     resolution: {integrity: sha512-crHn+G3ltqb5JG0oUv6q+PMz1m1YkjpASrXTU+sYWW9pLk0t2GybUHNRqYPZWhxgjPaVGC4yp92gSFEJgYEsPw==}
 
@@ -4230,9 +4243,18 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
+  '@tanstack/react-virtual@3.13.23':
+    resolution: {integrity: sha512-XnMRnHQ23piOVj2bzJqHrRrLg4r+F86fuBcwteKfbIjJrtGxb4z7tIvPVAe4B+4UVwo9G4Giuz5fmapcrnZ0OQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   '@tanstack/table-core@8.20.5':
     resolution: {integrity: sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==}
     engines: {node: '>=12'}
+
+  '@tanstack/virtual-core@3.13.23':
+    resolution: {integrity: sha512-zSz2Z2HNyLjCplANTDyl3BcdQJc2k1+yyFoKhNRmCr7V7dY8o8q5m8uFTI1/Pg1kL+Hgrz6u3Xo6eFUB7l66cg==}
 
   '@tootallnate/once@1.1.2':
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -7456,6 +7478,9 @@ packages:
 
   relative-microtime@2.0.0:
     resolution: {integrity: sha512-l18ha6HEZc+No/uK4GyAnNxgKW7nvEe35IaeN54sShMojtqik2a6GbTyuiezkjpPaqP874Z3lW5ysBo5irz4NA==}
+
+  remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
 
   replace-string@3.1.0:
     resolution: {integrity: sha512-yPpxc4ZR2makceA9hy/jHNqc7QVkd4Je/N0WRHm6bs3PtivPuPynxE5ejU/mp5EhnCv8+uZL7vhz8rkluSlx+Q==}
@@ -11309,6 +11334,10 @@ snapshots:
       tailwindcss: 4.1.11
       vite: 7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
 
+  '@tanstack/match-sorter-utils@8.19.4':
+    dependencies:
+      remove-accents: 0.5.0
+
   '@tanstack/query-core@5.59.16': {}
 
   '@tanstack/query-devtools@5.58.0': {}
@@ -11330,7 +11359,15 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
+  '@tanstack/react-virtual@3.13.23(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/virtual-core': 3.13.23
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@tanstack/table-core@8.20.5': {}
+
+  '@tanstack/virtual-core@3.13.23': {}
 
   '@tootallnate/once@1.1.2':
     optional: true
@@ -14888,6 +14925,8 @@ snapshots:
   regexp-to-ast@0.5.0: {}
 
   relative-microtime@2.0.0: {}
+
+  remove-accents@0.5.0: {}
 
   replace-string@3.1.0: {}
 
