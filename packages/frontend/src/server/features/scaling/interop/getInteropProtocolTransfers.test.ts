@@ -25,7 +25,7 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       transferId: 'transfer-id',
       timestamp: 123,
       srcAmount: undefined,
-      srcSymbol: undefined,
+      srcSymbol: 'Unknown',
       srcTokenIconUrl: '/images/token-placeholder.png',
       dstAmount: 12.34,
       dstSymbol: 'USDC',
