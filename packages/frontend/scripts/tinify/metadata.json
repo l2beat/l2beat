@@ -1491,5 +1491,9 @@
   "static/brand-kit/symbol-dark.png": "e97944b745a9b9d4fe3e507dc3befa05",
   "static/brand-kit/symbol-light.png": "94e532c9e49e1028685c6e8a8c743129",
   "static/images/badges/Privacy.png": "9dc11a22aabcbe9475c9ecff12e21674",
-  "static/icons/monad.png": "ed2f1e7ca391882232d04944f2be4004"
+  "static/icons/monad.png": "ed2f1e7ca391882232d04944f2be4004",
+  "static/meta-images/brand-kit/opengraph-image.png": "035cce33d5e9316aee8045fefc0f5c21",
+  "static/meta-images/da-risk-framework/opengraph-image.png": "1bc782c865062cf0e07a5e185cbfddc2",
+  "static/meta-images/icon-preview/opengraph-image.png": "6c387d9d861e02146b9e6b97f0f9c5bd",
+  "static/meta-images/multisig-report/opengraph-image.png": "997d38e58cbd6fbe19592176036e5188"
 }
