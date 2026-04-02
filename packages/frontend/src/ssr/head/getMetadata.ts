@@ -41,8 +41,6 @@ export function getMetadata(
   }
 }
 
-const DEFAULT_OG_IMAGE = '/meta-images/scaling/summary/opengraph-image.png'
-
 function getOpenGraph(
   manifest: Manifest,
   { url, image, type }: PartialMetadata['openGraph'],
@@ -50,7 +48,7 @@ function getOpenGraph(
   const baseUrl = getBaseUrl()
   return {
     url: baseUrl + stripQueryParams(url),
-    image: baseUrl + manifest.getUrl(image ?? DEFAULT_OG_IMAGE),
+    image: baseUrl + manifest.getUrl(image),
     type: type ?? 'website',
   }
 }
