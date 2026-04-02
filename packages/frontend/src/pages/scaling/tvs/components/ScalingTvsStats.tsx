@@ -51,7 +51,7 @@ export function ScalingTvsStats({
   const stats = data
 
   return (
-    <StatsGrid>
+    <StatsGrid className="mx-4">
       <Stat
         type="rollups"
         value={stats?.rollups.value}
@@ -96,12 +96,12 @@ function Stat({
   return (
     <StatCard color={meta.color} title={meta.label} isLoading={isLoading}>
       <div className="flex min-h-6 items-center gap-1 md:min-h-7">
-        <div className="whitespace-nowrap font-bold text-heading-20 md:text-heading-24">
+        <div className="whitespace-nowrap font-bold text-heading-18 md:text-heading-24">
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
         {change !== undefined ? (
           <PercentChange
-            textClassName="md:text-heading-20 text-heading-16"
+            textClassName="md:text-heading-20 w-full text-heading-16"
             value={change}
           />
         ) : null}

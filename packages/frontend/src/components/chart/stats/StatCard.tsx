@@ -53,7 +53,7 @@ export function StatCard({
     <CssVariables variables={{ 'stat-color': color }}>
       <div
         className={cn(
-          'flex h-full min-h-20 flex-col items-center justify-center rounded-lg border border-[var(--stat-color)] p-2 md:h-24 md:p-4 lg:h-28',
+          'flex h-full min-h-16 flex-col items-center justify-center rounded-lg border border-[var(--stat-color)] p-2 md:h-24 md:p-4 lg:h-28',
           className,
         )}
         style={{
