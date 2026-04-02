@@ -17,6 +17,7 @@ export async function getBrandKitData(
         description: 'L2BEAT brand guidelines, logos, and assets for download.',
         openGraph: {
           url,
+          image: '/meta-images/brand-kit/opengraph-image.png',
         },
       }),
     },

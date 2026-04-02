@@ -20,7 +20,7 @@ type PartialMetadata = {
   description?: string
   openGraph: {
     url: string
-    image?: string
+    image: string
     type?: 'article' | 'website'
   }
   excludeFromSearchEngines?: boolean
