@@ -1014,6 +1014,7 @@ function createSyncer(overrides: Partial<TestSyncer> = {}) {
     store ?? mockStore(),
     db ?? mockDb(),
     Logger.SILENT,
+    'Backend/Local',
   )
   Object.assign(syncer, rest)
   return syncer

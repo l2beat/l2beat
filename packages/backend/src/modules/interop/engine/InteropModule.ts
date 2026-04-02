@@ -91,6 +91,7 @@ export function createInteropModule({
     eventStore,
     db,
     logger,
+    config.name,
   )
 
   const processors = []

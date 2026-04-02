@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
+import type { ConfigName } from '../../../../config/Config'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
@@ -36,6 +37,7 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly configName: ConfigName,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -63,6 +65,7 @@ export class InteropSyncersManager {
           eventStore,
           db,
           logger,
+          this.configName,
         )
         clusterSyncers.push(eventSyncer)
         this.syncers

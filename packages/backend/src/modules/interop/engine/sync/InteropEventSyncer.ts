@@ -23,6 +23,7 @@ import {
   type LongChainName,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import type { ConfigName } from '../../../../config/Config'
 import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { toInteropTransaction } from '../../dto/interopTransaction'
@@ -170,6 +171,7 @@ export class InteropEventSyncer extends TimeLoop {
     readonly store: InteropEventStore,
     readonly db: Database,
     protected logger: Logger,
+    readonly configName: ConfigName,
     intervalMs = 10000,
   ) {
     super({ intervalMs })
@@ -234,7 +236,10 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   captureLog(logToCapture: LogToCapture) {
-    if (!this.cachedLogQuery.matchesLog(logToCapture.log)) {
+    if (
+      this.configName !== 'Backend/Production' &&
+      !this.cachedLogQuery.matchesLog(logToCapture.log)
+    ) {
       return
     }
     for (const plugin of this.cluster.plugins) {
