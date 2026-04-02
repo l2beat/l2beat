@@ -70,6 +70,18 @@
         }
       ]
     },
+    "securityCouncilAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SECURITY_COUNCIL_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the rollup indefinitely."
+        }
+      ]
+    },
     "yieldManagerSetterAC": {
       "handler": {
         "type": "accessControl",

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc24731e3418c5f5db98c848b79d1d601d3d843fb
+Generated with discovered.json: 0x236acf912de8a5f15c87612ffbd7f0540a176b76
 
-# Diff at Wed, 01 Apr 2026 15:44:51 GMT:
+# Diff at Thu, 02 Apr 2026 10:49:17 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@5445bef09c974966a397a84d1af27e8a50f5ae3e block: 1774434780
@@ -127,10 +127,12 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 ```
 
 ```diff
-    contract Linea Multisig 1 (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
     +++ description: None
       receivedPermissions.10:
 -        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set the contract that is recognized to be the token bridge contract on the other side.","role":".remoteTokenBridgeSetters"}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"pause the rollup indefinitely.","role":".securityCouncilAC"}
     }
 ```
 
@@ -214,6 +216,8 @@ Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff
 +        "0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55"
       values.SECURITY_COUNCIL_ROLE:
 +        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      values.securityCouncilAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
 +++ description: Smart contract that attests existence of blob commitments (shnarfs).
 +++ severity: HIGH
       values.shnarfProvider:
@@ -471,6 +475,15 @@ discovery. Values are for block 1774434780 (main branch discovery), not current.
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
       errors:
 +        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "Linea Multisig 1"
++        "Linea Security Council"
     }
 ```
 

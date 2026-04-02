@@ -486,7 +486,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Linea Multisig 1",
+      "name": "Linea Security Council",
       "address": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -625,6 +625,12 @@
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
           "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup indefinitely.",
+          "role": ".securityCouncilAC"
         },
         {
           "permission": "interact",
@@ -1158,6 +1164,7 @@
         "periodInSeconds": 86400,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
         "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
+        "securityCouncilAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "sender": "eth:0x0000000000000000000000000000000000000000",
         "SET_YIELD_MANAGER_ROLE": "0x76ef52a5344b10ed112c1d48c7c06f51e919518ea6fb005f9b25b359b955e3be",
         "shnarfProvider": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
@@ -4018,11 +4025,11 @@
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/L2MessageService_v1_0": "0xaa6a49f15c42e763f232df26b0c23e0aede0af912ff884a6b4bb094a27e30601",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
-    "linea/LineaRollup_NativeYield_v7_1": "0x66a99b9ab34e560608201acbec4a46f278b4016169903a2a5a8afe29ff5f3e22",
+    "linea/LineaRollup_NativeYield_v7_1": "0xbb46d22744782aeec55221d48e0e55c2b28604ab5423eb7a90bc028489bc27c2",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
   "usedBlockNumbers": { "ethereum": 24784001, "linea": 30004738 },
-  "permissionsConfigHash": "0xe6ad394d0a0651fd2150099fae1ea3da15cbad35a7b54f33eef1fc5765aefec8"
+  "permissionsConfigHash": "0x80db2b7e3b021cda698dd2de17c969076c6bc0a377266f55f9b70e229e7bbc49"
 }
