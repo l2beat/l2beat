@@ -84,7 +84,7 @@ export class InteropBlockProcessor implements BlockProcessor {
       })
     }
 
-    this.logger.info('Block processed', {
+    this.logger.debug('Block processed', {
       chain: this.chain,
       blockNumber: block.number,
       txs: toCapture.txsToCapture.length,

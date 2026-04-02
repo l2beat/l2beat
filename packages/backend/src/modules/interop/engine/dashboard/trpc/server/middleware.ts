@@ -5,6 +5,7 @@ import { createKoaMiddleware } from './koa-middleware'
 
 type Dependencies = {
   db: Database
+  getExplorerUrl: (chain: string) => string | undefined
 }
 
 type Options = {
@@ -13,7 +14,9 @@ type Options = {
 
 export function createInteropTrpc(deps: Dependencies, options?: Options) {
   return createKoaMiddleware({
-    router: createInteropTrpcRouter(),
+    router: createInteropTrpcRouter({
+      getExplorerUrl: deps.getExplorerUrl,
+    }),
     prefix: options?.prefix,
     allowMethodOverride: true,
     createContext: ({ req }) =>

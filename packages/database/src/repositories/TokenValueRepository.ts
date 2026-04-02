@@ -22,6 +22,7 @@ interface SummedByTimestampTokenValueRecord {
   timestamp: UnixTime
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -37,6 +38,7 @@ interface SummedByTimestampTokenValuePerProjectRecord {
   timestamp: UnixTime
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -248,14 +250,10 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(
-          eb,
-          valueField,
-          ['canonical', 'custom-canonical'],
-          'canonical',
-        ),
-        sumBySource(eb, valueField, ['external'], 'external'),
-        sumBySource(eb, valueField, ['native'], 'native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -289,6 +287,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -328,14 +327,10 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(
-          eb,
-          valueField,
-          ['canonical', 'custom-canonical'],
-          'canonical',
-        ),
-        sumBySource(eb, valueField, ['external'], 'external'),
-        sumBySource(eb, valueField, ['native'], 'native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -385,6 +380,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -410,6 +406,7 @@ export class TokenValueRepository extends BaseRepository {
       project: string
       value: number
       canonical: number
+      customCanonical: number
       external: number
       native: number
       ether: number
@@ -431,14 +428,10 @@ export class TokenValueRepository extends BaseRepository {
         'TokenValue.timestamp',
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
-        sumBySource(
-          eb,
-          valueField,
-          ['canonical', 'custom-canonical'],
-          'canonical',
-        ),
-        sumBySource(eb, valueField, ['external'], 'external'),
-        sumBySource(eb, valueField, ['native'], 'native'),
+        sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+        sumBySource(eb, valueField, 'external'),
+        sumBySource(eb, valueField, 'native'),
         // Category breakdown
         sumByCategory(eb, valueField, 'ether'),
         sumByCategory(eb, valueField, 'stablecoin'),
@@ -485,6 +478,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -536,21 +530,17 @@ function sumByCategory(
 function sumBySource(
   eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
   valueField: 'valueForProject' | 'valueForSummary',
-  sources: TokenSource[],
-  alias: string,
+  source: TokenSource,
+  alias?: string,
 ) {
-  if (sources.length === 0) {
-    return eb.cast(eb.val(0), 'double precision').as(alias)
-  }
-
   return eb.fn
     .sum(
       eb
         .case()
-        .when('TokenMetadata.source', 'in', sources)
+        .when('TokenMetadata.source', '=', source)
         .then(eb.ref(valueField))
         .else(eb.cast(eb.val(0), 'double precision'))
         .end(),
     )
-    .as(alias)
+    .as(alias ?? source)
 }

@@ -3,6 +3,7 @@ import { type ReactNode, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -120,6 +121,7 @@ export function TokensDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="primary-card flex max-h-3/5 w-[1040px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
+        <DialogClose />
         <Tabs
           name="tokens"
           value={activeTab}
@@ -127,7 +129,7 @@ export function TokensDialog({
           variant="highlighted"
           className="flex min-h-0 flex-1 flex-col"
         >
-          <DialogHeader className="fade-out-to-bottom-3 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-4">
+          <DialogHeader className="fade-out-to-bottom-3 -mb-2 relative z-20 shrink-0 bg-surface-primary px-6 pt-6 pb-3">
             <DialogTitle>{title}</DialogTitle>
             <BetweenChainsInfo className="mt-1" />
             {tabsList}

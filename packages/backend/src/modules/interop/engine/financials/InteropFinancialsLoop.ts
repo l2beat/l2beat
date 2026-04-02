@@ -35,7 +35,7 @@ export class InteropFinancialsLoop extends TimeLoop {
   async run() {
     const hasAnyPrices = await this.db.interopRecentPrices.hasAnyPrices()
     if (!hasAnyPrices) {
-      this.logger.info('Skipping run. No prices found.')
+      this.logger.debug('Skipping run. No prices found.')
       return
     }
 
@@ -48,7 +48,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     )
 
     if (unprocessed.length === 0) {
-      this.logger.info('Skipping run, no transfers to process.')
+      this.logger.debug('Skipping run, no transfers to process.')
       return
     }
 

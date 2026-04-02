@@ -40,6 +40,7 @@ describe(InteropCompareLoop.name, () => {
       })
 
       const tagLogger = mockObject<Logger>({
+        debug: mockFn().returns(undefined),
         info: mockFn().returns(undefined),
         warn: mockFn().returns(undefined),
         error: mockFn().returns(undefined),
