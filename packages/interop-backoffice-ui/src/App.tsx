@@ -21,20 +21,13 @@ export function App() {
           <Toaster />
           <Routes>
             <Route path="/" element={<SummaryPage />} />
+
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:kind/:type" element={<EventDetailsPage />} />
-            <Route path="/summary/events" element={<EventsPage />} />
-            <Route
-              path="/summary/events/:kind/:type"
-              element={<EventDetailsPage />}
-            />
+
             <Route path="/transfers" element={<TransfersPage />} />
             <Route path="/transfers/:type" element={<TransferDetailsPage />} />
-            <Route path="/summary/transfers" element={<TransfersPage />} />
-            <Route
-              path="/summary/transfers/:type"
-              element={<TransferDetailsPage />}
-            />
+
             <Route path="/insights/memory" element={<StatusPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
