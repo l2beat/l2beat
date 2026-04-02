@@ -17,6 +17,9 @@ export async function getDataAvailabilityArchivedData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Archived Data Availability Projects - L2BEAT',
+        description:
+          'Browse archived data availability solutions that are no longer actively maintained.',
         openGraph: {
           url,
           image: '/meta-images/data-availability/archived/opengraph-image.png',
