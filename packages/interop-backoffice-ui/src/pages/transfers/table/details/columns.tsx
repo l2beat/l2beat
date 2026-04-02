@@ -1,4 +1,4 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferDetailsRow } from '../../types'
@@ -18,7 +18,7 @@ const columnHelper = createColumnHelper<TransferDetailsRow>()
 
 export function createTransferDetailsColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
-}): ColumnDef<TransferDetailsRow>[] {
+}): TableOptions<TransferDetailsRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
       header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
@@ -295,5 +295,5 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) => row.original.transferId,
       },
     }),
-  ] as ColumnDef<TransferDetailsRow>[]
+  ]
 }

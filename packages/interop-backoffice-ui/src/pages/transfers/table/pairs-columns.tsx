@@ -1,4 +1,4 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferPairRow } from '../types'
@@ -12,8 +12,8 @@ interface CreateTransferPairsColumnsOptions {
 
 export function createTransferPairsColumns({
   getDetailsPath,
-}: CreateTransferPairsColumnsOptions): ColumnDef<TransferPairRow>[] {
-  const columns = [
+}: CreateTransferPairsColumnsOptions): TableOptions<TransferPairRow>['columns'] {
+  return [
     columnHelper.accessor('srcChain', {
       header: (props) => <SortableHeader {...props} label="Source chain" />,
       meta: {
@@ -66,7 +66,5 @@ export function createTransferPairsColumns({
         getCsvValue: ({ row }) => formatDollars(row.original.dstValueSum),
       },
     }),
-  ] as ColumnDef<TransferPairRow>[]
-
-  return columns
+  ]
 }

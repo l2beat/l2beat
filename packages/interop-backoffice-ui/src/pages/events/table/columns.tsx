@@ -1,11 +1,11 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventStatsRow } from '../types'
 
 const columnHelper = createColumnHelper<EventStatsRow>()
 
-export const eventStatsColumns = [
+export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('type', {
     header: (props) => <SortableHeader {...props} label="Type" />,
     meta: {
@@ -83,4 +83,4 @@ export const eventStatsColumns = [
       csvHeader: 'Unsupported',
     },
   }),
-] as unknown as ColumnDef<EventStatsRow>[]
+]

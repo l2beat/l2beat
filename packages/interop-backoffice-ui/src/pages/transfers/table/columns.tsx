@@ -1,4 +1,4 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { type TableOptions, createColumnHelper } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferStatsRow } from '../types'
@@ -10,7 +10,7 @@ import {
 
 const columnHelper = createColumnHelper<TransferStatsRow>()
 
-export const transferStatsColumns = [
+export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
   columnHelper.accessor('plugin', {
     header: (props) => <SortableHeader {...props} label="Plugin" />,
     meta: {
@@ -73,4 +73,4 @@ export const transferStatsColumns = [
       getCsvValue: ({ row }) => String(row.original.chains.length),
     },
   }),
-] as ColumnDef<TransferStatsRow>[]
+]
