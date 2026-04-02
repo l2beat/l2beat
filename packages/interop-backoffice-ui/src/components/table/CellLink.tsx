@@ -1,28 +1,25 @@
 import { ArrowRightIcon } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { cn } from '~/utils/cn'
 
-export function ExternalLink({
-  href,
+export function CellLink({
   className,
   children,
-  ...rest
-}: React.ComponentProps<'a'>) {
+  ...props
+}: React.ComponentProps<typeof Link>) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
       className={cn(
-        'group inline-flex items-center gap-1 text-blue-500 underline hover:text-blue-600',
+        'group inline-flex items-center gap-1 underline underline-offset-4 hover:text-primary',
         className,
       )}
-      {...rest}
+      {...props}
     >
       <span>{children}</span>
       <ArrowRightIcon
         aria-hidden="true"
         className="size-3 shrink-0 transition-transform group-hover:translate-x-0.5"
       />
-    </a>
+    </Link>
   )
 }

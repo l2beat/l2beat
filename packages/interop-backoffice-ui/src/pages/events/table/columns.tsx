@@ -1,5 +1,5 @@
 import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
-import { Link } from 'react-router-dom'
+import { CellLink } from '~/components/table/CellLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventStatsRow } from '../types'
 
@@ -23,12 +23,9 @@ export const eventStatsColumns = [
   columnHelper.accessor('count', {
     header: (props) => <SortableHeader {...props} label="All" />,
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
-        to={`/events/all/${encodeURIComponent(row.original.type)}`}
-      >
+      <CellLink to={`/events/all/${encodeURIComponent(row.original.type)}`}>
         {row.original.count}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'All',
@@ -37,12 +34,9 @@ export const eventStatsColumns = [
   columnHelper.accessor('matched', {
     header: (props) => <SortableHeader {...props} label="Matched" />,
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
-        to={`/events/matched/${encodeURIComponent(row.original.type)}`}
-      >
+      <CellLink to={`/events/matched/${encodeURIComponent(row.original.type)}`}>
         {row.original.matched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Matched',
@@ -51,12 +45,11 @@ export const eventStatsColumns = [
   columnHelper.accessor('unmatched', {
     header: (props) => <SortableHeader {...props} label="Unmatched" />,
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unmatched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unmatched',
@@ -67,12 +60,11 @@ export const eventStatsColumns = [
       <SortableHeader {...props} label="Unmatched (>2h ago)" />
     ),
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.oldUnmatched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unmatched (>2h ago)',
@@ -81,12 +73,11 @@ export const eventStatsColumns = [
   columnHelper.accessor('unsupported', {
     header: (props) => <SortableHeader {...props} label="Unsupported" />,
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/unsupported/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unsupported}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unsupported',
