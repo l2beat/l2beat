@@ -79,6 +79,7 @@ export function createTransferDetailsColumns(options: {
           </ExternalLink>
         )
       },
+      enableSorting: false,
       meta: {
         csvHeader: 'Source tx',
         getCsvValue: ({ row }) => row.original.srcTxHash ?? '-',
@@ -92,7 +93,7 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) => String(row.original.srcLogIndex ?? '-'),
       },
     }),
-    columnHelper.display({
+    columnHelper.accessor('srcTokenAddress', {
       id: 'srcToken',
       header: (props) => <SortableHeader {...props} label="Source token" />,
       cell: ({ row }) => {
@@ -122,17 +123,9 @@ export function createTransferDetailsColumns(options: {
         return getTokenAddressDisplay(row.original.srcTokenAddress)
       },
       sortingFn: (left, right) => {
-        const leftToken =
-          formatTokenAmount(left.original.srcSymbol, left.original.srcAmount) ??
-          getTokenAddressDisplay(left.original.srcTokenAddress)
-        const rightToken =
-          formatTokenAmount(
-            right.original.srcSymbol,
-            right.original.srcAmount,
-          ) ?? getTokenAddressDisplay(right.original.srcTokenAddress)
-
-        return leftToken.localeCompare(rightToken)
+        return (left.original.srcAmount ?? 0) - (right.original.srcAmount ?? 0)
       },
+      sortUndefined: 'last',
       meta: {
         csvHeader: 'Source token',
         getCsvValue: ({ row }) =>
@@ -147,6 +140,8 @@ export function createTransferDetailsColumns(options: {
         csvHeader: 'Source value',
         getCsvValue: ({ row }) => formatDollars(row.original.srcValueUsd),
       },
+      sortingFn: (left, right) =>
+        (right.original.srcValueUsd ?? 0) - (left.original.srcValueUsd ?? 0),
     }),
     columnHelper.display({
       id: 'srcFlow',
@@ -200,6 +195,7 @@ export function createTransferDetailsColumns(options: {
           </ExternalLink>
         )
       },
+      enableSorting: false,
       meta: {
         csvHeader: 'Destination tx',
         getCsvValue: ({ row }) => row.original.dstTxHash ?? '-',
@@ -215,7 +211,7 @@ export function createTransferDetailsColumns(options: {
         getCsvValue: ({ row }) => String(row.original.dstLogIndex ?? '-'),
       },
     }),
-    columnHelper.display({
+    columnHelper.accessor('dstTokenAddress', {
       id: 'dstToken',
       header: (props) => (
         <SortableHeader {...props} label="Destination token" />
@@ -246,18 +242,9 @@ export function createTransferDetailsColumns(options: {
 
         return getTokenAddressDisplay(row.original.dstTokenAddress)
       },
-      sortingFn: (left, right) => {
-        const leftToken =
-          formatTokenAmount(left.original.dstSymbol, left.original.dstAmount) ??
-          getTokenAddressDisplay(left.original.dstTokenAddress)
-        const rightToken =
-          formatTokenAmount(
-            right.original.dstSymbol,
-            right.original.dstAmount,
-          ) ?? getTokenAddressDisplay(right.original.dstTokenAddress)
-
-        return leftToken.localeCompare(rightToken)
-      },
+      sortingFn: (left, right) =>
+        (left.original.dstAmount ?? 0) - (right.original.dstAmount ?? 0),
+      sortUndefined: 'last',
       meta: {
         csvHeader: 'Destination token',
         getCsvValue: ({ row }) =>
@@ -274,6 +261,8 @@ export function createTransferDetailsColumns(options: {
         csvHeader: 'Destination value',
         getCsvValue: ({ row }) => formatDollars(row.original.dstValueUsd),
       },
+      sortingFn: (left, right) =>
+        (right.original.dstValueUsd ?? 0) - (left.original.dstValueUsd ?? 0),
     }),
     columnHelper.display({
       id: 'dstFlow',
@@ -296,6 +285,14 @@ export function createTransferDetailsColumns(options: {
         csvHeader: 'Destination flow',
         getCsvValue: ({ row }) =>
           getTransferSideLabel(row.original.dstWasMinted, 'minted', 'released'),
+      },
+    }),
+    columnHelper.accessor('transferId', {
+      header: (props) => <SortableHeader {...props} label="Transfer ID" />,
+      enableSorting: false,
+      meta: {
+        csvHeader: 'Transfer ID',
+        getCsvValue: ({ row }) => row.original.transferId,
       },
     }),
   ] as ColumnDef<TransferDetailsRow>[]

@@ -64,12 +64,10 @@ export const transferStatsColumns = [
       getCsvValue: ({ row }) => formatDollars(row.original.dstValueSum),
     },
   }),
-  columnHelper.display({
+  columnHelper.accessor((row) => row.chains.length, {
     id: 'chainPairs',
     header: (props) => <SortableHeader {...props} label="Chain pairs" />,
-    cell: ({ row }) => row.original.chains.length,
-    sortingFn: (left, right) =>
-      left.original.chains.length - right.original.chains.length,
+    cell: (row) => row.getValue(),
     meta: {
       csvHeader: 'Chain pairs',
       getCsvValue: ({ row }) => String(row.original.chains.length),

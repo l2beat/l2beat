@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
 import { cn } from '~/utils/cn'
 import type { TransferStatsRow } from '../types'
-import { buildTransferDetailsPath } from '../utils'
 import { transferStatsColumns } from './columns'
 import { TransferPairsTable } from './TransferPairsTable'
 
@@ -23,7 +21,6 @@ export function TransfersTable({
   enableCsvExport = false,
   enablePairsCsvExport = false,
 }: TransfersTableProps) {
-  const navigate = useNavigate()
   const [selectedRowId, setSelectedRowId] = useState<string>()
 
   const {
@@ -90,7 +87,7 @@ export function TransfersTable({
 
           return cn(
             'odd:bg-muted/20 hover:bg-muted/70',
-            isSelected && 'bg-primary/10 hover:bg-primary/20',
+            isSelected && '!bg-blue-200',
           )
         }}
         totalRowsCount={totalRowsCount}
@@ -116,17 +113,9 @@ export function TransfersTable({
           </div>
           <TransferPairsTable
             data={selectedRow.chains}
+            plugin={selectedRow.plugin}
+            type={selectedRow.type}
             enableCsvExport={enablePairsCsvExport}
-            onPairClick={(pair) => {
-              navigate(
-                buildTransferDetailsPath({
-                  type: selectedRow.type,
-                  plugin: selectedRow.plugin,
-                  srcChain: pair.srcChain,
-                  dstChain: pair.dstChain,
-                }),
-              )
-            }}
           />
         </div>
       ) : null}

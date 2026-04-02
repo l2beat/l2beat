@@ -1,19 +1,41 @@
+import { useMemo } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
 import type { TransferPairRow } from '../types'
-import { transferPairsColumns } from './pairs-columns'
+import { buildTransferDetailsPath } from '../utils'
+import { createTransferPairsColumns } from './pairs-columns'
 
 interface TransferPairsTableProps {
   data: TransferPairRow[]
+  plugin: string
+  type: string
   enableCsvExport?: boolean
-  onPairClick?: (row: TransferPairRow) => void
 }
 
 export function TransferPairsTable({
   data,
+  plugin,
+  type,
   enableCsvExport = false,
-  onPairClick,
 }: TransferPairsTableProps) {
+  const getDetailsPath = useMemo(
+    () => (pair: TransferPairRow) =>
+      buildTransferDetailsPath({
+        type,
+        plugin,
+        srcChain: pair.srcChain,
+        dstChain: pair.dstChain,
+      }),
+    [plugin, type],
+  )
+  const columns = useMemo(
+    () =>
+      createTransferPairsColumns({
+        getDetailsPath,
+      }),
+    [getDetailsPath],
+  )
+
   const {
     filteredRowsCount,
     isSearchEnabled,
@@ -27,7 +49,7 @@ export function TransferPairsTable({
     totalRowsCount,
   } = useTanStackTable({
     data,
-    columns: transferPairsColumns,
+    columns,
     initialSorting: [{ id: 'count', desc: true }],
     getRowId: (row) => `${row.srcChain}:${row.dstChain}`,
     searchPlaceholder: 'Search source and destination chains',
@@ -42,12 +64,6 @@ export function TransferPairsTable({
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
         `interop-transfer-chain-pairs-${new Date().toISOString()}.csv`
-      }
-      onRowClick={onPairClick ? (row) => onPairClick(row.original) : undefined}
-      rowClassName={
-        onPairClick
-          ? 'odd:bg-muted/20 hover:bg-muted/70 cursor-pointer'
-          : 'odd:bg-muted/20 hover:bg-muted/70'
       }
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}

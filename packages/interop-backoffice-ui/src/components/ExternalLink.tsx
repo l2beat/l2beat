@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from 'lucide-react'
+import { ArrowUpRightIcon } from 'lucide-react'
 import { cn } from '~/utils/cn'
 
 export function ExternalLink({
@@ -19,10 +19,7 @@ export function ExternalLink({
       {...rest}
     >
       <span>{children}</span>
-      <ArrowRightIcon
-        aria-hidden="true"
-        className="size-3 shrink-0 transition-transform group-hover:translate-x-0.5"
-      />
+      <ArrowUpRightIcon aria-hidden="true" className="size-3 shrink-0" />
     </a>
   )
 }

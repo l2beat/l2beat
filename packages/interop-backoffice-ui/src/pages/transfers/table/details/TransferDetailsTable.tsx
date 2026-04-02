@@ -53,7 +53,6 @@ export function TransferDetailsTable({
       getCsvFilename={() =>
         `interop-transfer-details-${new Date().toISOString()}.csv`
       }
-      rowClassName="odd:bg-muted/20 hover:bg-muted/70"
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}
       searchValue={isSearchEnabled ? searchValue : undefined}
