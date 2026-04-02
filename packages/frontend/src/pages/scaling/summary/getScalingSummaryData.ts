@@ -33,6 +33,9 @@ export async function getScalingSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Scaling Summary - L2BEAT',
+        description:
+          'Overview of the Ethereum layer 2 scaling ecosystem. Compare rollups, validiums, and optimiums by TVS, activity, and risk.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/summary/opengraph-image.png',

@@ -17,6 +17,9 @@ export async function getMultisigReportData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Multisig Report - L2BEAT',
+        description:
+          'An in-depth analysis of multisig governance across Ethereum scaling projects.',
         openGraph: {
           url,
         },

@@ -27,6 +27,9 @@ export async function getScalingArchivedData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Archived Scaling Projects - L2BEAT',
+        description:
+          'Browse archived Ethereum scaling projects that are no longer actively maintained.',
         openGraph: {
           url: req.originalUrl,
           image: '/meta-images/scaling/archived/opengraph-image.png',
