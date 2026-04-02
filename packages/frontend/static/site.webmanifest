@@ -1,0 +1,21 @@
+{
+  "name": "L2BEAT",
+  "short_name": "L2BEAT",
+  "description": "Analytics and research website about Ethereum layer 2 scaling",
+  "start_url": "/scaling/summary",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e91d8a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/apple-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ]
+}
