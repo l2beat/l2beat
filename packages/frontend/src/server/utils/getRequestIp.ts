@@ -21,7 +21,9 @@ export function getRequestIp(req: Request): string {
     return forwardedIp
   }
 
-  return normalizeIp(req.ip) ?? normalizeIp(req.socket.remoteAddress) ?? 'unknown'
+  return (
+    normalizeIp(req.ip) ?? normalizeIp(req.socket.remoteAddress) ?? 'unknown'
+  )
 }
 
 function getFirstIpFromHeader(header: string | undefined): string | undefined {

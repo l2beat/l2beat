@@ -4,8 +4,8 @@ import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
 import { appRouter } from '~/server/trpc/root'
 import { getRequestId } from '../middlewares/RequestIdMiddleware'
-import { getLogger } from '../utils/logger'
 import { getRequestIp } from '../utils/getRequestIp'
+import { getLogger } from '../utils/logger'
 
 const logger = getLogger().for('TrpcRouter')
 

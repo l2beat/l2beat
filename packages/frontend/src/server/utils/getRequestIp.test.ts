@@ -1,5 +1,5 @@
-import type { Request } from 'express'
 import { expect } from 'earl'
+import type { Request } from 'express'
 import { getRequestIp } from './getRequestIp'
 
 describe(getRequestIp.name, () => {

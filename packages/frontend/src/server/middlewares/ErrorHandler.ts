@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
-import { getLogger } from '../utils/logger'
 import { getRequestIp } from '../utils/getRequestIp'
+import { getLogger } from '../utils/logger'
 import { getRequestId } from './RequestIdMiddleware'
 
 export function ErrorHandler() {
