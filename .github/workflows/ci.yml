@@ -14,6 +14,7 @@ on:
 jobs:
   build-backend:
     name: Build backend container image
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
@@ -36,6 +37,7 @@ jobs:
 
   build-frontend:
     name: Build frontend
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -75,6 +77,7 @@ jobs:
 
   build-protocolbeat:
     name: Build protocolbeat
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -103,6 +106,7 @@ jobs:
 
   build-tools:
     name: Build tools
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -131,6 +135,7 @@ jobs:
 
   build-uops-dashboard:
     name: Build uops-dashboard
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -159,6 +164,7 @@ jobs:
 
   build-token-backend:
     name: Build token-backend container image
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
@@ -181,6 +187,7 @@ jobs:
 
   typecheck:
     name: Typecheck
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -209,6 +216,7 @@ jobs:
 
   test:
     name: Test
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -252,6 +260,7 @@ jobs:
 
   biome:
     name: Lint & Format
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
@@ -268,6 +277,7 @@ jobs:
 
   test-all-pages:
     name: Test All Pages
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     env:
@@ -301,6 +311,7 @@ jobs:
 
   test-gha-timeouts:
     name: Test if all GH Action jobs have timeout defined
+    # runs-on: ubuntu-latest
     runs-on: blacksmith-4vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
