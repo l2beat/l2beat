@@ -1,26 +1,39 @@
 import { useMemo } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
-import type { EventDetailsRow } from '../../types'
-import { createEventDetailsColumns } from './columns'
+import type { TransferPairRow } from '../types'
+import { buildTransferDetailsPath } from '../utils'
+import { createTransferPairsColumns } from './pairs-columns'
 
-interface EventDetailsTableProps {
-  data: EventDetailsRow[]
-  getExplorerUrl: (chain: string) => string | undefined
+interface TransferPairsTableProps {
+  data: TransferPairRow[]
+  plugin: string
+  type: string
   enableCsvExport?: boolean
 }
 
-export function EventDetailsTable({
+export function TransferPairsTable({
   data,
-  getExplorerUrl,
+  plugin,
+  type,
   enableCsvExport = false,
-}: EventDetailsTableProps) {
+}: TransferPairsTableProps) {
+  const getDetailsPath = useMemo(
+    () => (pair: TransferPairRow) =>
+      buildTransferDetailsPath({
+        type,
+        plugin,
+        srcChain: pair.srcChain,
+        dstChain: pair.dstChain,
+      }),
+    [plugin, type],
+  )
   const columns = useMemo(
     () =>
-      createEventDetailsColumns({
-        getExplorerUrl,
+      createTransferPairsColumns({
+        getDetailsPath,
       }),
-    [getExplorerUrl],
+    [getDetailsPath],
   )
 
   const {
@@ -37,9 +50,9 @@ export function EventDetailsTable({
   } = useTanStackTable({
     data,
     columns,
-    initialSorting: [{ id: 'timestamp', desc: true }],
-    getRowId: (row) => `${row.chain}-${row.txHash}-${row.logIndex}`,
-    searchPlaceholder: 'Search plugins, chains, tx hashes, and args',
+    initialSorting: [{ id: 'count', desc: true }],
+    getRowId: (row) => `${row.srcChain}:${row.dstChain}`,
+    searchPlaceholder: 'Search source and destination chains',
   })
 
   return (
@@ -47,10 +60,10 @@ export function EventDetailsTable({
       table={table}
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
-      emptyMessage="No events found for the selected filters."
+      emptyMessage="No chain pairs found."
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
-        `interop-event-details-${new Date().toISOString()}.csv`
+        `interop-transfer-chain-pairs-${new Date().toISOString()}.csv`
       }
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}

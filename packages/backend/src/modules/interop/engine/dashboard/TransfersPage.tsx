@@ -1,7 +1,10 @@
-import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { Address32, formatSeconds } from '@l2beat/shared-pure'
-import React from 'react'
+import {
+  Address32,
+  formatSeconds,
+  type InteropBridgeType,
+} from '@l2beat/shared-pure'
+import * as React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
@@ -10,6 +13,31 @@ import {
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
 import { ShortenedHash } from './ShortenedHash'
+
+interface TransferTableRow {
+  plugin: string
+  bridgeType: InteropBridgeType | undefined
+  transferId: string
+  type: string
+  duration: number | undefined
+  timestamp: number
+  srcChain: string
+  srcTxHash: string | undefined
+  srcTokenAddress: string | undefined
+  srcWasBurned: boolean | undefined
+  srcAbstractTokenId: string | undefined
+  srcSymbol: string | undefined
+  srcAmount: number | undefined
+  srcValueUsd: number | undefined
+  dstChain: string
+  dstTxHash: string | undefined
+  dstTokenAddress: string | undefined
+  dstWasMinted: boolean | undefined
+  dstAbstractTokenId: string | undefined
+  dstSymbol: string | undefined
+  dstAmount: number | undefined
+  dstValueUsd: number | undefined
+}
 
 function BooleanCell({
   value,
@@ -31,7 +59,7 @@ function BooleanCell({
 }
 
 export function TransfersTable(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   tableId?: string
 }) {
@@ -241,7 +269,7 @@ function AddTokenLink({
 }
 
 function TransfersPageLayout(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -274,7 +302,7 @@ function TransfersPageLayout(props: {
 }
 
 export function renderTransfersPage(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

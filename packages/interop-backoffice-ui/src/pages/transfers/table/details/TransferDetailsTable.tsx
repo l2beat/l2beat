@@ -1,23 +1,23 @@
 import { useMemo } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
-import type { EventDetailsRow } from '../../types'
-import { createEventDetailsColumns } from './columns'
+import type { TransferDetailsRow } from '../../types'
+import { createTransferDetailsColumns } from './columns'
 
-interface EventDetailsTableProps {
-  data: EventDetailsRow[]
+interface TransferDetailsTableProps {
+  data: TransferDetailsRow[]
   getExplorerUrl: (chain: string) => string | undefined
   enableCsvExport?: boolean
 }
 
-export function EventDetailsTable({
+export function TransferDetailsTable({
   data,
   getExplorerUrl,
   enableCsvExport = false,
-}: EventDetailsTableProps) {
+}: TransferDetailsTableProps) {
   const columns = useMemo(
     () =>
-      createEventDetailsColumns({
+      createTransferDetailsColumns({
         getExplorerUrl,
       }),
     [getExplorerUrl],
@@ -38,8 +38,9 @@ export function EventDetailsTable({
     data,
     columns,
     initialSorting: [{ id: 'timestamp', desc: true }],
-    getRowId: (row) => `${row.chain}-${row.txHash}-${row.logIndex}`,
-    searchPlaceholder: 'Search plugins, chains, tx hashes, and args',
+    getRowId: (row) => row.transferId,
+    searchPlaceholder:
+      'Search plugins, chains, hashes, bridge types, and token labels',
   })
 
   return (
@@ -47,10 +48,10 @@ export function EventDetailsTable({
       table={table}
       pageSizeOption={pageSizeOption}
       onPageSizeOptionChange={setPageSizeOption}
-      emptyMessage="No events found for the selected filters."
+      emptyMessage="No transfers found for the selected filters."
       enableCsvExport={enableCsvExport}
       getCsvFilename={() =>
-        `interop-event-details-${new Date().toISOString()}.csv`
+        `interop-transfer-details-${new Date().toISOString()}.csv`
       }
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}

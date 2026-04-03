@@ -14,6 +14,10 @@ import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
+import {
+  getInteropTransferDetails,
+  getInteropTransferStats,
+} from './impls/transfers'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
 import { renderStatusPage } from './StatusPage'
@@ -65,7 +69,7 @@ export function createInteropRouter(
       await Promise.all([
         db.interopEvent.getStats(),
         getMessagesStats(db),
-        getTransfersStats(db),
+        getInteropTransferStats(db),
         db.interopTransfer.getMissingTokensInfo(),
         db.interopMessage.getUniqueAppsPerPlugin(),
         db.interopPluginSyncedRange.getAll(),
@@ -397,13 +401,15 @@ export function createInteropRouter(
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
       .object({
+        plugin: v.string().optional(),
         srcChain: v.string().optional(),
         dstChain: v.string().optional(),
       })
       .validate(ctx.query)
     const status = getProcessorsStatus(processors)
 
-    const transfers = await db.interopTransfer.getByType(params.type, {
+    const transfers = await getInteropTransferDetails(db, params.type, {
+      plugin: query.plugin,
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })
@@ -457,22 +463,5 @@ async function getMessagesStats(db: Database) {
           avgDuration: Number(chain.avgDuration),
         }
       }),
-  }))
-}
-
-async function getTransfersStats(db: Database) {
-  const stats = await db.interopTransfer.getStats()
-  const detailedStats = await db.interopTransfer.getDetailedStats()
-
-  return stats.map((overall) => ({
-    plugin: overall.plugin,
-    type: overall.type,
-    count: overall.count,
-    avgDuration: overall.avgDuration,
-    srcValueSum: overall.srcValueSum,
-    dstValueSum: overall.dstValueSum,
-    chains: detailedStats.filter(
-      (chain) => chain.plugin === overall.plugin && chain.type === overall.type,
-    ),
   }))
 }

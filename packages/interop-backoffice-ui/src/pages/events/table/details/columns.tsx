@@ -1,4 +1,4 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
+import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventDetailsRow } from '../../types'
@@ -9,7 +9,7 @@ const columnHelper = createColumnHelper<EventDetailsRow>()
 
 export function createEventDetailsColumns(options: {
   getExplorerUrl: (chain: string) => string | undefined
-}): ColumnDef<EventDetailsRow>[] {
+}): TableOptions<EventDetailsRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
       header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
@@ -99,5 +99,5 @@ export function createEventDetailsColumns(options: {
         csvHeader: 'Args',
       },
     }),
-  ] as unknown as ColumnDef<EventDetailsRow>[]
+  ]
 }

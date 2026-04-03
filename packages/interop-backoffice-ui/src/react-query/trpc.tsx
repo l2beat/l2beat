@@ -5,7 +5,6 @@ import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
 import type React from 'react'
 import { useState } from 'react'
-import SuperJSON from 'superjson'
 import { createQueryClient } from './queryClient'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
@@ -31,8 +30,8 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
         }),
         httpBatchLink({
           transformer: {
-            serialize: SuperJSON.serialize,
-            deserialize: SuperJSON.deserialize,
+            serialize: JSON.stringify,
+            deserialize: JSON.parse,
           },
           url: '/trpc',
           headers: () => {
