@@ -20,6 +20,8 @@ export const fluence: ScalingProject = orbitStackL2({
   display: {
     name: 'Fluence',
     slug: 'fluence',
+    headerWarning:
+      'Fluence was sunset in April 2026. The Orbit Stack rollup was shut down and bridge escrow contracts were upgraded to sweeper contracts controlled by a 2-of-4 multisig. Users can claim migrated funds via the [Migration Tool](https://fluence.network/blog/ai-focus-flt-updates/) until April 2027.',
     description:
       'Fluence is an Optimium on Ethereum, built on the Orbit stack. It enables a decentralized serverless platform & computing marketplace powered by blockchain economics.',
     links: {
@@ -68,6 +70,14 @@ export const fluence: ScalingProject = orbitStackL2({
       date: '2024-09-20T00:00:00Z',
       description: 'Fluence launches FLT staking on Layer 2.',
       type: 'general',
+    },
+    {
+      title: 'Fluence L2 shutdown',
+      url: 'https://fluence.network/blog/ai-focus-flt-updates/',
+      date: '2026-04-01T00:00:00Z',
+      description:
+        'Fluence shuts down its Orbit Stack L2 rollup and migrates assets to Ethereum L1.',
+      type: 'incident',
     },
   ],
   customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
