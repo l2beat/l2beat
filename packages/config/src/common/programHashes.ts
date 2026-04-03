@@ -250,7 +250,7 @@ Prepare:
 
 Verify:
 
-1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\`.
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\` . Commit hash should be  \`debb3301e7720943f65274fd75f747ee2b722bbd\`.
 2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
@@ -269,7 +269,7 @@ Prepare:
 
 Verify:
 
-1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\`.
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\` . Commit hash should be  \`debb3301e7720943f65274fd75f747ee2b722bbd\`.
 2. Make sure docker is running by running  \`docker ps\`
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
