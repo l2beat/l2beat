@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1726790400), // 2024-09-20T00:00:00+00:00
+  archivedAt: UnixTime(1743465600), // 2026-04-01T00:00:00+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
