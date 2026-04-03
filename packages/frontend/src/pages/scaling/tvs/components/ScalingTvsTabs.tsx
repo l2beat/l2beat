@@ -64,7 +64,6 @@ export function ScalingTvsTabs(props: Props) {
             ...props.others,
             ...props.notReviewed,
           ]}
-          className="max-md:mt-0 max-md:px-0"
         />
         <DisplayControls display={display} setDisplay={setDisplay} />
       </div>
