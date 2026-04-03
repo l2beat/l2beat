@@ -1,6 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
@@ -26,10 +27,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       timestamp: 123,
       srcAmount: undefined,
       srcSymbol: 'Unknown',
-      srcTokenIconUrl: '/images/token-placeholder.png',
+      srcTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
-      dstTokenIconUrl: '/images/token-placeholder.png',
+      dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
       duration: 60,
       srcChain: 'ethereum',

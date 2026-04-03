@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransferStats,
@@ -29,7 +30,6 @@ const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const PAGE_SIZE = 100
 const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
-const TOKEN_PLACEHOLDER_ICON_URL = '/images/token-placeholder.png'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),

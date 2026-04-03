@@ -2,6 +2,7 @@ import { assert, unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   CommonInteropData,
   InteropTopItemsParams,
@@ -110,15 +111,13 @@ export async function getInteropTokensPairs({
     }
   }
 
-  const placeholder = manifest.getUrl('/images/token-placeholder.png')
-
   return Array.from(result.entries())
     .map(([pairId, data]) => {
       if (pairId === 'unknown') {
         return {
           id: pairId,
-          tokenA: { symbol: 'Unknown', iconUrl: placeholder },
-          tokenB: { symbol: 'Unknown', iconUrl: placeholder },
+          tokenA: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
+          tokenB: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
           volume: null,
           transferCount: data.transferCount,
           avgDuration: null,
