@@ -41,6 +41,7 @@ export class ElasticSearchTransport implements LoggerTransport {
     this.buffer.push(log)
     const overflow = this.buffer.length - this.bufferLimit
     if (overflow > 0) {
+      void this.reportBufferOverflow(overflow)
       this.buffer.splice(0, overflow)
     }
   }
@@ -123,6 +124,30 @@ export class ElasticSearchTransport implements LoggerTransport {
         )
       } catch {}
     }
+  }
+
+  private async reportBufferOverflow(droppedCount: number): Promise<void> {
+    try {
+      await this.client.bulk(
+        [
+          {
+            id: this.uuidProvider(),
+            ...JSON.parse(
+              formatEcsLog({
+                time: new Date(),
+                level: 'CRITICAL',
+                message: 'Elastic Search transport buffer overflowed',
+                parameters: {
+                  droppedCount,
+                  bufferLimit: this.bufferLimit,
+                },
+              }),
+            ),
+          },
+        ],
+        await this.createIndex(),
+      )
+    } catch {}
   }
 
   private async createIndex(): Promise<string> {
