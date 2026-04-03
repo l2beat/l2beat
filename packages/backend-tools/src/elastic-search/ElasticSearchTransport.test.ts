@@ -97,9 +97,25 @@ describe(ElasticSearchTransport.name, () => {
       }),
     )
 
+    await flushOverflowAlertMicrotasks()
     await clock.tickAsync(flushInterval + 1)
 
-    expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          parameters: { droppedCount: 1, bufferLimit: 2 },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      2,
       [
         { id, ...log, message: 'second' },
         { id, ...log, message: 'third' },
@@ -121,11 +137,27 @@ describe(ElasticSearchTransport.name, () => {
       )
     }
 
+    await flushOverflowAlertMicrotasks()
     await clock.tickAsync(flushInterval + 1)
 
-    expect(clientMock.bulk).toHaveBeenCalledTimes(1)
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
 
-    const [documents] = clientMock.bulk.calls[0]!.args
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          parameters: {
+            droppedCount: 1,
+            bufferLimit: 20_000,
+          },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    const [documents] = clientMock.bulk.calls[1]!.args
     expect(documents).toHaveLength(20_000)
     expect(documents[0]).toEqual({ id, ...log, message: 'log-1' })
     expect(documents[19_999]).toEqual({ id, ...log, message: 'log-20000' })
@@ -243,6 +275,13 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
   })
 })
+
+/** Drains microtasks so an eager `reportBufferOverflow` completes before the flush timer. */
+async function flushOverflowAlertMicrotasks() {
+  for (let i = 0; i < 10; i++) {
+    await Promise.resolve()
+  }
+}
 
 function createClientMock(
   indexExist = true,
