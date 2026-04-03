@@ -59,7 +59,6 @@ const items = [
         title: 'Transfers',
         url: '/transfers',
         icon: ArrowRightLeftIcon,
-        isUpcoming: true,
       },
       {
         title: 'Missing tokens',

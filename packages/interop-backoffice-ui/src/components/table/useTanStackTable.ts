@@ -1,11 +1,11 @@
 import {
-  type ColumnDef,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   type RowData,
   type SortingState,
+  type TableOptions,
   useReactTable,
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ function toPageSize(option: PageSizeOption, rowsCount: number) {
 
 interface UseTanStackTableOptions<TData extends RowData> {
   data: TData[]
-  columns: ColumnDef<TData>[]
+  columns: TableOptions<TData>['columns']
   getRowId?: (row: TData, index: number) => string
   initialSorting?: SortingState
   initialPageSizeOption?: PageSizeOption
