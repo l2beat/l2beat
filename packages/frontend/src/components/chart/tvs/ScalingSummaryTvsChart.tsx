@@ -75,6 +75,8 @@ export function ScalingSummaryTvsChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range,
+    excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens: true,
     filter: { type: 'layer2' },
   })
 

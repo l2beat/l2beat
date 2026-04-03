@@ -17,7 +17,7 @@ const SUPERFORM_ADDRESS = EthereumAddress(
   '0xa195608C2306A26f727d5199D5A382a4508308DA',
 )
 
-// https://docs.superform.xyz/integrate-superform/deployment-addresses
+// https://docs.superform.xyz/deployment-addresses#deployment-addresses
 // chainconfeeg
 const SUPERFORM_NETWORKS = defineNetworks('superform', [
   {
@@ -65,6 +65,7 @@ const SUPERFORM_NETWORKS = defineNetworks('superform', [
     eid: 30367,
     chain: 'hyperevm',
   },
+  // tempo, monad unsupported
 ])
 
 const parseCrossChainInitiatedDepositMulti = createEventParser(

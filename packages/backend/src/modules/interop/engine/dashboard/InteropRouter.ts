@@ -12,6 +12,7 @@ import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
+import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
 import { renderMainPage } from './MainPage'
 import { renderMessagesPage } from './MessagesPage'
@@ -48,7 +49,13 @@ export function createInteropRouter(
 
   router.all(
     ['/interop/trpc', '/interop/trpc/(.*)'],
-    createInteropTrpc({ db }, { prefix: '/interop/trpc' }),
+    createInteropTrpc(
+      {
+        db,
+        getExplorerUrl: config.dashboard.getExplorerUrl,
+      },
+      { prefix: '/interop/trpc' },
+    ),
   )
 
   router.get('/interop', async (ctx) => {
@@ -268,7 +275,6 @@ export function createInteropRouter(
       'all',
       'unmatched',
       'unsupported',
-      'transfers',
       'matched',
       'old-unmatched',
     ]),
@@ -358,57 +364,13 @@ export function createInteropRouter(
     const params = Params.validate(ctx.params)
     const status = getProcessorsStatus(processors)
 
-    if (params.kind === 'unmatched') {
-      const events = await db.interopEvent.getByType(params.type, {
-        matched: false,
-        unsupported: false,
-      })
-      ctx.body = renderEventsPage({
-        events,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        status,
-      })
-    } else if (params.kind === 'unsupported') {
-      const events = await db.interopEvent.getByType(params.type, {
-        unsupported: true,
-      })
-      ctx.body = renderEventsPage({
-        events,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        status,
-      })
-    } else if (params.kind === 'matched') {
-      const events = await db.interopEvent.getByType(params.type, {
-        matched: true,
-      })
-      ctx.body = renderEventsPage({
-        events,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        status,
-      })
-    } else if (params.kind === 'old-unmatched') {
-      const now = new Date()
-      const cutoffTime = new Date(now.toISOString())
-      cutoffTime.setUTCHours(cutoffTime.getUTCHours() - 2)
+    const events = await getInteropEventsByType(db, params.kind, params.type)
 
-      const events = await db.interopEvent.getByType(params.type, {
-        matched: false,
-        unsupported: false,
-        oldCutoff: UnixTime.fromDate(cutoffTime),
-      })
-      ctx.body = renderEventsPage({
-        events,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        status,
-      })
-    } else if (params.kind === 'all') {
-      const events = await db.interopEvent.getByType(params.type)
-      ctx.body = renderEventsPage({
-        events,
-        getExplorerUrl: config.dashboard.getExplorerUrl,
-        status,
-      })
-    }
+    ctx.body = renderEventsPage({
+      events,
+      getExplorerUrl: config.dashboard.getExplorerUrl,
+      status,
+    })
   })
 
   router.get('/interop/messages/:type', async (ctx) => {

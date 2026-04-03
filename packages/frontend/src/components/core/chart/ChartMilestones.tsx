@@ -287,14 +287,18 @@ type TimestampedMilestone = {
 }
 
 function ProjectMilestoneIcon({
-  projectIcon,
+  project,
   className,
 }: {
-  projectIcon: string
+  project: { name: string; icon: string }
   className?: string
 }) {
   return (
-    <img src={projectIcon} className={cn('size-5 rounded-full', className)} />
+    <img
+      src={project.icon}
+      alt={project.name}
+      className={cn('size-5 rounded-full', className)}
+    />
   )
 }
 
@@ -309,7 +313,7 @@ function SingleMilestoneIcon({
     case 'project':
       return (
         <ProjectMilestoneIcon
-          projectIcon={milestone.projectIcon}
+          project={milestone.project}
           className={className}
         />
       )

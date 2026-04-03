@@ -99,6 +99,7 @@ export interface ProjectScalingEntry {
         totalChange: number
       }
       warning?: WarningWithSentiment
+      additionalTrustAssumptionsPercentage: number
       tokens: {
         breakdown?: {
           total: number
@@ -233,6 +234,8 @@ export async function getScalingProjectEntry(
               totalChange: tvsProjectStats.change.total,
             },
             warning: project.tvsInfo.warnings[0],
+            additionalTrustAssumptionsPercentage:
+              tvsProjectStats.additionalTrustAssumptionsPercentage,
             tokens: {
               breakdown: tvsProjectStats.breakdown,
               warnings: compact([

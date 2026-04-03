@@ -10,11 +10,6 @@ export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
   flushInterval?: number
   indexPrefix?: string
-  /**
-   * Optional extra `parameters` for the diagnostic log when a bulk flush fails.
-   * Use for app-specific correlation (e.g. request ids parsed from batched ECS lines).
-   */
-  flushFailureContext?: (batch: string[]) => Record<string, unknown>
 }
 
 export type UuidProvider = () => string
@@ -84,20 +79,14 @@ export class ElasticSearchTransport implements LoggerTransport {
       const response = await this.client.bulk(documents, index)
 
       if (!response.isSuccess) {
-        throw new Error('Failed to push logs to Elastic Search node', {
+        throw new Error('Failed to push some logs to Elastic Search node', {
           cause: {
-            documentErrors: response.errors,
+            failedDocuments: JSON.stringify(response.failedDocuments),
           },
         })
       }
     } catch (error) {
       console.log(error)
-
-      let flushFailureExtra: Record<string, unknown> = {}
-      try {
-        flushFailureExtra = this.options.flushFailureContext?.(batch) ?? {}
-      } catch {}
-
       try {
         // We want to get notified in case there is a "push time error"
         // e.g. fields types collision https://github.com/l2beat/l2beat/pull/10136
@@ -116,8 +105,6 @@ export class ElasticSearchTransport implements LoggerTransport {
                       error instanceof Error
                         ? (error.cause ?? undefined)
                         : undefined,
-                    batchLogCount: batch.length,
-                    ...flushFailureExtra,
                   },
                 }),
               ),

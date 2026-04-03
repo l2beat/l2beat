@@ -1,4 +1,12 @@
-import { Card, CardHeader, CardTitle } from '~/components/core/Card'
+import { Link } from 'react-router-dom'
+import { Button } from '~/components/core/Button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '~/components/core/Card'
 import { AppLayout } from '~/layouts/AppLayout'
 
 export function SummaryPage() {
@@ -9,8 +17,16 @@ export function SummaryPage() {
           <CardHeader className="flex flex-row items-start justify-between gap-3">
             <div className="space-y-1">
               <CardTitle>Interop Overview</CardTitle>
+              <CardDescription>
+                The events migration is now available in the new UI.
+              </CardDescription>
             </div>
           </CardHeader>
+          <CardContent>
+            <Button asChild variant="outline">
+              <Link to="/events">Open events</Link>
+            </Button>
+          </CardContent>
         </Card>
       </div>
     </AppLayout>

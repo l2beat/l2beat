@@ -21,7 +21,12 @@ export function toTableRows({
       }
     }
 
-    const { warnings, breakdown, change } = projectData
+    const {
+      warnings,
+      breakdown,
+      change,
+      additionalTrustAssumptionsPercentage,
+    } = projectData
 
     return {
       ...project,
@@ -30,6 +35,7 @@ export function toTableRows({
         data: {
           breakdown,
           change,
+          additionalTrustAssumptionsPercentage,
         },
         warnings: [...project.tvs.warnings, ...warnings],
       },

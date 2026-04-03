@@ -60,6 +60,8 @@ async function getCachedData() {
     getScalingSummaryEntries(),
     helpers.tvs.recategorisedChart.prefetch({
       range: tvsChartRange,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
     }),
     helpers.activity.recategorisedChart.prefetch({

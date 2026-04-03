@@ -1,12 +1,15 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { createChainsRouter } from './routers/chains'
+import { createEventsRouter } from './routers/events'
 import { createStatusRouter } from './routers/status'
 import { router } from './trpc'
-// import { Database } from '@l2beat/database'
 
-export function createInteropTrpcRouter(
-  // db: Database
-) {
+export function createInteropTrpcRouter(deps: {
+  getExplorerUrl: (chain: string) => string | undefined
+}) {
   return router({
+    chains: createChainsRouter(deps),
+    events: createEventsRouter(),
     status: createStatusRouter(),
   })
 }

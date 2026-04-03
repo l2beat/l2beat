@@ -11,7 +11,8 @@
     "committedBatches",
     "finalizedStateRoots",
     "isBatchFinalized",
-    "committedStateRoots"
+    "committedStateRoots",
+    "batchBlobVersionedHashes"
   ],
   "ignoreInWatchMode": [
     "batchChallenged",

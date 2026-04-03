@@ -1,18 +1,17 @@
 import {
   AlertTriangleIcon,
   ArrowRightLeftIcon,
-  BookCheck,
+  BookCheckIcon,
   CircleDollarSignIcon,
-  Cpu,
   CpuIcon,
-  HatGlasses,
+  HatGlassesIcon,
   InboxIcon,
-  Layers,
+  LayersIcon,
   MessageSquareIcon,
   PanelsTopLeftIcon,
   PieChartIcon,
-  RefreshCw,
-  View,
+  RefreshCwIcon,
+  ViewIcon,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -41,7 +40,7 @@ const items = [
       {
         title: 'Aggregates',
         url: '/aggregates',
-        icon: Layers,
+        icon: LayersIcon,
         isUpcoming: true,
       },
 
@@ -49,7 +48,6 @@ const items = [
         title: 'Events',
         url: '/events',
         icon: InboxIcon,
-        isUpcoming: true,
       },
       {
         title: 'Messages',
@@ -66,13 +64,13 @@ const items = [
       {
         title: 'Missing tokens',
         url: '/missing-tokens',
-        icon: View,
+        icon: ViewIcon,
         isUpcoming: true,
       },
       {
         title: 'Known apps',
         url: '/known-apps',
-        icon: BookCheck,
+        icon: BookCheckIcon,
         isUpcoming: true,
       },
     ],
@@ -83,7 +81,7 @@ const items = [
       {
         title: 'Resyncable plugins',
         url: '/indexing/plugin-statuses',
-        icon: RefreshCw,
+        icon: RefreshCwIcon,
         isUpcoming: true,
       },
       {
@@ -112,7 +110,7 @@ const items = [
       {
         title: 'Suspicious transfers',
         url: '/insights/anomalies/suspicious-transfers',
-        icon: HatGlasses,
+        icon: HatGlassesIcon,
         isUpcoming: true,
       },
       {
@@ -124,7 +122,7 @@ const items = [
       {
         title: 'Memory',
         url: '/insights/memory',
-        icon: Cpu,
+        icon: CpuIcon,
       },
     ],
   },
