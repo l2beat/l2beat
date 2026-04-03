@@ -83,8 +83,10 @@ export async function getInteropTransferDetails(
 export async function getInteropTransferStats(
   db: Database,
 ): Promise<InteropTransferStatsItem[]> {
-  const stats = await db.interopTransfer.getStats()
-  const detailedStats = await db.interopTransfer.getDetailedStats()
+  const [stats, detailedStats] = await Promise.all([
+    db.interopTransfer.getStats(),
+    db.interopTransfer.getDetailedStats(),
+  ])
   const chainsByTransfer = new Map<
     string,
     InteropTransfersDetailedStatsRecord[]
