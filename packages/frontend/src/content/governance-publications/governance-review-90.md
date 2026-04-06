@@ -7,50 +7,42 @@ authorId: manuel-gonzalez
 
 ## **TL;DR**
 
-*In* ***Arbitrum***, *governance focused on treasury management and program adjustments. A proposal to deploy 5,000 ETH into yield-generating strategies continues the DAO’s push to reduce idle capital, while recent events highlight the importance of maintaining strong risk frameworks as exposure to DeFi strategies grows. At the same time, proposed changes to the Audit Program aim to attract higher-quality teams by relaxing exclusivity requirements and introducing AI-based security scans for earlier-stage projects.*
+*In* ***Arbitrum***, *governance is centered on treasury strategy and program refinement. A proposal to deploy 6,000 ETH into yield-generating strategies continues the DAO’s push to reduce idle capital, building on earlier efforts to consolidate funds into the Treasury Management Portfolio. At the same time, recent events like the Resolv exploit highlight the importance of maintaining strong risk frameworks as treasury exposure to DeFi strategies grows. In parallel, proposed updates to the Audit Program aim to attract stronger teams by relaxing exclusivity requirements and introducing AI-based security scans for earlier-stage projects.*
 
-*In* ***ZKsync***, *the Foundation selected Rally to lead its Institutional Narrative Experiment, while governance infrastructure remains stable following ScopeLift’s takeover of Tally’s operations, ensuring continuity for key interfaces without expected disruptions.*
+*In* ***ZKsync***, *governance activity focused on ecosystem positioning and infrastructure continuity. The Foundation selected Rally to lead its Institutional Narrative Experiment, a program designed to strengthen ZKsync’s institutional presence through coordinated content. Meanwhile, ScopeLift’s takeover of Tally’s operations ensures continuity for key governance interfaces, avoiding disruptions despite Tally’s shutdown.*
 
-***Elsewhere***, *governance activity continues to evolve across ecosystems: Starknet introduced a new “Minor Upgrade” path to streamline upgrades, Uniswap is undergoing structural and financial consolidation with a renewed Council proposal and updated Foundation financials, and Polygon is exploring changes to validator incentives to improve sustainability and reward distribution.*
-
-
+***Elsewhere***, *governance continues to evolve across ecosystems. Starknet introduced a new “Minor Upgrade” path to streamline protocol upgrades, while Uniswap is moving toward a more structured operational model with a renewed Council proposal and updated financials. Polygon is also exploring changes to validator incentives, aiming to improve sustainability and rebalance reward distribution across participants.*
 
 ---
 ## **Active Votes**
 
-**Starknet: 5 SNF polls**
+**Arbitrum**
 
-* [Which feature would most increase your activity on Starknet in the next 6 months?](https://snapshot.box/#/s:starknet.eth/proposal/0xae50fed9e8dbbe1c431793746135bb986918a9d6aa0397020eb41fd46d52d5e0) - ends on April 6 at 16:38 UTC.
-* [Which of these products would you use on Starknet?](https://snapshot.box/#/s:starknet.eth/proposal/0xc82a08ff88fdee6024e2df0301e06007385d4c05ded81bf034cf87fb0685a5b3) - ends on April 6 at 16:39 UTC.
-* [Are there on-chain activities you do not take part in due to a lack of privacy?](https://snapshot.box/#/s:starknet.eth/proposal/0x104fb2fe88d7151b373c174d5ab4a9bfe1c284610ebc75e4dbe89dc1d1a37533) - ends on April 6 at 16:40 UTC.
-* [How do you access or interact with Starknet's infrastructure?](https://snapshot.box/#/s:starknet.eth/proposal/0x6d9bd7aa4a397372ade41665dc6239cfb668ba09edd93a2fd9278f5801f6fba0) - ends on April 6 at 16:41 UTC.
-* [How do you participate in Starknet's staking mechanism?](https://snapshot.box/#/s:starknet.eth/proposal/0x1f4637b105bed2c36371a22edf637c79825f451261b28368d6c999c81cc89815) - ends on April 6 at 16:41 UTC.
-
-**Arbitrum: 2 Snapshot votes**
-
-* [AIP: ArbOS 60 Elara](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x04d6219c392f3f6187779f609d6cad21e3b3d6091809355ad12ba6bb39b55834) - ends on April 2 at 19:45 UTC.
-* [Updating the Code of Conduct & DAO Procedures to Become Living Documents](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xf78c223115031090b918ea09fa585d340718a426a21eb1556d81d19892e10b39)- ends on April at 18:36 UTC.
-
-**Everclear**
-
-* [Governance Task Force 3.0 - H1 2026](https://snapshot.box/#/s:dao.connext.eth/proposal/0x77198f689dd87011ef0f428a68263af0ed7c8be4d8275e85a8f62bfe821f4948) - ends on April 3 at 12:38 UTC.
+* [Transfer 6,000 ETH and Idle Stablecoins from the Treasury to the Treasury Management Portfolio](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0x25877ad1de4b9232af7a744dbd9ffb1b023c385aaf15c96c5b016859926416a2) - ends on April 9 at 17:00 UTC.
+* [Improvements to the Arbitrum Audit Program](https://snapshot.box/#/s:arbitrumfoundation.eth/proposal/0xa8d3dbf1b6cbe81847b5165da5d194d2fc554ae223f6ccf77f53c3fdecc6987e) - ends on April 9 at 17:00 UTC. 
 
 **Lisk**
 
-
-
 * [Test proposal #2: a new voting platform](https://www.tally.xyz/gov/lisk/proposal/80146914830138261105841041456506281049432216244382196186785004172776716281976) **- ends on April 7 at 10:32 UTC.** 
+
+---
+## Optimism
+
+### **Vulnerability in Kona fallback proof system**
+
+Pauldowman [announced](https://gov.optimism.io/t/vulnerability-in-kona-fallback-proof-system/10650) that an audit identified inconsistencies in the Kona proof system’s derivation logic that could have led to divergence from the canonical chain. No funds were at risk, as Kona is currently used only as a fallback-proof system and not as the active mechanism in any OP Stack chain.
+
+The issues were fixed prior to public disclosure and adopted by all relevant operators. While the incident had no direct impact, it highlights the importance of continued auditing and validation as Kona moves closer to playing a more central role in the fault-proof system.
 
 ---
 
 ## **Arbitrum**
 
+### **Transfer 6,000 ETH and Idle Stablecoins from the Treasury to the Treasury Management Portfolio**
 
-### **Transfer 5,000 ETH and Idle Stablecoins from the Treasury to the Treasury Management Portfolio**
+Entropy [proposed](https://forum.arbitrum.foundation/t/transfer-6-000-eth-and-idle-stablecoins-from-the-treasury-to-the-treasury-management-portfolio/30691) transferring 6,000 ETH and approximately $150k in idle USDC from the Arbitrum DAO treasury to the Treasury Management Portfolio, following forum feedback that leaving a large idle buffer was suboptimal. Currently, over 6,000 ETH remains unallocated and not generating yield.
 
-Entropy [proposed](https://forum.arbitrum.foundation/t/transfer-5-000-eth-and-idle-stablecoins-from-the-treasury-to-the-treasury-management-portfolio/30691) transferring 5,000 ETH and around $150k in idle USDC from the Arbitrum DAO treasury into the Treasury Management Portfolio, aiming to put currently unallocated assets to work. At the moment, nearly 6,000 ETH sits idle, and the proposal argues that deploying a portion of it could improve capital efficiency while maintaining a liquidity buffer.
-
-Based on recent performance, the Treasury Management portfolio has significantly improved its returns, with ETH strategies reaching a ~4.8% 30-day average yield, well above benchmark rates. The proposal estimates that allocating 5,000 ETH could generate roughly 240 ETH annually under current conditions, while also contributing to treasury diversification away from ARB and aligning with broader treasury management practices focused on yield generation and reduced idle capital.
+The proposal builds on improved treasury performance, with ETH strategies reaching a ~4.8% 30-day average yield, significantly above benchmark rates. Under current conditions, allocating 6,000 ETH could generate an estimated ~288 ETH annually (~$635k), while also moving the DAO’s ETH allocation closer to its target range and continuing diversification efforts away from ARB.
 
 **L2BEAT’s Take**
 
@@ -168,7 +160,6 @@ Some ecosystems saw no meaningful governance developments this week.
 
 
 * **Everclear**
-* **Optimism**
 * **Wormhole**
 * **Hop**
 * **Lisk**
@@ -178,23 +169,19 @@ As always, if we missed something important, feel free to reach out. We’re hap
 
 
 ---
-
-
 ## **Upcoming Events**
 
 **Arbitrum**
 
-* [Open Discussion of Proposals Governance Call](https://meet.google.com/dfo-xora-ysp) - on 31.03 at 16:00 UTC.
-* [Improvements to the Arbitrum Audit Program: Open Discussion](https://meet.google.com/biq-vywd-mea) - on 01.04 at 15:00 UTC.
+* [Entropy Advisors - biweekly office hours](https://meet.google.com/nfm-yfty-iwp) - on 07.04 at 17:15 UTC.
+* [Arbitrum Reporting Governance Call (GRC)](https://meet.google.com/kkv-icxy-xor) - on 08.04 at 16:00 UTC.
+* [March 2026 Security Council Member Election: AMA](https://meet.google.com/afj-rryt-pmx) - on 09.04 at 14:00 UTC.
+* [OpCo Monthly Update](https://meet.google.com/ety-prua-iei) - on 10.04 at 14:00 UTC.
+
 
 **Scroll**
 
-* [Weekly DAO & Governance Call](https://meet.google.com/fut-dgwp-tcn) - on 01.04 at 14:00 UTC.
-* [Scroll DAO Office Hours](https://meet.google.com/dcv-rodm-dfd) - on 03.04 at 14:00 UTC.
-
-**Hop**
-
-* [Hop Community Call](https://discord.com/channels/789310208413270078) - on 01.04 at 17:00 UTC.
+* [Weekly DAO & Governance Call](https://meet.google.com/fut-dgwp-tcn) - on 08.04 at 14:00 UTC.
 
 ---
 
