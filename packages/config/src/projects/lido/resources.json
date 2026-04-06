@@ -1,56 +1,331 @@
-[
-  {
-    "type": "website",
-    "url": "https://lido.fi/"
-  },
-  {
-    "type": "frontend",
-    "url": "https://stake.lido.fi/",
-    "frontendSubtype": "official"
-  },
-  {
-    "type": "frontend",
-    "url": "https://github.com/lidofinance/ethereum-staking-widget",
-    "frontendSubtype": "self-hosted",
-    "label": "Ethereum Staking Widget"
-  },
-  {
-    "type": "docs",
-    "url": "https://docs.lido.fi/"
-  },
-  {
-    "type": "github",
-    "url": "https://github.com/lidofinance"
-  },
-  {
-    "type": "github",
-    "url": "https://github.com/lidofinance/core",
-    "label": "Core smart contracts"
-  },
-  {
-    "type": "x",
-    "url": "https://x.com/LidoFinance"
-  },
-  {
-    "type": "license",
-    "url": "https://github.com/lidofinance/core/blob/master/LICENSE",
-    "label": "GPL-3.0",
-    "licenseScope": "Contracts"
-  },
-  {
-    "type": "license",
-    "url": "https://github.com/lidofinance/ethereum-staking-widget/blob/master/LICENSE",
-    "label": "GPL-3.0",
-    "licenseScope": "Frontend"
-  },
-  {
-    "type": "other",
-    "url": "https://dao.lido.fi",
-    "label": "Governance Portal"
-  },
-  {
-    "type": "other",
-    "url": "https://research.lido.fi",
-    "label": "Research Forum"
-  }
-]
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://lido.fi/"
+    },
+    {
+      "type": "frontend",
+      "url": "https://stake.lido.fi/",
+      "frontendSubtype": "official"
+    },
+    {
+      "type": "frontend",
+      "url": "https://github.com/lidofinance/ethereum-staking-widget",
+      "frontendSubtype": "self-hosted",
+      "label": "Ethereum Staking Widget"
+    },
+    {
+      "type": "docs",
+      "url": "https://docs.lido.fi/"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/lidofinance"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/lidofinance/core",
+      "label": "Core smart contracts"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/LidoFinance"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/lidofinance/core/blob/master/LICENSE",
+      "label": "GPL-3.0",
+      "licenseScope": "Contracts"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/lidofinance/ethereum-staking-widget/blob/master/LICENSE",
+      "label": "GPL-3.0",
+      "licenseScope": "Frontend"
+    },
+    {
+      "type": "other",
+      "url": "https://dao.lido.fi",
+      "label": "Governance Portal"
+    },
+    {
+      "type": "other",
+      "url": "https://research.lido.fi",
+      "label": "Research Forum"
+    }
+  ],
+  "audits": [
+    {
+      "author": "Sigma Prime",
+      "date": "2020-12",
+      "scope": "Lido Finance initial security assessment",
+      "url": "https://github.com/lidofinance/audits/blob/main/Sigma%20Prime%20-%20Lido%20Finance%20Security%20Assessment%20Report%20v2.1.pdf"
+    },
+    {
+      "author": "Quantstamp",
+      "date": "2020-12",
+      "scope": "Lido Protocol audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/QSP%20Lido%20Report%2012-2020.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2021-04",
+      "scope": "ETH2 Oracle security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20ETH2%20Oracle%20Security%20Audit%20Report%2004-2021.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2021-05",
+      "scope": "stETH price oracle security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20stETH%20price%20oracle%20Security%20Audit%20Report%2005-2021.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2021-05",
+      "scope": "Withdrawals Manager Stub audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Withdrawals%20Manager%20Stub%20Security%20Audit%20Report%2005-2021.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2021-09",
+      "scope": "wstETH security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20wstETH%20Security%20Audit%20Report%2009-2021.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2021-10",
+      "scope": "Aragon Voting security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Aragon%20Voting%20Security%20Audit%20Report%2010-2021.pdf"
+    },
+    {
+      "author": "Sigma Prime",
+      "date": "2021-10",
+      "scope": "Easy Track smart contract security review",
+      "url": "https://github.com/lidofinance/audits/blob/main/Sigma%20Prime%20-%20Lido%20Easy%20Track%20Smart%20Contract%20Security%20Review%20Report%20v2.0%2010-2021.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2022-02",
+      "scope": "Deposit Security Module audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Deposit%20Security%20Module%20Security%20Audit%20Report%2002-2022.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2022-05",
+      "scope": "Lido Protocol security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Lido_Protocol_Security_Audit_Report%2005-2022.pdf"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2022-08",
+      "scope": "Lido smart contracts code assessment",
+      "url": "https://github.com/lidofinance/audits/blob/main/ChainSecurity%20Code%20Assessment%20of%20the%20Lido%20Smart%20Contracts%20Report%2008-22.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2022-09",
+      "scope": "MEV-Boost relay allowlist audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20MEV-Boost%20relay%20allowlist%20Security%20Audit%20Report%2009-2022.pdf"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2023-02",
+      "scope": "Lido Staking Router audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/ChainSecurity%20Lido%20Staking%20Router%20audit%20report%2002-23.pdf"
+    },
+    {
+      "author": "Hexens",
+      "date": "2023-04",
+      "scope": "Lido V2 smart contract audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Hexens%20Lido%20V2%20Smart%20Contract%20Audit%20Report%2004-23.pdf"
+    },
+    {
+      "author": "Certora",
+      "date": "2023-04",
+      "scope": "Lido V2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Certora%20Lido%20V2%20Audit%20Report%2004-23.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2023-04",
+      "scope": "Lido V2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Lido%20V2%20Audit%20Report%2004-23.pdf"
+    },
+    {
+      "author": "Hexens",
+      "date": "2023-05",
+      "scope": "Lido V2 Oracle security review",
+      "url": "https://github.com/lidofinance/audits/blob/main/Hexens%20Lido%20V2%20Oracle%20Security%20Review%20Report%2005-23.pdf"
+    },
+    {
+      "author": "Oxorio",
+      "date": "2023-06",
+      "scope": "Lido V2 on-chain audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Oxorio%20Lido%20V2%20On-chain%20Audit%20Report%2006-23.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2023-10",
+      "scope": "Lido roles analysis",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Lido%20roles%20analysis%2010-2023.pdf"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2024-06",
+      "scope": "LIP-23 Negative Rebase Checks assessment",
+      "url": "https://github.com/lidofinance/audits/blob/main/ChainSecurity%20Code%20Assessment%20of%20LIP-23%20Negative%20Rebase%20Checks%20Smart%20Contracts%2006-24.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2024-10",
+      "scope": "Lido Oracle security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Lido%20Oracle%20Security%20Audit%20Report%2010-24.pdf"
+    },
+    {
+      "author": "Ackee Blockchain",
+      "date": "2024-10",
+      "scope": "Lido Staking Router v2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Ackee%20Blockchain%20Lido%20Staking%20Router%20v2%20Report%2010-24.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2024-10",
+      "scope": "Dual Governance audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Dual%20Governance%20Audit%20Report%2010-2024.pdf"
+    },
+    {
+      "author": "OpenZeppelin",
+      "date": "2024-11",
+      "scope": "Dual Governance audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/OpenZeppelin%20Dual%20Governance%20Audit%20Report%2011-2024.pdf"
+    },
+    {
+      "author": "Certora",
+      "date": "2025-02",
+      "scope": "Dual Governance audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Certora%20Dual%20Governance%20Audit%20Report%2002-2025.pdf"
+    },
+    {
+      "author": "OpenZeppelin",
+      "date": "2025-02",
+      "scope": "Dual Governance re-audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/OpenZeppelin%20Dual%20Governance%20Re-Audit%20Report%2002-2025.pdf"
+    },
+    {
+      "author": "Runtime Verification",
+      "date": "2025-02",
+      "scope": "Dual Governance formal verification",
+      "url": "https://github.com/lidofinance/audits/blob/main/Runtime%20Verification%20Dual%20Governance%20Formal%20Verification%20Report%2002-2025.pdf"
+    },
+    {
+      "author": "Ackee Blockchain",
+      "date": "2025-04",
+      "scope": "Community Staking Module audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Ackee%20Blockchain%20Lido%20Community%20Staking%20Module%20Report%2004-25.pdf"
+    },
+    {
+      "author": "Composable Security",
+      "date": "2025-04",
+      "scope": "Lido Oracle v5 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Composable%20Security%20Lido%20Oracle%20v5%2004-25.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2025-04",
+      "scope": "Lido Oracle v5 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Lido%20Oracle%20v5%2004-25.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2025-06",
+      "scope": "Dual Governance deployment & voting script review",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Dual%20Governance%20Deployment%20and%20Voting%20Script%20Review%20Report%2006-2025.pdf"
+    },
+    {
+      "author": "Certora",
+      "date": "2025-08",
+      "scope": "Dual Governance v1.0.1 hotfix review",
+      "url": "https://github.com/lidofinance/audits/blob/main/Certora%20Dual%20Governance%20v1.0.1%20Hotfix%20Review%20Report%2008-2025.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2025-08",
+      "scope": "Dual Governance Escrow fix review",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Dual%20Governance%20Escrow%20Fix%20Review%20Report%2008-2025.pdf"
+    },
+    {
+      "author": "Ackee Blockchain",
+      "date": "2025-09",
+      "scope": "Lido triggerable withdrawals audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Ackee%20Blockchain%20Lido%20Triggerable%20Withdrawals%20Audit%20Report%2009-25.pdf"
+    },
+    {
+      "author": "Ackee Blockchain",
+      "date": "2025-09",
+      "scope": "Community Staking Module v2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Ackee%20Blockchain%20Community%20Staking%20Module%20v2%20Audit%20Report%2009-2025.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2025-09",
+      "scope": "Easy Track CSM v2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Easy%20Track%20CSM%20v2%20Security%20Audit%20Report%2009-2025.pdf"
+    },
+    {
+      "author": "Statemind",
+      "date": "2025-09",
+      "scope": "Triggerable Withdrawals and CSM v2 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Statemind%20Triggerable%20Withdrawals%20and%20CSM%20v2%20Audit%20Report%2009-2025.pdf"
+    },
+    {
+      "author": "Consensys Diligence",
+      "date": "2025-11",
+      "scope": "Lido V3 security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Consensys%20Diligence%20Lido%20V3%20Security%20Audit%20-%2011-2025.pdf"
+    },
+    {
+      "author": "Certora",
+      "date": "2025-12",
+      "scope": "Lido V3 audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Certora%20Lido%20V3%20Audit%20Report%20-%2012-2025.pdf"
+    },
+    {
+      "author": "Certora",
+      "date": "2025-12",
+      "scope": "Lido V3 formal verification",
+      "url": "https://github.com/lidofinance/audits/blob/main/Certora%20Lido%20V3%20Formal%20Verification%20Report%20-%2012-2025.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2025-12",
+      "scope": "Lido V3 security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Lido%20V3%20Security%20Audit%20Report%20-%2012-2025.pdf"
+    },
+    {
+      "author": "Sigma Prime",
+      "date": "2026-01",
+      "scope": "Lido BLS Library security assessment",
+      "url": "https://github.com/lidofinance/audits/blob/main/Sigma%20Prime%20-%20Lido%20BLS%20Library%20Security%20Assessment%20Report%20v2.0%20-%2001-2026.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2026-01",
+      "scope": "Lido DeFi Wrapper security audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/MixBytes%20Lido%20DeFi%20Wrapper%20Security%20Audit%20Report%2001-2026.pdf"
+    },
+    {
+      "author": "Ackee Blockchain",
+      "date": "2026-01",
+      "scope": "Vault Wrapper audit",
+      "url": "https://github.com/lidofinance/audits/blob/main/Ackee%20Blockchain%20Vault%20Wrapper%20Report%2001-2026.pdf"
+    },
+    {
+      "author": "Immunefi",
+      "date": "2021-05",
+      "scope": "Bug Bounty Program",
+      "url": "https://immunefi.com/bug-bounty/lido/",
+      "bounty": 2000000
+    }
+  ]
+}

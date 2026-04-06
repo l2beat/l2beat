@@ -16,6 +16,7 @@ import type {
   ContractFundsData,
   FunctionEntry,
   FunctionTraversalResult,
+  ImpactCapUnit,
   Mitigation,
   MitigationType,
   MitigationValue,
@@ -506,6 +507,39 @@ export function FunctionFolder({
     return []
   }
 
+  // Resolve an impactCap to a USD number from project data
+  const IMPACT_CAP_DENOMINATORS: Record<string, number> = {
+    raw: 1,
+    '1e6': 1e6,
+    '1e8': 1e8,
+    '1e18': 1e18,
+    bps: 10_000,
+    percent: 100,
+  }
+  const resolveCapUsd = (cap: {
+    contractAddress: string
+    fieldName: string
+    unit: string
+  }): number | undefined => {
+    if (!projectData?.entries) return undefined
+    for (const entry of projectData.entries) {
+      const contracts = [
+        ...entry.initialContracts,
+        ...entry.discoveredContracts,
+      ]
+      const contract = contracts.find((c) =>
+        addressesEqual(c.address, cap.contractAddress),
+      )
+      const field = contract?.fields?.find((f) => f.name === cap.fieldName)
+      if (field?.value?.type === 'number') {
+        const raw = Number(field.value.value)
+        if (!isFinite(raw)) return undefined
+        return raw / (IMPACT_CAP_DENOMINATORS[cap.unit] ?? 1)
+      }
+    }
+    return undefined
+  }
+
   // Get external contracts with their entity attributes
   const getExternalContracts = React.useMemo(() => {
     if (!projectData?.entries || !contractTags?.tags) return []
@@ -609,6 +643,13 @@ export function FunctionFolder({
       unit: string
     }
     relativeValue: { maxChangePercent: MitigationValueFormState }
+    impactCap: {
+      mode: 'field' | 'hardcoded'
+      hardcodedUsd: string
+      contractAddress: string
+      fieldName: string
+      unit: ImpactCapUnit
+    }
     mitigatedField: {
       contractAddress: string
       fieldName: string
@@ -620,6 +661,13 @@ export function FunctionFolder({
     label: '',
     valueRange: { min: { ...emptyMitVal }, max: { ...emptyMitVal }, unit: '' },
     relativeValue: { maxChangePercent: { ...emptyMitVal } },
+    impactCap: {
+      mode: 'field' as const,
+      hardcodedUsd: '',
+      contractAddress: defaultContractAddress,
+      fieldName: '',
+      unit: 'raw' as ImpactCapUnit,
+    },
     mitigatedField: {
       contractAddress: defaultContractAddress,
       fieldName: '',
@@ -627,22 +675,35 @@ export function FunctionFolder({
     scopedTo: { address: '', type: '' },
   })
 
-  // Sync mitigated field default contract when availableContracts loads
+  // Sync mitigated field and impact cap default contract when availableContracts loads
   React.useEffect(() => {
     setNewMitigation((prev) => {
-      if (
+      const needsMitigatedFieldSync =
         prev.mitigatedField.contractAddress === contractAddress ||
         prev.mitigatedField.contractAddress === ''
-      ) {
-        return {
-          ...prev,
-          mitigatedField: {
-            ...prev.mitigatedField,
-            contractAddress: defaultContractAddress,
-          },
-        }
+      const needsImpactCapSync =
+        prev.impactCap.contractAddress === contractAddress ||
+        prev.impactCap.contractAddress === ''
+      if (!needsMitigatedFieldSync && !needsImpactCapSync) return prev
+      return {
+        ...prev,
+        ...(needsMitigatedFieldSync
+          ? {
+              mitigatedField: {
+                ...prev.mitigatedField,
+                contractAddress: defaultContractAddress,
+              },
+            }
+          : {}),
+        ...(needsImpactCapSync
+          ? {
+              impactCap: {
+                ...prev.impactCap,
+                contractAddress: defaultContractAddress,
+              },
+            }
+          : {}),
       }
-      return prev
     })
   }, [defaultContractAddress])
 
@@ -848,6 +909,13 @@ export function FunctionFolder({
         unit: '',
       },
       relativeValue: { maxChangePercent: { ...emptyMitVal } },
+      impactCap: {
+        mode: 'field' as const,
+        hardcodedUsd: '',
+        contractAddress: defaultContractAddress,
+        fieldName: '',
+        unit: 'raw' as ImpactCapUnit,
+      },
       mitigatedField: {
         contractAddress: defaultContractAddress,
         fieldName: '',
@@ -897,6 +965,27 @@ export function FunctionFolder({
       )
       mitigation.relativeValue = {
         ...(maxChange ? { maxChangePercent: maxChange } : {}),
+      }
+    }
+
+    // Add impact cap if filled (applies to any mitigation type)
+    if (
+      newMitigation.impactCap.mode === 'hardcoded' &&
+      newMitigation.impactCap.hardcodedUsd.trim()
+    ) {
+      const parsed = parseFloat(newMitigation.impactCap.hardcodedUsd.trim())
+      if (isFinite(parsed)) {
+        mitigation.impactCap = { hardcodedUsd: parsed }
+      }
+    } else if (
+      newMitigation.impactCap.mode === 'field' &&
+      newMitigation.impactCap.contractAddress &&
+      newMitigation.impactCap.fieldName.trim()
+    ) {
+      mitigation.impactCap = {
+        contractAddress: newMitigation.impactCap.contractAddress,
+        fieldName: newMitigation.impactCap.fieldName.trim(),
+        unit: newMitigation.impactCap.unit,
       }
     }
 
@@ -974,6 +1063,27 @@ export function FunctionFolder({
       relativeValue: {
         maxChangePercent: mitValToForm(m.relativeValue?.maxChangePercent),
       },
+      impactCap: m.impactCap
+        ? {
+            mode: (m.impactCap.hardcodedUsd !== undefined
+              ? 'hardcoded'
+              : 'field') as 'field' | 'hardcoded',
+            hardcodedUsd:
+              m.impactCap.hardcodedUsd !== undefined
+                ? String(m.impactCap.hardcodedUsd)
+                : '',
+            contractAddress:
+              m.impactCap.contractAddress ?? defaultContractAddress,
+            fieldName: m.impactCap.fieldName ?? '',
+            unit: (m.impactCap.unit ?? 'raw') as ImpactCapUnit,
+          }
+        : {
+            mode: 'field' as const,
+            hardcodedUsd: '',
+            contractAddress: defaultContractAddress,
+            fieldName: '',
+            unit: 'raw' as ImpactCapUnit,
+          },
       mitigatedField: m.mitigatedField
         ? {
             contractAddress: m.mitigatedField.contractAddress,
@@ -2557,6 +2667,38 @@ export function FunctionFolder({
                           })()}
                         </span>
                       )}
+                      {m.impactCap &&
+                        (() => {
+                          const capUsd =
+                            m.impactCapUsd ??
+                            m.impactCap.hardcodedUsd ??
+                            (m.impactCap.fieldName
+                              ? resolveCapUsd(
+                                  m.impactCap as {
+                                    contractAddress: string
+                                    fieldName: string
+                                    unit: string
+                                  },
+                                )
+                              : undefined)
+                          if (capUsd === undefined) return null
+                          const formatted =
+                            capUsd >= 1e9
+                              ? `$${(capUsd / 1e9).toFixed(1)}B`
+                              : capUsd >= 1e6
+                                ? `$${(capUsd / 1e6).toFixed(1)}M`
+                                : capUsd >= 1e3
+                                  ? `$${(capUsd / 1e3).toFixed(0)}K`
+                                  : `$${capUsd.toFixed(0)}`
+                          return (
+                            <span
+                              className="shrink-0 rounded bg-emerald-900/60 px-1.5 py-0.5 font-mono text-[10px] text-emerald-300"
+                              title={`Maximum fund impact: $${capUsd.toLocaleString()}`}
+                            >
+                              {formatted} Max Impact
+                            </span>
+                          )
+                        })()}
                     </div>
                     {/* Second line: description */}
                     {m.description && (
@@ -2787,6 +2929,158 @@ export function FunctionFolder({
                         contractAddress={contractAddress}
                         allContracts={allContracts}
                       />
+                    </div>
+                  )}
+                </div>
+
+                {/* Impact Cap (optional, applies to any mitigation type) */}
+                <div className="mb-3">
+                  <label className="mb-1 block text-coffee-300 text-xs">
+                    Fund Impact Cap{' '}
+                    <span className="text-coffee-500">(optional)</span>:
+                  </label>
+                  <div className="mb-1 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setNewMitigation((prev) => ({
+                          ...prev,
+                          impactCap: { ...prev.impactCap, mode: 'field' },
+                        }))
+                      }
+                      className={`rounded px-2 py-0.5 text-xs ${newMitigation.impactCap.mode === 'field' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
+                    >
+                      Contract Field
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setNewMitigation((prev) => ({
+                          ...prev,
+                          impactCap: { ...prev.impactCap, mode: 'hardcoded' },
+                        }))
+                      }
+                      className={`rounded px-2 py-0.5 text-xs ${newMitigation.impactCap.mode === 'hardcoded' ? 'bg-coffee-500 text-coffee-100' : 'bg-coffee-700 text-coffee-400'}`}
+                    >
+                      Hardcoded USD
+                    </button>
+                  </div>
+                  {newMitigation.impactCap.mode === 'hardcoded' ? (
+                    <input
+                      type="text"
+                      value={newMitigation.impactCap.hardcodedUsd}
+                      onChange={(e) =>
+                        setNewMitigation((prev) => ({
+                          ...prev,
+                          impactCap: {
+                            ...prev.impactCap,
+                            hardcodedUsd: e.target.value,
+                          },
+                        }))
+                      }
+                      placeholder="e.g. 10000000"
+                      className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                    />
+                  ) : (
+                    <div className="flex gap-2">
+                      <div className="flex-1">
+                        <select
+                          value={newMitigation.impactCap.contractAddress}
+                          onChange={(e) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              impactCap: {
+                                ...prev.impactCap,
+                                contractAddress: e.target.value,
+                                fieldName: '',
+                              },
+                            }))
+                          }
+                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                        >
+                          {availableContracts.map((contract) => (
+                            <option
+                              key={contract.address}
+                              value={contract.address}
+                            >
+                              {contract.name} ({contract.address.slice(0, 10)}
+                              ...)
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="flex-1">
+                        <select
+                          value={newMitigation.impactCap.fieldName}
+                          onChange={(e) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              impactCap: {
+                                ...prev.impactCap,
+                                fieldName: e.target.value,
+                              },
+                            }))
+                          }
+                          disabled={!newMitigation.impactCap.contractAddress}
+                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs disabled:opacity-50"
+                        >
+                          <option value="">Select field...</option>
+                          {newMitigation.impactCap.contractAddress &&
+                            getAvailableFields(
+                              newMitigation.impactCap.contractAddress,
+                            )
+                              .filter((f) => {
+                                const entry = projectData?.entries
+                                  ?.flatMap((e) => [
+                                    ...e.initialContracts,
+                                    ...e.discoveredContracts,
+                                  ])
+                                  .find((c) =>
+                                    addressesEqual(
+                                      c.address,
+                                      newMitigation.impactCap.contractAddress,
+                                    ),
+                                  )
+                                const field = entry?.fields?.find(
+                                  (ff) => ff.name === f.name,
+                                )
+                                return field?.value?.type === 'number'
+                              })
+                              .map((field) => (
+                                <option key={field.name} value={field.name}>
+                                  {field.name}
+                                  {field.valuePreview &&
+                                    ` (${field.valuePreview})`}
+                                </option>
+                              ))}
+                        </select>
+                      </div>
+                      <div className="w-44">
+                        <select
+                          value={newMitigation.impactCap.unit}
+                          onChange={(e) =>
+                            setNewMitigation((prev) => ({
+                              ...prev,
+                              impactCap: {
+                                ...prev.impactCap,
+                                unit: e.target.value as ImpactCapUnit,
+                              },
+                            }))
+                          }
+                          className="w-full rounded border border-coffee-600 bg-coffee-700 px-2 py-1 text-coffee-100 text-xs"
+                        >
+                          <option value="raw">USD (raw value)</option>
+                          <option value="1e6">
+                            Tokens — 6 dec (USDC, USDT)
+                          </option>
+                          <option value="1e8">Tokens — 8 dec (WBTC)</option>
+                          <option value="1e18">
+                            Tokens — 18 dec (ETH, ERC20)
+                          </option>
+                          <option value="bps">Basis points (÷ 10,000)</option>
+                          <option value="percent">Percent (÷ 100)</option>
+                        </select>
+                      </div>
                     </div>
                   )}
                 </div>

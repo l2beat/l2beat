@@ -1,11 +1,11 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-18T09:49:57.026Z",
+  "lastModified": "2026-04-01T09:17:05.803Z",
   "protocolSlug": "liquity-v1",
   "protocolName": "Liquity V1",
   "tokenName": "LUSD",
   "chain": "Ethereum",
-  "projectType": "cdp",
+  "projectType": "stablecoin",
   "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds {{totalProtocolCapital}} in total value across its contracts.",
   "admins": {},
   "dependencies": {

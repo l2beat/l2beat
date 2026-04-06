@@ -13,7 +13,7 @@ export function FeedbackButton() {
     <>
       <button
         onClick={openFeedback}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-purple-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition-all hover:bg-purple-700 hover:shadow-xl active:scale-95"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-accent-dark px-4 py-2.5 text-sm font-medium text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl active:scale-95"
         aria-label="Send feedback"
       >
         <svg

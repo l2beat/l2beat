@@ -1,8 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
-import { getResources, updateResources } from '../../../api/api'
+import {
+  getAudits,
+  getResources,
+  updateAudits,
+  updateResources,
+} from '../../../api/api'
 import { IS_READONLY } from '../../../config/readonly'
 import type {
+  AuditEntry,
   FrontendSubtype,
   ResourceEntry,
   ResourceType,
@@ -105,51 +111,56 @@ export function ReviewResourcesEditor({ project }: ReviewResourcesEditorProps) {
   }
 
   return (
-    <div className="rounded border border-coffee-600 p-2">
-      <div className="mb-2 flex items-center justify-between">
-        <h3 className="font-bold text-xs text-autumn-300">
-          Resources{' '}
-          <span className="font-normal text-coffee-400">
-            ({resources.length})
-          </span>
-          {mutation.isPending && (
-            <span className="ml-2 font-normal text-coffee-400">Saving...</span>
+    <div className="flex flex-col gap-2">
+      <div className="rounded border border-coffee-600 p-2">
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="font-bold text-xs text-autumn-300">
+            Resources{' '}
+            <span className="font-normal text-coffee-400">
+              ({resources.length})
+            </span>
+            {mutation.isPending && (
+              <span className="ml-2 font-normal text-coffee-400">
+                Saving...
+              </span>
+            )}
+            {mutation.isError && (
+              <span className="ml-2 font-normal text-red-400">Save failed</span>
+            )}
+          </h3>
+          {!IS_READONLY && (
+            <button
+              onClick={() => setShowAdd(!showAdd)}
+              className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
+            >
+              {showAdd ? 'Cancel' : '+ Add'}
+            </button>
           )}
-          {mutation.isError && (
-            <span className="ml-2 font-normal text-red-400">Save failed</span>
-          )}
-        </h3>
-        {!IS_READONLY && (
-          <button
-            onClick={() => setShowAdd(!showAdd)}
-            className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
-          >
-            {showAdd ? 'Cancel' : '+ Add'}
-          </button>
+        </div>
+
+        {showAdd && (
+          <AddResourceForm
+            onSave={handleAdd}
+            onCancel={() => setShowAdd(false)}
+          />
+        )}
+
+        {resources.map((entry, index) => (
+          <ResourceEntryRow
+            key={`${entry.type}-${entry.url}-${index}`}
+            entry={entry}
+            onUpdate={(updated) => handleUpdate(index, updated)}
+            onDelete={() => handleDelete(index)}
+          />
+        ))}
+
+        {resources.length === 0 && !showAdd && (
+          <p className="py-2 text-center text-xs text-coffee-400">
+            No resources yet
+          </p>
         )}
       </div>
-
-      {showAdd && (
-        <AddResourceForm
-          onSave={handleAdd}
-          onCancel={() => setShowAdd(false)}
-        />
-      )}
-
-      {resources.map((entry, index) => (
-        <ResourceEntryRow
-          key={`${entry.type}-${entry.url}-${index}`}
-          entry={entry}
-          onUpdate={(updated) => handleUpdate(index, updated)}
-          onDelete={() => handleDelete(index)}
-        />
-      ))}
-
-      {resources.length === 0 && !showAdd && (
-        <p className="py-2 text-center text-xs text-coffee-400">
-          No resources yet
-        </p>
-      )}
+      <AuditsEditor project={project} />
     </div>
   )
 }
@@ -407,6 +418,345 @@ function ResourceEntryRow({
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+// ============================================================================
+// Audits Editor
+// ============================================================================
+
+function AuditsEditor({ project }: { project: string }) {
+  const [showAdd, setShowAdd] = useState(false)
+  const queryClient = useQueryClient()
+
+  const { data: audits = [], isLoading } = useQuery({
+    queryKey: ['audits', project],
+    queryFn: () => getAudits(project),
+  })
+
+  const mutation = useMutation({
+    mutationFn: (newAudits: AuditEntry[]) => updateAudits(project, newAudits),
+    onMutate: async (newAudits) => {
+      await queryClient.cancelQueries({ queryKey: ['audits', project] })
+      queryClient.setQueryData(['audits', project], newAudits)
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ['audits', project] })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['audits', project] })
+    },
+  })
+
+  const handleAdd = useCallback(
+    (entry: AuditEntry) => {
+      mutation.mutate([...audits, entry])
+      setShowAdd(false)
+    },
+    [audits, mutation],
+  )
+
+  const handleUpdate = useCallback(
+    (index: number, entry: AuditEntry) => {
+      const updated = [...audits]
+      updated[index] = entry
+      mutation.mutate(updated)
+    },
+    [audits, mutation],
+  )
+
+  const handleDelete = useCallback(
+    (index: number) => {
+      mutation.mutate(audits.filter((_, i) => i !== index))
+    },
+    [audits, mutation],
+  )
+
+  if (isLoading) {
+    return (
+      <div className="rounded border border-coffee-600 p-2">
+        <p className="py-2 text-center text-xs text-coffee-400">
+          Loading audits...
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="rounded border border-coffee-600 p-2">
+      <div className="mb-2 flex items-center justify-between">
+        <h3 className="font-bold text-xs text-autumn-300">
+          Audits{' '}
+          <span className="font-normal text-coffee-400">({audits.length})</span>
+          {mutation.isPending && (
+            <span className="ml-2 font-normal text-coffee-400">Saving...</span>
+          )}
+          {mutation.isError && (
+            <span className="ml-2 font-normal text-red-400">Save failed</span>
+          )}
+        </h3>
+        {!IS_READONLY && (
+          <button
+            onClick={() => setShowAdd(!showAdd)}
+            className="rounded bg-coffee-700 px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-600"
+          >
+            {showAdd ? 'Cancel' : '+ Add'}
+          </button>
+        )}
+      </div>
+
+      {showAdd && (
+        <AddAuditForm onSave={handleAdd} onCancel={() => setShowAdd(false)} />
+      )}
+
+      {audits.map((entry, index) => (
+        <AuditEntryRow
+          key={`${entry.url}-${index}`}
+          entry={entry}
+          onUpdate={(updated) => handleUpdate(index, updated)}
+          onDelete={() => handleDelete(index)}
+        />
+      ))}
+
+      {audits.length === 0 && !showAdd && (
+        <p className="py-2 text-center text-xs text-coffee-400">
+          No audits yet
+        </p>
+      )}
+    </div>
+  )
+}
+
+function AuditEntryRow({
+  entry,
+  onUpdate,
+  onDelete,
+}: {
+  entry: AuditEntry
+  onUpdate: (entry: AuditEntry) => void
+  onDelete: () => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const [local, setLocal] = useState(entry)
+
+  const isDirty = JSON.stringify(local) !== JSON.stringify(entry)
+
+  return (
+    <div className="mb-1 rounded border border-coffee-700 bg-coffee-800/50">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex w-full items-center justify-between px-2 py-1 text-left"
+      >
+        <div className="flex items-center gap-2 overflow-hidden">
+          <span className="text-xs text-coffee-400">
+            {expanded ? '\u25BC' : '\u25B6'}
+          </span>
+          <span className="inline-block rounded px-1.5 py-0.5 text-[10px] font-medium bg-rose-900/50 text-rose-300">
+            Audit
+          </span>
+          <span className="truncate text-xs text-coffee-100">
+            {entry.author}
+          </span>
+          <span className="text-[10px] text-coffee-400">{entry.date}</span>
+          {entry.scope && (
+            <span className="text-[10px] text-coffee-400 truncate">
+              — {entry.scope}
+            </span>
+          )}
+        </div>
+        {isDirty && <span className="text-xs text-yellow-400">*</span>}
+      </button>
+
+      {expanded && (
+        <div className="border-t border-coffee-700 p-2 space-y-1">
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">Author:</label>
+            <input
+              type="text"
+              value={local.author}
+              onChange={(e) => setLocal({ ...local, author: e.target.value })}
+              disabled={IS_READONLY}
+              placeholder="e.g. Trail of Bits"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">Date:</label>
+            <input
+              type="text"
+              value={local.date}
+              onChange={(e) => setLocal({ ...local, date: e.target.value })}
+              disabled={IS_READONLY}
+              placeholder="e.g. 2024-03"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">Scope:</label>
+            <input
+              type="text"
+              value={local.scope ?? ''}
+              onChange={(e) =>
+                setLocal({ ...local, scope: e.target.value || undefined })
+              }
+              disabled={IS_READONLY}
+              placeholder="e.g. Core contracts"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">Bounty:</label>
+            <input
+              type="number"
+              value={local.bounty ?? ''}
+              onChange={(e) =>
+                setLocal({
+                  ...local,
+                  bounty: e.target.value ? Number(e.target.value) : undefined,
+                })
+              }
+              disabled={IS_READONLY}
+              placeholder="Max $ amount (optional)"
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="w-14 text-xs text-coffee-200">URL:</label>
+            <input
+              type="text"
+              value={local.url}
+              onChange={(e) => setLocal({ ...local, url: e.target.value })}
+              disabled={IS_READONLY}
+              placeholder="https://..."
+              className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none disabled:opacity-60"
+            />
+          </div>
+          {!IS_READONLY && (
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={onDelete}
+                className="rounded px-2 py-0.5 text-xs text-red-400 hover:bg-coffee-700"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => onUpdate(local)}
+                disabled={!isDirty}
+                className={`rounded px-2 py-0.5 text-xs font-medium ${
+                  isDirty
+                    ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
+                    : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
+                }`}
+              >
+                Apply
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function AddAuditForm({
+  onSave,
+  onCancel,
+}: {
+  onSave: (entry: AuditEntry) => void
+  onCancel: () => void
+}) {
+  const [author, setAuthor] = useState('')
+  const [date, setDate] = useState('')
+  const [scope, setScope] = useState('')
+  const [bounty, setBounty] = useState('')
+  const [url, setUrl] = useState('')
+
+  const isValid =
+    author.trim().length > 0 && date.trim().length > 0 && url.trim().length > 0
+
+  const handleSave = useCallback(() => {
+    if (!isValid) return
+    onSave({
+      url: url.trim(),
+      author: author.trim(),
+      date: date.trim(),
+      scope: scope.trim() || undefined,
+      bounty: bounty ? Number(bounty) : undefined,
+    })
+  }, [url, author, date, scope, bounty, isValid, onSave])
+
+  return (
+    <div className="mb-2 rounded border border-dashed border-coffee-500 bg-coffee-800/50 p-2 space-y-1">
+      <div className="flex items-center gap-2">
+        <label className="w-14 text-xs text-coffee-200">Author:</label>
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="e.g. Trail of Bits"
+          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        />
+      </div>
+      <div className="flex items-center gap-2">
+        <label className="w-14 text-xs text-coffee-200">Date:</label>
+        <input
+          type="text"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          placeholder="e.g. 2024-03"
+          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        />
+      </div>
+      <div className="flex items-center gap-2">
+        <label className="w-14 text-xs text-coffee-200">Scope:</label>
+        <input
+          type="text"
+          value={scope}
+          onChange={(e) => setScope(e.target.value)}
+          placeholder="e.g. Core contracts (optional)"
+          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        />
+      </div>
+      <div className="flex items-center gap-2">
+        <label className="w-14 text-xs text-coffee-200">Bounty:</label>
+        <input
+          type="number"
+          value={bounty}
+          onChange={(e) => setBounty(e.target.value)}
+          placeholder="Max $ amount (optional)"
+          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        />
+      </div>
+      <div className="flex items-center gap-2">
+        <label className="w-14 text-xs text-coffee-200">URL:</label>
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="https://..."
+          className="flex-1 rounded border border-coffee-600 bg-coffee-800 px-2 py-0.5 text-xs text-coffee-100 placeholder-coffee-400 focus:border-autumn-300 focus:outline-none"
+        />
+      </div>
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={onCancel}
+          className="rounded px-2 py-0.5 text-xs text-coffee-200 hover:bg-coffee-700"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={!isValid}
+          className={`rounded px-2 py-0.5 text-xs font-medium ${
+            isValid
+              ? 'bg-autumn-300 text-coffee-900 hover:bg-autumn-200'
+              : 'cursor-not-allowed bg-coffee-700 text-coffee-400'
+          }`}
+        >
+          Add
+        </button>
+      </div>
     </div>
   )
 }

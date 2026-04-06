@@ -83,8 +83,8 @@ export function ComparePage() {
       <div className="mx-auto max-w-7xl px-4 py-12">
         <p className="text-status-red">Failed to load data.</p>
         <Link
-          to="/"
-          className="mt-4 inline-block text-purple-600 hover:text-purple-800 font-medium"
+          to="/protocols"
+          className="mt-4 inline-block text-accent hover:text-blue-800 font-medium"
         >
           Back to Dashboard
         </Link>
@@ -97,8 +97,8 @@ export function ComparePage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <Link
-        to="/"
-        className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-purple-600 transition-colors mb-6"
+        to="/protocols"
+        className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-accent transition-colors mb-6"
       >
         <svg
           className="h-4 w-4"

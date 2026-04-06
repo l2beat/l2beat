@@ -4,6 +4,7 @@ yarn-error.log
 .DS_Store
 .turbo
 .copilotignore
+.agents
 
 # AI stuff
 .codex
@@ -38,7 +39,4 @@ packages/uops-dashboard/src/chains.json
 # Personal
 research-storage.md
 research-permissions.md
-
-# Claude Code skills (tracked in git)
-!.claude/skills/
-!.claude/skills/**
+.claude/skills/

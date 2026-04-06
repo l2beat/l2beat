@@ -1,33 +1,50 @@
-[
-  {
-    "url": "https://app.uniswap.org/ ",
-    "type": "frontend",
-    "frontendSubtype": "official"
-  },
-  {
-    "url": "https://github.com/Uniswap/interface/releases",
-    "type": "frontend",
-    "frontendSubtype": "third-party",
-    "label": "IPFS Releases"
-  },
-  {
-    "url": "https://github.com/Uniswap/interface",
-    "type": "frontend",
-    "frontendSubtype": "self-hosted",
-    "label": "Open source Interface"
-  },
-  {
-    "url": "https://x.com/uniswap",
-    "type": "x"
-  },
-  {
-    "url": "https://github.com/Uniswap/v2-core/blob/master/LICENSE",
-    "type": "license",
-    "label": "GPL-3.0",
-    "licenseScope": "Contracts"
-  },
-  {
-    "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
-    "type": "defiscan-v1"
-  }
-]
+{
+  "resources": [
+    {
+      "url": "https://app.uniswap.org/ ",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface/releases",
+      "type": "frontend",
+      "frontendSubtype": "third-party",
+      "label": "IPFS Releases"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface",
+      "type": "frontend",
+      "frontendSubtype": "self-hosted",
+      "label": "Open source Interface"
+    },
+    {
+      "url": "https://x.com/uniswap",
+      "type": "x"
+    },
+    {
+      "url": "https://github.com/Uniswap/v2-core/blob/master/LICENSE",
+      "type": "license",
+      "label": "GPL-3.0",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
+      "type": "defiscan-v1"
+    }
+  ],
+  "audits": [
+    {
+      "author": "dapp.org",
+      "date": "2020-06",
+      "scope": "V2 core & periphery formal verification",
+      "url": "https://dapp.org.uk/reports/uniswapv2.html"
+    },
+    {
+      "author": "Cantina",
+      "date": "2024-07",
+      "scope": "Bug Bounty Program",
+      "url": "https://cantina.xyz/bounties/f9df94db-c7b1-434b-bb06-d1360abdd1be",
+      "bounty": 15500000
+    }
+  ]
+}

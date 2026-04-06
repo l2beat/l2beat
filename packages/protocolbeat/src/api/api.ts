@@ -31,6 +31,7 @@ import type {
   ApiFunctionAnalysisResponse,
   ApiAdminsResponse,
   ApiDependenciesResponse,
+  AuditEntry,
   ResourceEntry,
 } from './types'
 
@@ -617,6 +618,28 @@ export async function updateReviewConfigEntity(
       headers: { 'Content-Type': 'application/json' },
     },
   )
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
+export async function getAudits(project: string): Promise<AuditEntry[]> {
+  const res = await fetch(`/api/projects/${project}/audits`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function updateAudits(
+  project: string,
+  audits: AuditEntry[],
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/audits`, {
+    method: 'PUT',
+    body: JSON.stringify(audits),
+    headers: { 'Content-Type': 'application/json' },
+  })
   if (!res.ok) {
     throw new Error(res.statusText)
   }

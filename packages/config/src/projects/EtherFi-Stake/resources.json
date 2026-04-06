@@ -1,44 +1,222 @@
-[
-  {
-    "type": "website",
-    "url": "https://www.ether.fi/"
-  },
-  {
-    "type": "frontend",
-    "url": "https://www.ether.fi/app/",
-    "frontendSubtype": "official"
-  },
-  {
-    "type": "docs",
-    "url": "https://etherfi.gitbook.io/etherfi"
-  },
-  {
-    "type": "github",
-    "url": "https://github.com/etherfi-protocol"
-  },
-  {
-    "type": "github",
-    "url": "https://github.com/etherfi-protocol/smart-contracts",
-    "label": "Smart Contracts"
-  },
-  {
-    "type": "x",
-    "url": "https://x.com/ether_fi"
-  },
-  {
-    "type": "license",
-    "url": "https://github.com/etherfi-protocol/smart-contracts/tree/master?tab=readme-ov-file#-license",
-    "label": "MIT",
-    "licenseScope": "Contracts"
-  },
-  {
-    "type": "other",
-    "url": "https://governance.ether.fi",
-    "label": "Governance Forum (Discourse)"
-  },
-  {
-    "type": "other",
-    "url": "https://snapshot.box/#/s:etherfi-dao.eth",
-    "label": "DAO Voting (Snapshot)"
-  }
-]
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://www.ether.fi/"
+    },
+    {
+      "type": "frontend",
+      "url": "https://www.ether.fi/app/",
+      "frontendSubtype": "official"
+    },
+    {
+      "type": "docs",
+      "url": "https://etherfi.gitbook.io/etherfi"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/etherfi-protocol"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/etherfi-protocol/smart-contracts",
+      "label": "Smart Contracts"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/ether_fi"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/etherfi-protocol/smart-contracts/tree/master?tab=readme-ov-file#-license",
+      "label": "MIT",
+      "licenseScope": "Contracts"
+    },
+    {
+      "type": "other",
+      "url": "https://governance.ether.fi",
+      "label": "Governance Forum (Discourse)"
+    },
+    {
+      "type": "other",
+      "url": "https://snapshot.box/#/s:etherfi-dao.eth",
+      "label": "DAO Voting (Snapshot)"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2023.02.25%20-%20CertiK.png",
+      "author": "CertiK",
+      "date": "2023-02",
+      "scope": "EarlyAdopterPool"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2023.05.16%20-%20Omniscia.pdf",
+      "author": "Omniscia",
+      "date": "2023-05",
+      "scope": "Core contracts"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2023.07.05%20-%20Nethermind.pdf",
+      "author": "Nethermind",
+      "date": "2023-07",
+      "scope": "Core contracts"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2023.10.26%20-%20Solidified.pdf",
+      "author": "Solidified",
+      "date": "2023-10",
+      "scope": "Core contracts"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2023.12.20%20-%20Hats%20Finance.md",
+      "author": "Hats Finance",
+      "date": "2023-12",
+      "scope": "Public audit competition"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.01.11%20-%20Zellic.pdf",
+      "author": "Zellic",
+      "date": "2024-01",
+      "scope": "Staking contracts"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.03.13%20-%20Zellic.pdf",
+      "author": "Zellic",
+      "date": "2024-03",
+      "scope": "Staking contracts (follow-up)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.04.08%20-%20Decurity.pdf",
+      "author": "Decurity",
+      "date": "2024-04"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/NM-0217%20-%20EtherFi%20Deposit%20Adapter%20Contract.md",
+      "author": "Nethermind",
+      "date": "2024",
+      "scope": "DepositAdapter"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/NM-0217%20-%20EtherFi%20Restaking%20Of%20stETH%20Holdings.md",
+      "author": "Nethermind",
+      "date": "2024",
+      "scope": "stETH restaking"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.06.25%20-%20Halborn%20-%20EtherFi_L2_Governance_Token_Smart_Contract_Security_Assessment_Report.pdf",
+      "author": "Halborn",
+      "date": "2024-06",
+      "scope": "L2 governance token"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.08.02%20-%20Halborn%20-%20EtherFi_EFIP_5_%26_EFIP_8_Implementation_Smart_Contract_Security_Assessment.pdf",
+      "author": "Halborn",
+      "date": "2024-08",
+      "scope": "EFIP-5 & EFIP-8"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.09.30%20-%20Paladin_EtherFi_OFT_Adapter_Migration.pdf",
+      "author": "Paladin",
+      "date": "2024-09",
+      "scope": "OFT adapter migration"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2024.10.08%20-%20Certora%20-%20EtherFi%20draft.pdf",
+      "author": "Certora",
+      "date": "2024-10",
+      "scope": "Core contracts"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.01.16%20-%20Certora%20-%20EETH%20share%20inflation%20by%20burn%20shares.pdf",
+      "author": "Certora",
+      "date": "2025-01",
+      "scope": "eETH share inflation"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.01.23%20-%20Certora%20-%20EtherFi%20-%20Withdrawal%20Fee.pdf",
+      "author": "Certora",
+      "date": "2025-01",
+      "scope": "Withdrawal fee"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.03.26%20-%20Certora%20-%20EtherFi%20-%20Instant%20Withdrawal%20Merge%20into%20v2.49.pdf",
+      "author": "Certora",
+      "date": "2025-03",
+      "scope": "Instant withdrawal (v2.49)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.03.26%20-%20Certora%20-%20EtherFi%20-%20v2.49.pdf",
+      "author": "Certora",
+      "date": "2025-03",
+      "scope": "v2.49"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.04.12%20-%20Certora%20-%20EigenLayer%20Slashing.pdf",
+      "author": "Certora",
+      "date": "2025-04",
+      "scope": "EigenLayer slashing"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.05.07%20-%20Certora%20-%20EtherFi%20-%20Cumulative%20Merkle%20Distributor.pdf",
+      "author": "Certora",
+      "date": "2025-05",
+      "scope": "Merkle Distributor"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.08.01%20-%20Certora%20-%20EtherFi%20-%20V3.Prelude%20-%201.pdf",
+      "author": "Certora",
+      "date": "2025-08",
+      "scope": "V3 Prelude (1)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.08.01%20-%20Certora%20-%20EtherFi%20-%20V3.Prelude%20-%202.pdf",
+      "author": "Certora",
+      "date": "2025-08",
+      "scope": "V3 Prelude (2)"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.09.09%20-%20Certora%20-%20EtherFi%20-%20Pectra%20Features%20Upgrade.pdf",
+      "author": "Certora",
+      "date": "2025-09",
+      "scope": "Pectra upgrade"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.10.06%20-%20Certora%20-%20EtherFi%20-%20Pectra%2C%20stETH%20wds%2C%20weETH%20adapter.pdf",
+      "author": "Certora",
+      "date": "2025-10",
+      "scope": "Pectra, stETH wds, weETH"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2025.11.12%20-%20Certora%20-%20EtherFi%20-%20Safe%20Key%20Gen%2C%20Cons.%20Role%2C%20Restaker%20bugFix.pdf",
+      "author": "Certora",
+      "date": "2025-11",
+      "scope": "Safe key gen, restaker"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2026.01.20%20-%20Certora%20-%20Liquid-Refer%2CKING%2CCross%20Pod%20Approval.pdf",
+      "author": "Certora",
+      "date": "2026-01",
+      "scope": "Liquid Refer, KING, Cross Pod"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2026.01.29%20-%20Certora%20-%20Reaudit%20Core%20Contracts.pdf",
+      "author": "Certora",
+      "date": "2026-01",
+      "scope": "Core contracts reaudit"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/etherfi-protocol/smart-contracts/master/audits/2026.03.05%20-%20Certora%20-%20Priority%20Queue.pdf",
+      "author": "Certora",
+      "date": "2026-03",
+      "scope": "Priority Queue"
+    },
+    {
+      "url": "https://immunefi.com/bug-bounty/etherfi/",
+      "author": "Immunefi",
+      "scope": "Bug Bounty Program",
+      "date": "2024",
+      "bounty": 300000
+    }
+  ]
+}

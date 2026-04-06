@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-27T10:00:00.000Z",
+  "lastModified": "2026-04-06T11:44:28.981Z",
   "contracts": {
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "functions": [
@@ -226,6 +226,7 @@
         {
           "functionName": "mint",
           "isPermissioned": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self.activeMinters"
@@ -235,6 +236,12 @@
             {
               "type": "other",
               "description": "Minting limit",
+              "label": "Mint Limit",
+              "impactCap": {
+                "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+                "fieldName": "limit",
+                "unit": "1e18"
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "fieldName": "limit"
@@ -242,8 +249,7 @@
               "scopedTo": {
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
-              },
-              "label": "Mint Limit"
+              }
             },
             {
               "type": "other",
@@ -278,7 +284,12 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Mint Limit"
+              "label": "Mint Limit",
+              "impactCap": {
+                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+                "fieldName": "limit",
+                "unit": "1e18"
+              }
             },
             {
               "type": "other",
@@ -375,12 +386,11 @@
               "label": "Not Called"
             }
           ],
-          "timestamp": "2026-03-27T10:00:00.000Z",
+          "timestamp": "2026-04-06T11:10:54.277Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-27T10:00:00.000Z"
-          },
-          "score": "critical"
+            "date": "2026-04-06T11:10:54.277Z"
+          }
         },
         {
           "functionName": "burnFrom",
@@ -1222,13 +1232,12 @@
         {
           "functionName": "restructureCapTable",
           "isPermissioned": true,
+          "score": "critical",
           "ownerDefinitions": [
             {
               "path": "$self"
             }
           ],
-          "timestamp": "2026-03-27T10:00:00.000Z",
-          "score": "critical",
           "mitigations": [
             {
               "type": "valueRange",
@@ -1243,6 +1252,9 @@
               "mitigatedField": {
                 "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
                 "fieldName": "equity"
+              },
+              "impactCap": {
+                "hardcodedUsd": 1000
               }
             },
             {
@@ -1250,9 +1262,10 @@
               "description": "Caller must be qualified FPS holder with 2% quorum of total votes (via checkQualified with helpers)"
             }
           ],
+          "timestamp": "2026-04-06T11:18:47.505Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-27T10:00:00.000Z"
+            "date": "2026-04-06T11:18:47.505Z"
           }
         }
       ]
@@ -1965,6 +1978,54 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-16T07:41:10.507Z"
+          }
+        }
+      ]
+    },
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
+      "functions": [
+        {
+          "functionName": "burn",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-04-06T11:44:24.014Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-06T11:44:24.014Z"
+          }
+        },
+        {
+          "functionName": "burnAndSend",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-04-06T11:44:25.598Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-06T11:44:25.598Z"
+          }
+        }
+      ]
+    },
+    "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
+      "functions": [
+        {
+          "functionName": "burn",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-04-06T11:44:27.780Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-06T11:44:27.780Z"
+          }
+        },
+        {
+          "functionName": "burnAndSend",
+          "isPermissioned": false,
+          "score": "no-impact",
+          "timestamp": "2026-04-06T11:44:28.981Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-06T11:44:28.981Z"
           }
         }
       ]

@@ -29,6 +29,7 @@ export class CapitalAnalysisCalculator {
   private functionsData: ApiFunctionsResponse
   private contractNameMap: Map<string, string>
   private implToProxy: Map<string, string>
+  private resolvedImpactCaps: Map<string, number>
 
   constructor(
     enhancedGraph: EnhancedGraph,
@@ -36,12 +37,33 @@ export class CapitalAnalysisCalculator {
     functionsData: ApiFunctionsResponse,
     contractNameMap: Map<string, string>,
     implToProxy?: Map<string, string>,
+    resolvedImpactCaps?: Map<string, number>,
   ) {
     this.enhancedGraph = enhancedGraph
     this.fundsData = fundsData
     this.functionsData = functionsData
     this.contractNameMap = contractNameMap
     this.implToProxy = implToProxy ?? new Map()
+    this.resolvedImpactCaps = resolvedImpactCaps ?? new Map()
+  }
+
+  /**
+   * Look up the impact cap (in USD) for a function.
+   * Scoped lookup (by ownerAddress) takes precedence over global.
+   */
+  private getFunctionCap(
+    contractAddress: string,
+    functionName: string,
+    ownerAddress?: string,
+  ): number | undefined {
+    const base = `${normalizeChainAddress(contractAddress)}|${functionName}`
+    if (ownerAddress) {
+      const scoped = this.resolvedImpactCaps.get(
+        `${base}|${normalizeChainAddress(ownerAddress)}`,
+      )
+      if (scoped !== undefined) return scoped
+    }
+    return this.resolvedImpactCaps.get(base)
   }
 
   /**
@@ -136,10 +158,16 @@ export class CapitalAnalysisCalculator {
    * so proxy + implementation are merged into a single entry. This prevents
    * double-counting funds that exist at the proxy but are mirrored to
    * implementations by enrichFundsWithImplementations.
+   *
+   * Cap propagation: if a function along the path has an impactCap mitigation,
+   * the cap is threaded through the BFS as pathCapUsd (minimum along each path).
+   * When a contract is reachable via multiple paths, the maximum cap is kept
+   * (least restrictive wins — if any path is uncapped, the contract is uncapped).
    */
   private traverseForward(
     startContract: string,
     startFunction: string,
+    ownerAddress?: string,
   ): CallGraphTraversalResult {
     const visited = new Set<string>()
     const reachableContracts = new Map<
@@ -148,14 +176,16 @@ export class CapitalAnalysisCalculator {
         contractName?: string
         viewOnlyPath: boolean
         calledFunctions: Set<string>
+        effectiveCapUsd?: number
       }
     >()
 
-    // BFS queue: each entry is a (contract, function, viewOnlyPath) triple
+    // BFS queue: each entry is a (contract, function, viewOnlyPath, pathCapUsd) tuple
     const queue: Array<{
       contract: string
       function: string
       pathIsViewOnly: boolean
+      pathCapUsd?: number
     }> = []
 
     if (isUpgradeFunction(startFunction)) {
@@ -174,6 +204,7 @@ export class CapitalAnalysisCalculator {
               contract: startContract,
               function: fn,
               pathIsViewOnly: false, // upgrade = non-view
+              pathCapUsd: this.getFunctionCap(startContract, fn, ownerAddress),
             })
           }
         }
@@ -183,6 +214,11 @@ export class CapitalAnalysisCalculator {
         contract: startContract,
         function: startFunction,
         pathIsViewOnly: false,
+        pathCapUsd: this.getFunctionCap(
+          startContract,
+          startFunction,
+          ownerAddress,
+        ),
       })
       // Permission edges (no sourceFunction) are followed by default in BFS
     } else {
@@ -190,11 +226,21 @@ export class CapitalAnalysisCalculator {
         contract: startContract,
         function: startFunction,
         pathIsViewOnly: true,
+        pathCapUsd: this.getFunctionCap(
+          startContract,
+          startFunction,
+          ownerAddress,
+        ),
       })
     }
 
     while (queue.length > 0) {
-      const { contract, function: func, pathIsViewOnly } = queue.shift()!
+      const {
+        contract,
+        function: func,
+        pathIsViewOnly,
+        pathCapUsd,
+      } = queue.shift()!
 
       const visitKey = `${normalizeChainAddress(contract)}:${func}`
       if (visited.has(visitKey)) continue
@@ -215,6 +261,14 @@ export class CapitalAnalysisCalculator {
           ? pathIsViewOnly && isViewCall
           : false // Permission edges are always non-view
 
+        // Cap propagation: apply the cap of the current source function to
+        // the outgoing path. Take the minimum (tightest) cap along the path.
+        const sourceFuncCap = this.getFunctionCap(contract, func, ownerAddress)
+        const newPathCap =
+          pathCapUsd !== undefined || sourceFuncCap !== undefined
+            ? Math.min(pathCapUsd ?? Infinity, sourceFuncCap ?? Infinity)
+            : undefined
+
         // Resolve implementation addresses to proxy for the output map,
         // so we don't create separate entries for proxy and implementation.
         const targetNorm = this.resolveToProxy(edge.targetContract)
@@ -222,11 +276,25 @@ export class CapitalAnalysisCalculator {
         if (existing) {
           if (!newPathIsViewOnly) existing.viewOnlyPath = false
           existing.calledFunctions.add(edge.targetFunction)
+          // Multiple paths: keep the maximum cap (least restrictive wins).
+          // If any path is uncapped (undefined), the contract is uncapped.
+          if (
+            existing.effectiveCapUsd !== undefined &&
+            newPathCap !== undefined
+          ) {
+            existing.effectiveCapUsd = Math.max(
+              existing.effectiveCapUsd,
+              newPathCap,
+            )
+          } else {
+            existing.effectiveCapUsd = undefined // uncapped path found
+          }
         } else {
           reachableContracts.set(targetNorm, {
             contractName: this.contractNameMap.get(targetNorm) ?? 'Unknown',
             viewOnlyPath: newPathIsViewOnly,
             calledFunctions: new Set([edge.targetFunction]),
+            effectiveCapUsd: newPathCap,
           })
         }
 
@@ -235,6 +303,7 @@ export class CapitalAnalysisCalculator {
           contract: edge.targetContract,
           function: edge.targetFunction,
           pathIsViewOnly: newPathIsViewOnly,
+          pathCapUsd: newPathCap,
         })
       }
     }
@@ -285,12 +354,16 @@ export class CapitalAnalysisCalculator {
 
   /**
    * Analyze capital exposure for a single permissioned function.
+   *
+   * ownerAddress is used to resolve scoped impactCap mitigations: a mitigation
+   * scoped to a specific admin/dependency only applies when that owner is the caller.
    */
   analyzeFunctionCapital(
     contractAddress: string,
     contractName: string,
     functionName: string,
     impact: Impact,
+    ownerAddress?: string,
   ): FunctionCapitalAnalysis {
     // Get direct funds and token value in the contract containing this function
     // If function is explicitly marked no-impact, zero out direct funds
@@ -316,7 +389,11 @@ export class CapitalAnalysisCalculator {
     const directTokenValueUsd = this.getContractTokenValue(contractAddress)
 
     // Traverse enhanced graph (call graph + permission edges) from this function
-    const traversalResult = this.traverseForward(contractAddress, functionName)
+    const traversalResult = this.traverseForward(
+      contractAddress,
+      functionName,
+      ownerAddress,
+    )
 
     // Build reachable contracts with funds
     const reachableContracts: ReachableContract[] = []
@@ -335,18 +412,30 @@ export class CapitalAnalysisCalculator {
         data.calledFunctions,
       )
 
+      // Bake effectiveCapUsd into fundsUsd/tokenValueUsd so downstream
+      // consumers (compiler, frontend) can sum values directly.
+      const cappedFunds =
+        data.effectiveCapUsd !== undefined
+          ? Math.min(fundsUsd, data.effectiveCapUsd)
+          : fundsUsd
+      const cappedTokenValue =
+        data.effectiveCapUsd !== undefined
+          ? Math.min(tokenValueUsd, data.effectiveCapUsd)
+          : tokenValueUsd
+
       reachableContracts.push({
         contractAddress: addr,
         contractName: data.contractName ?? 'Unknown',
         viewOnlyPath: data.viewOnlyPath,
         calledFunctions,
-        fundsUsd,
-        tokenValueUsd,
+        fundsUsd: cappedFunds,
+        tokenValueUsd: cappedTokenValue,
         fundsAtRisk,
+        effectiveCapUsd: data.effectiveCapUsd,
       })
     }
 
-    // Calculate totals - only count where fundsAtRisk is true
+    // Calculate totals from already-capped per-contract values.
     const totalReachableFundsUsd = reachableContracts.reduce(
       (sum, c) => (c.fundsAtRisk ? sum + c.fundsUsd : sum),
       0,
@@ -356,18 +445,50 @@ export class CapitalAnalysisCalculator {
       0,
     )
 
+    // Apply the function's own self-cap as a final ceiling on the grand total
+    // (direct + reachable). If capped, reduce direct funds proportionally.
+    const selfCap = this.getFunctionCap(
+      contractAddress,
+      functionName,
+      ownerAddress,
+    )
+    let finalDirectFunds = directFundsUsd
+    let finalDirectTokenValue = directTokenValueUsd
+    let finalReachableFunds = totalReachableFundsUsd
+    let finalReachableTokenValue = totalReachableTokenValueUsd
+    if (selfCap !== undefined) {
+      const grandFunds = directFundsUsd + totalReachableFundsUsd
+      if (grandFunds > selfCap) {
+        // Cap total to selfCap; reduce reachable first, then direct
+        finalReachableFunds = Math.max(
+          0,
+          Math.min(grandFunds, selfCap) - directFundsUsd,
+        )
+        finalDirectFunds = Math.min(directFundsUsd, selfCap)
+      }
+      const grandToken = directTokenValueUsd + totalReachableTokenValueUsd
+      if (grandToken > selfCap) {
+        finalReachableTokenValue = Math.max(
+          0,
+          Math.min(grandToken, selfCap) - directTokenValueUsd,
+        )
+        finalDirectTokenValue = Math.min(directTokenValueUsd, selfCap)
+      }
+    }
+
     return {
       contractAddress,
       contractName,
       functionName,
       impact,
       isUpgrade: isUpgradeFunction(functionName) || undefined,
-      directFundsUsd,
-      directTokenValueUsd,
+      directFundsUsd: finalDirectFunds,
+      directTokenValueUsd: finalDirectTokenValue,
       reachableContracts,
-      totalReachableFundsUsd,
-      totalReachableTokenValueUsd,
+      totalReachableFundsUsd: finalReachableFunds,
+      totalReachableTokenValueUsd: finalReachableTokenValue,
       unresolvedCallsCount: 0,
+      impactCapUsd: selfCap,
     }
   }
 
@@ -394,6 +515,7 @@ export class CapitalAnalysisCalculator {
         func.contractName,
         func.functionName,
         func.impact,
+        admin.adminAddress,
       )
 
       // Carry mitigations from the admin function entry
@@ -430,14 +552,45 @@ export class CapitalAnalysisCalculator {
       totalDirectTokenValue += this.getContractTokenValue(addr)
     }
 
+    // Build per-contract effective cap across all functions.
+    // If any function reaches a contract uncapped, it's fully exposed.
+    // Otherwise take the max cap (least restrictive).
+    const contractCaps = new Map<string, number | undefined>()
+    for (const analysis of functionsWithCapital) {
+      for (const rc of analysis.reachableContracts) {
+        const addr = normalizeChainAddress(rc.contractAddress)
+        const existing = contractCaps.get(addr)
+        if (existing === undefined && contractCaps.has(addr)) {
+          // Already marked as uncapped
+          continue
+        }
+        if (rc.effectiveCapUsd === undefined) {
+          contractCaps.set(addr, undefined) // uncapped
+        } else if (existing !== undefined) {
+          contractCaps.set(addr, Math.max(existing, rc.effectiveCapUsd))
+        } else {
+          contractCaps.set(addr, rc.effectiveCapUsd)
+        }
+      }
+    }
+
     // Calculate reachable capital and token value (deduplicated)
     // Only count reachable contracts where fundsAtRisk is true
+    // Apply effective caps when present
     let totalReachableCapital = totalDirectCapital
     let totalReachableTokenValue = totalDirectTokenValue
     for (const [addr, atRisk] of contractsAtRisk) {
       if (directContracts.has(addr) || !atRisk) continue
-      totalReachableCapital += this.getContractFunds(addr)
-      totalReachableTokenValue += this.getContractTokenValue(addr)
+      const funds = this.getContractFunds(addr)
+      const tokenVal = this.getContractTokenValue(addr)
+      const cap = contractCaps.get(addr)
+      if (cap !== undefined) {
+        totalReachableCapital += Math.min(funds, cap)
+        totalReachableTokenValue += Math.min(tokenVal, cap)
+      } else {
+        totalReachableCapital += funds
+        totalReachableTokenValue += tokenVal
+      }
     }
 
     // Count all affected contracts (for display purposes)

@@ -217,6 +217,7 @@ Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `proxy__upgradeTo`, `proxy__
 - `ResourceType`: `'frontend' | 'website' | 'docs' | 'source-code' | 'github' | 'x' | 'license' | 'defiscan-v1' | 'other'`
 - `FrontendSubtype`: `'official' | 'third-party' | 'self-hosted'`
 - `ResourceEntry`: `{ url, type: ResourceType, label?, frontendSubtype?: FrontendSubtype, licenseScope?: string }`
+- `AuditEntry`: `{ url, author, date, scope?, bounty? }` — see [Audits & Bug Bounties](#audits--bug-bounties) below
 - `ApiUpdateEntityDescriptionRequest`: `{ section: 'admins' | 'dependencies' | 'funds', address, name?, description }`
 - `ReviewConfig`: Full config including metadata, descriptions, sections, and dataKeys
 
@@ -225,20 +226,39 @@ Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `proxy__upgradeTo`, `proxy__
 - `GET /api/projects/:project/review-config` — full config (returns `{ config, availableTemplates }`)
 - `PUT /api/projects/:project/review-config` — full config save
 - `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
-- `GET /api/projects/:project/resources` — resources array
+- `GET /api/projects/:project/resources` — resources array (`ResourceEntry[]`)
 - `PUT /api/projects/:project/resources` — resources save (auto-save from UI)
+- `GET /api/projects/:project/audits` — audits array (`AuditEntry[]`)
+- `PUT /api/projects/:project/audits` — audits save (auto-save from UI)
 
 ### Resources
 
-Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored in a separate `resources.json` file per project.
+Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored in `resources.json` per project, alongside the audits array.
 
 - **File**: `resources.json` per project in `packages/config/src/projects/{project}/`
-- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/resources.ts`
-- **Types**: `frontend` (with subtype: official/third-party/self-hosted), `website`, `docs`, `source-code`, `github`, `x`, `license` (with `licenseScope`), `defiscan-v1`, `other`
-- **Compiler**: Pass-through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
+- **File format**: Wrapper object `{ resources: ResourceEntry[], audits: AuditEntry[] }`. Legacy bare `ResourceEntry[]` arrays are read transparently (audits default to `[]`) and migrated to wrapper format on first write.
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/resources.ts` — exports `getResources`, `updateResources`, `getAudits`, `updateAudits`
+- **Resource types**: `frontend` (with subtype: official/third-party/self-hosted), `website`, `docs`, `source-code`, `github`, `x`, `license` (with `licenseScope`), `defiscan-v1`, `other`
+- **Compiler**: Resources passed through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
 - **Auto-save**: Each add/edit/delete triggers an immediate save (not tied to review config Save button)
 - **Legacy fallback**: If `resources.json` doesn't exist, reads from `review-config.json` `resources` field; on first save, migrates to `resources.json` and strips from review-config
-- **Gathering skill**: `/gather-resources <project> <url>` — Claude Code skill that web-searches for official resources (website, frontends, docs, GitHub, X, licenses, DeFiScan V1), verifies each URL, and saves via the resources API. Merges with existing entries (additive only). Defined in `.claude/skills/gather-resources/SKILL.md`.
+- **Gathering skill**: `/gather-resources <project> <url>` — Claude Code skill that web-searches for official resources (website, frontends, docs, GitHub, X, licenses, DeFiScan V1), verifies each URL, and saves via the resources API. Also discovers security audits and bug bounty programs (see below). Merges with existing entries (additive only). Defined in `.claude/skills/gather-resources/SKILL.md`.
+
+### Audits & Bug Bounties
+
+Security audit reports and bug bounty programs stored as a separate `AuditEntry[]` array inside `resources.json`.
+
+- **Schema**: `AuditEntry { url: string, author: string, date: string, scope?: string, bounty?: number }`
+  - `url`: Official link to the audit report PDF or page
+  - `author`: Auditing firm name (e.g. `"Trail of Bits"`, `"OpenZeppelin"`)
+  - `date`: Audit date in `"YYYY-MM"` or `"YYYY-MM-DD"` format
+  - `scope`: Optional short description of what was audited (e.g. `"Core contracts"`, `"Staking module"`)
+  - `bounty`: Max bug bounty payout in USD as a plain number (e.g. `500000` for $500K). When set and non-zero, this value is used for the Bug Bounty stat in the defiscan-frontend Code Quality section.
+- **Bug bounty entries**: Use `author` = hosting platform (e.g. `"Immunefi"`, `"HackerOne"`), `scope: "Bug Bounty Program"`, and set `bounty` to the maximum payout. These are always separate entries — never merge bounty info into an audit report entry.
+- **Compiler**: Passed through to `compiled-review.json` as `audits: CompiledAuditEntry[]` (`CompiledAuditEntry = AuditEntry`)
+- **Frontend display**: `CodeQualitySection.tsx` in defiscan-frontend shows the audit count in the "Audits & Bug Bounties" card, the max bounty amount in the "Bug Bounty" stat (`$500K`, `$1M` format), and a scrollable carousel of audit cards with author, date, and scope.
+- **UI editor**: `ReviewResourcesEditor.tsx` renders a separate Audits section below the Resources list with the same add/edit/delete pattern (author, date, scope, bounty, URL fields).
+- **Gathering skill**: `/gather-resources <project> --audits-only` — skips resource discovery and only searches for audits + bug bounty programs, using the existing website/GitHub/docs URLs from `resources.json` as starting points.
 
 ### Design Decisions
 
@@ -291,17 +311,19 @@ Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored 
 - **Guard Conditions**: Requires `review-config.json` and `call-graph-data.json`; skips if either is missing
 - **Template Variables**: `{{variableName}}` resolved at compile time via `dataKeys` map
 - **Data source**: Instantiates `ProjectAnalysis` and calls `getAdmins()` + `getDependencies()` directly (same process, no HTTP). If admin/dependency data needs to change, modify `ProjectAnalysis`, not the compiler.
-- **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`
-- **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed by ProjectAnalysis, deduplicated across functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds.
+- **TypeScript interfaces**: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledDependencyFunction`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`, `CompiledResourceEntry`, `CompiledAuditEntry`
+- **Dependency funds**: Each `CompiledDependency` includes `totalFundsAtRisk` and `totalTokenValueAtRisk` (pre-computed by ProjectAnalysis, deduplicated *within* that dependency's functions). Each `CompiledDependencyFunction` includes `directFundsUsd`, `directTokenValueUsd`, and `reachableContracts[]` with per-contract funds.
+- **Entity-level deduplication** (`dependencyEntityGroups`): Because the report page groups deps by entity and sums their `totalFundsAtRisk`, the same underlying contract can be counted once per dep that reaches it. To fix this, the compiler builds a `dependencyEntityGroups` array after assembling `dependencies[]`. For each entity group it collects unique contract addresses across all deps in the group (using `Math.max` when a contract appears in multiple deps' `reachableContracts`) and sums once. The frontend uses this for both the per-entity bar chart values and the global "Impacted TVS" stat, with a fallback to the raw sum for compiled reviews that predate this field.
 - **Dependency type**: Each `CompiledDependency` has an optional `dependencyType?: 'callgraph' | 'write'` field indicating how it was detected. `'callgraph'` = found via code-level call graph traversal; `'write'` = external contract that owns/controls a permissioned function (detected from `ownerDefinitions`). See [Call Graph Analysis](call-graph-analysis.md#function-analysis-functionanalysists) for details.
-- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are computed by `ProjectAnalysis.getMitigationsForOwner()` which merges direct mitigations (from `functions.json`, filtered per owner) with transitive mitigations (collected via forward BFS through the call graph — global and scoped mitigations from downstream functions). The compiler passes these through as-is (`f.mitigations`).
+- **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are computed by `ProjectAnalysis.getMitigationsForOwner()` which merges direct mitigations (from `functions.json`, filtered per owner) with transitive mitigations (collected via forward BFS through the call graph — global and scoped mitigations from downstream functions). The compiler passes these through as-is (`f.mitigations`). Each mitigation with an `impactCap` has its `impactCapUsd` resolved during `getMitigationsForOwner()` (not in the compiler).
+- **Impact cap on reachable contracts**: Each `CompiledReachableContract` includes `effectiveCapUsd?: number`. Set during capital analysis BFS (for admins) and inline cap resolution (for dependencies) in `projectAnalysis.ts`. Frontend fund sums apply `Math.min(fundsUsd, effectiveCapUsd)` per reachable contract (`shared.tsx`, `dependencies.ts`, `narrative.ts`).
 - **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields
 
 ### Mitigations Display (defiscan-frontend)
 
 Mitigations are displayed in the Explorer tabs (AdminsTab, DepsTab, GovernanceTab) and Report views (AdminCards, DependencyCards).
 
-- **`MitigationBadge`** (`src/components/MitigationBadge.tsx`): Renders a single mitigation as a colored pill badge. Handles all `MitigationType` values: `delay` (cyan, shows formatted duration), `valueRange` (indigo, shows min/max), `relativeValue` (amber, shows max change %), `other` (gray, truncated description).
+- **`MitigationBadge`** (`src/components/MitigationBadge.tsx`): Renders a single mitigation as a colored pill badge. Handles all `MitigationType` values: `delay` (cyan, shows formatted duration), `valueRange` (indigo, shows min/max), `relativeValue` (amber, shows max change %), `other` (gray, truncated description). Also renders **impact cap badges** (emerald) when `impactCapUsd` is set — displays as "$XM Max Impact" using `formatCapUsd()` helper.
 - **`MitigationsSummary`** (`src/pages/review/views/explorer/shared.tsx`): Responsive overflow component for table cells. Collects mitigations from an entity's functions, deduplicates them, measures available width via `ResizeObserver`, and shows as many badges as fit with a `+N` overflow indicator. Note: uses `td.closest('td')` for measurement — only works inside `<table>` cells, not reusable in report card buttons.
 - **Report card inline badges** (`AdminCards.tsx`, `DependencyCards.tsx`): Admin and dependency card rows render deduplicated mitigation badges inline after the entity name using an IIFE that collects mitigations from all functions, deduplicates via `deduplicateMitigations()`, and maps to `MitigationBadge` components. This is separate from `MitigationsSummary` because report cards use `<button>` elements, not table cells.
 - **Shared explorer components** (`shared.tsx`): Also exports `SortHeader`, `ExpandedAdminFunctions`, `AdminFunctionTable`, and `deduplicateMitigations` — used by AdminsTab, DepsTab, GovernanceTab, and report card components to avoid duplication.

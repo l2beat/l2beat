@@ -1,210 +1,80 @@
-import { useState, useEffect, useRef } from 'react'
-import { clsx } from 'clsx'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import type { CompiledReview } from '../../../../types'
-import { KeyFindings } from './KeyFindings'
-import { AdminCards } from './AdminCards'
-import { FundCards } from './FundCards'
-import { DependencyCards } from './DependencyCards'
-import { CodeSection } from './CodeSection'
+import { HeroSection } from './HeroSection'
+import { KeyFindingsCarousel } from './KeyFindingsCarousel'
+import { TVSSection } from './TVSSection'
+import { CodeQualitySection } from './CodeQualitySection'
+import { AdminsSection } from './AdminsSection'
+import { GovernanceSection } from './GovernanceSection'
+import { DependenciesSection } from './DependenciesSection'
+import { FrontendsSection } from './FrontendsSection'
+import { ActivitySection } from './ActivitySection'
 
 interface ReportViewProps {
   review: CompiledReview
-  forceExpanded?: boolean
+  onExportPdf: () => void
 }
 
-interface SectionDef {
-  id: string
-  title: string
-}
+export function ReportView({ review, onExportPdf }: ReportViewProps) {
+  const navigate = useNavigate()
+  const [, setSearchParams] = useSearchParams()
 
-const SECTIONS: SectionDef[] = [
-  { id: 'summary', title: 'Summary' },
-  { id: 'key-findings', title: 'Key Findings' },
-  { id: 'funds', title: 'What Is at Stake?' },
-  { id: 'admins', title: 'Who Is in Control?' },
-  { id: 'dependencies', title: 'What Does It Depend On?' },
-  { id: 'code', title: 'More Information' },
-]
+  function goToExplorerTab(tab: string) {
+    setSearchParams({ view: 'explorer', tab }, { replace: true })
+  }
 
-export function ReportView({ review, forceExpanded = false }: ReportViewProps) {
-  const [activeSection, setActiveSection] = useState<string>(
-    SECTIONS[0]?.id ?? 'key-findings',
-  )
-  const observerRef = useRef<IntersectionObserver | null>(null)
-
-  // Create the IntersectionObserver once on mount
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        // Find the topmost visible section
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-
-        if (visible.length > 0 && visible[0]) {
-          const id = visible[0].target.getAttribute('data-section-id')
-          if (id) {
-            setActiveSection(id)
-          }
-        }
-      },
-      {
-        rootMargin: '-80px 0px -60% 0px',
-        threshold: 0,
-      },
-    )
-
-    return () => observerRef.current?.disconnect()
-  }, [])
-
-  // Register elements with the observer as they mount via ref callbacks
-  const sectionRefs = useRef<Map<string, HTMLElement>>(new Map())
-  function registerRef(id: string, el: HTMLElement | null) {
-    const observer = observerRef.current
-    if (el) {
-      sectionRefs.current.set(id, el)
-      observer?.observe(el)
-    } else {
-      const prev = sectionRefs.current.get(id)
-      if (prev) observer?.unobserve(prev)
-      sectionRefs.current.delete(id)
-    }
+  function goToActivity() {
+    setSearchParams({ view: 'activity' }, { replace: true })
   }
 
   return (
-    <article className="max-w-4xl mx-auto">
-      {/* Print-only branded header */}
-      <div className="hidden print:block mb-8 pb-4 border-b-2 border-purple-600">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-semibold text-purple-600 tracking-wide uppercase mb-1">
-              DeFiScan Decentralization Review
-            </p>
-            <h1 className="text-3xl font-bold text-text-primary">
-              {review.metadata.protocolName}
-            </h1>
-            <p className="mt-1 text-sm text-text-secondary">
-              {review.metadata.chain}
-              {review.metadata.tokenName &&
-                ` \u00B7 ${review.metadata.tokenName}`}
-            </p>
-          </div>
-          <div className="text-right text-xs text-text-muted">
-            <p>
-              Generated{' '}
-              {new Date().toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </p>
-          </div>
+    <div className="flex flex-col gap-10 sm:gap-16 md:gap-[80px] pb-12 md:pb-24">
+      {/* Hero */}
+      <section className="w-full">
+        <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+          <HeroSection review={review} onExportPdf={onExportPdf} />
         </div>
-      </div>
+      </section>
 
-      {/* Sticky section navigation bar */}
-      <nav className="mt-6 sticky top-0 z-40 -mx-4 px-4 py-3 bg-white/90 backdrop-blur-sm border-b border-border print:hidden">
-        <div className="flex gap-1 overflow-x-auto">
-          {SECTIONS.map((section) => (
-            <a
-              key={section.id}
-              href={`#${section.id}`}
-              className={clsx(
-                'px-4 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap',
-                activeSection === section.id
-                  ? 'text-purple-700 bg-purple-50'
-                  : 'text-text-secondary hover:text-purple-600 hover:bg-purple-50',
-              )}
-              onClick={(e) => {
-                e.preventDefault()
-                const el = sectionRefs.current.get(section.id)
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                }
-              }}
-            >
-              {section.title}
-            </a>
-          ))}
-        </div>
-      </nav>
+      {/* Key Findings */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <KeyFindingsCarousel review={review} />
+      </section>
 
-      {/* Story sections -- generous spacing for readability */}
-      <div className="mt-10 space-y-16">
-        <section
-          id="summary"
-          data-section-id="summary"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('summary', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">Summary</h2>
-          {review.metadata.description && (
-            <p className="text-lg text-text-secondary leading-relaxed max-w-3xl">
-              {review.metadata.description}
-            </p>
-          )}
-        </section>
+      {/* TVS */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <TVSSection review={review} onShowMore={() => goToExplorerTab('funds')} />
+      </section>
 
-        <section
-          id="key-findings"
-          data-section-id="key-findings"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('key-findings', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            Key Findings
-          </h2>
-          <KeyFindings review={review} />
-        </section>
+      {/* Code Quality */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <CodeQualitySection review={review} />
+      </section>
 
-        <section
-          id="funds"
-          data-section-id="funds"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('funds', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            What Is at Stake?
-          </h2>
-          <FundCards review={review} forceExpanded={forceExpanded} />
-        </section>
+      {/* Active Admins */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <AdminsSection review={review} onShowMore={() => goToExplorerTab('admins')} />
+      </section>
 
-        <section
-          id="admins"
-          data-section-id="admins"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('admins', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            Who Is in Control?
-          </h2>
-          <AdminCards review={review} forceExpanded={forceExpanded} />
-        </section>
+      {/* Governance */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <GovernanceSection review={review} onShowMore={() => goToExplorerTab('governance')} />
+      </section>
 
-        <section
-          id="dependencies"
-          data-section-id="dependencies"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('dependencies', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            What Does It Depend On?
-          </h2>
-          <DependencyCards review={review} forceExpanded={forceExpanded} />
-        </section>
+      {/* Dependencies */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <DependenciesSection review={review} onShowMore={() => goToExplorerTab('dependencies')} />
+      </section>
 
-        <section
-          id="code"
-          data-section-id="code"
-          className="scroll-mt-20"
-          ref={(el) => registerRef('code', el)}
-        >
-          <h2 className="text-2xl font-bold text-text-primary mb-6">
-            More Information
-          </h2>
-          <CodeSection review={review} />
-        </section>
-      </div>
-    </article>
+      {/* Frontends */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <FrontendsSection review={review} />
+      </section>
+
+      {/* Protocol Activity */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <ActivitySection review={review} onShowMore={goToActivity} />
+      </section>
+    </div>
   )
 }

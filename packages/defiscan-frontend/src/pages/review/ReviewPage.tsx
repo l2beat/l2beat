@@ -1,6 +1,5 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { TYPE_LABELS } from '../../components/ProtocolTypeBadge'
 import { ShareButton } from '../../components/ShareButton'
 import { type ViewMode, ViewModeToggle } from '../../components/ViewModeToggle'
 import { useReview } from '../../data/hooks'
@@ -30,27 +29,15 @@ export function ReviewPage() {
 
   const viewParam = searchParams.get('view')
   const view: ViewMode = isValidView(viewParam) ? viewParam : 'report'
-  const [forceExpanded, setForceExpanded] = useState(false)
 
   function handleViewChange(mode: ViewMode) {
     setSearchParams({ view: mode }, { replace: true })
   }
 
   const handleExportPdf = useCallback(() => {
-    setForceExpanded(true)
-    // Use requestAnimationFrame to ensure state is flushed before printing
     requestAnimationFrame(() => {
       window.print()
     })
-  }, [])
-
-  // Reset forceExpanded after print dialog closes
-  useEffect(() => {
-    function onAfterPrint() {
-      setForceExpanded(false)
-    }
-    window.addEventListener('afterprint', onAfterPrint)
-    return () => window.removeEventListener('afterprint', onAfterPrint)
   }, [])
 
   if (isLoading) {
@@ -81,8 +68,8 @@ export function ReviewPage() {
             The review data for this protocol could not be loaded.
           </p>
           <Link
-            to="/"
-            className="mt-4 inline-block font-medium text-purple-600 hover:text-purple-800"
+            to="/gallery"
+            className="mt-4 inline-block font-medium text-accent hover:text-blue-800"
           >
             Back to all reviews
           </Link>
@@ -92,43 +79,29 @@ export function ReviewPage() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6">
-      {/* Back nav + Protocol header + View toggle */}
-      <div className="mb-6 print:hidden">
-        <Link
-          to="/"
-          className="mb-4 inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-purple-600 print:hidden"
-        >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
+    <div className="w-full bg-white">
+      {/* Back nav + View toggle bar */}
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-4 print:hidden">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <Link
+            to="/gallery"
+            className="inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Back to all reviews
-        </Link>
-
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="font-bold text-3xl text-text-primary">
-              {review.metadata.protocolName}
-            </h1>
-            <p className="mt-1 text-sm text-text-secondary">
-              {review.metadata.chain} &middot;{' '}
-              {TYPE_LABELS[review.metadata.projectType] ??
-                review.metadata.projectType}
-              {review.metadata.tokenName && (
-                <> &middot; {review.metadata.tokenName}</>
-              )}
-            </p>
-          </div>
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back to all reviews
+          </Link>
           <div className="print:hidden">
             <ViewModeToggle current={view} onChange={handleViewChange}>
               <ShareButton review={review} onExportPdf={handleExportPdf} />
@@ -146,10 +119,18 @@ export function ReviewPage() {
         }
       >
         {view === 'report' && (
-          <ReportView review={review} forceExpanded={forceExpanded} />
+          <ReportView review={review} onExportPdf={handleExportPdf} />
         )}
-        {view === 'explorer' && <ExplorerView review={review} />}
-        {view === 'activity' && <ActivityView review={review} />}
+        {view === 'explorer' && (
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <ExplorerView review={review} />
+          </div>
+        )}
+        {view === 'activity' && (
+          <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+            <ActivityView review={review} />
+          </div>
+        )}
       </Suspense>
     </div>
   )

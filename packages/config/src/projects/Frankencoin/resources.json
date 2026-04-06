@@ -1,35 +1,51 @@
-[
-  {
-    "url": "https://frankencoin.com/",
-    "type": "website"
-  },
-  {
-    "url": "https://app.frankencoin.com/",
-    "type": "frontend",
-    "frontendSubtype": "official"
-  },
-  {
-    "url": "https://docs.frankencoin.com/ ",
-    "type": "docs"
-  },
-  {
-    "url": "https://github.com/Frankencoin-ZCHF/",
-    "type": "github"
-  },
-  {
-    "url": "https://x.com/frankencoinzchf",
-    "type": "x"
-  },
-  {
-    "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/LICENSE",
-    "type": "license",
-    "label": "MIT",
-    "licenseScope": "Contracts"
-  },
-  {
-    "url": "https://github.com/Frankencoin-ZCHF/frankencoin-dapp/blob/main/LICENSE",
-    "type": "license",
-    "label": "MIT",
-    "licenseScope": "Frontend"
-  }
-]
+{
+  "resources": [
+    {
+      "url": "https://frankencoin.com/",
+      "type": "website"
+    },
+    {
+      "url": "https://app.frankencoin.com/",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://docs.frankencoin.com/ ",
+      "type": "docs"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/",
+      "type": "github"
+    },
+    {
+      "url": "https://x.com/frankencoinzchf",
+      "type": "x"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/LICENSE",
+      "type": "license",
+      "label": "MIT",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/frankencoin-dapp/blob/main/LICENSE",
+      "type": "license",
+      "label": "MIT",
+      "licenseScope": "Frontend"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/audits/V2/ChainSecurity_Frankencoin_Frankencoin_v2024.pdf",
+      "author": "ChainSecurity",
+      "date": "2024-11",
+      "scope": "V2 Smart Contracts"
+    },
+    {
+      "url": "https://github.com/Frankencoin-ZCHF/Frankencoin/blob/main/audits/V2/frankencoin-audit-report-2024-1.1.pdf",
+      "author": "Decurity",
+      "date": "2024-09",
+      "scope": "V2 Smart Contracts"
+    }
+  ]
+}

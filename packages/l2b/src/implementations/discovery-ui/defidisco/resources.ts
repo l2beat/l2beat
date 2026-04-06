@@ -1,7 +1,35 @@
 import type { DiscoveryPaths } from '@l2beat/discovery'
 import * as fs from 'fs'
 import * as path from 'path'
-import type { ResourceEntry, ReviewConfig } from './types'
+import type { AuditEntry, ResourceEntry, ReviewConfig } from './types'
+
+interface ResourcesFile {
+  resources: ResourceEntry[]
+  audits: AuditEntry[]
+}
+
+function readResourcesFile(resourcesPath: string): ResourcesFile {
+  const fileContent = fs.readFileSync(resourcesPath, 'utf8')
+  const parsed = JSON.parse(fileContent)
+
+  // Legacy: bare array format (resources only, no audits)
+  if (Array.isArray(parsed)) {
+    return { resources: parsed as ResourceEntry[], audits: [] }
+  }
+
+  return {
+    resources: (parsed.resources ?? []) as ResourceEntry[],
+    audits: (parsed.audits ?? []) as AuditEntry[],
+  }
+}
+
+function writeResourcesFile(resourcesPath: string, file: ResourcesFile): void {
+  const dir = path.dirname(resourcesPath)
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true })
+  }
+  fs.writeFileSync(resourcesPath, JSON.stringify(file, null, 2))
+}
 
 export function getResources(
   paths: DiscoveryPaths,
@@ -12,8 +40,7 @@ export function getResources(
   // Primary: read from resources.json
   if (fs.existsSync(resourcesPath)) {
     try {
-      const fileContent = fs.readFileSync(resourcesPath, 'utf8')
-      return JSON.parse(fileContent) as ResourceEntry[]
+      return readResourcesFile(resourcesPath).resources
     } catch (error) {
       console.error('Error parsing resources file:', error)
     }
@@ -42,6 +69,23 @@ export function getResources(
   return []
 }
 
+export function getAudits(
+  paths: DiscoveryPaths,
+  project: string,
+): AuditEntry[] {
+  const resourcesPath = getResourcesPath(paths, project)
+
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      return readResourcesFile(resourcesPath).audits
+    } catch (error) {
+      console.error('Error parsing audits from resources file:', error)
+    }
+  }
+
+  return []
+}
+
 export function updateResources(
   paths: DiscoveryPaths,
   project: string,
@@ -49,14 +93,17 @@ export function updateResources(
 ): void {
   const resourcesPath = getResourcesPath(paths, project)
 
-  // Ensure directory exists
-  const dir = path.dirname(resourcesPath)
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true })
+  // Preserve existing audits when updating resources
+  let existingAudits: AuditEntry[] = []
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      existingAudits = readResourcesFile(resourcesPath).audits
+    } catch (_) {
+      // ignore parse errors — start fresh
+    }
   }
 
-  // Write resources.json
-  fs.writeFileSync(resourcesPath, JSON.stringify(resources, null, 2))
+  writeResourcesFile(resourcesPath, { resources, audits: existingAudits })
 
   // One-time migration: strip resources from review-config.json if present
   const reviewConfigPath = path.join(
@@ -76,6 +123,29 @@ export function updateResources(
       console.error('Error stripping resources from review-config.json:', error)
     }
   }
+}
+
+export function updateAudits(
+  paths: DiscoveryPaths,
+  project: string,
+  audits: AuditEntry[],
+): void {
+  const resourcesPath = getResourcesPath(paths, project)
+
+  // Preserve existing resources when updating audits
+  let existingResources: ResourceEntry[] = []
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      existingResources = readResourcesFile(resourcesPath).resources
+    } catch (_) {
+      // ignore parse errors — start fresh
+    }
+  }
+
+  writeResourcesFile(resourcesPath, {
+    resources: existingResources,
+    audits,
+  })
 }
 
 function getResourcesPath(paths: DiscoveryPaths, project: string): string {

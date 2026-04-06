@@ -1,53 +1,142 @@
-[
-  {
-    "url": "https://liquity.app/",
-    "type": "frontend",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://app.defisaver.com/liquityV2/",
-    "type": "frontend",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://app.lqty.io/",
-    "type": "frontend",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://app.trovezero.xyz/",
-    "type": "frontend",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://liquityv2.com/",
-    "type": "frontend",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://docs.liquity.org/",
-    "type": "docs"
-  },
-  {
-    "url": "https://github.com/liquity/bold",
-    "type": "github"
-  },
-  {
-    "url": "https://x.com/LiquityProtocol",
-    "type": "x"
-  },
-  {
-    "url": "https://www.liquity.org/",
-    "type": "website"
-  },
-  {
-    "url": "https://github.com/liquity/bold/blob/main/LICENSE",
-    "type": "license",
-    "label": "BUSL-1.1",
-    "licenseScope": "Contracts"
-  },
-  {
-    "url": "https://www.defiscan.info/protocols/liquity-v2/ethereum",
-    "type": "defiscan-v1"
-  }
-]
+{
+  "resources": [
+    {
+      "url": "https://liquity.app/",
+      "type": "frontend",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://app.defisaver.com/liquityV2/",
+      "type": "frontend",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://app.lqty.io/",
+      "type": "frontend",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://app.trovezero.xyz/",
+      "type": "frontend",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://liquityv2.com/",
+      "type": "frontend",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://docs.liquity.org/",
+      "type": "docs"
+    },
+    {
+      "url": "https://github.com/liquity/bold",
+      "type": "github"
+    },
+    {
+      "url": "https://x.com/LiquityProtocol",
+      "type": "x"
+    },
+    {
+      "url": "https://www.liquity.org/",
+      "type": "website"
+    },
+    {
+      "url": "https://github.com/liquity/bold/blob/main/LICENSE",
+      "type": "license",
+      "label": "BUSL-1.1",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/liquity-v2/ethereum",
+      "type": "defiscan-v1"
+    }
+  ],
+  "audits": [
+    {
+      "author": "Dedaub",
+      "date": "2024-08-28",
+      "scope": "Core Protocol (1st audit)",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-aug-28-2024/"
+    },
+    {
+      "author": "Dedaub",
+      "date": "2024-08-12",
+      "scope": "Governance (1st audit)",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-governance-1st-audit-aug-12-2024/"
+    },
+    {
+      "author": "Recon",
+      "date": "2024-10",
+      "scope": "Core Protocol security review",
+      "url": "https://github.com/GalloDaSballo/bold-review"
+    },
+    {
+      "author": "Dedaub",
+      "date": "2024-11-11",
+      "scope": "Core Protocol (2nd audit)",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-second-audit-nov-11-2024/"
+    },
+    {
+      "author": "Dedaub",
+      "date": "2024-11-11",
+      "scope": "Governance (2nd audit)",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-governance-2nd-audit-nov-11-2024/"
+    },
+    {
+      "author": "Certora",
+      "date": "2024-12",
+      "scope": "Formal verification",
+      "url": "https://certora.cdn.prismic.io/certora/Z1tLJJbqstJ98b8J_LiquityVerificationReport.pdf"
+    },
+    {
+      "author": "Coinspect",
+      "date": "2024-12-31",
+      "scope": "Bold core smart contracts",
+      "url": "https://www.coinspect.com/doc/Coinspect%20-%20Smart%20Contract%20Audit%20-%20Liquity%20-%20Bold%20-%20v241231.pdf"
+    },
+    {
+      "author": "Dedaub",
+      "date": "2024-12-22",
+      "scope": "Governance (3rd audit)",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-governance-3rd-audit-dec-22-2024/"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2025-01",
+      "scope": "Bold smart contracts",
+      "url": "https://www.chainsecurity.com/reports/Liquity/ChainSecurity_Liquity_Bold_Audit.pdf"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2025-01",
+      "scope": "Governance smart contracts",
+      "url": "https://www.chainsecurity.com/reports/Liquity/ChainSecurity_Liquity_LiquityV2Governance_Audit.pdf"
+    },
+    {
+      "author": "Coinspect",
+      "date": "2025-01-20",
+      "scope": "Bold governance smart contracts",
+      "url": "https://www.coinspect.com/doc/Coinspect%20-%20Smart%20Contract%20Audit%20-%20Liquity%20-%20Bold%20Governance%20-%20v250120.pdf"
+    },
+    {
+      "author": "Cantina",
+      "date": "2025-04",
+      "scope": "Competition (Mar–Apr 2025)",
+      "url": "https://cantina.xyz/portfolio/fca4f98a-7d24-49f1-9a3b-80e5e65b2b30"
+    },
+    {
+      "author": "Dedaub",
+      "date": "2025-05-13",
+      "scope": "Cantina fixes review",
+      "url": "https://dedaub.com/audits/liquity/liquity-v2-cantina-fixes-review-may-13-2025/"
+    },
+    {
+      "author": "Cantina",
+      "scope": "Bug Bounty Program",
+      "date": "2025",
+      "url": "https://cantina.xyz/bounties/7aa23a2b-7e8b-4b88-a9bb-713dc102a11a",
+      "bounty": 125000
+    }
+  ]
+}

@@ -31,6 +31,9 @@ export type Impact = 'critical' | 'no-impact'
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
 
+// Unit for impact cap field — describes how to scale the raw on-chain value to USD
+export type ImpactCapUnit = 'raw' | '1e6' | '1e8' | '1e18' | 'bps' | 'percent'
+
 // A mitigation value can be either a hardcoded literal or a reference to a contract field
 export interface MitigationValue {
   mode: 'hardcoded' | 'fieldRef'
@@ -68,6 +71,17 @@ export interface Mitigation {
   // Scopes this mitigation to a specific admin or dependency.
   // When absent, mitigation is global (applies to all callers).
   scopedTo?: { address: string; type: 'admin' | 'dependency' }
+  // Optional: the maximum fund impact this constraint produces.
+  // Either a hardcoded USD value or a reference to an on-chain field + scaling unit.
+  // Bounds (directFundsUsd + totalReachableFundsUsd) in capital analysis.
+  impactCap?: {
+    hardcodedUsd?: number
+    contractAddress?: string
+    fieldName?: string
+    unit?: ImpactCapUnit
+  }
+  // Resolved USD value of impactCap (set during analysis for display)
+  impactCapUsd?: number
 }
 
 // Function detail for scoring breakdown
@@ -124,6 +138,9 @@ export interface ReachableContract {
   tokenValueUsd: number
   // Whether funds are counted (true if at least one called function has impact != unscored)
   fundsAtRisk: boolean
+  // The effective USD cap applied to this contract's fund contribution (undefined = uncapped).
+  // Set when an impactCap mitigation on an intermediary function bounds the reachable amount.
+  effectiveCapUsd?: number
 }
 
 // Capital analysis for a single permissioned function
@@ -147,6 +164,8 @@ export interface FunctionCapitalAnalysis {
   totalReachableTokenValueUsd: number
   // Number of external calls that couldn't be resolved
   unresolvedCallsCount: number
+  // Set when an impactCap mitigation caps this function's grand total (direct + reachable).
+  impactCapUsd?: number
 }
 
 // Extended admin detail with capital analysis
@@ -176,6 +195,8 @@ export interface CallGraphTraversalResult {
       viewOnlyPath: boolean
       // Functions that are called on this contract (from the call graph)
       calledFunctions: Set<string>
+      // Effective USD cap for this contract's contribution (undefined = uncapped)
+      effectiveCapUsd?: number
     }
   >
   // External calls that couldn't be resolved (no resolvedAddress)
@@ -772,6 +793,14 @@ export interface ResourceEntry {
   label?: string
   frontendSubtype?: FrontendSubtype
   licenseScope?: string
+}
+
+export interface AuditEntry {
+  url: string
+  author: string
+  date: string
+  scope?: string
+  bounty?: number
 }
 
 export interface ReviewConfig {

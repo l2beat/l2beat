@@ -337,16 +337,26 @@ The **Review Builder** panel lets you compose the final review document for a pr
 
 ### Gathering Resources
 
-Use the **Resources** panel to manage project links — frontends (official/third-party/self-hosted), website, documentation, GitHub, X (Twitter), source code, licenses (with optional scope like "Contracts"), DeFiScan V1 review links, and other resources.
+Use the **Resources** panel to manage project links — frontends (official/third-party/self-hosted), website, documentation, GitHub, X (Twitter), source code, licenses (with optional scope like "Contracts"), DeFiScan V1 review links, and other resources. The same panel also manages **security audits and bug bounty programs** in a dedicated Audits section below the resource list.
 
 You can auto-discover resources using Claude Code:
 
 1. Make sure the l2b UI server is running (`cd packages/config && l2b ui`)
 2. In Claude Code, run `/gather-resources <project-name> <project-website-url>`
-3. The agent searches the web for official resources, verifies each URL, and saves them
+3. The agent searches the web for official resources, verifies each URL, and saves them. It also discovers security audit reports and bug bounty programs.
 4. Review the results in the Resources panel and adjust as needed
 
-The skill merges with any existing resources — it never removes entries you've already added. License entries always link to the actual license text (e.g., a LICENSE file on GitHub or a license page on the website).
+The skill merges with any existing resources and audits — it never removes entries you've already added.
+
+**Audits-only mode**: If you only need to gather security audits (e.g. resources are already complete), run:
+
+```
+/gather-resources <project-name> --audits-only
+```
+
+This skips all resource discovery and uses the existing website and GitHub URLs from `resources.json` as starting points to find audit reports and bug bounty programs.
+
+**Audit fields**: Each audit entry has `author` (auditing firm), `date` (YYYY-MM), `scope` (optional, e.g. "Core contracts"), and `url` (official link). For bug bounty programs, `author` is the hosting platform (e.g. `"Immunefi"`), `scope` is `"Bug Bounty Program"`, and `bounty` is the max payout in USD. The max bounty amount is displayed in the defiscan-frontend Code Quality section.
 
 ### Automated Discovery with Claude Code
 

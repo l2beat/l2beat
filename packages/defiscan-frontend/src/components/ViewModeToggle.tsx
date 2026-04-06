@@ -51,14 +51,14 @@ export function ViewModeToggle({ current, onChange, children }: ViewModeTogglePr
           onClick={() => onChange(mode.value)}
           title={mode.description}
           className={clsx(
-            'flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all',
+            'flex items-center gap-2 px-3 sm:px-4 py-2 text-sm font-medium rounded-lg transition-all',
             current === mode.value
               ? 'bg-white text-purple-700 shadow-sm'
               : 'text-text-secondary hover:text-purple-600',
           )}
         >
           {mode.icon}
-          {mode.label}
+          <span className="hidden sm:inline">{mode.label}</span>
         </button>
       ))}
       {children && (

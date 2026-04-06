@@ -1,31 +1,72 @@
-[
-  {
-    "url": "https://github.com/compound-finance/palisade",
-    "type": "frontend",
-    "label": "IPFS Instructions",
-    "frontendSubtype": "third-party"
-  },
-  {
-    "url": "https://compound.finance/",
-    "type": "website"
-  },
-  {
-    "url": "https://docs.compound.finance/ ",
-    "type": "docs"
-  },
-  {
-    "url": "https://app.compound.finance/?market=usdc-mainnet",
-    "type": "frontend",
-    "frontendSubtype": "official"
-  },
-  {
-    "url": "https://github.com/compound-finance/comet/blob/main/LICENSE",
-    "type": "license",
-    "label": "BUSL-1.1",
-    "licenseScope": "Contracts"
-  },
-  {
-    "url": "https://www.defiscan.info/protocols/compound-v3/ethereum",
-    "type": "defiscan-v1"
-  }
-]
+{
+  "resources": [
+    {
+      "url": "https://github.com/compound-finance/palisade",
+      "type": "frontend",
+      "label": "IPFS Instructions",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://compound.finance/",
+      "type": "website"
+    },
+    {
+      "url": "https://docs.compound.finance/ ",
+      "type": "docs"
+    },
+    {
+      "url": "https://app.compound.finance/?market=usdc-mainnet",
+      "type": "frontend",
+      "frontendSubtype": "official"
+    },
+    {
+      "url": "https://github.com/compound-finance/comet/blob/main/LICENSE",
+      "type": "license",
+      "label": "BUSL-1.1",
+      "licenseScope": "Contracts"
+    },
+    {
+      "url": "https://www.defiscan.info/protocols/compound-v3/ethereum",
+      "type": "defiscan-v1"
+    }
+  ],
+  "audits": [
+    {
+      "url": "https://www.openzeppelin.com/news/compound-iii-audit",
+      "author": "OpenZeppelin",
+      "date": "2022-06",
+      "scope": "Comet core contracts"
+    },
+    {
+      "url": "https://reports.chainsecurity.com/Compound/ChainSecurity_Compound_Comet_Audit.pdf",
+      "author": "ChainSecurity",
+      "date": "2022-05",
+      "scope": "Comet smart contracts"
+    },
+    {
+      "url": "https://certora.cdn.prismic.io/certora/e7ca6508-fad8-4a41-8588-b3312d8b750e_Compound+Report.pdf",
+      "author": "Certora",
+      "date": "2022-06",
+      "scope": "Formal verification, Comet.sol"
+    },
+    {
+      "url": "https://www.openzeppelin.com/news/compound-polygon-bridge-receiver-audit",
+      "author": "OpenZeppelin",
+      "date": "2023-02",
+      "scope": "Polygon bridge receiver"
+    },
+    {
+      "url": "https://www.openzeppelin.com/news/scroll-alpha-comet-deployment-audit",
+      "author": "OpenZeppelin",
+      "date": "2023-12",
+      "scope": "Scroll bridge receiver"
+    },
+    {
+      "url": "https://immunefi.com/bug-bounty/compoundfinance/information/",
+      "author": "Immunefi",
+      "date": "2024-12",
+      "scope": "Bug Bounty Program",
+      "bounty": 1000000
+    }
+  ]
+}

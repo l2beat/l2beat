@@ -27,11 +27,17 @@ export interface CompiledReview {
 
   admins: CompiledAdmin[]
   dependencies: CompiledDependency[]
+  dependencyEntityGroups?: {
+    entity: string | null
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }[]
   funds: CompiledFundHolder[]
   functions: CompiledFunction[]
   contracts: CompiledContract[]
 
   resources?: CompiledResourceEntry[]
+  audits?: AuditEntry[]
   activity?: ActivityEvent[]
   sections: Record<string, unknown>
 }
@@ -56,6 +62,14 @@ export interface CompiledResourceEntry {
   licenseScope?: string
 }
 
+export interface AuditEntry {
+  url: string
+  author: string
+  date: string
+  scope?: string
+  bounty?: number
+}
+
 export interface CompiledAdmin {
   address: string
   name: string
@@ -71,6 +85,7 @@ export interface CompiledAdmin {
 
 // Mitigation types for permissioned functions
 export type MitigationType = 'delay' | 'valueRange' | 'relativeValue' | 'other'
+
 
 export interface MitigationValue {
   mode: 'hardcoded' | 'fieldRef'
@@ -99,6 +114,8 @@ export interface Mitigation {
   relativeValue?: { maxChangePercent?: MitigationValue }
   mitigatedField?: { contractAddress: string; fieldName: string }
   scopedTo?: { address: string; type: 'admin' | 'dependency' }
+  // Resolved USD cap on fund impact (computed by review compiler from on-chain field)
+  impactCapUsd?: number
 }
 
 export type Impact = 'critical' | 'no-impact'
@@ -123,6 +140,7 @@ export interface CompiledReachableContract {
   fundsUsd: number
   tokenValueUsd: number
   fundsAtRisk: boolean
+  effectiveCapUsd?: number
 }
 
 export interface CompiledDependencyFunction {

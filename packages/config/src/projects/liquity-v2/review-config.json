@@ -1,11 +1,11 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-06T12:00:00.000Z",
+  "lastModified": "2026-04-01T09:17:14.503Z",
   "protocolSlug": "liquity-v2",
   "protocolName": "Liquity V2",
   "tokenName": "BOLD",
   "chain": "Ethereum",
-  "projectType": "cdp",
+  "projectType": "stablecoin",
   "description": "Liquity V2 is an immutable borrowing protocol that lets users open collateralized debt positions (Troves) against wstETH, rETH, or WETH to mint BOLD, a USD-pegged stablecoin. All 44 smart contracts are deployed as immutable (non-upgradeable), and the protocol has no admin keys, timelocks, or governance-controlled parameters -- ownership of the BoldToken and Governance contracts is renounced to the zero address. The protocol relies on three Chainlink price feeds (ETH/USD, stETH/USD, rETH/ETH) and the wstETH and rETH token contracts for exchange rate conversions, making oracle liveness and accuracy the primary external risk factor. Total collateral held across all branches is {{totalProtocolCapital}}.",
   "admins": {
     "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3": {

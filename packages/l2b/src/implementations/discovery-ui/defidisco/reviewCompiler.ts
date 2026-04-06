@@ -7,6 +7,7 @@ import {
 import type {
   ApiContractTagsResponse,
   ApiFunctionsResponse,
+  AuditEntry,
   ContractFundsData,
   ApiFundsDataResponse,
   Impact,
@@ -17,7 +18,7 @@ import type {
 import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
-import { getResources } from './resources'
+import { getAudits, getResources } from './resources'
 import {
   normalizeChainAddress,
   addressesEqual,
@@ -64,10 +65,18 @@ export interface CompiledReview {
 
   admins: CompiledAdmin[]
   dependencies: CompiledDependency[]
+  /** Per-entity deduplicated funds totals — avoids double-counting when multiple
+   *  deps of the same entity reach the same underlying contracts. */
+  dependencyEntityGroups?: {
+    entity: string | null
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }[]
   funds: CompiledFundHolder[]
   functions: CompiledFunction[]
   contracts: CompiledContract[]
   resources: CompiledResourceEntry[]
+  audits: CompiledAuditEntry[]
   activity?: ActivityEvent[]
 
   sections: Record<string, unknown>
@@ -176,6 +185,7 @@ export interface CompiledContract {
 }
 
 export type CompiledResourceEntry = ResourceEntry
+export type CompiledAuditEntry = AuditEntry
 
 // ============================================================================
 // Activity Feed Types
@@ -277,9 +287,10 @@ export class ReviewCompiler {
       // 3. Read funds data
       const fundsData = getFundsData(this.paths, project)
 
-      // 4. Read contract tags and resources
+      // 4. Read contract tags, resources, and audits
       const contractTags = getContractTags(this.paths, project)
       const resources = getResources(this.paths, project)
+      const audits = getAudits(this.paths, project)
 
       // 5. Read functions data (for mitigations)
       const functionsData = getFunctions(this.paths, project)
@@ -344,6 +355,7 @@ export class ReviewCompiler {
         discoveryEntries,
         discovery,
         resources,
+        audits,
       )
 
       // 11. Resolve template variables in all description fields
@@ -383,6 +395,7 @@ export class ReviewCompiler {
     discoveryEntries: { name?: string; address: string; proxyType?: string }[],
     discovery: DiscoveryOutput,
     resources: ResourceEntry[],
+    audits: AuditEntry[],
   ): CompiledReview {
     const tagsByAddress = new Map<
       string,
@@ -429,6 +442,7 @@ export class ReviewCompiler {
             fundsUsd: r.fundsUsd,
             tokenValueUsd: r.tokenValueUsd,
             fundsAtRisk: r.fundsAtRisk,
+            effectiveCapUsd: r.effectiveCapUsd,
           })),
           mitigations: f.mitigations,
         })),
@@ -487,6 +501,7 @@ export class ReviewCompiler {
             fundsUsd: r.fundsUsd,
             tokenValueUsd: r.tokenValueUsd,
             fundsAtRisk: r.fundsAtRisk,
+            effectiveCapUsd: r.effectiveCapUsd,
           })),
           mitigations: f.mitigations,
         })),
@@ -495,6 +510,55 @@ export class ReviewCompiler {
         dependencyType: dep.dependencyType,
       })
     }
+
+    // Compute per-entity deduplicated funds (avoids double-counting same contract across deps)
+    const entityDepMap = new Map<string | null, CompiledDependency[]>()
+    for (const dep of dependencies) {
+      const list = entityDepMap.get(dep.entity) ?? []
+      list.push(dep)
+      entityDepMap.set(dep.entity, list)
+    }
+    const dependencyEntityGroups = Array.from(entityDepMap.entries()).map(
+      ([entity, deps]) => {
+        const seen = new Map<string, { funds: number; tokenValue: number }>()
+        for (const dep of deps) {
+          for (const fn of dep.functions) {
+            if (fn.directFundsUsd > 0 || fn.directTokenValueUsd > 0) {
+              const key = normalizeChainAddress(fn.contractAddress)
+              const prev = seen.get(key)
+              seen.set(key, {
+                funds: Math.max(prev?.funds ?? 0, fn.directFundsUsd),
+                tokenValue: Math.max(
+                  prev?.tokenValue ?? 0,
+                  fn.directTokenValueUsd,
+                ),
+              })
+            }
+            for (const rc of fn.reachableContracts) {
+              if (rc.fundsUsd > 0 || rc.tokenValueUsd > 0) {
+                const key = normalizeChainAddress(rc.address)
+                const prev = seen.get(key)
+                seen.set(key, {
+                  funds: Math.max(prev?.funds ?? 0, rc.fundsUsd),
+                  tokenValue: Math.max(prev?.tokenValue ?? 0, rc.tokenValueUsd),
+                })
+              }
+            }
+          }
+        }
+        return {
+          entity,
+          totalFundsAtRisk: Array.from(seen.values()).reduce(
+            (s, v) => s + v.funds,
+            0,
+          ),
+          totalTokenValueAtRisk: Array.from(seen.values()).reduce(
+            (s, v) => s + v.tokenValue,
+            0,
+          ),
+        }
+      },
+    )
 
     // Build fund holders from funds data + review config descriptions
     const funds: CompiledFundHolder[] = []
@@ -711,10 +775,12 @@ export class ReviewCompiler {
 
       admins,
       dependencies,
+      dependencyEntityGroups,
       funds,
       functions,
       contracts,
       resources,
+      audits,
       activity: activity.length > 0 ? activity : undefined,
       sections: reviewConfig.sections ?? {},
     }

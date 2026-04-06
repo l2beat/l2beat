@@ -197,4 +197,13 @@
   - **Deduplication**: `deduplicateMitigations()` in `shared.tsx` collapses mitigations for entity-level badge lists (explorer + report cards). For `'other'` mitigations with a `label`, the dedup key is `other-label:<label>` — so all variants scoped to different callers collapse into one badge. Other types deduplicate by their full field set.
   - **Backend**: `configSeverity.ts` — `ensureFieldSeverity()` validates field exists in `discovered.json` before writing; `removeFieldSeverityIfAutoOnly()` cleans up when mitigated field is unlinked (only removes severity if no other field config properties exist)
   - **Frontend**: `resolveFieldValue()` in `ownerResolution.ts` resolves field-referenced values at display time
+  - **Impact Cap** (`impactCap`): Optional structured field that bounds the maximum potentially impacted TVL of a function. Two modes:
+    - **Field reference**: `{ contractAddress: string, fieldName: string, unit: ImpactCapUnit }` — references an on-chain field and scales it to USD using the unit denominator
+    - **Hardcoded USD**: `{ hardcodedUsd: number }` — fixed dollar amount derived from code analysis
+    - `ImpactCapUnit`: `'raw' | '1e6' | '1e8' | '1e18' | 'bps' | 'percent'` — denominators for converting raw field values to USD
+    - Both modes can coexist on the same object (all fields optional), but `hardcodedUsd` takes priority in resolution
+  - **Impact Cap Resolution** (`impactCapUsd`): Resolved USD value stored on the `Mitigation` object. Computed by `resolveStructuredImpactCap()` in `projectAnalysis.ts` and set during `getMitigationsForOwner()`. The frontend only sees `impactCapUsd: number`, not the raw cap details.
+  - **Capital capping**: `effectiveCapUsd` on `ReachableContract` — set during capital analysis BFS (`capitalAnalysis.ts`) and dependency analysis (`getDependencies()` in `projectAnalysis.ts`). When a function has an impactCap, reachable contract funds are capped to `Math.min(fundsUsd, capUsd)`. Admin-level `totalReachableCapital` also respects per-contract caps.
+  - **UI form** (`FunctionFolder.tsx`): Two-mode form — "Contract Field" (3 dropdowns: contract, field, unit) or "Hardcoded USD" (text input). Live preview shows the computed USD cap for field references.
+  - **Frontend badge** (`MitigationBadge.tsx`): Displays resolved `impactCapUsd` as "$XM Max Impact" with emerald styling
   - **Backward compat**: `normalizeMitigationValue()` converts old plain-string values to `MitigationValue` objects. Mitigations without `scopedTo` are treated as global (backward compatible).

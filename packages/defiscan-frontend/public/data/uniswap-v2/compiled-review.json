@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-06T08:28:53.106Z",
+  "compiledAt": "2026-04-06T12:27:33.090Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "dex",
     "tokenName": "UNI",
-    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $755.81M."
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $748.60M."
   },
   "totals": {
     "contractCount": 9,
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 0,
     "adminCount": 1,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 755808670.8402758,
+    "totalCapitalAtRisk": 748597271.7224443,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0
   },
@@ -45,17 +45,18 @@
     }
   ],
   "dependencies": [],
+  "dependencyEntityGroups": [],
   "funds": [
     {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "name": "UniswapV2Factory (All Pairs)",
-      "description": "Factory contract that has deployed 493576 liquidity pair contracts holding $755.81M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "description": "Factory contract that has deployed 491241 liquidity pair contracts holding $748.60M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 755808670.8402758,
-        "contractCount": 493576,
+        "totalUsdValue": 748597271.7224443,
+        "contractCount": 491241,
         "handlerName": "uniswap-v2-factory",
         "label": "All Uniswap-v2 Pairs"
       }
@@ -167,6 +168,21 @@
     {
       "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
       "type": "defiscan-v1"
+    }
+  ],
+  "audits": [
+    {
+      "author": "dapp.org",
+      "date": "2020-06",
+      "scope": "V2 core & periphery formal verification",
+      "url": "https://dapp.org.uk/reports/uniswapv2.html"
+    },
+    {
+      "author": "Cantina",
+      "date": "2024-07",
+      "scope": "Bug Bounty Program",
+      "url": "https://cantina.xyz/bounties/f9df94db-c7b1-434b-bb06-d1360abdd1be",
+      "bounty": 15500000
     }
   ],
   "sections": {

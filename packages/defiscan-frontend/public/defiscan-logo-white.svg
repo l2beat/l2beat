@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4398.56" height="800" viewBox="0 0 4398.56 800">
+  <defs>
+    <mask id="circle-cutout">
+      <rect width="800" height="800" fill="white"/>
+      <circle cx="400.0" cy="400.0" r="280.0" fill="black"/>
+    </mask>
+  </defs>
+  <rect width="800" height="800" rx="64.0" ry="64.0" fill="#ffffff" mask="url(#circle-cutout)"/>
+  <text x="984.0" y="400.0" fill="#ffffff" font-family="Inter, sans-serif" font-weight="900" font-size="624.0" letter-spacing="0" dominant-baseline="central">DEFISCAN</text>
+</svg>
