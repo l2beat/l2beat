@@ -45,6 +45,9 @@ export interface TopLevelDeclaration {
 
   inheritsFrom: string[]
   dynamicReferences: string[]
+  // Contracts that are instantiated via `new X(...)` and therefore cannot
+  // be minimized into an interface: we need their full bytecode.
+  instantiatedReferences: string[]
 }
 
 // If import is:
@@ -72,12 +75,23 @@ export interface Remapping {
   target: string
 }
 
+export interface FileLevelUsing {
+  // Verbatim source snippet, e.g. `using LibClaim for Claim global;`
+  snippet: string
+  // Short name of the library or free function bound by the directive.
+  libraryName: string
+}
+
 export interface ParsedFile extends FileContent {
   normalizedPath: string
   rootASTNode: ParseResult
 
   topLevelDeclarations: TopLevelDeclaration[]
   importDirectives: ImportDirective[]
+  // Raw source snippets for every file-level `using X for Y;` (or
+  // `using X for Y global;`) directive. These are preserved verbatim in the
+  // flattened output when any declaration from the file contributes to it.
+  fileLevelUsings: FileLevelUsing[]
 }
 
 export interface DeclarationFilePair {
@@ -107,12 +121,14 @@ export class ParsedFilesManager {
         rootASTNode: parse(content, { range: true }),
         topLevelDeclarations: [],
         importDirectives: [],
+        fileLevelUsings: [],
       }
     })
 
     // Pass 1: Find all contract declarations
     for (const file of result.files) {
       file.topLevelDeclarations = result.resolveTopLevelDeclarations(file)
+      file.fileLevelUsings = result.resolveFileLevelUsings(file)
     }
 
     // Pass 2: Resolve all imports
@@ -137,10 +153,32 @@ export class ParsedFilesManager {
           file,
           declaration.ast,
         )
+        declaration.instantiatedReferences =
+          result.resolveInstantiatedReferences(file, declaration.ast)
       }
     }
 
     return result
+  }
+
+  // Extracts file-level `using X for Y [global];` directives as raw source
+  // snippets. They are not contracts but must be preserved in the flattened
+  // output because they attach library functions to types.
+  private resolveFileLevelUsings(file: ParsedFile): FileLevelUsing[] {
+    const results: FileLevelUsing[] = []
+    for (const child of file.rootASTNode.children) {
+      if (child.type !== 'UsingForDeclaration') continue
+      const range = (child as unknown as { range?: [number, number] }).range
+      if (range === undefined) continue
+      // The parser's range already covers the trailing semicolon.
+      const snippet = file.content.slice(range[0], range[1] + 1)
+      const libraryName =
+        (child as unknown as { libraryName?: string }).libraryName ??
+        extractLibraryNameFromUsing(snippet) ??
+        ''
+      results.push({ snippet, libraryName })
+    }
+    return results
   }
 
   private resolveTopLevelDeclarations(file: ParsedFile): TopLevelDeclaration[] {
@@ -204,6 +242,7 @@ export class ParsedFilesManager {
         type: getDeclarationType(d),
         inheritsFrom,
         dynamicReferences: [],
+        instantiatedReferences: [],
         content: file.content.slice(adjustedStart, d.range[1] + 1),
       }
     })
@@ -321,29 +360,10 @@ export class ParsedFilesManager {
   }
 
   private resolveDynamicReferences(file: ParsedFile, c: AST.ASTNode): string[] {
-    let subNodes: AST.BaseASTNode[] = []
-    if (c.type === 'ContractDefinition') {
-      subNodes = c.subNodes
-    } else if (c.type === 'StructDefinition') {
-      subNodes = c.members
-    } else if (c.type === 'FunctionDefinition') {
-      subNodes = c.body ? [c.body] : []
-    } else if (c.type === 'TypeDefinition') {
-      subNodes = []
-    } else if (c.type === 'EnumDefinition') {
-      subNodes = c.members
-    } else if (c.type === 'FileLevelConstant') {
-      subNodes = [c.typeName, c.initialValue]
-    } else if (c.type === 'EventDefinition') {
-      subNodes = c.parameters ?? []
-    } else if (c.type === 'CustomErrorDefinition') {
-      subNodes = c.parameters ?? []
-    } else {
-      throw new Error('Invalid node type')
-    }
-
     const identifiers = new Set(
-      subNodes.flatMap((n) => getASTIdentifiers(n)).map(extractNamespace),
+      getDeclarationSubNodes(c)
+        .flatMap((n) => getASTIdentifiers(n))
+        .map(extractNamespace),
     )
 
     const referenced = []
@@ -353,28 +373,27 @@ export class ParsedFilesManager {
         continue
       }
 
-      const isContract = result.declaration.type === 'contract'
-      const isAbstract = result.declaration.type === 'abstract'
-      const isInterface = result.declaration.type === 'interface'
-      const isEvent = result.declaration.type === 'event'
-      const isError = result.declaration.type === 'error'
-      const isConstant = result.declaration.type === 'constant'
-
-      const isExtendedDeclaration =
-        isContract ||
-        isAbstract ||
-        isInterface ||
-        isEvent ||
-        isError ||
-        isConstant
-
-      if (isExtendedDeclaration && this.options.includeAll !== true) {
-        continue
-      }
-
       referenced.push(identifier)
     }
 
+    return referenced
+  }
+
+  private resolveInstantiatedReferences(
+    file: ParsedFile,
+    c: AST.ASTNode,
+  ): string[] {
+    const names = new Set<string>()
+    for (const subNode of getDeclarationSubNodes(c)) {
+      collectNewExpressions(subNode, names)
+    }
+
+    const referenced: string[] = []
+    for (const name of names) {
+      const found = this.tryFindDeclaration(name, file)
+      if (found === undefined) continue
+      referenced.push(name)
+    }
     return referenced
   }
 
@@ -499,6 +518,13 @@ export class ParsedFilesManager {
 
     return matchingFile
   }
+
+  // Iterates over every parsed file. Used by the flattener to look up nested
+  // type declarations (structs, enums) that do not live in the top-level
+  // declarations table.
+  getAllFiles(): readonly ParsedFile[] {
+    return this.files
+  }
 }
 
 // Takes a user defined type name such as `MyLibrary.MyStructInLibrary` and
@@ -509,6 +535,63 @@ function extractNamespace(identifier: string): string {
     return identifier
   }
   return identifier.substring(0, dotIndex)
+}
+
+// Fallback parser for `using LibName for Type` snippets when the AST
+// doesn't expose `libraryName` directly. Matches the name right after
+// `using` and before `for`.
+function extractLibraryNameFromUsing(snippet: string): string | undefined {
+  const m = snippet.match(/using\s+([\w.]+)\s+for\b/)
+  if (m === null) return undefined
+  const full = m[1] ?? ''
+  return full.split('.').slice(-1)[0] ?? full
+}
+
+function getDeclarationSubNodes(c: AST.ASTNode): AST.BaseASTNode[] {
+  if (c.type === 'ContractDefinition') return c.subNodes
+  if (c.type === 'StructDefinition') return c.members
+  if (c.type === 'FunctionDefinition') return c.body ? [c.body] : []
+  if (c.type === 'TypeDefinition') return []
+  if (c.type === 'EnumDefinition') return c.members
+  if (c.type === 'FileLevelConstant') return [c.typeName, c.initialValue]
+  if (c.type === 'EventDefinition') return c.parameters ?? []
+  if (c.type === 'CustomErrorDefinition') return c.parameters ?? []
+  throw new Error('Invalid node type')
+}
+
+// Collects the names of user-defined types that appear inside `new X(...)`
+// expressions anywhere in the given AST subtree. These contracts must be
+// kept as full contracts in the flattened output (never converted to an
+// interface) because interfaces cannot be instantiated.
+function collectNewExpressions(
+  node: AST.BaseASTNode | null | undefined,
+  out: Set<string>,
+): void {
+  if (node === null || node === undefined) return
+  const n = node as unknown as Record<string, unknown> & { type?: string }
+  if (!n.type) return
+
+  if (n.type === 'NewExpression') {
+    const typeName = (n as unknown as { typeName: AST.TypeName }).typeName
+    if (typeName && typeName.type === 'UserDefinedTypeName') {
+      const name = (typeName as unknown as { namePath: string }).namePath
+      out.add(name.split('.')[0] ?? name)
+    }
+    return
+  }
+
+  for (const key of Object.keys(n)) {
+    const value = n[key]
+    if (Array.isArray(value)) {
+      for (const v of value) {
+        if (v && typeof v === 'object') {
+          collectNewExpressions(v as AST.BaseASTNode, out)
+        }
+      }
+    } else if (value && typeof value === 'object' && 'type' in value) {
+      collectNewExpressions(value as AST.BaseASTNode, out)
+    }
+  }
 }
 
 function decodeRemappings(remappingStrings: string[]): Remapping[] {

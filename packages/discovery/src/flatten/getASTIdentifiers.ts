@@ -104,8 +104,11 @@ export function getASTIdentifiers(baseNode: AST.BaseASTNode | null): string[] {
         getASTIdentifiers(p),
       )
       const body = getASTIdentifiers(node.body)
+      const modifiers = (node.modifiers ?? []).flatMap((m) =>
+        (m.arguments ?? []).flatMap((a) => parseExpression(a)),
+      )
 
-      return params.concat(returnParams).concat(body)
+      return params.concat(returnParams).concat(body).concat(modifiers)
     }
     case 'ModifierDefinition': {
       const params = node.parameters ?? []
@@ -274,7 +277,12 @@ function parseTypeName(type: AST.TypeName | null): string[] {
       return parseTypeName(type.keyType).concat(parseTypeName(type.valueType))
     }
     case 'ArrayTypeName': {
-      return parseTypeName(type.baseTypeName)
+      // The array length expression may reference file-level constants
+      // (e.g. `uint256[MAX_GAP - 1]`); walk it so those constants stay
+      // tracked as dynamic references.
+      const base = parseTypeName(type.baseTypeName)
+      const length = type.length !== null ? parseExpression(type.length) : []
+      return base.concat(length)
     }
     case 'FunctionTypeName': {
       return []

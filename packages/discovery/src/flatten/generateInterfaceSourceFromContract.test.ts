@@ -8,7 +8,8 @@ import {
 describe(generateInterfaceSourceFromContract.name, () => {
   it('generates interface from contract', () => {
     const source = String.raw`contract E {
-            uint256 public variableToSkip;
+            uint256 public publicVariable;
+            uint256 private privateVariable;
             using ThisShouldBe for Skipped;
             modifier modifierToSkip() { _; }
 
@@ -40,6 +41,8 @@ describe(generateInterfaceSourceFromContract.name, () => {
 
     const expected = String.raw`// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
 interface E {
+    function publicVariable() external view returns (uint256);
+
     struct MyStructDifferent {
         mapping(uint256 => uint256) elementInside;
     }
@@ -83,7 +86,7 @@ interface E {
     expect(result).toEqual(expected)
   })
 
-  it('generates corrects overrides', () => {
+  it('drops override clauses (base contracts may be stripped)', () => {
     const source = String.raw`contract E {
             function A(uint256 element) override returns (uint256) { return element + 1; }
             function X() override(C1) returns (uint256) { return 1234; }
@@ -95,9 +98,9 @@ interface E {
 
     const expected = String.raw`// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
 interface E {
-    function A(uint256 element) external override returns (uint256);
-    function X() external override(C1) returns (uint256);
-    function XYZ(address receiver) external payable override(C1, C2) returns (uint256);
+    function A(uint256 element) external returns (uint256);
+    function X() external returns (uint256);
+    function XYZ(address receiver) external payable returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
