@@ -495,9 +495,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).not.toEqual({
-        BadRequestResponse: expect.a(Object),
-      })
+      expect(schema.components.schemas?.BadRequestResponse).toBeUndefined()
     })
 
     it('includes error schemas in components', () => {
