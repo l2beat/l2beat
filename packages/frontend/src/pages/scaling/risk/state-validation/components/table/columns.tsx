@@ -27,6 +27,30 @@ export const scalingRiskStateValidationValidityColumns = [
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
     },
   }),
+  validityColumnHelper.display({
+    id: 'verifiers',
+    header: 'Verifiers',
+    cell: (ctx) => {
+      const trustedSetupEntries = Object.entries(
+        ctx.row.original.trustedSetupsByProofSystem ?? {},
+      )
+
+      if (trustedSetupEntries.length === 0) {
+        return <TableValueCell value={undefined} emptyMode="n/a" />
+      }
+      return (
+        <div className="flex flex-col gap-2 py-2">
+          {trustedSetupEntries.map(([key, ts]) => (
+            <VerifiedCountWithDetails key={key} data={ts.verifiers} />
+          ))}
+        </div>
+      )
+    },
+    meta: {
+      tooltip:
+        'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system\'s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
+    },
+  }),
   validityColumnHelper.accessor('executionDelay', {
     header: 'Execution Delay',
     cell: (ctx) => (
@@ -84,30 +108,6 @@ export const scalingRiskStateValidationValidityColumns = [
     meta: {
       tooltip:
         'Trusted setup information for the proof system used by this project',
-    },
-  }),
-  validityColumnHelper.display({
-    id: 'verifiers',
-    header: 'Verifiers',
-    cell: (ctx) => {
-      const trustedSetupEntries = Object.entries(
-        ctx.row.original.trustedSetupsByProofSystem ?? {},
-      )
-
-      if (trustedSetupEntries.length === 0) {
-        return <TableValueCell value={undefined} emptyMode="n/a" />
-      }
-      return (
-        <div className="flex flex-col gap-2 py-2">
-          {trustedSetupEntries.map(([key, ts]) => (
-            <VerifiedCountWithDetails key={key} data={ts.verifiers} />
-          ))}
-        </div>
-      )
-    },
-    meta: {
-      tooltip:
-        'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system’s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
     },
   }),
 ]
