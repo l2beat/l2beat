@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x36253eb4bd41b547d115e00ec21edefefdba852e
+
+# Diff at Tue, 07 Apr 2026 11:42:01 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1774847186
+- current timestamp: 1775561692
+
+## Description
+
+Rollup contract has reached enough validators, so isBootstrapped is set to true.
+
+## Watched changes
+
+```diff
+    contract Rollup (eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962) {
+    +++ description: Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.
+      values.getIsBootstrapped:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xcc5c74614ececfc88f9b206262b6dc2365290fbf
 
 # Diff at Tue, 31 Mar 2026 10:55:10 GMT:

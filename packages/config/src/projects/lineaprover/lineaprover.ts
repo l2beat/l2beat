@@ -113,14 +113,14 @@ export const lineaprover: BaseProject = {
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
       {
-        hash: '0xc2cb25c194cf00b56b6c9eafe89ca2e35779f8f3f5e26023fae7faedfc584f0c',
+        hash: '0xd92b8281296cbfe1963093c23f9fb7fef6f9debfa9115622ca412c32b848aa52',
         name: 'Linea Plonk Type 1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x1442833180e253844897339aFb5800c797547987',
+              '0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb',
             ),
           },
         ],

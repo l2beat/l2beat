@@ -40,7 +40,8 @@
     "getNextFlushableEpoch",
     "getPendingCheckpointNumber",
     "getProvenCheckpointNumber",
-    "getTips"
+    "getTips",
+    "getProvingCostPerManaInFeeAsset"
   ],
   "fields": {
     "_epochProofVerifier": {

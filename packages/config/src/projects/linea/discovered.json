@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1775037483,
+  "timestamp": 1775561168,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
@@ -216,20 +216,20 @@
     },
     {
       "name": "PlonkVerifierFull",
-      "address": "eth:0x1442833180e253844897339aFb5800c797547987",
+      "address": "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb",
       "type": "Contract",
       "sourceHashes": [
-        "0xdb8b906aeb601a779cf86caeff60e8423578aa6e25fc64f2c38b6b77ac557669"
+        "0x9b55def99da5eeaf99eb27a930f5bf9d2b6ed2a2922160dc86392354d74186a6"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1774891415,
-      "sinceBlock": 24771884,
+      "sinceTimestamp": 1774982003,
+      "sinceBlock": 24779405,
       "values": {
         "$immutable": true,
         "getChainConfiguration": "0x0881dc6ffdc69ebfeca27fd8449922c32d0fd16ea33807e984881b08e7100988"
       },
       "implementationNames": {
-        "eth:0x1442833180e253844897339aFb5800c797547987": "PlonkVerifierFull"
+        "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb": "PlonkVerifierFull"
       }
     },
     {
@@ -784,7 +784,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 71,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1133,9 +1133,9 @@
         "CONTRACT_VERSION": "7.1",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0xb7073776eba9782bf219fb0d3e3b8fd0a0aff6a9392cd2369a0905f62806e6b2",
-        "currentFinalizedState": "0xed5fb64354fba6a8a9ef1d2ac60fa4ca874a4dda8db3c46a83434c617504af6c",
-        "currentPeriodAmountInWei": "100649900000000000000",
+        "currentFinalizedShnarf": "0x71aed2e590688cd3972b7b696a7870cbc4c6ae9b4ea3ad363f37d595c2a69c6c",
+        "currentFinalizedState": "0xc7997170babce2db5cc635bfeca7dc3d645ba2d88f6103414d33cf00e677eed9",
+        "currentPeriodAmountInWei": "2359399267772655694",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1198,7 +1198,7 @@
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897",
-          "eth:0x1442833180e253844897339aFb5800c797547987",
+          "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -2119,8 +2119,8 @@
         },
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "634646399744250000000",
-        "currentPeriodEnd": 1775028767,
+        "currentPeriodAmountInWei": "194002427772655694",
+        "currentPeriodEnd": 1775585488,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -2140,11 +2140,11 @@
         "l1l2MessageSetter": [
           "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 800668,
+        "lastAnchoredL1MessageNumber": 801027,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 106712,
+        "nextMessageNumber": 106773,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -2724,7 +2724,7 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x1442833180e253844897339aFb5800c797547987": [
+    "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb": [
       "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
       "error ChainConfigurationNotProvided()",
       "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
@@ -4051,6 +4051,6 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
-  "usedBlockNumbers": { "ethereum": 24784001, "linea": 30004738 },
-  "permissionsConfigHash": "0xa4613689df43accb1a3b7d1499e799cf965e490f84cabeec9f850b4dea38f3e1"
+  "usedBlockNumbers": { "ethereum": 24827500, "linea": 30101790 },
+  "permissionsConfigHash": "0xaeef17e1f6b1cdb7b3fb5f1a87aa3285524fed1a421d49e56fc6ebb55b34a68e"
 }

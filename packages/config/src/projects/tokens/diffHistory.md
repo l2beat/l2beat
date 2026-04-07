@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xfd4c27042d6a952c323df8bdfc649d31c9419000
+
+# Diff at Tue, 07 Apr 2026 11:43:39 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1774353727
+- current timestamp: 1775562114
+
+## Description
+
+Added USDC minters. Rotated MS member for wrapped OETH admin on Base.
+
+## Watched changes
+
+```diff
+    contract USD Coin Token (base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.18:
++        "base:0x9487e8DcaFFe6582e028D0F7C9ffC2Ab2D9F8C86"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.19:
++        "base:0x9B054F14A0A06AC3376F9Cf70AaB5bE55b1BAaCF"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.20:
++        "base:0xb5e914a620C731578Cf7468a077CAbF8fd93035f"
++++ description: All minters, ignoring their 'allowed amount'
+      values.minters.21:
++        "base:0xc045CcB577771FB7F24A040532B6aeA967d578F3"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (base:0x92A19381444A001d62cE67BaFF066fA1111d7202) {
+    +++ description: None
+      values.$members.7:
+-        "base:0xa96bD9c5D0b169f73c1c8570600aE0BAc9b2A7f4"
++        "base:0x9990C10ceb3c3d1E08060EAc7e977279Fd7A5920"
+    }
+```
+
 Generated with discovered.json: 0x706e968903668fdbd57149d5c66da36eac3e7b33
 
 # Diff at Tue, 24 Mar 2026 12:03:53 GMT:

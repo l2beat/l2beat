@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd89f2ed9ba53595826282026a670b0527d96f786
+
+# Diff at Tue, 07 Apr 2026 11:34:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1773665394
+- current timestamp: 1775561575
+
+## Description
+
+Rotated MS member.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x6c20ea7778EA9F3Afd74Ce4538bc4D9d61E6ABb1"
++        "eth:0xf2dc90d4645579f261cA36E81181986dB576BbEe"
+    }
+```
+
 Generated with discovered.json: 0xca5b85eab7c1e405516bbd8f5c2a12a5e0d48b7b
 
 # Diff at Mon, 16 Mar 2026 12:53:36 GMT:
