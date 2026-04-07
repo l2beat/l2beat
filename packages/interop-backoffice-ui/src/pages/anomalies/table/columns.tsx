@@ -129,7 +129,7 @@ export function createSuspiciousTransfersColumns(options: {
         getCsvValue: ({ row }) => formatDollars(row.original.srcValueUsd),
       },
       sortingFn: (left, right) =>
-        (right.original.srcValueUsd ?? 0) - (left.original.srcValueUsd ?? 0),
+        (left.original.srcValueUsd ?? 0) - (right.original.srcValueUsd ?? 0),
     }),
     columnHelper.accessor('dstValueUsd', {
       header: (props) => (
@@ -141,7 +141,7 @@ export function createSuspiciousTransfersColumns(options: {
         getCsvValue: ({ row }) => formatDollars(row.original.dstValueUsd),
       },
       sortingFn: (left, right) =>
-        (right.original.dstValueUsd ?? 0) - (left.original.dstValueUsd ?? 0),
+        (left.original.dstValueUsd ?? 0) - (right.original.dstValueUsd ?? 0),
     }),
     columnHelper.accessor('valueDifferencePercent', {
       header: (props) => <SortableHeader {...props} label="Diff %" />,
