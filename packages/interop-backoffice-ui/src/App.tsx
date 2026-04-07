@@ -2,6 +2,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { SuspiciousTransfersPage } from './pages/anomalies/SuspiciousTransfersPage'
 import { EventDetailsPage } from './pages/events/EventDetailsPage'
 import { EventsPage } from './pages/events/EventsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -28,6 +29,10 @@ export function App() {
             <Route path="/transfers" element={<TransfersPage />} />
             <Route path="/transfers/:type" element={<TransferDetailsPage />} />
 
+            <Route
+              path="/insights/anomalies/suspicious-transfers"
+              element={<SuspiciousTransfersPage />}
+            />
             <Route path="/insights/memory" element={<StatusPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />

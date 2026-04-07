@@ -8,6 +8,10 @@ import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import {
+  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  VALUE_DIFF_THRESHOLD_PERCENT,
+} from './anomalies/constants'
 import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
@@ -114,8 +118,6 @@ export function createInteropRouter(
     if (ctx.query.raw === 'true') {
       ctx.body = explored
     } else {
-      const VALUE_DIFF_THRESHOLD_PERCENT = 15
-      const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
       const suspiciousTransfers =
         await db.interopTransfer.getValueMismatchTransfers(
           VALUE_DIFF_THRESHOLD_PERCENT,

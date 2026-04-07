@@ -110,7 +110,6 @@ const items = [
         title: 'Suspicious transfers',
         url: '/insights/anomalies/suspicious-transfers',
         icon: HatGlassesIcon,
-        isUpcoming: true,
       },
       {
         title: 'Coverage pies',
