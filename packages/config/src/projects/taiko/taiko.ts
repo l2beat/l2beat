@@ -323,7 +323,7 @@ export const taiko: ScalingProject = {
   riskView: {
     stateValidation: {
       description:
-        'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
+        'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a batch, and SGX (Geth) is mandatory. The state root is supplied during the permissionless proveBatches call and is checked against the accompanying SGX/zkVM proof. A batch can be proven without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
       executionDelay: taikoChainConfig.cooldownWindow,
@@ -385,6 +385,10 @@ export const taiko: ScalingProject = {
             title: 'TaikoL1.sol - Etherscan source code, liveness bond',
             url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
           },
+          {
+            title: 'TaikoL1.sol - Etherscan source code, proveBatches function',
+            url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
+          },
         ],
         risks: [
           {
@@ -413,6 +417,10 @@ export const taiko: ScalingProject = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBatch function',
+          url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
+        },
+        {
+          title: 'TaikoL1.sol - Etherscan source code, proveBatches function',
           url: 'https://etherscan.io/address/0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187#code',
         },
         {
