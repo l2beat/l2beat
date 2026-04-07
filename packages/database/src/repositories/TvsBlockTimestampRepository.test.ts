@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { TvsBlockTimestampRepository } from './TvsBlockTimestampRepository'
 
 describeDatabase(TvsBlockTimestampRepository.name, (db) => {
@@ -135,6 +136,20 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       })
     },
   )
+
+  describe('archived cleaning methods', () => {
+    testDeletingArchivedRecords(
+      {
+        deleteHourlyUntil: (dateRange) =>
+          repository.deleteHourlyUntil(dateRange),
+        deleteSixHourlyUntil: (dateRange) =>
+          repository.deleteSixHourlyUntil(dateRange),
+        insertMany: (records) => repository.upsertMany(records),
+        getAll: () => repository.getAll(),
+      },
+      (timestamp) => blockTimestamp('a', 'ethereum', timestamp, 1),
+    )
+  })
 
   afterEach(async () => {
     await repository.deleteAll()

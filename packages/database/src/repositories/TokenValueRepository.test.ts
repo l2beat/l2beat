@@ -1,6 +1,7 @@
 import { assert, type TokenId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { TokenValueRepository } from './TokenValueRepository'
 
 describeDatabase(TokenValueRepository.name, (db) => {
@@ -436,6 +437,21 @@ describeDatabase(TokenValueRepository.name, (db) => {
       })
     },
   )
+
+  describe('archived cleaning methods', () => {
+    testDeletingArchivedRecords(
+      {
+        deleteHourlyUntil: (dateRange) =>
+          repository.deleteHourlyUntil(dateRange),
+        deleteSixHourlyUntil: (dateRange) =>
+          repository.deleteSixHourlyUntil(dateRange),
+        insertMany: (records) => repository.upsertMany(records),
+        getAll: () => repository.getAll(),
+      },
+      (timestamp) =>
+        tokenValue('a', 'ethereum', timestamp, 1, 1000, 800, 500, 10),
+    )
+  })
 
   describe(TokenValueRepository.prototype.checkIfExists.name, () => {
     beforeEach(async () => {

@@ -5,11 +5,13 @@ import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
+import { DayTargetIndexer } from '../activity/indexers/DayTargetIndexer'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
+import { TvsCleaner } from './indexers/TvsCleaner'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
@@ -218,6 +220,18 @@ export function initTvsModule({
     valueIndexers.push(tokenValueIndexer)
   }
 
+  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
+  const tvsCleaner = new TvsCleaner(
+    {
+      parents: [dayTargetIndexer],
+      indexerService,
+      minHeight: 0,
+      db,
+      syncOptimizer,
+    },
+    logger,
+  )
+
   const tvsProjects = config.tvs.projects
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
@@ -235,6 +249,9 @@ export function initTvsModule({
     for (const indexer of valueIndexers) {
       await indexer.start()
     }
+
+    await dayTargetIndexer.start()
+    await tvsCleaner.start()
   }
 
   return {

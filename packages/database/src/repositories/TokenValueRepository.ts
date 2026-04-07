@@ -4,6 +4,11 @@ import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
+import {
+  type CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
@@ -216,6 +221,14 @@ export class TokenValueRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteHourlyUntil(this.db, 'TokenValue', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteSixHourlyUntil(this.db, 'TokenValue', dateRange)
   }
 
   async getAll(): Promise<TokenValueRecord[]> {
