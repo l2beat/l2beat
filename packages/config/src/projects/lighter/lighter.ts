@@ -85,7 +85,17 @@ export const lighter: ScalingProject = {
         address: ChainSpecificAddress(
           'eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7',
         ),
-        tokens: ['USDC', 'ETH', 'LIT', 'LINK', 'AAVE', 'UNI', 'SKY', 'LDO'],
+        tokens: [
+          'USDC',
+          'ETH',
+          'LIT',
+          'LINK',
+          'AAVE',
+          'UNI',
+          'SKY',
+          'LDO',
+          'AZTEC',
+        ],
       }),
     ],
     daTracking: [
@@ -273,7 +283,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xae6961882D8Ad8d1d6840228CCca471ffffd5EA5#code#F1#L54',
+            url: 'https://etherscan.io/address/0xb20De28D78b63bc0c94eef89Db53F6338af17825#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
@@ -290,6 +300,7 @@ export const lighter: ScalingProject = {
       ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    zkVerifiers: getVerifiers(),
   },
   permissions: {
     ...discovery.getDiscoveredPermissions(),
@@ -312,4 +323,20 @@ export const lighter: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierProxy = discovery.getContractValue<ChainSpecificAddress>(
+    'Lighter',
+    'verifier',
+  )
+
+  const result = discovery.get$Implementations(verifierProxy)
+  result.push(
+    discovery.getContractValue<ChainSpecificAddress>(
+      'Lighter',
+      'desertVerifier',
+    ),
+  )
+  return result
 }

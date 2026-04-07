@@ -76,7 +76,14 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
     const wormholeNetworks = this.configs.get(WormholeConfig)
     if (!wormholeNetworks) return
 
-    const parsed = parseLogTransferRedeemed(input.log, null)
+    // Only capture from known tokenBridge addresses.
+    // Portal Token Bridge Relayer contracts also emit TransferRedeemed with
+    // the same (emitterChainId, emitterAddress, sequence), causing duplicates.
+    const network = wormholeNetworks.find((n) => n.chain === input.chain)
+    const tokenBridgeAddresses = network?.tokenBridge
+      ? [network.tokenBridge]
+      : null
+    const parsed = parseLogTransferRedeemed(input.log, tokenBridgeAddresses)
     if (!parsed) return
     const nextLog = input.txLogs.find(
       // biome-ignore lint/style/noNonNullAssertion: It's there
@@ -123,6 +130,12 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
         return
       }
 
+      const tokenChain = extractTokenChain(logMessagePublished.args.payload)
+      const srcWasBurned =
+        tokenChain !== undefined
+          ? tokenChain !== logMessagePublished.args.wormholeChainId
+          : undefined
+
       return [
         Result.Message('wormhole.Message', {
           app: 'wormhole-tokenbridge',
@@ -136,13 +149,24 @@ export class WormholeTokenBridgePlugin implements InteropPluginResyncable {
           srcAmount: logMessagePublished.args.srcAmount,
           dstTokenAddress: transferRedeemed.args.dstTokenAddress,
           dstAmount: transferRedeemed.args.dstAmount,
-          srcWasBurned:
-            transferRedeemed.args.dstWasMinted !== undefined
-              ? !transferRedeemed.args.dstWasMinted
-              : undefined,
+          srcWasBurned,
           dstWasMinted: transferRedeemed.args.dstWasMinted,
         }),
       ]
     }
+  }
+}
+
+// Portal Token Bridge payload: tokenChain is at bytes 65-67
+// See wormhole.plugin.ts for full format
+function extractTokenChain(payload: `0x${string}`): number | undefined {
+  try {
+    const data = payload.slice(2)
+    if (data.length < 134) return undefined
+    const payloadType = Number.parseInt(data.slice(0, 2), 16)
+    if (payloadType !== 1 && payloadType !== 3) return undefined
+    return Number.parseInt(data.slice(130, 134), 16)
+  } catch {
+    return undefined
   }
 }

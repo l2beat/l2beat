@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "aztecnetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "aztecnetwork-AZTEC",
+      "priceId": "aztec",
+      "symbol": "AZTEC",
+      "name": "AZTEC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+        "chain": "ethereum",
+        "escrowAddress": "0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
+        "decimals": 18,
+        "sinceTimestamp": 1772654159
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

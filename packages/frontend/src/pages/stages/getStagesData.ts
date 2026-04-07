@@ -22,8 +22,8 @@ export async function getStagesData(
         title: 'Stages - L2BEAT',
         description:
           'Discover the latest updates on L2BEAT’s Stages framework - the go-to system for assessing the maturity of rollups on Ethereum.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/stages/opengraph-image.png',
         },
       }),

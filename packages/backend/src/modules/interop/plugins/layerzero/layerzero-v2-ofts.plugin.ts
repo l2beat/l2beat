@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { TokenMap } from '../../engine/match/TokenMap'
-import { findParsedAround } from '../hyperlane-hwr'
+import { findParsedAround } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -62,6 +62,16 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   minted?: boolean
 }>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
 
+type NormalizedOFTSentAmounts = {
+  amountSentLD: bigint
+  amountReceivedLD: bigint
+}
+
+type OFTSentTransferData = {
+  address: Address32
+  burned: boolean
+}
+
 export function getBridgeType({
   srcTokenAddress,
   dstTokenAddress,
@@ -104,6 +114,13 @@ export function getBridgeType({
     return 'lockAndMint'
   }
 
+  if (srcWasBurned && dstWasMinted) {
+    return 'burnAndMint'
+  }
+  if (srcWasBurned || dstWasMinted) {
+    return 'lockAndMint'
+  }
+
   const srcAbstractToken = tokenMap.get(
     ChainSpecificAddress.fromLong(
       srcChain,
@@ -117,20 +134,53 @@ export function getBridgeType({
     ),
   )
   if (!srcAbstractToken || !dstAbstractToken) return
-
-  const followsDefaultFlow =
-    defaultBridgeType === 'nonMinting'
-      ? !srcWasBurned && !dstWasMinted
-      : srcWasBurned && dstWasMinted
-
-  if (
-    !followsDefaultFlow &&
-    srcAbstractToken.issuer !== dstAbstractToken.issuer
-  ) {
-    return 'lockAndMint'
+  if (srcAbstractToken.issuer === null || dstAbstractToken.issuer === null) {
+    return defaultBridgeType
   }
 
-  return defaultBridgeType
+  // lock + release
+  return srcAbstractToken.issuer === dstAbstractToken.issuer
+    ? 'nonMinting'
+    : 'lockAndMint'
+}
+
+function parseMatchingOFTSentTransfer(
+  log: LogToCapture['txLogs'][number],
+  normalized: NormalizedOFTSentAmounts,
+): OFTSentTransferData | undefined {
+  const transfer = parseTransfer(log, null)
+  if (!transfer) return
+
+  if (
+    transfer.value !== normalized.amountSentLD &&
+    transfer.value !== normalized.amountReceivedLD
+  ) {
+    return
+  }
+
+  return {
+    address: Address32.from(log.address),
+    burned: Address32.from(transfer.to) === Address32.ZERO,
+  }
+}
+
+// matching both amounts due to fees
+// and preferring transfers that burned the tokens
+export function findOFTSentTransferData(
+  logs: LogToCapture['txLogs'],
+  startLogIndex: number,
+  normalized: NormalizedOFTSentAmounts,
+): OFTSentTransferData | undefined {
+  return (
+    findParsedAround(logs, startLogIndex, (log) => {
+      const transfer = parseMatchingOFTSentTransfer(log, normalized)
+      if (!transfer?.burned) return
+      return transfer
+    }) ??
+    findParsedAround(logs, startLogIndex, (log) =>
+      parseMatchingOFTSentTransfer(log, normalized),
+    )
+  )
 }
 
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
@@ -184,20 +234,11 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
 
-      const matchingTransferData = findParsedAround(
+      const matchingTransferData = findOFTSentTransferData(
         input.txLogs,
         // biome-ignore lint/style/noNonNullAssertion: It's there
         input.log.logIndex!,
-        (log, _index) => {
-          const transfer = parseTransfer(log, null)
-          if (!transfer) return
-          // compare amount to not match a rogue Transfer event
-          if (transfer.value !== normalized.amountSentLD) return
-          return {
-            address: Address32.from(log.address),
-            burned: Address32.from(transfer.to) === Address32.ZERO,
-          }
-        },
+        normalized,
       )
 
       return [

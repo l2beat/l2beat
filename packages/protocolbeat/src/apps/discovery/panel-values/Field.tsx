@@ -94,14 +94,14 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
   ] as const
 
   return (
-    <li className="group/field truncate text-sm">
+    <li className="group/field overflow-hidden text-sm">
       <div className="flex h-fit flex-wrap items-center gap-2 px-4 py-1 font-bold text-xs">
         <div className="flex flex-wrap items-center gap-1">{field.name}</div>
         {templateTags
           .filter((x) => x.isActive)
-          .map((x, i) => (
+          .map((x) => (
             <FieldTag
-              key={i}
+              key={`${field.name}:${x.tag}`}
               source="template"
               onRemoveClick={canModify ? x.onClick : undefined}
             >
@@ -111,9 +111,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
 
         {configTags
           .filter((x) => x.isActive)
-          .map((x, i) => (
+          .map((x) => (
             <FieldTag
-              key={i}
+              key={`${field.name}:${x.tag}`}
               source="config"
               onRemoveClick={canModify ? x.onClick : undefined}
             >
@@ -125,7 +125,9 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         </div>
       </div>
       {description && (
-        <div className="-mt-0.5 px-5 pb-1 font-serif italic">{description}</div>
+        <div className="-mt-0.5 whitespace-normal px-5 pb-1 font-serif italic">
+          {description}
+        </div>
       )}
       <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5">
         <FieldValueDisplay topLevel value={field.value} />

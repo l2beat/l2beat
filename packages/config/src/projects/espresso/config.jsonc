@@ -21,7 +21,10 @@
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
         "finalizedState",
-        "currentBlockNumber"
+        "currentBlockNumber",
+        "authRoot",
+        "currentEpoch",
+        "votingStakeTableState"
       ],
       "fields": {
         "permissionedProver": {

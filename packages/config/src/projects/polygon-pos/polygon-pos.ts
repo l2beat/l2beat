@@ -81,18 +81,16 @@ export const polygonpos: ScalingProject = {
   },
   interopConfig: {
     durationSplit: {
-      lockAndMint: {
-        in: {
-          label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'polygonpos',
+      lockAndMint: [
+        {
+          label: 'Deposit',
+          transferTypes: ['polygon.L1ToL2Transfer'],
         },
-        out: {
-          label: 'L2 -> L1',
-          from: 'polygonpos',
-          to: 'ethereum',
+        {
+          label: 'Withdrawal',
+          transferTypes: ['polygon.L2ToL1Transfer'],
         },
-      },
+      ],
     },
     plugins: [
       {
@@ -100,6 +98,7 @@ export const polygonpos: ScalingProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'canonical',
   },
   config: {
     associatedTokens: ['POL', 'MATIC'],

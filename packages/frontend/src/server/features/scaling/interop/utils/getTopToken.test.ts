@@ -31,8 +31,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
-        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -68,8 +68,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
-        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set([ProjectId('sub')]),
@@ -105,7 +105,7 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -133,8 +133,8 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
-        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
+        ['usdc', { symbol: 'USDC', iconUrl: '/usdc.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -160,7 +160,7 @@ describe(getTopToken.name, () => {
         }),
       ],
       tokensDetailsMap: new Map([
-        ['eth', { symbol: 'ETH', iconUrl: '/eth.png' }],
+        ['eth', { symbol: 'ETH', iconUrl: '/eth.png', issuer: null }],
       ]),
       interopProjects,
       subgroupProjects: new Set(),
@@ -212,6 +212,7 @@ function project({
     name,
     slug,
     interopConfig: {
+      type: 'intent',
       bridgeType: 'nonMinting',
       isAggregate: false,
     },
@@ -232,6 +233,8 @@ function record({
       transferCount: token.transferCount,
       totalDurationSum: 0,
       volume: token.volume,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       mintedValueUsd: undefined,
       burnedValueUsd: undefined,
     })),

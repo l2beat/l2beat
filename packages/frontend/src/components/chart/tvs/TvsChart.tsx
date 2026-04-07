@@ -62,7 +62,7 @@ export function TvsChart({
       isLoading={isLoading}
       milestones={milestones}
     >
-      <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>
           <PinkFillGradientDef id="fill" />
           <PinkStrokeGradientDef id="stroke" />

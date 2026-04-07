@@ -1,6 +1,6 @@
 {
   "name": "molten",
-  "timestamp": 1770822545,
+  "timestamp": 1771857555,
   "configHash": "0xd34153da958bd57b3a9fb3757a8e1e5dab7d0d7a5019298aee8c36ddecc9286d",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
@@ -68,13 +68,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2303,
+        "firstUnresolvedNode": 2311,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 2302,
-        "latestNodeCreated": 2308,
+        "latestConfirmed": 2310,
+        "latestNodeCreated": 2315,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -206,7 +206,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 104822,
+        "batchCount": 104828,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -239,7 +239,7 @@
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 71046,
+        "totalDelayedMessagesRead": 71052,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -847,10 +847,10 @@
         "$immutable": false,
         "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
           "arb1:0xe5219fe14E2FD520Ff80be036790913053d1575d",
           "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
-          "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
           "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371",
           "arb1:0xbf853295743511e8DC5F03809d209C33fC136d24",
@@ -861,7 +861,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 103,
+        "nonce": 113,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1343,6 +1343,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xbf853295743511e8DC5F03809d209C33fC136d24",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1354,11 +1359,6 @@
     },
     {
       "address": "arb1:0xC334F802C5367f70235A3367d07CE4F0E2E8F5d7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1424,7 +1424,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 71046,
+        "delayedMessageCount": 71052,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1434,8 +1434,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 104822,
-        "sequencerReportedSubMessageCount": 105289276
+        "sequencerMessageCount": 104828,
+        "sequencerReportedSubMessageCount": 105289757
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -2511,6 +2511,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 431004962 },
-  "permissionsConfigHash": "0xec8d0836caf7368da2a601c0891e770956ac735147d4cff5a0966dd51e2df50d"
+  "usedBlockNumbers": { "arbitrum": 435157524 },
+  "permissionsConfigHash": "0x9c4e57d536de79ec3cd566fced4c6c1ee6284a00aa3cee91faaff9cf68a11c75"
 }

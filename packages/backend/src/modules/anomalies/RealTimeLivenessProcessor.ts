@@ -24,6 +24,15 @@ import { isProgramHashProven } from '../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
 import type { AnomalyNotifier } from './AnomalyNotifier'
 
+type GroupedConfigurations = Map<
+  string,
+  {
+    projectId: ProjectId
+    subtype: TrackedTxsConfigSubtype
+    configurationIds: string[]
+  }
+>
+
 export class RealTimeLivenessProcessor implements BlockProcessor {
   chain = 'ethereum'
 
@@ -155,13 +164,19 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   }
 
   async checkForAnomalies(block: Block) {
-    const latestStats = await this.db.anomalyStats.getLatestStats()
-    const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
-    const ongoingAnomalies =
-      await this.db.realTimeAnomalies.getOngoingAnomalies()
+    const [latestStats, latestRecords, ongoingAnomalies] = await Promise.all([
+      this.db.anomalyStats.getLatestStats(),
+      this.db.realTimeLiveness.getLatestRecords(),
+      this.db.realTimeAnomalies.getOngoingAnomalies(),
+    ])
 
     const records: RealTimeAnomalyRecord[] = []
     const configGroups = this.groupConfigurations()
+
+    await this.removeOngoingAnomaliesForMissingConfigurations(
+      ongoingAnomalies,
+      configGroups,
+    )
 
     for (const group of configGroups.values()) {
       const groupRecords = latestRecords
@@ -285,14 +300,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     await this.db.realTimeAnomalies.upsertMany(records)
   }
 
-  private groupConfigurations(): Map<
-    string,
-    {
-      projectId: ProjectId
-      subtype: TrackedTxsConfigSubtype
-      configurationIds: string[]
-    }
-  > {
+  private groupConfigurations(): GroupedConfigurations {
     const configs: TrackedTxLivenessConfig[] = [
       ...this.transfers,
       ...this.functionCalls,
@@ -310,7 +318,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     >()
 
     for (const config of configs) {
-      const key = `${config.projectId}-${config.subtype}`
+      const key = this.groupKey(config)
       if (!configGroups.has(key)) {
         configGroups.set(key, {
           projectId: config.projectId,
@@ -322,6 +330,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     }
 
     return configGroups
+  }
+
+  private groupKey<
+    T extends { projectId: string; subtype: TrackedTxsConfigSubtype },
+  >(item: T) {
+    return `${item.projectId}-${item.subtype}`
   }
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
@@ -365,6 +379,45 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         params: TrackedTxSharedBridgeConfig
       } => c.params.formula === 'sharedBridge',
     )
+  }
+
+  private async removeOngoingAnomaliesForMissingConfigurations(
+    ongoingAnomalies: RealTimeAnomalyRecord[],
+    configGroups: GroupedConfigurations,
+  ) {
+    const missing: { projectId: string; subtype: TrackedTxsConfigSubtype }[] =
+      []
+    for (const anomaly of ongoingAnomalies) {
+      const group = configGroups.get(this.groupKey(anomaly))
+      if (!group) {
+        missing.push({
+          projectId: anomaly.projectId,
+          subtype: anomaly.subtype,
+        })
+      }
+    }
+
+    await this.db.transaction(async () => {
+      for (const value of missing) {
+        this.logger.info(
+          'Missing configuration for ongoing anomaly. Removing the anomaly.',
+          {
+            projectId: value.projectId,
+            subtype: value.subtype,
+          },
+        )
+        const deletedCount =
+          await this.db.realTimeAnomalies.deleteOngoingByProjectIdAndSubtype(
+            value.projectId,
+            value.subtype,
+          )
+        this.logger.info('Deleted ongoing anomalies', {
+          projectId: value.projectId,
+          subtype: value.subtype,
+          count: deletedCount,
+        })
+      }
+    })
   }
 
   async deleteForArchivedProjects() {

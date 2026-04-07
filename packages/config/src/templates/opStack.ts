@@ -213,6 +213,7 @@ interface OpStackConfigCommon {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  nonTemplateZkVerifiers?: ChainSpecificAddress[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -251,6 +252,8 @@ interface OpStackConfigCommon {
    * but still are a part of superchain config due to offchain agreements
    */
   isPartOfSuperchain?: boolean
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -393,7 +396,7 @@ function opStackCommon(
           : fraudProofType === 'OpSuccinctFDP'
             ? {
                 type: 'Optimistic',
-                zkCatalogId: ProjectId('sp1'),
+                zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
             : {
@@ -456,6 +459,9 @@ function opStackCommon(
       risks: nativeContractRisks,
       programHashes:
         templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars),
+      zkVerifiers:
+        templateVars.nonTemplateZkVerifiers ??
+        getOPStackVerifiers(templateVars.discovery),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -702,6 +708,19 @@ function getProgramHashes(
   }
 }
 
+function programHashesReproducible(
+  templateVars: OpStackConfigCommon,
+): boolean | null {
+  const programHashes =
+    templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars)
+  if (programHashes.length === 0) return null
+  if (programHashes.some((h) => h.verificationStatus === 'unsuccessful'))
+    return false
+  if (programHashes.every((h) => h.verificationStatus === 'successful'))
+    return true
+  return null
+}
+
 function getStateValidation(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
@@ -854,6 +873,10 @@ function getStateValidation(
         'KailuaGame',
         'MAX_CLOCK_DURATION',
       )
+      const vanguardDescription =
+        vanguardAdvantage === 0
+          ? 'The **Vanguard** is configured with `vanguardAdvantage = 0`, so this advantage is currently disabled (not active) and child proposals are permissionless immediately.'
+          : `The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`
       return {
         categories: [
           {
@@ -866,7 +889,7 @@ Proposals consist of a state root and a reference to their parent and implicitly
 
 Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}. 
 
-The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
+${vanguardDescription}`,
             references: [
               {
                 title: 'Sequencing - Kailua Docs',
@@ -1384,6 +1407,15 @@ function getRiskViewProposerFailure(
       if (vanguardAdvantage > ONE_YEAR_IN_SECONDS) {
         return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
       }
+      if (vanguardAdvantage === 0) {
+        return {
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+            vanguardAdvantage,
+          ),
+          description:
+            'The primary whitelisted proposer currently has no optimistic advantage (`vanguardAdvantage = 0`), so this privilege is disabled (not active). Anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal to win against the privileged proposer and/or supply a bond and make a counter proposal immediately.',
+        }
+      }
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
         vanguardAdvantage,
       )
@@ -1438,10 +1470,20 @@ function computedStage(
           fraudProofType === 'KailuaSoon',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        noRedTrustedSetups:
+          fraudProofType === 'Kailua' || fraudProofType === 'KailuaSoon'
+            ? true
+            : null,
+        programHashesReproducible: programHashesReproducible(templateVars),
+        proverSourcePublished:
+          fraudProofType === 'Kailua' ||
+          fraudProofType === 'KailuaSoon' ||
+          fraudProofType === 'OpSuccinct' ||
+          fraudProofType === 'OpSuccinctFDP'
+            ? true
+            : null,
+        verifierContractsReproducible:
+          templateVars.zkVerifierContractsReproducible ?? null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug:
@@ -2390,4 +2432,24 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     technology: hostDaTech,
     badge: DABadge,
   }
+}
+
+// returns addresses of all active verifiers on SP1VerifierGateway in a given discovery
+export function getSP1Verifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGateway', 'activeVerifiers')
+  return activeVerifiers.map((el) => el.verifier)
+}
+
+function getOPStackVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    return getSP1Verifiers(discovery)
+  }
+  // kailua cases look more diverse and challenging to automate. Use nonTemplateZkVerifiers
+  return []
 }

@@ -19,6 +19,7 @@ export const squid: BaseProject = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

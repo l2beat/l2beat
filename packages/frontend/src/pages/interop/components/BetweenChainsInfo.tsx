@@ -8,7 +8,17 @@ export function BetweenChainsInfo({
   className?: string
   additionalText?: string
 }) {
-  const { selectedChains } = useInteropSelectedChains()
+  const { selectedChains, getChainById } = useInteropSelectedChains()
+  const fromChainId =
+    selectedChains.from.length === 1 ? selectedChains.from[0] : undefined
+  const toChainId =
+    selectedChains.to.length === 1 ? selectedChains.to[0] : undefined
+  const fromChain = fromChainId ? getChainById(fromChainId) : undefined
+  const toChain = toChainId ? getChainById(toChainId) : undefined
+  const isSinglePair =
+    selectedChains.from.length === 1 && selectedChains.to.length === 1
+
+  if (!isSinglePair) return null
 
   return (
     <div
@@ -18,12 +28,12 @@ export function BetweenChainsInfo({
       )}
     >
       <span>Between</span>
-      {selectedChains.first && (
-        <img src={selectedChains.first.iconUrl} className="size-4" />
+      {fromChain && (
+        <img src={fromChain.iconUrl} alt={fromChain.name} className="size-4" />
       )}
       <span>&</span>
-      {selectedChains.second && (
-        <img src={selectedChains.second.iconUrl} className="size-4" />
+      {toChain && (
+        <img src={toChain.iconUrl} alt={toChain.name} className="size-4" />
       )}
       {additionalText && <span>{additionalText}</span>}
     </div>

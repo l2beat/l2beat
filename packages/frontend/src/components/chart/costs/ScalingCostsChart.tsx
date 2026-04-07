@@ -116,16 +116,17 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   return (
     <div>
       <Header timeRange={timeRange} />
-      <CostsChart
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        unit={unit}
-        isLoading={isLoading}
-        milestones={milestones}
-        range={range}
-        hasBlobs={!!data?.hasBlobs}
-        className="mt-4 mb-3"
-      />
+      <div className="mt-4 mb-3">
+        <CostsChart
+          data={chartData}
+          syncedUntil={data?.syncedUntil}
+          unit={unit}
+          isLoading={isLoading}
+          milestones={milestones}
+          range={range}
+          hasBlobs={!!data?.hasBlobs}
+        />
+      </div>
       <ChartControlsWrapper>
         <div className="flex flex-wrap gap-1">
           <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
@@ -144,10 +145,10 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="font-bold text-xl md:text-2xl">
+      <h2 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
-      </h1>
+      </h2>
       <ChartTimeRange timeRange={timeRange} />
     </header>
   )

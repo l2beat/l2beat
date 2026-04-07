@@ -1,3 +1,932 @@
+Generated with discovered.json: 0xec3b57789279b435f1b11ce7b8a2dfcfcf9c973f
+
+# Diff at Mon, 30 Mar 2026 14:54:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773318498
+- current timestamp: 1774882369
+
+## Description
+
+EigenLayer v1.12.0 upgrade: Rewards 2.2, Duration Vaults, and Incentive Council. https://github.com/Layr-Labs/eigenlayer-contracts/releases
+
+EmissionsController replaces the old TokenHopper/RewardAllStakersActionGenerator incentive flow. StrategyFactory upgraded with DurationVaultStrategy support. All strategies upgraded to new implementation with beforeAddShares/beforeRemoveShares hooks. StrategiesBeacon implementation updated.
+
+Implementation diffs:
+- Strategies: adds beforeAddShares/beforeRemoveShares hooks (no-ops for standard strategies, used by DurationVaultStrategy for deposit caps and withdrawal locks). [diff](https://disco.l2beat.com/diff/eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7/eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230)
+- bEIGEN-Strategy: same hooks plus bEIGEN-specific wrapping logic. [diff](https://disco.l2beat.com/diff/eth:0x4a0aee93BE6C87B227cA0B450E15245631233532/eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40)
+- StrategyFactory: adds durationVaultBeacon, deployDurationVaultStrategy, getDurationVaults. [diff](https://disco.l2beat.com/diff/eth:0x5194D2a6A0900796903503926E9CF775b926c8AF/eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7)
+- StrategyManager: minor refactor, no functional change. [diff](https://disco.l2beat.com/diff/eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c/eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394)
+- RewardsCoordinator: updated rewards distribution logic for Rewards 2.2. [diff](https://disco.l2beat.com/diff/eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF/eth:0xa0673C53980665a706352412D2538bA005403C26)
+- StrategiesBeacon impl: updated base implementation matching the new strategy hooks. [diff](https://disco.l2beat.com/diff/eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780/eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract RewardAllStakersActionGenerator (eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
+    contract StrategiesBeacon (eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      values.implementation:
+-        "eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780"
++        "eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce"
+    }
+```
+
+```diff
+    contract swETH-Strategy (eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract rETH-Strategy (eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      values.getAllDeployments.names.34:
++        "DurationVaultStrategy"
+      values.getAllDeployments.names.35:
++        "EmissionsController"
+      values.getAllDeployments.addresses.34:
++        "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9"
+      values.getAllDeployments.addresses.35:
++        "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84"
+      values.getAllDeployments.configs.22:
++        {"pausable":true,"deprecated":false}
+      values.getAllDeployments.configs.34:
++        {"pausable":false,"deprecated":false}
+      values.totalDeployments:
+-        34
++        36
+      values.version:
+-        "1.9.0"
++        "1.12.0"
+    }
+```
+
+```diff
+    contract METH-Strategy (eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenHopper (eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
+    contract EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner"}
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+    }
+```
+
+```diff
+    contract cbETH-Strategy (eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract osETH-Strategy (eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      sourceHashes.1:
+-        "0x4f8ae893ee26ea9e942cbdbf1773af14930e90a0a483c20a8d13472478d7450b"
++        "0x6be3a76a4cd2b21fe46a575940a550918c0bf2325ab8d92bc266964c1086ffab"
+      values.$implementation:
+-        "eth:0x5194D2a6A0900796903503926E9CF775b926c8AF"
++        "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7"
+      values.$pastUpgrades.3:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.durationVaultBeacon:
++        "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9"
+      implementationNames.eth:0x5194D2a6A0900796903503926E9CF775b926c8AF:
+-        "StrategyFactory"
+      implementationNames.eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7:
++        "StrategyFactory"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      template:
+-        "eigenlayer/RewardsCoordinator"
+      sourceHashes.1:
+-        "0x2135e8c40a0b65d08749af76920904312a37014b94d2b676ecabaa844b63cbd2"
++        "0x7b1f03011cfcb15bf1f9fef4f3d459a2b254ee80329a6e767143b333475ae702"
+      values.$implementation:
+-        "eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF"
++        "eth:0xa0673C53980665a706352412D2538bA005403C26"
+      values.$pastUpgrades.5:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xa0673C53980665a706352412D2538bA005403C26"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.MAX_REWARDS_DURATION:
+-        6048000
++        63072000
+      values.emissionsController:
++        "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84"
+      values.feeRecipient:
++        "eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56"
+      implementationNames.eth:0x788E38bCe16Cd96E5588559703469efBA3Afb0cF:
+-        "RewardsCoordinator"
+      implementationNames.eth:0xa0673C53980665a706352412D2538bA005403C26:
++        "RewardsCoordinator"
+      category:
+-        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract wBETH-Strategy (eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract bEIGEN token (eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      values.Minters.0:
+-        "eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d"
++        "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84"
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: None
+      template:
+-        "eigenlayer/StrategyManager"
+      sourceHashes.1:
+-        "0x5433d9e78da537eadb2ed5b713412f6ed57cafef2bbe66fc756d599175cb2fab"
++        "0x736195a6d0101e08cc21210f3e0cceae0ac4db2bfdb3e79e113fdae1fc8c418c"
+      description:
+-        "The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake."
+      values.$implementation:
+-        "eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c"
++        "eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394"
+      values.$pastUpgrades.6:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.version:
+-        "1.9.0"
++        "1.12.0"
+      implementationNames.eth:0xE09d4a1717C936ef021e14E72328128268B0CC3c:
+-        "StrategyManager"
+      implementationNames.eth:0x88582996b70FDd7C4f16e3Fde7B53858FcE0d394:
++        "StrategyManager"
+      category:
+-        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin"}
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract stETH-Strategy (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract ETHx-Strategy (eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract OETH-Strategy (eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x49be559baf3f68046b1c4d4312e12ffd2f9c062523d5233fd1fe2d87ac417c72"
++        "0xfe47d627ac94734b18f2a972ade182f47e93f82b06e081000845b09ca0de1503"
+      values.$implementation:
+-        "eth:0x4a0aee93BE6C87B227cA0B450E15245631233532"
++        "eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0x4a0aee93BE6C87B227cA0B450E15245631233532:
+-        "EigenStrategy"
+      implementationNames.eth:0x509Aadb99487182b21fF4E9e7Eb362a9Ea8E8f40:
++        "EigenStrategy"
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (eth:0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      sourceHashes.1:
+-        "0x02cca45c3823b65463f67110918effaf473c243fa83da5173474aa1e5339fb52"
++        "0x75d17d7f53664389b8b159f4e34df6e62ddc034a27d71a2bbb308dd038c6b00b"
+      values.$implementation:
+-        "eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7"
++        "eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"
+      values.$pastUpgrades.4:
++        ["2026-03-12T20:49:23.000Z","0x1a0f6a0330a783146ebeb8c81a23b18f945fc3c3bdcbdd8d3f7ea4d88761e94a",["eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230"]]
+      values.$upgradeCount:
+-        4
++        5
+      implementationNames.eth:0xb8d2cc94A9d2a8Fd7fF499fbE64B0B209212DBa7:
+-        "StrategyBaseTVLLimits"
+      implementationNames.eth:0xB427E2Eb4Bb33eE3f1ee72dc9e347e8625a72230:
++        "StrategyBaseTVLLimits"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyBase (eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (eth:0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0fCE0A591D96BB76883323eF555867111E2050a9","description":"change the beacon implementation.","role":".owner","via":[{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84","role":"admin","via":[{"address":"eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9)
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97. Beacon proxy contracts pointing to this beacon will all use its implementation.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmissionsController (eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DurationVaultStrategy (eth:0xC355123d0a51b4B5185aA7f21150904CEE3EAC97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xE15AFE000789160BE164D2FBA66EaDd6c6B81e7B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/DurationVaultStrategy.sol                | 2045 ++++++++++++++++++++
+ .../ETHx-Strategy/StrategyBaseTVLLimits.sol        |   34 +-
+ .../EmissionsController/EmissionsController.sol    | 1886 ++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++
+ .../.flat/GnosisSafe/GnosisSafe.sol                |  953 +++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |   35 +
+ .../METH-Strategy/StrategyBaseTVLLimits.sol        |   34 +-
+ .../OETH-Strategy/StrategyBaseTVLLimits.sol        |   34 +-
+ .../dev/null                                       |  203 --
+ .../RewardsCoordinator/RewardsCoordinator.sol      |  442 ++++-
+ .../RiverV1-Strategy/StrategyBaseTVLLimits.sol     |   34 +-
+ .../Safe.sol                                       | 1088 +++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../{.flat@1773318498 => .flat}/StrategyBase.sol   |   34 +-
+ .../StrategyFactory/StrategyFactory.sol            |  122 +-
+ .../StrategyManager/StrategyManager.sol            |    7 +
+ .../.flat@1773318498/TokenHopper.sol => /dev/null  |  678 -------
+ ...:0x0fCE0A591D96BB76883323eF555867111E2050a9.sol |  374 ++++
+ ...0x5a2a4F2F3C18f09179B6703e63D9eDD165909073.sol} |    0
+ .../ankrETH-Strategy/StrategyBaseTVLLimits.sol     |   34 +-
+ .../bEIGEN-Strategy/EigenStrategy.sol              |   34 +-
+ .../cbETH-Strategy/StrategyBaseTVLLimits.sol       |   34 +-
+ .../osETH-Strategy/StrategyBaseTVLLimits.sol       |   34 +-
+ .../rETH-Strategy/StrategyBaseTVLLimits.sol        |   34 +-
+ .../sfrxETH-Strategy/StrategyBaseTVLLimits.sol     |   34 +-
+ .../stETH-Strategy/StrategyBaseTVLLimits.sol       |   34 +-
+ .../swETH-Strategy/StrategyBaseTVLLimits.sol       |   34 +-
+ .../wBETH-Strategy/StrategyBaseTVLLimits.sol       |   34 +-
+ 28 files changed, 8109 insertions(+), 966 deletions(-)
+```
+
+Generated with discovered.json: 0x5611932c89fae0f62c771e354a1d20c6ee818d4a
+
+# Diff at Thu, 12 Mar 2026 12:29:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1772543935
+- current timestamp: 1773318498
+
+## Description
+
+Categories
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772543935 (main branch discovery), not current.
+
+```diff
+    contract RewardAllStakersActionGenerator (eth:0x0903a99b35424069b31Ea690CA8BDaDcc02BE4E5) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract AllocationManagerView (eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34) {
+    +++ description: Read-only view contract that exposes query functions for the AllocationManager, allowing external callers to look up operator stake allocations, magnitudes, operator sets, and slashable/redistributable status.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract StrategiesBeacon (eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract swETH-Strategy (eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract TaskMailbox (eth:0x132b466d9d5723531F68797519DfED701aC2C749) {
+    +++ description: Task lifecycle manager where users create tasks with fee payments directed at specific executor operator sets, and executors submit results verified via BN254 or ECDSA certificate verification, with fee distribution on successful verification and refunds on task expiration.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract AVSDirectory (eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ankrETH-Strategy (eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract rETH-Strategy (eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract PermissionController (eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ProtocolRegistry (eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129) {
+    +++ description: Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract METH-Strategy (eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract TokenHopper (eth:0x3374D2E654FFBFEcd35D3F2Ac3e915B394DD7E7d) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract DelegationManager (eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract BN254CertificateVerifier (eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A) {
+    +++ description: Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenPod (eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868) {
+    +++ description: None
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract cbETH-Strategy (eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract KeyRegistrar (eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4) {
+    +++ description: Manages the registration and deregistration of operator cryptographic keys (ECDSA or BN254/BLS) for specific operator sets, enforcing signature-based proof of key ownership and global uniqueness of keys across the protocol.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract OperatorTableUpdater (eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5) {
+    +++ description: Central coordinator for EigenLayer's operator table system: accepts BN254-certified global Merkle table roots from a designated generator operator set, then allows Merkle proof submissions to push per-operator-set tables into the certificate verifier contracts.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract osETH-Strategy (eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract StrategyFactory (eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract RewardsCoordinator (eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract wBETH-Strategy (eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract bEIGEN token (eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: The token backing EIGEN and used for intersubjective staking.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract sfrxETH-Strategy (eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EigenPodManager (eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract CrossChainRegistry (eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b) {
+    +++ description: Allows AVSs to create generation reservations that configure and schedule the transport of operator tables (stake weight data) from L1 to whitelisted L2 chains, managing per-operator-set configs such as staleness periods and operator table calculators.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract stETH-Strategy (eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract AllocationManager (eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ETHx-Strategy (eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract OETH-Strategy (eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract bEIGEN-Strategy (eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract RiverV1-Strategy (eth:0xAe60d8180437b5C34bB956822ac2710972584473) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract PauserRegistry (eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ECDSACertificateVerifier (eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25) {
+    +++ description: Verifies ECDSA-based certificates for EigenLayer operator sets by recovering signer addresses from concatenated signatures, confirming each signer is a registered operator, and tallying their stake weights against quorum thresholds.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract StrategyBase (eth:0xd33AAccc7E1a29Bc8E09Af55F8fa6fF3301e2780) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EIGEN token (eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ReleaseManager (eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F) {
+    +++ description: Manages software release lifecycle for EigenLayer operator sets, allowing AVS owners to publish versioned releases (containing artifact digests, registry URLs, and upgrade-by deadlines) and metadata URIs that operators can query for required software versions.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+Generated with discovered.json: 0x8c3654c798cd1bcc8ff742e02d90818534e78961
+
+# Diff at Thu, 26 Feb 2026 15:12:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770994184
+- current timestamp: 1772118708
+
+## Description
+
+EigenLayerOperationsMultisig: one new member added (0x9B0098A3), increasing signers from 5 to 6. Threshold remains 3, changing the effective quorum from 3/5 (60%) to 3/6 (50%).
+
+## Watched changes
+
+```diff
+    contract EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9B0098A38548b8B71473B0123A38B90bd882d49E"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x17a5c41c8061c8d4466c5c830a1c111ec6e8fb87
 
 # Diff at Fri, 13 Feb 2026 14:50:55 GMT:

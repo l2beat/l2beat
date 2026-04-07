@@ -31,6 +31,7 @@ import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import { shouldHaveNoBridgePage } from '../utils/shouldHaveNoBridgePage'
 
 export async function getDaSummaryEntries(): Promise<
   TabbedDaEntries<DaSummaryEntry>
@@ -160,7 +161,7 @@ function getDaSummaryEntry(
     }
   })
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
+  if (shouldHaveNoBridgePage(layer.daLayer, bridges.length)) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',
@@ -183,6 +184,9 @@ function getDaSummaryEntry(
 
   daBridges.sort((a, b) => b.tvs.latest - a.tvs.latest)
 
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
@@ -190,7 +194,7 @@ function getDaSummaryEntry(
   )
 
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
       getDaLayerRisks(layer.daLayer, tvs.latest, economicSecurity),

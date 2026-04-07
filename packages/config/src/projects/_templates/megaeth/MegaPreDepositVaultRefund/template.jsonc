@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "bridge-external",
   "description": "Refund escrow designed to hold the funds extracted from the predeposit vault and send them back to the users listed in the vault.",
   "ignoreRelatives": ["token"],
   "ignoreInWatchMode": [

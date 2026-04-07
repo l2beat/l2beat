@@ -4,5 +4,11 @@
     "address": "eth:0x7a318c3DaA9f21f8fc8238c65755eB0394Fbf189",
     "chain": "ethereum",
     "blockNumber": 23834069
+  },
+  "TallySlashingProposer_alpha.sol": {
+    "hash": "0x0b4f1c707812b207e031a78710120f6962597aca1d9bfa47b0aa4c940fadbbdb",
+    "address": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
+    "chain": "ethereum",
+    "blockNumber": 24590324
   }
 }

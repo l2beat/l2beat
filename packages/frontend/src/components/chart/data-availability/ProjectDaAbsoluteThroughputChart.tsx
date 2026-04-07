@@ -92,7 +92,6 @@ export function ProjectDaAbsoluteThroughputChart({
       meta={projectChartMeta}
       data={chartData}
       project={project}
-      className="mb-2"
       isLoading={isLoading}
       interactiveLegend={{
         dataKeys,
@@ -100,7 +99,7 @@ export function ProjectDaAbsoluteThroughputChart({
       }}
       milestones={milestones}
     >
-      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <defs>
           {project.id === 'ethereum' && (
             <EthereumFillGradientDef id="ethereum-fill" />

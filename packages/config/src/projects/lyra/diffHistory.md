@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x8b00d6fd20a08399dc92b0d4101ec431e398dc7b
+
+# Diff at Fri, 27 Feb 2026 13:25:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769513434
+- current timestamp: 1772198387
+
+## Description
+
+Lyra L2 gas limit increased from 200M to 500M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        200000000
++        500000000
+    }
+```
+
 Generated with discovered.json: 0xc91b28c991f1dcc82d0b37c89c0bc11a3c6a7523
 
 # Diff at Fri, 13 Feb 2026 11:33:14 GMT:

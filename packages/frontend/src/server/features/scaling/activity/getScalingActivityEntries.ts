@@ -54,7 +54,9 @@ export interface ScalingActivityEntry extends CommonScalingEntry {
   stacks: ProjectScalingStack[] | undefined
   data:
     | {
-        tps: ActivityData
+        tps: ActivityData & {
+          totalCount?: { value: number; sinceTimestamp: number }
+        }
         uops: ActivityData
         ratio: number
         isSynced: boolean

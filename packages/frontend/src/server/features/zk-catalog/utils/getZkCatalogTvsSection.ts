@@ -1,16 +1,14 @@
-import type { Project } from '@l2beat/config'
+import type { Milestone, Project } from '@l2beat/config'
 import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tvs/ZkCatalogTvsSection'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import { optionToRange } from '~/utils/range/range'
 import { withProjectIcon } from '~/utils/withProjectIcon'
+import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
-  allProjects: Project<
-    never,
-    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
-  >[],
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
   const allProjectsMap = new Map(
     allProjects.map((project) => [project.id, project]),
@@ -55,10 +53,34 @@ export function getZkCatalogTvsSection(
   if (projectsForTvs.length === 0) {
     return undefined
   }
+  const projectsUsedIn = new Map(
+    getProjectsUsedIn(
+      projectsForTvs.map((project) => project.projectId),
+      allProjects,
+    ).map((project) => [project.id, project]),
+  )
+
+  const milestonesFromProjects: Milestone[] = projectsForTvs.flatMap((p) => {
+    const resolved = projectsUsedIn.get(p.projectId)
+    if (!resolved) return []
+
+    return [
+      {
+        date: new Date(p.sinceTimestamp * 1000).toISOString(),
+        title: `${p.name} started using ${project.name}`,
+        type: 'project',
+        project: { id: p.projectId, name: p.name, icon: resolved.icon },
+        linkLabel: 'Go to project page',
+        url: resolved.url,
+      },
+    ]
+  })
+
+  const milestones = [...(project.milestones ?? []), ...milestonesFromProjects]
 
   return {
     defaultRange: optionToRange('1y'),
-    milestones: project.milestones ?? [],
+    milestones: milestones,
     tvsInfo: project.tvsInfo,
     project: withProjectIcon(project),
     projectsForTvs,

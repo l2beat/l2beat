@@ -17,7 +17,13 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { Skeleton } from '~/components/core/Skeleton'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { useEcosystemDisplayControlsContext } from '~/components/table/display/contexts/EcosystemDisplayControlsContext'
+import { InfoIcon } from '~/icons/Info'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -108,10 +114,15 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          // Without right:1 the chart last point is not hoverable for some reason
+          margin={{ top: 20, right: 1 }}
+        >
           <defs>
             <CustomFillGradientDef
               id="fill"
@@ -141,7 +152,7 @@ export function EcosystemsTvsChart({
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
-      <ChartControlsWrapper className="mt-2.5">
+      <ChartControlsWrapper className="mt-2.5 flex-wrap">
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
@@ -163,7 +174,21 @@ function Header({
   return (
     <div className="mb-3">
       <div className="flex justify-between">
-        <div className="font-bold text-xl">TVS</div>
+        <div className="font-bold text-xl">
+          TVS{' '}
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                The total value secured by projects within the ecosystem -
+                including canonically bridged, externally bridged and natively
+                minted tokens.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
         {invert ? (
           stats?.marketShare ? (
             <div className="font-semibold text-xl">

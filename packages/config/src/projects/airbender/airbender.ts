@@ -1,4 +1,5 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -36,7 +37,7 @@ export const airbender: BaseProject = {
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Airbender,
-        ZK_CATALOG_TAGS.ISA.RISCV,
+        ZK_CATALOG_TAGS.ISA.RISCV32,
         ZK_CATALOG_TAGS.Field.Mersenne31,
       ],
       finalWrap: [
@@ -78,31 +79,63 @@ export const airbender: BaseProject = {
       },
     ],
     verifierHashes: [
+      // {
+      //   hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
+      //   proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
+      // {
+      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //   knownDeployments: [
+      //     {
+      //       address: EthereumAddress(
+      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+      //       ),
+      //       chain: 'ethereum',
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       {
-        hash: '0x996b02b1d0420e997b4dc0d629a3a1bba93ed3185ac463f17b02ff83be139581',
-        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
+        // Is a dummy to show adi as using airbender proof system. Verifier
+        // contract sources are unknown, so the actual hash cannot be computed.
+        // Fix once the sources are on etherscan.
+        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+        name: 'Airbender Fflonk Adi verifier',
+        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0x84871A20Cd4DB1Ac1Db641841Fc7d900e230F92D',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
       },
       {
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+        hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
+        name: 'Airbender Plonk Adi verifier',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
-            address: EthereumAddress(
-              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x08513A4646d1Bc8c348C67A3680bb19626E7F13F',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
       },
     ],
   },

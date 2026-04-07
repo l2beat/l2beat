@@ -1,7 +1,6 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -23,7 +22,6 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
@@ -56,6 +54,7 @@ import type {
 } from '../types'
 import { getActivityConfig } from './activity'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
+import { getSP1Verifiers } from './opStack'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -123,6 +122,8 @@ export interface ZkStackConfigCommon {
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   interopConfig?: InteropConfig
+  // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
+  zkVerifierContractsReproducible?: boolean
 }
 
 export type Upgradeability = {
@@ -399,10 +400,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: true,
-                noRedTrustedSetups: null,
-                programHashesReproducible: null,
-                proverSourcePublished: null,
-                verifierContractsReproducible: null,
+                noRedTrustedSetups: true,
+                programHashesReproducible:
+                  programHashesReproducible(l2BootloaderHash),
+                proverSourcePublished: true,
+                verifierContractsReproducible:
+                  templateVars.zkVerifierContractsReproducible ?? null,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -557,6 +560,10 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         ),
       ],
       programHashes: [PROGRAM_HASHES(l2BootloaderHash)],
+      zkVerifiers: getZKStackVerifiers(
+        templateVars.discovery,
+        templateVars.archivedAt !== undefined,
+      ),
     },
     stateDerivation:
       daProvider !== undefined
@@ -597,52 +604,6 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
             'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
         },
       ],
-      proofVerification: {
-        shortDescription: 'ZKsync Era is a ZK-EVM rollup on Ethereum.',
-        aggregation: true,
-        requiredTools: [
-          {
-            name: 'Custom tool',
-            version: 'v14.2.0',
-            link: 'https://github.com/matter-labs/zksync-era/tree/prover-v14.2.0/prover/vk_setup_data_generator_server_fri',
-          },
-        ],
-        verifiers: [
-          {
-            name: 'ZKsyncEraVerifier',
-            description:
-              'ZKsync Era utilizes [Boojum](https://github.com/matter-labs/zksync-crypto/tree/main/crates/boojum) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.',
-            verified: 'no',
-            contractAddress: EthereumAddress(
-              '0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66',
-            ),
-            chainId: ChainId.ETHEREUM,
-            subVerifiers: [
-              {
-                name: 'Final wrap',
-                ...PROOFS.PLONKSNARK('Aztec ceremony'),
-                link: 'https://github.com/matter-labs/zksync-protocol/blob/main/crates/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
-              },
-              {
-                name: 'Aggregation circuit',
-                proofSystem: 'Redshift',
-                mainArithmetization: 'Plonkish',
-                mainPCS: 'LPC',
-                trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/zksync-protocol/blob/7dfcc81eccc3984793646a5a47e4cd68757955a2/crates/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45',
-              },
-              {
-                name: 'Main circuit',
-                proofSystem: 'Redshift',
-                mainArithmetization: 'Plonkish',
-                mainPCS: 'LPC',
-                trustedSetup: 'None',
-                link: 'https://github.com/matter-labs/zksync-protocol/tree/main/crates/zkevm_circuits',
-              },
-            ],
-          },
-        ],
-      },
     },
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
@@ -715,4 +676,82 @@ function getDaTracking(
   }
 
   return undefined
+}
+
+function programHashesReproducible(l2BootloaderHash: string): boolean | null {
+  const vStatus = PROGRAM_HASHES(l2BootloaderHash).verificationStatus
+  if (vStatus === 'unsuccessful') return false
+  if (vStatus === 'successful') return true
+  return null
+}
+
+// get all verifiers that can prove STF of an L2
+// export because adi is not currently set up as a template but should get verifiers by this logic
+export function getZKStackVerifiers(
+  discovery: ProjectDiscovery,
+  isArchived: boolean,
+): ChainSpecificAddress[] {
+  const result: ChainSpecificAddress[] = []
+  if (isArchived) {
+    // don't want to bother setting up archived projects
+    return result
+  }
+  if (discovery.hasContract('DualVerifier')) {
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'FFLONK_VERIFIER',
+      ),
+    )
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        'DualVerifier',
+        'PLONK_VERIFIER',
+      ),
+    )
+  } else if (discovery.hasContract('Verifier')) {
+    // currently only Treasury has this setup
+    result.push(discovery.getContract('Verifier').address)
+  } else if (discovery.hasContract('ZKsyncOSDualVerifier')) {
+    // probably all aibender-based chains will fall under this case
+    const fflonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(fflonk0) !== EthereumAddress.ZERO) {
+      result.push(fflonk0)
+    }
+    const plonk0 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier0',
+    )
+    if (ChainSpecificAddress.address(plonk0) !== EthereumAddress.ZERO) {
+      result.push(plonk0)
+    }
+    const fflonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'fflonkVerifier1',
+    )
+    const plonk1 = discovery.getContractValue<ChainSpecificAddress>(
+      'ZKsyncOSDualVerifier',
+      'plonkVerifier1',
+    )
+    if (
+      ChainSpecificAddress.address(fflonk1) !== EthereumAddress.ZERO ||
+      ChainSpecificAddress.address(plonk1) !== EthereumAddress.ZERO
+    ) {
+      throw new Error(
+        `Verifier discovery for ${discovery.projectName} is misconfigured: both plonk1 and fflonk1 are expected to be zero addresses. Manually review and setup verifiers for zk catalog.`,
+      )
+    }
+  } else {
+    throw new Error(
+      `Cannot configure ZK Stack project verifiers (${discovery.projectName}), edit template file`,
+    )
+  }
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    // happens for vector projects
+    return result.concat(getSP1Verifiers(discovery))
+  }
+  return result
 }

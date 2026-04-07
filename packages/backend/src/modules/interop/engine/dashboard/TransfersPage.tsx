@@ -1,8 +1,11 @@
-import type { InteropTransferRecord } from '@l2beat/database'
-import { Address32, formatSeconds } from '@l2beat/shared-pure'
-import React from 'react'
+import { InteropTransferClassifier } from '@l2beat/shared'
+import {
+  Address32,
+  formatSeconds,
+  type InteropBridgeType,
+} from '@l2beat/shared-pure'
+import * as React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { InteropTransferClassifier } from '../aggregation/InteropTransferClassifier'
 import { DataTablePage } from './DataTablePage'
 import { formatDollars } from './formatDollars'
 import {
@@ -10,6 +13,31 @@ import {
   ProcessorsStatusTable,
 } from './ProcessorsStatusTable'
 import { ShortenedHash } from './ShortenedHash'
+
+interface TransferTableRow {
+  plugin: string
+  bridgeType: InteropBridgeType | undefined
+  transferId: string
+  type: string
+  duration: number | undefined
+  timestamp: number
+  srcChain: string
+  srcTxHash: string | undefined
+  srcTokenAddress: string | undefined
+  srcWasBurned: boolean | undefined
+  srcAbstractTokenId: string | undefined
+  srcSymbol: string | undefined
+  srcAmount: number | undefined
+  srcValueUsd: number | undefined
+  dstChain: string
+  dstTxHash: string | undefined
+  dstTokenAddress: string | undefined
+  dstWasMinted: boolean | undefined
+  dstAbstractTokenId: string | undefined
+  dstSymbol: string | undefined
+  dstAmount: number | undefined
+  dstValueUsd: number | undefined
+}
 
 function BooleanCell({
   value,
@@ -31,7 +59,7 @@ function BooleanCell({
 }
 
 export function TransfersTable(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   tableId?: string
 }) {
@@ -76,10 +104,20 @@ export function TransfersTable(props: {
               </td>
               <td>{e.type}</td>
               <td data-order={e.duration} data-sort={e.duration}>
-                {e.duration && formatSeconds(e.duration)}
+                {e.duration !== undefined && formatSeconds(e.duration)}
               </td>
               <td>
-                {e.srcAmount} {e.srcSymbol}
+                {e.srcSymbol ? (
+                  <>
+                    {e.srcAmount} {e.srcSymbol}
+                  </>
+                ) : (
+                  <AddTokenLink
+                    address={e.srcTokenAddress}
+                    chain={e.srcChain}
+                    otherSideAbstractTokenId={e.dstAbstractTokenId}
+                  />
+                )}
               </td>
               <td data-order={e.srcValueUsd} data-sort={e.srcValueUsd}>
                 {formatDollars(e.srcValueUsd)}
@@ -92,7 +130,17 @@ export function TransfersTable(props: {
                 />
               </td>
               <td>
-                {e.dstAmount} {e.dstSymbol}
+                {e.dstSymbol ? (
+                  <>
+                    {e.dstAmount} {e.dstSymbol}
+                  </>
+                ) : (
+                  <AddTokenLink
+                    address={e.dstTokenAddress}
+                    chain={e.dstChain}
+                    otherSideAbstractTokenId={e.srcAbstractTokenId}
+                  />
+                )}
               </td>
               <td data-order={e.dstValueUsd} data-sort={e.dstValueUsd}>
                 {formatDollars(e.dstValueUsd)}
@@ -106,16 +154,7 @@ export function TransfersTable(props: {
               </td>
               <td>{e.srcChain}</td>
               <td>
-                {srcExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${srcExplorerUrl}/tx/${e.srcTxHash}`}
-                  >
-                    <ShortenedHash hash={e.srcTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.srcTxHash} />
-                )}
+                <TxHash explorerUrl={srcExplorerUrl} hash={e.srcTxHash} />
               </td>
               <td>
                 <TokenAddress
@@ -125,16 +164,7 @@ export function TransfersTable(props: {
               </td>
               <td>{e.dstChain}</td>
               <td>
-                {dstExplorerUrl ? (
-                  <a
-                    target="_blank"
-                    href={`${dstExplorerUrl}/tx/${e.dstTxHash}`}
-                  >
-                    <ShortenedHash hash={e.dstTxHash} />
-                  </a>
-                ) : (
-                  <ShortenedHash hash={e.dstTxHash} />
-                )}
+                <TxHash explorerUrl={dstExplorerUrl} hash={e.dstTxHash} />
               </td>
               <td>
                 <TokenAddress
@@ -177,8 +207,69 @@ function TokenAddress({
   )
 }
 
+function TxHash({
+  explorerUrl,
+  hash,
+}: {
+  explorerUrl: string | undefined
+  hash: string | undefined
+}) {
+  if (!hash) {
+    return <span style={{ color: '#888' }}>-</span>
+  }
+
+  if (!explorerUrl) {
+    return <ShortenedHash hash={hash} />
+  }
+
+  return (
+    <a
+      target="_blank"
+      rel="noreferrer noopener"
+      href={`${explorerUrl}/tx/${hash}`}
+    >
+      <ShortenedHash hash={hash} />
+    </a>
+  )
+}
+
+function AddTokenLink({
+  address,
+  chain,
+  otherSideAbstractTokenId,
+}: {
+  address: string | undefined
+  chain: string | undefined
+  otherSideAbstractTokenId: string | undefined
+}) {
+  if (!address || !chain) {
+    return null
+  }
+  if (address === Address32.NATIVE || address === Address32.ZERO) {
+    return null
+  }
+  const ethAddress = Address32.cropToEthereumAddress(Address32(address))
+  const params = new URLSearchParams({
+    tab: 'deployed',
+    chain,
+    address: ethAddress,
+  })
+  if (otherSideAbstractTokenId) {
+    params.set('abstractTokenId', otherSideAbstractTokenId)
+  }
+  return (
+    <a
+      target="_blank"
+      href={`https://tokens.l2beat.com/tokens/new?${params.toString()}`}
+      className="add-token-link"
+    >
+      {otherSideAbstractTokenId ? 'add (same abstract)' : 'add token'}
+    </a>
+  )
+}
+
 function TransfersPageLayout(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {
@@ -211,7 +302,7 @@ function TransfersPageLayout(props: {
 }
 
 export function renderTransfersPage(props: {
-  transfers: InteropTransferRecord[]
+  transfers: TransferTableRow[]
   getExplorerUrl: (chain: string) => string | undefined
   status: ProcessorsStatus[]
 }) {

@@ -62,11 +62,15 @@ export function EcosystemsProjectsChart({
       <ChartContainer
         meta={chartMeta}
         data={data.chart}
-        className="h-[110px]! min-h-[110px]!"
         logoClassName="bottom-[42px]"
         milestones={ecosystemMilestones}
       >
-        <AreaChart data={data.chart} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart
+          responsive
+          data={data.chart}
+          className="h-[110px]! min-h-[110px]!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id="fill"

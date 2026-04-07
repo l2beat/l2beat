@@ -31,14 +31,15 @@ export function ProjectTokenChart({ project, milestones, token }: Props) {
   }, [data])
 
   return (
-    <TokenChart
-      data={chartData}
-      project={project}
-      isLoading={isLoading}
-      milestones={milestones}
-      token={token}
-      syncedUntil={data?.syncedUntil}
-      className="mt-4 mb-3"
-    />
+    <div className="mt-4 mb-3">
+      <TokenChart
+        data={chartData}
+        project={project}
+        isLoading={isLoading}
+        milestones={milestones}
+        token={token}
+        syncedUntil={data?.syncedUntil}
+      />
+    </div>
   )
 }

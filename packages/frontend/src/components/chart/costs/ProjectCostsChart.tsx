@@ -99,18 +99,19 @@ export function ProjectCostsChart({
         <ProjectChartTimeRange timeRange={timeRange} />
         <CostsChartRangeControls range={range} setRange={setRange} />
       </div>
-      <CostsChart
-        project={project}
-        data={chartData}
-        syncedUntil={data?.syncedUntil}
-        unit={unit}
-        isLoading={isLoading}
-        milestones={milestones}
-        range={range}
-        hasBlobs={!!data?.hasBlobs}
-        tickCount={4}
-        className="mt-4 mb-3"
-      />
+      <div className="mt-4 mb-3">
+        <CostsChart
+          project={project}
+          data={chartData}
+          syncedUntil={data?.syncedUntil}
+          unit={unit}
+          isLoading={isLoading}
+          milestones={milestones}
+          range={range}
+          hasBlobs={!!data?.hasBlobs}
+          tickCount={4}
+        />
+      </div>
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />
       <ProjectCostsChartStats data={data} isLoading={isLoading} unit={unit} />

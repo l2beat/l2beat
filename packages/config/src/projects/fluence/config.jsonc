@@ -2,5 +2,53 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "fluence",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D"]
+  "archived": true,
+  "initialAddresses": [
+    "eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D",
+    "eth:0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f",
+    "eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A",
+    "eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0"
+  ],
+  "names": {
+    "eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A": "Bridge",
+    "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": "CircleGateway"
+  },
+  "overrides": {
+    "eth:0x236501327e701692a281934230AF0b6BE8Df3353": {
+      "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"]
+    },
+    "eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0": {
+      "ignoreMethods": ["batchCount"]
+    },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xfd78EE919681417d192449715b2594ab58f5D002": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205": {
+      "ignoreDiscovery": true
+    },
+    "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17": {
+      "ignoreDiscovery": true
+    },
+    "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE": {
+      "ignoreDiscovery": true
+    }
+  }
 }

@@ -3,13 +3,11 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type {
-  ProtocolDisplayable,
-  SelectedChainsIds,
-} from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { api } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { ChainSelector } from '../components/chain-selector/ChainSelector'
+import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InitialChainSelector } from '../components/InitialChainSelector'
 import { FlowsWidget } from '../components/widgets/FlowsWidget'
@@ -21,24 +19,32 @@ import {
   InteropSelectedChainsProvider,
   useInteropSelectedChains,
 } from '../utils/InteropSelectedChainsContext'
+import type { InteropMode, InteropSelection } from '../utils/types'
+import { BreakdownByTransferType } from './components/BreakdownByTransferType'
 import { InteropEmptyState } from './components/InteropEmptyState'
+import { TokenCount } from './components/TokenCount'
 import { TransferSizeChartCard } from './components/TransferSizeChartCard'
 import { BurnAndMintCard } from './components/table-widgets/BurnAndMintCard'
 import { LockAndMintCard } from './components/table-widgets/LockAndMintCard'
 import { NonMintingCard } from './components/table-widgets/NonMintingCard'
 import { getBridgeTypeEntries } from './components/table-widgets/tables/getBridgeTypeEntries'
+import { getTransferTypeBreakdown } from './utils/getTransferTypeBreakdown'
 
 interface Props extends AppLayoutProps {
+  mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
-  initialSelectedChains: SelectedChainsIds
+  initialSelection: InteropSelection
 }
 
 export function InteropSummaryPage({
+  mode,
   interopChains,
+  onboardingInteropChains,
   queryState,
-  initialSelectedChains,
+  initialSelection,
   protocols,
   ...props
 }: Props) {
@@ -46,12 +52,18 @@ export function InteropSummaryPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <InteropSelectedChainsProvider
+          mode={mode}
           interopChains={interopChains}
-          initialSelectedChains={initialSelectedChains}
+          initialSelection={initialSelection}
         >
           <SideNavLayout maxWidth="wide">
-            <MainPageHeader>Ethereum Ecosystem Interop</MainPageHeader>
-            <Content interopChains={interopChains} protocols={protocols} />
+            <MainPageHeader>Interoperability</MainPageHeader>
+            <Content
+              mode={mode}
+              interopChains={interopChains}
+              onboardingInteropChains={onboardingInteropChains}
+              protocols={protocols}
+            />
           </SideNavLayout>
         </InteropSelectedChainsProvider>
       </HydrationBoundary>
@@ -60,18 +72,25 @@ export function InteropSummaryPage({
 }
 
 function Content({
+  mode,
   interopChains,
+  onboardingInteropChains,
   protocols,
 }: {
+  mode: InteropMode
   interopChains: InteropChainWithIcon[]
+  onboardingInteropChains: InteropChainWithIcon[]
   protocols: ProtocolDisplayable[]
 }) {
   const { selectedChains, selectChain } = useInteropSelectedChains()
 
-  if (!selectedChains.first || !selectedChains.second) {
+  if (
+    mode === 'public' &&
+    (selectedChains.from.length !== 1 || selectedChains.to.length !== 1)
+  ) {
     return (
       <InitialChainSelector
-        interopChains={interopChains}
+        interopChains={onboardingInteropChains}
         selectedChains={selectedChains}
         selectChain={selectChain}
         type={undefined}
@@ -81,32 +100,37 @@ function Content({
 
   return (
     <>
-      <ChainSelector chains={interopChains} protocols={protocols} />
+      {mode === 'public' ? (
+        <ChainSelector chains={interopChains} protocols={protocols} />
+      ) : (
+        <MultiChainSelector chains={interopChains} />
+      )}
       <Widgets interopChains={interopChains} />
     </>
   )
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
-  const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery({
-    selectedChainsIds: [
-      selectedChains.first?.id ?? null,
-      selectedChains.second?.id ?? null,
-    ],
-  })
+  const { selectionForApi, mode, isDirty, reset } = useInteropSelectedChains()
+  const { data, isLoading } = api.interop.dashboard.useQuery(selectionForApi)
 
   if (
     data?.entries.length === 0 &&
     data.flows.length === 0 &&
     data.topProtocols.length === 0
   ) {
-    return <InteropEmptyState />
+    return (
+      <InteropEmptyState
+        showResetButton={mode === 'internal' && isDirty}
+        onResetButtonClick={reset}
+      />
+    )
   }
 
   const { lockAndMint, nonMinting, burnAndMint } = getBridgeTypeEntries(
     data?.entries ?? [],
   )
+  const breakdown = getTransferTypeBreakdown(data?.entries ?? [])
 
   return (
     <div
@@ -139,6 +163,14 @@ function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
         isLoading={isLoading}
       />
       <TopTokenWidget topToken={data?.topToken} isLoading={isLoading} />
+      <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] min-md:gap-5">
+        <BreakdownByTransferType isLoading={isLoading} breakdown={breakdown} />
+        <TokenCount
+          isLoading={isLoading}
+          tokenCount={data?.tokenCount}
+          topItems={data?.topTokens}
+        />
+      </div>
       <div className="col-span-full grid grid-cols-1 min-[1024px]:grid-cols-2 min-md:gap-5">
         <NonMintingCard entries={nonMinting} isLoading={isLoading} />
         <LockAndMintCard entries={lockAndMint} isLoading={isLoading} />

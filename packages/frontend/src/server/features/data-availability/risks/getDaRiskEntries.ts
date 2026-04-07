@@ -1,5 +1,5 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
@@ -20,6 +20,7 @@ import {
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import { shouldHaveNoBridgePage } from '../utils/shouldHaveNoBridgePage'
 
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
@@ -106,7 +107,7 @@ function getDaRiskEntry(
     }),
   )
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
+  if (shouldHaveNoBridgePage(layer.daLayer, bridges.length)) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',
@@ -120,13 +121,17 @@ function getDaRiskEntry(
   }
 
   daBridges.sort((a, b) => b.tvs - a.tvs)
+
+  const firstBridge = daBridges[0]
+  assert(firstBridge)
+
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
       .map((x) => x.id),
   ).latest
   return {
-    ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
+    ...getCommonDaEntry({ project: layer, href: firstBridge.href }),
     tvs,
     risks: getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
     bridges: daBridges,

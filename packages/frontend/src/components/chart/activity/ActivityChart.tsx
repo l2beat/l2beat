@@ -64,7 +64,6 @@ interface Props {
   metric: ActivityMetric
   type: ActivityChartType
   project: ChartProject
-  className?: string
   tickCount?: number
 }
 
@@ -77,7 +76,6 @@ export function ActivityChart({
   type,
   metric,
   project,
-  className,
   tickCount,
 }: Props) {
   const chartMeta = useMemo(
@@ -113,7 +111,6 @@ export function ActivityChart({
   return (
     <ChartContainer
       data={data}
-      className={className}
       meta={chartMeta}
       isLoading={isLoading}
       interactiveLegend={
@@ -127,7 +124,7 @@ export function ActivityChart({
       project={project}
       milestones={milestones}
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <AreaChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend
           content={(props) => <ChartLegendContent payload={props.payload} />}
         />

@@ -77,13 +77,13 @@ export function MonthlyUpdateActivityChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} />
-      <ChartContainer
-        data={chartData}
-        meta={chartMeta}
-        isLoading={isLoading}
-        className="h-44! min-h-44!"
-      >
-        <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents
             data={compact([

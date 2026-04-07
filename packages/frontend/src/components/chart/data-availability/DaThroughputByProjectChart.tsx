@@ -172,7 +172,7 @@ export function DaThroughputByProjectChart({
       project={project}
       milestones={milestones}
     >
-      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}

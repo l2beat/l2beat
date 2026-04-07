@@ -113,7 +113,7 @@ export function DaAbsoluteThroughputChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
           <FuchsiaFillGradientDef id="celestia-fill" />

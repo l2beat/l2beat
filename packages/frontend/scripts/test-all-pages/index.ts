@@ -6,18 +6,13 @@ import { testPage } from './testPage'
 async function main() {
   const [
     scalingProjects,
-    bridgedProjects,
     daLayerProjects,
     daBridgeProjects,
     zkCatalogProjects,
-    zkCatalogV1Projects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
       optional: ['tvsConfig'],
-    }),
-    ps.getProjects({
-      where: ['isBridge'],
     }),
     ps.getProjects({
       where: ['isDaLayer'],
@@ -28,10 +23,6 @@ async function main() {
     }),
     ps.getProjects({
       where: ['zkCatalogInfo'],
-    }),
-    ps.getProjects({
-      where: ['isZkCatalog'],
-      whereNot: ['archivedAt'],
     }),
   ])
   const governancePublications = getCollection('governance-publications')
@@ -51,9 +42,6 @@ async function main() {
       `/scaling/projects/${x.slug}`,
       x.tvsConfig && `/scaling/projects/${x.slug}/tvs-breakdown`,
     ]),
-    '/bridges/summary',
-    '/bridges/archived',
-    ...bridgedProjects.map((x) => `/bridges/projects/${x.slug}`),
     '/data-availability/summary',
     '/data-availability/risk',
     '/data-availability/throughput',
@@ -73,8 +61,6 @@ async function main() {
     }),
     '/zk-catalog',
     ...zkCatalogProjects.map((p) => `/zk-catalog/${p.slug}`),
-    '/zk-catalog/v1',
-    ...zkCatalogV1Projects.map((p) => `/zk-catalog/v1/${p.slug}`),
     '/about-us',
     '/donate',
     '/governance',

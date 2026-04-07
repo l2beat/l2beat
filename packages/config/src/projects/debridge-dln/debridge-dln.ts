@@ -14,6 +14,7 @@ export const debridgeDln: BaseProject = {
         bridgeType: 'nonMinting',
       },
     ],
+    type: 'intent',
   },
   isInteropProtocol: true,
 }

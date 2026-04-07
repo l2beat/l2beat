@@ -11,8 +11,8 @@ import {
   ContractCallApproved,
   ContractCallExecuted,
 } from './axelar'
-import { findParsedAround } from './hyperlane-hwr'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,

@@ -3,9 +3,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import pick from 'lodash/pick'
 import { env } from '~/env'
-import { ps } from '~/server/projects'
 import { queryExecutor } from '~/server/queryExecutor'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 
@@ -18,6 +18,7 @@ export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit
   breakdown7d: BreakdownSplit
   change: BreakdownSplit
+  additionalTrustAssumptionsPercentage: number
 }
 
 interface BreakdownSplit {
@@ -45,7 +46,6 @@ export const TvsBreakdownProjectFilter = v.union([
     type: v.enum([
       'all',
       'layer2',
-      'bridge',
       'rollups',
       'validiumsAndOptimiums',
       'others',
@@ -59,13 +59,15 @@ export const TvsBreakdownProjectFilter = v.union([
     ...TvsAdditionalProps,
   }),
 ])
-type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
+export type TvsBreakdownProjectFilter = v.infer<
+  typeof TvsBreakdownProjectFilter
+>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
-    return getMockTvsBreakdownData()
+    return getMockTvsBreakdownData(props)
   }
 
   const target = props.customTarget ?? getTvsTargetTimestamp()
@@ -99,6 +101,7 @@ export async function get7dTvsBreakdown(
     const [
       latestValue,
       latestCanonical,
+      latestCustomCanonical,
       latestExternal,
       latestNative,
       latestEther,
@@ -113,6 +116,7 @@ export async function get7dTvsBreakdown(
     const [
       oldestValue,
       oldestCanonical,
+      oldestCustomCanonical,
       oldestExternal,
       oldestNative,
       oldestEther,
@@ -124,11 +128,21 @@ export async function get7dTvsBreakdown(
       oldestAssociated,
     ] = oldestValueRecord
 
+    const additionalTrustAssumptionsPercentage =
+      getAdditionalTrustAssumptionsPercentage({
+        total: latestValue,
+        customCanonical: latestCustomCanonical,
+        external: latestExternal,
+      })
+
+    const canonical = latestCanonical + latestCustomCanonical
+    const sevenDaysAgoCanonical = oldestCanonical + oldestCustomCanonical
+
     projects[projectId] = {
       breakdown: {
         total: latestValue,
         native: latestNative,
-        canonical: latestCanonical,
+        canonical,
         external: latestExternal,
         ether: latestEther,
         stablecoin: latestStablecoin,
@@ -141,7 +155,7 @@ export async function get7dTvsBreakdown(
       breakdown7d: {
         total: oldestValue,
         native: oldestNative,
-        canonical: oldestCanonical,
+        canonical: sevenDaysAgoCanonical,
         external: oldestExternal,
         ether: oldestEther,
         stablecoin: oldestStablecoin,
@@ -154,7 +168,7 @@ export async function get7dTvsBreakdown(
       change: {
         total: calculatePercentageChange(latestValue, oldestValue),
         native: calculatePercentageChange(latestNative, oldestNative),
-        canonical: calculatePercentageChange(latestCanonical, oldestCanonical),
+        canonical: calculatePercentageChange(canonical, sevenDaysAgoCanonical),
         external: calculatePercentageChange(latestExternal, oldestExternal),
         ether: calculatePercentageChange(latestEther, oldestEther),
         stablecoin: calculatePercentageChange(
@@ -173,6 +187,7 @@ export async function get7dTvsBreakdown(
           oldestAssociated,
         ),
       },
+      additionalTrustAssumptionsPercentage,
     }
   }
 
@@ -187,9 +202,9 @@ export async function get7dTvsBreakdown(
   }
 }
 
-function createTvsBreakdownProjectFilter(
+export function createTvsBreakdownProjectFilter(
   filter: TvsBreakdownProjectFilter,
-): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
+): (project: Project<'statuses', 'scalingInfo'>) => boolean {
   switch (filter.type) {
     case 'projects':
       return (project) => filter.projectIds.includes(project.id)
@@ -217,22 +232,23 @@ function createTvsBreakdownProjectFilter(
         !!project.scalingInfo &&
         project.scalingInfo.type === 'Other' &&
         !(project.statuses.reviewStatus === 'initialReview')
-    case 'bridge':
-      return (project) => !!project.isBridge
   }
 }
 
-async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
-  const projects = await ps.getProjects({ where: ['tvsConfig'] })
+async function getMockTvsBreakdownData(
+  props: TvsBreakdownProjectFilter,
+): Promise<SevenDayTvsBreakdown> {
+  const projects = await getTvsProjects(createTvsBreakdownProjectFilter(props))
   return {
     total: 1000,
     projects: Object.fromEntries(
       projects.map((project) => [
-        project.id,
+        project.projectId,
         {
           breakdown: {
             total: 60,
             canonical: 30,
+            customCanonical: 10,
             native: 20,
             external: 10,
             ether: 30,
@@ -246,6 +262,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
           breakdown7d: {
             total: 50,
             canonical: 25,
+            customCanonical: 5,
             native: 15,
             external: 10,
             ether: 25,
@@ -259,6 +276,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
           change: {
             total: 0.4,
             canonical: 0.5,
+            customCanonical: 0.25,
             native: 0.25,
             external: 0.25,
             ether: 0.25,
@@ -269,6 +287,8 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             rwaPublic: 0.25,
             associated: 0.25,
           },
+          additionalTrustAssumptionsPercentage:
+            project.projectId === 'base' ? 0.8 : 0,
         },
       ]),
     ),

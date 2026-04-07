@@ -14,6 +14,7 @@ export const cctpv1: BaseProject = {
         bridgeType: 'burnAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

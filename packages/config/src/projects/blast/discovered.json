@@ -1,6 +1,6 @@
 {
   "name": "blast",
-  "timestamp": 1730369759,
+  "timestamp": 1772118382,
   "configHash": "0x8a92466ab214da7197b983752d54f139945aa71f5119289555b57539ae3f5448",
   "entries": [
     {
@@ -87,8 +87,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 509262,
-          "prevBlockNum": 21084792
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 24541101
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -109,11 +109,6 @@
     },
     {
       "address": "eth:0x1f97306039530ADB4173C3786e86fab5e6b90F41",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -434,14 +429,14 @@
           "eth:0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C",
           "eth:0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d",
           "eth:0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA",
-          "eth:0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d"
+          "eth:0x7DbDFbb265bF26e626B44132eF4e3A3E6eEc1282"
         ],
         "$threshold": 3,
         "domainSeparator": "0xe588d5604980962ab03dbe466995c5304923b096098c653abf8a454642f1f01e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 51,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -506,7 +501,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279134670319890990156",
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187535205631052",
         "sequencerInbox": "eth:0xFf00000000000000000000000000000000081457",
         "startBlock": 19300387,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -566,7 +561,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292737129",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292758204",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -636,10 +631,10 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PSM": "eth:0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "eth:0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "1261906904527850644164",
-        "totalETHShares": "1223454384402164558100",
-        "totalUSDBalanceNoUpdate": "288318012689205305235679",
-        "totalUSDShares": "269663073212147173556576",
+        "totalETHBalance": "877216967631673872514",
+        "totalETHShares": "819580046077776909127",
+        "totalUSDBalanceNoUpdate": "252259556481447043987979",
+        "totalUSDShares": "224570357637905280693373",
         "USDC": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -766,6 +761,11 @@
       }
     },
     {
+      "address": "eth:0x7DbDFbb265bF26e626B44132eF4e3A3E6eEc1282",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2OutputOracle",
       "address": "eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
       "type": "Contract",
@@ -812,10 +812,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 10778400,
-        "latestOutputIndex": 5987,
-        "nextBlockNumber": 10780200,
-        "nextOutputIndex": 5988,
+        "latestBlockNumber": 31653000,
+        "latestOutputIndex": 17584,
+        "nextBlockNumber": 31654800,
+        "nextOutputIndex": 17585,
         "proposer": "eth:0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "eth:0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -859,7 +859,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "10573450879282109143950",
+        "getLockedBalance": "2417774586226260576904",
         "insurance": "eth:0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 10,
@@ -908,7 +908,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "eth:0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "1250385951567772920143000",
+        "getLockedBalance": "532043470000498295009533",
         "insurance": "eth:0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 0,
@@ -1741,6 +1741,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 21084957 },
-  "permissionsConfigHash": "0x0c91daeb3b5fd6c3d15f6350e4587415d23214b2671e6e3c0299b86ac7223795"
+  "usedBlockNumbers": { "ethereum": 24541879 },
+  "permissionsConfigHash": "0x7d9326d0a5a6556f593ec3d92e1cd56410eddc599ff9f1645ebd973792fbf608"
 }

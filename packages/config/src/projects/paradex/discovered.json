@@ -1,6 +1,6 @@
 {
   "name": "paradex",
-  "timestamp": 1770975731,
+  "timestamp": 1771848139,
   "configHash": "0xe147a2dfbb62ca52636bca43d754a5bae4e40213e358dabc4b775b0f9edfeb52",
   "entries": [
     {
@@ -52,6 +52,114 @@
       }
     },
     {
+      "name": "StarkgateManager",
+      "address": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+      "type": "Contract",
+      "template": "starknet/StarkgateManager",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
+      ],
+      "proxyType": "StarkWare proxy",
+      "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "deactivate bridging for deposits into the escrow.",
+          "role": ".manager"
+        }
+      ],
+      "sinceTimestamp": 1771090835,
+      "sinceBlock": 24456587,
+      "values": {
+        "$admin": "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+        "$immutable": false,
+        "$implementation": "eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3",
+        "$pastUpgrades": [
+          [
+            "2026-02-14T17:47:59.000Z",
+            "0xeea93b6e0f0ef059c8ee856129fa50da713b90c64928112556064964255c64d5",
+            ["eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0x40060493a280915e2df7b46f8A9f251156080C39"]
+          },
+          "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": {
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+            "members": []
+          },
+          "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": {
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99",
+            "members": []
+          },
+          "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": {
+            "adminRole": "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+            "members": ["eth:0x40060493a280915e2df7b46f8A9f251156080C39"]
+          },
+          "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": {
+            "adminRole": "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3",
+            "members": []
+          }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getEnableWindowDuration": 1209600,
+        "getRegistry": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+        "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["eth:0x40060493a280915e2df7b46f8A9f251156080C39"],
+        "identify": "StarkWare_StarkgateManager_2.0_1",
+        "implementation": "eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "tokenAdminAC": ["eth:0x40060493a280915e2df7b46f8A9f251156080C39"],
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+        },
+        "accessControl": {
+          "severity": "HIGH",
+          "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
+        },
+        "govAdminAC": {
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
+        },
+        "tokenAdminAC": {
+          "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
+        }
+      },
+      "implementationNames": {
+        "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE": "Proxy",
+        "eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3": "StarkgateManager"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
       "address": "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
       "type": "EOA",
       "proxyType": "EOA"
@@ -71,6 +179,31 @@
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "enable the withdrawal limit.",
           "role": ".secAgentAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x40060493a280915e2df7b46f8A9f251156080C39",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
+          "role": ".tokenAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "role": ".govAdminAC"
         }
       ]
     },
@@ -118,6 +251,59 @@
       "proxyType": "EOA"
     },
     {
+      "name": "StarkgateRegistry",
+      "address": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+      "type": "Contract",
+      "template": "starknet/StarkgateRegistry",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
+      ],
+      "proxyType": "StarkWare proxy",
+      "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
+      "sinceTimestamp": 1771090931,
+      "sinceBlock": 24456595,
+      "values": {
+        "$admin": "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+        "$immutable": false,
+        "$implementation": "eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3",
+        "$pastUpgrades": [
+          [
+            "2026-02-14T17:49:11.000Z",
+            "0xcf488e7f151fe248bd1c51fd3e8d1ecb40286adccb5527079d40886583cae510",
+            ["eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 0,
+        "govAdminAC": ["eth:0x40060493a280915e2df7b46f8A9f251156080C39"],
+        "identify": "StarkWare_StarkgateRegistry_2.0_1",
+        "implementation": "eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "fieldMeta": {
+        "$admin": {
+          "severity": "HIGH",
+          "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
+        },
+        "govAdminAC": {
+          "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
+        }
+      },
+      "implementationNames": {
+        "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280": "Proxy",
+        "eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3": "StarkgateRegistry"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
       "address": "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
       "type": "EOA",
       "proxyType": "EOA",
@@ -141,7 +327,7 @@
       "template": "starknet/StarknetERC20Bridge",
       "sourceHashes": [
         "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
-        "0xbe08cd77d92ae2b4d333c5d2850e16d06e16d98de2a8435e0a49dc35ad73b915"
+        "0xecdc47d2045525d1d373fdecc6478959fa5b2d2595713c2187c41ed98baa4738"
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.",
@@ -150,7 +336,7 @@
       "values": {
         "$admin": "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0",
         "$immutable": false,
-        "$implementation": "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
+        "$implementation": "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86",
         "$pastUpgrades": [
           [
             "2023-08-18T06:47:11.000Z",
@@ -171,9 +357,14 @@
             "2025-05-16T18:05:23.000Z",
             "0x6df9f1b6e2fe53f2ea980ff4908aca6e43dc77e17cfdb869c67e4879c49eabf2",
             ["eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"]
+          ],
+          [
+            "2026-02-21T13:53:59.000Z",
+            "0xb0ea49fedd399a118b3f8a0c6a05b3e73a8235a184e1e5c61f57c601f94b59e7",
+            ["eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -219,12 +410,12 @@
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
         "govAdminAC": ["eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"],
-        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
-        "implementation": "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
+        "identify": "StarkWare_StarknetTokenBridge_2.0_5",
+        "implementation": "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86",
         "isFrozen": false,
         "isNotFinalized": true,
         "l2TokenContract": "eth:0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353",
-        "manager": "eth:0x0000000000000000000000000000000000000000",
+        "manager": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": 500000000000000,
         "messagingContract": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
@@ -269,7 +460,7 @@
       },
       "implementationNames": {
         "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": "Proxy",
-        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": "StarknetERC20Bridge"
+        "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86": "StarknetTokenBridge"
       },
       "usedTypes": [
         {
@@ -351,7 +542,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 31118,
+        "l1ToL2MessageNonce": 31519,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -370,9 +561,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3004743033936636801877945096060166672717169471696599003195044329821010132277",
-        "stateBlockNumber": 1748110,
-        "stateRoot": "2229687517595298670085634816912951982381326804681234273684146340038298299704",
+        "stateBlockHash": "76397468078102081919171654866431532479491383030350231132096412578823775921",
+        "stateBlockNumber": 1790510,
+        "stateRoot": "3441651571715536827260103159282707805813610278224679372881899764103679423381",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -469,6 +660,16 @@
         },
         {
           "permission": "upgrade",
+          "from": "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "role": ".$admin"
         },
@@ -497,7 +698,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 41,
+        "nonce": 45,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -570,6 +771,53 @@
       "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
       "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
     ],
+    "eth:0x279b87139f2e89D7ce44c3056D2876fDEAB29BAE": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
     "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -618,46 +866,17 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": [
-      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
-      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
-      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
-      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
-      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
-      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogRemovedGovernor(address removedGovernor)",
+    "eth:0x61D146CfE95Dc5Ba6d9c5d9C83c39C1bff018bD3": [
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
       "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SetL2TokenBridge(uint256 value)",
-      "event SetMaxTotalBalance(address indexed token, uint256 value)",
-      "event TokenDeactivated(address token)",
-      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
-      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
-      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
-      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
-      "function assignLegacyProxyGovernor(address account)",
-      "function checkDeploymentStatus(address token)",
-      "function deactivate(address token)",
-      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
-      "function deposit(uint256 amount, uint256 l2Recipient) payable",
-      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
-      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
-      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
-      "function disableWithdrawalLimit(address token)",
-      "function enableWithdrawalLimit(address token)",
-      "function enrollToken(address) payable",
-      "function estimateDepositFeeWei() pure returns (uint256)",
-      "function estimateEnrollmentFeeWei() pure returns (uint256)",
-      "function getMaxTotalBalance(address token) view returns (uint256)",
-      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
-      "function getStatus(address token) view returns (uint8)",
+      "event TokenEnlisted(address indexed token, address indexed bridge)",
+      "event TokenSelfRemoved(address indexed token, address indexed bridge)",
+      "event TokenStatusBlocked(address indexed token)",
+      "function blockToken(address token)",
+      "function enlistToken(address token, address bridge)",
+      "function getBridge(address token) view returns (address)",
+      "function getWithdrawalBridges(address token) view returns (address[] bridges)",
       "function identify() pure returns (string)",
       "function initialize(bytes data)",
       "function isAppGovernor(address account) view returns (bool)",
@@ -667,13 +886,8 @@
       "function isOperator(address account) view returns (bool)",
       "function isSecurityAdmin(address account) view returns (bool)",
       "function isSecurityAgent(address account) view returns (bool)",
-      "function isServicingToken(address token) view returns (bool)",
       "function isTokenAdmin(address account) view returns (bool)",
       "function isUpgradeGovernor(address account) view returns (bool)",
-      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function maxDeposit() pure returns (uint256)",
-      "function maxTotalBalance() view returns (uint256)",
       "function registerAppGovernor(address account)",
       "function registerAppRoleAdmin(address account)",
       "function registerGovernanceAdmin(address account)",
@@ -682,7 +896,6 @@
       "function registerSecurityAgent(address account)",
       "function registerTokenAdmin(address account)",
       "function registerUpgradeGovernor(address account)",
-      "function removeLegacyProxyGovernor(address account)",
       "function renounceRole(bytes32 role, address account)",
       "function revokeAppGovernor(address account)",
       "function revokeAppRoleAdmin(address account)",
@@ -692,12 +905,96 @@
       "function revokeSecurityAgent(address account)",
       "function revokeTokenAdmin(address account)",
       "function revokeUpgradeGovernor(address account)",
-      "function setL2TokenBridge(uint256 l2TokenBridge_)",
-      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
-      "function withdraw(uint256 amount, address recipient)",
-      "function withdraw(uint256 amount)",
-      "function withdraw(address token, uint256 amount, address recipient)",
-      "function withdraw(address token, uint256 amount)"
+      "function selfRemove(address token)"
+    ],
+    "eth:0xc23D17BaeE6b2026d0e76914feD78d24b25548e3": [
+      "event ExistingBridgeAdded(address indexed token, address indexed bridge)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenBlocked(address indexed token, address indexed sender)",
+      "event TokenDeactivated(address indexed token, address indexed sender)",
+      "event TokenEnrolled(address indexed token, address indexed sender)",
+      "function addExistingBridge(address token, address bridge_)",
+      "function blockToken(address token)",
+      "function deactivateToken(address token)",
+      "function enrollTokenBridge(address token) payable",
+      "function getRegistry() view returns (address)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)"
+    ],
+    "eth:0xc50E4DF59aad8Ab494d10d2B66a90C9F0298f280": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -747,6 +1044,74 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0xDcbD52FFaF81BF0aA5bD38B0c15F60345e8Eec86": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address token) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function maxDeposit() pure returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
     ],
     "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3": [
       "constructor(uint256 upgradeActivationDelay)",
@@ -807,9 +1172,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
+    "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
     "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
-  "usedBlockNumbers": { "ethereum": 24447033 },
-  "permissionsConfigHash": "0xda1a3a743d33ccd8955ca600354c7efd41130c84c84a792d88afac6d00f27158"
+  "usedBlockNumbers": { "ethereum": 24519458 },
+  "permissionsConfigHash": "0x83626713d39e56baba32892529b290338f1639b1b278909a7fe2c1e37b7eb062"
 }

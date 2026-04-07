@@ -3,6 +3,7 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
+import type { ChartUnit } from '~/components/chart/types'
 import type {
   ChartMeta,
   ChartProject,
@@ -25,7 +26,6 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import type { ChartUnit } from '../../../types'
 
 interface ZkCatalogProjectsTvsChartProps {
   project: ChartProject
@@ -150,10 +150,9 @@ export function ZkCatalogProjectsTvsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      className="mt-4 mb-3"
       project={project}
     >
-      <AreaChart data={chartData} margin={{ top: 20 }}>
+      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}

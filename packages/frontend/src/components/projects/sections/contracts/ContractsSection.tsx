@@ -36,7 +36,6 @@ export interface ContractsSectionProps {
 export function ContractsSection(props: ContractsSectionProps) {
   if (
     Object.keys(props.contracts).length === 0 &&
-    props.escrows.length === 0 &&
     props.risks.length === 0 &&
     !props.isUnderReview
   ) {
@@ -49,10 +48,6 @@ export function ContractsSection(props: ContractsSectionProps) {
     }),
   )
 
-  const [changedEscrows, unchangedEscrows] = partition(
-    props.escrows,
-    (c) => c.impactfulChange,
-  )
   const hasContractsChanged = Object.values(props.contracts).some((p) =>
     p.some((c) => !!c.impactfulChange),
   )
@@ -105,30 +100,6 @@ export function ContractsSection(props: ContractsSectionProps) {
             )
           },
         )}
-      {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
-      {props.escrows.length > 0 && (
-        <>
-          <h3 className="text-heading-20">
-            Value Secured is calculated based on these smart contracts and
-            tokens:
-          </h3>
-          <div className="my-4">
-            {unchangedEscrows.map((contract) => (
-              <ContractEntry
-                key={technologyContractKey(contract)}
-                contract={contract}
-                className="my-4"
-              />
-            ))}
-            {changedEscrows.length > 0 && (
-              <ContractsWithImpactfulChanges
-                contracts={changedEscrows}
-                type="contracts"
-              />
-            )}
-          </div>
-        </>
-      )}
       {props.risks.length > 0 && (
         <>
           <p className="text-paragraph-15 md:text-paragraph-16">

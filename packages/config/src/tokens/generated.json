@@ -219,8 +219,23 @@
       "decimals": 18,
       "deploymentTimestamp": 1698365339,
       "coingeckoListingTimestamp": 1698969600,
+      "untilTimestamp": 1747440000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Amino",
+      "coingeckoId": "amino-2",
+      "address": "0x4DfD742c6E5e28F11Bcbcf6c5e51A965d15ea315",
+      "symbol": "AMINO",
+      "decimals": 18,
+      "deploymentTimestamp": 1736391875,
+      "coingeckoListingTimestamp": 1736899200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53626/large/amino.jpg?1736908953",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -572,6 +587,20 @@
       "coingeckoListingTimestamp": 1708041600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35290/large/AXGT-logo-7.png?1708076161",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "AZTEC",
+      "coingeckoId": "aztec",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "symbol": "AZTEC",
+      "decimals": 18,
+      "deploymentTimestamp": 1751359739,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70681/large/aztec.png?1763091883",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -1902,6 +1931,20 @@
       "coingeckoListingTimestamp": 1623369600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/16248/large/sovryn_logo_orange.png?1709174299",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Espresso",
+      "coingeckoId": "espresso",
+      "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+      "symbol": "ESP",
+      "decimals": 18,
+      "deploymentTimestamp": 1769784155,
+      "coingeckoListingTimestamp": 1770854400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67626/large/espresso.jpg?1753324525",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5715,6 +5758,20 @@
       "supply": "zero"
     },
     {
+      "name": "Syndicate",
+      "coingeckoId": "syndicate-3",
+      "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+      "symbol": "SYND",
+      "decimals": 18,
+      "deploymentTimestamp": 1752159095,
+      "coingeckoListingTimestamp": 1758153600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69122/large/synd.png?1757576144",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Synthetix Network Token",
       "coingeckoId": "havven",
       "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
@@ -7200,7 +7257,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7373,7 +7430,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7697,6 +7754,76 @@
       }
     },
     {
+      "name": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1735492876,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/AUSD_1024px.png?1764684132",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xE6A537a407488807F0bbeb0038B79004f19DDDFb",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1681858398,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "BRZ Token",
+      "coingeckoId": "brz",
+      "address": "0x4eD141110F6EeeAbA9A1df36d8c26f684d2475Dc",
+      "symbol": "BRZ",
+      "decimals": 18,
+      "deploymentTimestamp": 1687282016,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8472/large/MicrosoftTeams-image_%286%29.png?1696508657",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USD Coin",
+      "coingeckoId": "usd-coin",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1689890042,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDT0",
       "coingeckoId": "usdt0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -7717,6 +7844,34 @@
           }
         ]
       }
+    },
+    {
+      "name": "Worldwide USD",
+      "coingeckoId": "worldwide-usd",
+      "address": "0x7Cd017ca5ddb86861FA983a34b5F495C6F898c41",
+      "symbol": "WUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1734057669,
+      "coingeckoListingTimestamp": 1708300800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35358/large/WUSD-logo.png?1755754866",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "XSGD",
+      "coingeckoId": "xsgd",
+      "address": "0xDC3326e71D45186F113a2F448984CA0e8D201995",
+      "symbol": "XSGD",
+      "decimals": 6,
+      "deploymentTimestamp": 1648632579,
+      "coingeckoListingTimestamp": 1602806400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12832/large/XSGD_Logo_Full_Colour_1.png?1772634156",
+      "chainId": 137,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Ether",
@@ -7828,7 +7983,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7922,7 +8077,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -8030,7 +8185,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -8052,7 +8207,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9114,7 +9269,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9137,7 +9292,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9181,7 +9336,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9204,7 +9359,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9759,7 +9914,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -9935,7 +10090,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10067,7 +10222,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10139,7 +10294,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10233,7 +10388,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10298,7 +10453,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10320,7 +10475,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10342,7 +10497,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10364,7 +10519,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10386,7 +10541,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10431,6 +10586,72 @@
           {
             "name": "Socket",
             "slug": "socket"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cap USD",
+      "coingeckoId": "cap-usd",
+      "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+      "symbol": "cUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1767034034,
+      "coingeckoListingTimestamp": 1756339200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68272/large/cUSD_ab_500%C3%97500.png?1755232868",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MegaUSD",
+      "coingeckoId": "megausd",
+      "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+      "symbol": "USDm",
+      "decimals": 18,
+      "deploymentTimestamp": 1767518517,
+      "coingeckoListingTimestamp": 1770249600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69955/large/USDm.png?1760170136",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT0",
+      "coingeckoId": "usdt0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "symbol": "USDT0",
+      "decimals": 6,
+      "deploymentTimestamp": 1767074275,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 4326,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -10614,7 +10835,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -10664,7 +10885,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -11048,7 +11269,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -11541,7 +11762,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -11671,7 +11892,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -11806,7 +12027,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -12210,7 +12431,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -12254,7 +12475,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -13249,6 +13470,28 @@
       }
     },
     {
+      "name": "PayPal USD",
+      "coingeckoId": "paypal-usd",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "symbol": "PYUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1746547905,
+      "coingeckoListingTimestamp": 1692144000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31212/large/PYUSD_Token_Logo_2x.png?1765987788",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Pepe",
       "coingeckoId": "pepe",
       "address": "0x25d887Ce7a35172C62FeBFD67a1856F20FaEbB00",
@@ -13269,6 +13512,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Pleasing Gold",
+      "coingeckoId": "pleasing-gold",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "symbol": "PGOLD",
+      "decimals": 18,
+      "deploymentTimestamp": 1760426055,
+      "coingeckoListingTimestamp": 1761782400,
+      "category": "rwaPublic",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/70395/large/%E9%BB%84%E9%87%91.png?1761795141",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Polkamon",
@@ -13359,7 +13616,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -13511,7 +13768,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -13734,7 +13991,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -13995,6 +14252,20 @@
       "supply": "zero"
     },
     {
+      "name": "BRLA Token",
+      "coingeckoId": "brla-digital-brla",
+      "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+      "symbol": "BRLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1716405493,
+      "coingeckoListingTimestamp": 1725408000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Celo Brazilian Real",
       "coingeckoId": "celo-real-creal",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
@@ -14101,6 +14372,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Mento British Pound",
+      "coingeckoId": "celo-british-pound",
+      "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+      "symbol": "GBPm",
+      "decimals": 18,
+      "deploymentTimestamp": 1742684383,
+      "coingeckoListingTimestamp": 1745798400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55374/large/GBPm__%28Mento_British_Pound%29.png?1769111439",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "PLASTIK Token",
       "coingeckoId": "plastiks",
       "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
@@ -14201,6 +14486,27 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Bridged USDC (VIA Labs)",
+      "coingeckoId": "usd-coin",
+      "address": "0x3b952c8C9C44e8Fe201e2b26F6B2200203214cfF",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1730731277,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 48900,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Proto-CCTP (not Circle)"
+          }
+        ]
+      }
+    },
+    {
       "name": "ENA",
       "coingeckoId": "ethena",
       "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
@@ -14217,7 +14523,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -14348,7 +14654,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -14414,7 +14720,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -14436,7 +14742,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -14790,7 +15096,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -14890,7 +15196,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15285,7 +15591,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15328,7 +15634,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15372,7 +15678,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15394,7 +15700,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15466,7 +15772,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15592,7 +15898,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15657,7 +15963,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15749,7 +16055,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -15821,7 +16127,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -16438,7 +16744,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -16460,7 +16766,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -16483,7 +16789,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -16506,7 +16812,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }

@@ -13,6 +13,10 @@ describe('tinify', () => {
     const metadata = getTinifiyMetadata()
 
     const missing = pngs.filter((png) => {
+      // We dont want to tinify brand kit images because we want to serve them in best quality
+      if (png.startsWith(path.join(process.cwd(), 'static/brand-kit')))
+        return false
+
       const hash = metadata[path.relative(process.cwd(), png)]
       const buffer = readFileSync(png)
       return hash !== hashPng(buffer)
@@ -20,7 +24,8 @@ describe('tinify', () => {
 
     if (missing.length > 0) {
       throw new Error(
-        'Not all images were tinified. Run \`pnpm tinify\` to tinify them.',
+        'Not all images were tinified. Run \`pnpm tinify\` to tinify them. Missing: ' +
+          missing.join(', '),
       )
     }
   })

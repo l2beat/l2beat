@@ -55,7 +55,7 @@ export function FlowsWidget({
         <div className="mt-3 grid grid-cols-2 gap-3 md:mt-4">
           {isLoading &&
             times(2).map((index) => (
-              <Skeleton key={index} className="h-20 w-full" />
+              <Skeleton key={index} className="h-[110px] w-full" />
             ))}
           {flows?.map((flow) => (
             <FlowItem
@@ -66,6 +66,7 @@ export function FlowsWidget({
             />
           ))}
         </div>
+        {isLoading && <Skeleton className="mt-3 h-1.5 w-full" />}
         {flows && (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -129,17 +130,24 @@ function FlowTooltipItem({
   )
 }
 
-function FlowItem({
+export function FlowItem({
   from,
   to,
   volume,
+  className,
 }: {
   from: { id: string; iconUrl: string }
   to: { id: string; iconUrl: string }
   volume: number
+  className?: string
 }) {
   return (
-    <div className="flex flex-col items-center rounded-lg border border-divider px-4 py-3 md:py-4">
+    <div
+      className={cn(
+        'flex flex-col items-center rounded-lg border border-divider px-4 py-3 md:py-4',
+        className,
+      )}
+    >
       <div className="flex gap-1.5">
         <img src={from.iconUrl} alt={from.id} className="size-5" />
         <ArrowRightIcon className="size-5 fill-brand" />

@@ -106,7 +106,7 @@ export function DaPercentageThroughputChart({
       }}
     >
       <ChartWrapper
-        accessibilityLayer
+        responsive
         data={chartData}
         margin={{ top: 20 }}
         barCategoryGap={0}

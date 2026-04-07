@@ -18,6 +18,8 @@ import { rangeToResolution } from './utils/range'
 
 export const RecategorisedTvsChartDataParams = v.object({
   range: ChartRange,
+  excludeAssociatedTokens: v.boolean(),
+  excludeRwaRestrictedTokens: v.boolean(),
   filter: TvsProjectFilter,
 })
 
@@ -45,10 +47,17 @@ type RecategorisedTvsChartData = {
  */
 export async function getRecategorisedTvsChart({
   range,
+  excludeAssociatedTokens,
+  excludeRwaRestrictedTokens,
   filter,
 }: RecategorisedTvsChartDataParams): Promise<RecategorisedTvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData({ range, filter })
+    return getMockTvsChartData({
+      range,
+      excludeAssociatedTokens,
+      excludeRwaRestrictedTokens,
+      filter,
+    })
   }
 
   const projectsFilter = createTvsProjectsFilter(filter)
@@ -74,18 +83,18 @@ export async function getRecategorisedTvsChart({
     await Promise.all([
       getSummedTvsValues(rollups, range, {
         forSummary: true,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: true,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
       }),
       getSummedTvsValues(validiumsAndOptimiums, range, {
         forSummary: true,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: true,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
       }),
       getSummedTvsValues(others, range, {
         forSummary: true,
-        excludeAssociatedTokens: false,
-        excludeRwaRestrictedTokens: true,
+        excludeAssociatedTokens,
+        excludeRwaRestrictedTokens,
       }),
     ])
 

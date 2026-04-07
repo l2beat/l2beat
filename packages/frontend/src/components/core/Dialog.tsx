@@ -1,6 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import type * as React from 'react'
 
+import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 
 const Dialog = DialogPrimitive.Root
@@ -9,7 +10,24 @@ const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
-const DialogClose = DialogPrimitive.Close
+const DialogClose = ({
+  ref,
+  className,
+  ...props
+}: Omit<React.ComponentProps<typeof DialogPrimitive.Close>, 'children'>) => (
+  <DialogPrimitive.Close
+    ref={ref}
+    className={cn(
+      'absolute top-4 right-4 z-50 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:pointer-events-none',
+      className,
+    )}
+    {...props}
+  >
+    <CloseIcon className="size-4 fill-primary" />
+    <span className="sr-only">Close</span>
+  </DialogPrimitive.Close>
+)
+DialogClose.displayName = DialogPrimitive.Close.displayName
 
 const DialogOverlay = ({
   ref,
@@ -41,7 +59,7 @@ const DialogContent = ({
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        '-translate-x-1/2 -translate-y-1/2 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-999 grid w-full gap-4 border border-divider bg-surface-secondary p-6 shadow-popover duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in md:rounded-lg',
+        '-translate-x-1/2 -translate-y-1/2 data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-999 grid w-full gap-4 overscroll-none border border-divider bg-surface-secondary p-6 shadow-popover duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in md:rounded-lg',
         fullScreenMobile &&
           'max-md:inset-0 max-md:h-screen max-md:translate-x-0 max-md:translate-y-0 max-md:rounded-none',
         !fullScreenMobile && 'max-md:w-[calc(100%-1rem)] max-md:rounded-md',

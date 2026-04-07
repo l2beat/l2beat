@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xaa62aaa7a4d71203f47c0062acf904a9723614d3
+
+# Diff at Mon, 23 Feb 2026 14:42:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1770822545
+- current timestamp: 1771857555
+
+## Description
+
+Caldera signer rotation on Caldera Multisig 1: signer 0xc454... removed, signer 0xbCDb... added. Total signers unchanged at 8, threshold unchanged at "3 of 8 (38%)".
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$members.3:
+-        "arb1:0xc4548687682246e5B6ee8f914635c9f47836eDFe"
+    }
+```
+
 Generated with discovered.json: 0xac9f652bb86eefad66137adc4c1bb89ba48e5f44
 
 # Diff at Tue, 10 Feb 2026 15:13:07 GMT:

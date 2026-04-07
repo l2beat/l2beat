@@ -75,6 +75,8 @@ export function ScalingSummaryTvsChart({
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range,
+    excludeAssociatedTokens: false,
+    excludeRwaRestrictedTokens: true,
     filter: { type: 'layer2' },
   })
 
@@ -111,8 +113,10 @@ export function ScalingSummaryTvsChart({
         }}
       >
         <AreaChart
+          responsive
           data={chartData}
-          margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+          // Without right:1 the chart last point is not hoverable for some reason
+          margin={{ top: 20, right: 1, left: 0, bottom: 0 }}
         >
           <defs>
             <PinkFillGradientDef id="rollups-fill" />
@@ -302,15 +306,10 @@ function getStats(
   }
   const pointsWithData = data.filter(
     (point) =>
-      point.rollups !== null &&
-      point.validiumsAndOptimiums !== null &&
+      point.rollups !== null ||
+      point.validiumsAndOptimiums !== null ||
       point.others !== null,
-  ) as {
-    timestamp: number
-    rollups: number
-    validiumsAndOptimiums: number
-    others: number
-  }[]
+  )
 
   const oldestDataPoint = pointsWithData.at(0)
   const newestDataPoint = pointsWithData.at(-1)
@@ -339,8 +338,8 @@ function getStats(
       : undefined,
   ])
 
-  const oldestTotal = toSum.reduce((acc, curr) => acc + curr.oldest, 0)
-  const newestTotal = toSum.reduce((acc, curr) => acc + curr.newest, 0)
+  const oldestTotal = toSum.reduce((acc, curr) => acc + (curr.oldest ?? 0), 0)
+  const newestTotal = toSum.reduce((acc, curr) => acc + (curr.newest ?? 0), 0)
   const change = newestTotal / oldestTotal - 1
 
   return {

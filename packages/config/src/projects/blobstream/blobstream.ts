@@ -12,6 +12,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('blobstream')
@@ -35,7 +36,7 @@ export const blobstream: BaseProject = {
       'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
     links: {
       documentation: [
-        'https://docs.celestia.org/how-to-guides/blobstream',
+        'https://docs.celestia.org/operate/blobstream/install-binary/#how-to-run',
         'https://hackmd.io/@succinctlabs/HJE7XRrup',
       ],
       repositories: [
@@ -86,7 +87,7 @@ export const blobstream: BaseProject = {
       value: 'Validity Proof',
       description:
         'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
-      zkCatalogId: ProjectId('sp1'),
+      zkCatalogId: ProjectId('sp1hypercube'),
     },
     usedIn: linkByDA({
       layer: ProjectId('celestia'),
@@ -148,6 +149,7 @@ export const blobstream: BaseProject = {
       },
     ],
     programHashes: getBlobstreamVKeys().map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   milestones: [
     {

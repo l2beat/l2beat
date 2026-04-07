@@ -1,16 +1,16 @@
 import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
+import type { CommonProjectColumnsOptions } from '~/components/table/common-project-columns/CommonProjectColumns'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
-import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/components/tables/categoryToLabel'
+import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { TableLink } from '../../../../../components/table/TableLink'
-import type { ScalingTvsTableRow } from '../../utils/ToTableRows'
+import type { ScalingTvsTableRow } from '../../utils/toTableRows'
 import { TotalValueSecuredCell } from './TotalValueSecuredCell'
 import { ValueSecuredCell } from './ValueSecuredCell'
 
@@ -84,6 +84,9 @@ export const getScalingTvsColumns = (
                         rwaPublic: data.breakdown.rwaPublic,
                         rwaRestricted: data.breakdown.rwaRestricted,
                       }
+                }
+                additionalTrustAssumptionsPercentage={
+                  data.additionalTrustAssumptionsPercentage
                 }
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
@@ -293,7 +296,9 @@ function BreakdownCell({
   isTvsLoading,
 }: {
   row: ScalingTvsTableRow
-  dataKey: TvsToken['category'] | TvsToken['source']
+  dataKey:
+    | TvsToken['category']
+    | Exclude<TvsToken['source'], 'custom-canonical'>
   type: 'bridgingType' | 'category'
   isTvsLoading?: boolean
 }) {
@@ -341,6 +346,6 @@ function dataKeyToFilter(dataKey: TvsToken['category'] | TvsToken['source']) {
     case 'rwaRestricted':
       return categoryToLabel(dataKey)
     default:
-      return capitalize(dataKey)
+      return sourceToLabel(dataKey)
   }
 }

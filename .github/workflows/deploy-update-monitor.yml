@@ -60,7 +60,7 @@ jobs:
 
   deploy-update-monitor-staging:
     needs: check-time
-    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-staging-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs['um-staging-enabled'] == 'true') || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}
@@ -69,7 +69,7 @@ jobs:
 
   deploy-update-monitor-production:
     needs: check-time
-    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.um-prod-enabled == true) || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs['um-prod-enabled'] == 'true') || (github.event_name != 'workflow_dispatch' && vars.DEPLOY_UM_STAGING_ENABLED != 'false')
     uses: ./.github/workflows/deploy-to-coolify.yml
     secrets:
       COOLIFY_SERVER: ${{ secrets.COOLIFY_SERVER }}

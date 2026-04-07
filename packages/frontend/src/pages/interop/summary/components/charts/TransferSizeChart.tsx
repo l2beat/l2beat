@@ -22,10 +22,13 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { Logo } from '~/components/Logo'
+import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
 interface Props {
   data: TransferSizeDataPoint[]
@@ -34,28 +37,28 @@ interface Props {
 
 const chartMeta = {
   percentageUnder100: {
-    label: 'Under $100',
-    color: '#567FFF',
+    label: transferSizeBuckets.under100.label,
+    color: transferSizeBuckets.under100.color,
     indicatorType: { shape: 'square' },
   },
   percentage100To1K: {
-    label: '$100-$1,000',
-    color: '#7AE7C7',
+    label: transferSizeBuckets.from100To1K.label,
+    color: transferSizeBuckets.from100To1K.color,
     indicatorType: { shape: 'square' },
   },
   percentage1KTo10K: {
-    label: '$1,000-$10,000',
-    color: '#F7CB15',
+    label: transferSizeBuckets.from1KTo10K.label,
+    color: transferSizeBuckets.from1KTo10K.color,
     indicatorType: { shape: 'square' },
   },
   percentage10KTo100K: {
-    label: '$10,000-$100,000',
-    color: '#503047',
+    label: transferSizeBuckets.from10KTo100K.label,
+    color: transferSizeBuckets.from10KTo100K.color,
     indicatorType: { shape: 'square' },
   },
   percentageOver100K: {
-    label: 'Over $100,000',
-    color: '#F55D3E',
+    label: transferSizeBuckets.over100K.label,
+    color: transferSizeBuckets.over100K.color,
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
@@ -64,21 +67,20 @@ export function TransferSizeChart({ data, isLoading }: Props) {
   const isClient = useIsClient()
 
   if (isLoading || !isClient) {
-    return <Skeleton className="mt-5 h-full w-full" />
+    return <Skeleton className="mt-5 h-full min-h-[250px] w-full" />
   }
 
   return (
     <div className="relative size-full">
-      <SimpleChartContainer
-        meta={chartMeta}
-        className="size-full max-md:min-h-[200px] md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11"
-      >
+      <SimpleChartContainer meta={chartMeta}>
         <BarChart
-          accessibilityLayer
+          responsive
+          width="100%"
           data={data}
           margin={{ top: 20 }}
           maxBarSize={24}
           barGap={4}
+          className="size-full min-h-[250px]! md:aspect-auto [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:fill-secondary! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:font-bold! [&_.recharts-yAxis-tick-labels_.recharts-cartesian-axis-tick-label_text]:text-subtitle-11!"
         >
           <ChartLegend
             verticalAlign="top"
@@ -120,7 +122,11 @@ export function TransferSizeChart({ data, isLoading }: Props) {
             interval={0}
             tick={(props) => <XAxisTick {...props} data={data} />}
           />
-          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip />}
+            allowEscapeViewBox={{ y: true }}
+          />
         </BarChart>
       </SimpleChartContainer>
       <Logo
@@ -188,8 +194,18 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
       <div className="font-medium text-label-value-14 text-secondary">
         {label}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex flex-col gap-2">
+
+      <HorizontalSeparator className="my-1.5" />
+
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">
+            Total transfers
+          </span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatInteger(totalTransfers)} transfers
+          </span>
+        </div>
         {reversedPayload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry || entry.hide) return null
@@ -225,13 +241,31 @@ function CustomTooltip({ payload, label }: CustomChartTooltipProps) {
           )
         })}
       </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex items-center justify-between gap-x-6">
-        <span className="font-medium text-label-value-14">Total transfers</span>
-        <span className="font-medium text-label-value-15 text-primary tabular-nums">
-          {formatInteger(totalTransfers)} transfers
-        </span>
+      <HorizontalSeparator className="my-1.5" />
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Min size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.minTransferValueUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Average size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.averageTransferSizeUsd)}
+          </span>
+        </div>
+        <div className="flex items-center justify-between gap-x-6">
+          <span className="font-medium text-label-value-14">Max size</span>
+          <span className="font-medium text-label-value-15 text-primary tabular-nums">
+            {formatTransferSize(data.maxTransferValueUsd)}
+          </span>
+        </div>
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function formatTransferSize(value: number | undefined) {
+  return value !== undefined ? formatCurrency(value, 'usd') : EM_DASH
 }

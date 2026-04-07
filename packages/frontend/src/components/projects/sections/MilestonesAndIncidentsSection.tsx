@@ -8,8 +8,8 @@ import {
 } from '~/components/core/Collapsible'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
-import { IncidentIcon } from '~/icons/Incident'
-import { MilestoneIcon } from '~/icons/Milestone'
+import { GeneralMilestoneIcon } from '~/icons/GeneralMilestone'
+import { IncidentMilestoneIcon } from '~/icons/IncidentMilestone'
 import { cn } from '~/utils/cn'
 import { Markdown } from '../../markdown/Markdown'
 import { ProjectSection } from './ProjectSection'
@@ -67,7 +67,9 @@ function MilestonesBase(props: {
       <div className="ml-10">
         {props.milestones.map((milestone, i) => {
           const Icon =
-            milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
+            milestone.type === 'incident'
+              ? IncidentMilestoneIcon
+              : GeneralMilestoneIcon
           const isLast = i === props.milestones.length - 1
 
           return (

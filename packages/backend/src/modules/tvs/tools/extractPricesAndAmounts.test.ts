@@ -361,4 +361,114 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
   })
+
+  describe('chain range clamping', () => {
+    const chainSince = 1000
+    const chainUntil = 2000
+    const chainRanges = new Map([
+      ['form', { sinceTimestamp: chainSince, untilTimestamp: chainUntil }],
+    ])
+
+    const getAmount = (amounts: AmountConfig[], chain: string) =>
+      amounts.find((a) => 'chain' in a && a.chain === chain)!
+
+    it('clamps sinceTimestamp when token starts before chain', () => {
+      const tokens = [
+        mockObject<TvsToken>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address: EthereumAddress.ZERO,
+            chain: 'form',
+            decimals: 18,
+            sinceTimestamp: 500,
+          },
+          valueForProject: undefined,
+          valueForSummary: undefined,
+        }),
+      ]
+      const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
+      expect(getAmount(amounts, 'form').sinceTimestamp).toEqual(chainSince)
+    })
+
+    it('clamps untilTimestamp when token ends after chain', () => {
+      const tokens = [
+        mockObject<TvsToken>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address: EthereumAddress.ZERO,
+            chain: 'form',
+            decimals: 18,
+            sinceTimestamp: 1500,
+            untilTimestamp: 3000,
+          },
+          valueForProject: undefined,
+          valueForSummary: undefined,
+        }),
+      ]
+      const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
+      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(chainUntil)
+    })
+
+    it('leaves token unchanged when within chain range', () => {
+      const tokens = [
+        mockObject<TvsToken>({
+          priceId: 'price-A',
+          amount: {
+            type: 'balanceOfEscrow',
+            address: EthereumAddress.ZERO,
+            chain: 'form',
+            escrowAddress: EthereumAddress.ZERO,
+            decimals: 18,
+            sinceTimestamp: 1200,
+            untilTimestamp: 1800,
+          },
+          valueForProject: undefined,
+          valueForSummary: undefined,
+        }),
+      ]
+      const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
+      expect(getAmount(amounts, 'form').sinceTimestamp).toEqual(1200)
+      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(1800)
+    })
+
+    it('skips when chain not in config', () => {
+      const tokens = [
+        mockObject<TvsToken>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address: EthereumAddress.ZERO,
+            chain: 'unknown-chain',
+            decimals: 18,
+            sinceTimestamp: 500,
+          },
+          valueForProject: undefined,
+          valueForSummary: undefined,
+        }),
+      ]
+      const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
+      expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toEqual(500)
+    })
+
+    it('sets untilTimestamp when token has none', () => {
+      const tokens = [
+        mockObject<TvsToken>({
+          priceId: 'price-A',
+          amount: {
+            type: 'totalSupply',
+            address: EthereumAddress.ZERO,
+            chain: 'form',
+            decimals: 18,
+            sinceTimestamp: 1500,
+          },
+          valueForProject: undefined,
+          valueForSummary: undefined,
+        }),
+      ]
+      const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
+      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(chainUntil)
+    })
+  })
 })

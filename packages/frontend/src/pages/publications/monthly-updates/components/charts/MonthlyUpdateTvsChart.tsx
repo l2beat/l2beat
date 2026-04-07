@@ -78,13 +78,13 @@ export function MonthlyUpdateTvsChart({
   return (
     <PrimaryCard className="rounded-lg! border border-divider">
       <Header timeRange={timeRange} stats={stats} unit={'usd'} />
-      <ChartContainer
-        meta={chartMeta}
-        data={chartData}
-        isLoading={isLoading}
-        className="h-44! min-h-44!"
-      >
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
+        <AreaChart
+          responsive
+          data={chartData}
+          className="h-44! min-h-44!"
+          margin={{ top: 20 }}
+        >
           <defs>
             <CustomFillGradientDef
               id={id}

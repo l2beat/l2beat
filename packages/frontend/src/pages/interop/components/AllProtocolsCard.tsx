@@ -47,9 +47,9 @@ export function AllProtocolsCard({
               showNetMintedValueColumn={showNetMintedValueColumn}
             />
             {zeroTransferProtocols && zeroTransferProtocols.length > 0 && (
-              <div className="mt-2 ml-auto flex items-center gap-2">
+              <div className="flex items-center justify-center gap-1 border-divider border-t pt-4">
                 <AllProtocolsDialog protocols={zeroTransferProtocols} />
-                <span className="font-medium text-xs leading-none max-md:opacity-50 md:text-base">
+                <span className="font-normal text-secondary text-xs leading-none md:text-base">
                   have no transfers for the selected path.
                 </span>
               </div>

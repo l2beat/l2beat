@@ -1,27 +1,18 @@
 import { Client } from '@elastic/elasticsearch'
-import type {
-  BulkOperationType,
-  BulkResponseItem,
-  ErrorCause,
-} from '@elastic/elasticsearch/lib/api/types'
+import type { BulkResponse } from '@elastic/elasticsearch/lib/api/types'
 
 export interface ElasticSearchClientOptions {
   node: string
   apiKey: string
 }
 
-type DocumentError = {
-  status: number
-  error: ErrorCause
-}
-
-type BulkResponse =
+type CustomBulkResponse =
   | {
       isSuccess: true
     }
   | {
       isSuccess: false
-      errors: DocumentError[]
+      failedDocuments: Record<string, unknown>[]
     }
 
 // hides complexity of ElasticSearch client API
@@ -38,10 +29,9 @@ export class ElasticSearchClient {
   }
 
   public async bulk(
-    // biome-ignore lint/suspicious/noExplicitAny: generic type
-    documents: any[],
+    documents: unknown[],
     index: string,
-  ): Promise<BulkResponse> {
+  ): Promise<CustomBulkResponse> {
     if (documents.length === 0) {
       return { isSuccess: true }
     }
@@ -54,7 +44,10 @@ export class ElasticSearchClient {
     const response = await this.client.bulk({ refresh: true, operations })
 
     if (response.errors) {
-      return { isSuccess: false, errors: this.bundleErrors(response) }
+      return {
+        isSuccess: false,
+        failedDocuments: this.getFailedDocuments(response, operations),
+      }
     }
 
     return { isSuccess: true }
@@ -70,26 +63,22 @@ export class ElasticSearchClient {
     })
   }
 
-  private bundleErrors<
-    T extends {
-      errors: boolean
-      items: Partial<Record<BulkOperationType, BulkResponseItem>>[]
-    },
-  >(response: T): DocumentError[] {
-    const erroredDocuments: DocumentError[] = []
-    if (response.errors) {
-      response.items.forEach((action) => {
-        const operation = Object.keys(action)[0] as BulkOperationType
-        if (!operation) return
-        const item = action[operation]
-        if (item?.error) {
-          erroredDocuments.push({
-            status: item.status,
-            error: item.error,
-          })
-        }
-      })
-    }
-    return erroredDocuments
+  private getFailedDocuments(
+    response: BulkResponse,
+    operations: unknown[],
+  ): Record<string, unknown>[] {
+    /**
+     * The ES bulk API returns `items` in the same order as the input operations.
+     * Input operations are structured as alternating [action, document] pairs,
+     * so `items[i]` corresponds to `operations[i * 2]` (action) and `operations[i * 2 + 1]` (document).
+     * We use this positional mapping to extract the original documents that failed ingestion.
+     */
+    return response.items
+      .map((item, i) => ({
+        status: item.index?.status ?? 500,
+        error: item.index?.error ?? 'Unknown error',
+        document: operations[i * 2 + 1],
+      }))
+      .filter(({ status }) => status !== 201)
   }
 }

@@ -10,6 +10,7 @@ import {
   DA_LAYERS,
   DA_MODES,
   DATA_ON_CHAIN,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -21,6 +22,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('facet')
 
@@ -73,7 +75,7 @@ export const facet: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
   stage: getStage(
@@ -92,8 +94,8 @@ export const facet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
         noRedTrustedSetups: false,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
         verifierContractsReproducible: false,
       },
       stage2: {
@@ -142,7 +144,7 @@ export const facet: ScalingProject = {
           'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
         ),
         tokens: ['ETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {
@@ -157,7 +159,7 @@ export const facet: ScalingProject = {
           'eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909',
         ),
         tokens: ['ETH', 'WETH'],
-        source: 'external',
+        ...ESCROW.CANONICAL_ADD_TA,
         bridgedUsing: {
           bridges: [
             {
@@ -360,6 +362,7 @@ export const facet: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: facetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

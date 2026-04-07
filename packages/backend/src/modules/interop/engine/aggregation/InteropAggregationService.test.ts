@@ -1,13 +1,13 @@
 import type { InteropTransferRecord } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { InteropAggregationService } from './InteropAggregationService'
-import { InteropTransferClassifier } from './InteropTransferClassifier'
 
 describe(InteropAggregationService.name, () => {
   describe(InteropAggregationService.prototype.aggregate.name, () => {
-    it('aggregates transfers and tokens correctly', () => {
+    it('aggregates transfers, tokens and pairs correctly', () => {
       const transfers: InteropTransferRecord[] = [
         createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
           srcChain: 'ethereum',
@@ -37,6 +37,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -51,10 +52,16 @@ describe(InteropAggregationService.name, () => {
         id: 'config1',
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
+        transferTypeStats: {
+          deposit: { transferCount: 2, totalDurationSum: 11000 },
+        },
         transferCount: 2,
+        transfersWithDurationCount: 2,
         totalDurationSum: 11000,
         srcValueUsd: 5000,
         dstValueUsd: 5000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 3000,
         avgValueInFlight: undefined,
         countUnder100: 0,
         count100To1K: 0,
@@ -74,12 +81,38 @@ describe(InteropAggregationService.name, () => {
         srcChain: 'ethereum',
         dstChain: 'arbitrum',
         abstractTokenId: 'eth',
+        transferTypeStats: {
+          deposit: { transferCount: 2, totalDurationSum: 11000 },
+        },
         transferCount: 2,
+        transfersWithDurationCount: 2,
         totalDurationSum: 11000,
         volume: 5000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 3000,
         bridgeType: 'lockAndMint',
         mintedValueUsd: 5000,
         burnedValueUsd: 0,
+      })
+
+      expect(result.aggregatedTokensPairs).toHaveLength(1)
+      expect(result.aggregatedTokensPairs[0]).toEqual({
+        timestamp: to,
+        id: 'config1',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        tokenA: 'eth',
+        tokenB: 'eth',
+        transferTypeStats: {
+          deposit: { transferCount: 2, totalDurationSum: 11000 },
+        },
+        transferCount: 2,
+        transfersWithDurationCount: 2,
+        totalDurationSum: 11000,
+        volume: 5000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 3000,
+        bridgeType: 'lockAndMint',
       })
     })
 
@@ -113,6 +146,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -126,6 +160,12 @@ describe(InteropAggregationService.name, () => {
       expect(result.aggregatedTransfers[0].dstChain).toEqual('arbitrum')
       expect(result.aggregatedTransfers[1].srcChain).toEqual('ethereum')
       expect(result.aggregatedTransfers[1].dstChain).toEqual('polygon')
+
+      expect(result.aggregatedTokensPairs).toHaveLength(2)
+      expect(result.aggregatedTokensPairs[0].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTokensPairs[0].dstChain).toEqual('arbitrum')
+      expect(result.aggregatedTokensPairs[1].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTokensPairs[1].dstChain).toEqual('polygon')
     })
 
     it('calculates average value in flight for nonMinting bridge type', () => {
@@ -147,6 +187,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'nonMinting' }],
+          type: 'other',
         },
       ]
 
@@ -188,10 +229,12 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
         {
           id: 'config2',
           plugins: [{ plugin: 'stargate', bridgeType: 'burnAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -203,6 +246,10 @@ describe(InteropAggregationService.name, () => {
       expect(result.aggregatedTransfers).toHaveLength(2)
       expect(result.aggregatedTransfers[0].id).toEqual('config1')
       expect(result.aggregatedTransfers[1].id).toEqual('config2')
+
+      expect(result.aggregatedTokensPairs).toHaveLength(2)
+      expect(result.aggregatedTokensPairs[0].id).toEqual('config1')
+      expect(result.aggregatedTokensPairs[1].id).toEqual('config2')
     })
 
     it('returns empty arrays when no transfers match', () => {
@@ -212,6 +259,7 @@ describe(InteropAggregationService.name, () => {
         {
           id: 'config1',
           plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
         },
       ]
 
@@ -222,6 +270,7 @@ describe(InteropAggregationService.name, () => {
 
       expect(result.aggregatedTransfers).toEqual([])
       expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
     })
   })
 })

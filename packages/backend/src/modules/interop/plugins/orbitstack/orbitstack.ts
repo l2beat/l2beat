@@ -207,6 +207,10 @@ export class OrbitStackPlugin implements InteropPlugin {
   readonly name = 'orbitstack'
 
   capture(input: LogToCapture) {
+    if (input.tx.kind !== 'canonical') {
+      return
+    }
+
     if (input.chain === 'ethereum') {
       const network = ORBITSTACK_NETWORKS.find(
         (n) => n.outbox === EthereumAddress(input.log.address),
@@ -366,7 +370,7 @@ export class OrbitStackPlugin implements InteropPlugin {
         results.push(
           Result.Transfer('orbitstack.L1ToL2Transfer', {
             srcEvent: messageDelivered,
-            srcAmount: messageDelivered.args.txValue,
+            srcAmount: event.args.ethAmount,
             srcTokenAddress: Address32.NATIVE,
             srcWasBurned: false,
             dstEvent: event,

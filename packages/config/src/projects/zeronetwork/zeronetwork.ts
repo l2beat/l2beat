@@ -39,6 +39,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       ],
     },
   },
+  zkVerifierContractsReproducible: true,
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },

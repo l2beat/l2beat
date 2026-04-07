@@ -45,6 +45,7 @@ export const optimism: ScalingProject = opStackL2({
         'https://optimism.mirror.xyz/',
         'https://twitter.com/OPLabsPBC',
         'https://youtube.com/playlist?list=PLX_rXoLYCf5HqTWygUfoMfzRirGz5lekH',
+        'https://linkedin.com/company/optimism-foundation',
         'https://twitch.tv/optimismpbc',
         'https://discord.gg/optimism',
       ],
@@ -57,18 +58,28 @@ export const optimism: ScalingProject = opStackL2({
   interopConfig: {
     name: 'OP Canonical',
     durationSplit: {
-      lockAndMint: {
-        in: {
+      lockAndMint: [
+        {
           label: 'L1 -> L2',
-          from: 'ethereum',
-          to: 'optimism',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+            'beefy-bridge.L1ToL2Transfer',
+            'maker-bridge.L1ToL2Transfer',
+            'sorare-base.L1ToL2Transfer',
+            'lido-wsteth.L1ToL2Transfer',
+          ],
         },
-        out: {
+        {
           label: 'L2 -> L1',
-          from: 'optimism',
-          to: 'ethereum',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+            'maker-bridge.L2ToL1Transfer',
+            'lido-wsteth.L2ToL1Transfer',
+          ],
         },
-      },
+      ],
     },
     plugins: [
       {
@@ -96,7 +107,18 @@ export const optimism: ScalingProject = opStackL2({
         plugin: 'sorare-base',
         bridgeType: 'lockAndMint',
       },
+      {
+        chain: 'optimism',
+        plugin: 'lido-wsteth',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'optimism',
+        plugin: 'synthetix-bridge',
+        bridgeType: 'burnAndMint',
+      },
     ],
+    type: 'canonical',
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],

@@ -1,20 +1,14 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
-
-const typeToLabel = {
-  nonMinting: {
-    label: 'Non-minting',
-    bgColor: 'bg-blue-600',
-  },
-  lockAndMint: {
-    label: 'Lock & Mint',
-    bgColor: 'bg-yellow-700',
-  },
-  burnAndMint: {
-    label: 'Burn & Mint',
-    bgColor: 'bg-teal-500',
-  },
-} as const
+import {
+  INTEROP_TYPE_TO_BG_COLOR,
+  TRANSFER_TYPE_DISPLAY,
+} from '../../utils/display'
 
 interface BridgeTypeBadgeProps {
   bridgeType: KnownInteropBridgeType
@@ -25,18 +19,23 @@ export function BridgeTypeBadge({
   bridgeType,
   className,
 }: BridgeTypeBadgeProps) {
-  const config = typeToLabel[bridgeType]
+  const config = TRANSFER_TYPE_DISPLAY[bridgeType]
 
   return (
-    <div
-      key={bridgeType}
-      className={cn(
-        config.bgColor,
-        'flex h-min w-max items-center justify-center rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
-        className,
-      )}
-    >
-      {config.label}
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div
+          key={bridgeType}
+          className={cn(
+            INTEROP_TYPE_TO_BG_COLOR[bridgeType],
+            'flex h-min w-max cursor-pointer items-center justify-center whitespace-nowrap rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+            className,
+          )}
+        >
+          {config.label}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>{config.description}</TooltipContent>
+    </Tooltip>
   )
 }

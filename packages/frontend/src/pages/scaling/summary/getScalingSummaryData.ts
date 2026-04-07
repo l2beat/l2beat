@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -10,12 +10,12 @@ import { optionToRange } from '~/utils/range/range'
 import {
   SCALING_SUMMARY_ACTIVITY_CHART_RANGE_ARGS,
   SCALING_SUMMARY_TVS_CHART_RANGE_ARGS,
-} from './ScalingSummaryPage'
+} from './scalingSummaryConstants'
 
 export async function getScalingSummaryData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
@@ -33,8 +33,8 @@ export async function getScalingSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/summary/opengraph-image.png',
         },
       }),
@@ -60,6 +60,8 @@ async function getCachedData() {
     getScalingSummaryEntries(),
     helpers.tvs.recategorisedChart.prefetch({
       range: tvsChartRange,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
     }),
     helpers.activity.recategorisedChart.prefetch({

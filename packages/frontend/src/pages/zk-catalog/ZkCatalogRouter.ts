@@ -1,59 +1,24 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
-import { getZkCatalogV1Data } from './v1/getZkCatalogV1Data'
-import { getZkCatalogV1ProjectData } from './v1/project/getZkCatalogV1ProjectData'
 import { getZkCatalogData } from './v2/getZkCatalogData'
 import { getZkCatalogProjectData } from './v2/project/getZkCatalogProjectData'
 
 export function createZkCatalogRouter(
   manifest: Manifest,
   render: RenderFunction,
-  cache: ICache,
+  cache: InMemoryCache,
 ) {
   const router = express.Router()
 
   router.get('/zk-catalog', async (req, res) => {
     const data = await getZkCatalogData(manifest, req.originalUrl, cache)
-    const html = render(data, req.originalUrl)
+    const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
-
-  router.get('/zk-catalog/v1', async (req, res) => {
-    const data = await cache.get(
-      { key: ['zk-catalog', 'v1'], ttl: 5 * 60, staleWhileRevalidate: 25 * 60 },
-      () => getZkCatalogV1Data(manifest, req.originalUrl),
-    )
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get(
-    '/zk-catalog/v1/:slug',
-    validateRoute({
-      params: v.object({ slug: v.string() }),
-    }),
-    async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['zk-catalog', 'v1', 'projects', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () =>
-          getZkCatalogV1ProjectData(manifest, req.params.slug, req.originalUrl),
-      )
-      if (!data) {
-        res.status(404).send('Not found')
-        return
-      }
-      const html = render(data, req.originalUrl)
-      res.status(200).send(html)
-    },
-  )
 
   router.get(
     '/zk-catalog/:slug',
@@ -74,7 +39,7 @@ export function createZkCatalogRouter(
         res.status(404).send('Not found')
         return
       }
-      const html = render(data, req.originalUrl)
+      const html = await render(data, req.originalUrl)
       res.status(200).send(html)
     },
   )

@@ -72,6 +72,17 @@
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
+    "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      // L1Timelock: scheduledTransactions handler hits a parsing bug at newer blocks
+      "fields": {
+        "scheduledTransactions": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "DISABLED - handler parsing bug"
+          }
+        }
+      }
+    },
     "arb1:0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
       "ignoreDiscovery": true
     },

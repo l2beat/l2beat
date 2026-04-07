@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared'
 import {
   assert,
-  ChainSpecificAddress,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
 } from '@l2beat/shared-pure'
@@ -28,6 +28,7 @@ import { layer3s } from './layer3s'
 
 describe('getProjects', () => {
   const projects = getProjects()
+  const projectsById = new Map(projects.map((p) => [p.id, p]))
 
   describe('every project has a unique and valid id and slug', () => {
     const ids = new Set<ProjectId>()
@@ -37,9 +38,9 @@ describe('getProjects', () => {
         expect(project.slug).toMatchRegex(/^[a-z\-\d]+$/)
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
-        if (project.slug === 'payy' || project.slug === 'near') {
-          // Those two projects are exceptions!
-          // Both should most likely be merged with their duplicates
+        if (project.slug === 'near') {
+          // This project is an exception.
+          // It should most likely be merged with its duplicate
           // Right now it only works because refactored projects are resolved
           // first when querying by slug
           return
@@ -130,21 +131,6 @@ describe('getProjects', () => {
     }
   })
 
-  describe('verifier descriptions end with a dot', () => {
-    for (const project of projects) {
-      if (!project.proofVerification) {
-        return
-      }
-      describe(project.name, () => {
-        project.proofVerification?.verifiers.forEach((sV) => {
-          it(sV.name, () => {
-            expect(sV.description.endsWith('.')).toEqual(true)
-          })
-        })
-      })
-    }
-  })
-
   describe('synchronization with scaling projects - layer2s and layer3s', () => {
     it('each scaling project should have a corresponding entry in the DA-BEAT', () => {
       const daLayers = projects.filter((x) => x.daLayer !== undefined)
@@ -195,6 +181,7 @@ describe('getProjects', () => {
       'celestia',
       'avail',
       'near-da',
+      'espresso',
     ]
 
     for (const project of projects) {
@@ -212,6 +199,7 @@ describe('getProjects', () => {
       'celestia',
       'avail',
       'near-da',
+      'espresso',
     ]
 
     for (const project of projects) {
@@ -240,18 +228,58 @@ describe('getProjects', () => {
         const usedInVerifiers = uniq(
           project.zkCatalogInfo.verifierHashes.flatMap((v) =>
             v.knownDeployments.flatMap(
-              (d) =>
-                d.overrideUsedIn ?? usageMap.get(`${d.chain}-${d.address}`),
+              (d) => d.overrideUsedIn ?? usageMap.get(`${d.address}`),
             ),
           ),
         ).filter((p) => p !== undefined)
+        const usedInVerifiersSet = new Set(usedInVerifiers)
 
         for (const usedIn of usedInVerifiers) {
           it(`${usedIn} is configured in ${project.id} TVS projects`, () => {
             expect(liveTvsProjects.has(usedIn)).toEqual(true)
           })
         }
+
+        const currentProjectsForTvsSection = new Set(
+          [...liveTvsProjects].flatMap((tvsProject) => {
+            const tvsProjectConfig = projectsById.get(tvsProject)
+            if (!tvsProjectConfig || tvsProjectConfig.archivedAt) {
+              return []
+            }
+
+            if (tvsProjectConfig.daBridge) return []
+
+            return [tvsProject]
+          }),
+        )
+
+        for (const tvsProject of currentProjectsForTvsSection) {
+          it(`TVS project ${tvsProject} is detected in verifier usage`, () => {
+            expect(usedInVerifiersSet.has(tvsProject)).toEqual(true)
+          })
+        }
       })
+    }
+  })
+
+  describe('scaling project zkVerifiers are configured in zk catalog', () => {
+    const zkCatalogAddresses = new Set<ChainSpecificAddress>()
+    for (const project of projects) {
+      if (!project.zkCatalogInfo) continue
+      for (const verifierHash of project.zkCatalogInfo.verifierHashes) {
+        for (const deployment of verifierHash.knownDeployments) {
+          zkCatalogAddresses.add(deployment.address)
+        }
+      }
+    }
+
+    for (const project of projects) {
+      if (!project.isScaling || !project.contracts?.zkVerifiers) continue
+      for (const verifier of project.contracts.zkVerifiers) {
+        it(`${project.id} verifier ${verifier} is in at least one zk catalog project`, () => {
+          expect(zkCatalogAddresses.has(verifier)).toEqual(true)
+        })
+      }
     }
   })
 
@@ -282,12 +310,26 @@ describe('getProjects', () => {
 
             if (upgradableBy) {
               it('contracts.upgradableBy is valid', () => {
-                const expectedToContain = upgradableBy.map(
-                  (a) => a.id ?? a.name,
-                )
+                for (const actor of upgradableBy) {
+                  const expected = actor.id ?? actor.name
 
-                for (const expected of expectedToContain) {
-                  const message = [
+                  if (actorIds.includes(expected)) {
+                    const reachableActorMarkedUnreachableMessage = [
+                      '',
+                      chalk.red('ERROR:'),
+                      `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has upgrader ${chalk.magenta(expected)} marked as unreachable.`,
+                      'Reachable upgraders should not have unreachable: true.',
+                      '',
+                      `${chalk.green('POSSIBLE FIX')}: remove unreachable: true for reachable upgraders`,
+                    ].join('\n')
+                    assert(
+                      actor.unreachable !== true,
+                      reachableActorMarkedUnreachableMessage,
+                    )
+                    continue
+                  }
+
+                  const missingActorMessage = [
                     '',
                     chalk.red('ERROR:'),
                     `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} is marked as upgradable by an actor named ${chalk.magenta(expected)}.`,
@@ -295,10 +337,21 @@ describe('getProjects', () => {
                     '',
                     `${chalk.cyan('Current actors')}: ${all.map((a) => a.name).join(', ')}`,
                     '',
-                    `${chalk.green('POSSIBLE FIX')}: check if the actor is not marked as spam`,
+                    `${chalk.green('POSSIBLE FIX')}: check if the actor should be marked with unreachable: true`,
                   ].join('\n')
 
-                  assert(actorIds.includes(expected), message)
+                  assert(actor.unreachable === true, missingActorMessage)
+
+                  const unreachableActorWithIdMessage = [
+                    '',
+                    chalk.red('ERROR:'),
+                    `Contract ${contract.name} (${contract.address}) in project ${chalk.blue(project.id)} has unreachable upgrader ${chalk.magenta(actor.name)}.`,
+                    'Unreachable upgraders cannot be linked to a permission actor id.',
+                    '',
+                    `${chalk.green('POSSIBLE FIX')}: remove the id field for unreachable upgraders`,
+                  ].join('\n')
+
+                  assert(actor.id === undefined, unreachableActorWithIdMessage)
                 }
               })
             }
@@ -723,10 +776,10 @@ describe('getProjects', () => {
 
 // This is simpler version of getContractUtils that we have in FE. It's used only for testing.
 function getUsageMap(projects: BaseProject[]) {
-  const usageMap = new Map<`${string}-${EthereumAddress}`, ProjectId[]>()
+  const usageMap = new Map<`${ChainSpecificAddress}`, ProjectId[]>()
 
-  function addUsage(chain: string, address: EthereumAddress, usage: ProjectId) {
-    const key = `${chain}-${address}` as const
+  function addUsage(address: ChainSpecificAddress, usage: ProjectId) {
+    const key = `${address}` as const
     const uses = usageMap.get(key)
     if (!uses) {
       usageMap.set(key, [usage])
@@ -738,19 +791,13 @@ function getUsageMap(projects: BaseProject[]) {
   }
 
   for (const project of projects) {
-    if (!project.isScaling || !project.contracts) continue
+    if (!(project.isScaling || project.daBridge) || !project.contracts) continue
 
-    for (const [chain, contracts] of Object.entries(
-      project.contracts.addresses,
-    )) {
+    for (const [, contracts] of Object.entries(project.contracts.addresses)) {
       for (const contract of contracts) {
-        addUsage(
-          chain,
-          ChainSpecificAddress.address(contract.address),
-          project.id,
-        )
+        addUsage(contract.address, project.id)
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, ChainSpecificAddress.address(impl), project.id)
+          addUsage(impl, project.id)
         }
       }
     }

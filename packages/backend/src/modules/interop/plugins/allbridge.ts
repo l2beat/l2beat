@@ -8,7 +8,8 @@ allbridge is a simple swap service that performs three steps:
   as VUSD is not used outside of Allbridge
  */
 
-import { Address32 } from '@l2beat/shared-pure'
+import type { Address32 } from '@l2beat/shared-pure'
+import { findTransferLogBefore } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -118,29 +119,12 @@ export class AllbridgePlugIn implements InteropPlugin {
     }
     const tokensSent = parseTokensSent(input.log, null)
     if (tokensSent) {
-      // Find Transfer event in any preceding logs
-      let srcTokenAddress: Address32 | undefined
-      let srcAmount: bigint | undefined
-
-      for (
-        let offset = 1;
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
-          srcTokenAddress = Address32.from(precedingLog.address)
-          srcAmount = transfer.value
-          break
-        }
-      }
+      const transferMatch = findTransferLogBefore(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => parseTransfer(log, null),
+        () => true,
+      )
       return [
         TokensSent.create(input, {
           amount: tokensSent.amount,
@@ -150,36 +134,20 @@ export class AllbridgePlugIn implements InteropPlugin {
             (x) => x.allBridgeChainId,
             Number(tokensSent.destinationChainId),
           ),
-          srcTokenAddress,
-          srcAmount,
+          srcTokenAddress: transferMatch.transfer?.logAddress,
+          srcAmount: transferMatch.transfer?.value,
         }),
       ]
     }
 
     const tokensReceived = parseTokensReceived(input.log, null)
     if (tokensReceived) {
-      let dstTokenAddress: Address32 | undefined
-      let dstAmount: bigint | undefined
-
-      for (
-        let offset = 1;
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        offset <= input.log.logIndex!;
-        offset++
-      ) {
-        const precedingLog = input.txLogs.find(
-          // biome-ignore lint/style/noNonNullAssertion: It's there
-          (x) => x.logIndex === input.log.logIndex! - offset,
-        )
-        if (!precedingLog) break
-
-        const transfer = parseTransfer(precedingLog, null)
-        if (transfer) {
-          dstTokenAddress = Address32.from(precedingLog.address)
-          dstAmount = transfer.value
-          break
-        }
-      }
+      const transferMatch = findTransferLogBefore(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => parseTransfer(log, null),
+        () => true,
+      )
       return [
         TokensReceived.create(input, {
           amount: tokensReceived.amount,
@@ -190,8 +158,8 @@ export class AllbridgePlugIn implements InteropPlugin {
             /* srcChain is the first byte of the message */
             Number.parseInt(tokensReceived.message.slice(2, 4), 16),
           ),
-          dstTokenAddress,
-          dstAmount,
+          dstTokenAddress: transferMatch.transfer?.logAddress,
+          dstAmount: transferMatch.transfer?.value,
         }),
       ]
     }

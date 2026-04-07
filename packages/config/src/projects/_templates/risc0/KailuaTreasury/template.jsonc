@@ -2,7 +2,12 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Entrypoint for state root proposals. Manages bonds (currently {{participationBondFmt}} ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as {{vanguardAdvantageFmt}}.",
   "ignoreMethods": ["getChallengerDuration"],
-  "ignoreRelatives": ["children", "parentGame", "lastResolved"],
+  "ignoreRelatives": [
+    "children",
+    "parentGame",
+    "lastResolved",
+    "anchorStateRegistry"
+  ],
   "ignoreInWatchMode": ["lastResolved"],
   "fields": {
     "participationBondFmt": {

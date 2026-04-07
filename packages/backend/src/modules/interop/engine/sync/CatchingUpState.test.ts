@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { CatchingUpState } from './CatchingUpState'
@@ -29,7 +29,7 @@ describe(CatchingUpState.name, () => {
 
       expect(nextState).toEqual(state)
       expect(state.status).toEqual('waiting for block number')
-      expect(getResyncState).not.toHaveBeenCalled()
+      expect(getResyncState).toHaveBeenCalled()
     })
 
     it('resyncs from requested timestamp after wipe, clears flag and switches to following', async () => {
@@ -96,6 +96,23 @@ describe(CatchingUpState.name, () => {
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
+    it('waits for wipe even when latest block number is missing', async () => {
+      const syncer = createSyncer({
+        latestBlockNumber: undefined,
+        getResyncState: mockFn().resolvesTo({
+          resyncFrom: UnixTime(5),
+          wipeRequired: true,
+        }),
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const nextState = await state.catchUp()
+
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
+    })
+
     it('switches to following when already synced to latest block', async () => {
       const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
       const getLogs = mockFn().resolvesTo([])
@@ -137,6 +154,36 @@ describe(CatchingUpState.name, () => {
         toBlock: 10n,
         toTimestamp: UnixTime(10),
       })
+    })
+
+    it('shows the active range before saving it', async () => {
+      let resolveSaveProducedInteropEvents!: () => void
+      const saveProducedInteropEvents = mockFn().returns(
+        new Promise<void>((resolve) => {
+          resolveSaveProducedInteropEvents = resolve
+        }),
+      )
+      const syncer = createSyncer({
+        latestBlockNumber: 10n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 9n }),
+        ),
+        buildLogQuery: mockFn().returns(makeEmptyLogQuery()),
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      const catchUpPromise = state.catchUp()
+      await flushAsyncWork()
+
+      expect(state.status).toEqual(
+        'saving events 10-10 (0 behind tip, 0 events)',
+      )
+
+      resolveSaveProducedInteropEvents()
+      const nextState = await catchUpPromise
+
+      expect(nextState).toBeA(FollowingState)
     })
 
     it('syncs multiple ranges until the tip is reached', async () => {
@@ -375,11 +422,80 @@ describe(CatchingUpState.name, () => {
 
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'canonical')
       expect(captured?.tx.hash).toEqual(txHash)
-      expect(captured?.tx.data).toEqual(transaction.input)
-      expect(captured?.tx.value).toEqual(transaction.value)
+      expect(captured?.tx.data).toEqual(transaction.input!)
+      expect(captured?.tx.value).toEqual(transaction.value!)
       expect(captured?.tx.from).toEqual(transaction.from)
       expect(captured?.tx.to).toEqual(transaction.to?.toString())
+    })
+
+    it('maps call-only bundle transaction fields for includeTx', async () => {
+      const baseTopic0 = '0xaaa'
+      const txHash = `0x${'23'.repeat(32)}`
+
+      const captureLog = mockFn().returns(undefined)
+      const saveProducedInteropEvents = mockFn().resolvesTo(undefined)
+
+      const logQuery = new LogQuery()
+      addAddress(logQuery, EthereumAddress.random())
+      logQuery.topic0s.add(baseTopic0)
+      logQuery.topic0sWithTx.add(baseTopic0)
+
+      const getLogs = mockFn().resolvesTo([
+        makeRpcLog({
+          txHash,
+          blockNumber: 2n,
+          blockTimestamp: 2n,
+          topics: [baseTopic0],
+          logIndex: 0n,
+        }),
+      ])
+
+      const callTo = EthereumAddress.random()
+      const transaction = makeRpcTransaction({
+        hash: txHash,
+        type: 118n,
+        to: null,
+        input: undefined,
+        value: undefined,
+        calls: [
+          {
+            to: callTo,
+            value: 321n,
+            input: '0xabc',
+          },
+        ],
+      })
+      const getTransactionByHash = mockFn().resolvesTo(transaction)
+
+      const syncer = createSyncer({
+        latestBlockNumber: 2n,
+        getLastSyncedRange: mockFn().resolvesTo(
+          makeSyncedRange({ fromBlock: 1n, toBlock: 1n }),
+        ),
+        buildLogQuery: mockFn().returns(logQuery),
+        getLogs,
+        getTransactionByHash,
+        captureLog,
+        saveProducedInteropEvents,
+      })
+      const state = new CatchingUpState(syncer, Logger.SILENT)
+
+      await state.catchUp()
+
+      expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
+      const captured = captureLog.calls[0]?.args[0] as LogToCapture | undefined
+      assert(captured?.tx.kind === 'bundle')
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.calls).toEqual([
+        {
+          to: callTo,
+          value: 321n,
+          data: '0xabc',
+        },
+      ])
     })
 
     it('retries with smaller ranges after log response size exceeded', async () => {
@@ -402,12 +518,14 @@ describe(CatchingUpState.name, () => {
       const firstState = await state.catchUp()
 
       expect(firstState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/2]')
       expect(syncer.logRangeDivider).toEqual(1)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
 
       const secondState = await state.catchUp()
 
       expect(secondState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/4]')
       expect(syncer.logRangeDivider).toEqual(2)
       const secondCall = getLogs.calls[1]?.args[0]
       expect(secondCall?.fromBlock).toEqual(1n)
@@ -435,16 +553,16 @@ describe(CatchingUpState.name, () => {
       )
     })
 
-    it('throws when no synced range and no resync timestamp', async () => {
+    it('transitions to FollowingState when no synced range and no resync timestamp', async () => {
       const syncer = createSyncer({
         latestBlockNumber: 10n,
         getLastSyncedRange: mockFn().resolvesTo(undefined),
       })
       const state = new CatchingUpState(syncer, Logger.SILENT)
 
-      await expect(async () => await state.catchUp()).toBeRejectedWith(
-        `Can't resync ${CLUSTER_NAME} cluster without "from" timestamp`,
-      )
+      const nextState = await state.catchUp()
+
+      expect(nextState).toBeA(FollowingState)
     })
   })
 })
@@ -547,6 +665,7 @@ function makeRpcTransaction(
   overrides: Partial<RpcTransaction> = {},
 ): RpcTransaction {
   return {
+    type: 1n,
     blockHash: ZERO_HASH,
     blockNumber: 1n,
     from: EthereumAddress.random(),
@@ -558,6 +677,10 @@ function makeRpcTransaction(
     value: 0n,
     ...overrides,
   }
+}
+
+async function flushAsyncWork() {
+  await new Promise<void>((resolve) => setImmediate(resolve))
 }
 
 const ZERO_HASH = `0x${'00'.repeat(32)}`

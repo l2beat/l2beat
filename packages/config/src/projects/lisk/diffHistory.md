@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x032a2ceb1cb071aca2a547594fc09039a0be61c9
+
+# Diff at Wed, 25 Mar 2026 10:07:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1772198386
+- current timestamp: 1774433184
+
+## Description
+
+Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA. Additionally, a Gelato Multisig signer (0x28bB9385A588EF4747264D19B9A9F1603591680c) has set an EIP-7702 delegation to an EIP7702StatelessDeleGator contract.
+## Watched changes
+
+```diff
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x28bB9385A588EF4747264D19B9A9F1603591680c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x4831558cc7e858c354d05912425f7b608f63f175997992468f288e0d88c4cc50","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0x16907752b65fe7ae452a6255066d9045afb41b4c
+
+# Diff at Fri, 27 Feb 2026 13:25:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1769272346
+- current timestamp: 1772198386
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0x96caad6a7c80d4307b14b9e61d3d62aee179ce94
 
 # Diff at Fri, 13 Feb 2026 11:33:13 GMT:

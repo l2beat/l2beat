@@ -24,6 +24,7 @@ export const usdt0: BaseProject = {
         bridgeType: 'burnAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

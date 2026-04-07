@@ -1,11 +1,10 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
-import { bridges } from './bridges'
 import { adjustDiscoveryInfo } from './getProjects'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
@@ -28,7 +27,7 @@ export function runConfigAdjustments() {
   if (once) return
   once = true
 
-  const chains = [...layer2s, ...layer3s, ...bridges, ...refactored]
+  const chains = [...layer2s, ...layer3s, ...refactored]
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
 
@@ -37,7 +36,6 @@ export function runConfigAdjustments() {
     adjustBadges(p, layer3s)
   })
   layer3s.forEach((p) => adjustLegacy(p, chains))
-  bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
 
@@ -70,13 +68,6 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       ),
     )
   }
-  if (project.proofVerification) {
-    for (const verifier of project.proofVerification.verifiers) {
-      const chain = chains.find((x) => x.chainId === verifier.chainId)
-      assert(chain?.explorerUrl, `Missing explorerUrl for: ${verifier.chainId}`)
-      verifier.url = `${chain.explorerUrl}/address/${verifier.contractAddress}#code`
-    }
-  }
   adjustContracts(project, chains)
 }
 
@@ -90,7 +81,7 @@ function adjustContracts(
         const chain = chains.find((x) => x.name === contract.chain)
         assert(chain, `Missing chain: ${contract.chain}`)
         assert(chain.explorerUrl, `Missing explorer url: ${chain.name}`)
-        contract.url = `${chain.explorerUrl}/address/${contract.address}#code`
+        contract.url = `${chain.explorerUrl}/address/${ChainSpecificAddress.address(contract.address)}#code`
       }
     }
     const unverifiedContracts = getProjectUnverifiedContracts(project)

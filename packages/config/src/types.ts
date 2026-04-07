@@ -1,12 +1,10 @@
 import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
-  type ChainId,
   type ChainSpecificAddress,
   type CoingeckoId,
   EthereumAddress,
   type KnownInteropBridgeType,
   type ProjectId,
-  type StringWithAutocomplete,
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
@@ -100,9 +98,6 @@ export interface BaseProject {
   daBridge?: ProjectDaBridge
   customDa?: ProjectCustomDa
 
-  // zk catalog data
-  proofVerification?: ProjectProofVerification
-
   // interop data
   interopConfig?: InteropConfig
 
@@ -125,9 +120,7 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isBridge?: true
   isScaling?: true
-  isZkCatalog?: true
   isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
@@ -219,13 +212,31 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
-export interface Milestone {
+interface BaseMilestone {
   title: string
   url: string
+  linkLabel?: string
   date: string
   description?: string
-  type: 'general' | 'incident'
 }
+
+interface GeneralMilestone extends BaseMilestone {
+  type: 'general'
+}
+
+interface IncidentMilestone extends BaseMilestone {
+  type: 'incident'
+}
+
+interface ProjectIconMilestone extends BaseMilestone {
+  project: { id: string; name: string; icon: string }
+  type: 'project'
+}
+
+export type Milestone =
+  | ProjectIconMilestone
+  | GeneralMilestone
+  | IncidentMilestone
 
 export interface ChainConfig {
   /**
@@ -563,7 +574,6 @@ export interface ProjectScalingStateDerivation {
 export interface ProjectScalingStateValidation {
   description?: string
   categories: ProjectScalingStateValidationCategory[]
-  proofVerification?: ProjectProofVerification
   isUnderReview?: boolean
 }
 
@@ -582,6 +592,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'Fraud proofs'
     // Other
     | 'No state validation'
+    | 'Slashing'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -758,50 +769,7 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 // #endregion
 
 // #region zk catalog data
-export interface ProjectProofVerification {
-  shortDescription?: string
-  aggregation: boolean
-  verifiers: OnchainVerifier[]
-  requiredTools: RequiredTool[]
-}
-
-export type OnchainVerifier = {
-  name: string
-  description: string
-  contractAddress: EthereumAddress
-  /** Link to the smart contract code on an explorer. Automatically set. */
-  url?: string
-  chainId: ChainId
-  subVerifiers: SubVerifier[]
-} & (
-  | {
-      verified: 'yes' | 'failed'
-      /** Details of entity that performed verification */
-      performedBy: {
-        name: string
-        link: string
-      }
-    }
-  | { verified: 'no' }
-)
-
-export interface SubVerifier {
-  name: string
-  proofSystem: string
-  mainArithmetization: string
-  mainPCS: string
-  trustedSetup?: StringWithAutocomplete<'None'>
-  link?: string
-}
-
-export interface RequiredTool {
-  name: string
-  version: string
-  link?: string
-}
-// #endregion
-
-// #region zk catalog v2 data
+// #region zk catalog data
 export interface ProjectZkCatalogInfo {
   creator?: string
   formalVerificationLinks?: {
@@ -828,11 +796,12 @@ export interface ProjectZkCatalogInfo {
     untilTimestamp?: UnixTime
   }[]
   verifierHashes: {
+    name: string
+    sourceLink?: string
     hash: string
     proofSystem: ZkCatalogTag
     knownDeployments: {
-      address: EthereumAddress
-      chain: string
+      address: ChainSpecificAddress
       overrideUsedIn?: ProjectId[]
     }[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
@@ -871,7 +840,11 @@ export interface ProjectAssociatedToken {
   icon: string | undefined
 }
 
-export type ProjectEscrowSource = 'canonical' | 'external' | 'native'
+export type ProjectEscrowSource =
+  | 'canonical'
+  | 'custom-canonical'
+  | 'external'
+  | 'native'
 
 export type SharedEscrow = AggLayerEscrow | ElasticChainEscrow
 
@@ -1091,6 +1064,7 @@ export interface ProjectContracts {
   risks: ProjectRisk[]
   escrows?: ProjectEscrow[]
   programHashes?: ProjectScalingContractsProgramHash[]
+  zkVerifiers?: ChainSpecificAddress[]
 }
 
 export interface ProjectContract {
@@ -1145,6 +1119,9 @@ export interface ProjectUpgradeableActor {
   name: string
   /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
   delay: string
+  /** Actor is not reachable from discovery entrypoints (probably due to depth limit)
+   * and is therefore not listed in permissions. */
+  unreachable?: boolean
 }
 
 export interface ProjectEscrow {
@@ -1200,6 +1177,7 @@ export type InteropPluginName =
   | 'agglayer'
   | 'allbridge'
   | 'aori'
+  | 'avalanche'
   | 'axelar'
   | 'axelar-its'
   | 'beefy-bridge'
@@ -1242,6 +1220,7 @@ export type InteropPluginName =
   | 'squid-coral'
   | 'stargate'
   | 'superform'
+  | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
   | 'wormhole-ntt'
@@ -1249,10 +1228,14 @@ export type InteropPluginName =
   | 'wormhole-token-bridge'
   | 'zkstack'
   | 'zklink-nova'
+  | 'linea'
+
+export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
 export interface InteropConfig {
   name?: string
   shortName?: string
+  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1265,8 +1248,8 @@ export interface InteropConfig {
    */
   subgroupId?: ProjectId
   plugins: InteropPlugin[]
-  /** If configured avg. duration it able will be split into two parts, depending on the config.
-   Mostly used for canonical bridges, to show deposit and withdrawal times separately  */
+  /** If configured avg. duration can be split into custom labeled groups.
+   The listed transfer types are intentionally allowed to be non-exhaustive. */
   durationSplit?: Partial<Record<KnownInteropBridgeType, InteropDurationSplit>>
 }
 
@@ -1278,19 +1261,12 @@ export type InteropPlugin = {
   transferType?: string
 }
 
-export type InteropDurationSplit = {
-  in: {
-    /** Custom label to be shown in the UI */
-    label: string
-    from: string
-    to: string
-  }
-  out: {
-    /** Custom label to be shown in the UI */
-    label: string
-    from: string
-    to: string
-  }
+export type InteropDurationSplit = InteropDurationSplitEntry[]
+
+export type InteropDurationSplitEntry = {
+  /** Custom label to be shown in the UI */
+  label: string
+  transferTypes: string[]
 }
 
 // #endregion
@@ -1453,7 +1429,7 @@ export const TvsTokenSchema = v.object({
     'rwaPublic',
     'other',
   ]),
-  source: v.enum(['canonical', 'external', 'native']),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v
     .object({

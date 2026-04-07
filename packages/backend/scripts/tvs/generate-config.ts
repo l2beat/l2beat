@@ -71,9 +71,7 @@ const cmd = command({
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-    let projects:
-      | Project<'escrows' | 'tvsInfo', 'chainConfig' | 'isBridge'>[]
-      | undefined
+    let projects: Project<'escrows' | 'tvsInfo', 'chainConfig'>[] | undefined
 
     const start = Date.now()
 
@@ -91,7 +89,7 @@ const cmd = command({
       projects = (
         await ps.getProjects({
           select: ['escrows', 'tvsInfo'],
-          optional: ['chainConfig', 'isBridge'],
+          optional: ['chainConfig'],
         })
       ).filter(
         (project) =>
@@ -112,7 +110,7 @@ const cmd = command({
       const project = await ps.getProject({
         id: ProjectId(args.project),
         select: ['escrows', 'tvsInfo'],
-        optional: ['chainConfig', 'isBridge'],
+        optional: ['chainConfig'],
       })
 
       if (!project) {

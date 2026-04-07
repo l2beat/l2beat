@@ -111,7 +111,7 @@ export class LayerZeroConfigPlugin
     const reconciledV1 = reconcileNetworks(previousV1, latest.v1)
 
     if (reconciledV1.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: LayerZeroV1Config.key,
         removed: reconciledV1.removed,
       })
@@ -128,7 +128,7 @@ export class LayerZeroConfigPlugin
     const reconciledV2 = reconcileNetworks(previousV2, latest.v2)
 
     if (reconciledV2.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: LayerZeroV2Config.key,
         removed: reconciledV2.removed,
       })

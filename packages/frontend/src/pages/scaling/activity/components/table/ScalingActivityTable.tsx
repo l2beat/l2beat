@@ -67,6 +67,7 @@ function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
           pastDayCount: entry.data[metric].pastDayCount,
           summedCount: entry.data[metric].summedCount,
           maxCount: entry.data[metric].maxCount,
+          totalCount: metric === 'tps' ? entry.data.tps.totalCount : undefined,
         }
       : undefined,
   }

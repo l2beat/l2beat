@@ -1,33 +1,26 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type KnownInteropBridgeType, notUndefined } from '@l2beat/shared-pure'
-import { manifest } from '~/utils/Manifest'
-import type { CommonInteropData, DurationSplitMap, TokenData } from '../types'
+import type { InteropDurationSplit } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import type { TokenData } from '../types'
+import type { TokenInteropData } from './buildTokensDataMap'
+import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration } from './getAverageDuration'
 
 type Params = {
-  projectId: string
-  bridgeType: KnownInteropBridgeType | undefined
-  tokens: Map<string, CommonInteropData>
-  tokensDetailsMap: Map<
-    string,
-    {
-      symbol: string
-      iconUrl: string | null
-    }
-  >
-  durationSplitMap: DurationSplitMap | undefined
+  tokens: Map<string, TokenInteropData>
+  tokensDetailsMap: TokensDetailsMap
   unknownTransfersCount: number
   logger: Logger
+  durationSplit: InteropDurationSplit | undefined
 }
 
 export function getTokensData({
-  projectId,
-  bridgeType,
   tokens,
   tokensDetailsMap,
-  durationSplitMap,
   unknownTransfersCount,
   logger,
+  durationSplit,
 }: Params): TokenData[] {
   const tokensData: TokenData[] = Array.from(tokens.entries())
     .map(([tokenId, token]) => {
@@ -38,28 +31,30 @@ export function getTokensData({
         return undefined
       }
 
-      const avgDuration = getAverageDuration(
-        projectId,
-        bridgeType,
-        token,
-        durationSplitMap,
-      )
+      const avgDuration = getAverageDuration(token, durationSplit)
 
       return {
         id: tokenId,
         symbol: tokenDetails.symbol,
-        iconUrl:
-          tokenDetails.iconUrl ??
-          manifest.getUrl('/images/token-placeholder.png'),
+        issuer: tokenDetails.issuer,
+        iconUrl: tokenDetails.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
         volume: token.volume,
         transferCount: token.transferCount,
         avgDuration: avgDuration,
-        avgValue: Math.floor(token.volume / token.transferCount),
+        avgValue:
+          token.transferCount > 0 ? token.volume / token.transferCount : null,
+        minTransferValueUsd: token.minTransferValueUsd,
+        maxTransferValueUsd: token.maxTransferValueUsd,
         netMintedValue:
           token.mintedValueUsd !== undefined &&
           token.burnedValueUsd !== undefined
             ? token.mintedValueUsd - token.burnedValueUsd
             : undefined,
+        flows: token.flows
+          ? Array.from(token.flows.values()).toSorted(
+              (a, b) => b.volume - a.volume,
+            )
+          : [],
       }
     })
     .filter(notUndefined)
@@ -69,12 +64,16 @@ export function getTokensData({
     tokensData.push({
       id: 'unknown',
       symbol: 'Unknown',
-      iconUrl: manifest.getUrl('/images/token-placeholder.png'),
+      issuer: null,
+      iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       transferCount: unknownTransfersCount,
       avgDuration: null,
       avgValue: null,
       volume: null,
+      minTransferValueUsd: undefined,
+      maxTransferValueUsd: undefined,
       netMintedValue: undefined,
+      flows: [],
     })
   }
 

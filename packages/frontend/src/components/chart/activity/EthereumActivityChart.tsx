@@ -77,24 +77,26 @@ export function EthereumActivityChart({
         <ProjectChartTimeRange timeRange={timeRange} />
         <ActivityChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
-      <ActivityChart
-        data={chartData}
-        milestones={milestones}
-        scale={scale}
-        metric={metric}
-        isLoading={isLoading}
-        syncedUntil={chart?.syncedUntil}
-        className="mt-4 mb-3"
-        type={type}
-        project={project}
-        tickCount={4}
-      />
-      <ActivityRatioChart
-        data={ratioData}
-        syncedUntil={chart?.syncedUntil}
-        isLoading={isLoading}
-        className="mb-2"
-      />
+      <div className="mt-4 mb-3">
+        <ActivityChart
+          data={chartData}
+          milestones={milestones}
+          scale={scale}
+          metric={metric}
+          isLoading={isLoading}
+          syncedUntil={chart?.syncedUntil}
+          type={type}
+          project={project}
+          tickCount={4}
+        />
+      </div>
+      <div className="mb-2">
+        <ActivityRatioChart
+          data={ratioData}
+          syncedUntil={chart?.syncedUntil}
+          isLoading={isLoading}
+        />
+      </div>
 
       <div className="flex justify-between gap-4">
         <ActivityMetricControls
@@ -133,6 +135,25 @@ export function EthereumActivityChart({
             ? formatInteger(chart?.stats?.[metric].pastDaySum)
             : 'No data'}
         </ChartStatsItem>
+        {metric === 'tps' && (
+          <ChartStatsItem
+            label="Total Txs"
+            className="max-md:h-7"
+            isLoading={isLoading}
+          >
+            {chart?.stats?.tps.totalCount ? (
+              <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+                <div>{formatInteger(chart?.stats?.tps.totalCount.value)}</div>
+                <div className="font-medium text-label-value-14 text-secondary">
+                  since{' '}
+                  {formatTimestamp(chart?.stats?.tps.totalCount.sinceTimestamp)}
+                </div>
+              </div>
+            ) : (
+              'No data'
+            )}
+          </ChartStatsItem>
+        )}
         <ChartStatsItem
           label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
           tooltip={`Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`}

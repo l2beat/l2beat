@@ -5,11 +5,17 @@
   "maxDepth": 10,
   "initialAddresses": ["eth:0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe"],
   "names": {
-    "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner",
-    "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636": "Celo Multisig 1",
-    "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": "Celo Multisig 2"
+    "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner"
   },
   "overrides": {
+    "eth:0xC03172263409584f7860C25B6eB4985f0f6F4636": {
+      "references": [
+        {
+          "text": "Security Council members - Celo Docs",
+          "href": "https://docs.celo.org/home/protocol/security-council"
+        }
+      ]
+    },
     "eth:0xD1C635987B6Aa287361d08C6461491Fa9df087f2": { "category": "spam" },
     "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]

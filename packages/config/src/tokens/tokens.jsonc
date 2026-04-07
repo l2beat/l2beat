@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "AZTEC",
+      "address": "0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+      "coingeckoId": "aztec"
+    },
+    {
       "symbol": "NIL",
       "address": "0x7cf9a80db3b29ee8efe3710aadb7b95270572d47",
       "coingeckoId": "nillion",
@@ -614,6 +619,10 @@
       "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30"
     },
     {
+      "symbol": "AMINO",
+      "address": "0x4DfD742c6E5e28F11Bcbcf6c5e51A965d15ea315"
+    },
+    {
       "symbol": "ARB",
       "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
       "excludeFromTotal": true
@@ -1004,6 +1013,11 @@
     {
       "symbol": "EPIK",
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
+    },
+    {
+      "symbol": "ESP",
+      "address": "0x031De51F3E8016514Bd0963d0B2AB825A591Db9A",
+      "coingeckoId": "espresso"
     },
     {
       "symbol": "EQB",
@@ -1805,6 +1819,11 @@
       "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
     },
     {
+      "symbol": "SYND",
+      "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+      "coingeckoId": "syndicate-3"
+    },
+    {
       "symbol": "SYN",
       "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29"
     },
@@ -2088,7 +2107,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2105,7 +2124,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2122,13 +2141,28 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
     }
   ],
   "zircuit": [
+    {
+      "symbol": "USDC.e",
+      "coingeckoId": "usd-coin",
+      "address": "0x3b952c8c9c44e8fe201e2b26f6b2200203214cff",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Proto-CCTP (not Circle)"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
@@ -2140,7 +2174,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2156,7 +2190,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2171,7 +2205,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -2289,6 +2323,27 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PYUSD",
+      "address": "0x46850aD61C2B7d64d08c9C754F45254596696984",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PGOLD",
+      "address": "0x3e76BB02286BFeAA89DD35f11253f2CbCE634F91",
+      "source": "native",
+      "supply": "totalSupply",
+      "category": "rwaPublic" // tradable on uniswap
+    },
     {
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
@@ -2490,7 +2545,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3159,7 +3214,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3175,7 +3230,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3651,7 +3706,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3667,7 +3722,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -3758,7 +3813,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4017,7 +4072,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4081,7 +4136,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4097,7 +4152,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4434,7 +4489,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4450,7 +4505,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4560,7 +4615,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4576,7 +4631,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4721,7 +4776,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4737,7 +4792,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -4990,7 +5045,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5006,7 +5061,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5198,7 +5253,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5214,7 +5269,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5413,7 +5468,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5429,7 +5484,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5561,7 +5616,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -5577,7 +5632,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6230,7 +6285,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6292,7 +6347,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6309,7 +6364,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6328,7 +6383,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6345,7 +6400,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       },
@@ -6526,7 +6581,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6542,7 +6597,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6701,7 +6756,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6717,7 +6772,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -6732,7 +6787,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7371,7 +7426,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7387,7 +7442,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7591,7 +7646,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7607,7 +7662,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7623,7 +7678,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7654,7 +7709,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7670,7 +7725,7 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7728,6 +7783,20 @@
     }
   ],
   "celo": [
+    {
+      "symbol": "GBPm",
+      "address": "0xccf663b1ff11028f0b19058d0f7b674004a40746",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "BRLA",
+      "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
     {
       "symbol": "USDGLO",
       "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
@@ -7883,7 +7952,7 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -7948,7 +8017,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2" // this is not the standard USDT0, but a stargate-version
+            "slug": "stargate" // this is not the standard USDT0, but a stargate-version
           }
         ]
       }
@@ -8046,7 +8115,7 @@
         "bridges": [
           {
             "name": "Stargate v2",
-            "slug": "stargatev2"
+            "slug": "stargate"
           }
         ]
       }
@@ -8253,7 +8322,6 @@
     {
       "symbol": "USDT0",
       "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
-      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -8265,6 +8333,63 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BRZ",
+      "address": "0x4eD141110F6EeeAbA9A1df36d8c26f684d2475Dc",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "WUSD",
+      "address": "0x7Cd017ca5ddb86861FA983a34b5F495C6F898c41",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "AUSD",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "BRLA",
+      "address": "0xE6A537a407488807F0bbeb0038B79004f19DDDFb",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "XSGD",
+      "address": "0xDC3326e71D45186F113a2F448984CA0e8D201995",
+      "coingeckoId": "xsgd",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ],
   "ethereal": [
@@ -8279,6 +8404,54 @@
         "bridges": [
           {
             "name": "Layer Zero v2 (OrbitNativeOFT)",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    }
+  ],
+  "megaeth": [
+    {
+      "symbol": "cUSD",
+      "coingeckoId": "cap-usd",
+      "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDm", // EOA 'escrow' on ethereum: https://etherscan.io/address/0x343c18b0f1710b65ce33a7ce720b5d540215d343
+      "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDT0",
+      "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
             "slug": "layerzerov2oft"
           }
         ]

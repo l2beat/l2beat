@@ -8,8 +8,8 @@
  */
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
-import { findParsedAround } from './hyperlane-hwr'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -56,6 +56,7 @@ const parsePayloadVerified = createEventParser(
 )
 
 // https://docs.axelar.dev/resources/contract-addresses/mainnet/
+// chainconfeeg
 export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'Ethereum', chain: 'ethereum' },
   { axelarChainName: 'arbitrum', chain: 'arbitrum' },
@@ -68,6 +69,11 @@ export const AXELAR_NETWORKS = defineNetworks('axelar', [
   { axelarChainName: 'linea', chain: 'linea' },
   { axelarChainName: 'optimism', chain: 'optimism' },
   { axelarChainName: 'Polygon', chain: 'polygonpos' },
+  { axelarChainName: 'celo', chain: 'celo' },
+  { axelarChainName: 'Avalanche', chain: 'avalanche' },
+  { axelarChainName: 'hyperliquid', chain: 'hyperevm' },
+  { axelarChainName: 'monad', chain: 'monad' },
+  // tempo unsupported
 ])
 
 export const SquidExpressExecutedWithToken = createInteropEventType<{

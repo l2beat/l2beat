@@ -1,4 +1,5 @@
 import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
+import { Badge } from '~/components/badge/Badge'
 import { Callout } from '~/components/Callout'
 import {
   Tooltip,
@@ -37,6 +38,7 @@ export interface TechnologyContract {
   references: ReferenceLink[]
   impactfulChange: boolean
   pastUpgrades?: PastUpgradesData
+  escrow?: TechnologyContractEscrow
 }
 
 export interface TechnologyContractAddress {
@@ -44,6 +46,17 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   verificationStatus: VerificationStatus
+}
+
+export interface TechnologyContractEscrow {
+  tokens: string[] | '*'
+  tokenIcons: TechnologyContractEscrowToken[]
+  isCustom?: boolean
+}
+
+interface TechnologyContractEscrowToken {
+  symbol: string
+  iconUrl: string
 }
 
 interface ContractEntryProps {
@@ -78,7 +91,10 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               className="word-break-word scroll-mt-14 md:scroll-mt-10"
             >
               {contract.name}
-            </strong>{' '}
+            </strong>
+            {contract.escrow && (
+              <EscrowBadge isCustom={contract.escrow.isCustom} />
+            )}
             {entries.map((address, i) => (
               <HighlightableLink
                 key={i}
@@ -115,19 +131,32 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               {contract.description}
             </Markdown>
           )}
+          {contract.escrow && <EscrowDetailsEntry escrow={contract.escrow} />}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
             <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
-                {contract.upgradeableBy.map((entry) => (
-                  <a
-                    key={entry.name}
-                    className={linkVariants()}
-                    href={`#${entry.id ?? entry.name}`}
-                  >
-                    {`${entry.name} with ${entry.delay} delay`}
-                  </a>
-                ))}
+                {contract.upgradeableBy.map((entry) =>
+                  entry.unreachable ? (
+                    <span
+                      key={entry.name}
+                      className={linkVariants({
+                        variant: 'plain',
+                        underline: false,
+                      })}
+                    >
+                      {`${entry.name} with ${entry.delay} delay`}
+                    </span>
+                  ) : (
+                    <a
+                      key={entry.name}
+                      className={linkVariants()}
+                      href={`#${entry.id ?? entry.name}`}
+                    >
+                      {`${entry.name} with ${entry.delay} delay`}
+                    </a>
+                  ),
+                )}
               </div>
             </div>
           )}
@@ -169,6 +198,56 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
         </>
       }
     />
+  )
+}
+
+function EscrowBadge({ isCustom }: { isCustom?: boolean }) {
+  return (
+    <Badge
+      type="pink"
+      padding="regular"
+      className="text-[13px] uppercase leading-none"
+    >
+      {isCustom ? 'Custom Escrow' : 'Escrow'}
+    </Badge>
+  )
+}
+
+function EscrowDetailsEntry({ escrow }: { escrow: TechnologyContractEscrow }) {
+  if (escrow.tokens === '*') {
+    return (
+      <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+        <strong className="text-primary">
+          All supported tokens in this escrow are included in the value secured
+          calculation.
+        </strong>
+      </p>
+    )
+  }
+
+  return (
+    <div className="mt-2 flex flex-wrap items-center text-paragraph-15 md:text-paragraph-16">
+      <strong className="text-primary">
+        The following tokens are included in the value secured calculation:
+      </strong>
+      <div className="ml-1.5 flex flex-wrap items-center gap-1.5">
+        {escrow.tokenIcons.map((token) => (
+          <Tooltip key={token.symbol}>
+            <TooltipTrigger asChild>
+              <span className="shrink-0">
+                <img
+                  src={token.iconUrl}
+                  alt={`${token.symbol} token logo`}
+                  title={token.symbol}
+                  className="size-5 rounded-full"
+                />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{token.symbol}</TooltipContent>
+          </Tooltip>
+        ))}
+      </div>
+    </div>
   )
 }
 

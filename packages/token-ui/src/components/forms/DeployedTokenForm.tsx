@@ -48,6 +48,7 @@ import type {
 } from '../../../../database/dist/repositories/ChainRepository'
 import { AutoFillIndicator } from '../AutoFillIndicator'
 import { CardActionButton, CardActionButtons } from '../CardActionButtons'
+import { Badge } from '../core/Badge'
 import { Card, CardContent } from '../core/Card'
 import { Checkbox } from '../core/Checkbox'
 import { Label } from '../core/Label'
@@ -67,14 +68,14 @@ export const fieldToDataSource: Record<
   'symbol' | 'decimals' | 'deploymentTimestamp' | 'abstractTokenId',
   DataSource[]
 > = {
-  symbol: ['coingecko'],
+  symbol: ['rpc', 'coingecko'],
   decimals: ['rpc'],
   deploymentTimestamp: ['etherscan', 'blockscout'],
   abstractTokenId: ['coingecko'],
 }
 
 export const dataSourceToLabel: Record<DataSource, string> = {
-  coingecko: 'Coingecko',
+  coingecko: 'CoinGecko',
   rpc: 'RPC',
   etherscan: 'Etherscan',
   blockscout: 'Blockscout',
@@ -82,9 +83,14 @@ export const dataSourceToLabel: Record<DataSource, string> = {
   routescan: 'Routescan',
 }
 
+const symbolSourceToLabel = {
+  rpc: 'On-chain (RPC)',
+  coingecko: 'CoinGecko',
+} as const
+
 const TvsMetadata = v.object({
   includeInCalculations: v.boolean(),
-  source: v.enum(['canonical', 'external', 'native']),
+  source: v.enum(['canonical', 'custom-canonical', 'external', 'native']),
   supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   excludeFromTotal: v.boolean(),
   bridgedUsing: v.array(
@@ -153,9 +159,26 @@ export function DeployedTokenForm({
     (abstractToken) => abstractToken.id === abstractTokenId,
   )
   const chainValue = form.watch('chain')
+  const addressValue = form.watch('address')
+  const symbolValue = form.watch('symbol')
 
-  const success =
+  const chainFieldSuccess =
+    tokenDetails.data &&
+    tokenDetails.data?.error?.type !== 'chain-not-found' &&
+    tokenDetails.data?.error?.type !== 'already-exists'
+  const addressFieldSuccess =
     tokenDetails.data && tokenDetails.data?.error?.type !== 'already-exists'
+  const fetchedSymbol = tokenDetails.data?.data?.symbol
+  const symbolSource = tokenDetails.data?.data?.symbolSource as
+    | keyof typeof symbolSourceToLabel
+    | undefined
+  const shouldShowSymbolSourceIndicator =
+    symbolSource !== undefined &&
+    fetchedSymbol !== undefined &&
+    symbolValue === fetchedSymbol
+  const symbolSourceLabel = symbolSource
+    ? symbolSourceToLabel[symbolSource]
+    : undefined
 
   const metadata = form.watch('metadata')
 
@@ -167,93 +190,114 @@ export function DeployedTokenForm({
             <FormField
               control={form.control}
               name="chain"
-              success={success}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    Chain{' '}
-                    {tokenDetails.loading && <Spinner className="size-3.5" />}
-                  </FormLabel>
-                  <div className="flex items-center gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl className="flex-1">
-                          <Button
-                            disabled={chains.loading}
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              'justify-between',
-                              !field.value && 'text-muted-foreground',
-                            )}
-                          >
-                            {field.value
-                              ? (chains.data?.find(
-                                  (chain) => chain.name === field.value,
-                                )?.name ?? form.formState.defaultValues?.chain)
-                              : 'Select chain'}
-                            <ChevronsUpDownIcon className="opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0" align="start">
-                        <Command>
-                          <CommandInput
-                            placeholder="Search chain..."
-                            className="h-9"
-                          />
-                          <CommandList>
-                            <CommandEmpty>No chain found.</CommandEmpty>
-                            <CommandGroup>
-                              {chains.data?.map((chain) => (
-                                <CommandItem
-                                  value={chain.name}
-                                  key={chain.name}
-                                  onSelect={() => {
-                                    form.setValue('chain', chain.name, {
-                                      shouldDirty: true,
-                                    })
-                                  }}
-                                >
-                                  {chain.name}
-                                  <CheckIcon
-                                    className={cn(
-                                      'ml-auto',
-                                      chain.name === field.value
-                                        ? 'opacity-100'
-                                        : 'opacity-0',
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                    {chainValue && (
-                      <Link
-                        to={`/chains/${chainValue}`}
-                        target="_blank"
-                        className={buttonVariants({
-                          variant: 'outline',
-                          className: 'shrink-0',
-                          size: 'icon',
-                        })}
-                      >
-                        <ArrowRightIcon />
-                      </Link>
-                    )}
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
+              success={chainFieldSuccess}
+              render={({ field }) => {
+                const chainRecord = chains.data?.find(
+                  (chain) => chain.name === field.value,
+                )
+
+                return (
+                  <FormItem>
+                    <FormLabel>
+                      Chain{' '}
+                      {tokenDetails.loading && <Spinner className="size-3.5" />}
+                    </FormLabel>
+                    <div className="flex items-center gap-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl className="flex-1">
+                            <Button
+                              disabled={chains.loading}
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                'justify-between',
+                                !field.value && 'text-muted-foreground',
+                              )}
+                            >
+                              {field.value
+                                ? (chains.data?.find(
+                                    (chain) => chain.name === field.value,
+                                  )?.name ??
+                                  form.formState.defaultValues?.chain)
+                                : 'Select chain'}
+                              <ChevronsUpDownIcon className="opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-0" align="start">
+                          <Command>
+                            <CommandInput
+                              placeholder="Search chain..."
+                              className="h-9"
+                            />
+                            <CommandList>
+                              <CommandEmpty>No chain found.</CommandEmpty>
+                              <CommandGroup>
+                                {chains.data?.map((chain) => (
+                                  <CommandItem
+                                    value={chain.name}
+                                    key={chain.name}
+                                    onSelect={() => {
+                                      form.setValue('chain', chain.name, {
+                                        shouldDirty: true,
+                                      })
+                                    }}
+                                  >
+                                    {chain.name}
+                                    <CheckIcon
+                                      className={cn(
+                                        'ml-auto',
+                                        chain.name === field.value
+                                          ? 'opacity-100'
+                                          : 'opacity-0',
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                      {chainRecord && (
+                        <Link
+                          to={`/chains/${chainValue}`}
+                          target="_blank"
+                          className={buttonVariants({
+                            variant: 'outline',
+                            className: 'shrink-0',
+                            size: 'icon',
+                          })}
+                        >
+                          <ArrowRightIcon />
+                        </Link>
+                      )}
+                    </div>
+                    <FormMessage>
+                      {tokenDetails.data?.error?.type === 'chain-not-found' && (
+                        <Link
+                          to={buildUrlWithParams('/chains/new', {
+                            name: field.value,
+                            redirectTo: 'deployed',
+                            address: addressValue,
+                            abstractTokenId,
+                          })}
+                          className="underline"
+                        >
+                          Add chain
+                        </Link>
+                      )}
+                    </FormMessage>
+                  </FormItem>
+                )
+              }}
             />
 
             <FormField
               control={form.control}
               name="address"
-              success={success}
+              success={addressFieldSuccess}
               render={({ field }) => {
                 const chainRecord = chains.data?.find(
                   (chain) => chain.name === chainValue,
@@ -270,7 +314,7 @@ export function DeployedTokenForm({
                         <Input {...field} placeholder="0xd33db33f" />
                       </FormControl>
                       {field.value?.startsWith('0x') ? (
-                        chainRecord?.explorerUrl ? (
+                        !chainRecord ? null : chainRecord.explorerUrl ? (
                           <ExplorerLinkButton
                             explorerUrl={chainRecord.explorerUrl}
                             value={field.value}
@@ -298,19 +342,16 @@ export function DeployedTokenForm({
                         )
                       ) : null}
                     </div>
-                    {tokenDetails.data?.error?.type === 'already-exists' ? (
-                      <p className="text-destructive text-sm">
-                        {tokenDetails.data.error.message}.{' '}
+                    <FormMessage>
+                      {tokenDetails.data?.error?.type === 'already-exists' && (
                         <Link
                           to={`/tokens/${chainValue}/${field.value}`}
-                          className="underline hover:no-underline"
+                          className="underline"
                         >
                           View
                         </Link>
-                      </p>
-                    ) : (
-                      <FormMessage />
-                    )}
+                      )}
+                    </FormMessage>
                   </FormItem>
                 )
               }}
@@ -331,6 +372,11 @@ export function DeployedTokenForm({
                       available={autofill.symbol}
                       chainName={chainValue}
                     />
+                  )}
+                  {shouldShowSymbolSourceIndicator && symbolSourceLabel && (
+                    <Badge variant="outline" className="ml-1 text-[10px]">
+                      {symbolSourceLabel}
+                    </Badge>
                   )}
                 </FormLabel>
                 <FormControl>
@@ -539,6 +585,31 @@ export function DeployedTokenForm({
                     </Tooltip>
                   )}
                 </div>
+                {tokenDetails.data?.data?.abstractTokenSuggestions &&
+                  tokenDetails.data.data.abstractTokenSuggestions.length >
+                    0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-muted-foreground text-xs">
+                        Suggested:
+                      </span>
+                      {tokenDetails.data.data.abstractTokenSuggestions.map(
+                        (suggestion) => (
+                          <button
+                            key={suggestion.id}
+                            type="button"
+                            className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs transition-colors hover:bg-accent"
+                            onClick={() => {
+                              form.setValue('abstractTokenId', suggestion.id, {
+                                shouldDirty: true,
+                              })
+                            }}
+                          >
+                            {getAbstractTokenDisplayId(suggestion)}
+                          </button>
+                        ),
+                      )}
+                    </div>
+                  )}
                 <FormMessage />
               </FormItem>
             )}
@@ -611,7 +682,7 @@ export function setDeployedTokenExistsError(
   form: UseFormReturn<DeployedTokenSchema>,
 ) {
   form.setError('address', {
-    type: 'custom',
+    type: 'already-exists',
     message: 'Deployed token with given address and chain already exists',
   })
 }

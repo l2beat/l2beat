@@ -1,5 +1,9 @@
 import type { Project } from '@l2beat/config'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  getInteropTransferValue,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export type InteropProtocolData = {
@@ -27,8 +31,7 @@ export function getTopProtocols(
 
     const currentVolume = map.get(record.id) ?? { volume: 0, transfers: 0 }
     map.set(record.id, {
-      volume:
-        currentVolume.volume + (record.srcValueUsd ?? record.dstValueUsd ?? 0),
+      volume: currentVolume.volume + (getInteropTransferValue(record) ?? 0),
       transfers: currentVolume.transfers + (record.transferCount ?? 0),
     })
   }

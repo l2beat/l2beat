@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xcdd03d7afe7404d2c7393488325d9d1c192626ac
+
+# Diff at Tue, 31 Mar 2026 10:43:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773160450
+- current timestamp: 1774953745
+
+## Description
+
+Removed Euro Coin Token (EURC) and its MasterMinter from discovery scope. These are Circle-operated contracts unrelated to Scroll, tracked only because the L1USDCGateway references them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773160450 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (eth:0x02398771Fd1db790Ef2b656ca3BcB3075f27A72c)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract Euro Coin Token (eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x476514734aad2706f87307396942309a909b724d
+
+# Diff at Mon, 23 Feb 2026 14:45:29 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@223ad9100b05447b13e88b350a283f0fcdd967a4 block: 1770994456
+- current timestamp: 1771857557
+
+## Description
+
+Emergency upgrade: ZkEvmVerifierPostFeynman replaced at index 9 of MultipleVersionRollupVerifier due to a bug in the guest prover program. Old verifier 0x4F43... deleted, new verifier 0x0dE1... created with identical source code but updated verifierDigest (verification key update).
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.9.verifier:
+-        "eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181"
++        "eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostFeynman (eth:0x4F438522956c8826B9e29B4c775b2d8a6a803181)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostFeynman (eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...erifierPostFeynman-eth:0x0dE180164Dc571522457101F5c47B2eaB36d0A82.sol} | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+```
+
 Generated with discovered.json: 0x294b7c0fa7408abc9a6ff5f18b126c6b745ae954
 
 # Diff at Tue, 10 Feb 2026 15:13:37 GMT:

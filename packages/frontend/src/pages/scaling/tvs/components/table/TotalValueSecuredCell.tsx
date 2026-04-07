@@ -3,6 +3,10 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
 } from '~/components/breakdown/TokenBreakdown'
@@ -40,6 +44,7 @@ interface TotalValueSecuredCellProps {
         rwaPublic: number
         rwaRestricted: number
       }
+  additionalTrustAssumptionsPercentage: number
   change: number
   tvsWarnings?: WarningWithSentiment[]
   associatedTokens?: ProjectAssociatedToken[]
@@ -53,7 +58,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
     <Tooltip>
       <TooltipTrigger asChild>
         <TableLink href={props.href}>
-          <div className="flex flex-col items-end">
+          <div className="flex flex-col items-end max-md:py-1">
             <div className="flex items-center gap-1">
               {tvsWarnings.length ? (
                 <RoundedWarningIcon
@@ -66,12 +71,16 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
               </ValueWithPercentageChange>
             </div>
             {props.breakdown.type === 'bridgeType' ? (
-              <ValueSecuredBreakdown
-                canonical={props.breakdown.canonical}
-                external={props.breakdown.external}
-                native={props.breakdown.native}
-                className="h-[3px] w-[180px]"
-              />
+              <div className="inline-flex flex-col items-end gap-1">
+                <ValueSecuredBreakdown
+                  canonical={props.breakdown.canonical}
+                  external={props.breakdown.external}
+                  native={props.breakdown.native}
+                />
+                <AdditionalTrustAssumptionsText
+                  percentage={props.additionalTrustAssumptionsPercentage}
+                />
+              </div>
             ) : (
               <TokenBreakdown
                 total={props.total}
@@ -81,7 +90,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
                 other={props.breakdown.other}
                 rwaPublic={props.breakdown.rwaPublic}
                 rwaRestricted={props.breakdown.rwaRestricted}
-                className="h-[3px] w-[180px]"
+                className="h-[3px] w-[200px]"
               />
             )}
           </div>
@@ -89,16 +98,21 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
       </TooltipTrigger>
       <TooltipContent className="flex flex-col gap-2">
         {props.breakdown.type === 'bridgeType' ? (
-          <ValueSecuredBreakdownTooltipContent
-            canonical={props.breakdown.canonical}
-            external={props.breakdown.external}
-            native={props.breakdown.native}
-            tvsWarnings={tvsWarnings}
-            associatedTokenSymbols={props.associatedTokens?.map(
-              (t) => t.symbol,
-            )}
-            hideTotal
-          />
+          <>
+            <ValueSecuredBreakdownTooltipContent
+              canonical={props.breakdown.canonical}
+              external={props.breakdown.external}
+              native={props.breakdown.native}
+              change={props.change}
+              tvsWarnings={tvsWarnings}
+              associatedTokenSymbols={props.associatedTokens?.map(
+                (t) => t.symbol,
+              )}
+            />
+            <AdditionalTrustAssumptionsBanner
+              percentage={props.additionalTrustAssumptionsPercentage}
+            />
+          </>
         ) : (
           <TokenBreakdownTooltipContent
             total={props.total}

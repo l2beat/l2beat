@@ -21,11 +21,14 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getAgglayerVerifiers } from '../../templates/agglayer'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+
+type ProgramHashDict = Record<string, Record<string, string>[]>
 
 const discovery = new ProjectDiscovery('katana')
 const upgradeDelayString = formatSeconds(
@@ -81,7 +84,7 @@ export const katana: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
   },
   config: {
     trackedTxs: [
@@ -202,10 +205,10 @@ export const katana: ScalingProject = {
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
-      noRedTrustedSetups: null,
+      noRedTrustedSetups: true,
       programHashesReproducible: false,
-      proverSourcePublished: null,
-      verifierContractsReproducible: null,
+      proverSourcePublished: true,
+      verifierContractsReproducible: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -311,7 +314,7 @@ export const katana: ScalingProject = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          url: 'https://etherscan.io/address/0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc#code#F1#L578',
+          url: 'https://etherscan.io/address/0x3e6753e6c0162061cfa7eEc88d8fdaE651160Bf4#code#F1#L563',
           title:
             '_depositTransaction() in OptimismPortal2 - Etherscan source code',
         },
@@ -360,6 +363,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
       },
     ],
     programHashes: katanaVKeys.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getAgglayerVerifiers(discovery),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
@@ -382,7 +386,6 @@ function getKatanaVKeys(): string[] {
   vKeys.push(opSuccinctConfig['rangeVkeyCommitment'])
   // If default gateway is used, aggchain program hashes are taken from AggLayerGateway
   // Otherwise they are taken from AggchainFEP itself
-  type ProgramHashDict = Record<string, Record<string, string>[]>
   const useDefaultVkeys = discovery.getContractValue<boolean>(
     'AggchainFEP',
     'useDefaultVkeys',

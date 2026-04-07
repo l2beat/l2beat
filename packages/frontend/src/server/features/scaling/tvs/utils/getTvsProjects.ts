@@ -6,17 +6,18 @@ import { ps } from '~/server/projects'
 interface TvsProject {
   projectId: ProjectId
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
+  details: Project<never, 'scalingInfo' | 'tvsInfo'>
 }
 
 export async function getTvsProjects(
-  filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
+  filter: (p: Project<'statuses', 'scalingInfo'>) => boolean,
   options?: {
     withoutArchivedAndUpcoming?: boolean
   },
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
     select: ['statuses', 'tvsConfig'],
-    optional: ['chainConfig', 'scalingInfo', 'isBridge'],
+    optional: ['chainConfig', 'scalingInfo', 'tvsInfo'],
     whereNot: options?.withoutArchivedAndUpcoming
       ? ['isUpcoming', 'archivedAt']
       : undefined,
@@ -29,6 +30,7 @@ export async function getTvsProjects(
   return filteredProjects.map((project) => ({
     projectId: project.id,
     category: getCategory(project),
+    details: project,
   }))
 }
 

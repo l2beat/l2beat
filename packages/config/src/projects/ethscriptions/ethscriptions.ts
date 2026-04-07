@@ -14,6 +14,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ethscriptions')
 
@@ -64,7 +65,7 @@ export const ethscriptions: ScalingProject = {
   },
   proofSystem: {
     type: 'Optimistic',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
   stage: getStage(
@@ -82,10 +83,10 @@ export const ethscriptions: ScalingProject = {
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
-        noRedTrustedSetups: null,
-        programHashesReproducible: null,
-        proverSourcePublished: null,
-        verifierContractsReproducible: null,
+        noRedTrustedSetups: true,
+        programHashesReproducible: true,
+        proverSourcePublished: true,
+        verifierContractsReproducible: true,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
@@ -294,6 +295,7 @@ export const ethscriptions: ScalingProject = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [],
     programHashes: ethscriptionsProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   chainConfig: {

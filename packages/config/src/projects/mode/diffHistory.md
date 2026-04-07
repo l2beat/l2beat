@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x87ad468c2831822a1a752ba53b7d44b36b0846a3
+
+# Diff at Wed, 25 Mar 2026 10:07:44 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1773160414
+- current timestamp: 1774433200
+
+## Description
+
+Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe and OpFoundationOperationsSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0x85da7ad2949bf90091fee14f3066eefb648c334c
+
+# Diff at Fri, 27 Feb 2026 13:25:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@17ff9ba367ef55b34e16f082bde7902f4760911e block: 1770912815
+- current timestamp: 1772198388
+
+## Description
+
+Optimism Security Council: 2 members replaced.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x07dC0893cAfbF810e3E72505041f2865726Fd073"
++        "eth:0xE61F12136bA47De67D15a1D59fE2f383ec5176aE"
+      values.$members.2:
+-        "eth:0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e"
++        "eth:0x5c1f9E9384Ca9fE0499277F6a015a2ac0A317a81"
+    }
+```
+
 Generated with discovered.json: 0x86a7fd2d2ef141e4839bddb98f6be2af82ce8394
 
 # Diff at Fri, 13 Feb 2026 11:46:40 GMT:
@@ -4762,7 +4846,7 @@ Generated with discovered.json: 0x3338d4e679dd17d539345310c85fcb02f33cd77c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Optimism Security Council: 2 members replaced.
 
 ## Watched changes
 

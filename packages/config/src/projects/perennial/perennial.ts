@@ -32,7 +32,7 @@ export const perennial: ScalingProject = underReviewL3({
       repositories: ['https://github.com/equilibria-xyz/perennial-v2'],
       socialMedia: [
         'https://twitter.com/perenniallabs',
-        'https://discord.com/invite/perennial-finance',
+        'https://discord.com/invite/zMFdJEsNE2',
       ],
     },
   },

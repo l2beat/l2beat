@@ -51,7 +51,6 @@ interface Props {
   hasBlobs: boolean
   project?: ChartProject
   tickCount?: number
-  className?: string
 }
 
 export function CostsChart({
@@ -61,7 +60,6 @@ export function CostsChart({
   unit,
   isLoading,
   milestones,
-  className,
   range,
   tickCount,
   hasBlobs,
@@ -157,10 +155,9 @@ export function CostsChart({
         dataKeys,
         onItemClick: toggleDataKey,
       }}
-      className={className}
       project={project}
     >
-      <ComposedChart data={data} margin={{ top: 20 }}>
+      <ComposedChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           yAxisId="left"

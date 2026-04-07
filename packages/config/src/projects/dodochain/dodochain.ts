@@ -7,6 +7,7 @@ export const dodochain: ScalingProject = underReviewL3({
   id: 'dodochain',
   capability: 'universal',
   addedAt: UnixTime(1719224565), // 2024-06-24T10:22:45Z
+  archivedAt: UnixTime(1772017837), // 2026-02-25T11:10:37Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Birdlayer',

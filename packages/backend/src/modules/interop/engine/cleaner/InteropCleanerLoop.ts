@@ -12,6 +12,7 @@ export class InteropCleanerLoop extends TimeLoop {
     private plugins: InteropPlugins,
     protected logger: Logger,
     intervalMs = 20 * 60 * 1000,
+    private configHistoryKeepLatest = 3,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
@@ -25,10 +26,13 @@ export class InteropCleanerLoop extends TimeLoop {
       now - 1 * UnixTime.DAY,
     )
     const expiredTransfers = await this.db.interopTransfer.deleteBefore(
-      now - 1 * UnixTime.DAY,
+      now - 1 * UnixTime.DAY - 2 * UnixTime.HOUR,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
       now - 7 * UnixTime.DAY,
+    )
+    const expiredConfigs = await this.db.interopConfig.deleteAllButLatestPerKey(
+      this.configHistoryKeepLatest,
     )
 
     const currentPluginNames = pluginsAsClusters(this.plugins.eventPlugins).map(
@@ -48,6 +52,7 @@ export class InteropCleanerLoop extends TimeLoop {
       expiredMessages,
       expiredTransfers,
       expiredPrices,
+      expiredConfigs,
       orphanedSyncStates,
       orphanedSyncedRanges,
     })

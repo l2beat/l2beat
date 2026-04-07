@@ -18,6 +18,7 @@ export const wormholeNtt: BaseProject = {
         bridgeType: 'lockAndMint',
       },
     ],
+    type: 'multichain',
   },
   isInteropProtocol: true,
 }

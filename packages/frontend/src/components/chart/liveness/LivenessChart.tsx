@@ -44,7 +44,6 @@ interface Props {
   data: LivenessChartDataPoint[] | undefined
   isLoading: boolean
   project?: ChartProject
-  className?: string
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
   tickCount?: number
@@ -72,7 +71,6 @@ export function LivenessChart({
   data,
   isLoading,
   project,
-  className,
   subtype,
   milestones,
   tickCount,
@@ -96,13 +94,12 @@ export function LivenessChart({
   return (
     <ChartContainer
       data={data}
-      className={className}
       meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
       project={project}
     >
-      <ComposedChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <ComposedChart responsive data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="range"

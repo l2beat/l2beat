@@ -88,6 +88,7 @@ export const bob: ScalingProject = opStackL2({
     zkCatalogId: ProjectId('risc0'),
     challengeProtocol: 'Single-step',
   },
+
   associatedTokens: ['BOB'],
   chainConfig: {
     name: 'bob',
@@ -100,4 +101,28 @@ export const bob: ScalingProject = opStackL2({
       { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
     ],
   },
+  nonTemplateZkVerifiers: getVerifiers(),
 })
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifierNames = [
+    'verifier5Manual',
+    'verifier6Manual',
+    // 'verifier7Manual', // this is set verifier, not an actual RiscZero verifier smart contract
+  ]
+  const result: ChainSpecificAddress[] = []
+  for (const verifierName of verifierNames) {
+    const emergencyStopContract =
+      discovery.getContractValue<ChainSpecificAddress>(
+        'RiscZeroVerifierRouter',
+        verifierName,
+      )
+    result.push(
+      discovery.getContractValue<ChainSpecificAddress>(
+        emergencyStopContract,
+        'verifier',
+      ),
+    )
+  }
+  return result
+}

@@ -1,6 +1,5 @@
 import {
   assert,
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
@@ -21,7 +20,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PERFORMED_BY } from '../../common/performedBy'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -40,24 +38,24 @@ const timelockDelay = discovery.getContractValue<number>(
 )
 const timelockDelayString = formatSeconds(timelockDelay)
 
-const zodiacRoles = discovery.getContractValue<{
-  roles: Record<string, Record<string, boolean>>
-}>('Roles', 'roles')
-const zodiacPauserRole = '1'
-const zodiacPausers: ProjectPermissionedAccount[] =
-  discovery.formatPermissionedAccounts(
-    Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
-  )
-const zodiacPausersHardcoded = discovery.getPermissionedAccounts(
-  'Roles',
-  'pausers',
-)
+// const zodiacRoles = discovery.getContractValue<{
+//   roles: Record<string, Record<string, boolean>>
+// }>('Roles', 'roles')
+// const zodiacPauserRole = '1'
+// const zodiacPausers: ProjectPermissionedAccount[] =
+//   discovery.formatPermissionedAccounts(
+//     Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
+//   )
+// const zodiacPausersHardcoded = discovery.getPermissionedAccounts(
+//   'Roles',
+//   'pausers',
+// )
 
-assert(
-  zodiacPausers.length === zodiacPausersHardcoded.length &&
-    zodiacPausers[0].address === zodiacPausersHardcoded[0].address,
-  'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
-)
+// assert(
+//   zodiacPausers.length === zodiacPausersHardcoded.length &&
+//     zodiacPausers[0].address === zodiacPausersHardcoded[0].address,
+//   'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
+// )
 
 const zodiacL2Roles = discovery.getContractValue<{
   roles: Record<string, Record<string, boolean>>
@@ -140,6 +138,7 @@ export const linea: ScalingProject = {
         'https://twitter.com/LineaBuild',
         'https://discord.gg/linea',
         'https://linea.mirror.xyz/',
+        'https://linkedin.com/company/lineabuild/',
         'https://community.linea.build/',
       ],
       other: [
@@ -151,6 +150,28 @@ export const linea: ScalingProject = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
+  },
+  interopConfig: {
+    name: 'Linea Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: ['linea.L1ToL2Transfer'],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: ['linea.L2ToL1Transfer'],
+        },
+      ],
+    },
+    plugins: [
+      {
+        plugin: 'linea',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
   },
   proofSystem: {
     type: 'Validity',
@@ -474,7 +495,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -494,7 +515,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -512,12 +533,12 @@ export const linea: ScalingProject = {
           {
             title:
               'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F21#L92',
           },
           {
             title:
-              'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
-            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
+              'LineaRollup.sol - Etherscan source code, setLivenessRecoveryOperator() function',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F36#L41',
           },
         ],
       },
@@ -527,6 +548,7 @@ export const linea: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
+    zkVerifiers: getVerifiers(),
   },
   stateDerivation: {
     nodeSoftware:
@@ -563,63 +585,19 @@ export const linea: ScalingProject = {
           {
             title:
               'LineaRollup.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
-            url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F38#L277',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 3)',
-            url: 'https://etherscan.io/address/0x814D80782aA8c508aBABE9C6956D8F1f90E5177a',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
+            url: 'https://etherscan.io/address/0xC83ed08E2262fBa264D528C749c051f8fC526897',
           },
           {
-            title: 'PlonkVerifierMainnetFull.sol (Proof Type 4)',
-            url: 'https://etherscan.io/address/0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b',
+            title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
+            url: 'https://etherscan.io/address/0x1442833180e253844897339aFb5800c797547987',
           },
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Linea is a universal ZK-EVM rollup on Ethereum.',
-      aggregation: false,
-      requiredTools: [],
-      verifiers: [
-        {
-          name: 'LineaVerifier (ProofType 4)',
-          description:
-            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
-          verified: 'failed',
-          performedBy: PERFORMED_BY.l2beat,
-          contractAddress: EthereumAddress(
-            '0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              proofSystem: '?',
-              mainArithmetization: '?',
-              mainPCS: '?',
-            },
-          ],
-        },
-        {
-          name: 'LineaVerifier (ProofType 0)',
-          description:
-            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0xED39C0C41A7651006953AB58Ecb3039363620995',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              proofSystem: '?',
-              mainArithmetization: '?',
-              mainPCS: '?',
-            },
-          ],
-        },
-      ],
-    },
   },
   milestones: [
     {
@@ -668,4 +646,14 @@ export const linea: ScalingProject = {
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const verifiersArray = discovery.getContractValue<ChainSpecificAddress[]>(
+    'LineaRollup',
+    'verifiers',
+  )
+  return verifiersArray.filter(
+    (v) => ChainSpecificAddress.address(v) !== EthereumAddress.ZERO,
+  )
 }

@@ -15,9 +15,14 @@ interface Props {
     proofSystem: ZkCatalogTag
   })[]
   dotSize?: TrustedSetupRiskDotSize
+  displayType?: 'type' | 'typeAndName'
 }
 
-export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
+export function TrustedSetupCell({
+  trustedSetups,
+  dotSize,
+  displayType = 'type',
+}: Props) {
   const proofSystem = trustedSetups[0]?.proofSystem
   if (trustedSetups.length === 0 || !proofSystem) return null
 
@@ -27,7 +32,11 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-2">
         <TrustedSetupRiskDot risk={worstRisk} size={dotSize} />
-        <TechStackTag tag={proofSystem} withoutTooltip />
+        <TechStackTag
+          tag={proofSystem}
+          withoutTooltip
+          displayType={displayType}
+        />
       </TooltipTrigger>
       <TooltipContent>
         <div className="mb-3 text-paragraph-14">
@@ -36,6 +45,7 @@ export function TrustedSetupCell({ trustedSetups, dotSize }: Props) {
             tag={proofSystem}
             className="inline-block"
             withoutTooltip
+            displayType="type"
           />
         </div>
         {trustedSetups.map((trustedSetup) => {
