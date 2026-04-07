@@ -2,7 +2,7 @@ import type { CompiledReview, CompiledDependency } from '../../../../types'
 import { formatUsdValue } from '../../../../utils/format'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
 import { deduplicateMitigations } from '../explorer/shared'
-import { SectionHeader, ShowMoreButton } from './_shared'
+import { SectionHeader, ShowMoreButton, impactPct } from './_shared'
 
 interface DependenciesSectionProps {
   review: CompiledReview
@@ -58,17 +58,6 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
     list.push(dep)
     grouped.set(key, list)
   }
-  // Sort entity groups by total funds at risk descending
-  const entityGroups = Array.from(grouped.entries()).sort(([, aDeps], [, bDeps]) => {
-    const aFunds = aDeps.reduce((s, d) => s + depFunds(d), 0)
-    const bFunds = bDeps.reduce((s, d) => s + depFunds(d), 0)
-    return bFunds - aFunds
-  })
-
-  const namedEntities = entityGroups
-    .filter(([e]) => e !== null)
-    .map(([e]) => e as string)
-
   // Use pre-computed deduplicated entity totals from the compiler when available,
   // falling back to raw sum for old compiled reviews.
   const entityGroupMap = new Map(
@@ -82,14 +71,24 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
       ? (entityGroupMap.get(entity) ?? 0)
       : deps.reduce((s, d) => s + depFunds(d), 0)
 
-  const totalAtRisk =
-    review.dependencyEntityGroups !== undefined
+  // Sort entity groups by deduplicated funds descending
+  const entityGroups = Array.from(grouped.entries()).sort(([aEntity, aDeps], [bEntity, bDeps]) =>
+    getGroupFunds(bEntity, bDeps) - getGroupFunds(aEntity, aDeps),
+  )
+
+  const namedEntities = entityGroups
+    .filter(([e]) => e !== null)
+    .map(([e]) => e as string)
+
+  const totalAtRisk = review.dependencyTotals
+    ? review.dependencyTotals.totalFundsAtRisk + review.dependencyTotals.totalTokenValueAtRisk
+    : review.dependencyEntityGroups !== undefined
       ? review.dependencyEntityGroups.reduce(
           (s, g) => s + g.totalFundsAtRisk + g.totalTokenValueAtRisk,
           0,
         )
       : dependencies.reduce((s, d) => s + depFunds(d), 0)
-  const atRiskPct = totalTvs > 0 ? Math.round((totalAtRisk / totalTvs) * 100) : 0
+  const atRiskPct = impactPct(totalAtRisk, totalTvs)
   const displayedGroups = entityGroups.slice(0, 3)
   const maxGroupFunds = Math.max(
     ...entityGroups.map(([entity, ds]) => getGroupFunds(entity, ds)),

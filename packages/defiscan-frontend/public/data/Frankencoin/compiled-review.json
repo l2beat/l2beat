@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T08:26:38.502Z",
+  "compiledAt": "2026-04-07T10:07:30.081Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "stablecoin",
     "tokenName": "ZCHF",
-    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.44M, with $66.65M in active collateral positions."
+    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.72M, with $68.98M in active collateral positions."
   },
   "totals": {
     "contractCount": 24,
@@ -16,15 +16,15 @@
     "scoredFunctionCount": 18,
     "adminCount": 19,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 80995742.79096806,
-    "totalTokenValueAtRisk": 25437632.396310825,
-    "totalTokenValue": 25437632.396310825
+    "totalCapitalAtRisk": 83050119.92069063,
+    "totalTokenValueAtRisk": 25724637.771031145,
+    "totalTokenValue": 25724637.771031145
   },
   "admins": [
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "name": "MintingHub (Legacy)",
-      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, collectProfits, coverLoss, and burnWithoutReserve directly. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve. This is the older MintingHub, no longer actively used but still registered as a minter with $0 in remaining positions.",
+      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, collectProfits, coverLoss, and burnWithoutReserve directly. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve. This is the older MintingHub, no longer actively used but still registered as a minter with $146.99K in remaining positions.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -34,7 +34,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -54,7 +54,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -79,7 +79,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -99,7 +99,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -119,7 +119,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -139,7 +139,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -164,7 +164,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -189,7 +189,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -209,7 +209,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -225,9 +225,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -242,7 +242,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -262,7 +262,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -339,7 +339,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -359,7 +359,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -379,7 +379,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -404,7 +404,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -429,7 +429,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -449,7 +449,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -465,14 +465,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
       "name": "Savings (Legacy)",
-      "description": "Immutable older Savings contract registered as an active minter. Can mint ZCHF to pay interest to depositors. Holds $21.26K in ZCHF deposits. Parameters can be changed by qualified FPS holders via proposeChange.",
+      "description": "Immutable older Savings contract registered as an active minter. Can mint ZCHF to pay interest to depositors. Holds $21.50K in ZCHF deposits. Parameters can be changed by qualified FPS holders via proposeChange.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -482,7 +482,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -502,7 +502,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -527,7 +527,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -547,7 +547,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -567,7 +567,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -587,7 +587,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -612,7 +612,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -637,7 +637,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -656,7 +656,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -672,9 +672,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
@@ -689,7 +689,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -709,7 +709,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -734,7 +734,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -754,7 +754,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -774,7 +774,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -794,7 +794,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -819,7 +819,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -844,7 +844,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -864,7 +864,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -880,14 +880,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current)",
-      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $66.65M across 51 active positions. Functions including openPosition, clone, challenge, bid, and buyExpiredCollateral are open to anyone. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve on the Frankencoin token.",
+      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $68.98M across 51 active positions. Functions including openPosition, clone, challenge, bid, and buyExpiredCollateral are open to anyone. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve on the Frankencoin token.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -897,7 +897,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -917,7 +917,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -942,7 +942,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -962,7 +962,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -982,7 +982,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1002,7 +1002,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1027,7 +1027,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1052,7 +1052,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1072,7 +1072,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1263,9 +1263,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
@@ -1280,7 +1280,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1300,7 +1300,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1377,7 +1377,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1397,7 +1397,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1417,7 +1417,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1442,7 +1442,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1467,7 +1467,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1487,7 +1487,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1503,14 +1503,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $10.11M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
+      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $10.22M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1520,7 +1520,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1540,7 +1540,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1565,7 +1565,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1585,7 +1585,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1605,7 +1605,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1625,7 +1625,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1650,7 +1650,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1675,7 +1675,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1694,7 +1694,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1710,9 +1710,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 25437632.396310825,
+      "totalDirectTokenValue": 25724637.771031145,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 25437632.396310825
+      "totalReachableTokenValue": 25724637.771031145
     },
     {
       "address": "eth:0x0000000000000000000000000000000000000000",
@@ -1748,7 +1748,7 @@
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Token)",
-      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can propose changes to Savings parameters via proposeChange. The Equity contract itself has kamikaze (self-sacrifice of shares for voting power) and restructureCapTable (emergency cap table wipe when equity falls below 1000 ZCHF). Holds $14.32M in reserves.",
+      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can propose changes to Savings parameters via proposeChange. The Equity contract itself has kamikaze (self-sacrifice of shares for voting power) and restructureCapTable (emergency cap table wipe when equity falls below 1000 ZCHF). Holds $13.92M in reserves.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1757,7 +1757,7 @@
           "contractName": "Equity",
           "functionName": "kamikaze",
           "impact": "critical",
-          "directFundsUsd": 14342816.649018617,
+          "directFundsUsd": 13923431.96265291,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -1828,9 +1828,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 14342816.649018617,
+      "totalDirectCapital": 13923431.96265291,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 14342816.649018617,
+      "totalReachableCapital": 13923431.96265291,
       "totalReachableTokenValue": 1000
     },
     {
@@ -1946,6 +1946,10 @@
       "totalReachableTokenValue": 0
     }
   ],
+  "adminTotals": {
+    "totalFundsAtRisk": 0,
+    "totalTokenValueAtRisk": 1000
+  },
   "dependencies": [
     {
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
@@ -2004,7 +2008,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 396268.23324047885,
+          "directFundsUsd": 402452.6575177941,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2015,7 +2019,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1603731.7667595213,
+              "tokenValueUsd": 1597547.3424822057,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2069,7 +2073,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mintTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 396268.23324047885,
+          "directFundsUsd": 402452.6575177941,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2080,7 +2084,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1603731.7667595213,
+              "tokenValueUsd": 1597547.3424822057,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2394,8 +2398,8 @@
           ]
         }
       ],
-      "totalFundsAtRisk": 396268.23324047885,
-      "totalTokenValueAtRisk": 1603731.7667595213,
+      "totalFundsAtRisk": 402452.6575177941,
+      "totalTokenValueAtRisk": 1597547.3424822057,
       "dependencyType": "callgraph"
     },
     {
@@ -3165,7 +3169,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3185,7 +3189,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3210,7 +3214,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3235,7 +3239,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3255,7 +3259,7 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3275,7 +3279,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3295,7 +3299,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3315,7 +3319,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3340,7 +3344,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3356,7 +3360,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 25437632.396310825,
+      "totalTokenValueAtRisk": 25724637.771031145,
       "dependencyType": "write"
     },
     {
@@ -3384,7 +3388,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3404,7 +3408,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3429,7 +3433,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3454,7 +3458,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3474,7 +3478,7 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3494,7 +3498,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3514,7 +3518,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3534,7 +3538,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3559,7 +3563,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3575,7 +3579,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 25437632.396310825,
+      "totalTokenValueAtRisk": 25724637.771031145,
       "dependencyType": "write"
     },
     {
@@ -3603,7 +3607,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3623,7 +3627,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3648,7 +3652,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3673,7 +3677,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3693,7 +3697,7 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3713,7 +3717,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3733,7 +3737,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3753,7 +3757,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3778,7 +3782,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25437632.396310825,
+          "directTokenValueUsd": 25724637.771031145,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3794,7 +3798,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 25437632.396310825,
+      "totalTokenValueAtRisk": 25724637.771031145,
       "dependencyType": "write"
     },
     {
@@ -3856,13 +3860,13 @@
   "dependencyEntityGroups": [
     {
       "entity": "VCHF",
-      "totalFundsAtRisk": 396268.23324047885,
-      "totalTokenValueAtRisk": 1603731.7667595213
+      "totalFundsAtRisk": 402452.6575177941,
+      "totalTokenValueAtRisk": 1597547.3424822057
     },
     {
       "entity": "Chainlink",
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 25437632.396310825
+      "totalTokenValueAtRisk": 25724637.771031145
     },
     {
       "entity": "XCHF",
@@ -3870,30 +3874,34 @@
       "totalTokenValueAtRisk": 10000000
     }
   ],
+  "dependencyTotals": {
+    "totalFundsAtRisk": 402452.6575177941,
+    "totalTokenValueAtRisk": 25724637.771031145
+  },
   "funds": [
     {
       "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
       "name": "Frankencoin (ZCHF Token)",
-      "description": "The ZCHF stablecoin token contract itself with a market cap of $25.44M. ZCHF is pegged to the Swiss Franc and backed by collateral locked in MintingHub positions, XCHF/VCHF reserves in StablecoinBridges, and the Equity reserve pool.",
+      "description": "The ZCHF stablecoin token contract itself with a market cap of $25.72M. ZCHF is pegged to the Swiss Franc and backed by collateral locked in MintingHub positions, XCHF/VCHF reserves in StablecoinBridges, and the Equity reserve pool.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "ZCHF",
-        "price": 1.2497,
+        "price": 1.2638,
         "totalSupply": "20354991114916240227952988",
-        "tokenValue": 25437632.396310825
+        "tokenValue": 25724637.771031145
       },
       "aggregate": null
     },
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Reserve Pool)",
-      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $14.32M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
+      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $13.92M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
       "balances": {
-        "totalUsdValue": 14316256.824386226
+        "totalUsdValue": 13923431.96265291
       },
       "positions": {
-        "totalUsdValue": 26559.824632391363
+        "totalUsdValue": 0
       },
       "tokenInfo": null,
       "aggregate": null
@@ -3901,22 +3909,22 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current Positions)",
-      "description": "The active MintingHub managing 51 collateral positions worth $66.65M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
+      "description": "The active MintingHub managing 51 collateral positions worth $68.98M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 66652926.141949445,
-        "contractCount": 60,
+        "totalUsdValue": 68979699.91272724,
+        "contractCount": 51,
         "handlerName": "frankencoin-mintinghub"
       }
     },
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "The current Savings contract holding $10.11M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
+      "description": "The current Savings contract holding $10.22M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
       "balances": {
-        "totalUsdValue": 10111359.40284072
+        "totalUsdValue": 10220366.480646407
       },
       "positions": {
         "totalUsdValue": 0
@@ -3927,9 +3935,9 @@
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "name": "StablecoinBridge (VCHF)",
-      "description": "Bridge contract holding $494.18K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path. Has an immutable minting limit of 2,000,000 ZCHF and expires ~2026-04-15.",
+      "description": "Bridge contract holding $503.84K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path. Has an immutable minting limit of 2,000,000 ZCHF and expires ~2026-04-15.",
       "balances": {
-        "totalUsdValue": 494182.68248333456
+        "totalUsdValue": 503838.1609304662
       },
       "positions": null,
       "tokenInfo": null,
@@ -3949,22 +3957,22 @@
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "name": "MintingHub (Legacy Positions)",
-      "description": "The older MintingHub with $0 in 2 remaining WBTC collateral positions. No longer used for new position creation.",
+      "description": "The older MintingHub with $146.99K in 2 remaining WBTC collateral positions. No longer used for new position creation.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 0,
-        "contractCount": 0,
+        "totalUsdValue": 146988.04531047662,
+        "contractCount": 2,
         "handlerName": "frankencoin-mintinghub"
       }
     },
     {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
       "name": "Savings (Legacy)",
-      "description": "The older Savings contract holding $21.26K in remaining ZCHF deposits.",
+      "description": "The older Savings contract holding $21.50K in remaining ZCHF deposits.",
       "balances": {
-        "totalUsdValue": 21257.409496999997
+        "totalUsdValue": 21497.250637999998
       },
       "positions": {
         "totalUsdValue": 0

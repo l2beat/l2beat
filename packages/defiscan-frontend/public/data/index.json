@@ -421,7 +421,7 @@
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNXCToken (VCHF)",
       "entity": "VCHF",
-      "totalFundsAtRisk": 503838.1609304662,
+      "totalFundsAtRisk": 402452.6575177941,
       "protocols": [
         {
           "slug": "Frankencoin",

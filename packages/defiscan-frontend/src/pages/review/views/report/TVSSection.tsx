@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
 import type { CompiledReview, CompiledFundHolder } from '../../../../types'
 import { formatUsdValue } from '../../../../utils/format'
@@ -8,15 +9,8 @@ interface TVSSectionProps {
   onShowMore: () => void
 }
 
-const BLUE_SHADES = [
-  '#2563eb',
-  '#60a5fa',
-  '#93c5fd',
-  '#bfdbfe',
-  '#dbeafe',
-  '#1d4ed8',
-  '#3b82f6',
-]
+const CHART_COLORS = ['#2563eb', '#60a5fa', '#93c5fd']
+const OTHER_COLOR = '#e2e8f0'
 
 function getFundName(fund: CompiledFundHolder): string {
   return fund.name || fund.address
@@ -30,35 +24,54 @@ function getFundValue(fund: CompiledFundHolder): number {
 }
 
 export function TVSSection({ review, onShowMore }: TVSSectionProps) {
+  const [includeTokens, setIncludeTokens] = useState(true)
   const { totals, funds } = review
-  const totalTvs = totals.totalCapitalAtRisk + (totals.totalTokenValue ?? 0)
+  const totalTvs = totals.totalCapitalAtRisk + (includeTokens ? (totals.totalTokenValue ?? 0) : 0)
 
-  // Build pie data from fund holders
+  // Build pie data from fund holders — top 3 + "Other"
   const fundValues = funds
+    .filter((f) => includeTokens || !f.tokenInfo)
     .map((f) => ({ fund: f, value: getFundValue(f) }))
     .filter((x) => x.value > 0)
     .sort((a, b) => b.value - a.value)
-    .slice(0, 7)
 
-  const pieTotal = fundValues.reduce((s, x) => s + x.value, 0)
+  const top3 = fundValues.slice(0, 3)
+  const rest = fundValues.slice(3)
+  const otherValue = rest.reduce((s, x) => s + x.value, 0)
 
-  const pieData = fundValues.map((x, i) => ({
-    name: getFundName(x.fund),
-    value: x.value,
-    color: BLUE_SHADES[i % BLUE_SHADES.length] ?? '#2563eb',
-  }))
+  const pieData = [
+    ...top3.map((x, i) => ({
+      name: getFundName(x.fund),
+      value: x.value,
+      color: CHART_COLORS[i],
+    })),
+    ...(otherValue > 0
+      ? [{ name: 'Other', value: otherValue, color: OTHER_COLOR }]
+      : []),
+  ]
+
+  const pieTotal = pieData.reduce((s, x) => s + x.value, 0)
 
   return (
     <div className="flex flex-col sm:flex-row gap-[30px] items-stretch">
       {/* Left stats card */}
-      <div className="sm:w-[312px] sm:shrink-0 bg-bg-card border border-border rounded-lg p-6 sm:p-[33px] flex flex-row sm:flex-col justify-between sm:justify-center gap-6 sm:gap-8">
-        <div className="flex flex-col gap-1">
+      <div className="sm:w-[312px] sm:shrink-0 bg-bg-card border border-border rounded-lg p-6 sm:p-[33px] flex flex-col sm:justify-center gap-6 sm:gap-8">
+        <div className="flex flex-col">
           <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
             Total TVS
           </p>
-          <p className="font-mono font-bold text-2xl sm:text-[36px] sm:leading-[40px] text-text-primary">
+          <p className="font-mono font-bold text-2xl sm:text-[36px] sm:leading-[40px] text-text-primary mt-1">
             {formatUsdValue(totalTvs)}
           </p>
+          <label className="flex items-center gap-2 cursor-pointer mt-3">
+            <input
+              type="checkbox"
+              checked={includeTokens}
+              onChange={(e) => setIncludeTokens(e.target.checked)}
+              className="size-3.5 rounded border-border accent-accent"
+            />
+            <span className="text-[11px] text-text-muted">Include protocol tokens</span>
+          </label>
         </div>
         <div className="sm:border-t sm:border-border sm:pt-[33px] flex flex-col gap-1">
           <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">

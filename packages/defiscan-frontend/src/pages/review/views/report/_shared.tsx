@@ -20,6 +20,11 @@ export function SectionHeader({ icon, label, action }: SectionHeaderProps) {
   )
 }
 
+/** Compute impacted TVS percentage, capped at 100%. */
+export function impactPct(capital: number, totalTvs: number): number {
+  return totalTvs > 0 ? Math.min(100, Math.round((capital / totalTvs) * 100)) : 0
+}
+
 interface ShowMoreButtonProps {
   onClick: () => void
 }

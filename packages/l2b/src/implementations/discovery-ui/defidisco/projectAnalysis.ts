@@ -111,6 +111,8 @@ export interface CollapsedChainStep {
 export interface ApiDependenciesResponse {
   totals: {
     dependencyCount: number
+    totalCapitalAtRisk: number
+    totalTokenValueAtRisk: number
   }
   dependencies: DependencyEntry[]
 }
@@ -1108,8 +1110,14 @@ export class ProjectAnalysis {
       })
     }
 
+    const depTotals = this.computeDependencyTotals(dependencies)
+
     return {
-      totals: { dependencyCount: dependencies.length },
+      totals: {
+        dependencyCount: dependencies.length,
+        totalCapitalAtRisk: depTotals.totalCapitalAtRisk,
+        totalTokenValueAtRisk: depTotals.totalTokenValueAtRisk,
+      },
       dependencies,
     }
   }
@@ -1310,6 +1318,51 @@ export class ProjectAnalysis {
       totalCapitalAtRisk,
       totalTokenValueAtRisk,
     }
+  }
+
+  /**
+   * Compute cross-dependency deduplicated capital totals.
+   * Each contract is counted once (max value) across all dependencies.
+   */
+  private computeDependencyTotals(dependencies: DependencyEntry[]): {
+    totalCapitalAtRisk: number
+    totalTokenValueAtRisk: number
+  } {
+    const seen = new Map<string, { funds: number; tokenValue: number }>()
+
+    for (const dep of dependencies) {
+      for (const func of dep.functions) {
+        if (func.directFundsUsd > 0 || func.directTokenValueUsd > 0) {
+          const addr = normalizeChainAddress(func.contractAddress)
+          const prev = seen.get(addr)
+          seen.set(addr, {
+            funds: Math.max(prev?.funds ?? 0, func.directFundsUsd),
+            tokenValue: Math.max(
+              prev?.tokenValue ?? 0,
+              func.directTokenValueUsd,
+            ),
+          })
+        }
+        for (const rc of func.reachableContracts) {
+          if (!rc.fundsAtRisk) continue
+          const addr = normalizeChainAddress(rc.contractAddress)
+          const prev = seen.get(addr)
+          seen.set(addr, {
+            funds: Math.max(prev?.funds ?? 0, rc.fundsUsd),
+            tokenValue: Math.max(prev?.tokenValue ?? 0, rc.tokenValueUsd),
+          })
+        }
+      }
+    }
+
+    let totalCapitalAtRisk = 0
+    let totalTokenValueAtRisk = 0
+    for (const { funds, tokenValue } of seen.values()) {
+      totalCapitalAtRisk += funds
+      totalTokenValueAtRisk += tokenValue
+    }
+
+    return { totalCapitalAtRisk, totalTokenValueAtRisk }
   }
 
   /**

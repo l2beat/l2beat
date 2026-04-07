@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Radar,
@@ -81,31 +81,85 @@ export function LandingPage() {
     return map
   }, [allReviews])
 
-  const recentProtocols = useMemo(() => {
-    return [...protocols]
-      .sort((a, b) => {
-        const aDate = reviewMap.get(a.slug) ?? ''
-        const bDate = reviewMap.get(b.slug) ?? ''
-        return bDate.localeCompare(aDate)
-      })
-      .slice(0, 3)
+  const sortedProtocols = useMemo(() => {
+    return [...protocols].sort((a, b) => {
+      const aDate = reviewMap.get(a.slug) ?? ''
+      const bDate = reviewMap.get(b.slug) ?? ''
+      return bDate.localeCompare(aDate)
+    })
   }, [protocols, reviewMap])
+
+  // Carousel state
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [perView, setPerView] = useState(3)
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  // Responsive cards-per-view: 1 on mobile, 3 on md+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    const update = () => setPerView(mq.matches ? 3 : 1)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  const maxIndex = Math.max(0, sortedProtocols.length - perView)
+
+  // Reset index when perView changes to avoid overscroll
+  useEffect(() => {
+    setCarouselIndex((i) => Math.min(i, maxIndex))
+  }, [maxIndex])
+
+  const advance = useCallback(
+    (dir: 1 | -1) => {
+      setCarouselIndex((i) => {
+        const next = i + dir
+        if (next < 0) return maxIndex
+        if (next > maxIndex) return 0
+        return next
+      })
+    },
+    [maxIndex],
+  )
+
+  // Auto-advance every 3s, pause on hover
+  useEffect(() => {
+    if (isPaused || sortedProtocols.length <= perView) return
+    const id = setInterval(() => advance(1), 3000)
+    return () => clearInterval(id)
+  }, [isPaused, advance, sortedProtocols.length, perView])
+
+  // Touch swipe support
+  const touchStart = useRef(0)
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX
+    setIsPaused(true)
+  }, [])
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const delta = touchStart.current - e.changedTouches[0].clientX
+      if (Math.abs(delta) > 50) advance(delta > 0 ? 1 : -1)
+      setIsPaused(false)
+    },
+    [advance],
+  )
 
   return (
     <div className="bg-bg-primary">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-b from-accent/[0.03] to-transparent">
         {/* Background blur orbs */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute top-1/4 left-1/4 size-[384px] rounded-xl bg-accent opacity-10 blur-[60px] hidden md:block" />
           <div className="absolute bottom-1/4 right-1/4 size-[384px] rounded-xl bg-purple-500 opacity-10 blur-[60px] hidden md:block" />
         </div>
 
-        <div className="relative mx-auto max-w-[896px] px-4 md:px-8 py-12 md:py-24 text-center flex flex-col items-center gap-6">
+        <div className="relative mx-auto max-w-[896px] px-4 md:px-8 py-16 md:py-28 text-center flex flex-col items-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-xl bg-accent-tint px-3 py-1">
-            <ShieldCheckIcon className="size-3 text-accent shrink-0" />
-            <span className="text-[10px] font-bold text-text-secondary uppercase tracking-[1.5px]">
+          <div className="inline-flex items-center gap-2 rounded-xl bg-accent-tint px-3.5 py-1.5 mb-6 md:mb-8">
+            <ShieldCheckIcon className="size-3.5 text-accent shrink-0" />
+            <span className="text-xs font-bold text-text-secondary uppercase tracking-[1.5px]">
               Continuous Monitoring Active
             </span>
           </div>
@@ -118,7 +172,7 @@ export function LandingPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl font-normal text-text-secondary leading-normal max-w-[612px]">
+          <p className="mt-4 md:mt-6 text-lg md:text-xl font-normal text-text-secondary leading-normal max-w-[612px]">
             Continuous risk assessment for institutional liquidity. Verify the
             exposure to trusted code, admin keys and dependencies of any DeFi
             protocol with on-chain evidence.
@@ -127,7 +181,7 @@ export function LandingPage() {
           {/* Search Bar */}
           <form
             onSubmit={handleSearch}
-            className="mt-4 w-full max-w-[672px] bg-white p-2 rounded flex items-center shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.5),0px_8px_10px_-6px_rgba(226,232,240,0.5)]"
+            className="mt-10 md:mt-12 w-full max-w-[672px] bg-white p-2 rounded flex items-center shadow-[0px_20px_25px_-5px_rgba(226,232,240,0.5),0px_8px_10px_-6px_rgba(226,232,240,0.5)]"
           >
             <input
               type="text"
@@ -190,7 +244,7 @@ export function LandingPage() {
                     data={trustPostureData}
                     cx="50%"
                     cy="50%"
-                    outerRadius="70%"
+                    outerRadius="60%"
                   >
                     <PolarGrid gridType="circle" stroke="rgba(37,99,235,0.1)" />
                     <PolarAngleAxis
@@ -214,7 +268,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Recent Reports Section */}
+      {/* Recent Reports Carousel */}
       <section className="mx-auto max-w-7xl px-4 md:px-8 py-12 md:py-20">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
@@ -225,12 +279,32 @@ export function LandingPage() {
               Recent Reports
             </h2>
           </div>
-          <Link
-            to="/gallery"
-            className="text-sm font-medium text-accent hover:text-accent-dark transition-colors"
-          >
-            Browse Gallery &rarr;
-          </Link>
+          <div className="flex items-center gap-4">
+            {sortedProtocols.length > perView && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => advance(-1)}
+                  aria-label="Previous reports"
+                  className="size-9 rounded-full border border-border bg-white flex items-center justify-center text-text-secondary hover:border-accent/30 hover:text-accent transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 3L4.5 7L8.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <button
+                  onClick={() => advance(1)}
+                  aria-label="Next reports"
+                  className="size-9 rounded-full border border-border bg-white flex items-center justify-center text-text-secondary hover:border-accent/30 hover:text-accent transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5.5 3L9.5 7L5.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+            )}
+            <Link
+              to="/gallery"
+              className="text-sm font-medium text-accent hover:text-accent-dark transition-colors"
+            >
+              Browse Gallery &rarr;
+            </Link>
+          </div>
         </div>
 
         {isLoading ? (
@@ -252,59 +326,78 @@ export function LandingPage() {
         ) : !indexData ? (
           <p className="text-status-red">Failed to load protocol data.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {recentProtocols.map((p) => {
-              const tvl = p.totals.totalCapitalAtRisk
-              const token =
-                p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk
-              const tvs = tvl + token
+          <div
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Recent protocol reports"
+            className="overflow-hidden"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              ref={trackRef}
+              className="flex motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-[cubic-bezier(0.25,1,0.5,1)]"
+              style={{
+                gap: '32px',
+                transform: `translateX(calc(-${carouselIndex} * (${100 / perView}% + ${32 / perView}px)))`,
+              }}
+            >
+              {sortedProtocols.map((p) => {
+                const tvl = p.totals.totalCapitalAtRisk
+                const token =
+                  p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk
+                const tvs = tvl + token
 
-              return (
-                <Link
-                  key={p.slug}
-                  to={`/protocol/${p.slug}`}
-                  className="group rounded-lg border border-border bg-white p-8 hover:border-accent/30 hover:shadow-md transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="size-10 rounded bg-accent-tint-light flex items-center justify-center">
-                        <img
-                          src="/defiscan-mark-blue.svg"
-                          alt=""
-                          className="h-5 w-5"
-                        />
+                return (
+                  <Link
+                    key={p.slug}
+                    to={`/protocol/${p.slug}`}
+                    style={{ minWidth: `calc(${100 / perView}% - ${(32 * (perView - 1)) / perView}px)` }}
+                    className="group shrink-0 rounded-lg border border-border bg-white p-8 hover:border-accent/30 hover:shadow-md transition-[border-color,box-shadow]"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="size-10 rounded bg-accent-tint-light flex items-center justify-center">
+                          <img
+                            src="/defiscan-mark-blue.svg"
+                            alt=""
+                            className="h-5 w-5"
+                          />
+                        </div>
+                        <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
+                          {p.name}
+                        </h3>
                       </div>
-                      <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">
-                        {p.name}
-                      </h3>
                     </div>
-                  </div>
-                  <p className="text-sm text-text-secondary mb-4 line-clamp-2">
-                    {p.chain} &middot; {p.projectType}
-                  </p>
-                  <div className="flex items-center gap-4 text-xs text-text-muted">
-                    <span>
-                      TVS{' '}
-                      <span className="font-semibold text-text-primary">
-                        {formatUsdValue(tvs)}
+                    <p className="text-sm text-text-secondary mb-4 line-clamp-2">
+                      {p.chain} &middot; {p.projectType}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs text-text-muted">
+                      <span>
+                        TVS{' '}
+                        <span className="font-semibold text-text-primary">
+                          {formatUsdValue(tvs)}
+                        </span>
                       </span>
-                    </span>
-                    <span>
-                      Admins{' '}
-                      <span className="font-semibold text-text-primary">
-                        {p.totals.adminCount}
+                      <span>
+                        Admins{' '}
+                        <span className="font-semibold text-text-primary">
+                          {p.totals.adminCount}
+                        </span>
                       </span>
-                    </span>
-                    <span>
-                      Deps{' '}
-                      <span className="font-semibold text-text-primary">
-                        {p.totals.dependencyCount}
+                      <span>
+                        Deps{' '}
+                        <span className="font-semibold text-text-primary">
+                          {p.totals.dependencyCount}
+                        </span>
                       </span>
-                    </span>
-                  </div>
-                </Link>
-              )
-            })}
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
           </div>
         )}
       </section>

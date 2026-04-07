@@ -26,12 +26,20 @@ export interface CompiledReview {
   }
 
   admins: CompiledAdmin[]
+  adminTotals?: {
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }
   dependencies: CompiledDependency[]
   dependencyEntityGroups?: {
     entity: string | null
     totalFundsAtRisk: number
     totalTokenValueAtRisk: number
   }[]
+  dependencyTotals?: {
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }
   funds: CompiledFundHolder[]
   functions: CompiledFunction[]
   contracts: CompiledContract[]

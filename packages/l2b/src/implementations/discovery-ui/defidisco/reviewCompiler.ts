@@ -64,6 +64,11 @@ export interface CompiledReview {
   }
 
   admins: CompiledAdmin[]
+  /** Cross-admin deduplicated admin totals — each contract counted once (max value). */
+  adminTotals?: {
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }
   dependencies: CompiledDependency[]
   /** Per-entity deduplicated funds totals — avoids double-counting when multiple
    *  deps of the same entity reach the same underlying contracts. */
@@ -72,6 +77,11 @@ export interface CompiledReview {
     totalFundsAtRisk: number
     totalTokenValueAtRisk: number
   }[]
+  /** Cross-entity deduplicated dependency totals — each contract counted once (max value). */
+  dependencyTotals?: {
+    totalFundsAtRisk: number
+    totalTokenValueAtRisk: number
+  }
   funds: CompiledFundHolder[]
   functions: CompiledFunction[]
   contracts: CompiledContract[]
@@ -453,6 +463,12 @@ export class ReviewCompiler {
       })
     }
 
+    // Forward cross-admin deduplicated totals from ProjectAnalysis
+    const adminTotals = {
+      totalFundsAtRisk: adminsResult.totals.totalCapitalAtRisk,
+      totalTokenValueAtRisk: adminsResult.totals.totalTokenValueAtRisk,
+    }
+
     // Build contract name lookup from discovery entries (covers all contracts)
     const contractNameMap = new Map<string, string>()
     for (const entry of discoveryEntries) {
@@ -559,6 +575,12 @@ export class ReviewCompiler {
         }
       },
     )
+
+    // Forward cross-dependency deduplicated totals from ProjectAnalysis
+    const dependencyTotals = {
+      totalFundsAtRisk: depsResult.totals.totalCapitalAtRisk,
+      totalTokenValueAtRisk: depsResult.totals.totalTokenValueAtRisk,
+    }
 
     // Build fund holders from funds data + review config descriptions
     const funds: CompiledFundHolder[] = []
@@ -774,8 +796,10 @@ export class ReviewCompiler {
       },
 
       admins,
+      adminTotals,
       dependencies,
       dependencyEntityGroups,
+      dependencyTotals,
       funds,
       functions,
       contracts,

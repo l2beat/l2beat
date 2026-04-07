@@ -108,7 +108,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Audits (`audits` array in `resources.json` — `AuditEntry[]` with `url`, `author`, `date`, `scope?`, `bounty?`; `bounty` = max bug bounty USD amount; separate from `ResourceEntry[]`)
 - Resource Gathering Agent (`/gather-resources` Claude Code skill — web search + verify for official links, licenses, socials, security audits, and bug bounty programs; `--audits-only` flag skips resource gathering and only discovers/saves audits using existing resources as starting points)
 - Review Generation Agent (`/generate-review` Claude Code skill)
-- Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint)
+- Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint, `adminTotals`/`dependencyTotals` for cross-entity deduplicated capital)
 - Impact Cap (`impactCap` on mitigations — structured field reference or hardcoded USD, `ImpactCapUnit` scaling, `effectiveCapUsd` on reachable contracts, "$X Max Impact" badge display)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
 
