@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x529fd0efce773237b50fac6548e485e06c5c3bf7
 
-# Diff at Tue, 07 Apr 2026 10:23:50 GMT:
+# Diff at Tue, 07 Apr 2026 13:20:19 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774433040
@@ -8,23 +8,9 @@ Generated with discovered.json: 0x529fd0efce773237b50fac6548e485e06c5c3bf7
 
 ## Description
 
-Two upgrades combined:
-
-1) Upgrade 14: Isthmus L1 Contracts + MT-Cannon (op-contracts/v3.0.0, March 30). https://gov.optimism.io/t/upgrade-proposal-14-isthmus-l1-contracts-mt-cannon/9796
-MIPS32 replaced with MIPS64 (MT-Cannon). Operator fee mechanism added (disabled). Gas estimation constants added to L1CrossDomainMessenger.
-
-2) Upgrade to op-contracts v5.x (April 7). SystemConfig v3.7.0, OptimismPortal2 v5.0.0, L1CrossDomainMessenger v2.10.0, L1StandardBridge v2.7.0, L1ERC721Bridge v2.8.0, DisputeGameFactory v1.2.0.
+Upgrade to op-contracts v5.x (April 7, on top of U14 from March 30). SystemConfig v3.7.0, OptimismPortal2 v5.0.0, L1CrossDomainMessenger v2.10.0, L1StandardBridge v2.7.0, L1ERC721Bridge v2.8.0, DisputeGameFactory v1.2.0.
 maximumGasLimit increased from 200M to 500M. New fields: guardian, initVersion, l2ChainId, paused, proxyAdmin, proxyAdminOwner, superchainConfig. Old DelayedWETH and AnchorStateRegistry deleted, new ones created. Now uses standard SuperchainConfig (0x95703e).
 
-U14 diffs (old→U14 impl):
-SystemConfig: [diff](https://disco.l2beat.com/diff/eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647)
-L1CrossDomainMessenger: [diff](https://disco.l2beat.com/diff/eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231/eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B)
-OptimismPortal2: [diff](https://disco.l2beat.com/diff/eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4)
-L1StandardBridge: [diff](https://disco.l2beat.com/diff/eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6/eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A)
-L1ERC721Bridge: [diff](https://disco.l2beat.com/diff/eth:0x276d3730f219f7ec22274f7263180b8452B46d47/eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013)
-MIPS (MIPS32→MIPS64): [diff](https://disco.l2beat.com/diff/eth:0xaA59A0777648BC75cd10364083e878c1cCd6112a/eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1)
-
-v5 diffs (U14 impl→v5 impl):
 SystemConfig: [diff](https://disco.l2beat.com/diff/eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647/eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557)
 L1CrossDomainMessenger: [diff](https://disco.l2beat.com/diff/eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B/eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6)
 OptimismPortal2: [diff](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999)
