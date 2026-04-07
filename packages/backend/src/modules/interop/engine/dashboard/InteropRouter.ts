@@ -3,7 +3,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
@@ -13,6 +13,7 @@ import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
+import { getInteropMessageStats } from './impls/messages'
 import { getMemoryUsage } from './impls/memory'
 import {
   getInteropTransferDetails,
@@ -68,7 +69,7 @@ export function createInteropRouter(
     const [events, messages, transfers, missingTokens, uniqueApps] =
       await Promise.all([
         db.interopEvent.getStats(),
-        getMessagesStats(db),
+        getInteropMessageStats(db),
         getInteropTransferStats(db),
         db.interopTransfer.getMissingTokensInfo(),
         db.interopMessage.getUniqueAppsPerPlugin(),
@@ -435,33 +436,4 @@ function getProcessorsStatus(processors: InteropBlockProcessor[]) {
         ]
       : [],
   )
-}
-
-async function getMessagesStats(db: Database) {
-  const stats = await db.interopMessage.getStats()
-  const detailedStats = await db.interopMessage.getDetailedStats()
-
-  return stats.map((overall) => ({
-    plugin: overall.plugin,
-    type: overall.type,
-    count: Number(overall.count),
-    avgDuration: Number(overall.avgDuration),
-    knownAppCount: Number(overall.knownAppCount),
-    chains: detailedStats
-      .filter(
-        (chain) =>
-          chain.plugin === overall.plugin && chain.type === overall.type,
-      )
-      .map((chain) => {
-        assert(chain.srcChain && chain.dstChain)
-        return {
-          plugin: chain.plugin,
-          type: chain.type,
-          srcChain: chain.srcChain,
-          dstChain: chain.dstChain,
-          count: Number(chain.count),
-          avgDuration: Number(chain.avgDuration),
-        }
-      }),
-  }))
 }

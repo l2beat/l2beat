@@ -21,6 +21,9 @@ export function SummaryPage() {
               <Link to="/events">Open events</Link>
             </Button>
             <Button asChild variant="outline">
+              <Link to="/messages">Open messages</Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link to="/transfers">Open transfers</Link>
             </Button>
           </CardContent>

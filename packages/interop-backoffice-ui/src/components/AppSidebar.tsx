@@ -53,7 +53,6 @@ const items = [
         title: 'Messages',
         url: '/messages',
         icon: MessageSquareIcon,
-        isUpcoming: true,
       },
       {
         title: 'Transfers',
