@@ -1,38 +1,56 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contains the whitelist of addresses allowed to propose batches on L1. These operators can also issue pre-confirmation from their public addresses. Currently, there are {{registeredOperatorsCount}} operators registered.",
-  "ignoreMethods": ["epochStartTimestamp", "operatorMapping", "proxiableUUID"],
+  "description": "Contains the whitelist of addresses allowed to propose batches on L1 and issue preconfirmations. It dynamically selects a single operator for a given epoch using the Ethereum beacon block root as a source of randomness.",
+  "fields": {
+    "operatorMapping": {
+      "handler": {
+        "type": "array",
+        "method": "operatorMapping",
+        "startIndex": 0,
+        "length": "{{operatorCount}}"
+      },
+      "permissions": [
+        {
+          "type": "sequence"
+        }
+      ]
+    },
+    "paused": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause/unpause, manage operator and ejector roles."
+        }
+      ]
+    },
+    "_ejectorManager": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F" // https://app.blocksec.com/phalcon/explorer/tx/eth/0x55776c3ca4062444e6d852ec3e316c29b2da34eaffdf7030f8ac804aebdc90c0?line=0
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the ejecter role"
+        }
+      ]
+    },
+    "ejecters": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage operators"
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["epochStartTimestamp", "proxiableUUID"],
   "ignoreInWatchMode": [
-    "getOperatorCandidatesForCurrentEpoch",
-    "getOperatorCandidatesForNextEpoch",
     "getOperatorForCurrentEpoch",
     "getOperatorForNextEpoch",
-    "registeredOperators",
-    "havingPerfectOperators"
-  ],
-  "fields": {
-    "getOperatorCandidatesForCurrentEpoch": {
-      "permissions": [{ "type": "sequence" }]
-    },
-    "registeredOperators": {
-      "handler": {
-        "type": "event",
-        "select": ["proposer", "sequencer"],
-        "add": { "event": "OperatorAdded" },
-        "remove": { "event": "OperatorRemoved" }
-      }
-    },
-    "registeredOperatorsCount": {
-      "handler": {
-        "type": "event",
-        "select": "proposer",
-        "add": { "event": "OperatorAdded" },
-        "remove": { "event": "OperatorRemoved" }
-      },
-      "edit": ["length"]
-    },
-    "havingPerfectOperators": {
-      "description": "tells the contract whether it can safely pick a random operator using a simple mathematical operation, or if it needs to perform a more expensive \"loop-and-check\" operation"
-    }
-  }
+    "operatorCount"
+  ]
 }

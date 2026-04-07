@@ -2,16 +2,8 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Verifier contract for SGX proven blocks.",
   "ignoreInWatchMode": ["nextInstanceId"],
-  "ignoreMethods": ["getPastTotalSupply", "instances"],
+  "ignoreMethods": ["getPastTotalSupply", "instances", "proxiableUUID"],
   "fields": {
-    "proxiableUUID": {
-      "handler": {
-        "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
-    },
     "owner": {
       "permissions": [
         {

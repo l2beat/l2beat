@@ -545,7 +545,7 @@ export class InteropTransferRepository extends BaseRepository {
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
         const plugins = chainAddressPlugins.get(key)
         if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
+          chainAddressPlugins.set(key, new Set([row.plugin]))
         } else {
           plugins.add(row.plugin)
         }
@@ -555,7 +555,7 @@ export class InteropTransferRepository extends BaseRepository {
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
         const plugins = chainAddressPlugins.get(key)
         if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
+          chainAddressPlugins.set(key, new Set([row.plugin]))
         } else {
           plugins.add(row.plugin)
         }

@@ -16,8 +16,8 @@ export async function getIconPreviewData(
         title: 'Icon Preview - L2BEAT',
         description:
           'Development-only gallery of frontend icon components used across L2BEAT.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/icon-preview/opengraph-image.png',
         },
         excludeFromSearchEngines: true,
