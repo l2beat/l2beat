@@ -20,6 +20,7 @@ import {
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import { shouldHaveNoBridgePage } from '../utils/shouldHaveNoBridgePage'
 
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
@@ -106,7 +107,7 @@ function getDaRiskEntry(
     }),
   )
 
-  if (layer.daLayer.usedWithoutBridgeIn.length > 0 || bridges.length === 0) {
+  if (shouldHaveNoBridgePage(layer.daLayer, bridges.length)) {
     daBridges.unshift({
       name: 'No Bridge',
       slug: 'no-bridge',

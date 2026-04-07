@@ -29,8 +29,8 @@ export async function getScalingProjectTvsBreakdownData(
       metadata: getMetadata(manifest, {
         title: `${tvsBreakdownData.project.name} | TVS Breakdown - L2BEAT`,
         description: `See a detailed breakdown of ${tvsBreakdownData.project.name}'s TVS on L2BEAT.`,
+        url,
         openGraph: {
-          url,
           image: `/meta-images/scaling/projects/${tvsBreakdownData.project.slug}/opengraph-image.png`,
         },
       }),

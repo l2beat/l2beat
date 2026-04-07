@@ -236,6 +236,44 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
     `,
   },
+  '0x004f4bbc8b8599a08bb3715b9a18bb53996ac81d558a0ac094f6e97c71b70377': {
+    ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.0.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/aggregation',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\` . Commit hash should be  \`debb3301e7720943f65274fd75f747ee2b722bbd\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+    `,
+  },
+  '0x1fffeb5a6f932e26084c284829e79973121fe5d456a7ec9029febc1308167c2c': {
+    ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.0.0'),
+    programUrl:
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct branch in [celo-org/op-succinct](https://github.com/celo-org/op-succinct) repo:  \`git checkout celo/v2.0.0\` . Commit hash should be  \`debb3301e7720943f65274fd75f747ee2b722bbd\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
+    `,
+  },
   '0x003991487ea72a40a1caa7c234b12c0da52fc4ccc748a07f6ebd354bbb54772e': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1hypercube'),

@@ -1,0 +1,16 @@
+{
+  "description": "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+  "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"],
+  "ignoreInWatchMode": ["clock"],
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  },
+  "category": "core"
+}

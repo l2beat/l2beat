@@ -1,13 +1,14 @@
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
+import { getRequestIp } from '../utils/getRequestIp'
 import { getLogger } from '../utils/logger'
 import { getRequestId } from './RequestIdMiddleware'
 
 export function ErrorHandler() {
   const logger = getLogger().for('ErrorHandler')
-  return (err: Error, req: Request, res: Response, next: NextFunction) => {
+  return (error: Error, req: Request, res: Response, next: NextFunction) => {
     if (res.headersSent) {
-      return next(err)
+      return next(error)
     }
 
     const errorId = randomUUID()
@@ -15,7 +16,8 @@ export function ErrorHandler() {
 
     const body = {
       requestId: getRequestId(req),
-      error: err instanceof Error ? err.message : String(err),
+      ip: getRequestIp(req),
+      error,
       method: req.method,
       url: req.originalUrl,
       errorId,
@@ -24,10 +26,14 @@ export function ErrorHandler() {
       userAgent: req.headers['user-agent'] ?? 'unknown',
     }
 
-    if (err instanceof URIError && err.message.startsWith('Failed to decode')) {
-      logger.warn('Error processing request', body)
+    const message = error.message || 'Error processing request'
+    if (
+      error instanceof URIError &&
+      error.message.startsWith('Failed to decode')
+    ) {
+      logger.warn(message, body)
     } else {
-      logger.error('Error processing request', body)
+      logger.error(message, body)
     }
     res.send(`Internal Server Error\n\n Error ID: ${errorId}`)
   }

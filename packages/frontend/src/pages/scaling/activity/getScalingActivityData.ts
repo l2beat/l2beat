@@ -33,8 +33,8 @@ export async function getScalingActivityData(
         title: 'Activity - L2BEAT',
         description:
           'Track activity across Ethereum scaling projects with interactive charts.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/activity/opengraph-image.png',
         },
       }),

@@ -54,7 +54,9 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <Layer3Icon className="size-4" />
             </TooltipTrigger>
-            <TooltipContent>{project.nameSecondLine}</TooltipContent>
+            <TooltipContent sideOffset={16}>
+              {project.nameSecondLine}
+            </TooltipContent>
           </Tooltip>
         )}
         {project.ecosystemInfo?.isPartOfSuperchain && (
@@ -62,7 +64,7 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <SuperchainIcon />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent sideOffset={16}>
               The project is officially part of the Superchain - it contributes
               revenue to the Optimism Collective and uses the SuperchainConfig
               to manage chain configuration values.
@@ -77,7 +79,7 @@ export function ProjectNameCell({
               <TooltipTrigger>
                 <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent sideOffset={16}>
                 {project.statuses.verificationWarnings.contracts && (
                   <p>{project.statuses.verificationWarnings.contracts}</p>
                 )}
@@ -92,7 +94,9 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <ShieldIcon className="-top-px relative size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
-            <TooltipContent>{project.statuses.redWarning}</TooltipContent>
+            <TooltipContent sideOffset={16}>
+              {project.statuses.redWarning}
+            </TooltipContent>
           </Tooltip>
         )}
         {project.statuses?.underReview && !ignoreUnderReviewIcon && (
@@ -100,7 +104,7 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent sideOffset={16}>
               {getUnderReviewText(project.statuses.underReview)}
             </TooltipContent>
           </Tooltip>
@@ -110,7 +114,7 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <ShieldIcon className="-top-px relative size-3.5 fill-yellow-700 md:size-4 dark:fill-yellow-300" />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent sideOffset={16}>
               <Markdown inline ignoreGlossary>
                 {project.statuses.yellowWarning}
               </Markdown>
@@ -125,7 +129,7 @@ export function ProjectNameCell({
             <TooltipTrigger>
               <LiveIndicator />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent sideOffset={16}>
               There's an ongoing anomaly. Check detailed page for more
               information.
             </TooltipContent>
@@ -171,7 +175,7 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipContent className="flex flex-col gap-2">
+      <TooltipContent sideOffset={16} className="flex flex-col gap-2">
         <span className="text-heading-18">What is {projectName}?</span>
         <p>{project.description}</p>
         <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">

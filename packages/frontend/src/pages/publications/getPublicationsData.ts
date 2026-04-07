@@ -33,8 +33,8 @@ export async function getPublicationsData(
         title: 'Publications - L2BEAT',
         description:
           'Your hub for everything L2BEAT publishes: research, explainers, essays, interviews, and curated highlights on the evolving Layer 2 ecosystem.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/publications/opengraph-image.png',
         },
       }),

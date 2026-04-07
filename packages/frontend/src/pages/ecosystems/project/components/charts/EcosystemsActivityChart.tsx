@@ -127,7 +127,8 @@ export function EcosystemsActivityChart({
           responsive
           data={chartData}
           className="h-44! min-h-44!"
-          margin={{ top: 20 }}
+          // Without right:1 the chart last point is not hoverable for some reason
+          margin={{ top: 20, right: 1 }}
         >
           <ChartLegend content={<ChartLegendContent />} />
           <ChartStrokeOverFillAreaComponents

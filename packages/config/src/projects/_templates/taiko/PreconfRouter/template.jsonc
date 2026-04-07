@@ -1,15 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "PreconfRouter",
-  "description": "Entry point for batch proposals under the pre-confirmation architecture. It allows batches to be proposed only by whitelisted addresses.",
+  "description": "Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the {{preconfWhitelist}} (or a designated fallback) can successfully submit a batch.",
   "fields": {
-    "proxiableUUID": {
-      "handler": {
-        "type": "call",
-        "method": "function proxiableUUID() view returns (bytes32)",
-        "args": [],
-        "expectRevert": true
-      }
+    "fallbackPreconfer": { "permissions": [{ "type": "sequence" }] },
+    "owner": {
+      "permissions": [{ "type": "interact", "description": "pause/unpause." }]
     }
-  }
+  },
+  "ignoreMethods": ["proxiableUUID"]
 }

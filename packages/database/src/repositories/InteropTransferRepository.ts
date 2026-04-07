@@ -237,11 +237,16 @@ export class InteropTransferRepository extends BaseRepository {
   async getByType(
     type: string,
     options: {
+      plugin?: string
       srcChain?: string
       dstChain?: string
     } = {},
   ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
+
+    if (options.plugin !== undefined) {
+      query = query.where('plugin', '=', options.plugin)
+    }
 
     if (options.srcChain !== undefined) {
       query = query.where('srcChain', '=', options.srcChain)
@@ -540,7 +545,7 @@ export class InteropTransferRepository extends BaseRepository {
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
         const plugins = chainAddressPlugins.get(key)
         if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
+          chainAddressPlugins.set(key, new Set([row.plugin]))
         } else {
           plugins.add(row.plugin)
         }
@@ -550,7 +555,7 @@ export class InteropTransferRepository extends BaseRepository {
         chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
         const plugins = chainAddressPlugins.get(key)
         if (!plugins) {
-          chainAddressPlugins.set(key, new Set())
+          chainAddressPlugins.set(key, new Set([row.plugin]))
         } else {
           plugins.add(row.plugin)
         }

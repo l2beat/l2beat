@@ -16,7 +16,7 @@ import { categoryToLabel } from '~/pages/scaling/project/tvs-breakdown/component
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { formatTimestamp } from '~/utils/dates'
-import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 import { sourceToLabel } from '../utils/sourceToLabel'
 import {
@@ -108,8 +108,7 @@ function getEntries(
           chains,
           project.contracts?.addresses,
         ),
-        iconUrl:
-          token.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
+        iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
         priceUsd: tokenValue.priceUsd,
         valueForProject: tokenValue.valueForProject,
         value: tokenValue.value,

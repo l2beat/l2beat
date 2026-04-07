@@ -66,14 +66,24 @@ function LogoSection({
           svgHref={lightSvgHref}
           pngHref={lightPngHref}
         >
-          <img src={lightSvgHref} className="h-20 w-auto" alt="L2BEAT" />
+          <img
+            src={lightSvgHref}
+            className="h-20 w-auto"
+            alt="L2BEAT"
+            loading="lazy"
+          />
         </LogoPreviewCard>
         <LogoPreviewCard
           background="light"
           svgHref={darkSvgHref}
           pngHref={darkPngHref}
         >
-          <img src={darkSvgHref} className="h-20 w-auto" alt="L2BEAT" />
+          <img
+            src={darkSvgHref}
+            className="h-20 w-auto"
+            alt="L2BEAT"
+            loading="lazy"
+          />
         </LogoPreviewCard>
       </div>
     </PrimaryCard>
