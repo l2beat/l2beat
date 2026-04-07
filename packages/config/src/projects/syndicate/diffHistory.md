@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x69bc3fd3051866223488bc52208d2a96dad43ac0
+Generated with discovered.json: 0xf1ee73e827c7d5ec8e30cd92fef45e44ca8ee26f
 
-# Diff at Tue, 07 Apr 2026 10:42:25 GMT:
+# Diff at Tue, 07 Apr 2026 22:03:14 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1773419488
-- current timestamp: 1775558421
+- comparing to: main@0abb07b4e46d76d6e92ec02beaddc56264e90c1e block: 1775083700
+- current timestamp: 1775599220
 
 ## Description
 
@@ -23,7 +23,7 @@ EigenDAOperationsMultisig member removed (0x4985...), threshold unchanged at 3, 
     }
 ```
 
-Generated with discovered.json: 0xf3a7f8351eadbaf7dfe531be57ecd366197dd9da
+Generated with discovered.json: 0x0b8e30dbd325ec5e95907644b0dbaa8fc9fc3c03
 
 # Diff at Fri, 13 Mar 2026 16:32:38 GMT:
 

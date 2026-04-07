@@ -1,6 +1,6 @@
 {
   "name": "settlus",
-  "timestamp": 1775557361,
+  "timestamp": 1775598688,
   "configHash": "0xc6c48fee5a0b564121f058f9c72a1ee4933d893ab5a1bbb27ce8c62a8e047eb1",
   "entries": [
     {
@@ -1492,7 +1492,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 6542,
+        "gameCount": 6549,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xAD905147163589265C20f11D72a14626a6126133",
@@ -1507,7 +1507,7 @@
         "initVersion": 1,
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 6542,
+        "permissionedGamesTotal": 6549,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0xd35FeF329Bb6569baa373BDa702F3dfF59D57321",
         "proxyAdminOwner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
@@ -2673,6 +2673,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 24827183 },
+  "usedBlockNumbers": { "ethereum": 24830614 },
   "permissionsConfigHash": "0x4f6bd9abaab518a5fe305d8ab45e94a197c09cc393663b7db5cef8db16859e59"
 }
