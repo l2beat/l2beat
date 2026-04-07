@@ -181,7 +181,9 @@ export function ProjectNameCell({
             </MobileProjectIconTooltip>
           )}
           {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-            <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+            <MobileProjectIconTooltip
+              icon={<UnderReviewIcon className="size-4" />}
+            >
               {getUnderReviewText(project.statuses.underReview)}
             </MobileProjectIconTooltip>
           )}
