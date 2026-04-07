@@ -85,6 +85,7 @@ export async function getScalingRiskStateValidationEntries() {
       projectsChangeReport.getChanges(project.id),
       zkCatalogProjects,
       tvs,
+      contractUtils,
     ),
   )
   const noProofsEntries = noProofsProjects.map((project) =>
@@ -162,6 +163,15 @@ export interface ScalingRiskStateValidationOptimisticEntry
   executionDelay: number | undefined
   challengePeriod: number | undefined
   initialBond: string | undefined
+  zkCatalog:
+    | {
+        name: string
+        id: string
+        hasSuccessful: boolean
+        hasUnsuccessful: boolean
+        hasNotVerified: boolean
+      }
+    | undefined
 }
 
 function getScalingRiskStateValidationOptimisticEntry(
@@ -172,6 +182,7 @@ function getScalingRiskStateValidationOptimisticEntry(
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   tvs: SevenDayTvsBreakdown,
+  contractUtils: ContractUtils,
 ): ScalingRiskStateValidationOptimisticEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
@@ -183,6 +194,29 @@ function getScalingRiskStateValidationOptimisticEntry(
   const { stateValidation } =
     project.scalingRisks.stacked ?? project.scalingRisks.self
 
+  let zkCatalog: ScalingRiskStateValidationOptimisticEntry['zkCatalog']
+  if (zkCatalogProject && proofSystem.zkCatalogId) {
+    const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
+      zkCatalogProject,
+      contractUtils,
+      tvs,
+      [],
+      { id: project.id, contracts: project.contracts },
+    )
+    const allVerifiers = Object.values(trustedSetups).map((ts) => ts.verifiers)
+    const hasUnsuccessful = allVerifiers.some((v) => v.unsuccessful)
+    const hasNotVerified = allVerifiers.some((v) => v.notVerified)
+    const hasSuccessful = allVerifiers.some((v) => v.successful)
+
+    zkCatalog = {
+      name: zkCatalogProject.name,
+      id: proofSystem.zkCatalogId,
+      hasSuccessful,
+      hasUnsuccessful,
+      hasNotVerified,
+    }
+  }
+
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvsOrder: tvs.projects[project.id.toString()]?.breakdown?.total ?? -1,
@@ -193,6 +227,7 @@ function getScalingRiskStateValidationOptimisticEntry(
     executionDelay: stateValidation?.executionDelay,
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
+    zkCatalog,
   }
 }
 

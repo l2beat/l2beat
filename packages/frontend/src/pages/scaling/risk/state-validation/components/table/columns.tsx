@@ -4,6 +4,9 @@ import { Badge } from '~/components/badge/Badge'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
+import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
+import { UnverifiedIcon } from '~/icons/Unverified'
+import { VerifiedIcon } from '~/icons/Verified'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
@@ -12,6 +15,7 @@ import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
+import { cn } from '~/utils/cn'
 
 const validityColumnHelper =
   createColumnHelper<ScalingRiskStateValidationValidityEntry>()
@@ -124,7 +128,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
   ),
   optimisticColumnHelper.accessor('proofSystem', {
     header: 'Proof system',
-    cell: (ctx) => <ProofSystemCell {...ctx.row.original} hideType />,
+    cell: (ctx) => <OptimisticProofSystemCell {...ctx.row.original} />,
     meta: {
       tooltip:
         'The type of proof system that the project uses to prove its state: either Optimistic (assumed valid unless challenged) or Validity (cryptographically proven upfront)',
@@ -224,3 +228,39 @@ export const scalingRiskStateValidationNoProofsColumns = [
     },
   }),
 ]
+
+function OptimisticProofSystemCell({
+  proofSystem,
+  slug,
+  zkCatalog,
+}: ScalingRiskStateValidationOptimisticEntry) {
+  return (
+    <div className="flex items-center gap-4">
+      <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
+      {zkCatalog && (
+        <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+          <div
+            className={cn(
+              'flex items-center gap-1 rounded px-1.5 font-medium text-[13px]',
+              // Color priority: green if any successful, else red if any unsuccessful, else grey
+              'border border-secondary bg-secondary/20 text-[#2E3730]',
+              zkCatalog.hasUnsuccessful &&
+                'border border-[#D24D4D] bg-[#D24D4D]/20 text-[#D91919]',
+              zkCatalog.hasSuccessful &&
+                'border border-[#32EB4B] bg-[#32EB4B]/20 text-[#009620]',
+            )}
+          >
+            {zkCatalog.name}
+            {zkCatalog.hasSuccessful && <VerifiedIcon className="size-3.5" />}
+            {zkCatalog.hasNotVerified && (
+              <CircleQuestionMarkIcon className="size-3.5" />
+            )}
+            {zkCatalog.hasUnsuccessful && (
+              <UnverifiedIcon className="size-3.5" />
+            )}
+          </div>
+        </a>
+      )}
+    </div>
+  )
+}
