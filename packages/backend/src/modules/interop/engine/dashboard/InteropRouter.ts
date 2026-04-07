@@ -13,8 +13,8 @@ import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
-import { getInteropMessageStats } from './impls/messages'
 import { getMemoryUsage } from './impls/memory'
+import { getInteropMessageStats } from './impls/messages'
 import {
   getInteropTransferDetails,
   getInteropTransferStats,
