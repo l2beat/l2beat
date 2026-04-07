@@ -1,5 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import {
   createTvsBreakdownProjectFilter,
@@ -40,15 +40,6 @@ export async function getTvsTableData(
 
     result[projectId] = {
       ...values,
-      syncState:
-        project.projectId === 'optimism'
-          ? {
-              isSynced: false,
-              syncedUntil:
-                UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR,
-              target: UnixTime.toStartOf(UnixTime.now(), 'hour'),
-            }
-          : values.syncState,
       warnings: compact([
         associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
       ]),
