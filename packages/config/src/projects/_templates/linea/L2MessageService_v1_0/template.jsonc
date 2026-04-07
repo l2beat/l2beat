@@ -1,0 +1,156 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["l1RollingHashes"],
+  "ignoreInWatchMode": [
+    "currentPeriodAmountInWei",
+    "currentPeriodEnd",
+    "lastAnchoredL1MessageNumber",
+    "nextMessageNumber"
+  ],
+  "fields": {
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "l1l2MessageSetter": {
+      "copy": "accessControl",
+      "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor."
+        }
+      ]
+    },
+    "sender": {
+      "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
+    },
+    "limitInWei": {
+      "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
+    },
+    "periodInSeconds": {
+      "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+    },
+    // enum PauseType {
+    // 0  UNUSED,
+    // 1  GENERAL,
+    // 2  L1_L2,
+    // 3  L2_L1,
+    // 4  BLOB_SUBMISSION,
+    // 5  CALLDATA_SUBMISSION,
+    // 6  FINALIZATION,
+    // 7  INITIATE_TOKEN_BRIDGING,
+    // 8  COMPLETE_TOKEN_BRIDGING
+    // 9  NATIVE_YIELD_STAKING
+    // 10 NATIVE_YIELD_UNSTAKING
+    // 11 NATIVE_YIELD_PERMISSIONLESS_ACTIONS
+    // 12 NATIVE_YIELD_REPORTING
+    // 13 STATE_DATA_SUBMISSION
+    // }
+    "isPaused_GENERAL": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [1]
+      }
+    },
+    "isPaused_L1_L2": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [2]
+      }
+    },
+    "isPaused_L2_L1": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [3]
+      }
+    },
+    //   "isPaused_BLOB_SUBMISSION": {  // DEPRECATED
+    //     "severity": "HIGH",
+    //     "handler": {
+    //       "type": "call",
+    //       "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+    //       "args": [4]
+    //     }
+    //   },
+    //   "isPaused_CALLDATA_SUBMISSION": {      // DEPRECATED
+    //     "severity": "HIGH",
+    //     "handler": {
+    //       "type": "call",
+    //       "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+    //       "args": [5]
+    //     }
+    //   },
+    "isPaused_FINALIZATION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [6]
+      }
+    },
+    "isPaused_INITIATE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [7]
+      }
+    },
+    "isPaused_COMPLETE_TOKEN_BRIDGING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [8]
+      }
+    },
+    "isPaused_NATIVE_YIELD_STAKING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [9]
+      }
+    },
+    "isPaused_NATIVE_YIELD_UNSTAKING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [10]
+      }
+    },
+    "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [11]
+      }
+    },
+    "isPaused_NATIVE_YIELD_REPORTING": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [12]
+      }
+    },
+    "isPaused_STATE_DATA_SUBMISSION": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+        "args": [13]
+      }
+    },
+    "nonSecurityCouncilCooldownEnd": {
+      "severity": "HIGH",
+      "description": "Timestamp until which non security council entities can't pause the rollup."
+    }
+  }
+}

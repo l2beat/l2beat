@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x50fb82e81504fd96e7045160490ee60aaefa1f00
+
+# Diff at Wed, 01 Apr 2026 07:36:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774433058
+- current timestamp: 1775028883
+
+## Description
+
+Gas parameter update: basefeeScalar and blobbasefeeScalar increased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        26812
++        67290
+      values.blobbasefeeScalar:
+-        906223
++        1510372
+    }
+```
+
 Generated with discovered.json: 0xcfa6c2d0ce525bd8eccb402967e7289ee1d118f5
 
 # Diff at Wed, 25 Mar 2026 10:05:35 GMT:

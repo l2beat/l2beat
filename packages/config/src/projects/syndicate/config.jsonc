@@ -64,7 +64,7 @@
     },
     "eth:0x1bAB804803159aD84b8854581AA53AC72455614E": {
       "ignoreMethods": ["getPastTotalSupply"],
-      "ignoreInWatchMode": ["clock"]
+      "ignoreInWatchMode": ["clock", "getCurrentTotalSupply", "totalSupply"]
     },
     "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A": {
       "ignoreMethods": ["proxiableUUID"],

@@ -260,6 +260,15 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(result[0]?.transferId).toEqual('msg1')
     })
 
+    it('filters by plugin when provided', async () => {
+      const result = await repository.getByType('deposit', {
+        plugin: 'plugin1',
+      })
+
+      expect(result).toHaveLength(2)
+      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+    })
+
     it('returns empty array when no transfers match type', async () => {
       const result = await repository.getByType('nonexistent')
 

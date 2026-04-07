@@ -37,7 +37,7 @@ export function createInteropRouter(
   const router = express.Router()
 
   router.get('/interop', (_req, res) => {
-    res.redirect('/interop/summary')
+    res.redirect(301, '/interop/summary')
   })
 
   router.get(

@@ -120,10 +120,10 @@ export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
   srcAmount: number | undefined
-  srcSymbol: string | undefined
+  srcSymbol: string
   srcTokenIconUrl: string
   dstAmount: number | undefined
-  dstSymbol: string | undefined
+  dstSymbol: string
   dstTokenIconUrl: string
   valueUsd: number | undefined
   duration: number | undefined

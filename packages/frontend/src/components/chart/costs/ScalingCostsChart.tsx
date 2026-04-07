@@ -145,10 +145,10 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 function Header({ timeRange }: { timeRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="font-bold text-xl md:text-2xl">
+      <h2 className="font-bold text-xl md:text-2xl">
         Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
-      </h1>
+      </h2>
       <ChartTimeRange timeRange={timeRange} />
     </header>
   )

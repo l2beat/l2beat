@@ -34,6 +34,7 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
+      <link rel="canonical" href={metadata.openGraph.url} />
       {metadata.excludeFromSearchEngines && (
         <meta name="robots" content="noindex" />
       )}
@@ -66,14 +67,10 @@ function OpengraphMeta({ openGraph: opengraph, title, description }: Metadata) {
       {opengraph && <meta property="og:url" content={opengraph.url} />}
       <meta property="og:site_name" content="L2BEAT" />
       {<meta property="og:type" content={opengraph.type} />}
-      {opengraph?.image && (
-        <>
-          <meta property="og:image" content={opengraph.image} />
-          <meta property="og:image:width" content={size.width.toString()} />
-          <meta property="og:image:height" content={size.height.toString()} />
-          <meta property="og:image:type" content="image/png" />
-        </>
-      )}
+      <meta property="og:image" content={opengraph.image} />
+      <meta property="og:image:width" content={size.width.toString()} />
+      <meta property="og:image:height" content={size.height.toString()} />
+      <meta property="og:image:type" content="image/png" />
     </>
   )
 }
@@ -84,14 +81,10 @@ function TwitterMeta({ title, description, openGraph: opengraph }: Metadata) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      {opengraph?.image && (
-        <>
-          <meta name="twitter:image" content={opengraph.image} />
-          <meta name="twitter:image:type" content="image/png" />
-          <meta name="twitter:image:width" content={size.width.toString()} />
-          <meta name="twitter:image:height" content={size.height.toString()} />
-        </>
-      )}
+      <meta name="twitter:image" content={opengraph.image} />
+      <meta name="twitter:image:type" content="image/png" />
+      <meta name="twitter:image:width" content={size.width.toString()} />
+      <meta name="twitter:image:height" content={size.height.toString()} />
     </>
   )
 }

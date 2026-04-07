@@ -29,6 +29,7 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { ScalingTvsCharts } from './ScalingTvsCharts'
 import { ScalingTvsDataKeysProvider } from './ScalingTvsDataKeysContext'
+import { ScalingTvsStats } from './ScalingTvsStats'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -66,6 +67,9 @@ export function ScalingTvsTabs(props: Props) {
           ]}
         />
         <DisplayControls display={display} setDisplay={setDisplay} />
+      </div>
+      <div className="mt-4">
+        <ScalingTvsStats entries={entries} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

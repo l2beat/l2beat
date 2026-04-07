@@ -1,6 +1,6 @@
 {
   "name": "grvt",
-  "timestamp": 1774881143,
+  "timestamp": 1775058712,
   "configHash": "0x26bd8c3e58b2e9806d0c664edb76c534f244854119673724bf41a4b192e332c9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -350,12 +350,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 37,
+        "executedCount": 38,
         "minDelay": 0,
         "owner": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 37,
+        "scheduledTransparentCount": 38,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -732,7 +732,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 3774,
+        "getFirstUnprocessedPriorityTx": 3808,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -740,8 +740,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0xfaedfd16dc5c7f4bfc91df5ef5b301f22e06522df2260c82220a82b7d3bb6ab6",
+        "getPriorityQueueSize": 4,
+        "getPriorityTreeRoot": "0x2ef0e1a468a250e8204698839998d4031deab74070faaabc0b5a3c4b1cf8241e",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051586,
@@ -749,13 +749,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 2],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 57422,
-        "getTotalBatchesExecuted": 57377,
-        "getTotalBatchesVerified": 57401,
-        "getTotalBlocksCommitted": 57422,
-        "getTotalBlocksExecuted": 57377,
-        "getTotalBlocksVerified": 57401,
-        "getTotalPriorityTxs": 3775,
+        "getTotalBatchesCommitted": 58085,
+        "getTotalBatchesExecuted": 58036,
+        "getTotalBatchesVerified": 58057,
+        "getTotalBlocksCommitted": 58085,
+        "getTotalBlocksExecuted": 58036,
+        "getTotalBlocksVerified": 58057,
+        "getTotalPriorityTxs": 3812,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3",
         "getVerifierParams": {
@@ -1452,6 +1452,6 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24771031 },
+  "usedBlockNumbers": { "ethereum": 24785759 },
   "permissionsConfigHash": "0x3f481aed56d7041ab5fa91804d5851c467f75abe2655f5a15dcc63b9a8460d16"
 }

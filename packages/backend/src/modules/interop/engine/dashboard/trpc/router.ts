@@ -2,6 +2,7 @@ import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { createChainsRouter } from './routers/chains'
 import { createEventsRouter } from './routers/events'
 import { createStatusRouter } from './routers/status'
+import { createTransfersRouter } from './routers/transfers'
 import { router } from './trpc'
 
 export function createInteropTrpcRouter(deps: {
@@ -11,6 +12,7 @@ export function createInteropTrpcRouter(deps: {
     chains: createChainsRouter(deps),
     events: createEventsRouter(),
     status: createStatusRouter(),
+    transfers: createTransfersRouter(),
   })
 }
 

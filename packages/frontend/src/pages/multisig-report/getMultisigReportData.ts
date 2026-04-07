@@ -19,6 +19,7 @@ export async function getMultisigReportData(
       metadata: getMetadata(manifest, {
         openGraph: {
           url,
+          image: '/meta-images/multisig-report/opengraph-image.png',
         },
       }),
     },
