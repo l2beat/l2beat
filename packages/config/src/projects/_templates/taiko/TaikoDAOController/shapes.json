@@ -8,5 +8,11 @@
     "hash": "0xacca94dada8d52e2f59e26907cb2b2de0a50f5241a1548ba8ceb5e2162f45040",
     "address": "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06",
     "blockNumber": 22666471
+  },
+  "DelegateController.sol": {
+    "hash": "0x126c01552edc6ec0f433f57a1cb50dee6524ae96dc62ca10278748794a267e90",
+    "address": "taiko:0x6900f893Fb1dcf2868c7799Ac9a2dAf1c046c6bF",
+    "chain": "taiko",
+    "blockNumber": 4989721
   }
 }

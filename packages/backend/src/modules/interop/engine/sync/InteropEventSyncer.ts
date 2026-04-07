@@ -316,7 +316,7 @@ export class InteropEventSyncer extends TimeLoop {
       await this.clearChainSyncError()
     })
 
-    this.logger.info('Events captured for resyncable cluster', {
+    this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
       chain: this.chain,
       blockNumber: fullRange.toBlock,

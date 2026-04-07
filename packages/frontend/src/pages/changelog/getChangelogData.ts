@@ -25,8 +25,8 @@ export async function getChangelogData(
         title: 'Changelog - L2BEAT',
         description:
           'Track product and content updates shipped on L2BEAT in one place.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/changelog/opengraph-image.png',
         },
       }),

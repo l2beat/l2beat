@@ -111,7 +111,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           </div>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent fitContent>
+      <TooltipContent>
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}

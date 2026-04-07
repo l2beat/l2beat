@@ -31,7 +31,7 @@ export class InteropCompareLoop extends TimeLoop {
   }
 
   async fetchExternalItems() {
-    this.logger.info('Fetching items from external explorer...', {
+    this.logger.debug('Fetching items from external explorer...', {
       plugin: this.plugin.name,
     })
 
@@ -51,7 +51,7 @@ export class InteropCompareLoop extends TimeLoop {
   }
 
   async compare() {
-    this.logger.info('Comparing...', {
+    this.logger.debug('Comparing...', {
       plugin: this.plugin.name,
       items: this.items.length,
     })

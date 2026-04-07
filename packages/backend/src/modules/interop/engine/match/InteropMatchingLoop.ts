@@ -64,7 +64,7 @@ export class InteropMatchingLoop extends TimeLoop {
       const transfers =
         await this.db.interopTransfer.insertMany(transferRecords)
 
-      this.logger.info('Matching results saved', {
+      this.logger.debug('Matching results saved', {
         messages,
         transfers,
       })
@@ -83,7 +83,7 @@ export async function match(
   tokenMap: TokenMap,
 ) {
   const start = Date.now()
-  logger.info('Matching started', {
+  logger.debug('Matching started', {
     plugins: plugins.length,
     events: count,
     chains: supportedChains.length,

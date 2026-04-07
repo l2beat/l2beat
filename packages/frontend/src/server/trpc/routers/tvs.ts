@@ -15,6 +15,10 @@ import {
   getTvsChart,
   TvsChartDataParams,
 } from '~/server/features/scaling/tvs/getTvsChartData'
+import {
+  getTvsChartStats,
+  TvsChartStatsParams,
+} from '~/server/features/scaling/tvs/getTvsChartStats'
 import { getTvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 import {
   getTokenTvsChart,
@@ -35,6 +39,9 @@ export const tvsRouter = router({
   recategorisedChart: procedure
     .input(RecategorisedTvsChartDataParams)
     .query(({ input }) => getRecategorisedTvsChart(input)),
+  chartStats: procedure
+    .input(TvsChartStatsParams)
+    .query(({ input }) => getTvsChartStats(input)),
   tokenChart: procedure
     .input(TokenTvsChartParams)
     .query(({ input }) => getTokenTvsChart(input)),

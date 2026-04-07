@@ -102,6 +102,34 @@ describeDatabase(InteropMessageRepository.name, (database) => {
     })
   })
 
+  describe(InteropMessageRepository.prototype.getByType.name, () => {
+    it('filters records by plugin when provided', async () => {
+      const now = UnixTime.now()
+      const records: InteropMessageRecord[] = [
+        makeRecord(now, {
+          plugin: 'plugin-a',
+          messageId: 'msg1',
+          type: 'shared-type',
+        }),
+        makeRecord(now + UnixTime.MINUTE, {
+          plugin: 'plugin-b',
+          messageId: 'msg2',
+          type: 'shared-type',
+        }),
+      ]
+
+      await repository.insertMany(records)
+
+      const filtered = await repository.getByType('shared-type', {
+        plugin: 'plugin-a',
+      })
+
+      expect(filtered).toHaveLength(1)
+      expect(filtered[0]?.plugin).toEqual('plugin-a')
+      expect(filtered[0]?.messageId).toEqual('msg1')
+    })
+  })
+
   describe(InteropMessageRepository.prototype.deleteForPlugin.name, () => {
     it('deletes only records for the given plugin', async () => {
       const now = UnixTime.now()

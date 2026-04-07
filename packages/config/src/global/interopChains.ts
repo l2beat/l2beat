@@ -168,6 +168,13 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'TMP',
     explorerUrl: 'https://explore.tempo.xyz',
   },
+  {
+    id: 'monad',
+    name: 'Monad',
+    type: 'evm',
+    display: 'MON',
+    explorerUrl: 'https://monadscan.com',
+  },
 ] as const
 
 export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const

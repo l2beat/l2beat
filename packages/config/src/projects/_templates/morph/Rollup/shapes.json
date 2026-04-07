@@ -4,5 +4,11 @@
     "address": "eth:0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF",
     "chain": "ethereum",
     "blockNumber": 24748452
+  },
+  "Rollup_reuseBlobs": {
+    "hash": "0x4ae0d375d97899b0fd3cb34e7aa502f2b652e417b27b23df262734b951560256",
+    "address": "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2",
+    "chain": "ethereum",
+    "blockNumber": 24785167
   }
 }

@@ -8,19 +8,18 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
+  bufferLimit?: number
   flushInterval?: number
   indexPrefix?: string
-  /**
-   * Optional extra `parameters` for the diagnostic log when a bulk flush fails.
-   * Use for app-specific correlation (e.g. request ids parsed from batched ECS lines).
-   */
-  flushFailureContext?: (batch: string[]) => Record<string, unknown>
 }
 
 export type UuidProvider = () => string
 
+const DEFAULT_BUFFER_LIMIT = 20_000
+
 export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
+  private readonly bufferLimit: number
 
   constructor(
     private readonly options: ElasticSearchTransportOptions,
@@ -30,15 +29,21 @@ export class ElasticSearchTransport implements LoggerTransport {
     private readonly uuidProvider: UuidProvider = uuidv4,
   ) {
     this.buffer = []
+    this.bufferLimit = options.bufferLimit ?? DEFAULT_BUFFER_LIMIT
     this.start()
   }
 
   log(entry: LogEntry): void {
-    this.buffer.push(formatEcsLog(entry))
+    this.push(formatEcsLog(entry))
   }
 
   push(log: string) {
     this.buffer.push(log)
+    const overflow = this.buffer.length - this.bufferLimit
+    if (overflow > 0) {
+      void this.reportBufferOverflow(overflow)
+      this.buffer.splice(0, overflow)
+    }
   }
 
   private start(): void {
@@ -84,20 +89,14 @@ export class ElasticSearchTransport implements LoggerTransport {
       const response = await this.client.bulk(documents, index)
 
       if (!response.isSuccess) {
-        throw new Error('Failed to push logs to Elastic Search node', {
+        throw new Error('Failed to push some logs to Elastic Search node', {
           cause: {
-            documentErrors: response.errors,
+            failedDocuments: JSON.stringify(response.failedDocuments),
           },
         })
       }
     } catch (error) {
       console.log(error)
-
-      let flushFailureExtra: Record<string, unknown> = {}
-      try {
-        flushFailureExtra = this.options.flushFailureContext?.(batch) ?? {}
-      } catch {}
-
       try {
         // We want to get notified in case there is a "push time error"
         // e.g. fields types collision https://github.com/l2beat/l2beat/pull/10136
@@ -116,8 +115,6 @@ export class ElasticSearchTransport implements LoggerTransport {
                       error instanceof Error
                         ? (error.cause ?? undefined)
                         : undefined,
-                    batchLogCount: batch.length,
-                    ...flushFailureExtra,
                   },
                 }),
               ),
@@ -127,6 +124,30 @@ export class ElasticSearchTransport implements LoggerTransport {
         )
       } catch {}
     }
+  }
+
+  private async reportBufferOverflow(droppedCount: number): Promise<void> {
+    try {
+      await this.client.bulk(
+        [
+          {
+            id: this.uuidProvider(),
+            ...JSON.parse(
+              formatEcsLog({
+                time: new Date(),
+                level: 'CRITICAL',
+                message: 'Elastic Search transport buffer overflowed',
+                parameters: {
+                  droppedCount,
+                  bufferLimit: this.bufferLimit,
+                },
+              }),
+            ),
+          },
+        ],
+        await this.createIndex(),
+      )
+    } catch {}
   }
 
   private async createIndex(): Promise<string> {

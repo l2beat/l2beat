@@ -117,6 +117,8 @@ export function MainPageOpengraphImage({ type, title, size, baseUrl }: Props) {
               fontSize: 80,
               fontWeight: 700,
               lineHeight: 1,
+              whiteSpace: 'pre-line',
+              textAlign: 'center',
             }}
           >
             {title}

@@ -27,8 +27,8 @@ export async function getScalingArchivedData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/archived/opengraph-image.png',
         },
       }),

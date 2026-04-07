@@ -97,6 +97,8 @@ export const DEBRIDGE_NETWORKS = defineNetworks('debridge', [
   { chainId: '43114', chain: 'avalanche' },
   { chainId: '59144', chain: 'linea' },
   { chainId: '999', chain: 'hyperevm' },
+  { chainId: '143', chain: 'monad' },
+  // tempo unsupported
 ])
 
 export const Sent = createInteropEventType<{

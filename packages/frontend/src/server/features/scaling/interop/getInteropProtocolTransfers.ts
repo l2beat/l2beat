@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransferStats,
@@ -28,6 +29,7 @@ interface TransfersWithStats {
 const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const PAGE_SIZE = 100
+const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
@@ -205,13 +207,13 @@ export function toInteropProtocolTransferDetailsItem(
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
-    srcSymbol: transfer.srcSymbol,
+    srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
     srcTokenIconUrl: getTokenIconUrl(
       transfer.srcAbstractTokenId,
       tokensDetailsMap,
     ),
     dstAmount: transfer.dstAmount,
-    dstSymbol: transfer.dstSymbol,
+    dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
     dstTokenIconUrl: getTokenIconUrl(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
@@ -244,10 +246,9 @@ function getTokenIconUrl(
   abstractTokenId: string | undefined,
   tokensDetailsMap: TokensDetailsMap,
 ): string {
-  if (!abstractTokenId) return '/images/token-placeholder.png'
+  if (!abstractTokenId) return TOKEN_PLACEHOLDER_ICON_URL
   return (
-    tokensDetailsMap.get(abstractTokenId)?.iconUrl ??
-    '/images/token-placeholder.png'
+    tokensDetailsMap.get(abstractTokenId)?.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL
   )
 }
 

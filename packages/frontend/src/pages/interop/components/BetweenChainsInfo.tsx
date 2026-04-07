@@ -28,9 +28,13 @@ export function BetweenChainsInfo({
       )}
     >
       <span>Between</span>
-      {fromChain && <img src={fromChain.iconUrl} className="size-4" />}
+      {fromChain && (
+        <img src={fromChain.iconUrl} alt={fromChain.name} className="size-4" />
+      )}
       <span>&</span>
-      {toChain && <img src={toChain.iconUrl} className="size-4" />}
+      {toChain && (
+        <img src={toChain.iconUrl} alt={toChain.name} className="size-4" />
+      )}
       {additionalText && <span>{additionalText}</span>}
     </div>
   )

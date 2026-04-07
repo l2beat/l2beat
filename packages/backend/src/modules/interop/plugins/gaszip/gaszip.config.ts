@@ -135,6 +135,16 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     gaszipId: 430,
     chainId: 999,
   }),
+  gasZipNetwork({
+    chain: 'monad',
+    gaszipId: 511,
+    chainId: 143,
+  }),
+  gasZipNetwork({
+    chain: 'tempo',
+    gaszipId: 521,
+    chainId: 4217,
+  }),
 ])
 
 export function getChainByGaszipId(

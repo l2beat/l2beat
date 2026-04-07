@@ -229,8 +229,7 @@ interface IncidentMilestone extends BaseMilestone {
 }
 
 interface ProjectIconMilestone extends BaseMilestone {
-  projectId: ProjectId
-  projectIcon: string
+  project: { id: string; name: string; icon: string }
   type: 'project'
 }
 
