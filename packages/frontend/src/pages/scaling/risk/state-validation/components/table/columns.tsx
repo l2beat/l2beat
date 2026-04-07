@@ -241,7 +241,7 @@ function OptimisticProofSystemCell({
   zkCatalog,
 }: ScalingRiskStateValidationOptimisticEntry) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex h-full items-center gap-4">
       <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
       <div className="flex items-center gap-1.5">
         {zkCatalog && (
