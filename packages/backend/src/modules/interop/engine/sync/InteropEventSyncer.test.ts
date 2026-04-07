@@ -730,7 +730,7 @@ describe(InteropEventSyncer.name, () => {
       expect(query.topicToTxEvents.size).toEqual(0)
     })
 
-    it('throws when addresses list is empty', () => {
+    it('skips data request when addresses list is empty', () => {
       const signature = 'event Transfer(address,address,uint256)'
       const plugin = makePlugin({
         dataRequests: [
@@ -742,9 +742,12 @@ describe(InteropEventSyncer.name, () => {
         ],
       })
 
-      expect(() =>
-        buildLogQueryForCluster(makeCluster({ plugins: [plugin] }), 'ethereum'),
-      ).toThrow(/Empty address list/)
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
+
+      expect(query.isEmpty()).toEqual(true)
     })
 
     describe('matchesLog', () => {

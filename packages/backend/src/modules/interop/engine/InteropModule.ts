@@ -203,8 +203,17 @@ export function createInteropModule({
     if (config.interop && config.interop.cleaner) {
       cleaner.start()
     }
-    if (config.interop && config.interop.capture.enabled) {
-      syncersManager.start()
+    if (config.interop) {
+      if (config.interop.config.enabled) {
+        // Start config plugins before event plugins, so that data requests can be constructed
+        await configStore.start()
+        for (const configLoop of plugins.configPlugins) {
+          configLoop.start()
+        }
+      }
+      if (config.interop.capture.enabled) {
+        syncersManager.start()
+      }
     }
     await hourlyIndexer.start()
     if (config.interop && config.interop.aggregation) {
@@ -213,12 +222,6 @@ export function createInteropModule({
     if (config.interop && config.interop.financials.enabled) {
       await recentPricesIndexer.start()
       financialsService.start()
-    }
-    if (config.interop && config.interop.config.enabled) {
-      await configStore.start()
-      for (const configLoop of plugins.configPlugins) {
-        configLoop.start()
-      }
     }
     logger.info('Started', {
       comparePlugins: plugins.comparePlugins.length,
