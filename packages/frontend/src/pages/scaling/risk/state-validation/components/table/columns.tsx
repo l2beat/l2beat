@@ -1,8 +1,10 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
+import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type {
@@ -48,7 +50,7 @@ export const scalingRiskStateValidationValidityColumns = [
     },
     meta: {
       tooltip:
-        'Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system\'s source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.',
+        "Shows the number of different versions of onchain verifiers and whether they were independently checked by regenerating them from the proving system's source code. A green check indicates successful verification, while a red cross indicates a failure to regenerate.",
     },
   }),
   validityColumnHelper.accessor('executionDelay', {
@@ -187,4 +189,38 @@ export const scalingRiskStateValidationNoProofsColumns = [
     noProofsColumnHelper,
     (row) => `/scaling/projects/${row.slug}#state-validation`,
   ),
+  noProofsColumnHelper.display({
+    id: 'proofSystem',
+    header: 'Proof system',
+    cell: () => (
+      <Badge type="gray" size="small">
+        No proofs
+      </Badge>
+    ),
+  }),
+  noProofsColumnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
+    id: 'total',
+    header: 'Total value secured',
+    cell: (ctx) => {
+      const value = ctx.row.original.tvs
+      return (
+        <TotalCellWithTvsBreakdown
+          href={`/scaling/tvs?highlight=${ctx.row.original.slug}`}
+          associatedTokens={value.associatedTokens}
+          tvsWarnings={value.warnings}
+          breakdown={value.breakdown}
+          additionalTrustAssumptionsPercentage={
+            value.additionalTrustAssumptionsPercentage
+          }
+          change={value.change?.total}
+        />
+      )
+    },
+    meta: {
+      align: 'right',
+      cellClassName: 'pl-3',
+      tooltip:
+        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+    },
+  }),
 ]

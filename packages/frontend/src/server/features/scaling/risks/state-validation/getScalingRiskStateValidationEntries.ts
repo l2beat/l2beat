@@ -1,4 +1,9 @@
-import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
+import type {
+  Project,
+  ProjectAssociatedToken,
+  ProjectScalingProofSystem,
+  WarningWithSentiment,
+} from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import {
@@ -9,6 +14,7 @@ import {
   get7dTvsBreakdown,
   type SevenDayTvsBreakdown,
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { compareTvs } from '~/server/features/scaling/tvs/utils/compareTvs'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -35,7 +41,7 @@ export async function getScalingRiskStateValidationEntries() {
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-      optional: ['contracts'],
+      optional: ['contracts', 'tvsInfo'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
@@ -78,24 +84,27 @@ export async function getScalingRiskStateValidationEntries() {
       project,
       projectsChangeReport.getChanges(project.id),
       zkCatalogProjects,
+      tvs,
     ),
   )
   const noProofsEntries = noProofsProjects.map((project) =>
     getScalingRiskStateValidationNoProofsEntry(
       project,
       projectsChangeReport.getChanges(project.id),
+      tvs,
     ),
   )
 
   return {
-    validity: validityEntries,
-    optimistic: optimisticEntries,
-    noProofs: noProofsEntries,
+    validity: validityEntries.sort(compareTvs),
+    optimistic: optimisticEntries.sort(compareTvs),
+    noProofs: noProofsEntries.sort(compareTvs),
   }
 }
 
 export interface ScalingRiskStateValidationValidityEntry
   extends CommonScalingEntry {
+  tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
@@ -135,6 +144,7 @@ function getScalingRiskStateValidationValidityEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
+    tvsOrder: tvs.projects[project.id.toString()]?.breakdown?.total ?? -1,
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
@@ -147,6 +157,7 @@ function getScalingRiskStateValidationValidityEntry(
 
 export interface ScalingRiskStateValidationOptimisticEntry
   extends CommonScalingEntry {
+  tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   executionDelay: number | undefined
   challengePeriod: number | undefined
@@ -160,6 +171,7 @@ function getScalingRiskStateValidationOptimisticEntry(
   >,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
+  tvs: SevenDayTvsBreakdown,
 ): ScalingRiskStateValidationOptimisticEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
@@ -173,6 +185,7 @@ function getScalingRiskStateValidationOptimisticEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
+    tvsOrder: tvs.projects[project.id.toString()]?.breakdown?.total ?? -1,
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
@@ -183,14 +196,37 @@ function getScalingRiskStateValidationOptimisticEntry(
   }
 }
 
-export type ScalingRiskStateValidationNoProofsEntry = CommonScalingEntry
+export interface ScalingRiskStateValidationNoProofsEntry
+  extends CommonScalingEntry {
+  tvsOrder: number
+  tvs: {
+    associatedTokens: ProjectAssociatedToken[]
+    warnings: WarningWithSentiment[]
+    breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
+    change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
+    additionalTrustAssumptionsPercentage: number | undefined
+  }
+}
 
 function getScalingRiskStateValidationNoProofsEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
-    'contracts'
+    'contracts' | 'tvsInfo'
   >,
   changes: ProjectChanges,
+  tvs: SevenDayTvsBreakdown,
 ): ScalingRiskStateValidationNoProofsEntry {
-  return getCommonScalingEntry({ project, changes })
+  const projectTvs = tvs.projects[project.id.toString()]
+  return {
+    ...getCommonScalingEntry({ project, changes }),
+    tvsOrder: projectTvs?.breakdown?.total ?? -1,
+    tvs: {
+      associatedTokens: project.tvsInfo?.associatedTokens ?? [],
+      warnings: project.tvsInfo?.warnings ?? [],
+      breakdown: projectTvs?.breakdown,
+      change: projectTvs?.change,
+      additionalTrustAssumptionsPercentage:
+        projectTvs?.additionalTrustAssumptionsPercentage,
+    },
+  }
 }
