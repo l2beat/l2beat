@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["oldFork"],
+  "ignoreMethods": ["proxiableUUID"],
+  "category": "spam",
+  "description": "Routes to the Shasta SignalService post shasta fork."
+}

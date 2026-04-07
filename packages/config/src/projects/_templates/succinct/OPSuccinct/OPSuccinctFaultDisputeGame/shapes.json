@@ -4,5 +4,11 @@
     "address": "eth:0x113f434f82FF82678AE7f69Ea122791FE1F6b73e",
     "chain": "ethereum",
     "blockNumber": 23989013
+  },
+  "OPSuccinctFaultDisputeGame_celo.sol": {
+    "hash": "0xf7e6253e33073d03e58dd85db83b34b568e76fe6b4e84c838357ac993d91bf1e",
+    "address": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
+    "chain": "ethereum",
+    "blockNumber": 24783311
   }
 }

@@ -35,8 +35,8 @@ export async function getScalingLivenessData(
         title: 'Liveness - L2BEAT',
         description:
           'Monitor liveness metrics of Ethereum scaling projects and recent anomalies.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/liveness/opengraph-image.png',
         },
       }),

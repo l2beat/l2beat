@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 
@@ -28,9 +29,6 @@ export function getTopToken({
   interopProjects,
   subgroupProjects,
 }: GetTopTokenParams): InteropTopTokenData | undefined {
-  const placeholderTokenIconUrl = manifest.getUrl(
-    '/images/token-placeholder.png',
-  )
   const projectsById = new Map(
     interopProjects.map((project) => [project.id, project]),
   )
@@ -52,7 +50,7 @@ export function getTopToken({
 
     for (const token of record.tokens) {
       const tokenDetails = tokensDetailsMap.get(token.abstractTokenId)
-      if (!tokenDetails || tokenDetails.iconUrl === placeholderTokenIconUrl)
+      if (!tokenDetails || tokenDetails.iconUrl === TOKEN_PLACEHOLDER_ICON_URL)
         continue
 
       const tokenVolume = token.volume ?? 0

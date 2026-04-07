@@ -173,7 +173,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     </div>
                   </ConditionalLink>
                 </TooltipTrigger>
-                <TooltipContent fitContent className="flex flex-col gap-2">
+                <TooltipContent className="flex flex-col gap-2">
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     external={project.header.tvs?.breakdown?.external ?? 0}

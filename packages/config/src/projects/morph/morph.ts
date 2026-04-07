@@ -69,6 +69,8 @@ export const morph: ScalingProject = {
   display: {
     name: 'Morph',
     slug: 'morph',
+    warning:
+      'The current rollup version loses liveness if bad/random data is posted to blobs using `commitBatch()`', // introduced in the upgrade that made reuse of blobs mandatory after a revert
     description:
       'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs and has plans for decentralizing the Sequencer. Their mission is to build the first blockchain for consumers, where user-friendly applications integrate seamlessly into everyday life, becoming indispensable utilities.',
     purposes: ['Universal'],
@@ -235,7 +237,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0xB2F539aede77DF4cD1d427d046bBbBd8dB4cBAAF',
+            url: 'https://etherscan.io/address/0x9e2Fb684935a32CEd121972f23BD0e4634377cA2',
           },
         ],
         risks: [

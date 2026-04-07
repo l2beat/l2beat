@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1774882403,
+  "timestamp": 1775212027,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -136,7 +136,6 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
-          "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
           "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
@@ -145,8 +144,8 @@
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 37,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 39,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1185,11 +1184,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "EigenLayerPauserMultisig",
       "address": "eth:0x5050389572f2d220ad927CcbeA0D406831012390",
       "type": "Reference",
@@ -1381,7 +1375,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664540",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664676",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1542,7 +1536,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24771042
+          "prevBlockNum": 24798447
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1681,7 +1675,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3357,
+        "gameCount": 3449,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2655,7 +2649,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x876DcB33eaC9cF9B7B774a035c9D525965Ab7B33",
+        "lastResolved": "eth:0xfc46698E88Dbddf327ea8aBf4B41E05FC6067006",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -4503,6 +4497,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24771136 },
-  "permissionsConfigHash": "0xec85a43227380cee07e3b312e84c71a5ffc4ee79d9aa41017950d223e15464c1"
+  "usedBlockNumbers": { "ethereum": 24798498 },
+  "permissionsConfigHash": "0xa510ae4785e3a6e9a11645323f348486cfe12d68e1c990e094a0c92b71703c6d"
 }

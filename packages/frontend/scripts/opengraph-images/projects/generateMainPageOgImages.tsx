@@ -92,6 +92,18 @@ const mainPages: MainPage[] = [
   {
     title: 'Terms of Service',
   },
+  {
+    title: 'Brand Kit',
+  },
+  {
+    title: 'Multisig Report',
+  },
+  {
+    title: 'Icon preview',
+  },
+  {
+    title: 'DA Risk Framework',
+  },
 ]
 
 export async function generateMainPageOgImages(

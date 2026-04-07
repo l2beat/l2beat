@@ -160,19 +160,20 @@ function TokenAmount({
   iconUrl,
 }: {
   amount: number | undefined
-  symbol: string | undefined
+  symbol: string
   iconUrl: string
 }) {
-  if (amount === undefined) return <NoDataBadge />
-
-  const formattedAmount = formatNumberWithCommas(amount, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 5,
-  })
+  const label =
+    amount !== undefined
+      ? formatNumberWithCommas(amount, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 5,
+        })
+      : symbol
 
   return (
     <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
-      {formattedAmount}
+      <span>{label}</span>
       <Tooltip>
         <TooltipTrigger asChild>
           <img src={iconUrl} alt={symbol} className="size-4 rounded-full" />

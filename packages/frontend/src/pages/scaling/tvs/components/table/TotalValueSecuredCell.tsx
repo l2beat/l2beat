@@ -100,7 +100,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
           </SyncStatusWrapper>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent fitContent className="flex flex-col gap-2">
+      <TooltipContent className="flex flex-col gap-2">
         {props.breakdown.type === 'bridgeType' ? (
           <>
             <ValueSecuredBreakdownTooltipContent

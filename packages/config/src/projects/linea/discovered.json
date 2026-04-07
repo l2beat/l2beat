@@ -1,16 +1,16 @@
 {
   "name": "linea",
-  "timestamp": 1774434780,
+  "timestamp": 1775037483,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
       "name": "TokenBridge",
       "address": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
       "type": "Contract",
-      "template": "linea/L1TokenBridge",
+      "template": "linea/L1TokenBridge_v1_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
+        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
@@ -18,7 +18,7 @@
       "sinceBlock": 17834649,
       "values": {
         "$admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34",
+        "$implementation": "eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff",
         "$pastUpgrades": [
           [
             "2023-08-03T13:04:35.000Z",
@@ -34,9 +34,14 @@
             "2024-12-16T13:52:11.000Z",
             "0x96b88112de2e594cb763bc625cc2dcb6920825bb642eb1a62ff577f0c29f616d",
             ["eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"]
+          ],
+          [
+            "2026-03-31T15:26:47.000Z",
+            "0x2956910285297bc330ad8b1e31f6dd7866e58c26164fe126f09a44df6a65ce9b",
+            ["eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -44,7 +49,10 @@
           },
           "PAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+            ]
           },
           "UNPAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -84,7 +92,7 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
-          "SET_REMOTE_TOKENBRIDGE_ROLE": {
+          "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
@@ -94,9 +102,16 @@
               "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
               "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
             ]
+          },
+          "SECURITY_COUNCIL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "allPausers": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "allPausers": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+        ],
         "allUnpausers": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "completeTokenBridgingPausers": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
@@ -104,7 +119,8 @@
         "completeTokenBridgingUnpausers": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
-        "CONTRACT_VERSION": "1.0",
+        "CONTRACT_VERSION": "1.1",
+        "COOLDOWN_DURATION": 172800,
         "customContractSetters": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
@@ -117,20 +133,25 @@
         "initiateTokenBridgingUnpausers": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
-        "isPaused_BLOB_SUBMISSION": false,
-        "isPaused_CALLDATA_SUBMISSION": false,
         "isPaused_COMPLETE_TOKEN_BRIDGING": false,
         "isPaused_FINALIZATION": false,
         "isPaused_GENERAL": false,
         "isPaused_INITIATE_TOKEN_BRIDGING": false,
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": false,
+        "isPaused_NATIVE_YIELD_REPORTING": false,
+        "isPaused_NATIVE_YIELD_STAKING": false,
+        "isPaused_NATIVE_YIELD_UNSTAKING": false,
+        "isPaused_STATE_DATA_SUBMISSION": false,
         "messageService": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "messageServiceSetters": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
+        "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
+        "PAUSE_DURATION": 172800,
         "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
         "pauseTypeToRole": {
           "1": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
@@ -138,9 +159,6 @@
           "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
         },
         "remoteSender": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-        "remoteTokenBridgeSetters": [
-          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
-        ],
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "reserveTokenRemovers": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
@@ -150,9 +168,9 @@
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
         ],
+        "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
         "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
         "SET_MESSAGE_SERVICE_ROLE": "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00",
-        "SET_REMOTE_TOKENBRIDGE_ROLE": "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24",
         "SET_RESERVED_TOKEN_ROLE": "0xeaf25fcc6b7d45bda16c56628df3f435e20319ef53b065c11ee4510083f0ae2d",
         "sourceChainId": 1,
         "targetChainId": 59144,
@@ -170,15 +188,22 @@
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
         "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_BLOB_SUBMISSION": { "severity": "HIGH" },
-        "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
         "isPaused_FINALIZATION": { "severity": "HIGH" },
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "nonSecurityCouncilCooldownEnd": {
+          "severity": "HIGH",
+          "description": "Timestamp until which non security council entities can't pause the rollup."
+        }
       },
       "implementationNames": {
         "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": "TransparentUpgradeableProxy",
-        "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": "TokenBridge"
+        "eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff": "TokenBridge"
       },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
@@ -190,9 +215,46 @@
       "proxyType": "EOA"
     },
     {
+      "name": "PlonkVerifierFull",
+      "address": "eth:0x1442833180e253844897339aFb5800c797547987",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdb8b906aeb601a779cf86caeff60e8423578aa6e25fc64f2c38b6b77ac557669"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1774891415,
+      "sinceBlock": 24771884,
+      "values": {
+        "$immutable": true,
+        "getChainConfiguration": "0x0881dc6ffdc69ebfeca27fd8449922c32d0fd16ea33807e984881b08e7100988"
+      },
+      "implementationNames": {
+        "eth:0x1442833180e253844897339aFb5800c797547987": "PlonkVerifierFull"
+      }
+    },
+    {
       "address": "eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
+        }
+      ]
     },
     {
       "name": "CallForwardingProxy",
@@ -209,7 +271,7 @@
           "permission": "interact",
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
-          "role": ".fallbackOperator"
+          "role": ".livenessRecoveryOperator"
         }
       ],
       "sinceTimestamp": 1733219987,
@@ -377,21 +439,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PlonkVerifierMainnetFull",
-      "address": "eth:0x66355689a9f067eeb9dc9d899E4192676988279C",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf200c358a589427f9686cab4353b2234c8b5ded891cffc5501c145a0146bb2df"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1774307699,
-      "sinceBlock": 24723435,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x66355689a9f067eeb9dc9d899E4192676988279C": "PlonkVerifierMainnetFull"
-      }
-    },
-    {
       "address": "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -445,7 +492,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Linea Multisig 1",
+      "name": "Linea Security Council",
       "address": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -539,12 +586,6 @@
         {
           "permission": "interact",
           "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can set the contract that is recognized to be the token bridge contract on the other side.",
-          "role": ".remoteTokenBridgeSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "description": "can set the contract used as the source of truth from crosschain messages.",
           "role": ".messageServiceSetters"
         },
@@ -590,6 +631,18 @@
           "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
           "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup indefinitely.",
+          "role": ".securityCouncilAC"
         },
         {
           "permission": "interact",
@@ -731,7 +784,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 70,
+        "nonce": 71,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -842,7 +895,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -893,10 +946,10 @@
       "name": "LineaRollup",
       "address": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
       "type": "Contract",
-      "template": "linea/LineaRollup_NativeYield",
+      "template": "linea/LineaRollup_NativeYield_v7_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x7f1b1a08526c142b2843c2e0d1fb7d8511f9fe0da9001aa980e58eea6ddd3fb1"
+        "0xc79888514ff3b0780c3947bdc52c7fb27664029407ec70360023b494f725f7b3"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
@@ -911,7 +964,7 @@
       "sinceBlock": 17677070,
       "values": {
         "$admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "eth:0x04728BF704a716C26F9EF4085013b760AC885631",
+        "$implementation": "eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332",
         "$pastUpgrades": [
           [
             "2023-07-12T11:05:23.000Z",
@@ -962,9 +1015,14 @@
             "2026-03-01T14:25:35.000Z",
             "0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",
             ["eth:0x04728BF704a716C26F9EF4085013b760AC885631"]
+          ],
+          [
+            "2026-03-31T15:26:47.000Z",
+            "0x2956910285297bc330ad8b1e31f6dd7866e58c26164fe126f09a44df6a65ce9b",
+            ["eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 11,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -991,7 +1049,10 @@
           },
           "PAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+            ]
           },
           "PAUSE_L1_L2_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1013,11 +1074,11 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
-          "PAUSE_BLOB_SUBMISSION_ROLE": {
+          "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
-          "UNPAUSE_BLOB_SUBMISSION_ROLE": {
+          "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           },
@@ -1055,33 +1116,49 @@
           "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "SECURITY_COUNCIL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "PAUSE_STATE_DATA_SUBMISSION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+          },
+          "UNPAUSE_STATE_DATA_SUBMISSION_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
           }
         },
-        "CONTRACT_VERSION": "7.0",
-        "currentFinalizedShnarf": "0x5acb8d2ba511cef12209cf49eeb25893e147934f3753e3bc1ed26efb3ae2b22f",
-        "currentFinalizedState": "0x99bb4b74a118ca1bae7f26e1c78f176f141b898b0764683ba7765aa076b05798",
-        "currentL2StoredL1MessageNumber": 626080,
-        "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "54866857424322558135",
+        "CONTRACT_VERSION": "7.1",
+        "COOLDOWN_DURATION": 172800,
+        "COOLDOWN_DURATION_fmt": "2d",
+        "currentFinalizedShnarf": "0xb7073776eba9782bf219fb0d3e3b8fd0a0aff6a9392cd2369a0905f62806e6b2",
+        "currentFinalizedState": "0xed5fb64354fba6a8a9ef1d2ac60fa4ca874a4dda8db3c46a83434c617504af6c",
+        "currentPeriodAmountInWei": "100649900000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"
         ],
-        "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
-        "isPaused_BLOB_SUBMISSION": false,
-        "isPaused_CALLDATA_SUBMISSION": false,
         "isPaused_COMPLETE_TOKEN_BRIDGING": false,
         "isPaused_FINALIZATION": false,
         "isPaused_GENERAL": false,
         "isPaused_INITIATE_TOKEN_BRIDGING": false,
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": false,
+        "isPaused_NATIVE_YIELD_REPORTING": false,
+        "isPaused_NATIVE_YIELD_STAKING": false,
+        "isPaused_NATIVE_YIELD_UNSTAKING": false,
+        "isPaused_STATE_DATA_SUBMISSION": false,
         "isWithdrawLSTAllowed": false,
         "limitInWei": "30000000000000000000000",
+        "livenessRecoveryOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
+        "nonSecurityCouncilCooldownEnd": 0,
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "Operators": [
           "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
@@ -1091,28 +1168,37 @@
         "OUTBOX_STATUS_SENT": 1,
         "OUTBOX_STATUS_UNKNOWN": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
-        "PAUSE_BLOB_SUBMISSION_ROLE": "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77",
+        "PAUSE_DURATION": 172800,
         "PAUSE_FINALIZATION_ROLE": "0xe37c272ea30e2bb381ad7cf89ae754b49153250609f36d0cbdad8b64c184bb5c",
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
         "PAUSE_NATIVE_YIELD_STAKING_ROLE": "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450",
+        "PAUSE_STATE_DATA_SUBMISSION_ROLE": "0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55",
+        "pauseAllAC": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+        ],
+        "pauseDuration_fmt": "2d",
         "periodInSeconds": 86400,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
+        "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
+        "securityCouncilAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "sender": "eth:0x0000000000000000000000000000000000000000",
         "SET_YIELD_MANAGER_ROLE": "0x76ef52a5344b10ed112c1d48c7c06f51e919518ea6fb005f9b25b359b955e3be",
+        "shnarfProvider": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "systemMigrationBlock": 19219000,
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
-        "UNPAUSE_BLOB_SUBMISSION_ROLE": "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40",
         "UNPAUSE_FINALIZATION_ROLE": "0x1ab87f7458c0e3d07e9881c14ee67f0141703614fd48ea5b15ed987e5f4b030e",
         "UNPAUSE_L1_L2_ROLE": "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc",
         "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
         "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858",
+        "UNPAUSE_STATE_DATA_SUBMISSION_ROLE": "0x4df33217c89b6f12af38ba46035cb312b5e88de78d22279286830fe079b642cd",
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9",
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
           "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897",
-          "eth:0x66355689a9f067eeb9dc9d899E4192676988279C",
+          "eth:0x1442833180e253844897339aFb5800c797547987",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
@@ -1140,27 +1226,42 @@
       },
       "fieldMeta": {
         "yieldManager": { "severity": "HIGH" },
+        "livenessRecoveryOperator": { "severity": "HIGH" },
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
         "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_BLOB_SUBMISSION": { "severity": "HIGH" },
-        "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
         "isPaused_FINALIZATION": { "severity": "HIGH" },
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
         "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
         "limitInWei": {
           "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
         },
-        "periodInSeconds": {
+        "pauseDuration_fmt": {
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+        },
+        "COOLDOWN_DURATION_fmt": {
+          "description": "The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."
+        },
+        "shnarfProvider": {
+          "severity": "HIGH",
+          "description": "Smart contract that attests existence of blob commitments (shnarfs)."
+        },
+        "nonSecurityCouncilCooldownEnd": {
+          "severity": "HIGH",
+          "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
       "implementationNames": {
         "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
-        "eth:0x04728BF704a716C26F9EF4085013b760AC885631": "LineaRollup"
+        "eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332": "LineaRollup"
       }
     },
     {
@@ -1478,7 +1579,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "linea:0x00000000000000000000000000000000075BCd15",
+      "address": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1524,6 +1625,19 @@
       "proxyType": "EOA"
     },
     {
+      "address": "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        }
+      ]
+    },
+    {
       "address": "linea:0x2b0F9C76970975aec03784EFd763623757EF7652",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1540,10 +1654,10 @@
       "name": "TokenBridge",
       "address": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
       "type": "Contract",
-      "template": "linea/L2TokenBridge",
+      "template": "linea/L1TokenBridge_v1_1",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
+        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
@@ -1551,7 +1665,7 @@
       "sinceBlock": 116555,
       "values": {
         "$admin": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E",
-        "$implementation": "linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137",
+        "$implementation": "linea:0x4a496167F187A97379e763f693A499cE1182848b",
         "$pastUpgrades": [
           [
             "2023-08-03T13:11:22.000Z",
@@ -1567,9 +1681,14 @@
             "2024-12-16T14:06:23.000Z",
             "0xbb31a92afc2c725d0b10aaf96829db7a553041d0be10ca840d2fb82ef77119e7",
             ["linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137"]
+          ],
+          [
+            "2026-03-31T15:28:55.000Z",
+            "0xee1773eabf52589c20884aceed118949ea8e03afc7bfd1df008206d2d69e1b01",
+            ["linea:0x4a496167F187A97379e763f693A499cE1182848b"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1577,7 +1696,10 @@
           },
           "PAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+            "members": [
+              "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
+              "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+            ]
           },
           "UNPAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1617,7 +1739,7 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
           },
-          "SET_REMOTE_TOKENBRIDGE_ROLE": {
+          "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
           },
@@ -1627,9 +1749,16 @@
               "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
               "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
             ]
+          },
+          "SECURITY_COUNCIL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
           }
         },
-        "allPausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
+        "allPausers": [
+          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
+          "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+        ],
         "allUnpausers": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"],
         "completeTokenBridgingPausers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
@@ -1637,7 +1766,8 @@
         "completeTokenBridgingUnpausers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
         ],
-        "CONTRACT_VERSION": "1.0",
+        "CONTRACT_VERSION": "1.1",
+        "COOLDOWN_DURATION": 172800,
         "customContractSetters": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
           "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
@@ -1650,30 +1780,32 @@
         "initiateTokenBridgingUnpausers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
         ],
-        "isPaused_BLOB_SUBMISSION": false,
-        "isPaused_CALLDATA_SUBMISSION": false,
         "isPaused_COMPLETE_TOKEN_BRIDGING": false,
         "isPaused_FINALIZATION": false,
         "isPaused_GENERAL": false,
         "isPaused_INITIATE_TOKEN_BRIDGING": false,
         "isPaused_L1_L2": false,
         "isPaused_L2_L1": false,
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": false,
+        "isPaused_NATIVE_YIELD_REPORTING": false,
+        "isPaused_NATIVE_YIELD_STAKING": false,
+        "isPaused_NATIVE_YIELD_UNSTAKING": false,
+        "isPaused_STATE_DATA_SUBMISSION": false,
         "messageService": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
         "messageServiceSetters": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
         ],
+        "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
+        "PAUSE_DURATION": 172800,
         "PAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
         "pauseTypeToRole": {
           "1": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
           "7": "0x3900d9d72d5177a154375317154fdc0e08377e3134a8a5d21cadccf831cc231c",
           "8": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5"
         },
-        "remoteSender": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-        "remoteTokenBridgeSetters": [
-          "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
-        ],
+        "remoteSender": "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "REMOVE_RESERVED_TOKEN_ROLE": "0x19bf281d118073c159a713666aba52e0d403520cd01e03f42e0f62a0b3bd4a35",
         "reserveTokenRemovers": [
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
@@ -1683,9 +1815,9 @@
           "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
           "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
         ],
+        "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
         "SET_CUSTOM_CONTRACT_ROLE": "0x550554a677c8e7b73b62db78b0ef06c5f237da4ef30b88196a899ccf591041fe",
         "SET_MESSAGE_SERVICE_ROLE": "0x77974cc9cb5bafc9bb265be792d93fa46355c05701895b82f6d3b4b448c8ce00",
-        "SET_REMOTE_TOKENBRIDGE_ROLE": "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24",
         "SET_RESERVED_TOKEN_ROLE": "0xeaf25fcc6b7d45bda16c56628df3f435e20319ef53b065c11ee4510083f0ae2d",
         "sourceChainId": 59144,
         "targetChainId": 1,
@@ -1703,17 +1835,26 @@
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
         "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_BLOB_SUBMISSION": { "severity": "HIGH" },
-        "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
         "isPaused_FINALIZATION": { "severity": "HIGH" },
         "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "nonSecurityCouncilCooldownEnd": {
+          "severity": "HIGH",
+          "description": "Timestamp until which non security council entities can't pause the rollup."
+        }
       },
       "implementationNames": {
         "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9": "TransparentUpgradeableProxy",
-        "linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137": "TokenBridge"
+        "linea:0x4a496167F187A97379e763f693A499cE1182848b": "TokenBridge"
       },
-      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
+      "usedTypes": [
+        { "typeCaster": "ChainPrefix", "arg": { "prefix": "linea" } }
+      ]
     },
     {
       "name": "L2Roles",
@@ -1864,10 +2005,10 @@
       "name": "L2MessageService",
       "address": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
       "type": "Contract",
-      "template": "linea/L2MessageService",
+      "template": "linea/L2MessageService_v1_0",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x9436ff273e587ee919293672a7a5ba7bf371053a92565ee236a004932a5dda66"
+        "0x6239c25539f3ab00e89f637a6f0c8c125ada5ac83bb623a815236dfa315e293c"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
@@ -1880,7 +2021,7 @@
       "sinceBlock": 4,
       "values": {
         "$admin": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E",
-        "$implementation": "linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd",
+        "$implementation": "linea:0x9976fD7edDb78156a002DE74c9158E884702273d",
         "$pastUpgrades": [
           [
             "2023-07-06T13:37:45.000Z",
@@ -1911,9 +2052,14 @@
             "2024-12-16T14:06:23.000Z",
             "0xbb31a92afc2c725d0b10aaf96829db7a553041d0be10ca840d2fb82ef77119e7",
             ["linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd"]
+          ],
+          [
+            "2026-03-31T15:28:55.000Z",
+            "0xee1773eabf52589c20884aceed118949ea8e03afc7bfd1df008206d2d69e1b01",
+            ["linea:0x9976fD7edDb78156a002DE74c9158E884702273d"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1941,7 +2087,10 @@
           },
           "PAUSE_ALL_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+            "members": [
+              "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD",
+              "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+            ]
           },
           "PAUSE_L1_L2_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1962,30 +2111,49 @@
           "UNPAUSE_L2_L1_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+          },
+          "SECURITY_COUNCIL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
           }
         },
         "CONTRACT_VERSION": "1.0",
-        "currentPeriodAmountInWei": "3891314750947261374",
-        "currentPeriodEnd": 1774438562,
+        "COOLDOWN_DURATION": 172800,
+        "currentPeriodAmountInWei": "634646399744250000000",
+        "currentPeriodEnd": 1775028767,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
+        "isPaused_COMPLETE_TOKEN_BRIDGING": false,
+        "isPaused_FINALIZATION": false,
+        "isPaused_GENERAL": false,
+        "isPaused_INITIATE_TOKEN_BRIDGING": false,
+        "isPaused_L1_L2": false,
+        "isPaused_L2_L1": false,
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": false,
+        "isPaused_NATIVE_YIELD_REPORTING": false,
+        "isPaused_NATIVE_YIELD_STAKING": false,
+        "isPaused_NATIVE_YIELD_UNSTAKING": false,
+        "isPaused_STATE_DATA_SUBMISSION": false,
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
         "l1l2MessageSetter": [
           "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 800274,
+        "lastAnchoredL1MessageNumber": 800668,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 106637,
+        "nextMessageNumber": 106712,
+        "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
+        "PAUSE_DURATION": 172800,
         "PAUSE_L1_L2_ROLE": "0x430a7f0cb00b5ebbe63cecc96e82cf959a883e7c13a95110854f1fa6b3fbf598",
         "PAUSE_L2_L1_ROLE": "0xe1fce82838dd7a42cfe783f60dc6233c8aa2c4fc66e77817805e767ec5e349b6",
         "periodInSeconds": 86400,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
-        "sender": "linea:0x00000000000000000000000000000000075BCd15",
+        "SECURITY_COUNCIL_ROLE": "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118",
+        "sender": "linea:0x0000000000000000000000000000000000000000",
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_L1_L2_ROLE": "0xe8cb6172fcf5cbaae022b7c910224a4f0c20d53227e630056efff182155a5abc",
         "UNPAUSE_L2_L1_ROLE": "0xb6cc65f42901ed602aec1619cc1ead29d487cd489094a37615153eaeb991d770",
@@ -2000,11 +2168,26 @@
         },
         "periodInSeconds": {
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
+        },
+        "isPaused_GENERAL": { "severity": "HIGH" },
+        "isPaused_L1_L2": { "severity": "HIGH" },
+        "isPaused_L2_L1": { "severity": "HIGH" },
+        "isPaused_FINALIZATION": { "severity": "HIGH" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "nonSecurityCouncilCooldownEnd": {
+          "severity": "HIGH",
+          "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
       "implementationNames": {
         "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec": "TransparentUpgradeableProxy",
-        "linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd": "L2MessageService"
+        "linea:0x9976fD7edDb78156a002DE74c9158E884702273d": "L2MessageService"
       }
     },
     {
@@ -2156,7 +2339,7 @@
         "getChainId": 59144,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 13,
+        "nonce": 14,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2408,12 +2591,6 @@
         {
           "permission": "interact",
           "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can set the contract that is recognized to be the token bridge contract on the other side.",
-          "role": ".remoteTokenBridgeSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
           "description": "can set the contract used as the source of truth from crosschain messages.",
           "role": ".messageServiceSetters"
         },
@@ -2531,7 +2708,7 @@
           "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239"
         ],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 52,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2541,268 +2718,18 @@
     }
   ],
   "abis": {
-    "eth:0x04728BF704a716C26F9EF4085013b760AC885631": [
-      "constructor()",
-      "error ArrayLengthsDoNotMatch()",
-      "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
-      "error BlobSubmissionDataIsMissing()",
-      "error BytesLengthNotMultipleOf32()",
-      "error BytesLengthNotMultipleOfTwo(uint256 bytesLength)",
-      "error CallerIsNotYieldManager()",
-      "error CallerNotLSTWithdrawalRecipient()",
-      "error CallerNotProxyAdmin()",
-      "error DataAlreadySubmitted(bytes32 currentDataHash)",
-      "error EmptyBlobDataAtIndex(uint256 index)",
-      "error EmptySubmissionData()",
-      "error FeePaymentFailed(address recipient)",
-      "error FeeTooLow()",
-      "error FinalBlobNotSubmitted(bytes32 shnarf)",
-      "error FinalBlockStateEqualsZeroHash()",
-      "error FinalShnarfWrong(bytes32 expected, bytes32 value)",
-      "error FinalizationInTheFuture(uint256 l2BlockTimestamp, uint256 currentBlockTimestamp)",
-      "error FinalizationStateIncorrect(bytes32 expected, bytes32 value)",
-      "error FirstByteIsNotZero()",
-      "error InvalidMerkleProof()",
-      "error InvalidProof()",
-      "error InvalidProofOrProofVerificationRanOutOfGas(string errorReason)",
-      "error InvalidProofType()",
-      "error IsNotPaused(uint8 pauseType)",
-      "error IsPaused(uint8 pauseType)",
-      "error L1RollingHashDoesNotExistOnL1(uint256 messageNumber, bytes32 rollingHash)",
-      "error L2MerkleRootAlreadyAnchored(bytes32 merkleRoot)",
-      "error L2MerkleRootDoesNotExist()",
-      "error LSTWithdrawalRequiresDeficit()",
-      "error LastFinalizationTimeNotLapsed()",
-      "error LeafIndexOutOfBounds(uint32 leafIndex, uint32 maxAllowedIndex)",
-      "error LimitIsZero()",
-      "error MessageAlreadyClaimed(uint256 messageIndex)",
-      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
-      "error MessageSendingFailed(address destination)",
-      "error MissingMessageNumberForRollingHash(bytes32 rollingHash)",
-      "error MissingRollingHashForMessageNumber(uint256 messageNumber)",
-      "error NoEthSent()",
-      "error OnlyNonFallbackOperator()",
-      "error ParentBlobNotSubmitted(bytes32 shnarf)",
-      "error PauseTypeNotUsed()",
-      "error PeriodIsZero()",
-      "error PointEvaluationFailed()",
-      "error PointEvaluationResponseInvalid(uint256 fieldElements, uint256 blsCurveModulus)",
-      "error PrecompileReturnDataLengthWrong(uint256 expected, uint256 actual)",
-      "error ProofIsEmpty()",
-      "error ProofLengthDifferentThanMerkleDepth(uint256 actual, uint256 expected)",
-      "error RateLimitExceeded()",
-      "error ReentrantCall()",
-      "error RolesNotDifferent()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error StartingRootHashDoesNotMatch()",
-      "error ValueSentTooLow()",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroHashNotAllowed()",
-      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
-      "event DataFinalizedV3(uint256 indexed startBlockNumber, uint256 indexed endBlockNumber, bytes32 indexed shnarf, bytes32 parentStateRootHash, bytes32 finalStateRootHash)",
-      "event DataSubmittedV3(bytes32 parentShnarf, bytes32 indexed shnarf, bytes32 finalStateRootHash)",
-      "event FallbackOperatorAddressSet(address indexed caller, address indexed fallbackOperator)",
-      "event FallbackOperatorRoleGranted(address indexed caller, address indexed fallbackOperator)",
-      "event FundingReceived(uint256 amount)",
-      "event Initialized(uint8 version)",
-      "event L2MerkleRootAdded(bytes32 indexed l2MerkleRoot, uint256 indexed treeDepth)",
-      "event L2MessagingBlockAnchored(uint256 indexed l2Block)",
-      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
-      "event LineaRollupVersionChanged(bytes8 indexed previousVersion, bytes8 indexed newVersion)",
-      "event MessageClaimed(bytes32 indexed _messageHash)",
-      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
-      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
-      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
-      "event Paused(address messageSender, uint8 indexed pauseType)",
-      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash, bytes32 indexed messageHash)",
-      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
-      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
-      "event UnPaused(address messageSender, uint8 indexed pauseType)",
-      "event VerifierAddressChanged(address indexed verifierAddress, uint256 indexed proofType, address indexed verifierSetBy, address oldVerifierAddress)",
-      "event YieldManagerChanged(address oldYieldManagerAddress, address newYieldManagerAddress)",
-      "function CONTRACT_VERSION() view returns (string)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
-      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
-      "function OPERATOR_ROLE() view returns (bytes32)",
-      "function OUTBOX_STATUS_RECEIVED() view returns (uint8)",
-      "function OUTBOX_STATUS_SENT() view returns (uint8)",
-      "function OUTBOX_STATUS_UNKNOWN() view returns (uint8)",
-      "function PAUSE_ALL_ROLE() view returns (bytes32)",
-      "function PAUSE_BLOB_SUBMISSION_ROLE() view returns (bytes32)",
-      "function PAUSE_FINALIZATION_ROLE() view returns (bytes32)",
-      "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
-      "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
-      "function PAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
-      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
-      "function SET_YIELD_MANAGER_ROLE() view returns (bytes32)",
-      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
-      "function UNPAUSE_BLOB_SUBMISSION_ROLE() view returns (bytes32)",
-      "function UNPAUSE_FINALIZATION_ROLE() view returns (bytes32)",
-      "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
-      "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
-      "function UNPAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
-      "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
-      "function VERIFIER_SETTER_ROLE() view returns (bytes32)",
-      "function VERIFIER_UNSETTER_ROLE() view returns (bytes32)",
-      "function YIELD_PROVIDER_STAKING_ROLE() view returns (bytes32)",
-      "function blobShnarfExists(bytes32 shnarf) view returns (uint256 exists)",
-      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
-      "function claimMessageWithProof(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params)",
-      "function claimMessageWithProofAndWithdrawLST(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params, address _yieldProvider)",
-      "function currentFinalizedShnarf() view returns (bytes32)",
-      "function currentFinalizedState() view returns (bytes32)",
-      "function currentL2BlockNumber() view returns (uint256)",
-      "function currentL2StoredL1MessageNumber() view returns (uint256)",
-      "function currentL2StoredL1RollingHash() view returns (bytes32)",
-      "function currentPeriodAmountInWei() view returns (uint256)",
-      "function currentPeriodEnd() view returns (uint256)",
-      "function currentTimestamp() view returns (uint256)",
-      "function dataEndingBlock(bytes32 dataHash) view returns (uint256 endingBlock)",
-      "function dataFinalStateRootHashes(bytes32 dataHash) view returns (bytes32 finalStateRootHash)",
-      "function dataParents(bytes32 dataHash) view returns (bytes32 parentHash)",
-      "function dataShnarfHashes(bytes32 dataHash) view returns (bytes32 shnarfHash)",
-      "function dataStartingBlock(bytes32 dataHash) view returns (uint256 startingBlock)",
-      "function fallbackOperator() view returns (address)",
-      "function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
-      "function fund() payable",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function inboxL2L1MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
-      "function initialize(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address initialYieldManager, address fallbackOperator, address defaultAdmin) _initializationData)",
-      "function isMessageClaimed(uint256 _messageNumber) view returns (bool isClaimed)",
-      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-      "function isWithdrawLSTAllowed() view returns (bool)",
-      "function l2MerkleRootsDepths(bytes32 merkleRoot) view returns (uint256 treeDepth)",
-      "function limitInWei() view returns (uint256)",
-      "function nextMessageNumber() view returns (uint256)",
-      "function outboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
-      "function pauseByType(uint8 _pauseType)",
-      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
-      "function periodInSeconds() view returns (uint256)",
-      "function reinitializeLineaRollupV7(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles, address _yieldManager)",
-      "function renounceRole(bytes32 _role, address _account)",
-      "function reportNativeYield(uint256 _amount, address _l2YieldRecipient)",
-      "function resetAmountUsedInPeriod()",
-      "function resetRateLimitAmount(uint256 _amount)",
-      "function revokeRole(bytes32 role, address account)",
-      "function rollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
-      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
-      "function sender() view returns (address originalSender)",
-      "function setFallbackOperator(uint256 _messageNumber, bytes32 _rollingHash, uint256 _lastFinalizedTimestamp)",
-      "function setVerifierAddress(address _newVerifierAddress, uint256 _proofType)",
-      "function setYieldManager(address _newYieldManager)",
-      "function stateRootHashes(uint256 blockNumber) view returns (bytes32 stateRootHash)",
-      "function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)",
-      "function submitDataAsCalldata(tuple(bytes32 finalStateRootHash, bytes32 snarkHash, bytes compressedData) _submission, bytes32 _parentShnarf, bytes32 _expectedShnarf)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function systemMigrationBlock() view returns (uint256)",
-      "function transferFundsForNativeYield(uint256 _amount)",
-      "function unPauseByType(uint8 _pauseType)",
-      "function unsetVerifierAddress(uint256 _proofType)",
-      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
-      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
-      "function verifiers(uint256 proofType) view returns (address verifierAddress)",
-      "function yieldManager() view returns (address)"
-    ],
     "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": [
-      "constructor()",
-      "error AlreadyBridgedToken(address token)",
-      "error AlreadyBrigedToNativeTokenSet(address token)",
-      "error ArrayLengthsDoNotMatch()",
-      "error CallerIsNotMessageService()",
-      "error DecimalsAreUnknown(address token)",
-      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
-      "error IsNotPaused(uint8 pauseType)",
-      "error IsPaused(uint8 pauseType)",
-      "error NativeToBridgedTokenAlreadySet(address token)",
-      "error NotReserved(address token)",
-      "error PermitNotAllowingBridge(address spender)",
-      "error PermitNotFromSender(address owner)",
-      "error RemoteTokenBridgeAlreadySet(address remoteTokenBridge)",
-      "error ReservedToken(address token)",
-      "error SenderNotAuthorized()",
-      "error StatusAddressNotAllowed(address token)",
-      "error TokenListEmpty()",
-      "error TokenNotDeployed(address token)",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroAmountNotAllowed(uint256 amount)",
-      "error ZeroHashNotAllowed()",
-      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
-      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
-      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
-      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
-      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
-      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
-      "event Initialized(uint8 version)",
-      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
-      "event NewToken(address indexed token)",
-      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
-      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
-      "event Paused(address messageSender, uint8 indexed pauseType)",
-      "event RemoteSenderSet(address indexed remoteSender, address indexed setter)",
-      "event RemoteTokenBridgeSet(address indexed remoteTokenBridge, address indexed setBy)",
-      "event ReservationRemoved(address indexed token)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event TokenDeployed(address indexed token)",
-      "event TokenReserved(address indexed token)",
-      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
-      "event UnPaused(address messageSender, uint8 indexed pauseType)",
-      "function CONTRACT_VERSION() view returns (string)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function PAUSE_ALL_ROLE() view returns (bytes32)",
-      "function PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function PAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function REMOVE_RESERVED_TOKEN_ROLE() view returns (bytes32)",
-      "function SET_CUSTOM_CONTRACT_ROLE() view returns (bytes32)",
-      "function SET_MESSAGE_SERVICE_ROLE() view returns (bytes32)",
-      "function SET_REMOTE_TOKENBRIDGE_ROLE() view returns (bytes32)",
-      "function SET_RESERVED_TOKEN_ROLE() view returns (bytes32)",
-      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
-      "function UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
-      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
-      "function bridgedToNativeToken(address bridged) view returns (address native)",
-      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
-      "function confirmDeployment(address[] _tokens) payable",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(tuple(address defaultAdmin, address messageService, address tokenBeacon, uint256 sourceChainId, uint256 targetChainId, address[] reservedTokens, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles) _initializationData)",
-      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-      "function messageService() view returns (address)",
-      "function nativeToBridgedToken(uint256 chainId, address native) view returns (address bridged)",
-      "function pauseByType(uint8 _pauseType)",
-      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
-      "function reinitializePauseTypesAndPermissions(address _defaultAdmin, tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
-      "function remoteSender() view returns (address)",
-      "function removeReserved(address _token)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCustomContract(address _nativeToken, address _targetContract)",
-      "function setDeployed(address[] _nativeTokens)",
-      "function setMessageService(address _messageService)",
-      "function setRemoteTokenBridge(address _remoteTokenBridge)",
-      "function setReserved(address _token)",
-      "function sourceChainId() view returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function targetChainId() view returns (uint256)",
-      "function tokenBeacon() view returns (address)",
-      "function unPauseByType(uint8 _pauseType)"
+    "eth:0x1442833180e253844897339aFb5800c797547987": [
+      "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
+      "error ChainConfigurationNotProvided()",
+      "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function getChainConfiguration() view returns (bytes32)"
     ],
     "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
       "constructor(address _target)",
@@ -2905,9 +2832,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x66355689a9f067eeb9dc9d899E4192676988279C": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": [
       "error AmountTooBig(uint256 amount, uint256 limit)",
@@ -3255,11 +3179,289 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332": [
+      "constructor()",
+      "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
+      "error BlobSubmissionDataIsMissing()",
+      "error BytesLengthNotMultipleOfTwo(uint256 bytesLength)",
+      "error CallerIsNotYieldManager()",
+      "error CallerNotLSTWithdrawalRecipient()",
+      "error EmptyBlobDataAtIndex(uint256 index)",
+      "error FeePaymentFailed(address recipient)",
+      "error FeeTooLow()",
+      "error FinalBlockStateEqualsZeroHash()",
+      "error FinalShnarfNotSubmitted(bytes32 shnarf)",
+      "error FinalShnarfWrong(bytes32 expected, bytes32 value)",
+      "error FinalStateRootHashIsZeroHash()",
+      "error FinalizationInTheFuture(uint256 l2BlockTimestamp, uint256 currentBlockTimestamp)",
+      "error FinalizationStateIncorrect(bytes32 expected, bytes32 value)",
+      "error InitializedVersionWrong(uint256 expected, uint256 actual)",
+      "error InvalidMerkleProof()",
+      "error InvalidProof()",
+      "error InvalidProofOrProofVerificationRanOutOfGas(string errorReason)",
+      "error InvalidProofType()",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error L1RollingHashDoesNotExistOnL1(uint256 messageNumber, bytes32 rollingHash)",
+      "error L2MerkleRootAlreadyAnchored(bytes32 merkleRoot)",
+      "error L2MerkleRootDoesNotExist()",
+      "error LSTWithdrawalRequiresDeficit()",
+      "error LastFinalizationTimeNotLapsed()",
+      "error LeafIndexOutOfBounds(uint32 leafIndex, uint32 maxAllowedIndex)",
+      "error LimitIsZero()",
+      "error MessageAlreadyClaimed(uint256 messageIndex)",
+      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
+      "error MessageSendingFailed(address destination)",
+      "error MissingMessageNumberForRollingHash(bytes32 rollingHash)",
+      "error MissingRollingHashForMessageNumber(uint256 messageNumber)",
+      "error NoEthSent()",
+      "error OnlyNonLivenessRecoveryOperator()",
+      "error OnlySecurityCouncilCanUnpauseIndefinitePause(uint8 pauseType)",
+      "error ParentShnarfNotSubmitted(bytes32 shnarf)",
+      "error PauseNotExpired(uint256 expiryEnd)",
+      "error PauseTypeNotUsed()",
+      "error PauseUnavailableDueToCooldown(uint256 cooldownEnd)",
+      "error PeriodIsZero()",
+      "error PointEvaluationFailed()",
+      "error PointEvaluationResponseInvalid(uint256 fieldElements, uint256 blsCurveModulus)",
+      "error PrecompileReturnDataLengthWrong(uint256 expected, uint256 actual)",
+      "error ProofIsEmpty()",
+      "error ProofLengthDifferentThanMerkleDepth(uint256 actual, uint256 expected)",
+      "error RateLimitExceeded()",
+      "error ReentrantCall()",
+      "error RolesNotDifferent()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error ShnarfAlreadySubmitted(bytes32 shnarf)",
+      "error ShnarfSubmissionIsZeroHash()",
+      "error StartingRootHashDoesNotMatch()",
+      "error ValueSentTooLow()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
+      "event DataFinalizedV3(uint256 indexed startBlockNumber, uint256 indexed endBlockNumber, bytes32 indexed shnarf, bytes32 parentStateRootHash, bytes32 finalStateRootHash)",
+      "event DataSubmittedV3(bytes32 parentShnarf, bytes32 indexed shnarf, bytes32 finalStateRootHash)",
+      "event FundingReceived(uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event L2MerkleRootAdded(bytes32 indexed l2MerkleRoot, uint256 indexed treeDepth)",
+      "event L2MessagingBlockAnchored(uint256 indexed l2Block)",
+      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
+      "event LineaRollupBaseInitialized(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address defaultAdmin, address shnarfProvider) InitializationData, bytes32 genesisShnarf)",
+      "event LineaRollupVersionChanged(bytes8 indexed previousVersion, bytes8 indexed newVersion)",
+      "event LivenessRecoveryOperatorAddressSet(address indexed caller, address indexed livenessRecoveryOperator)",
+      "event LivenessRecoveryOperatorRoleGranted(address indexed caller, address indexed livenessRecoveryOperator)",
+      "event MessageClaimed(bytes32 indexed _messageHash)",
+      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
+      "event NonSecurityCouncilCooldownEndReset()",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event PausedIndefinitely(address messageSender, uint8 indexed pauseType)",
+      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash, bytes32 indexed messageHash)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event UnPausedDueToExpiry(uint8 indexed pauseType)",
+      "event VerifierAddressChanged(address indexed verifierAddress, uint256 indexed proofType, address indexed verifierSetBy, address oldVerifierAddress)",
+      "event YieldManagerChanged(address oldYieldManagerAddress, address newYieldManagerAddress)",
+      "function CONTRACT_VERSION() view returns (string contractVersion)",
+      "function COOLDOWN_DURATION() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
+      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
+      "function OPERATOR_ROLE() view returns (bytes32)",
+      "function OUTBOX_STATUS_RECEIVED() view returns (uint8)",
+      "function OUTBOX_STATUS_SENT() view returns (uint8)",
+      "function OUTBOX_STATUS_UNKNOWN() view returns (uint8)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_DURATION() view returns (uint256)",
+      "function PAUSE_FINALIZATION_ROLE() view returns (bytes32)",
+      "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function PAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
+      "function PAUSE_STATE_DATA_SUBMISSION_ROLE() view returns (bytes32)",
+      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
+      "function SECURITY_COUNCIL_ROLE() view returns (bytes32)",
+      "function SET_YIELD_MANAGER_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_FINALIZATION_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function UNPAUSE_NATIVE_YIELD_STAKING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_STATE_DATA_SUBMISSION_ROLE() view returns (bytes32)",
+      "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
+      "function VERIFIER_SETTER_ROLE() view returns (bytes32)",
+      "function VERIFIER_UNSETTER_ROLE() view returns (bytes32)",
+      "function YIELD_PROVIDER_STAKING_ROLE() view returns (bytes32)",
+      "function blobShnarfExists(bytes32 _shnarf) view returns (uint256 shnarfExists)",
+      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
+      "function claimMessageWithProof(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params)",
+      "function claimMessageWithProofAndWithdrawLST(tuple(bytes32[] proof, uint256 messageNumber, uint32 leafIndex, address from, address to, uint256 fee, uint256 value, address feeRecipient, bytes32 merkleRoot, bytes data) _params, address _yieldProvider)",
+      "function currentFinalizedShnarf() view returns (bytes32)",
+      "function currentFinalizedState() view returns (bytes32)",
+      "function currentL2BlockNumber() view returns (uint256)",
+      "function currentPeriodAmountInWei() view returns (uint256)",
+      "function currentPeriodEnd() view returns (uint256)",
+      "function finalizeBlocks(bytes _aggregatedProof, uint256 _proofType, tuple(bytes32 parentStateRootHash, uint256 endBlockNumber, tuple(bytes32 parentShnarf, bytes32 snarkHash, bytes32 finalStateRootHash, bytes32 dataEvaluationPoint, bytes32 dataEvaluationClaim) shnarfData, uint256 lastFinalizedTimestamp, uint256 finalTimestamp, bytes32 lastFinalizedL1RollingHash, bytes32 l1RollingHash, uint256 lastFinalizedL1RollingHashMessageNumber, uint256 l1RollingHashMessageNumber, uint256 l2MerkleTreesDepth, bytes32[] l2MerkleRoots, bytes l2MessagingBlocksOffsets) _finalizationData)",
+      "function fund() payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function inboxL2L1MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function initialize(tuple(bytes32 initialStateRootHash, uint256 initialL2BlockNumber, uint256 genesisTimestamp, address defaultVerifier, uint256 rateLimitPeriodInSeconds, uint256 rateLimitAmountInWei, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles, address defaultAdmin, address shnarfProvider) _initializationData, address _livenessRecoveryOperator, address _yieldManager)",
+      "function isMessageClaimed(uint256 _messageNumber) view returns (bool isClaimed)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function isWithdrawLSTAllowed() view returns (bool)",
+      "function l2MerkleRootsDepths(bytes32 merkleRoot) view returns (uint256 treeDepth)",
+      "function limitInWei() view returns (uint256)",
+      "function livenessRecoveryOperator() view returns (address)",
+      "function nextMessageNumber() view returns (uint256)",
+      "function nonSecurityCouncilCooldownEnd() view returns (uint256)",
+      "function outboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseTypeExpiryTimestamps(uint8 pauseType) view returns (uint256 expiryTimestamp)",
+      "function periodInSeconds() view returns (uint256)",
+      "function reinitializeV8(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
+      "function renounceRole(bytes32 _role, address _account)",
+      "function reportNativeYield(uint256 _amount, address _l2YieldRecipient)",
+      "function resetAmountUsedInPeriod()",
+      "function resetNonSecurityCouncilCooldownEnd()",
+      "function resetRateLimitAmount(uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
+      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
+      "function sender() view returns (address originalSender)",
+      "function setLivenessRecoveryOperator(uint256 _messageNumber, bytes32 _rollingHash, uint256 _lastFinalizedTimestamp)",
+      "function setVerifierAddress(address _newVerifierAddress, uint256 _proofType)",
+      "function setYieldManager(address _newYieldManager)",
+      "function shnarfProvider() view returns (address)",
+      "function stateRootHashes(uint256 blockNumber) view returns (bytes32 stateRootHash)",
+      "function submitBlobs(tuple(uint256 dataEvaluationClaim, bytes kzgCommitment, bytes kzgProof, bytes32 finalStateRootHash, bytes32 snarkHash)[] _blobSubmissions, bytes32 _parentShnarf, bytes32 _finalBlobShnarf)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function systemMigrationBlock() view returns (uint256)",
+      "function transferFundsForNativeYield(uint256 _amount)",
+      "function unPauseByExpiredType(uint8 _pauseType)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function unsetVerifierAddress(uint256 _proofType)",
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function verifiers(uint256 proofType) view returns (address verifierAddress)",
+      "function yieldManager() view returns (address)"
+    ],
     "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff": [
+      "constructor()",
+      "error AlreadyBridgedToken(address token)",
+      "error AlreadyBrigedToNativeTokenSet(address token)",
+      "error CallerIsNotMessageService()",
+      "error DecimalsAreUnknown(address token)",
+      "error InitializedVersionWrong(uint256 expected, uint256 actual)",
+      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error NativeToBridgedTokenAlreadySet(address token)",
+      "error NoEthSent()",
+      "error NotReserved(address token)",
+      "error OnlySecurityCouncilCanUnpauseIndefinitePause(uint8 pauseType)",
+      "error PauseNotExpired(uint256 expiryEnd)",
+      "error PauseTypeNotUsed()",
+      "error PauseUnavailableDueToCooldown(uint256 cooldownEnd)",
+      "error PermitNotAllowingBridge(address spender)",
+      "error PermitNotFromSender(address owner)",
+      "error ReentrantCall()",
+      "error ReservedToken(address token)",
+      "error RolesNotDifferent()",
+      "error SenderNotAuthorized()",
+      "error SourceChainSameAsTargetChain()",
+      "error StatusAddressNotAllowed(address token)",
+      "error TokenListEmpty()",
+      "error TokenNotDeployed(address token)",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroAmountNotAllowed(uint256 amount)",
+      "error ZeroChainIdNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
+      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
+      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
+      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
+      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
+      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
+      "event Initialized(uint8 version)",
+      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
+      "event NewToken(address indexed token)",
+      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
+      "event NonSecurityCouncilCooldownEndReset()",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event PausedIndefinitely(address messageSender, uint8 indexed pauseType)",
+      "event RemoteSenderSet(address indexed remoteSender, address indexed setter)",
+      "event ReservationRemoved(address indexed token)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenDeployed(address indexed token)",
+      "event TokenReserved(address indexed token)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event UnPausedDueToExpiry(uint8 indexed pauseType)",
+      "function CONTRACT_VERSION() view returns (string contractVersion)",
+      "function COOLDOWN_DURATION() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function PAUSE_DURATION() view returns (uint256)",
+      "function PAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function REMOVE_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function SECURITY_COUNCIL_ROLE() view returns (bytes32)",
+      "function SET_CUSTOM_CONTRACT_ROLE() view returns (bytes32)",
+      "function SET_MESSAGE_SERVICE_ROLE() view returns (bytes32)",
+      "function SET_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
+      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
+      "function bridgedToNativeToken(address bridged) view returns (address native)",
+      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
+      "function confirmDeployment(address[] _tokens) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address defaultAdmin, address messageService, address tokenBeacon, uint256 sourceChainId, uint256 targetChainId, address remoteSender, address[] reservedTokens, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles) _initializationData)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function messageService() view returns (address)",
+      "function nativeToBridgedToken(uint256 chainId, address native) view returns (address bridged)",
+      "function nonSecurityCouncilCooldownEnd() view returns (uint256)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseTypeExpiryTimestamps(uint8 pauseType) view returns (uint256 expiryTimestamp)",
+      "function reinitializeV3()",
+      "function remoteSender() view returns (address)",
+      "function removeReserved(address _token)",
+      "function renounceRole(bytes32 role, address account)",
+      "function resetNonSecurityCouncilCooldownEnd()",
+      "function revokeRole(bytes32 role, address account)",
+      "function setCustomContract(address _nativeToken, address _targetContract)",
+      "function setDeployed(address[] _nativeTokens)",
+      "function setMessageService(address _messageService)",
+      "function setReserved(address _token)",
+      "function sourceChainId() view returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function targetChainId() view returns (uint256)",
+      "function tokenBeacon() view returns (address)",
+      "function unPauseByExpiredType(uint8 _pauseType)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)"
     ],
     "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3271,87 +3473,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd": [
-      "constructor()",
-      "error ArrayLengthsDoNotMatch()",
-      "error FeePaymentFailed(address recipient)",
-      "error FeeTooLow()",
-      "error FinalRollingHashIsZero()",
-      "error IsNotPaused(uint8 pauseType)",
-      "error IsPaused(uint8 pauseType)",
-      "error L1MessageNumberSynchronizationWrong(uint256 expected, uint256 found)",
-      "error L1RollingHashSynchronizationWrong(bytes32 expected, bytes32 found)",
-      "error LimitIsZero()",
-      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
-      "error MessageHashesListLengthHigherThanOneHundred(uint256 length)",
-      "error MessageHashesListLengthIsZero()",
-      "error MessageSendingFailed(address destination)",
-      "error PeriodIsZero()",
-      "error RateLimitExceeded()",
-      "error ValueSentTooLow()",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroHashNotAllowed()",
-      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
-      "event Initialized(uint8 version)",
-      "event L1L2MessageHashesAddedToInbox(bytes32[] messageHashes)",
-      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
-      "event MessageClaimed(bytes32 indexed _messageHash)",
-      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
-      "event MinimumFeeChanged(uint256 previousMinimumFee, uint256 newMinimumFee, address indexed calledBy)",
-      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
-      "event Paused(address messageSender, uint8 indexed pauseType)",
-      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash)",
-      "event ServiceVersionMigrated(uint256 indexed version)",
-      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
-      "event UnPaused(address messageSender, uint8 indexed pauseType)",
-      "function CONTRACT_VERSION() view returns (string)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function INBOX_STATUS_CLAIMED() view returns (uint8)",
-      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
-      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
-      "function L1_L2_MESSAGE_SETTER_ROLE() view returns (bytes32)",
-      "function MINIMUM_FEE_SETTER_ROLE() view returns (bytes32)",
-      "function PAUSE_ALL_ROLE() view returns (bytes32)",
-      "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
-      "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
-      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
-      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
-      "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
-      "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
-      "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
-      "function anchorL1L2MessageHashes(bytes32[] _messageHashes, uint256 _startingMessageNumber, uint256 _finalMessageNumber, bytes32 _finalRollingHash)",
-      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
-      "function currentPeriodAmountInWei() view returns (uint256)",
-      "function currentPeriodEnd() view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function inboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
-      "function initialize(uint256 _rateLimitPeriod, uint256 _rateLimitAmount, address _defaultAdmin, tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
-      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-      "function l1RollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
-      "function lastAnchoredL1MessageNumber() view returns (uint256)",
-      "function limitInWei() view returns (uint256)",
-      "function minimumFeeInWei() view returns (uint256)",
-      "function nextMessageNumber() view returns (uint256)",
-      "function pauseByType(uint8 _pauseType)",
-      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
-      "function periodInSeconds() view returns (uint256)",
-      "function reinitializePauseTypesAndPermissions(tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
-      "function renounceRole(bytes32 role, address account)",
-      "function resetAmountUsedInPeriod()",
-      "function resetRateLimitAmount(uint256 _amount)",
-      "function revokeRole(bytes32 role, address account)",
-      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
-      "function sender() view returns (address originalSender)",
-      "function setMinimumFee(uint256 _feeInWei)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unPauseByType(uint8 _pauseType)"
     ],
     "linea:0x1998108fA7993EA67a8B1a99d392a3288C5a5521": [
       "error AmountTooBig(uint256 amount, uint256 limit)",
@@ -3563,11 +3684,218 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "linea:0x4a496167F187A97379e763f693A499cE1182848b": [
+      "constructor()",
+      "error AlreadyBridgedToken(address token)",
+      "error AlreadyBrigedToNativeTokenSet(address token)",
+      "error CallerIsNotMessageService()",
+      "error DecimalsAreUnknown(address token)",
+      "error InitializedVersionWrong(uint256 expected, uint256 actual)",
+      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error NativeToBridgedTokenAlreadySet(address token)",
+      "error NoEthSent()",
+      "error NotReserved(address token)",
+      "error OnlySecurityCouncilCanUnpauseIndefinitePause(uint8 pauseType)",
+      "error PauseNotExpired(uint256 expiryEnd)",
+      "error PauseTypeNotUsed()",
+      "error PauseUnavailableDueToCooldown(uint256 cooldownEnd)",
+      "error PermitNotAllowingBridge(address spender)",
+      "error PermitNotFromSender(address owner)",
+      "error ReentrantCall()",
+      "error ReservedToken(address token)",
+      "error RolesNotDifferent()",
+      "error SenderNotAuthorized()",
+      "error SourceChainSameAsTargetChain()",
+      "error StatusAddressNotAllowed(address token)",
+      "error TokenListEmpty()",
+      "error TokenNotDeployed(address token)",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroAmountNotAllowed(uint256 amount)",
+      "error ZeroChainIdNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
+      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
+      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
+      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
+      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
+      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
+      "event Initialized(uint8 version)",
+      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
+      "event NewToken(address indexed token)",
+      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
+      "event NonSecurityCouncilCooldownEndReset()",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event PausedIndefinitely(address messageSender, uint8 indexed pauseType)",
+      "event RemoteSenderSet(address indexed remoteSender, address indexed setter)",
+      "event ReservationRemoved(address indexed token)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenDeployed(address indexed token)",
+      "event TokenReserved(address indexed token)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event UnPausedDueToExpiry(uint8 indexed pauseType)",
+      "function CONTRACT_VERSION() view returns (string contractVersion)",
+      "function COOLDOWN_DURATION() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function PAUSE_DURATION() view returns (uint256)",
+      "function PAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function REMOVE_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function SECURITY_COUNCIL_ROLE() view returns (bytes32)",
+      "function SET_CUSTOM_CONTRACT_ROLE() view returns (bytes32)",
+      "function SET_MESSAGE_SERVICE_ROLE() view returns (bytes32)",
+      "function SET_RESERVED_TOKEN_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
+      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
+      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
+      "function bridgedToNativeToken(address bridged) view returns (address native)",
+      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
+      "function confirmDeployment(address[] _tokens) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(tuple(address defaultAdmin, address messageService, address tokenBeacon, uint256 sourceChainId, uint256 targetChainId, address remoteSender, address[] reservedTokens, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles) _initializationData)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function messageService() view returns (address)",
+      "function nativeToBridgedToken(uint256 chainId, address native) view returns (address bridged)",
+      "function nonSecurityCouncilCooldownEnd() view returns (uint256)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseTypeExpiryTimestamps(uint8 pauseType) view returns (uint256 expiryTimestamp)",
+      "function reinitializeV3()",
+      "function remoteSender() view returns (address)",
+      "function removeReserved(address _token)",
+      "function renounceRole(bytes32 role, address account)",
+      "function resetNonSecurityCouncilCooldownEnd()",
+      "function revokeRole(bytes32 role, address account)",
+      "function setCustomContract(address _nativeToken, address _targetContract)",
+      "function setDeployed(address[] _nativeTokens)",
+      "function setMessageService(address _messageService)",
+      "function setReserved(address _token)",
+      "function sourceChainId() view returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function targetChainId() view returns (uint256)",
+      "function tokenBeacon() view returns (address)",
+      "function unPauseByExpiredType(uint8 _pauseType)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)"
+    ],
     "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "linea:0x9976fD7edDb78156a002DE74c9158E884702273d": [
+      "constructor()",
+      "error FeePaymentFailed(address recipient)",
+      "error FeeTooLow()",
+      "error FinalRollingHashIsZero()",
+      "error InitializedVersionWrong(uint256 expected, uint256 actual)",
+      "error IsNotPaused(uint8 pauseType)",
+      "error IsPaused(uint8 pauseType)",
+      "error L1MessageNumberSynchronizationWrong(uint256 expected, uint256 found)",
+      "error L1RollingHashSynchronizationWrong(bytes32 expected, bytes32 found)",
+      "error LimitIsZero()",
+      "error MessageDoesNotExistOrHasAlreadyBeenClaimed(bytes32 messageHash)",
+      "error MessageHashesListLengthHigherThanOneHundred(uint256 length)",
+      "error MessageHashesListLengthIsZero()",
+      "error MessageSendingFailed(address destination)",
+      "error NoEthSent()",
+      "error OnlySecurityCouncilCanUnpauseIndefinitePause(uint8 pauseType)",
+      "error PauseNotExpired(uint256 expiryEnd)",
+      "error PauseTypeNotUsed()",
+      "error PauseUnavailableDueToCooldown(uint256 cooldownEnd)",
+      "error PeriodIsZero()",
+      "error RateLimitExceeded()",
+      "error ReentrantCall()",
+      "error RolesNotDifferent()",
+      "error ValueSentTooLow()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event AmountUsedInPeriodReset(address indexed resettingAddress)",
+      "event Initialized(uint8 version)",
+      "event L1L2MessageHashesAddedToInbox(bytes32[] messageHashes)",
+      "event LimitAmountChanged(address indexed amountChangeBy, uint256 amount, bool amountUsedLoweredToLimit, bool usedAmountResetToZero)",
+      "event MessageClaimed(bytes32 indexed _messageHash)",
+      "event MessageSent(address indexed _from, address indexed _to, uint256 _fee, uint256 _value, uint256 _nonce, bytes _calldata, bytes32 indexed _messageHash)",
+      "event MinimumFeeChanged(uint256 previousMinimumFee, uint256 newMinimumFee, address indexed calledBy)",
+      "event NonSecurityCouncilCooldownEndReset()",
+      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
+      "event PauseTypeRoleUpdated(uint8 indexed pauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event Paused(address messageSender, uint8 indexed pauseType)",
+      "event PausedIndefinitely(address messageSender, uint8 indexed pauseType)",
+      "event RateLimitInitialized(uint256 periodInSeconds, uint256 limitInWei, uint256 currentPeriodEnd)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollingHashUpdated(uint256 indexed messageNumber, bytes32 indexed rollingHash)",
+      "event ServiceVersionMigrated(uint256 indexed version)",
+      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
+      "event UnPauseTypeRoleUpdated(uint8 indexed unPauseType, bytes32 indexed role, bytes32 indexed previousRole)",
+      "event UnPaused(address messageSender, uint8 indexed pauseType)",
+      "event UnPausedDueToExpiry(uint8 indexed pauseType)",
+      "function CONTRACT_VERSION() view returns (string contractVersion)",
+      "function COOLDOWN_DURATION() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function INBOX_STATUS_CLAIMED() view returns (uint8)",
+      "function INBOX_STATUS_RECEIVED() view returns (uint8)",
+      "function INBOX_STATUS_UNKNOWN() view returns (uint8)",
+      "function L1_L2_MESSAGE_SETTER_ROLE() view returns (bytes32)",
+      "function MINIMUM_FEE_SETTER_ROLE() view returns (bytes32)",
+      "function PAUSE_ALL_ROLE() view returns (bytes32)",
+      "function PAUSE_DURATION() view returns (uint256)",
+      "function PAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function PAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function RATE_LIMIT_SETTER_ROLE() view returns (bytes32)",
+      "function SECURITY_COUNCIL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L1_L2_ROLE() view returns (bytes32)",
+      "function UNPAUSE_L2_L1_ROLE() view returns (bytes32)",
+      "function USED_RATE_LIMIT_RESETTER_ROLE() view returns (bytes32)",
+      "function anchorL1L2MessageHashes(bytes32[] _messageHashes, uint256 _startingMessageNumber, uint256 _finalMessageNumber, bytes32 _finalRollingHash)",
+      "function claimMessage(address _from, address _to, uint256 _fee, uint256 _value, address _feeRecipient, bytes _calldata, uint256 _nonce)",
+      "function currentPeriodAmountInWei() view returns (uint256)",
+      "function currentPeriodEnd() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function inboxL1L2MessageStatus(bytes32 messageHash) view returns (uint256 messageStatus)",
+      "function initialize(uint256 _rateLimitPeriod, uint256 _rateLimitAmount, address _defaultAdmin, tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoleAssignments, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoleAssignments)",
+      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
+      "function l1RollingHashes(uint256 messageNumber) view returns (bytes32 rollingHash)",
+      "function lastAnchoredL1MessageNumber() view returns (uint256)",
+      "function limitInWei() view returns (uint256)",
+      "function minimumFeeInWei() view returns (uint256)",
+      "function nextMessageNumber() view returns (uint256)",
+      "function nonSecurityCouncilCooldownEnd() view returns (uint256)",
+      "function pauseByType(uint8 _pauseType)",
+      "function pauseTypeExpiryTimestamps(uint8 pauseType) view returns (uint256 expiryTimestamp)",
+      "function periodInSeconds() view returns (uint256)",
+      "function reinitializeV3()",
+      "function renounceRole(bytes32 role, address account)",
+      "function resetAmountUsedInPeriod()",
+      "function resetNonSecurityCouncilCooldownEnd()",
+      "function resetRateLimitAmount(uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sendMessage(address _to, uint256 _fee, bytes _calldata) payable",
+      "function sender() view returns (address originalSender)",
+      "function setMinimumFee(uint256 _feeInWei)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unPauseByExpiredType(uint8 _pauseType)",
+      "function unPauseByType(uint8 _pauseType)",
+      "function updatePauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
+      "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)"
     ],
     "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -3664,94 +3992,6 @@
       "function transfer(address, uint256) returns (bool)",
       "function transferFrom(address, address, uint256) returns (bool)"
     ],
-    "linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137": [
-      "constructor()",
-      "error AlreadyBridgedToken(address token)",
-      "error AlreadyBrigedToNativeTokenSet(address token)",
-      "error ArrayLengthsDoNotMatch()",
-      "error CallerIsNotMessageService()",
-      "error DecimalsAreUnknown(address token)",
-      "error InvalidPermitData(bytes4 permitData, bytes4 permitSelector)",
-      "error IsNotPaused(uint8 pauseType)",
-      "error IsPaused(uint8 pauseType)",
-      "error NativeToBridgedTokenAlreadySet(address token)",
-      "error NotReserved(address token)",
-      "error PermitNotAllowingBridge(address spender)",
-      "error PermitNotFromSender(address owner)",
-      "error RemoteTokenBridgeAlreadySet(address remoteTokenBridge)",
-      "error ReservedToken(address token)",
-      "error SenderNotAuthorized()",
-      "error StatusAddressNotAllowed(address token)",
-      "error TokenListEmpty()",
-      "error TokenNotDeployed(address token)",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroAmountNotAllowed(uint256 amount)",
-      "error ZeroHashNotAllowed()",
-      "event BridgingFinalized(address indexed nativeToken, address indexed bridgedToken, uint256 indexed amount, address recipient)",
-      "event BridgingFinalizedV2(address indexed nativeToken, address indexed bridgedToken, uint256 amount, address indexed recipient)",
-      "event BridgingInitiated(address indexed sender, address recipient, address indexed token, uint256 indexed amount)",
-      "event BridgingInitiatedV2(address indexed sender, address indexed recipient, address indexed token, uint256 amount)",
-      "event CustomContractSet(address indexed nativeToken, address indexed customContract, address indexed setBy)",
-      "event DeploymentConfirmed(address[] tokens, address indexed confirmedBy)",
-      "event Initialized(uint8 version)",
-      "event MessageServiceUpdated(address indexed newMessageService, address indexed oldMessageService, address indexed setBy)",
-      "event NewToken(address indexed token)",
-      "event NewTokenDeployed(address indexed bridgedToken, address indexed nativeToken)",
-      "event PauseTypeRoleSet(uint8 indexed pauseType, bytes32 indexed role)",
-      "event Paused(address messageSender, uint8 indexed pauseType)",
-      "event RemoteSenderSet(address indexed remoteSender, address indexed setter)",
-      "event RemoteTokenBridgeSet(address indexed remoteTokenBridge, address indexed setBy)",
-      "event ReservationRemoved(address indexed token)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event TokenDeployed(address indexed token)",
-      "event TokenReserved(address indexed token)",
-      "event UnPauseTypeRoleSet(uint8 indexed unPauseType, bytes32 indexed role)",
-      "event UnPaused(address messageSender, uint8 indexed pauseType)",
-      "function CONTRACT_VERSION() view returns (string)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function PAUSE_ALL_ROLE() view returns (bytes32)",
-      "function PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function PAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function REMOVE_RESERVED_TOKEN_ROLE() view returns (bytes32)",
-      "function SET_CUSTOM_CONTRACT_ROLE() view returns (bytes32)",
-      "function SET_MESSAGE_SERVICE_ROLE() view returns (bytes32)",
-      "function SET_REMOTE_TOKENBRIDGE_ROLE() view returns (bytes32)",
-      "function SET_RESERVED_TOKEN_ROLE() view returns (bytes32)",
-      "function UNPAUSE_ALL_ROLE() view returns (bytes32)",
-      "function UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE() view returns (bytes32)",
-      "function bridgeToken(address _token, uint256 _amount, address _recipient) payable",
-      "function bridgeTokenWithPermit(address _token, uint256 _amount, address _recipient, bytes _permitData) payable",
-      "function bridgedToNativeToken(address bridged) view returns (address native)",
-      "function completeBridging(address _nativeToken, uint256 _amount, address _recipient, uint256 _chainId, bytes _tokenMetadata)",
-      "function confirmDeployment(address[] _tokens) payable",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(tuple(address defaultAdmin, address messageService, address tokenBeacon, uint256 sourceChainId, uint256 targetChainId, address[] reservedTokens, tuple(address addressWithRole, bytes32 role)[] roleAddresses, tuple(uint8 pauseType, bytes32 role)[] pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] unpauseTypeRoles) _initializationData)",
-      "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
-      "function messageService() view returns (address)",
-      "function nativeToBridgedToken(uint256 chainId, address native) view returns (address bridged)",
-      "function pauseByType(uint8 _pauseType)",
-      "function pauseTypeStatuses(bytes32 pauseType) view returns (bool pauseStatus)",
-      "function reinitializePauseTypesAndPermissions(address _defaultAdmin, tuple(address addressWithRole, bytes32 role)[] _roleAddresses, tuple(uint8 pauseType, bytes32 role)[] _pauseTypeRoles, tuple(uint8 pauseType, bytes32 role)[] _unpauseTypeRoles)",
-      "function remoteSender() view returns (address)",
-      "function removeReserved(address _token)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setCustomContract(address _nativeToken, address _targetContract)",
-      "function setDeployed(address[] _nativeTokens)",
-      "function setMessageService(address _messageService)",
-      "function setRemoteTokenBridge(address _remoteTokenBridge)",
-      "function setReserved(address _token)",
-      "function sourceChainId() view returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function targetChainId() view returns (uint256)",
-      "function tokenBeacon() view returns (address)",
-      "function unPauseByType(uint8 _pauseType)"
-    ],
     "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF": [
       "constructor()",
       "error OnlyBridge(address bridgeAddress)",
@@ -3802,16 +4042,15 @@
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/L1TokenBridge": "0xef38a739bf90c693c298d238745c360992548cf941cdee82ed7c4a5ba41df4ae",
+    "linea/L1TokenBridge_v1_1": "0x20d3d6a56767ec58f82df2df933b95c3432f7171ad7624291d8860ab020a0719",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService": "0xedda44cd37e50cfac16b991bfd1291c10ed903063625cc7621f278451b5997af",
+    "linea/L2MessageService_v1_0": "0xaa6a49f15c42e763f232df26b0c23e0aede0af912ff884a6b4bb094a27e30601",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
-    "linea/L2TokenBridge": "0xde60fe36104dfc27d1da95bf2e74c70fc2b30fa7cb17e179ebcfce8c4a701e3b",
-    "linea/LineaRollup_NativeYield": "0x43ca4c9b4c70a37b08d2cc88342dd2959bdc3d397dcd20d780d02705d5e4f1b5",
+    "linea/LineaRollup_NativeYield_v7_1": "0x32ac09897450f6f3aa651ca8d4421a08adb045c30651edcdbd6dbf04f4732452",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
   },
-  "usedBlockNumbers": { "ethereum": 24733995, "linea": 29900162 },
-  "permissionsConfigHash": "0x979fec1ddeb83aa5af45026bb99b5d5a9ff4340fb387f9717e47f716e3d8baad"
+  "usedBlockNumbers": { "ethereum": 24784001, "linea": 30004738 },
+  "permissionsConfigHash": "0xa4613689df43accb1a3b7d1499e799cf965e490f84cabeec9f850b4dea38f3e1"
 }

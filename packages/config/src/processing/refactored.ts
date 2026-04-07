@@ -37,6 +37,7 @@ import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
+import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
 import { relay } from '../projects/relay/relay'
@@ -93,6 +94,7 @@ export const refactored: BaseProject[] = [
   gnosis,
   gateway,
   avalanche,
+  monad,
   tempo,
   // interop protocols
   debridgeDln,

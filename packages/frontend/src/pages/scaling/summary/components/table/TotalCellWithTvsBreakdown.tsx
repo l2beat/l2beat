@@ -115,7 +115,7 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
           </SyncStatusWrapper>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent fitContent className="flex flex-col gap-2">
+      <TooltipContent className="flex flex-col gap-2">
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}

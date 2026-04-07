@@ -63,6 +63,7 @@ function createLogger(env: Env): Logger {
       node: env.string('ES_NODE'),
       apiKey: env.string('ES_API_KEY'),
       indexPrefix: env.string('ES_INDEX_PREFIX'),
+      bufferLimit: env.optionalInteger('ES_BUFFER_LIMIT'),
       flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 

@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -58,34 +59,39 @@ export function AllProtocolsDialog({
           )}
         </button>
       </DialogTrigger>
-      <DialogContent className="max-h-[320px] gap-0 overflow-y-auto bg-surface-primary p-0 max-md:border-none md:top-1/4 md:max-w-lg">
-        <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary p-4">
-          <DialogTitle>List of protocols</DialogTitle>
-        </DialogHeader>
-        <div className="px-2 pb-2">
-          {protocols.length === 0 ? (
-            <p className="px-2 py-3 text-center text-sm">No protocols found.</p>
-          ) : (
-            <ul className="space-y-0.5">
-              {protocols.map((protocol) => (
-                <li
-                  key={protocol.name}
-                  className="flex items-center gap-3 rounded-sm px-2 py-3"
-                >
-                  <img
-                    src={protocol.iconUrl}
-                    alt={protocol.name}
-                    width={20}
-                    height={20}
-                    className="size-5"
-                  />
-                  <span className="font-bold text-label-value-15">
-                    {protocol.name}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
+      <DialogContent className="gap-0 bg-surface-primary p-0 max-md:border-none md:top-1/4 md:max-w-lg">
+        <DialogClose />
+        <div className="max-h-[320px] overflow-y-auto">
+          <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary p-4">
+            <DialogTitle>List of protocols</DialogTitle>
+          </DialogHeader>
+          <div className="px-2 pb-2">
+            {protocols.length === 0 ? (
+              <p className="px-2 py-3 text-center text-sm">
+                No protocols found.
+              </p>
+            ) : (
+              <ul className="space-y-0.5">
+                {protocols.map((protocol) => (
+                  <li
+                    key={protocol.name}
+                    className="flex items-center gap-3 rounded-sm px-2 py-3"
+                  >
+                    <img
+                      src={protocol.iconUrl}
+                      alt={protocol.name}
+                      width={20}
+                      height={20}
+                      className="size-5"
+                    />
+                    <span className="font-bold text-label-value-15">
+                      {protocol.name}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
