@@ -50,8 +50,14 @@ export function SuspiciousTransfersPage() {
     ),
   )
 
-  const totalSrcValue = rows.reduce((sum, row) => sum + (row.srcValueUsd ?? 0), 0)
-  const totalDstValue = rows.reduce((sum, row) => sum + (row.dstValueUsd ?? 0), 0)
+  const totalSrcValue = rows.reduce(
+    (sum, row) => sum + (row.srcValueUsd ?? 0),
+    0,
+  )
+  const totalDstValue = rows.reduce(
+    (sum, row) => sum + (row.dstValueUsd ?? 0),
+    0,
+  )
 
   const refetchAll = async () => {
     await Promise.all([refetchSuspiciousTransfers(), refetchChains()])
@@ -73,9 +79,7 @@ export function SuspiciousTransfersPage() {
               variant="outline"
               size="sm"
               onClick={() => void refetchAll()}
-              disabled={
-                isSuspiciousTransfersFetching || isChainsFetching
-              }
+              disabled={isSuspiciousTransfersFetching || isChainsFetching}
             >
               <RefreshCwIcon
                 className={

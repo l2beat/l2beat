@@ -150,9 +150,7 @@ export function createSuspiciousTransfersColumns(options: {
         const isOverThreshold = value > options.valueDiffThresholdPercent
 
         return (
-          <span
-            className={isOverThreshold ? 'font-semibold text-red-700' : ''}
-          >
+          <span className={isOverThreshold ? 'font-semibold text-red-700' : ''}>
             {value.toFixed(2)}%
           </span>
         )
@@ -254,6 +252,9 @@ function getTokenUiHref(chain: string, address: string | undefined) {
   return `https://tokens.l2beat.com/tokens/${chain}/${normalizedAddress}`
 }
 
-function getTokenLabel(symbol: string | undefined, address: string | undefined) {
+function getTokenLabel(
+  symbol: string | undefined,
+  address: string | undefined,
+) {
   return symbol ?? getTokenAddressDisplay(address)
 }
