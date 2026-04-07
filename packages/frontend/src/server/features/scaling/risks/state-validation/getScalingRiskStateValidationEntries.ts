@@ -11,7 +11,6 @@ import {
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
-import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import {
   getProjectsChangeReport,
   type ProjectChanges,
@@ -44,12 +43,17 @@ export async function getScalingRiskStateValidationEntries() {
       getContractUtils(),
     ])
 
+  const reviewedProjects = projects.filter(
+    (p) => p.statuses.reviewStatus !== 'initialReview',
+  )
+
+  const [withProofSystem, noProofsProjects] = partition(
+    reviewedProjects,
+    (p) => !!p.scalingInfo.proofSystem,
+  )
+
   const [validityProjects, optimisticProjects] = partition(
-    projects.filter(
-      (p) =>
-        p.scalingInfo.proofSystem &&
-        p.statuses.reviewStatus !== 'initialReview',
-    ),
+    withProofSystem,
     (p) => p.scalingInfo.proofSystem?.type === 'Validity',
   )
 
@@ -68,10 +72,17 @@ export async function getScalingRiskStateValidationEntries() {
       zkCatalogProjects,
     ),
   )
+  const noProofsEntries = noProofsProjects.map((project) =>
+    getScalingRiskStateValidationNoProofsEntry(
+      project,
+      projectsChangeReport.getChanges(project.id),
+    ),
+  )
 
   return {
-    validity: groupByScalingTabs(validityEntries),
-    optimistic: groupByScalingTabs(optimisticEntries),
+    validity: validityEntries,
+    optimistic: optimisticEntries,
+    noProofs: noProofsEntries,
   }
 }
 
@@ -170,6 +181,18 @@ function getScalingRiskStateValidationOptimisticEntry(
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
   }
+}
+
+export type ScalingRiskStateValidationNoProofsEntry = CommonScalingEntry
+
+function getScalingRiskStateValidationNoProofsEntry(
+  project: Project<
+    'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
+    'contracts'
+  >,
+  changes: ProjectChanges,
+): ScalingRiskStateValidationNoProofsEntry {
+  return getCommonScalingEntry({ project, changes })
 }
 
 function getTrustedSetupsByProofSystem(

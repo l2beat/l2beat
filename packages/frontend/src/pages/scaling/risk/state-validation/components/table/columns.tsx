@@ -6,6 +6,7 @@ import { getScalingCommonProjectColumns } from '~/components/table/common-projec
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
 import type {
+  ScalingRiskStateValidationNoProofsEntry,
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
@@ -176,4 +177,14 @@ export const scalingRiskStateValidationOptimisticColumns = [
       />
     ),
   }),
+]
+
+const noProofsColumnHelper =
+  createColumnHelper<ScalingRiskStateValidationNoProofsEntry>()
+
+export const scalingRiskStateValidationNoProofsColumns = [
+  ...getScalingCommonProjectColumns(
+    noProofsColumnHelper,
+    (row) => `/scaling/projects/${row.slug}#state-validation`,
+  ),
 ]
