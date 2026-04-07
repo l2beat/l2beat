@@ -1,22 +1,18 @@
-import type {
-  Project,
-  ProjectScalingProofSystem,
-  TrustedSetup,
-  ZkCatalogTag,
-} from '@l2beat/config'
-import {
-  assert,
-  ChainSpecificAddress,
-  type ProjectId,
-} from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
+import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import {
   getProjectsChangeReport,
   type ProjectChanges,
 } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { TrustedSetupVerifierData } from '~/server/features/zk-catalog/getZkCatalogEntries'
-import { getVerifiersWithAttesters } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import {
+  get7dTvsBreakdown,
+  type SevenDayTvsBreakdown,
+} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import {
+  getTrustedSetupsWithVerifiersAndAttesters,
+  type TrustedSetupsByProofSystem,
+} from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
 import {
   type ContractUtils,
@@ -28,20 +24,30 @@ import {
 } from '../../getCommonScalingEntry'
 
 export async function getScalingRiskStateValidationEntries() {
-  const [projectsChangeReport, projects, zkCatalogProjects, contractUtils] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      ps.getProjects({
-        select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-        optional: ['contracts'],
-        where: ['isScaling'],
-        whereNot: ['isUpcoming', 'archivedAt'],
-      }),
-      ps.getProjects({
-        select: ['zkCatalogInfo'],
-      }),
-      getContractUtils(),
-    ])
+  const [
+    projectsChangeReport,
+    projects,
+    zkCatalogProjects,
+    allProjects,
+    contractUtils,
+    tvs,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    ps.getProjects({
+      select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+      optional: ['contracts'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
+    ps.getProjects({
+      optional: ['daBridge', 'isScaling', 'isDaLayer'],
+    }),
+    getContractUtils(),
+    get7dTvsBreakdown({ type: 'all' }),
+  ])
 
   const reviewedProjects = projects.filter(
     (p) => p.statuses.reviewStatus !== 'initialReview',
@@ -63,6 +69,8 @@ export async function getScalingRiskStateValidationEntries() {
       projectsChangeReport.getChanges(project.id),
       zkCatalogProjects,
       contractUtils,
+      tvs,
+      allProjects,
     ),
   )
   const optimisticEntries = optimisticProjects.map((project) =>
@@ -90,19 +98,7 @@ export interface ScalingRiskStateValidationValidityEntry
   extends CommonScalingEntry {
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetupsByProofSystem?: Record<
-    string,
-    {
-      trustedSetups: (TrustedSetup & {
-        proofSystem: ZkCatalogTag
-      })[]
-      verifiers: {
-        successful?: TrustedSetupVerifierData
-        unsuccessful?: TrustedSetupVerifierData
-        notVerified?: TrustedSetupVerifierData
-      }
-    }
-  >
+  trustedSetupsByProofSystem: TrustedSetupsByProofSystem
   executionDelay: number | undefined
 }
 
@@ -114,6 +110,8 @@ function getScalingRiskStateValidationValidityEntry(
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
+  tvs: SevenDayTvsBreakdown,
+  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
@@ -127,10 +125,12 @@ function getScalingRiskStateValidationValidityEntry(
     (tag) => tag.type === 'ISA',
   )
 
-  const trustedSetupsByProofSystem = getTrustedSetupsByProofSystem(
+  const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
     zkCatalogProject,
-    project.id,
     contractUtils,
+    tvs,
+    allProjects,
+    { id: project.id, contracts: project.contracts },
   )
 
   return {
@@ -193,66 +193,4 @@ function getScalingRiskStateValidationNoProofsEntry(
   changes: ProjectChanges,
 ): ScalingRiskStateValidationNoProofsEntry {
   return getCommonScalingEntry({ project, changes })
-}
-
-function getTrustedSetupsByProofSystem(
-  project: Project<'zkCatalogInfo'>,
-  projectId: ProjectId,
-  contractUtils: ContractUtils,
-): ScalingRiskStateValidationValidityEntry['trustedSetupsByProofSystem'] {
-  const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
-    v.knownDeployments.some((d) =>
-      contractUtils
-        .getUsedIn(
-          projectId,
-          ChainSpecificAddress.longChain(d.address),
-          ChainSpecificAddress.address(d.address),
-        )
-        .some((u) => u.id === projectId),
-    ),
-  )
-
-  const relevantProofSystemIds = new Set(
-    relevantVerifiers.map((v) => `${v.proofSystem.type}-${v.proofSystem.id}`),
-  )
-
-  const grouped = groupBy(
-    project.zkCatalogInfo.trustedSetups.filter((ts) =>
-      relevantProofSystemIds.has(`${ts.proofSystem.type}-${ts.proofSystem.id}`),
-    ),
-    (ts) => `${ts.proofSystem.type}-${ts.proofSystem.id}`,
-  )
-
-  return Object.fromEntries(
-    Object.entries(grouped).map(([key, trustedSetups]) => {
-      const trustedSetupVerifiers = relevantVerifiers.filter(
-        (v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`,
-      )
-
-      const groupedByStatus = groupBy(
-        trustedSetupVerifiers,
-        (v) => v.verificationStatus,
-      )
-      return [
-        key,
-        {
-          trustedSetups,
-          verifiers: {
-            successful: getVerifiersWithAttesters(
-              groupedByStatus,
-              'successful',
-            ),
-            unsuccessful: getVerifiersWithAttesters(
-              groupedByStatus,
-              'unsuccessful',
-            ),
-            notVerified: getVerifiersWithAttesters(
-              groupedByStatus,
-              'notVerified',
-            ),
-          },
-        },
-      ]
-    }),
-  )
 }
