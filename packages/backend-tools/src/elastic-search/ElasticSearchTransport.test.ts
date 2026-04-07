@@ -97,7 +97,6 @@ describe(ElasticSearchTransport.name, () => {
       }),
     )
 
-    await flushOverflowAlertMicrotasks()
     await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
@@ -137,7 +136,6 @@ describe(ElasticSearchTransport.name, () => {
       )
     }
 
-    await flushOverflowAlertMicrotasks()
     await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
@@ -275,13 +273,6 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
   })
 })
-
-/** Drains microtasks so an eager `reportBufferOverflow` completes before the flush timer. */
-async function flushOverflowAlertMicrotasks() {
-  for (let i = 0; i < 10; i++) {
-    await Promise.resolve()
-  }
-}
 
 function createClientMock(
   indexExist = true,
