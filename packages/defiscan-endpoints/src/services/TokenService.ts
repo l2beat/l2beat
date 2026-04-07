@@ -41,6 +41,7 @@ export class TokenService {
       symbol: debankToken.symbol,
       decimals: debankToken.decimals,
       price: debankToken.price,
+      total_supply: debankToken.total_supply,
     }
 
     this.cache.set(cacheKey, response)

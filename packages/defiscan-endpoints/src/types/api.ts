@@ -27,6 +27,7 @@ export interface TokenInfoResponse {
   symbol: string
   decimals: number
   price: number
+  total_supply?: number
 }
 
 export interface AggregateBreakdownEntry {

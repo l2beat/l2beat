@@ -27,6 +27,7 @@ export interface TokenInfo {
   symbol: string
   decimals: number
   price: number
+  total_supply?: number
 }
 
 export async function fetchTokenInfo(
@@ -188,7 +189,6 @@ interface FetchOptions {
   isToken?: boolean
   fetchAggregate?: boolean
   aggregateHandler?: string
-  discoveredData?: any
   forceRefresh?: boolean
 }
 
@@ -350,40 +350,15 @@ export async function fetchFundsForContract(
     if (options.isToken) {
       const tokenData = await fetchTokenInfo('eth', cleanAddress)
 
-      // Look up totalSupply and decimals from discovered.json
-      let totalSupply: string | undefined
-      let decimals: number | undefined
-
-      // discovered.json entries is a flat array of contracts with values
-      if (options.discoveredData?.entries) {
-        const contract = options.discoveredData.entries.find(
-          (c: any) => c.address && addressesEqual(c.address, contractAddress),
-        )
-        if (contract?.values) {
-          if (contract.values.totalSupply != null)
-            totalSupply = String(contract.values.totalSupply)
-          if (contract.values.decimals != null)
-            decimals = Number(contract.values.decimals)
-        }
-      }
-
-      let tokenValue = 0
-      if (totalSupply !== undefined && decimals !== undefined) {
-        // Safe BigInt computation for large totalSupply values
-        const raw = BigInt(totalSupply)
-        const divisor = BigInt(10) ** BigInt(decimals)
-        // Convert to float: integer part + fractional remainder
-        const integerPart = Number(raw / divisor)
-        const remainder = Number(raw % divisor) / Number(divisor)
-        tokenValue = (integerPart + remainder) * tokenData.price
-      }
+      const totalSupply = tokenData.total_supply ?? 0
+      const tokenValue = totalSupply * tokenData.price
 
       result.tokenInfo = {
         symbol: tokenData.symbol,
         name: tokenData.name,
         decimals: tokenData.decimals,
         price: tokenData.price,
-        totalSupply: totalSupply ?? '0',
+        totalSupply: String(totalSupply),
         tokenValue,
         timestamp: new Date().toISOString(),
         source: 'debank',
@@ -471,24 +446,6 @@ export async function fetchAllFundsForProject(
     `Found ${contractsToFetch.length} contracts to fetch funds for${forceRefresh ? ' (force refresh)' : ''}`,
   )
 
-  // Load discovered data once for token totalSupply lookups
-  const hasTokenContracts = contractsToFetch.some((c) => c.isToken)
-  let discoveredData: any = undefined
-  if (hasTokenContracts) {
-    const discoveredPath = path.join(
-      paths.discovery,
-      project,
-      'discovered.json',
-    )
-    if (fs.existsSync(discoveredPath)) {
-      try {
-        discoveredData = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
-      } catch (error) {
-        console.error('Error loading discovered.json for token data:', error)
-      }
-    }
-  }
-
   const contracts = { ...existingData.contracts }
   let fetchedFromApi = 0
   let returnedFromCache = 0
@@ -506,7 +463,6 @@ export async function fetchAllFundsForProject(
       isToken: contract.isToken,
       fetchAggregate: contract.fetchAggregate,
       aggregateHandler: contract.aggregateHandler,
-      discoveredData,
       forceRefresh,
     })
 
@@ -626,23 +582,6 @@ export async function fetchFundsForSingleContract(
     return getFundsData(paths, project)
   }
 
-  // Load discovered data for token totalSupply lookups
-  let discoveredData: any = undefined
-  if (tag.isToken) {
-    const discoveredPath = path.join(
-      paths.discovery,
-      project,
-      'discovered.json',
-    )
-    if (fs.existsSync(discoveredPath)) {
-      try {
-        discoveredData = JSON.parse(fs.readFileSync(discoveredPath, 'utf8'))
-      } catch (error) {
-        console.error('Error loading discovered.json for token data:', error)
-      }
-    }
-  }
-
   onProgress?.(
     `Requesting ${contractAddress}${tag.isToken ? ' (token)' : ''}${tag.fetchAggregate ? ' (aggregate)' : ''}${forceRefresh ? ' (force refresh)' : ''}...`,
   )
@@ -653,7 +592,6 @@ export async function fetchFundsForSingleContract(
     isToken: tag.isToken,
     fetchAggregate: tag.fetchAggregate,
     aggregateHandler: tag.aggregateHandler,
-    discoveredData,
     forceRefresh,
   })
 

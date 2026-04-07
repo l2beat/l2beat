@@ -62,6 +62,7 @@ export const DebankTokenInfoResponse = v.object({
   symbol: v.string(),
   decimals: v.number(),
   price: v.number(),
+  total_supply: v.number().optional(),
 })
 
 // Type exports
