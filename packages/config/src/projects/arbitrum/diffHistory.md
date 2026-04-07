@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe5d506b7fa0a0166a8ab57f72dca7366a6144f2e
+Generated with discovered.json: 0x848ec98d9ba39952cb92adbfc49ec7eebcc336d0
 
-# Diff at Wed, 01 Apr 2026 07:37:58 GMT:
+# Diff at Tue, 07 Apr 2026 11:36:25 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774387655
-- current timestamp: 1775028964
+- current timestamp: 1775561714
 
 ## Description
 
@@ -70,8 +70,6 @@ L2ArbitrumToken: [diff](https://disco.l2beat.com/diff/arb1:0xC4ed0A9Ea70d5bCC69f
       values.$upgradeCount:
 -        1
 +        2
-      values.getTotalDelegation:
-+        "5467804287667329195821414720"
       implementationNames.arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882:
 -        "L2ArbitrumToken"
       implementationNames.arb1:0xd47D14a315394ddf063174f2286Ab4Eb7C507fa0:
