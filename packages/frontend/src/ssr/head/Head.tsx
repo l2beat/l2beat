@@ -35,7 +35,8 @@ export function Head({ manifest, metadata }: HeadProps) {
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
       <link rel="canonical" href={metadata.openGraph.url} />
-      {metadata.excludeFromSearchEngines && (
+      {(metadata.excludeFromSearchEngines ||
+        env.DEPLOYMENT_ENV !== 'production') && (
         <meta name="robots" content="noindex" />
       )}
 
