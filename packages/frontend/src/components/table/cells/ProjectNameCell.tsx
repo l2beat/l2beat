@@ -24,7 +24,6 @@ import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
-import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 const tooltipSectionVariants = cva('rounded-lg px-3 py-2', {
@@ -51,6 +50,32 @@ interface ProjectCellProps {
   ignoreUnderReviewIcon?: boolean
 }
 
+function redWarningDetailHref(project: ProjectCellProject): string | undefined {
+  const anchor = project.statuses?.redWarning?.detailAnchor
+  return anchor ? `/scaling/projects/${project.slug}#${anchor}` : undefined
+}
+
+function MobileProjectIconTooltip({
+  icon,
+  children,
+  contentClassName,
+}: {
+  icon: React.ReactNode
+  children: React.ReactNode
+  contentClassName?: string
+}) {
+  return (
+    <Tooltip disableHoverableContent={false}>
+      <TooltipTrigger>{icon}</TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent sideOffset={16} className={contentClassName}>
+          {children}
+        </TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
+  )
+}
+
 export function ProjectNameCell({
   project,
   className,
@@ -58,6 +83,7 @@ export function ProjectNameCell({
   ignoreUnderReviewIcon,
 }: ProjectCellProps) {
   const projectName = project.shortName ?? project.name
+  const redWarningHref = redWarningDetailHref(project)
 
   return (
     <div className={className}>
@@ -93,90 +119,104 @@ export function ProjectNameCell({
           )}
         >
           {project.isLayer3 && (
-            <Tooltip>
-              <TooltipTrigger>
-                <Layer3Icon className="size-4" />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
-                {project.nameSecondLine}
-              </TooltipContent>
-            </Tooltip>
+            <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
+              {project.nameSecondLine}
+            </MobileProjectIconTooltip>
           )}
           {project.ecosystemInfo?.isPartOfSuperchain && (
-            <Tooltip>
-              <TooltipTrigger>
-                <SuperchainIcon />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
-                The project is officially part of the Superchain - it
-                contributes revenue to the Optimism Collective and uses the
-                SuperchainConfig to manage chain configuration values.
-              </TooltipContent>
-            </Tooltip>
+            <MobileProjectIconTooltip icon={<SuperchainIcon />}>
+              The project is officially part of the Superchain - it contributes
+              revenue to the Optimism Collective and uses the SuperchainConfig
+              to manage chain configuration values.
+            </MobileProjectIconTooltip>
           )}
           {project.statuses?.verificationWarnings &&
             Object.values(project.statuses.verificationWarnings).some(
               (value) => value !== undefined,
             ) && (
-              <Tooltip>
-                <TooltipTrigger>
-                  <UnverifiedIcon className="size-4 fill-red-300" />
-                </TooltipTrigger>
-                <TooltipContent sideOffset={16}>
-                  {project.statuses.verificationWarnings.contracts && (
+              <MobileProjectIconTooltip
+                icon={<UnverifiedIcon className="size-4 fill-red-300" />}
+                contentClassName="flex flex-col gap-2"
+              >
+                {project.statuses.verificationWarnings.contracts && (
+                  <>
                     <p>{project.statuses.verificationWarnings.contracts}</p>
-                  )}
-                  {project.statuses.verificationWarnings.programHashes && (
+                    <CustomLink
+                      href={`/scaling/projects/${project.slug}#contracts`}
+                      className="inline-block text-label-value-13"
+                    >
+                      View details
+                    </CustomLink>
+                  </>
+                )}
+                {project.statuses.verificationWarnings.programHashes && (
+                  <>
                     <p>{project.statuses.verificationWarnings.programHashes}</p>
-                  )}
-                </TooltipContent>
-              </Tooltip>
+                    <CustomLink
+                      href={`/scaling/projects/${project.slug}#program-hashes`}
+                      className="inline-block text-label-value-13"
+                    >
+                      View details
+                    </CustomLink>
+                  </>
+                )}
+              </MobileProjectIconTooltip>
             )}
           {project.statuses?.redWarning && (
-            <Tooltip>
-              <TooltipTrigger>
-                <ShieldIcon className="size-4 fill-red-300" />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
+            <MobileProjectIconTooltip
+              icon={<ShieldIcon className="size-4 fill-red-300" />}
+              contentClassName="flex flex-col gap-2"
+            >
+              <Markdown inline ignoreGlossary>
                 {project.statuses.redWarning.text}
-              </TooltipContent>
-            </Tooltip>
+              </Markdown>
+              {redWarningHref && (
+                <CustomLink
+                  href={redWarningHref}
+                  className="inline-block text-label-value-13"
+                >
+                  View details
+                </CustomLink>
+              )}
+            </MobileProjectIconTooltip>
           )}
           {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-            <Tooltip>
-              <TooltipTrigger>
-                <UnderReviewIcon className="size-4" />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
-                {getUnderReviewText(project.statuses.underReview)}
-              </TooltipContent>
-            </Tooltip>
+            <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+              {getUnderReviewText(project.statuses.underReview)}
+            </MobileProjectIconTooltip>
           )}
           {project.statuses?.yellowWarning && (
-            <Tooltip>
-              <TooltipTrigger>
+            <MobileProjectIconTooltip
+              icon={
                 <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
-                <Markdown inline ignoreGlossary>
-                  {project.statuses.yellowWarning}
-                </Markdown>
-              </TooltipContent>
-            </Tooltip>
+              }
+            >
+              <Markdown inline ignoreGlossary>
+                {project.statuses.yellowWarning}
+              </Markdown>
+            </MobileProjectIconTooltip>
           )}
           {project.statuses?.syncWarning && (
-            <NoDataIcon content={project.statuses.syncWarning} />
+            <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
+              {project.statuses.syncWarning}
+            </MobileProjectIconTooltip>
           )}
           {project.statuses?.ongoingAnomaly && (
-            <Tooltip>
-              <TooltipTrigger>
-                <LiveIndicator />
-              </TooltipTrigger>
-              <TooltipContent sideOffset={16}>
+            <MobileProjectIconTooltip
+              icon={<LiveIndicator />}
+              contentClassName="flex flex-col gap-2"
+            >
+              <p>
                 There's an ongoing anomaly. Check detailed page for more
                 information.
-              </TooltipContent>
-            </Tooltip>
+              </p>
+              <CustomLink
+                href={`/scaling/projects/${project.slug}#liveness`}
+                className="inline-block text-label-value-13"
+              >
+                View details
+              </CustomLink>
+            </MobileProjectIconTooltip>
           )}
         </div>
       </div>
@@ -328,9 +368,7 @@ function getTooltipWarningSections(project: ProjectCellProject) {
     sections.push({
       id: 'red-warning',
       text: project.statuses.redWarning.text,
-      href: project.statuses.redWarning.detailAnchor
-        ? `/scaling/projects/${project.slug}#${project.statuses.redWarning.detailAnchor}`
-        : undefined,
+      href: redWarningDetailHref(project),
       variant: 'negative',
       icon: <ShieldIcon className="size-4 fill-red-300" />,
     })
