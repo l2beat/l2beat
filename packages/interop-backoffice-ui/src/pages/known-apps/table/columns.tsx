@@ -1,19 +1,18 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { KnownAppsRow } from '../types'
 
 const columnHelper = createColumnHelper<KnownAppsRow>()
 
 export const knownAppsColumns: TableOptions<KnownAppsRow>['columns'] = [
   columnHelper.accessor('plugin', {
-    header: (props) => <SortableHeader {...props} label="Plugin" />,
+    header: 'Plugin',
     meta: {
       csvHeader: 'Plugin',
     },
   }),
   columnHelper.accessor((row) => row.apps.length, {
     id: 'appCount',
-    header: (props) => <SortableHeader {...props} label="Known apps" />,
+    header: 'Known apps',
     cell: ({ getValue }) => getValue(),
     meta: {
       csvHeader: 'Known apps',
@@ -22,7 +21,7 @@ export const knownAppsColumns: TableOptions<KnownAppsRow>['columns'] = [
   }),
   columnHelper.accessor((row) => row.apps.join(', '), {
     id: 'apps',
-    header: (props) => <SortableHeader {...props} label="Apps" />,
+    header: 'Apps',
     cell: ({ getValue }) => {
       const value = getValue()
 

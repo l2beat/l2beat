@@ -1,19 +1,18 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventStatsRow } from '../types'
 
 const columnHelper = createColumnHelper<EventStatsRow>()
 
 export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('type', {
-    header: (props) => <SortableHeader {...props} label="Type" />,
+    header: 'Type',
     meta: {
       csvHeader: 'Type',
     },
   }),
   columnHelper.accessor('direction', {
-    header: (props) => <SortableHeader {...props} label="Direction" />,
+    header: 'Direction',
     cell: ({ row }) => row.original.direction ?? '-',
     meta: {
       csvHeader: 'Direction',
@@ -21,7 +20,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('count', {
-    header: (props) => <SortableHeader {...props} label="All" />,
+    header: 'All',
     cell: ({ row }) => (
       <CellLink to={`/events/all/${encodeURIComponent(row.original.type)}`}>
         {row.original.count}
@@ -32,7 +31,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('matched', {
-    header: (props) => <SortableHeader {...props} label="Matched" />,
+    header: 'Matched',
     cell: ({ row }) => (
       <CellLink to={`/events/matched/${encodeURIComponent(row.original.type)}`}>
         {row.original.matched}
@@ -43,7 +42,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('unmatched', {
-    header: (props) => <SortableHeader {...props} label="Unmatched" />,
+    header: 'Unmatched',
     cell: ({ row }) => (
       <CellLink
         to={`/events/unmatched/${encodeURIComponent(row.original.type)}`}
@@ -56,9 +55,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('oldUnmatched', {
-    header: (props) => (
-      <SortableHeader {...props} label="Unmatched (>2h ago)" />
-    ),
+    header: 'Unmatched (>2h ago)',
     cell: ({ row }) => (
       <CellLink
         to={`/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
@@ -71,7 +68,7 @@ export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('unsupported', {
-    header: (props) => <SortableHeader {...props} label="Unsupported" />,
+    header: 'Unsupported',
     cell: ({ row }) => (
       <CellLink
         to={`/events/unsupported/${encodeURIComponent(row.original.type)}`}

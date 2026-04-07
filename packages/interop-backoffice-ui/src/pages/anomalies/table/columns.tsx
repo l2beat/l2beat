@@ -1,7 +1,6 @@
 import { Address32 } from '@l2beat/shared-pure'
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import {
   formatDollars,
   formatTransferTimestamp,
@@ -19,7 +18,7 @@ export function createSuspiciousTransfersColumns(options: {
 }): TableOptions<SuspiciousTransferRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
-      header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
+      header: 'Timestamp UTC',
       cell: ({ row }) => formatTransferTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
@@ -27,13 +26,13 @@ export function createSuspiciousTransfersColumns(options: {
       },
     }),
     columnHelper.accessor('plugin', {
-      header: (props) => <SortableHeader {...props} label="Plugin" />,
+      header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
       },
     }),
     columnHelper.accessor('transferId', {
-      header: (props) => <SortableHeader {...props} label="Transfer ID" />,
+      header: 'Transfer ID',
       cell: ({ row }) => (
         <span className="font-mono text-xs">{row.original.transferId}</span>
       ),
@@ -42,34 +41,32 @@ export function createSuspiciousTransfersColumns(options: {
       },
     }),
     columnHelper.accessor('type', {
-      header: (props) => <SortableHeader {...props} label="Type" />,
+      header: 'Type',
       meta: {
         csvHeader: 'Type',
       },
     }),
     columnHelper.accessor('bridgeType', {
-      header: (props) => <SortableHeader {...props} label="Bridge type" />,
+      header: 'Bridge type',
       meta: {
         csvHeader: 'Bridge type',
       },
     }),
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="Source chain" />,
+      header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination chain" />
-      ),
+      header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
       },
     }),
     columnHelper.accessor('srcTokenAddress', {
       id: 'srcToken',
-      header: (props) => <SortableHeader {...props} label="Source token" />,
+      header: 'Source token',
       cell: ({ row }) => (
         <TokenCell
           chain={row.original.srcChain}
@@ -95,9 +92,7 @@ export function createSuspiciousTransfersColumns(options: {
     }),
     columnHelper.accessor('dstTokenAddress', {
       id: 'dstToken',
-      header: (props) => (
-        <SortableHeader {...props} label="Destination token" />
-      ),
+      header: 'Destination token',
       cell: ({ row }) => (
         <TokenCell
           chain={row.original.dstChain}
@@ -122,7 +117,7 @@ export function createSuspiciousTransfersColumns(options: {
         ),
     }),
     columnHelper.accessor('srcValueUsd', {
-      header: (props) => <SortableHeader {...props} label="Source value" />,
+      header: 'Source value',
       cell: ({ row }) => formatDollars(row.original.srcValueUsd),
       meta: {
         csvHeader: 'Source value',
@@ -132,9 +127,7 @@ export function createSuspiciousTransfersColumns(options: {
         (left.original.srcValueUsd ?? 0) - (right.original.srcValueUsd ?? 0),
     }),
     columnHelper.accessor('dstValueUsd', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination value" />
-      ),
+      header: 'Destination value',
       cell: ({ row }) => formatDollars(row.original.dstValueUsd),
       meta: {
         csvHeader: 'Destination value',
@@ -144,7 +137,7 @@ export function createSuspiciousTransfersColumns(options: {
         (left.original.dstValueUsd ?? 0) - (right.original.dstValueUsd ?? 0),
     }),
     columnHelper.accessor('valueDifferencePercent', {
-      header: (props) => <SortableHeader {...props} label="Diff %" />,
+      header: 'Diff %',
       cell: ({ row }) => {
         const value = row.original.valueDifferencePercent
         const isOverThreshold = value > options.valueDiffThresholdPercent
@@ -162,7 +155,7 @@ export function createSuspiciousTransfersColumns(options: {
       },
     }),
     columnHelper.accessor('srcTxHash', {
-      header: (props) => <SortableHeader {...props} label="Source tx" />,
+      header: 'Source tx',
       cell: ({ row }) => (
         <TxHashCell
           chain={row.original.srcChain}
@@ -177,7 +170,7 @@ export function createSuspiciousTransfersColumns(options: {
       },
     }),
     columnHelper.accessor('dstTxHash', {
-      header: (props) => <SortableHeader {...props} label="Destination tx" />,
+      header: 'Destination tx',
       cell: ({ row }) => (
         <TxHashCell
           chain={row.original.dstChain}

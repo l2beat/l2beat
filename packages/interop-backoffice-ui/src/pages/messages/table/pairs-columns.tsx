@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { MessagePairRow } from '../types'
 import { formatMessageDuration } from '../utils'
 
@@ -15,21 +14,19 @@ export function createMessagePairsColumns({
 }: CreateMessagePairsColumnsOptions): TableOptions<MessagePairRow>['columns'] {
   return [
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="Source chain" />,
+      header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination chain" />
-      ),
+      header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
       },
     }),
     columnHelper.accessor('count', {
-      header: (props) => <SortableHeader {...props} label="Count" />,
+      header: 'Count',
       cell: ({ row }) => (
         <CellLink to={getDetailsPath(row.original)}>
           {row.original.count}
@@ -40,7 +37,7 @@ export function createMessagePairsColumns({
       },
     }),
     columnHelper.accessor('avgDuration', {
-      header: (props) => <SortableHeader {...props} label="Median duration" />,
+      header: 'Median duration',
       cell: ({ row }) => formatMessageDuration(row.original.avgDuration),
       meta: {
         csvHeader: 'Median duration',

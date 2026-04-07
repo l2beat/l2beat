@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferStatsRow } from '../types'
 import {
   buildTransferDetailsPath,
@@ -12,19 +11,19 @@ const columnHelper = createColumnHelper<TransferStatsRow>()
 
 export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
   columnHelper.accessor('plugin', {
-    header: (props) => <SortableHeader {...props} label="Plugin" />,
+    header: 'Plugin',
     meta: {
       csvHeader: 'Plugin',
     },
   }),
   columnHelper.accessor('type', {
-    header: (props) => <SortableHeader {...props} label="Type" />,
+    header: 'Type',
     meta: {
       csvHeader: 'Type',
     },
   }),
   columnHelper.accessor('count', {
-    header: (props) => <SortableHeader {...props} label="Count" />,
+    header: 'Count',
     cell: ({ row }) => (
       <CellLink
         to={buildTransferDetailsPath({
@@ -40,7 +39,7 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('avgDuration', {
-    header: (props) => <SortableHeader {...props} label="Median duration" />,
+    header: 'Median duration',
     cell: ({ row }) => formatTransferDuration(row.original.avgDuration),
     meta: {
       csvHeader: 'Median duration',
@@ -49,7 +48,7 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('srcValueSum', {
-    header: (props) => <SortableHeader {...props} label="Source value" />,
+    header: 'Source value',
     cell: ({ row }) => formatDollars(row.original.srcValueSum),
     meta: {
       csvHeader: 'Source value',
@@ -57,7 +56,7 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('dstValueSum', {
-    header: (props) => <SortableHeader {...props} label="Destination value" />,
+    header: 'Destination value',
     cell: ({ row }) => formatDollars(row.original.dstValueSum),
     meta: {
       csvHeader: 'Destination value',
@@ -66,7 +65,7 @@ export const transferStatsColumns: TableOptions<TransferStatsRow>['columns'] = [
   }),
   columnHelper.accessor((row) => row.chains.length, {
     id: 'chainPairs',
-    header: (props) => <SortableHeader {...props} label="Chain pairs" />,
+    header: 'Chain pairs',
     cell: (row) => row.getValue(),
     meta: {
       csvHeader: 'Chain pairs',

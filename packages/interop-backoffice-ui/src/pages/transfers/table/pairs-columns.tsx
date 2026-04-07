@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferPairRow } from '../types'
 import { formatDollars, formatTransferDuration } from '../utils'
 
@@ -15,21 +14,19 @@ export function createTransferPairsColumns({
 }: CreateTransferPairsColumnsOptions): TableOptions<TransferPairRow>['columns'] {
   return [
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="Source chain" />,
+      header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination chain" />
-      ),
+      header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
       },
     }),
     columnHelper.accessor('count', {
-      header: (props) => <SortableHeader {...props} label="Count" />,
+      header: 'Count',
       cell: ({ row }) => (
         <CellLink to={getDetailsPath(row.original)}>
           {row.original.count}
@@ -40,7 +37,7 @@ export function createTransferPairsColumns({
       },
     }),
     columnHelper.accessor('avgDuration', {
-      header: (props) => <SortableHeader {...props} label="Median duration" />,
+      header: 'Median duration',
       cell: ({ row }) => formatTransferDuration(row.original.avgDuration),
       meta: {
         csvHeader: 'Median duration',
@@ -49,7 +46,7 @@ export function createTransferPairsColumns({
       },
     }),
     columnHelper.accessor('srcValueSum', {
-      header: (props) => <SortableHeader {...props} label="Source value" />,
+      header: 'Source value',
       cell: ({ row }) => formatDollars(row.original.srcValueSum),
       meta: {
         csvHeader: 'Source value',
@@ -57,9 +54,7 @@ export function createTransferPairsColumns({
       },
     }),
     columnHelper.accessor('dstValueSum', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination value" />
-      ),
+      header: 'Destination value',
       cell: ({ row }) => formatDollars(row.original.dstValueSum),
       meta: {
         csvHeader: 'Destination value',

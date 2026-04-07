@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { MessageDetailsRow } from '../../types'
 import {
   formatMessageDuration,
@@ -32,7 +31,7 @@ export function createMessageDetailsColumns(options: {
 }): TableOptions<MessageDetailsRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
-      header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
+      header: 'Timestamp UTC',
       cell: ({ row }) => formatMessageTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
@@ -40,7 +39,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('duration', {
-      header: (props) => <SortableHeader {...props} label="Duration" />,
+      header: 'Duration',
       cell: ({ row }) => formatMessageDuration(row.original.duration),
       meta: {
         csvHeader: 'Duration',
@@ -48,13 +47,13 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('plugin', {
-      header: (props) => <SortableHeader {...props} label="Plugin" />,
+      header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
       },
     }),
     columnHelper.accessor('app', {
-      header: (props) => <SortableHeader {...props} label="App" />,
+      header: 'App',
       cell: ({ row }) => formatMessageLabel(row.original.app),
       meta: {
         csvHeader: 'App',
@@ -62,14 +61,14 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('messageId', {
-      header: (props) => <SortableHeader {...props} label="Message ID" />,
+      header: 'Message ID',
       cell: ({ row }) => renderIdentifier(row.original.messageId),
       meta: {
         csvHeader: 'Message ID',
       },
     }),
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="Source chain" />,
+      header: 'Source chain',
       cell: ({ row }) => row.original.srcChain ?? '-',
       meta: {
         csvHeader: 'Source chain',
@@ -77,7 +76,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcTime', {
-      header: (props) => <SortableHeader {...props} label="Source time" />,
+      header: 'Source time',
       cell: ({ row }) => formatMessageTimestamp(row.original.srcTime),
       meta: {
         csvHeader: 'Source time',
@@ -85,7 +84,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcTxHash', {
-      header: (props) => <SortableHeader {...props} label="Source tx" />,
+      header: 'Source tx',
       cell: ({ row }) => {
         const hash = row.original.srcTxHash
 
@@ -117,7 +116,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcLogIndex', {
-      header: (props) => <SortableHeader {...props} label="Source log index" />,
+      header: 'Source log index',
       cell: ({ row }) => row.original.srcLogIndex ?? '-',
       meta: {
         csvHeader: 'Source log index',
@@ -125,17 +124,16 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcEventId', {
-      header: (props) => <SortableHeader {...props} label="Source event ID" />,
+      header: 'Source event ID',
       cell: ({ row }) => renderIdentifier(row.original.srcEventId),
+      enableSorting: false,
       meta: {
         csvHeader: 'Source event ID',
         getCsvValue: ({ row }) => row.original.srcEventId ?? '-',
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination chain" />
-      ),
+      header: 'Destination chain',
       cell: ({ row }) => row.original.dstChain ?? '-',
       meta: {
         csvHeader: 'Destination chain',
@@ -143,7 +141,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstTime', {
-      header: (props) => <SortableHeader {...props} label="Destination time" />,
+      header: 'Destination time',
       cell: ({ row }) => formatMessageTimestamp(row.original.dstTime),
       meta: {
         csvHeader: 'Destination time',
@@ -151,7 +149,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstTxHash', {
-      header: (props) => <SortableHeader {...props} label="Destination tx" />,
+      header: 'Destination tx',
       cell: ({ row }) => {
         const hash = row.original.dstTxHash
 
@@ -183,9 +181,7 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstLogIndex', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination log index" />
-      ),
+      header: 'Destination log index',
       cell: ({ row }) => row.original.dstLogIndex ?? '-',
       meta: {
         csvHeader: 'Destination log index',
@@ -193,10 +189,9 @@ export function createMessageDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstEventId', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination event ID" />
-      ),
+      header: 'Destination event ID',
       cell: ({ row }) => renderIdentifier(row.original.dstEventId),
+      enableSorting: false,
       meta: {
         csvHeader: 'Destination event ID',
         getCsvValue: ({ row }) => row.original.dstEventId ?? '-',

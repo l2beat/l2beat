@@ -1,19 +1,15 @@
-import type { HeaderContext, RowData } from '@tanstack/react-table'
+import { flexRender, type Header, type RowData } from '@tanstack/react-table'
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from 'lucide-react'
 import { Button } from '~/components/core/Button'
 import { cn } from '~/utils/cn'
 
-interface SortableHeaderProps<TData extends RowData, TValue>
-  extends HeaderContext<TData, TValue> {
-  label: string
-}
-
 export function SortableHeader<TData extends RowData, TValue>({
-  column,
-  label,
-}: SortableHeaderProps<TData, TValue>) {
-  const sortState = column.getIsSorted()
-  const canBeSorted = column.getCanSort()
+  header,
+}: {
+  header: Header<TData, TValue>
+}) {
+  const sortState = header.column.getIsSorted()
+  const canBeSorted = header.column.getCanSort()
 
   return (
     <Button
@@ -21,10 +17,12 @@ export function SortableHeader<TData extends RowData, TValue>({
       size="sm"
       className={cn('-ml-3', !canBeSorted && 'pointer-events-none')}
       onClick={() =>
-        canBeSorted && column.toggleSorting(column.getIsSorted() === 'asc')
+        canBeSorted && header.column.toggleSorting(sortState === 'asc')
       }
     >
-      {label}
+      {header.isPlaceholder
+        ? null
+        : flexRender(header.column.columnDef.header, header.getContext())}
       {canBeSorted && (
         <div>
           {sortState === 'asc' ? (

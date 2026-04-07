@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { MissingTokenRow } from '../types'
 import {
   getAddMissingTokenHref,
@@ -15,14 +14,14 @@ export function createMissingTokensColumns(options: {
 }): TableOptions<MissingTokenRow>['columns'] {
   return [
     columnHelper.accessor('chain', {
-      header: (props) => <SortableHeader {...props} label="Chain" />,
+      header: 'Chain',
       meta: {
         csvHeader: 'Chain',
       },
     }),
     columnHelper.accessor('tokenAddress', {
       id: 'address',
-      header: (props) => <SortableHeader {...props} label="Address" />,
+      header: 'Address',
       cell: ({ row }) => {
         const explorerHref = getMissingTokenExplorerHref({
           address: row.original.tokenAddress,
@@ -46,14 +45,14 @@ export function createMissingTokensColumns(options: {
       },
     }),
     columnHelper.accessor('count', {
-      header: (props) => <SortableHeader {...props} label="Count" />,
+      header: 'Count',
       meta: {
         csvHeader: 'Count',
       },
     }),
     columnHelper.accessor((row) => row.plugins.join(', '), {
       id: 'plugins',
-      header: (props) => <SortableHeader {...props} label="Plugins" />,
+      header: 'Plugins',
       cell: ({ row }) =>
         row.original.plugins.length > 0 ? (
           row.original.plugins.join(', ')

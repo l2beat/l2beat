@@ -22,6 +22,8 @@ export function SummaryPage() {
             </Button>
             <Button asChild variant="outline">
               <Link to="/messages">Open messages</Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link to="/known-apps">Open known apps</Link>
             </Button>
             <Button asChild variant="outline">

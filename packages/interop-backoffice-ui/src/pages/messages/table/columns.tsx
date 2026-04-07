@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { CellLink } from '~/components/table/CellLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { MessageStatsRow } from '../types'
 import {
   buildMessageDetailsPath,
@@ -12,19 +11,19 @@ const columnHelper = createColumnHelper<MessageStatsRow>()
 
 export const messageStatsColumns: TableOptions<MessageStatsRow>['columns'] = [
   columnHelper.accessor('plugin', {
-    header: (props) => <SortableHeader {...props} label="Plugin" />,
+    header: 'Plugin',
     meta: {
       csvHeader: 'Plugin',
     },
   }),
   columnHelper.accessor('type', {
-    header: (props) => <SortableHeader {...props} label="Type" />,
+    header: 'Type',
     meta: {
       csvHeader: 'Type',
     },
   }),
   columnHelper.accessor('count', {
-    header: (props) => <SortableHeader {...props} label="Count" />,
+    header: 'Count',
     cell: ({ row }) => (
       <CellLink
         to={buildMessageDetailsPath({
@@ -40,7 +39,7 @@ export const messageStatsColumns: TableOptions<MessageStatsRow>['columns'] = [
     },
   }),
   columnHelper.accessor('avgDuration', {
-    header: (props) => <SortableHeader {...props} label="Median duration" />,
+    header: 'Median duration',
     cell: ({ row }) => formatMessageDuration(row.original.avgDuration),
     meta: {
       csvHeader: 'Median duration',
@@ -51,7 +50,7 @@ export const messageStatsColumns: TableOptions<MessageStatsRow>['columns'] = [
     (row) => (row.count === 0 ? 0 : row.knownAppCount / row.count),
     {
       id: 'knownAppCoverage',
-      header: (props) => <SortableHeader {...props} label="Known app %" />,
+      header: 'Known app %',
       cell: ({ row }) =>
         formatKnownAppCoverage(row.original.count, row.original.knownAppCount),
       meta: {
@@ -66,7 +65,7 @@ export const messageStatsColumns: TableOptions<MessageStatsRow>['columns'] = [
   ),
   columnHelper.accessor((row) => row.chains.length, {
     id: 'chainPairs',
-    header: (props) => <SortableHeader {...props} label="Chain pairs" />,
+    header: 'Chain pairs',
     cell: (row) => row.getValue(),
     meta: {
       csvHeader: 'Chain pairs',
