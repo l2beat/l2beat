@@ -33,7 +33,7 @@ export function EcosystemProjectPageTables({ ecosystem }: Props) {
     <>
       <TableFilters
         entries={[...ecosystem.liveProjects, ...ecosystem.upcomingProjects]}
-        className="max-md:mt-4 max-md:px-4"
+        className="max-md:mt-4"
       />
       <DirectoryTabs
         defaultValue="live"
