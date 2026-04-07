@@ -53,7 +53,6 @@ const items = [
         title: 'Messages',
         url: '/messages',
         icon: MessageSquareIcon,
-        isUpcoming: true,
       },
       {
         title: 'Transfers',
@@ -64,13 +63,11 @@ const items = [
         title: 'Missing tokens',
         url: '/missing-tokens',
         icon: ViewIcon,
-        isUpcoming: true,
       },
       {
         title: 'Known apps',
         url: '/known-apps',
         icon: BookCheckIcon,
-        isUpcoming: true,
       },
     ],
   },
@@ -110,7 +107,6 @@ const items = [
         title: 'Suspicious transfers',
         url: '/insights/anomalies/suspicious-transfers',
         icon: HatGlassesIcon,
-        isUpcoming: true,
       },
       {
         title: 'Coverage pies',

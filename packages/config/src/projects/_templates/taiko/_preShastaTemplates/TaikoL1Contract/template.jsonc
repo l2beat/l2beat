@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "TaikoL1Contract",
   "category": "core",
   "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",

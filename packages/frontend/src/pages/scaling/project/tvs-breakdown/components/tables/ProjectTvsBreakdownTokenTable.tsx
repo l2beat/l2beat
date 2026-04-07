@@ -62,7 +62,10 @@ export function ProjectTvsBreakdownTokenTable(props: Props) {
 
   return (
     <div id="tvs-breakdown-token-table" className="space-y-4">
-      <TableFilters entries={props.entries} />
+      <TableFilters
+        entries={props.entries}
+        className="max-md:mt-4 max-md:px-4"
+      />
       <PrimaryCard>
         <BasicTable
           table={table}

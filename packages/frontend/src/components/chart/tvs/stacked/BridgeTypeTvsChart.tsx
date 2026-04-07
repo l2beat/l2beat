@@ -83,7 +83,8 @@ export function BridgeTypeTvsChart({
       }}
       project={project}
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartCommonComponents
           data={data}

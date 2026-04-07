@@ -38,8 +38,8 @@ export async function getDataAvailabilityProjectData(
             description: projectEntry.description,
           },
         }),
+        url,
         openGraph: {
-          url,
           image: `/meta-images/data-availability/projects/${params.layer}/opengraph-image.png`,
         },
       }),

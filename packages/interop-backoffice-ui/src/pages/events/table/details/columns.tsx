@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { EventDetailsRow } from '../../types'
 import { shortenHash } from '../../utils/shorten-hash'
 import { formatEventTimestamp, toCsvIsoTimestamp } from '../../utils/timestamps'
@@ -12,7 +11,7 @@ export function createEventDetailsColumns(options: {
 }): TableOptions<EventDetailsRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
-      header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
+      header: 'Timestamp UTC',
       cell: ({ row }) => formatEventTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
@@ -20,19 +19,19 @@ export function createEventDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('plugin', {
-      header: (props) => <SortableHeader {...props} label="Plugin" />,
+      header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
       },
     }),
     columnHelper.accessor('chain', {
-      header: (props) => <SortableHeader {...props} label="Chain" />,
+      header: 'Chain',
       meta: {
         csvHeader: 'Chain',
       },
     }),
     columnHelper.accessor('txHash', {
-      header: (props) => <SortableHeader {...props} label="Tx hash" />,
+      header: 'Tx hash',
       cell: ({ getValue, row }) => {
         const hash = getValue()
         const explorerUrl = options.getExplorerUrl(row.original.chain)
@@ -54,15 +53,16 @@ export function createEventDetailsColumns(options: {
       meta: {
         csvHeader: 'Tx hash',
       },
+      enableSorting: false,
     }),
     columnHelper.accessor('logIndex', {
-      header: (props) => <SortableHeader {...props} label="Log index" />,
+      header: 'Log index',
       meta: {
         csvHeader: 'Log index',
       },
     }),
     columnHelper.accessor('direction', {
-      header: (props) => <SortableHeader {...props} label="Direction" />,
+      header: 'Direction',
       cell: ({ row }) => row.original.direction ?? '-',
       meta: {
         csvHeader: 'Direction',
@@ -70,7 +70,7 @@ export function createEventDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="$srcChain" />,
+      header: '$srcChain',
       cell: ({ row }) => row.original.srcChain ?? '-',
       meta: {
         csvHeader: '$srcChain',
@@ -78,7 +78,7 @@ export function createEventDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => <SortableHeader {...props} label="$dstChain" />,
+      header: '$dstChain',
       cell: ({ row }) => row.original.dstChain ?? '-',
       meta: {
         csvHeader: '$dstChain',
@@ -86,7 +86,7 @@ export function createEventDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('args', {
-      header: (props) => <SortableHeader {...props} label="Args" />,
+      header: 'Args',
       cell: ({ row }) => (
         <code
           className="whitespace-nowrap font-mono text-muted-foreground text-xs"
@@ -98,6 +98,7 @@ export function createEventDetailsColumns(options: {
       meta: {
         csvHeader: 'Args',
       },
+      enableSorting: false,
     }),
   ]
 }

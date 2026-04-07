@@ -3,7 +3,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 
 import { InteropTransferClassifier } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
@@ -11,9 +11,14 @@ import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { renderAnomaliesPage } from './AnomaliesPage'
 import { renderAnomalyIdPage } from './AnomalyIdPage'
 import { renderAggregatesPage } from './aggregates/AggregatesPage'
+import {
+  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  VALUE_DIFF_THRESHOLD_PERCENT,
+} from './anomalies/constants'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
+import { getInteropMessageStats } from './impls/messages'
 import {
   getInteropTransferDetails,
   getInteropTransferStats,
@@ -68,7 +73,7 @@ export function createInteropRouter(
     const [events, messages, transfers, missingTokens, uniqueApps] =
       await Promise.all([
         db.interopEvent.getStats(),
-        getMessagesStats(db),
+        getInteropMessageStats(db),
         getInteropTransferStats(db),
         db.interopTransfer.getMissingTokensInfo(),
         db.interopMessage.getUniqueAppsPerPlugin(),
@@ -114,8 +119,6 @@ export function createInteropRouter(
     if (ctx.query.raw === 'true') {
       ctx.body = explored
     } else {
-      const VALUE_DIFF_THRESHOLD_PERCENT = 15
-      const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
       const suspiciousTransfers =
         await db.interopTransfer.getValueMismatchTransfers(
           VALUE_DIFF_THRESHOLD_PERCENT,
@@ -435,33 +438,4 @@ function getProcessorsStatus(processors: InteropBlockProcessor[]) {
         ]
       : [],
   )
-}
-
-async function getMessagesStats(db: Database) {
-  const stats = await db.interopMessage.getStats()
-  const detailedStats = await db.interopMessage.getDetailedStats()
-
-  return stats.map((overall) => ({
-    plugin: overall.plugin,
-    type: overall.type,
-    count: Number(overall.count),
-    avgDuration: Number(overall.avgDuration),
-    knownAppCount: Number(overall.knownAppCount),
-    chains: detailedStats
-      .filter(
-        (chain) =>
-          chain.plugin === overall.plugin && chain.type === overall.type,
-      )
-      .map((chain) => {
-        assert(chain.srcChain && chain.dstChain)
-        return {
-          plugin: chain.plugin,
-          type: chain.type,
-          srcChain: chain.srcChain,
-          dstChain: chain.dstChain,
-          count: Number(chain.count),
-          avgDuration: Number(chain.avgDuration),
-        }
-      }),
-  }))
 }

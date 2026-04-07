@@ -30,8 +30,8 @@ export async function getScalingUpcomingData(
         title: 'Upcoming Scaling Projects - L2BEAT',
         description:
           'Discover upcoming Ethereum scaling solutions before they launch.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/upcoming/opengraph-image.png',
         },
       }),

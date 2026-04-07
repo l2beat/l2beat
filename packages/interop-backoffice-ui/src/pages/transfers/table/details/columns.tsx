@@ -1,6 +1,5 @@
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import { SortableHeader } from '~/components/table/SortableHeader'
 import type { TransferDetailsRow } from '../../types'
 import {
   formatDollars,
@@ -21,7 +20,7 @@ export function createTransferDetailsColumns(options: {
 }): TableOptions<TransferDetailsRow>['columns'] {
   return [
     columnHelper.accessor('timestamp', {
-      header: (props) => <SortableHeader {...props} label="Timestamp UTC" />,
+      header: 'Timestamp UTC',
       cell: ({ row }) => formatTransferTimestamp(row.original.timestamp),
       meta: {
         csvHeader: 'Timestamp UTC',
@@ -29,19 +28,19 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('plugin', {
-      header: (props) => <SortableHeader {...props} label="Plugin" />,
+      header: 'Plugin',
       meta: {
         csvHeader: 'Plugin',
       },
     }),
     columnHelper.accessor('bridgeType', {
-      header: (props) => <SortableHeader {...props} label="Bridge type" />,
+      header: 'Bridge type',
       meta: {
         csvHeader: 'Bridge type',
       },
     }),
     columnHelper.accessor('duration', {
-      header: (props) => <SortableHeader {...props} label="Duration" />,
+      header: 'Duration',
       cell: ({ row }) => formatTransferDuration(row.original.duration),
       meta: {
         csvHeader: 'Duration',
@@ -49,13 +48,13 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcChain', {
-      header: (props) => <SortableHeader {...props} label="Source chain" />,
+      header: 'Source chain',
       meta: {
         csvHeader: 'Source chain',
       },
     }),
     columnHelper.accessor('srcTxHash', {
-      header: (props) => <SortableHeader {...props} label="Source tx" />,
+      header: 'Source tx',
       cell: ({ row }) => {
         const hash = row.original.srcTxHash
 
@@ -86,7 +85,7 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcLogIndex', {
-      header: (props) => <SortableHeader {...props} label="Source log index" />,
+      header: 'Source log index',
       cell: ({ row }) => row.original.srcLogIndex ?? '-',
       meta: {
         csvHeader: 'Source log index',
@@ -95,7 +94,7 @@ export function createTransferDetailsColumns(options: {
     }),
     columnHelper.accessor('srcTokenAddress', {
       id: 'srcToken',
-      header: (props) => <SortableHeader {...props} label="Source token" />,
+      header: 'Source token',
       cell: ({ row }) => {
         const tokenAmount = formatTokenAmount(
           row.original.srcSymbol,
@@ -134,7 +133,7 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('srcValueUsd', {
-      header: (props) => <SortableHeader {...props} label="Source value" />,
+      header: 'Source value',
       cell: ({ row }) => formatDollars(row.original.srcValueUsd),
       meta: {
         csvHeader: 'Source value',
@@ -145,7 +144,7 @@ export function createTransferDetailsColumns(options: {
     }),
     columnHelper.display({
       id: 'srcFlow',
-      header: (props) => <SortableHeader {...props} label="Source flow" />,
+      header: 'Source flow',
       cell: ({ row }) =>
         getTransferSideLabel(row.original.srcWasBurned, 'burned', 'locked'),
       sortingFn: (left, right) =>
@@ -163,15 +162,13 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstChain', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination chain" />
-      ),
+      header: 'Destination chain',
       meta: {
         csvHeader: 'Destination chain',
       },
     }),
     columnHelper.accessor('dstTxHash', {
-      header: (props) => <SortableHeader {...props} label="Destination tx" />,
+      header: 'Destination tx',
       cell: ({ row }) => {
         const hash = row.original.dstTxHash
 
@@ -202,9 +199,7 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstLogIndex', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination log index" />
-      ),
+      header: 'Destination log index',
       cell: ({ row }) => row.original.dstLogIndex ?? '-',
       meta: {
         csvHeader: 'Destination log index',
@@ -213,9 +208,7 @@ export function createTransferDetailsColumns(options: {
     }),
     columnHelper.accessor('dstTokenAddress', {
       id: 'dstToken',
-      header: (props) => (
-        <SortableHeader {...props} label="Destination token" />
-      ),
+      header: 'Destination token',
       cell: ({ row }) => {
         const tokenAmount = formatTokenAmount(
           row.original.dstSymbol,
@@ -253,9 +246,7 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('dstValueUsd', {
-      header: (props) => (
-        <SortableHeader {...props} label="Destination value" />
-      ),
+      header: 'Destination value',
       cell: ({ row }) => formatDollars(row.original.dstValueUsd),
       meta: {
         csvHeader: 'Destination value',
@@ -266,7 +257,7 @@ export function createTransferDetailsColumns(options: {
     }),
     columnHelper.display({
       id: 'dstFlow',
-      header: (props) => <SortableHeader {...props} label="Destination flow" />,
+      header: 'Destination flow',
       cell: ({ row }) =>
         getTransferSideLabel(row.original.dstWasMinted, 'minted', 'released'),
       sortingFn: (left, right) =>
@@ -288,7 +279,7 @@ export function createTransferDetailsColumns(options: {
       },
     }),
     columnHelper.accessor('transferId', {
-      header: (props) => <SortableHeader {...props} label="Transfer ID" />,
+      header: 'Transfer ID',
       enableSorting: false,
       meta: {
         csvHeader: 'Transfer ID',

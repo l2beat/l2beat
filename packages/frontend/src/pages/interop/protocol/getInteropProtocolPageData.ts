@@ -57,8 +57,8 @@ export async function getInteropProtocolPageData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: `/meta-images/interop/projects/${project.slug}/opengraph-image.png`,
         },
       }),

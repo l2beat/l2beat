@@ -38,8 +38,8 @@ export async function getScalingTvsData(
         title: 'Total Value Secured - L2BEAT',
         description:
           'Track total value secured across Ethereum scaling solutions.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/value-secured/opengraph-image.png',
         },
       }),
