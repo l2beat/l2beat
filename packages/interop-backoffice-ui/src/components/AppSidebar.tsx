@@ -70,7 +70,6 @@ const items = [
         title: 'Known apps',
         url: '/known-apps',
         icon: BookCheckIcon,
-        isUpcoming: true,
       },
     ],
   },
