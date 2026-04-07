@@ -8,14 +8,18 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
+  bufferLimit?: number
   flushInterval?: number
   indexPrefix?: string
 }
 
 export type UuidProvider = () => string
 
+const DEFAULT_BUFFER_LIMIT = 20_000
+
 export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
+  private readonly bufferLimit: number
 
   constructor(
     private readonly options: ElasticSearchTransportOptions,
@@ -25,15 +29,21 @@ export class ElasticSearchTransport implements LoggerTransport {
     private readonly uuidProvider: UuidProvider = uuidv4,
   ) {
     this.buffer = []
+    this.bufferLimit = options.bufferLimit ?? DEFAULT_BUFFER_LIMIT
     this.start()
   }
 
   log(entry: LogEntry): void {
-    this.buffer.push(formatEcsLog(entry))
+    this.push(formatEcsLog(entry))
   }
 
   push(log: string) {
     this.buffer.push(log)
+    const overflow = this.buffer.length - this.bufferLimit
+    if (overflow > 0) {
+      void this.reportBufferOverflow(overflow)
+      this.buffer.splice(0, overflow)
+    }
   }
 
   private start(): void {
@@ -114,6 +124,30 @@ export class ElasticSearchTransport implements LoggerTransport {
         )
       } catch {}
     }
+  }
+
+  private async reportBufferOverflow(droppedCount: number): Promise<void> {
+    try {
+      await this.client.bulk(
+        [
+          {
+            id: this.uuidProvider(),
+            ...JSON.parse(
+              formatEcsLog({
+                time: new Date(),
+                level: 'CRITICAL',
+                message: 'Elastic Search transport buffer overflowed',
+                parameters: {
+                  droppedCount,
+                  bufferLimit: this.bufferLimit,
+                },
+              }),
+            ),
+          },
+        ],
+        await this.createIndex(),
+      )
+    } catch {}
   }
 
   private async createIndex(): Promise<string> {

@@ -26,7 +26,7 @@ export function createScalingRouter(
   const router = express.Router()
 
   router.get('/scaling', (_req, res) => {
-    res.redirect('/scaling/summary')
+    res.redirect(301, '/scaling/summary')
   })
 
   router.get('/scaling/summary', async (req, res) => {

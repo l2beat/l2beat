@@ -72,6 +72,8 @@ export const SQUIDCORAL_NETWORKS = defineNetworks('squidcoral', [
   { chainId: '42220', chain: 'celo' },
   { chainId: '43114', chain: 'avalanche' },
   // no hyperevm, ink, unichain
+  { chainId: '43114', chain: 'avalanche' },
+  // monad, tempo unsupported
 ])
 
 export const LogOrderCreated = createInteropEventType<{

@@ -1,0 +1,12 @@
+{
+  "PreconfWhitelist": {
+    "hash": "0xf118d401839238cdc94b9476ab2149f7492c9653c489f80819102c4fe0b23fc3",
+    "address": "eth:0x44eC275996BD69361EF062ed488882a58256CF11",
+    "blockNumber": 23132480
+  },
+  "PreconfWhitelist_2908": {
+    "hash": "0x93a254bb5914a81cd902577cdafd323639e44227fdae5e14aa14fd47e1440063",
+    "address": "eth:0x54FeDc114D78dcbDb8c7b2DeA433f9749E8fd0Fc",
+    "blockNumber": 23259716
+  }
+}

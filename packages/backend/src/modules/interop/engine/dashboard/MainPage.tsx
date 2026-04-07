@@ -188,6 +188,26 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
 }
 
 function TransfersTable(props: { items: TransferStats[]; id: string }) {
+  const buildTransfersUrl = (options: {
+    plugin: string
+    type: string
+    srcChain?: string
+    dstChain?: string
+  }) => {
+    const params = new URLSearchParams({
+      plugin: options.plugin,
+    })
+
+    if (options.srcChain) {
+      params.set('srcChain', options.srcChain)
+    }
+    if (options.dstChain) {
+      params.set('dstChain', options.dstChain)
+    }
+
+    return `/interop/transfers/${options.type}?${params.toString()}`
+  }
+
   return (
     <table id={props.id} className="display">
       <thead>
@@ -234,7 +254,9 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
-                <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
+                <a href={buildTransfersUrl({ plugin: t.plugin, type: t.type })}>
+                  {t.count}
+                </a>
               </td>
               <td data-order={t.avgDuration} data-sort={t.avgDuration}>
                 {formatSeconds(t.avgDuration)}
@@ -266,7 +288,12 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
+                          href={buildTransfersUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[0].id,
+                            dstChain: n[1].id,
+                          })}
                         >
                           {forwardCount}
                         </a>
@@ -293,7 +320,12 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
+                          href={buildTransfersUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[1].id,
+                            dstChain: n[0].id,
+                          })}
                         >
                           {backwardCount}
                         </a>

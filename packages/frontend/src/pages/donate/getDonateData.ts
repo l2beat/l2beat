@@ -25,8 +25,8 @@ export async function getDonateData(
         title: 'Donate - L2BEAT',
         description:
           "Support L2BEAT's independent research & development with a donation.",
+        url,
         openGraph: {
-          url,
           image: '/meta-images/donate/opengraph-image.png',
         },
       }),

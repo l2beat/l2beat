@@ -60,6 +60,10 @@ const SERVER_CONFIG = {
     .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
+  ES_BUFFER_LIMIT: z
+    .unknown()
+    .transform((v) => Number(v))
+    .optional(),
   ES_FLUSH_INTERVAL: z
     .unknown()
     .transform((v) => Number(v))
@@ -128,6 +132,7 @@ function getRawEnv(): Record<
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
+    ES_BUFFER_LIMIT: process.env.ES_BUFFER_LIMIT,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,

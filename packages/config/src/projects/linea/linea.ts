@@ -495,7 +495,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -515,7 +515,7 @@ export const linea: ScalingProject = {
         {
           title:
             'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+          url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code',
         },
       ],
     },
@@ -533,12 +533,12 @@ export const linea: ScalingProject = {
           {
             title:
               'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F21#L92',
           },
           {
             title:
-              'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code#F29#L178',
+              'LineaRollup.sol - Etherscan source code, setLivenessRecoveryOperator() function',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F36#L41',
           },
         ],
       },
@@ -585,7 +585,7 @@ export const linea: ScalingProject = {
           {
             title:
               'LineaRollup.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
-            url: 'https://etherscan.io/address/0x04728BF704a716C26F9EF4085013b760AC885631#code#F29#L432',
+            url: 'https://etherscan.io/address/0xe68697690e8ff196a6abb3e1385156d87df85332#code#F38#L277',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',
@@ -593,7 +593,7 @@ export const linea: ScalingProject = {
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 1)',
-            url: 'https://etherscan.io/address/0x66355689a9f067eeb9dc9d899E4192676988279C',
+            url: 'https://etherscan.io/address/0x1442833180e253844897339aFb5800c797547987',
           },
         ],
       },

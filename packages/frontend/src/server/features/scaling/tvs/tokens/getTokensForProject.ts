@@ -2,7 +2,7 @@ import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined, type TokenId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
 
 export type ProjectToken = {
@@ -42,7 +42,7 @@ export async function getTokensForProject(
         source: t.source,
         category: t.category,
         value: tokenValue.valueForProject,
-        iconUrl: t.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
+        iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       }
     })
     .filter(notUndefined)
@@ -56,7 +56,7 @@ function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
   if (!project.tvsConfig) return undefined
   return project.tvsConfig.map((t) => ({
     ...t,
-    iconUrl: t.iconUrl ?? manifest.getUrl('/images/token-placeholder.png'),
+    iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
     value: 1000,
   }))
 }

@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { InteropDurationSplit } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TokenData } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
@@ -37,9 +37,7 @@ export function getTokensData({
         id: tokenId,
         symbol: tokenDetails.symbol,
         issuer: tokenDetails.issuer,
-        iconUrl:
-          tokenDetails.iconUrl ??
-          manifest.getUrl('/images/token-placeholder.png'),
+        iconUrl: tokenDetails.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
         volume: token.volume,
         transferCount: token.transferCount,
         avgDuration: avgDuration,
@@ -67,7 +65,7 @@ export function getTokensData({
       id: 'unknown',
       symbol: 'Unknown',
       issuer: null,
-      iconUrl: manifest.getUrl('/images/token-placeholder.png'),
+      iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       transferCount: unknownTransfersCount,
       avgDuration: null,
       avgValue: null,

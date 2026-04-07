@@ -57,8 +57,8 @@ export async function getScalingProjectData(
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
         description: getProjectMetadataDescription(project),
+        url,
         openGraph: {
-          url,
           image: `/meta-images/scaling/projects/${project.slug}/opengraph-image.png`,
         },
       }),

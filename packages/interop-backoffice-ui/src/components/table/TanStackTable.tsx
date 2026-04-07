@@ -31,6 +31,7 @@ import {
 } from '~/components/core/Table'
 import { cn } from '~/utils/cn'
 import { ExportTableCsvButton } from './ExportTableCsvButton'
+import { SortableHeader } from './SortableHeader'
 import type { PageSizeOption } from './useTanStackTable'
 
 interface TanStackTableProps<TData extends RowData> {
@@ -226,12 +227,7 @@ export function TanStackTable<TData extends RowData>({
                       zIndex: 30 - headerGroup.depth,
                     }}
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                    <SortableHeader header={header} />
                   </TableHead>
                 ))}
               </TableRow>

@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import { initTRPC } from '@trpc/server'
-import SuperJSON from 'superjson'
 
 export const createTRPCContext = (opts: { headers: Headers; db: Database }) => {
   const { headers, db } = opts
@@ -15,8 +14,8 @@ type Context = Awaited<ReturnType<typeof createTRPCContext>>
 
 export const trcpRoot = initTRPC.context<Context>().create({
   transformer: {
-    serialize: SuperJSON.serialize,
-    deserialize: SuperJSON.deserialize,
+    serialize: JSON.stringify,
+    deserialize: JSON.parse,
   },
   errorFormatter({ shape, error }) {
     return {

@@ -29,6 +29,7 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { ScalingTvsCharts } from './ScalingTvsCharts'
 import { ScalingTvsDataKeysProvider } from './ScalingTvsDataKeysContext'
+import { ScalingTvsStats } from './ScalingTvsStats'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -56,7 +57,7 @@ export function ScalingTvsTabs(props: Props) {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
         <TableFilters
           entries={[
             ...props.rollups,
@@ -65,9 +66,10 @@ export function ScalingTvsTabs(props: Props) {
             ...props.notReviewed,
           ]}
         />
-        <div className="max-md:mt-4 max-md:mr-4">
-          <DisplayControls display={display} setDisplay={setDisplay} />
-        </div>
+        <DisplayControls display={display} setDisplay={setDisplay} />
+      </div>
+      <div className="mt-4">
+        <ScalingTvsStats entries={entries} />
       </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

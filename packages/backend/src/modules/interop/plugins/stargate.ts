@@ -346,6 +346,7 @@ export const STARGATE_NETWORKS = defineNetworks('stargate', [
       '0x45f1A95A4D3f3836523F5c83673c797f4d4d263B',
     ),
   },
+  // tempo, monad unsupported
 ])
 
 const StargateV2CreditsSent = createInteropEventType<{

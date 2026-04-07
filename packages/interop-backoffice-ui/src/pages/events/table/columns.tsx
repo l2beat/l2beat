@@ -1,19 +1,18 @@
-import { type ColumnDef, createColumnHelper } from '@tanstack/react-table'
-import { Link } from 'react-router-dom'
-import { SortableHeader } from '~/components/table/SortableHeader'
+import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
+import { CellLink } from '~/components/table/CellLink'
 import type { EventStatsRow } from '../types'
 
 const columnHelper = createColumnHelper<EventStatsRow>()
 
-export const eventStatsColumns = [
+export const eventStatsColumns: TableOptions<EventStatsRow>['columns'] = [
   columnHelper.accessor('type', {
-    header: (props) => <SortableHeader {...props} label="Type" />,
+    header: 'Type',
     meta: {
       csvHeader: 'Type',
     },
   }),
   columnHelper.accessor('direction', {
-    header: (props) => <SortableHeader {...props} label="Direction" />,
+    header: 'Direction',
     cell: ({ row }) => row.original.direction ?? '-',
     meta: {
       csvHeader: 'Direction',
@@ -21,75 +20,64 @@ export const eventStatsColumns = [
     },
   }),
   columnHelper.accessor('count', {
-    header: (props) => <SortableHeader {...props} label="All" />,
+    header: 'All',
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
-        to={`/events/all/${encodeURIComponent(row.original.type)}`}
-      >
+      <CellLink to={`/events/all/${encodeURIComponent(row.original.type)}`}>
         {row.original.count}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'All',
     },
   }),
   columnHelper.accessor('matched', {
-    header: (props) => <SortableHeader {...props} label="Matched" />,
+    header: 'Matched',
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
-        to={`/events/matched/${encodeURIComponent(row.original.type)}`}
-      >
+      <CellLink to={`/events/matched/${encodeURIComponent(row.original.type)}`}>
         {row.original.matched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Matched',
     },
   }),
   columnHelper.accessor('unmatched', {
-    header: (props) => <SortableHeader {...props} label="Unmatched" />,
+    header: 'Unmatched',
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unmatched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unmatched',
     },
   }),
   columnHelper.accessor('oldUnmatched', {
-    header: (props) => (
-      <SortableHeader {...props} label="Unmatched (>2h ago)" />
-    ),
+    header: 'Unmatched (>2h ago)',
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/old-unmatched/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.oldUnmatched}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unmatched (>2h ago)',
     },
   }),
   columnHelper.accessor('unsupported', {
-    header: (props) => <SortableHeader {...props} label="Unsupported" />,
+    header: 'Unsupported',
     cell: ({ row }) => (
-      <Link
-        className="underline underline-offset-4 hover:text-primary"
+      <CellLink
         to={`/events/unsupported/${encodeURIComponent(row.original.type)}`}
       >
         {row.original.unsupported}
-      </Link>
+      </CellLink>
     ),
     meta: {
       csvHeader: 'Unsupported',
     },
   }),
-] as unknown as ColumnDef<EventStatsRow>[]
+]

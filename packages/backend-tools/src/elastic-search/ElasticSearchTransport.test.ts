@@ -74,6 +74,121 @@ describe(ElasticSearchTransport.name, () => {
     )
   })
 
+  it('keeps only the newest logs when buffer limit is exceeded', async () => {
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock, { bufferLimit: 2 })
+
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'first',
+      }),
+    )
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'second',
+      }),
+    )
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'third',
+      }),
+    )
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          parameters: { droppedCount: 1, bufferLimit: 2 },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      2,
+      [
+        { id, ...log, message: 'second' },
+        { id, ...log, message: 'third' },
+      ],
+      expectedIndexName,
+    )
+  })
+
+  it('uses the default buffer limit when explicit limit is not provided', async () => {
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock)
+
+    for (let i = 0; i < 20_001; i++) {
+      transportMock.push(
+        JSON.stringify({
+          ...log,
+          message: `log-${i}`,
+        }),
+      )
+    }
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+
+    expect(clientMock.bulk).toHaveBeenNthCalledWith(
+      1,
+      [
+        expect.subset({
+          id,
+          log: { level: 'CRITICAL' },
+          parameters: {
+            droppedCount: 1,
+            bufferLimit: 20_000,
+          },
+        }),
+      ],
+      expectedIndexName,
+    )
+
+    const [documents] = clientMock.bulk.calls[1]!.args
+    expect(documents).toHaveLength(20_000)
+    expect(documents[0]).toEqual({ id, ...log, message: 'log-1' })
+    expect(documents[19_999]).toEqual({ id, ...log, message: 'log-20000' })
+  })
+
+  it('does not trim logs when buffer stays within the configured limit', async () => {
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock, { bufferLimit: 3 })
+
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'first',
+      }),
+    )
+    transportMock.push(
+      JSON.stringify({
+        ...log,
+        message: 'second',
+      }),
+    )
+
+    await clock.tickAsync(flushInterval + 1)
+
+    expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
+      [
+        { id, ...log, message: 'first' },
+        { id, ...log, message: 'second' },
+      ],
+      expectedIndexName,
+    )
+  })
+
   it('runs recovery bulk with ERROR ECS log when primary bulk reports failures', async () => {
     const failedDocuments = [{ reason: 'test' }]
     const clientMock = createClientMock(false, [

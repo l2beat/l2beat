@@ -10,7 +10,8 @@
   ],
   "names": {
     "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": "L2Timelock",
-    "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239": "L2Roles"
+    "linea:0x3886a948eA7b4053312c3aE31a13776144aA6239": "L2Roles",
+    "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": "Linea Security Council"
   },
   "overrides": {
     "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
