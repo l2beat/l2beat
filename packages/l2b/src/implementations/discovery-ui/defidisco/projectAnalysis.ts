@@ -1593,15 +1593,31 @@ export class ProjectAnalysis {
       ownerType,
     )
 
-    // Transitive mitigations are NOT re-filtered: their scopedTo was already
-    // validated during BFS collection (scopedTo.address matched a contract
-    // on the call path). They apply to all callers going through that path.
-    if (!filteredDirect && !transitive) return undefined
+    // Transitive mitigations are collected by BFS where scopedTo.address
+    // matched a contract on the downstream call path. When displaying for
+    // a specific owner, keep only: global mitigations, mitigations scoped
+    // to the owner, or mitigations scoped to the function's own contract
+    // (which describe self-constraints like "flash loan" or "not called").
+    // Drop mitigations scoped to unrelated intermediate contracts — their
+    // impactCaps would be misleading for this owner relationship.
+    const filteredTransitive = transitive
+      ? (() => {
+          const normalizedOwner = normalizeChainAddress(ownerAddress)
+          const normalizedSelf = normalizeChainAddress(contractAddress)
+          const filtered = transitive.filter((m) => {
+            if (!m.scopedTo) return true
+            const scopeAddr = normalizeChainAddress(m.scopedTo.address)
+            return scopeAddr === normalizedOwner || scopeAddr === normalizedSelf
+          })
+          return filtered.length > 0 ? filtered : undefined
+        })()
+      : undefined
+    if (!filteredDirect && !filteredTransitive) return undefined
     const merged = !filteredDirect
-      ? transitive!
-      : !transitive
+      ? filteredTransitive!
+      : !filteredTransitive
         ? filteredDirect
-        : [...filteredDirect, ...transitive]
+        : [...filteredDirect, ...filteredTransitive]
 
     // Resolve impactCapUsd on mitigations that have an impactCap
     const dataAccess = new DiscoveredDataAccess(this.discovered)

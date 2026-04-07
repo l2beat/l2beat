@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T10:07:35.425Z",
+  "compiledAt": "2026-04-07T16:02:56.725Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -587,7 +587,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 0,
+    "totalFundsAtRisk": 169519102.78369424,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [

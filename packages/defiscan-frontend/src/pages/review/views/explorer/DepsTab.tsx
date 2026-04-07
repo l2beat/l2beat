@@ -160,8 +160,8 @@ export function DepsTab({ review }: DepsTabProps) {
                 Access
               </th>
               <SortHeader
-                field="fundsAtRisk"
-                label="TVL"
+                field="functions"
+                label="Used By"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -171,8 +171,8 @@ export function DepsTab({ review }: DepsTabProps) {
                 Mitigations
               </th>
               <SortHeader
-                field="functions"
-                label="Used By"
+                field="fundsAtRisk"
+                label="TVL"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -251,6 +251,19 @@ function DependencyRow({
             {dep.viewOnlyPath ? <ReadBadge /> : <WriteBadge />}
           </div>
         </td>
+        <td className="px-4 py-2.5 text-right">
+          <span className="font-medium text-text-primary">
+            {dep.functions.length}
+          </span>
+          {readFns > 0 && writeFns > 0 && (
+            <span className="text-text-muted text-xs ml-1">
+              ({readFns}R / {writeFns}W)
+            </span>
+          )}
+        </td>
+        <td className="px-4 py-2.5">
+          <MitigationsSummary functions={dep.functions} />
+        </td>
         <td className="px-4 py-2.5 text-right tabular-nums">
           {fundsAtRisk > 0 ? (
             <UsdValue
@@ -260,19 +273,6 @@ function DependencyRow({
             />
           ) : (
             <span className="text-text-muted">-</span>
-          )}
-        </td>
-        <td className="px-4 py-2.5">
-          <MitigationsSummary functions={dep.functions} />
-        </td>
-        <td className="px-4 py-2.5 text-right">
-          <span className="font-medium text-text-primary">
-            {dep.functions.length}
-          </span>
-          {readFns > 0 && writeFns > 0 && (
-            <span className="text-text-muted text-xs ml-1">
-              ({readFns}R / {writeFns}W)
-            </span>
           )}
         </td>
       </tr>

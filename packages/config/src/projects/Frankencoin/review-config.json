@@ -1,160 +1,132 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-20T15:38:57.123Z",
+  "lastModified": "2026-04-07T16:00:00.000Z",
   "protocolSlug": "Frankencoin",
   "protocolName": "Frankencoin",
   "tokenName": "ZCHF",
   "chain": "Ethereum",
-  "projectType": "stablecoin",
-  "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is {{zchfMarketCap}}, with {{currentMintingHubCollateral}} in active collateral positions.",
+  "projectType": "cdp",
+  "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding {{equityReserve}}, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token.",
   "admins": {
+    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
+      "name": "MintingHub (Current)",
+      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: {{mintingHubV2Aggregate}}."
+    },
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
       "name": "MintingHub (Legacy)",
-      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, collectProfits, coverLoss, and burnWithoutReserve directly. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve. This is the older MintingHub, no longer actively used but still registered as a minter with {{legacyMintingHubCollateral}} in remaining positions."
+      "description": "Older immutable MintingHub no longer actively used for new positions. Retains minter permissions on the Frankencoin token but most functions are marked as not called from this contract. Residual collateral in legacy positions: {{mintingHubV1Aggregate}}."
     },
     "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
       "name": "StablecoinBridge (XCHF)",
-      "description": "Immutable bridge contract enabling 1:1 conversion between XCHF (CryptoFranc) and ZCHF. Registered as an active minter but already expired (horizon passed ~2024-10-27), so no further minting is possible. Has an immutable minting limit of 10,000,000 ZCHF. The bridge holds XCHF as backing."
-    },
-    "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
-      "name": "Savings (Legacy)",
-      "description": "Immutable older Savings contract registered as an active minter. Can mint ZCHF to pay interest to depositors. Holds {{legacySavingsBalance}} in ZCHF deposits. Parameters can be changed by qualified FPS holders via proposeChange."
-    },
-    "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": {
-      "name": "PositionRoller",
-      "description": "Immutable protocol contract that enables rolling (migrating) collateral positions between MintingHub versions. Registered as an active minter, though its roll/rollFully/rollFullyWithExpiration functions have been scored as no-impact."
-    },
-    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
-      "name": "MintingHub (Current)",
-      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages {{currentMintingHubCollateral}} across 51 active positions. Functions including openPosition, clone, challenge, bid, and buyExpiredCollateral are open to anyone. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve on the Frankencoin token."
+      "description": "Immutable bridge contract that enables 1:1 minting of ZCHF by depositing XCHF (CryptoFranc) and burning ZCHF to redeem XCHF. Minting is capped at 10M ZCHF and has an expiration date. The bridge holds negligible XCHF as it is largely deprecated."
     },
     "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
       "name": "StablecoinBridge (VCHF)",
-      "description": "Immutable bridge contract that allows 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, it can mint and burn ZCHF. Has an immutable minting limit of 2,000,000 ZCHF and expires at a fixed horizon timestamp (~2026-04-15). The bridge holds VCHF as backing for ZCHF minted through it."
+      "description": "Immutable bridge contract that enables 1:1 minting of ZCHF by depositing VCHF (VNX Franc) and burning ZCHF to redeem VCHF. Minting is capped at 2M ZCHF and has an expiration date. Currently holds {{vchfBridgeBalance}} in VCHF backing."
     },
     "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
       "name": "Savings (Current)",
-      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding {{currentSavingsBalance}} in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange."
+      "description": "Immutable savings contract that allows ZCHF holders to deposit and earn interest. Can call coverLoss on the Frankencoin token to absorb losses from the savings pool. Holds {{savingsCurrentBalance}} in deposited ZCHF."
     },
-    "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": {
-      "name": "TransferReference (Chainlink)",
-      "description": "Chainlink CCIP infrastructure contract registered as an active minter. Facilitates cross-chain ZCHF transfers via transferFrom and approve operations on the Ethereum side of the bridge. Does not directly call mint or burn."
+    "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
+      "name": "Savings (Legacy)",
+      "description": "Older immutable savings contract with the same interface as the current version. Can call coverLoss on the Frankencoin token. Holds {{savingsLegacyBalance}} in residual ZCHF deposits."
     },
-    "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
-      "name": "BurnMintTokenPool (Chainlink)",
-      "description": "Chainlink CCIP token pool contract registered as an active minter. Handles the actual burn and mint operations for cross-chain ZCHF transfers. Owned by an unknown address (0x2527...FEf8)."
+    "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": {
+      "name": "PositionRoller",
+      "description": "Immutable utility contract that allows position holders to roll their collateral into new positions. Uses flash loan mechanics (mint then burn within the same transaction) on the Frankencoin token. No direct capital exposure as operations are atomic."
     },
-    "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": {
-      "name": "BridgeAccounting (Chainlink)",
-      "description": "Chainlink CCIP accounting contract registered as an active minter. Tracks cross-chain ZCHF supply across supported chains."
-    },
-    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
-      "name": "Chainlink RBACTimelock (3h delay)",
-      "description": "Chainlink-operated timelock with a 3-hour minimum delay. Controls the ARMProxy (setARM, transferOwnership), CryptoFranc (transferOperator, startMigrate, transferOwnership, pause/unpause, transferMinter), and RMNRemote (setConfig, curse/uncurse, transferOwnership). Uses role-based access control with PROPOSER, CANCELLER, EXECUTOR, and BYPASSER roles."
+    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
+      "name": "Equity (FPS Reserve Pool)",
+      "description": "Immutable reserve pool contract that holds the protocol's equity buffer. The kamikaze function allows burning FPS tokens to withdraw a proportional share of the reserve, with {{equityReserve}} in direct capital exposure. The restructureCapTable function can redistribute shares but is bounded by a value range constraint. This contract is the backstop for the protocol: losses from challenged positions are covered from the reserve."
     },
     "eth:0x0000000000000000000000000000000000000000": {
       "name": "Zero Address (Renounced)",
-      "description": "The zero address holds the newOwner role on CryptoFranc (acceptOwnership) and the migrationFromContract reference (migrateFrom). These permissions are effectively renounced and cannot be exercised."
+      "description": "Renounced permission on CryptoFranc (XCHF). The acceptOwnership and migrateFrom functions are assigned to the zero address, meaning these capabilities are permanently disabled."
     },
-    "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6": {
-      "name": "XCHF Minter 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig controlled by the XCHF (CryptoFranc) entity. Can mint new XCHF tokens. The XCHF StablecoinBridge is expired (horizon passed ~2024-10-26), so XCHF minting can no longer be used to mint ZCHF through the bridge."
-    },
-    "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD": {
-      "name": "XCHF Operator 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig controlled by the XCHF (CryptoFranc) entity. Can call announceRollover and refundForeignTokens on the CryptoFranc token, affecting its operational parameters."
-    },
-    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
-      "name": "Equity (FPS Token)",
-      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can propose changes to Savings parameters via proposeChange. The Equity contract itself has kamikaze (self-sacrifice of shares for voting power) and restructureCapTable (emergency cap table wipe when equity falls below 1000 ZCHF). Holds {{equityBalance}} in reserves."
-    },
-    "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": {
-      "name": "VNX Proxy Admin (VCHF)",
-      "description": "Proxy admin for the VNXCToken (VCHF) contract. Can upgrade the VCHF implementation, change the proxy admin, and view admin/implementation details. Controlled by the VCHF entity. An upgrade to VCHF could affect the StablecoinBridge that bridges VCHF to ZCHF."
+    "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6": {
+      "name": "VNXCToken Implementation",
+      "description": "The implementation contract behind the VCHF (VNX Franc) EIP-1967 proxy. Controls administrative functions on VNXCToken including minter role assignment, asset protection, transfer provider changes, minting, burning, freezing, and pausing. This is an external dependency operated by the VNX team, not a Frankencoin-controlled admin."
     }
   },
   "dependencies": {
     "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": {
-      "name": "VNXCToken (VCHF)",
-      "description": "VNX Franc stablecoin, an upgradeable ERC-20 (EIP-1967 proxy) used by the StablecoinBridge for 1:1 VCHF-to-ZCHF conversion. The VCHF token can be paused, frozen per-address, or upgraded by VNX, which would block StablecoinBridge mint/burn operations. Critical dependency for the VCHF bridge path."
+      "name": "VNX Franc (VCHF)",
+      "description": "ERC-20 stablecoin issued by VNX, used as collateral in the StablecoinBridge (VCHF) for 1:1 ZCHF minting. The token is upgradeable via an EIP-1967 proxy controlled by VNXProxyAdmin, and its owner (VNXManager) can mint, burn, freeze, and pause transfers. Total funds at risk through the VCHF bridge: {{vchfBridgeBalance}}."
     },
     "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08": {
       "name": "CryptoFranc (XCHF)",
-      "description": "CryptoFranc token used by the StablecoinBridge for 1:1 XCHF-to-ZCHF conversion. XCHF is an immutable token but has centralized controls: it can be paused, its minter and operator can be changed, and token migrations can be initiated. Owned by a Chainlink RBACTimelock (3h delay), with minting controlled by a 3/6 XCHF multisig."
-    },
-    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
-      "name": "Chainlink RBACTimelock",
-      "description": "Chainlink-operated timelock (3h delay) that owns the ARMProxy and CryptoFranc contracts. Chainlink can modify CCIP configuration and CryptoFranc parameters after the timelock delay. Uses role-based access with PROPOSER, EXECUTOR, CANCELLER, and BYPASSER roles."
-    },
-    "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": {
-      "name": "VNX Proxy Admin",
-      "description": "Proxy admin for the VCHF token, controlled by an EOA (0x7B0C...9403). Can upgrade the VCHF token implementation without a timelock, which would directly affect the VCHF StablecoinBridge."
-    },
-    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
-      "name": "Chainlink ARMProxy",
-      "description": "Chainlink Active Risk Management proxy used by the CCIP infrastructure (BurnMintTokenPool, BridgeAccounting) for cross-chain ZCHF transfer validation. Owned by the Chainlink RBACTimelock."
-    },
-    "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e": {
-      "name": "XCHF Owner 3/4 Multisig",
-      "description": "A 3-of-4 GnosisSafe multisig that owns the CryptoFranc token through the Chainlink RBACTimelock. Controls CryptoFranc ownership transfer, operator assignment, migration, pause/unpause, and minter role changes."
-    },
-    "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6": {
-      "name": "XCHF Minter 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig with the minter role on CryptoFranc. Can mint new XCHF tokens, which could be bridged to ZCHF via the StablecoinBridge."
-    },
-    "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD": {
-      "name": "XCHF Operator 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig with the operator role on CryptoFranc. Can announce rollovers and refund foreign tokens."
-    },
-    "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": {
-      "name": "Chainlink TransferReference",
-      "description": "Chainlink CCIP infrastructure contract that facilitates cross-chain ZCHF transfers via transferFrom and approve. Registered as an active minter on the Frankencoin token but does not directly call mint or burn."
+      "description": "ERC-20 Swiss Franc stablecoin used as collateral in the StablecoinBridge (XCHF) for 1:1 ZCHF minting. Owned by a 3/4 XCHF multisig that can pause, migrate, and reassign minter roles. The bridge is largely deprecated with negligible XCHF holdings."
     },
     "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
       "name": "Chainlink BurnMintTokenPool",
-      "description": "Chainlink CCIP token pool that handles burn/mint operations for cross-chain ZCHF transfers. Registered as an active minter on the Frankencoin token."
+      "description": "Chainlink CCIP token pool that holds burn/mint permissions on the Frankencoin token for cross-chain transfers. Can mint ZCHF without collateral backing when receiving cross-chain messages, and burn ZCHF when sending. Operated by Chainlink's CCIP infrastructure."
     },
     "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": {
       "name": "Chainlink BridgeAccounting",
-      "description": "Chainlink CCIP accounting contract tracking cross-chain ZCHF supply. Registered as an active minter on the Frankencoin token."
+      "description": "Chainlink CCIP accounting contract that holds minter permissions on the Frankencoin token. Can call coverLoss (unbounded, no mitigations) and collectProfits on the Frankencoin reserve. Controlled by Chainlink infrastructure."
+    },
+    "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": {
+      "name": "Chainlink TransferReference",
+      "description": "Chainlink CCIP contract that holds minter permissions on the Frankencoin token including registerPosition, mint, mintWithReserve, burnFrom, burnWithoutReserve, burnWithReserve, burnFromWithReserve, coverLoss, and collectProfits. All functions are marked as not called from this contract."
+    },
+    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
+      "name": "Chainlink ARMProxy",
+      "description": "Chainlink Active Risk Management proxy used by PositionRoller and MintingHub for cross-chain risk checks. Called during position rolling and cloning operations. Owned by a Chainlink RBACTimelock with a 3-hour minimum delay."
+    },
+    "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
+      "name": "Chainlink RBACTimelock (ARMProxy)",
+      "description": "Chainlink timelock (3-hour minimum delay) that owns the ARMProxy contract. Can transfer ARMProxy ownership and replace its implementation. Operated by Chainlink's role-based access control system."
     },
     "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A": {
       "name": "Chainlink RBACTimelock (RMNRemote)",
-      "description": "A second Chainlink RBACTimelock (3h delay) that owns the RMNRemote contract. Controls RMNRemote configuration, curse/uncurse operations, and ownership transfer."
+      "description": "Chainlink timelock (3-hour minimum delay) that owns the RMNRemote contract. Can configure the Risk Management Network, curse/uncurse chains, and transfer ownership. Part of Chainlink's CCIP security infrastructure."
+    },
+    "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": {
+      "name": "VNX Proxy Admin",
+      "description": "Proxy admin for the VCHF (VNXCToken) EIP-1967 proxy. Can upgrade the VCHF token implementation and change the admin. Owned by an EOA (0x7B0C...9403), giving VNX full control over the VCHF token contract."
+    },
+    "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e": {
+      "name": "XCHF Owner 3/4 Multisig",
+      "description": "3-of-4 multisig that owns the CryptoFranc (XCHF) token. Can transfer ownership, pause/unpause the token, assign new minters, and initiate token migrations. Operated by the XCHF team."
+    },
+    "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6": {
+      "name": "XCHF Minter 3/6 Multisig",
+      "description": "3-of-6 multisig with minting rights on the CryptoFranc (XCHF) token. Can mint new XCHF tokens, which could indirectly affect the StablecoinBridge if minted XCHF is used to mint ZCHF."
+    },
+    "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD": {
+      "name": "XCHF Operator 3/6 Multisig",
+      "description": "3-of-6 multisig with operator rights on the CryptoFranc (XCHF) token. Can announce rollovers and refund foreign tokens accidentally sent to the contract."
     }
   },
   "funds": {
-    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
-      "name": "Frankencoin (ZCHF Token)",
-      "description": "The ZCHF stablecoin token contract itself with a market cap of {{zchfMarketCap}}. ZCHF is pegged to the Swiss Franc and backed by collateral locked in MintingHub positions, XCHF/VCHF reserves in StablecoinBridges, and the Equity reserve pool."
-    },
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
       "name": "Equity (FPS Reserve Pool)",
-      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds {{equityBalance}} primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations."
+      "description": "Protocol reserve pool that backs the ZCHF stablecoin. Holds {{equityReserve}} primarily in ZCHF, serving as the loss-absorption buffer for challenged and liquidated positions. FPS token holders have a proportional claim on this reserve."
     },
     "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
-      "name": "MintingHub (Current Positions)",
-      "description": "The active MintingHub managing 51 collateral positions worth {{currentMintingHubCollateral}} in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types."
+      "name": "MintingHub V2 (Collateral Positions)",
+      "description": "Current MintingHub with {{mintingHubV2Aggregate}} locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral."
     },
     "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
       "name": "Savings (Current)",
-      "description": "The current Savings contract holding {{currentSavingsBalance}} in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter."
+      "description": "Current savings contract holding {{savingsCurrentBalance}} in deposited ZCHF from users earning interest on their stablecoin holdings."
     },
     "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
       "name": "StablecoinBridge (VCHF)",
-      "description": "Bridge contract holding {{vchfBridgeBalance}} in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path. Has an immutable minting limit of 2,000,000 ZCHF and expires ~2026-04-15."
-    },
-    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
-      "name": "StablecoinBridge (XCHF)",
-      "description": "Expired bridge contract holding {{xchfBridgeBalance}} in XCHF reserves. The bridge expired ~2024-10-27, so no further minting is possible."
+      "description": "Bridge contract holding {{vchfBridgeBalance}} in VCHF tokens backing ZCHF minted through the 1:1 VCHF-to-ZCHF bridge."
     },
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
-      "name": "MintingHub (Legacy Positions)",
-      "description": "The older MintingHub with {{legacyMintingHubCollateral}} in 2 remaining WBTC collateral positions. No longer used for new position creation."
+      "name": "MintingHub V1 (Legacy Positions)",
+      "description": "Legacy MintingHub with {{mintingHubV1Aggregate}} remaining in 2 collateral positions (WBTC). Being gradually wound down as positions expire."
     },
     "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
       "name": "Savings (Legacy)",
-      "description": "The older Savings contract holding {{legacySavingsBalance}} in remaining ZCHF deposits."
+      "description": "Legacy savings contract holding {{savingsLegacyBalance}} in residual ZCHF deposits."
+    },
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
+      "name": "Frankencoin (ZCHF Token)",
+      "description": "The ZCHF stablecoin token with a total market capitalization of {{zchfMarketCap}}. Immutable ERC-20 with built-in minter registry and reserve accounting."
     }
   },
   "sections": {
@@ -169,47 +141,30 @@
               "type": "dataTable",
               "dataSource": "project.contracts",
               "columns": [
-                {
-                  "field": "name",
-                  "header": "Name"
-                },
-                {
-                  "field": "address",
-                  "header": "Address",
-                  "format": "address"
-                },
-                {
-                  "field": "proxyType",
-                  "header": "Proxy Type",
-                  "format": "badge"
-                }
+                { "field": "name", "header": "Name" },
+                { "field": "address", "header": "Address", "format": "address" },
+                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
               ],
-              "filters": {
-                "excludeExternal": true
-              }
+              "filters": { "excludeExternal": true }
             }
           ]
         },
         {
           "title": "Audits",
           "content": [
-            {
-              "type": "text",
-              "content": ""
-            }
+            { "type": "text", "content": "" }
           ]
         }
       ]
     }
   },
   "dataKeys": {
-    "zchfMarketCap": "fundsdata.contracts[\"eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB\"].tokenInfo.tokenValue",
-    "equityBalance": "fundsdata.contracts[\"eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2\"].balances.totalUsdValue",
-    "currentMintingHubCollateral": "fundsdata.contracts[\"eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557\"].aggregate.totalUsdValue",
-    "currentSavingsBalance": "fundsdata.contracts[\"eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38\"].balances.totalUsdValue",
+    "equityReserve": "fundsdata.contracts[\"eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2\"].balances.totalUsdValue",
+    "mintingHubV2Aggregate": "fundsdata.contracts[\"eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557\"].aggregate.totalUsdValue",
+    "mintingHubV1Aggregate": "fundsdata.contracts[\"eth:0x7546762fdb1a6d9146b33960545C3f6394265219\"].aggregate.totalUsdValue",
+    "savingsCurrentBalance": "fundsdata.contracts[\"eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38\"].balances.totalUsdValue",
+    "savingsLegacyBalance": "fundsdata.contracts[\"eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE\"].balances.totalUsdValue",
     "vchfBridgeBalance": "fundsdata.contracts[\"eth:0x3B71ba73299F925a837836160c3E1Fec74340403\"].balances.totalUsdValue",
-    "xchfBridgeBalance": "fundsdata.contracts[\"eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF\"].balances.totalUsdValue",
-    "legacyMintingHubCollateral": "fundsdata.contracts[\"eth:0x7546762fdb1a6d9146b33960545C3f6394265219\"].aggregate.totalUsdValue",
-    "legacySavingsBalance": "fundsdata.contracts[\"eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE\"].balances.totalUsdValue"
+    "zchfMarketCap": "fundsdata.contracts[\"eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB\"].tokenInfo.tokenValue"
   }
 }

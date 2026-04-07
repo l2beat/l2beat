@@ -44,7 +44,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -53,7 +56,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -62,7 +68,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -71,7 +80,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -80,7 +92,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -89,7 +104,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -98,7 +116,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -107,7 +128,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -138,7 +162,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -147,7 +174,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -156,7 +186,10 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -165,7 +198,10 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -174,7 +210,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -183,7 +222,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -192,7 +234,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -201,7 +246,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -210,7 +258,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -219,7 +270,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -324,21 +378,15 @@
             },
             {
               "type": "other",
-              "description": "Only callable via Chainlink CCIP router on incoming cross-chain transfers; rate-limited per chain by CCIP rate limiter",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "CCIP Rate Limit"
-            },
-            {
-              "type": "other",
               "description": "MintingHub: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -347,7 +395,10 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -356,7 +407,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -365,7 +419,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -374,7 +431,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -383,7 +443,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ],
           "timestamp": "2026-04-06T11:10:54.277Z",
@@ -441,7 +504,10 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -450,7 +516,10 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -459,7 +528,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -468,7 +540,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -477,7 +552,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -486,7 +564,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -495,7 +576,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -539,7 +623,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -548,7 +635,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -557,7 +647,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -566,7 +659,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -575,7 +671,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -584,7 +683,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -593,7 +695,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -602,7 +707,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -633,7 +741,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -642,7 +753,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -651,7 +765,10 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -660,7 +777,10 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -669,7 +789,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -678,7 +801,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -687,7 +813,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -696,7 +825,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -705,7 +837,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -714,7 +849,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -745,7 +883,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -754,7 +895,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -763,7 +907,10 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -772,7 +919,10 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -781,7 +931,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -790,7 +943,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -799,7 +955,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -808,7 +967,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -817,7 +979,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -826,7 +991,10 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -881,21 +1049,15 @@
             },
             {
               "type": "other",
-              "description": "Called for cross-chain loss accounting; only triggered by validated CCIP messages from registered remote token pools",
-              "scopedTo": {
-                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
-                "type": "admin"
-              },
-              "label": "CCIP Rate Limit"
-            },
-            {
-              "type": "other",
               "description": "StablecoinBridge (XCHF): does not invoke this function",
               "scopedTo": {
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -904,7 +1066,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -913,7 +1078,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -922,7 +1090,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -931,7 +1102,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         },
@@ -970,12 +1144,15 @@
             },
             {
               "type": "other",
-              "description": "Sends accumulated ZCHF balance (cross-chain profits) to reserve; only triggered by validated CCIP messages",
+              "description": "Only transfers ZCHF balance into the reserve (additive); cannot drain or reduce funds",
               "scopedTo": {
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "CCIP Rate Limit"
+              "label": "Additive Only",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -984,7 +1161,10 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -993,7 +1173,10 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -1002,7 +1185,10 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -1011,7 +1197,10 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -1020,7 +1209,10 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -1029,7 +1221,10 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             },
             {
               "type": "other",
@@ -1038,7 +1233,10 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              }
             }
           ]
         }

@@ -1,14 +1,14 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T10:07:30.081Z",
+  "compiledAt": "2026-04-07T16:02:51.247Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
     "protocolSlug": "Frankencoin",
     "chain": "Ethereum",
-    "projectType": "stablecoin",
+    "projectType": "cdp",
     "tokenName": "ZCHF",
-    "description": "Frankencoin is a collateral-backed stablecoin pegged to the Swiss Franc (CHF). Users deposit collateral (WBTC, wstETH, LsETH, cbBTC, and others) into positions via the MintingHub to mint ZCHF, while the Equity token (FPS) represents governance rights and a share of the protocol's reserve pool. All core protocol contracts are immutable, with governance limited to FPS holders who can propose changes to Savings parameters. The protocol bridges to other CHF stablecoins (XCHF, VCHF) via immutable StablecoinBridge contracts and supports cross-chain transfers through Chainlink CCIP infrastructure. Total ZCHF market cap is $25.72M, with $68.98M in active collateral positions."
+    "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding $13.92M, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token."
   },
   "totals": {
     "contractCount": 24,
@@ -24,7 +24,7 @@
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "name": "MintingHub (Legacy)",
-      "description": "Immutable protocol contract registered as an active minter on the Frankencoin token. Can call registerPosition, collectProfits, coverLoss, and burnWithoutReserve directly. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve. This is the older MintingHub, no longer actively used but still registered as a minter with $146.99K in remaining positions.",
+      "description": "Older immutable MintingHub no longer actively used for new positions. Retains minter permissions on the Frankencoin token but most functions are marked as not called from this contract. Residual collateral in legacy positions: $146.99K.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -54,7 +54,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -69,7 +69,11 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -79,7 +83,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -89,7 +93,11 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -99,7 +107,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -109,7 +117,11 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -139,7 +151,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -154,7 +166,11 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -164,7 +180,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -179,7 +195,11 @@
                 "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -232,7 +252,7 @@
     {
       "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
       "name": "StablecoinBridge (XCHF)",
-      "description": "Immutable bridge contract enabling 1:1 conversion between XCHF (CryptoFranc) and ZCHF. Registered as an active minter but already expired (horizon passed ~2024-10-27), so no further minting is possible. Has an immutable minting limit of 10,000,000 ZCHF. The bridge holds XCHF as backing.",
+      "description": "Immutable bridge contract that enables 1:1 minting of ZCHF by depositing XCHF (CryptoFranc) and burning ZCHF to redeem XCHF. Minting is capped at 10M ZCHF and has an expiration date. The bridge holds negligible XCHF as it is largely deprecated.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -242,7 +262,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -252,7 +272,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -262,7 +286,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -277,7 +301,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -359,7 +387,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -369,7 +397,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -379,7 +411,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -394,7 +426,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -404,7 +440,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -419,7 +455,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -429,7 +469,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -439,7 +479,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -449,7 +493,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -459,7 +503,11 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -472,7 +520,7 @@
     {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
       "name": "Savings (Legacy)",
-      "description": "Immutable older Savings contract registered as an active minter. Can mint ZCHF to pay interest to depositors. Holds $21.50K in ZCHF deposits. Parameters can be changed by qualified FPS holders via proposeChange.",
+      "description": "Older immutable savings contract with the same interface as the current version. Can call coverLoss on the Frankencoin token. Holds $21.50K in residual ZCHF deposits.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -482,7 +530,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -492,7 +540,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -502,7 +554,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -517,7 +569,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -527,7 +583,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -537,7 +593,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -547,7 +607,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -557,7 +617,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -567,7 +631,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -577,7 +641,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -587,7 +655,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -602,7 +670,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -612,7 +684,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -627,7 +699,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -656,7 +732,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -666,7 +742,11 @@
                 "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -679,7 +759,7 @@
     {
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
       "name": "PositionRoller",
-      "description": "Immutable protocol contract that enables rolling (migrating) collateral positions between MintingHub versions. Registered as an active minter, though its roll/rollFully/rollFullyWithExpiration functions have been scored as no-impact.",
+      "description": "Immutable utility contract that allows position holders to roll their collateral into new positions. Uses flash loan mechanics (mint then burn within the same transaction) on the Frankencoin token. No direct capital exposure as operations are atomic.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -689,7 +769,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -699,7 +779,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -709,7 +793,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -724,7 +808,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -774,7 +862,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -784,7 +872,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -794,7 +886,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -809,7 +901,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -819,7 +915,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -834,7 +930,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -844,7 +944,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -854,7 +954,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -864,7 +968,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -874,7 +978,11 @@
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -887,7 +995,7 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current)",
-      "description": "Immutable protocol contract and the primary entry point for creating collateral-backed positions. Registered as an active minter, it manages $68.98M across 51 active positions. Functions including openPosition, clone, challenge, bid, and buyExpiredCollateral are open to anyone. Positions created through it can call mintWithReserve, burnFrom, burnWithReserve, and burnFromWithReserve on the Frankencoin token.",
+      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: $68.98M.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -917,7 +1025,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -932,7 +1040,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -942,7 +1054,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -952,7 +1064,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -962,7 +1078,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -972,7 +1088,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1002,7 +1122,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1017,7 +1137,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1027,7 +1151,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1042,7 +1166,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1185,7 +1313,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1270,7 +1402,7 @@
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "name": "StablecoinBridge (VCHF)",
-      "description": "Immutable bridge contract that allows 1:1 conversion between VCHF (VNX Franc) and ZCHF. Registered as an active minter, it can mint and burn ZCHF. Has an immutable minting limit of 2,000,000 ZCHF and expires at a fixed horizon timestamp (~2026-04-15). The bridge holds VCHF as backing for ZCHF minted through it.",
+      "description": "Immutable bridge contract that enables 1:1 minting of ZCHF by depositing VCHF (VNX Franc) and burning ZCHF to redeem VCHF. Minting is capped at 2M ZCHF and has an expiration date. Currently holds $503.84K in VCHF backing.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1280,7 +1412,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1290,7 +1422,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1300,7 +1436,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1315,7 +1451,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1397,7 +1537,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1407,7 +1547,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1417,7 +1561,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1432,7 +1576,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1442,7 +1590,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1457,7 +1605,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1467,7 +1619,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1477,7 +1629,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1487,7 +1643,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1497,7 +1653,11 @@
                 "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -1510,7 +1670,7 @@
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "Immutable current Savings contract where users deposit ZCHF to earn interest. Registered as an active minter, holding $10.22M in ZCHF. Interest rate parameters can be changed by qualified FPS holders via proposeChange.",
+      "description": "Immutable savings contract that allows ZCHF holders to deposit and earn interest. Can call coverLoss on the Frankencoin token to absorb losses from the savings pool. Holds $10.22M in deposited ZCHF.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1520,7 +1680,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1530,7 +1690,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1540,7 +1704,7 @@
           "functionName": "mintWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1555,7 +1719,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1565,7 +1733,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1575,7 +1743,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1585,7 +1757,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1595,7 +1767,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1605,7 +1781,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1615,7 +1791,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1625,7 +1805,7 @@
           "functionName": "burnWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1640,7 +1820,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1650,7 +1834,7 @@
           "functionName": "burnFromWithReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1665,7 +1849,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -1694,7 +1882,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1704,7 +1892,11 @@
                 "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -1717,7 +1909,7 @@
     {
       "address": "eth:0x0000000000000000000000000000000000000000",
       "name": "Zero Address (Renounced)",
-      "description": "The zero address holds the newOwner role on CryptoFranc (acceptOwnership) and the migrationFromContract reference (migrateFrom). These permissions are effectively renounced and cannot be exercised.",
+      "description": "Renounced permission on CryptoFranc (XCHF). The acceptOwnership and migrateFrom functions are assigned to the zero address, meaning these capabilities are permanently disabled.",
       "adminType": "Revoked",
       "isGovernance": false,
       "functions": [
@@ -1747,8 +1939,8 @@
     },
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
-      "name": "Equity (FPS Token)",
-      "description": "The Frankencoin governance token contract. FPS holders who meet qualification criteria can propose changes to Savings parameters via proposeChange. The Equity contract itself has kamikaze (self-sacrifice of shares for voting power) and restructureCapTable (emergency cap table wipe when equity falls below 1000 ZCHF). Holds $13.92M in reserves.",
+      "name": "Equity (FPS Reserve Pool)",
+      "description": "Immutable reserve pool contract that holds the protocol's equity buffer. The kamikaze function allows burning FPS tokens to withdraw a proportional share of the reserve, with $13.92M in direct capital exposure. The restructureCapTable function can redistribute shares but is bounded by a value range constraint. This contract is the backstop for the protocol: losses from challenged positions are covered from the reserve.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1835,8 +2027,8 @@
     },
     {
       "address": "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
-      "name": "VNXCToken",
-      "description": "",
+      "name": "VNXCToken Implementation",
+      "description": "The implementation contract behind the VCHF (VNX Franc) EIP-1967 proxy. Controls administrative functions on VNXCToken including minter role assignment, asset protection, transfer provider changes, minting, burning, freezing, and pausing. This is an external dependency operated by the VNX team, not a Frankencoin-controlled admin.",
       "adminType": "Unknown",
       "isGovernance": false,
       "functions": [
@@ -1947,14 +2139,14 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 0,
-    "totalTokenValueAtRisk": 1000
+    "totalFundsAtRisk": 13923431.96265291,
+    "totalTokenValueAtRisk": 25724637.771031145
   },
   "dependencies": [
     {
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-      "name": "VNXCToken (VCHF)",
-      "description": "VNX Franc stablecoin, an upgradeable ERC-20 (EIP-1967 proxy) used by the StablecoinBridge for 1:1 VCHF-to-ZCHF conversion. The VCHF token can be paused, frozen per-address, or upgraded by VNX, which would block StablecoinBridge mint/burn operations. Critical dependency for the VCHF bridge path.",
+      "name": "VNX Franc (VCHF)",
+      "description": "ERC-20 stablecoin issued by VNX, used as collateral in the StablecoinBridge (VCHF) for 1:1 ZCHF minting. The token is upgradeable via an EIP-1967 proxy controlled by VNXProxyAdmin, and its owner (VNXManager) can mint, burn, freeze, and pause transfers. Total funds at risk through the VCHF bridge: $503.84K.",
       "entity": "VCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -2162,62 +2354,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2250,62 +2396,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2338,62 +2438,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         }
@@ -2404,8 +2458,8 @@
     },
     {
       "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-      "name": "Chainlink RBACTimelock",
-      "description": "Chainlink-operated timelock (3h delay) that owns the ARMProxy and CryptoFranc contracts. Chainlink can modify CCIP configuration and CryptoFranc parameters after the timelock delay. Uses role-based access with PROPOSER, EXECUTOR, CANCELLER, and BYPASSER roles.",
+      "name": "Chainlink RBACTimelock (ARMProxy)",
+      "description": "Chainlink timelock (3-hour minimum delay) that owns the ARMProxy contract. Can transfer ARMProxy ownership and replace its implementation. Operated by Chainlink's role-based access control system.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -2440,7 +2494,7 @@
     {
       "address": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
       "name": "VNX Proxy Admin",
-      "description": "Proxy admin for the VCHF token, controlled by an EOA (0x7B0C...9403). Can upgrade the VCHF token implementation without a timelock, which would directly affect the VCHF StablecoinBridge.",
+      "description": "Proxy admin for the VCHF (VNXCToken) EIP-1967 proxy. Can upgrade the VCHF token implementation and change the admin. Owned by an EOA (0x7B0C...9403), giving VNX full control over the VCHF token contract.",
       "entity": "VCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -2505,7 +2559,7 @@
     {
       "address": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
       "name": "CryptoFranc (XCHF)",
-      "description": "CryptoFranc token used by the StablecoinBridge for 1:1 XCHF-to-ZCHF conversion. XCHF is an immutable token but has centralized controls: it can be paused, its minter and operator can be changed, and token migrations can be initiated. Owned by a Chainlink RBACTimelock (3h delay), with minting controlled by a 3/6 XCHF multisig.",
+      "description": "ERC-20 Swiss Franc stablecoin used as collateral in the StablecoinBridge (XCHF) for 1:1 ZCHF minting. Owned by a 3/4 XCHF multisig that can pause, migrate, and reassign minter roles. The bridge is largely deprecated with negligible XCHF holdings.",
       "entity": "XCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -2692,7 +2746,7 @@
     {
       "address": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
       "name": "Chainlink ARMProxy",
-      "description": "Chainlink Active Risk Management proxy used by the CCIP infrastructure (BurnMintTokenPool, BridgeAccounting) for cross-chain ZCHF transfer validation. Owned by the Chainlink RBACTimelock.",
+      "description": "Chainlink Active Risk Management proxy used by PositionRoller and MintingHub for cross-chain risk checks. Called during position rolling and cloning operations. Owned by a Chainlink RBACTimelock with a 3-hour minimum delay.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -2730,62 +2784,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2818,62 +2826,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2906,62 +2868,16 @@
             },
             {
               "type": "other",
-              "description": "Registers positions created by immutable PositionFactory; each new position requires collateral deposit and 1000 ZCHF opening fee",
-              "scopedTo": {
-                "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-                "type": "admin"
-              },
-              "label": "Position Fee"
-            },
-            {
-              "type": "other",
               "description": "PositionRoller: does not invoke this function",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
                 "type": "admin"
               },
-              "label": "Not Called"
-            },
-            {
-              "type": "other",
-              "description": "Minting limit",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Mint Limit",
+              "label": "Not Called",
               "impactCap": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "limit",
-                "unit": "1e18"
+                "hardcodedUsd": 0
               },
-              "impactCapUsd": 2000000
-            },
-            {
-              "type": "other",
-              "description": "1:1 backed — requires depositing equivalent VCHF tokens before minting",
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "1:1 Backed"
-            },
-            {
-              "type": "other",
-              "description": "Bridge expires at immutable horizon timestamp (52 weeks from deployment)",
-              "mitigatedField": {
-                "contractAddress": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "fieldName": "horizon"
-              },
-              "scopedTo": {
-                "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
-                "type": "admin"
-              },
-              "label": "Expiry"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2990,7 +2906,11 @@
                 "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -3002,7 +2922,7 @@
     {
       "address": "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e",
       "name": "XCHF Owner 3/4 Multisig",
-      "description": "A 3-of-4 GnosisSafe multisig that owns the CryptoFranc token through the Chainlink RBACTimelock. Controls CryptoFranc ownership transfer, operator assignment, migration, pause/unpause, and minter role changes.",
+      "description": "3-of-4 multisig that owns the CryptoFranc (XCHF) token. Can transfer ownership, pause/unpause the token, assign new minters, and initiate token migrations. Operated by the XCHF team.",
       "entity": "XCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3087,7 +3007,7 @@
     {
       "address": "eth:0x318CeE69D79c8e96FB8C63D89FD5505CE424a2a6",
       "name": "XCHF Minter 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig with the minter role on CryptoFranc. Can mint new XCHF tokens, which could be bridged to ZCHF via the StablecoinBridge.",
+      "description": "3-of-6 multisig with minting rights on the CryptoFranc (XCHF) token. Can mint new XCHF tokens, which could indirectly affect the StablecoinBridge if minted XCHF is used to mint ZCHF.",
       "entity": "XCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3112,7 +3032,7 @@
     {
       "address": "eth:0x958571619fFf444365B1F3d52DDb7E310363EcfD",
       "name": "XCHF Operator 3/6 Multisig",
-      "description": "A 3-of-6 GnosisSafe multisig with the operator role on CryptoFranc. Can announce rollovers and refund foreign tokens.",
+      "description": "3-of-6 multisig with operator rights on the CryptoFranc (XCHF) token. Can announce rollovers and refund foreign tokens accidentally sent to the contract.",
       "entity": "XCHF",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3147,7 +3067,7 @@
     {
       "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
       "name": "Chainlink TransferReference",
-      "description": "Chainlink CCIP infrastructure contract that facilitates cross-chain ZCHF transfers via transferFrom and approve. Registered as an active minter on the Frankencoin token but does not directly call mint or burn.",
+      "description": "Chainlink CCIP contract that holds minter permissions on the Frankencoin token including registerPosition, mint, mintWithReserve, burnFrom, burnWithoutReserve, burnWithReserve, burnFromWithReserve, coverLoss, and collectProfits. All functions are marked as not called from this contract.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3169,7 +3089,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3179,7 +3099,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3189,7 +3113,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3204,7 +3128,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3214,7 +3142,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3229,7 +3157,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3239,7 +3171,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3249,7 +3181,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3259,7 +3195,7 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3269,7 +3205,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3279,7 +3219,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3289,7 +3229,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3299,7 +3243,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3309,7 +3253,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3319,7 +3267,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3334,7 +3282,11 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3344,7 +3296,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3354,19 +3306,23 @@
                 "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 25724637.771031145,
+      "totalTokenValueAtRisk": 0,
       "dependencyType": "write"
     },
     {
       "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
       "name": "Chainlink BurnMintTokenPool",
-      "description": "Chainlink CCIP token pool that handles burn/mint operations for cross-chain ZCHF transfers. Registered as an active minter on the Frankencoin token.",
+      "description": "Chainlink CCIP token pool that holds burn/mint permissions on the Frankencoin token for cross-chain transfers. Can mint ZCHF without collateral backing when receiving cross-chain messages, and burn ZCHF when sending. Operated by Chainlink's CCIP infrastructure.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3388,7 +3344,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3398,7 +3354,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3408,7 +3368,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3423,7 +3383,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3433,7 +3397,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3448,7 +3412,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3458,7 +3426,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3468,7 +3436,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3478,7 +3450,7 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3488,7 +3460,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3498,7 +3474,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3508,7 +3484,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3519,18 +3499,7 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 25724637.771031145,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "Only callable via Chainlink CCIP router on incoming cross-chain transfers; rate-limited per chain by CCIP rate limiter",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "CCIP Rate Limit"
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
@@ -3538,7 +3507,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3553,7 +3522,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3563,7 +3536,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3573,7 +3546,11 @@
                 "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -3585,7 +3562,7 @@
     {
       "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
       "name": "Chainlink BridgeAccounting",
-      "description": "Chainlink CCIP accounting contract tracking cross-chain ZCHF supply. Registered as an active minter on the Frankencoin token.",
+      "description": "Chainlink CCIP accounting contract that holds minter permissions on the Frankencoin token. Can call coverLoss (unbounded, no mitigations) and collectProfits on the Frankencoin reserve. Controlled by Chainlink infrastructure.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3607,7 +3584,7 @@
           "functionName": "burnFrom",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3617,7 +3594,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3627,7 +3608,7 @@
           "functionName": "burnFromWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3642,7 +3623,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3652,7 +3637,7 @@
           "functionName": "burnWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3667,7 +3652,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3677,7 +3666,7 @@
           "functionName": "burnWithoutReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3687,7 +3676,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3697,17 +3690,21 @@
           "functionName": "collectProfits",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
               "type": "other",
-              "description": "Sends accumulated ZCHF balance (cross-chain profits) to reserve; only triggered by validated CCIP messages",
+              "description": "Only transfers ZCHF balance into the reserve (additive); cannot drain or reduce funds",
               "scopedTo": {
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "CCIP Rate Limit"
+              "label": "Additive Only",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3718,18 +3715,7 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 25724637.771031145,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "Called for cross-chain loss accounting; only triggered by validated CCIP messages from registered remote token pools",
-              "scopedTo": {
-                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
-                "type": "admin"
-              },
-              "label": "CCIP Rate Limit"
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
@@ -3737,7 +3723,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3747,7 +3733,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3757,7 +3747,7 @@
           "functionName": "mintWithReserve",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3772,7 +3762,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         },
@@ -3782,7 +3776,7 @@
           "functionName": "registerPosition",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 25724637.771031145,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -3792,7 +3786,11 @@
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
               },
-              "label": "Not Called"
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
             }
           ]
         }
@@ -3804,7 +3802,7 @@
     {
       "address": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
       "name": "Chainlink RBACTimelock (RMNRemote)",
-      "description": "A second Chainlink RBACTimelock (3h delay) that owns the RMNRemote contract. Controls RMNRemote configuration, curse/uncurse operations, and ownership transfer.",
+      "description": "Chainlink timelock (3-hour minimum delay) that owns the RMNRemote contract. Can configure the Risk Management Network, curse/uncurse chains, and transfer ownership. Part of Chainlink's CCIP security infrastructure.",
       "entity": "Chainlink",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -3880,23 +3878,9 @@
   },
   "funds": [
     {
-      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-      "name": "Frankencoin (ZCHF Token)",
-      "description": "The ZCHF stablecoin token contract itself with a market cap of $25.72M. ZCHF is pegged to the Swiss Franc and backed by collateral locked in MintingHub positions, XCHF/VCHF reserves in StablecoinBridges, and the Equity reserve pool.",
-      "balances": null,
-      "positions": null,
-      "tokenInfo": {
-        "symbol": "ZCHF",
-        "price": 1.2638,
-        "totalSupply": "20354991114916240227952988",
-        "tokenValue": 25724637.771031145
-      },
-      "aggregate": null
-    },
-    {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Reserve Pool)",
-      "description": "The FPS governance token contract that also serves as the protocol's reserve pool. Holds $13.92M primarily in ZCHF, representing the system's equity buffer that absorbs losses from undercollateralized liquidations.",
+      "description": "Protocol reserve pool that backs the ZCHF stablecoin. Holds $13.92M primarily in ZCHF, serving as the loss-absorption buffer for challenged and liquidated positions. FPS token holders have a proportional claim on this reserve.",
       "balances": {
         "totalUsdValue": 13923431.96265291
       },
@@ -3908,8 +3892,8 @@
     },
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
-      "name": "MintingHub (Current Positions)",
-      "description": "The active MintingHub managing 51 collateral positions worth $68.98M in aggregate. Positions are backed by WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, WETH, GNO, CRV, and other collateral types.",
+      "name": "MintingHub V2 (Collateral Positions)",
+      "description": "Current MintingHub with $68.98M locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
@@ -3922,7 +3906,7 @@
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "The current Savings contract holding $10.22M in ZCHF deposits. Users deposit ZCHF to earn interest, which is minted by the contract as an active minter.",
+      "description": "Current savings contract holding $10.22M in deposited ZCHF from users earning interest on their stablecoin holdings.",
       "balances": {
         "totalUsdValue": 10220366.480646407
       },
@@ -3935,7 +3919,7 @@
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "name": "StablecoinBridge (VCHF)",
-      "description": "Bridge contract holding $503.84K in VCHF reserves. These reserves back ZCHF minted through the VCHF-to-ZCHF bridge path. Has an immutable minting limit of 2,000,000 ZCHF and expires ~2026-04-15.",
+      "description": "Bridge contract holding $503.84K in VCHF tokens backing ZCHF minted through the 1:1 VCHF-to-ZCHF bridge.",
       "balances": {
         "totalUsdValue": 503838.1609304662
       },
@@ -3944,20 +3928,9 @@
       "aggregate": null
     },
     {
-      "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
-      "name": "StablecoinBridge (XCHF)",
-      "description": "Expired bridge contract holding $0 in XCHF reserves. The bridge expired ~2024-10-27, so no further minting is possible.",
-      "balances": {
-        "totalUsdValue": 0
-      },
-      "positions": null,
-      "tokenInfo": null,
-      "aggregate": null
-    },
-    {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-      "name": "MintingHub (Legacy Positions)",
-      "description": "The older MintingHub with $146.99K in 2 remaining WBTC collateral positions. No longer used for new position creation.",
+      "name": "MintingHub V1 (Legacy Positions)",
+      "description": "Legacy MintingHub with $146.99K remaining in 2 collateral positions (WBTC). Being gradually wound down as positions expire.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
@@ -3970,7 +3943,7 @@
     {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
       "name": "Savings (Legacy)",
-      "description": "The older Savings contract holding $21.50K in remaining ZCHF deposits.",
+      "description": "Legacy savings contract holding $21.50K in residual ZCHF deposits.",
       "balances": {
         "totalUsdValue": 21497.250637999998
       },
@@ -3978,6 +3951,20 @@
         "totalUsdValue": 0
       },
       "tokenInfo": null,
+      "aggregate": null
+    },
+    {
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "name": "Frankencoin (ZCHF Token)",
+      "description": "The ZCHF stablecoin token with a total market capitalization of $25.72M. Immutable ERC-20 with built-in minter registry and reserve accounting.",
+      "balances": null,
+      "positions": null,
+      "tokenInfo": {
+        "symbol": "ZCHF",
+        "price": 1.2638,
+        "totalSupply": "20354991114916240227952988",
+        "tokenValue": 25724637.771031145
+      },
       "aggregate": null
     }
   ],
@@ -4065,7 +4052,7 @@
     },
     {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
-      "name": "MintingHub (Legacy Positions)",
+      "name": "MintingHub V1 (Legacy Positions)",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -4073,7 +4060,7 @@
     },
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
-      "name": "MintingHub (Current Positions)",
+      "name": "MintingHub V2 (Collateral Positions)",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -4089,7 +4076,7 @@
     },
     {
       "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-      "name": "Chainlink RBACTimelock",
+      "name": "Chainlink RBACTimelock (ARMProxy)",
       "isExternal": true,
       "isGovernance": false,
       "entity": "Chainlink",
@@ -4153,7 +4140,7 @@
     },
     {
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-      "name": "VNXCToken (VCHF)",
+      "name": "VNX Franc (VCHF)",
       "isExternal": true,
       "isGovernance": false,
       "entity": "VCHF",

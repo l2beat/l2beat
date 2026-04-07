@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T10:07:34.767Z",
+  "compiledAt": "2026-04-07T16:02:55.996Z",
   "project": "liquity-v2",
   "metadata": {
     "protocolName": "Liquity V2",
@@ -9625,7 +9625,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 113360174.89554201,
+    "totalFundsAtRisk": 113360174.895542,
     "totalTokenValueAtRisk": 31325385.25346636
   },
   "dependencies": [
