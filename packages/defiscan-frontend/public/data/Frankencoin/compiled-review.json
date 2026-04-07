@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T16:02:51.247Z",
+  "compiledAt": "2026-04-07T16:38:37.157Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -315,7 +315,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 10000000,
+          "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -349,6 +349,10 @@
             {
               "type": "other",
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
+              "label": "Expired",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "fieldName": "horizon"
@@ -357,7 +361,7 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Expired"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2624,9 +2628,9 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 10000000,
+              "tokenValueUsd": 0,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 10000000
+              "effectiveCapUsd": 0
             }
           ],
           "mitigations": [
@@ -2661,6 +2665,10 @@
             {
               "type": "other",
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
+              "label": "Expired",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "fieldName": "horizon"
@@ -2669,7 +2677,7 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Expired"
+              "impactCapUsd": 0
             }
           ]
         },
@@ -2689,9 +2697,9 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 10000000,
+              "tokenValueUsd": 0,
               "fundsAtRisk": true,
-              "effectiveCapUsd": 10000000
+              "effectiveCapUsd": 0
             }
           ],
           "mitigations": [
@@ -2726,6 +2734,10 @@
             {
               "type": "other",
               "description": "Bridge expired — horizon timestamp has passed, no further minting possible",
+              "label": "Expired",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
               "mitigatedField": {
                 "contractAddress": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "fieldName": "horizon"
@@ -2734,13 +2746,13 @@
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
                 "type": "admin"
               },
-              "label": "Expired"
+              "impactCapUsd": 0
             }
           ]
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 10000000,
+      "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
     {
@@ -3869,7 +3881,7 @@
     {
       "entity": "XCHF",
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 10000000
+      "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {

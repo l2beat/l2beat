@@ -1,13 +1,6 @@
 import { displayMitigationValue, type Mitigation } from '../types'
 
 
-function formatCapUsd(usd: number): string {
-  if (usd >= 1e9) return `$${(usd / 1e9).toFixed(1)}B`
-  if (usd >= 1e6) return `$${(usd / 1e6).toFixed(1)}M`
-  if (usd >= 1e3) return `$${(usd / 1e3).toFixed(0)}K`
-  return `$${usd.toFixed(0)}`
-}
-
 function formatDelayLabel(seconds: number): string {
   if (seconds >= 86400) {
     const days = seconds / 86400
@@ -68,26 +61,12 @@ export function MitigationBadge({ mitigation: m }: { mitigation: Mitigation }) {
     tooltip = m.description
   }
 
-  // Render the cap badge (if present) alongside the primary badge
-  const capBadge =
-    m.impactCapUsd !== undefined ? (
-      <span
-        className="inline-flex items-center rounded-[2px] px-[8px] py-[2px] text-[9px] font-bold uppercase tracking-[0.225px] bg-emerald-100 text-emerald-700"
-        title={`Maximum fund impact: $${m.impactCapUsd.toLocaleString()}`}
-      >
-        {formatCapUsd(m.impactCapUsd)} Max Impact
-      </span>
-    ) : null
-
   return (
-    <>
-      <span
-        className={`inline-flex items-center rounded-[2px] px-[8px] py-[2px] text-[9px] font-bold uppercase tracking-[0.225px] ${colorClass}`}
-        title={tooltip}
-      >
-        {label}
-      </span>
-      {capBadge}
-    </>
+    <span
+      className={`inline-flex items-center rounded-[2px] px-[8px] py-[2px] text-[9px] font-bold uppercase tracking-[0.225px] ${colorClass}`}
+      title={tooltip}
+    >
+      {label}
+    </span>
   )
 }
