@@ -38,7 +38,9 @@ export function KnownAppsTable({
       onPageSizeOptionChange={setPageSizeOption}
       emptyMessage="No known apps found."
       enableCsvExport={enableCsvExport}
-      getCsvFilename={() => `interop-known-apps-${new Date().toISOString()}.csv`}
+      getCsvFilename={() =>
+        `interop-known-apps-${new Date().toISOString()}.csv`
+      }
       totalRowsCount={totalRowsCount}
       filteredRowsCount={filteredRowsCount}
       searchValue={isSearchEnabled ? searchValue : undefined}
