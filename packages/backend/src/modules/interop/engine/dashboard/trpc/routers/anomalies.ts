@@ -7,7 +7,7 @@ import {
 import { publicProcedure } from '../procedures'
 import { router } from '../trpc'
 
-interface SuspiciousTransferDto {
+export interface SuspiciousTransferDto {
   plugin: string
   type: string
   transferId: string
