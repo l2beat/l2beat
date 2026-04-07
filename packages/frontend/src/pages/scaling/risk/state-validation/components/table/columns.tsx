@@ -1,6 +1,12 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import type { ProjectScalingProofSystem } from '@l2beat/config'
+import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
@@ -237,30 +243,59 @@ function OptimisticProofSystemCell({
   return (
     <div className="flex items-center gap-4">
       <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
-      {zkCatalog && (
-        <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-          <div
-            className={cn(
-              'flex items-center gap-1 rounded px-1.5 font-medium text-[13px]',
-              // Color priority: green if any successful, else red if any unsuccessful, else grey
-              'border border-secondary bg-secondary/20 text-[#2E3730]',
-              zkCatalog.hasUnsuccessful &&
-                'border border-[#D24D4D] bg-[#D24D4D]/20 text-[#D91919]',
-              zkCatalog.hasSuccessful &&
-                'border border-[#32EB4B] bg-[#32EB4B]/20 text-[#009620]',
-            )}
-          >
-            {zkCatalog.name}
-            {zkCatalog.hasSuccessful && <VerifiedIcon className="size-3.5" />}
-            {zkCatalog.hasNotVerified && (
-              <CircleQuestionMarkIcon className="size-3.5" />
-            )}
-            {zkCatalog.hasUnsuccessful && (
-              <UnverifiedIcon className="size-3.5" />
-            )}
-          </div>
-        </a>
-      )}
+      <div className="flex items-center gap-1.5">
+        {zkCatalog && (
+          <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+            <div
+              className={cn(
+                'flex items-center gap-1 rounded px-1.5 font-medium text-[13px]',
+                // Color priority: green if any successful, else red if any unsuccessful, else grey
+                'border border-secondary bg-secondary/20 text-[#2E3730]',
+                zkCatalog.hasUnsuccessful &&
+                  'border border-[#D24D4D] bg-[#D24D4D]/20 text-[#D91919]',
+                zkCatalog.hasSuccessful &&
+                  'border border-[#32EB4B] bg-[#32EB4B]/20 text-[#009620]',
+              )}
+            >
+              {zkCatalog.name}
+              {zkCatalog.hasSuccessful && <VerifiedIcon className="size-3.5" />}
+              {zkCatalog.hasNotVerified && (
+                <CircleQuestionMarkIcon className="size-3.5" />
+              )}
+              {zkCatalog.hasUnsuccessful && (
+                <UnverifiedIcon className="size-3.5" />
+              )}
+            </div>
+          </a>
+        )}
+        {proofSystem?.challengeProtocol && (
+          <Tooltip>
+            <TooltipTrigger className="h-6">
+              <Badge type="blue" className="block h-6">
+                {proofSystem.challengeProtocol}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              {challengeToDescription(proofSystem.challengeProtocol)}
+            </TooltipContent>
+          </Tooltip>
+        )}
+      </div>
     </div>
   )
+}
+
+function challengeToDescription(
+  challengeProtocol: NonNullable<
+    ProjectScalingProofSystem['challengeProtocol']
+  >,
+) {
+  switch (challengeProtocol) {
+    case 'Single-step':
+      return 'To dispute a proposed state transition, challengers submit a single transaction with the correct state together with a ZK (validity) proof.'
+    case 'Interactive':
+      return 'To dispute a proposed state transition, challengers and proposers participate in a multi-step interactive process to identify and re-execute a single contested instruction.'
+    default:
+      return assertUnreachable(challengeProtocol)
+  }
 }
