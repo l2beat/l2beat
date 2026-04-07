@@ -26,8 +26,8 @@ export async function getDataAvailabilitySummaryData(
         title: 'Data Availability Summary - L2BEAT',
         description:
           'Get an overview of the data availability solutions powering Ethereum scaling projects.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/data-availability/summary/opengraph-image.png',
         },
       }),

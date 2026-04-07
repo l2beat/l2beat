@@ -39,8 +39,8 @@ export async function getGovernanceData(
         title: 'Governance - L2BEAT',
         description:
           'Discover everything about the L2BEAT Governance Team, including the latest insights, analyses, and updates',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/governance/opengraph-image.png',
         },
       }),

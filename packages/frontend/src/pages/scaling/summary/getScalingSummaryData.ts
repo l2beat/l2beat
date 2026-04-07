@@ -33,8 +33,8 @@ export async function getScalingSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/summary/opengraph-image.png',
         },
       }),

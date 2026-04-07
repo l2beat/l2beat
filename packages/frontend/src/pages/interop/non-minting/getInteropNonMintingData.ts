@@ -66,8 +66,9 @@ export async function getInteropNonMintingData(
         description:
           'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
 
+        url: req.originalUrl,
+
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/interop/non-minting/opengraph-image.png',
         },
         excludeFromSearchEngines: mode === 'internal',

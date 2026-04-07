@@ -29,8 +29,8 @@ export async function getZkCatalogData(
         title: 'ZK Catalog - L2BEAT',
         description:
           "Browse L2BEAT's comprehensive catalog of zero-knowledge projects with in-depth research.",
+        url,
         openGraph: {
-          url,
           image: '/meta-images/zk-catalog/opengraph-image.png',
         },
       }),
