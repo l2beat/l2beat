@@ -105,20 +105,22 @@ export function InteropVolumeSection({
         </div>
 
         <div className="flex flex-col gap-5 md:flex-row md:gap-3">
-          <FlowSection
-            title="TOTAL"
-            badge={
-              <Badge size="extraSmall" type="purple">
-                TOTAL
-              </Badge>
-            }
-            flows={data?.flows}
-            getChainDetails={getChainDetails}
-            isLoading={isLoading}
-            className="md:flex-1"
-          />
+          {availableBridgeTypes.length > 1 && (
+            <FlowSection
+              title="TOTAL"
+              badge={
+                <Badge size="extraSmall" className="text-white" type="purple">
+                  TOTAL
+                </Badge>
+              }
+              flows={data?.flows}
+              getChainDetails={getChainDetails}
+              isLoading={isLoading}
+              className="md:flex-1"
+            />
+          )}
           {isLoading
-            ? times(3).map((i) => (
+            ? times(4).map((i) => (
                 <FlowSection
                   key={`skeleton-${i}`}
                   title=""
