@@ -14,8 +14,7 @@ export function getDaRiskFrameworkData(
         description: 'Discover how L2BEAT evaluates data availability risks.',
         openGraph: {
           url,
-          image:
-            '/meta-images/data-availability-risk-framework/opengraph-image.png',
+          image: '/meta-images/da-risk-framework/opengraph-image.png',
         },
       }),
     },
