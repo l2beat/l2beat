@@ -10,17 +10,19 @@ interface TVSSectionProps {
 }
 
 const CHART_COLORS = ['#2563eb', '#60a5fa', '#93c5fd']
+const TOKEN_COLORS = ['#16a34a', '#22c55e', '#4ade80']
 const OTHER_COLOR = '#e2e8f0'
 
 function getFundName(fund: CompiledFundHolder): string {
   return fund.name || fund.address
 }
 
-function getFundValue(fund: CompiledFundHolder): number {
+function getFundValue(fund: CompiledFundHolder, includeTokens: boolean): number {
   if (fund.aggregate?.totalUsdValue) return fund.aggregate.totalUsdValue
   const balanceTotal = fund.balances?.totalUsdValue ?? 0
   const positionTotal = fund.positions?.totalUsdValue ?? 0
-  return balanceTotal + positionTotal
+  const tokenTotal = includeTokens ? (fund.tokenInfo?.tokenValue ?? 0) : 0
+  return balanceTotal + positionTotal + tokenTotal
 }
 
 export function TVSSection({ review, onShowMore }: TVSSectionProps) {
@@ -28,22 +30,32 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
   const { totals, funds } = review
   const totalTvs = totals.totalCapitalAtRisk + (includeTokens ? (totals.totalTokenValue ?? 0) : 0)
 
-  // Build pie data from fund holders — top 3 + "Other"
-  const fundValues = funds
-    .filter((f) => includeTokens || !f.tokenInfo)
-    .map((f) => ({ fund: f, value: getFundValue(f) }))
+  // Build pie data from fund holders — top 3 non-token + top 3 token + "Other"
+  const allFundValues = funds
+    .map((f) => ({ fund: f, value: getFundValue(f, includeTokens), isToken: !!f.tokenInfo }))
     .filter((x) => x.value > 0)
     .sort((a, b) => b.value - a.value)
 
-  const top3 = fundValues.slice(0, 3)
-  const rest = fundValues.slice(3)
-  const otherValue = rest.reduce((s, x) => s + x.value, 0)
+  const nonTokenFunds = allFundValues.filter((x) => !x.isToken)
+  const tokenFunds = allFundValues.filter((x) => x.isToken)
+
+  const topNonToken = nonTokenFunds.slice(0, 3)
+  const topToken = includeTokens ? tokenFunds.slice(0, 3) : []
+  const shownKeys = new Set([...topNonToken, ...topToken].map((x) => x.fund.address))
+  const otherValue = allFundValues
+    .filter((x) => !shownKeys.has(x.fund.address) && (includeTokens || !x.isToken))
+    .reduce((s, x) => s + x.value, 0)
 
   const pieData = [
-    ...top3.map((x, i) => ({
+    ...topNonToken.map((x, i) => ({
       name: getFundName(x.fund),
       value: x.value,
-      color: CHART_COLORS[i],
+      color: CHART_COLORS[i % CHART_COLORS.length],
+    })),
+    ...topToken.map((x, i) => ({
+      name: getFundName(x.fund),
+      value: x.value,
+      color: TOKEN_COLORS[i % TOKEN_COLORS.length],
     })),
     ...(otherValue > 0
       ? [{ name: 'Other', value: otherValue, color: OTHER_COLOR }]
@@ -68,7 +80,7 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
               type="checkbox"
               checked={includeTokens}
               onChange={(e) => setIncludeTokens(e.target.checked)}
-              className="size-3.5 rounded border-border accent-accent"
+              className="size-3.5 rounded border-border accent-green-600"
             />
             <span className="text-[11px] text-text-muted">Include protocol tokens</span>
           </label>

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-11T01:53:35.163Z",
+  "lastModified": "2026-04-07T14:17:13.842Z",
   "contracts": {
     "eth:0x4c517d4e2c851ca76d7ec94b805269df0f2201de": {
       "functions": [
@@ -389,94 +389,6 @@
           "completedBy": {
             "author": "yvesboutellier",
             "date": "2026-03-04T12:50:43.476Z"
-          }
-        }
-      ]
-    },
-    "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d": {
-      "functions": [
-        {
-          "functionName": "transfer",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.multisigAddress"
-            }
-          ],
-          "timestamp": "2026-03-02T12:52:38.228Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-02T12:52:38.228Z"
-          }
-        },
-        {
-          "functionName": "approve",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.multisigAddress"
-            }
-          ],
-          "timestamp": "2026-03-02T12:52:34.617Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-02T12:52:34.617Z"
-          }
-        },
-        {
-          "functionName": "transferFrom",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.multisigAddress"
-            }
-          ],
-          "timestamp": "2026-03-02T12:52:39.226Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-02T12:52:39.226Z"
-          }
-        },
-        {
-          "functionName": "increaseAllowance",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.multisigAddress"
-            }
-          ],
-          "timestamp": "2026-03-02T12:52:36.163Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-02T12:52:36.163Z"
-          }
-        },
-        {
-          "functionName": "decreaseAllowance",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.multisigAddress"
-            }
-          ],
-          "timestamp": "2026-03-02T12:52:35.159Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-02T12:52:35.159Z"
-          }
-        },
-        {
-          "functionName": "sendToLQTYStaking",
-          "isPermissioned": true,
-          "ownerDefinitions": [
-            {
-              "path": "$self.lqtyStakingAddress"
-            }
-          ],
-          "timestamp": "2026-03-11T01:42:24.586Z",
-          "lastChangedBy": {
-            "author": "yvesboutellier",
-            "date": "2026-03-11T01:42:24.586Z"
           }
         }
       ]

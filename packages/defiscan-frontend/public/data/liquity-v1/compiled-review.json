@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-07T10:07:33.411Z",
+  "compiledAt": "2026-04-07T14:17:42.264Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -12,9 +12,9 @@
   },
   "totals": {
     "contractCount": 18,
-    "permissionedFunctionCount": 38,
+    "permissionedFunctionCount": 32,
     "scoredFunctionCount": 0,
-    "adminCount": 6,
+    "adminCount": 4,
     "dependencyCount": 2,
     "totalCapitalAtRisk": 175609673.29952922,
     "totalTokenValueAtRisk": 60403451.700806536,
@@ -136,18 +136,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
               "name": "TroveManager",
               "viewOnlyPath": false,
@@ -216,6 +204,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -310,19 +309,7 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x8fdd3fbfeb32b28fb73555518f8b361bcea741a6",
@@ -484,8 +471,7 @@
               "name": "LQTY Token",
               "viewOnlyPath": false,
               "calledFunctions": [
-                "transfer",
-                "sendToLQTYStaking"
+                "transfer"
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 29200000,
@@ -630,18 +616,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -673,6 +647,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -768,19 +753,7 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
@@ -911,18 +884,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -954,6 +915,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -1104,18 +1076,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -1147,6 +1107,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -1269,19 +1240,7 @@
           "impact": "critical",
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            }
-          ]
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
@@ -1412,18 +1371,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -1455,6 +1402,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -1605,18 +1563,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -1648,6 +1594,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -1847,8 +1804,7 @@
               "name": "LQTY Token",
               "viewOnlyPath": false,
               "calledFunctions": [
-                "transfer",
-                "sendToLQTYStaking"
+                "transfer"
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 29200000,
@@ -2081,18 +2037,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-              "name": "LQTY Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "sendToLQTYStaking",
-                "transfer"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 29200000,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
               "name": "CommunityIssuance",
               "viewOnlyPath": false,
@@ -2102,6 +2046,17 @@
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+              "name": "LQTY Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transfer"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 29200000,
               "fundsAtRisk": true
             },
             {
@@ -2190,98 +2145,6 @@
       "totalDirectTokenValue": 31203451.700806536,
       "totalReachableCapital": 175609673.29952922,
       "totalReachableTokenValue": 60403451.700806536
-    },
-    {
-      "address": "eth:0xb8a9faDA75c6d891fB77a7988Ff9BaD9e485Ca1C",
-      "name": "3/8 38% GnosisSafe",
-      "description": "",
-      "adminType": "Multisig",
-      "isGovernance": false,
-      "functions": [
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "transfer",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": [
-            {
-              "address": "eth:0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "isRegisteredLockup"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "approve",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "transferFrom",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "increaseAllowance",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "decreaseAllowance",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": []
-        }
-      ],
-      "totalDirectCapital": 0,
-      "totalDirectTokenValue": 29200000,
-      "totalReachableCapital": 0,
-      "totalReachableTokenValue": 29200000
-    },
-    {
-      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-      "name": "LQTYStaking",
-      "description": "",
-      "adminType": "Immutable",
-      "isGovernance": false,
-      "functions": [
-        {
-          "contractAddress": "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          "contractName": "LQTY Token",
-          "functionName": "sendToLQTYStaking",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 29200000,
-          "reachableContracts": []
-        }
-      ],
-      "totalDirectCapital": 0,
-      "totalDirectTokenValue": 29200000,
-      "totalReachableCapital": 0,
-      "totalReachableTokenValue": 29200000
     }
   ],
   "adminTotals": {
@@ -3688,38 +3551,7 @@
       "aggregate": null
     }
   ],
-  "functions": [
-    {
-      "contractAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "contractName": "LQTY Token",
-      "functionName": "transfer",
-      "impact": "critical"
-    },
-    {
-      "contractAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "contractName": "LQTY Token",
-      "functionName": "approve",
-      "impact": "critical"
-    },
-    {
-      "contractAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "contractName": "LQTY Token",
-      "functionName": "transferFrom",
-      "impact": "critical"
-    },
-    {
-      "contractAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "contractName": "LQTY Token",
-      "functionName": "increaseAllowance",
-      "impact": "critical"
-    },
-    {
-      "contractAddress": "eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
-      "contractName": "LQTY Token",
-      "functionName": "decreaseAllowance",
-      "impact": "critical"
-    }
-  ],
+  "functions": [],
   "contracts": [
     {
       "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
