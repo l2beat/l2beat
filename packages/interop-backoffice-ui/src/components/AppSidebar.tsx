@@ -64,7 +64,6 @@ const items = [
         title: 'Missing tokens',
         url: '/missing-tokens',
         icon: ViewIcon,
-        isUpcoming: true,
       },
       {
         title: 'Known apps',
