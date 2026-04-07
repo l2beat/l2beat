@@ -75,9 +75,32 @@ Arbitrum has [entered](https://forum.arbitrum.foundation/t/march-2026-security-c
 
 Candidates who successfully pass this phase will move on to the final Member Election stage, scheduled to begin on April 12.
 
+### **Watchdog Program Publishes 6-Month Retrospective**
+
+Entropy [shared](https://forum.arbitrum.foundation/t/watchdog-retrospective/30732) a six-month retrospective of the Arbitrum Watchdog Program, summarizing its role in identifying and recovering misused funds across DAO initiatives. The program received 78 reports (59 unique cases), with 32 confirmed instances of misuse, resulting in a validation rate of ~63% among completed investigations.
+
+In total, the program has recovered 422,316 ARB for the DAO and allocated 280,773 ARB in bounties to reporters. Notably, all confirmed misuse cases were linked to legacy incentive programs, suggesting that more recent initiatives have improved accountability mechanisms. The report outlines lessons learned and potential next steps, including closing out remaining cases and evolving the program toward a future transition under OpCo.
+
+### **Firestarters Program Publishes March Update**
+
+OpCo [shared](https://forum.arbitrum.foundation/t/firestarters-march-monthly-update/30733) a monthly update on the Firestarters program, highlighting continued progress across grant allocations and project development. To date, the program has received 14 applications, with 5 approved and ~$24k allocated, reflecting a selective approach focused on early-stage ecosystem initiatives.
+
+Several projects have already been completed, while others remain in progress or under review. With applications now closed, the program is moving toward its next phase, with a full retrospective report expected soon to evaluate outcomes and guide future iterations.
+
+### **RAD Program Update: March Results and Proposed Adjustments**
+
+The Rewarding Active Delegates program [published](https://forum.arbitrum.foundation/t/rad-update-3-march-2026/30736) its March results alongside a broader operational update, highlighting both participation outcomes and potential changes to the incentive structure. During the month, 36 delegates participated, with 13 meeting the eligibility criteria and a total of $19,500 distributed. While participation remained relatively strong, a significant portion of delegates failed to qualify due to strict requirements around participation thresholds and rationale submission.
+
+In response, OpCo is [considering adjustments](https://forum.arbitrum.foundation/t/rad-update-3-march-2026/30736) to improve alignment between incentives and actual participation. Proposed changes include removing the 75% participation threshold, eliminating the minimum payout requirement, and softening the rationale requirement by applying a small penalty instead of full disqualification. These changes aim to reduce friction and better reflect meaningful engagement, while maintaining accountability within the program.
+
+### **AGV Shares March Update and Portfolio Progress**
+
+Arbitrum Gaming Ventures [published](https://forum.arbitrum.foundation/t/agv-monthly-update-march-26/30735) its March update, highlighting ongoing portfolio activity and the release of its [third Transparency Report](https://docsend.com/view/r9dfyf55xj8bjics). Among key developments, portfolio company Psychedelic Games raised $3.5M to support the development of its upcoming title Golden Tides, backed by investors including KRAFTON and FlyQuest.
+
+The update also points to AGV’s continued efforts to position Arbitrum as a hub for gaming and consumer applications, with the latest transparency report outlining its evolving investment strategy, operational progress, and broader ecosystem engagement.
+
 
 ---
-
 
 ## **ZKsync**
 
@@ -151,15 +174,22 @@ The changes are intended to address growing disparities in validator earnings an
 
 
 ---
+## **Everclear**
 
+### **Everclear Delegate Dashboard Goes Live**
+
+CuriaLab [announced](https://forum.connext.network/t/everclear-delegate-dashboard-by-curialab/1430) the launch of the Everclear Delegate Dashboard, following its selection as the DAO’s dashboard provider for 2026. The tool is designed to serve as a unified source of truth for delegate activity and accountability across Everclear’s multi-chain governance, which currently spans six chains.
+
+The dashboard was delivered with no upfront development cost to the DAO, with funding limited to a one-year maintenance and support period. CuriaLab will continue updating the tool throughout the engagement, incorporating community feedback and ensuring it remains aligned with evolving governance needs.
+
+
+---
 
 ## **Quiet Corner**
 
 Some ecosystems saw no meaningful governance developments this week.
 
 
-
-* **Everclear**
 * **Wormhole**
 * **Hop**
 * **Lisk**
