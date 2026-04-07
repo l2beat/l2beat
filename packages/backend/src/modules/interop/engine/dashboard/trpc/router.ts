@@ -1,7 +1,9 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { createChainsRouter } from './routers/chains'
 import { createEventsRouter } from './routers/events'
+import { createKnownAppsRouter } from './routers/knownApps'
 import { createMessagesRouter } from './routers/messages'
+import { createMissingTokensRouter } from './routers/missingTokens'
 import { createStatusRouter } from './routers/status'
 import { createTransfersRouter } from './routers/transfers'
 import { router } from './trpc'
@@ -13,6 +15,8 @@ export function createInteropTrpcRouter(deps: {
     chains: createChainsRouter(deps),
     events: createEventsRouter(),
     messages: createMessagesRouter(),
+    knownApps: createKnownAppsRouter(),
+    missingTokens: createMissingTokensRouter(),
     status: createStatusRouter(),
     transfers: createTransfersRouter(),
   })

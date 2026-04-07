@@ -34,8 +34,9 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
-      <link rel="canonical" href={metadata.openGraph.url} />
-      {metadata.excludeFromSearchEngines && (
+      <link rel="canonical" href={metadata.canonicalUrl} />
+      {(metadata.excludeFromSearchEngines ||
+        env.DEPLOYMENT_ENV !== 'production') && (
         <meta name="robots" content="noindex" />
       )}
 
@@ -59,12 +60,17 @@ export function Head({ manifest, metadata }: HeadProps) {
   )
 }
 
-function OpengraphMeta({ openGraph: opengraph, title, description }: Metadata) {
+function OpengraphMeta({
+  openGraph: opengraph,
+  title,
+  description,
+  url,
+}: Metadata) {
   return (
     <>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      {opengraph && <meta property="og:url" content={opengraph.url} />}
+      <meta property="og:url" content={url} />
       <meta property="og:site_name" content="L2BEAT" />
       {<meta property="og:type" content={opengraph.type} />}
       <meta property="og:image" content={opengraph.image} />

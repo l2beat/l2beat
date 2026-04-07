@@ -22,9 +22,13 @@ export function SummaryPage() {
             </Button>
             <Button asChild variant="outline">
               <Link to="/messages">Open messages</Link>
+              <Link to="/known-apps">Open known apps</Link>
             </Button>
             <Button asChild variant="outline">
               <Link to="/transfers">Open transfers</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/missing-tokens">Open missing tokens</Link>
             </Button>
           </CardContent>
         </Card>

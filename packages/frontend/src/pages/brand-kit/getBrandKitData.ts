@@ -15,8 +15,8 @@ export async function getBrandKitData(
       metadata: getMetadata(manifest, {
         title: 'Brand Kit - L2BEAT',
         description: 'L2BEAT brand guidelines, logos, and assets for download.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/brand-kit/opengraph-image.png',
         },
       }),

@@ -63,13 +63,11 @@ const items = [
         title: 'Missing tokens',
         url: '/missing-tokens',
         icon: ViewIcon,
-        isUpcoming: true,
       },
       {
         title: 'Known apps',
         url: '/known-apps',
         icon: BookCheckIcon,
-        isUpcoming: true,
       },
     ],
   },

@@ -3,7 +3,6 @@ import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
 type OpenGraph = {
-  url: string
   type: 'article' | 'website'
   image: string
 }
@@ -11,15 +10,17 @@ type OpenGraph = {
 export interface Metadata {
   title: string
   description: string
+  url: string
   openGraph: OpenGraph
+  canonicalUrl: string
   excludeFromSearchEngines?: boolean
 }
 
 type PartialMetadata = {
   title?: string
   description?: string
+  url: string
   openGraph: {
-    url: string
     image: string
     type?: 'article' | 'website'
   }
@@ -30,24 +31,28 @@ export function getMetadata(
   manifest: Manifest,
   metadata: PartialMetadata,
 ): Metadata {
-  const { title, description, openGraph, ...rest } = metadata ?? {}
+  const { title, description, url, openGraph, ...rest } = metadata ?? {}
+  const strippedPath = stripQueryParams(url)
+  const baseUrl = getBaseUrl()
   return {
     title: title ?? 'L2BEAT - The state of the layer two ecosystem',
     description:
       description ??
       'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
-    openGraph: getOpenGraph(manifest, openGraph),
+    url: baseUrl + strippedPath,
+    openGraph: getOpenGraph(manifest, baseUrl, openGraph),
+    // We want canonical to always point to the production URL
+    canonicalUrl: 'https://l2beat.com' + strippedPath,
     ...rest,
   }
 }
 
 function getOpenGraph(
   manifest: Manifest,
-  { url, image, type }: PartialMetadata['openGraph'],
+  baseUrl: string,
+  { image, type }: PartialMetadata['openGraph'],
 ): OpenGraph {
-  const baseUrl = getBaseUrl()
   return {
-    url: baseUrl + stripQueryParams(url),
     image: baseUrl + manifest.getUrl(image),
     type: type ?? 'website',
   }
