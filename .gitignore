@@ -39,4 +39,6 @@ packages/uops-dashboard/src/chains.json
 # Personal
 research-storage.md
 research-permissions.md
-.claude/skills/
+
+.skills
+.agents
