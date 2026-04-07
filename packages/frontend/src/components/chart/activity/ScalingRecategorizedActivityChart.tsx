@@ -141,7 +141,8 @@ export function ScalingRecategorizedActivityChart({
       }}
       milestones={milestones}
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
         <defs>
           <PinkFillGradientDef id="rollups-fill" />
           <PinkStrokeGradientDef id="rollups-stroke" />
