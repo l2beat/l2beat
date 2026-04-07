@@ -22,6 +22,7 @@ import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
+import { createRobotsRouter } from './routers/RobotsRouter'
 import { createSitemapRouter } from './routers/SitemapRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
@@ -46,6 +47,10 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   const productionTemplate = options.dev
     ? undefined
     : readFileSync(CLIENT_TEMPLATE_PATH, 'utf-8')
+
+  // These routers are explicitly added before the express.static to avoid being overwritten by the static files
+  app.use('/', createRobotsRouter())
+  app.use('/', createSitemapRouter())
 
   if (options.dev) {
     app.use('/', express.static('./static'))
@@ -84,7 +89,6 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   app.use(RequestIdMiddleware())
   app.use(MetricsMiddleware())
 
-  app.use('/', createSitemapRouter())
   app.use('/', createMigratedProjectsRouter())
   app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())

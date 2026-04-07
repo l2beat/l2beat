@@ -1,4 +1,3 @@
-import { env } from '~/env'
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
@@ -54,8 +53,5 @@ function getOpenGraph(
 }
 
 function getBaseUrl() {
-  if (env.DEPLOYMENT_ENV === 'production') return 'https://l2beat.com'
-  if (env.DEPLOYMENT_ENV === 'staging') return 'https://fe-stag.l2beat.com'
-  if (env.COOLIFY_URL) return env.COOLIFY_URL
-  return 'http://localhost:3000'
+  return 'https://l2beat.com'
 }
