@@ -2,7 +2,6 @@ import { Address32 } from '@l2beat/shared-pure'
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
 import { SortableHeader } from '~/components/table/SortableHeader'
-import type { SuspiciousTransferRow } from '../types'
 import {
   formatDollars,
   formatTransferTimestamp,
@@ -10,6 +9,7 @@ import {
   shortenHash,
   toCsvIsoTimestamp,
 } from '~/pages/transfers/utils'
+import type { SuspiciousTransferRow } from '../types'
 
 const columnHelper = createColumnHelper<SuspiciousTransferRow>()
 

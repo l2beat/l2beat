@@ -1,5 +1,5 @@
-import { createAnomaliesRouter } from './routers/anomalies'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { createAnomaliesRouter } from './routers/anomalies'
 import { createChainsRouter } from './routers/chains'
 import { createEventsRouter } from './routers/events'
 import { createStatusRouter } from './routers/status'

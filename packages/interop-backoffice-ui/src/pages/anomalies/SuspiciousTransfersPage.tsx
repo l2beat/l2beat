@@ -11,8 +11,8 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
 import { formatDollars } from '~/pages/transfers/utils'
+import { api } from '~/react-query/trpc'
 import { SuspiciousTransfersTable } from './table/SuspiciousTransfersTable'
 import type {
   SuspiciousTransferRow,

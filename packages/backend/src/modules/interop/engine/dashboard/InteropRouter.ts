@@ -8,13 +8,13 @@ import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import { renderAnomaliesPage } from './AnomaliesPage'
+import { renderAnomalyIdPage } from './AnomalyIdPage'
+import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from './anomalies/constants'
-import { renderAnomaliesPage } from './AnomaliesPage'
-import { renderAnomalyIdPage } from './AnomalyIdPage'
-import { renderAggregatesPage } from './aggregates/AggregatesPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
