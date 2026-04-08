@@ -4,7 +4,6 @@ import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import type { ChartRange } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
-import { mergeCanonical } from './mergeCanonical'
 import { rangeToResolution } from './range'
 
 export type SummedTvsValues = {
@@ -51,12 +50,11 @@ export async function getSummedTvsValues(
   if (records.length === 0) {
     return []
   }
-  const mergedCanonicalRecords = records.map(mergeCanonical)
 
-  const timestamps = mergedCanonicalRecords.map((v) => v.timestamp)
+  const timestamps = records.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
-  const groupedByTimestamp = keyBy(mergedCanonicalRecords, (v) => v.timestamp)
+  const groupedByTimestamp = keyBy(records, (v) => v.timestamp)
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
@@ -80,6 +78,11 @@ export async function getSummedTvsValues(
         rwaPublic: null,
       }
     }
-    return record
+
+    const { canonical, customCanonical, ...rest } = record
+    return {
+      ...rest,
+      canonical: canonical + customCanonical,
+    }
   })
 }
