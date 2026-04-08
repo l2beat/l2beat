@@ -4,7 +4,7 @@ import {
   type ProjectId,
 } from '@l2beat/shared-pure'
 import times from 'lodash/times'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Badge } from '~/components/badge/Badge'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { BridgeTypeBadge } from '~/pages/interop/components/table/BridgeTypeBadge'
@@ -13,6 +13,7 @@ import { useInteropSelectedChains } from '~/pages/interop/utils/InteropSelectedC
 import type { ByBridgeTypeData } from '~/server/features/scaling/interop/types'
 import type { InteropFlowData } from '~/server/features/scaling/interop/utils/getFlows'
 import { api } from '~/trpc/React'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
@@ -56,12 +57,19 @@ export function InteropVolumeSection({
     return chain
   }
 
-  const breakdownValues = useMemo(() => {
-    return availableBridgeTypes.map((type) => ({
-      value: entry?.byBridgeType?.[type]?.volume ?? 0,
-      className: bridgeTypeColors[type],
-    }))
-  }, [availableBridgeTypes, entry])
+  const bridgeTypesWithFlows = availableBridgeTypes.filter((type) => {
+    const flows = entry?.byBridgeType?.[type]?.flows
+    return flows !== undefined && flows.length > 0
+  })
+
+  const breakdownValues = bridgeTypesWithFlows.map((type) => ({
+    value: entry?.byBridgeType?.[type]?.volume ?? 0,
+    className: bridgeTypeColors[type],
+  }))
+  const breakdownTotal = breakdownValues.reduce(
+    (sum, value) => sum + value.value,
+    0,
+  )
 
   return (
     <ProjectSection {...sectionProps}>
@@ -85,7 +93,7 @@ export function InteropVolumeSection({
                   values={breakdownValues}
                 />
                 <div className="flex flex-wrap gap-2.5">
-                  {availableBridgeTypes.map((type) => (
+                  {bridgeTypesWithFlows.map((type) => (
                     <div key={type} className="flex items-center gap-1.5">
                       <div
                         className={cn(
@@ -96,6 +104,22 @@ export function InteropVolumeSection({
                       <span className="font-medium text-paragraph-12 text-secondary leading-none">
                         {bridgeTypeLabels[type]}
                       </span>
+                      <span className="font-bold text-paragraph-12 leading-none">
+                        {formatCurrency(
+                          entry?.byBridgeType?.[type]?.volume ?? 0,
+                          'usd',
+                        )}
+                      </span>
+                      <span className="font-bold text-paragraph-12 text-secondary leading-none">
+                        (
+                        {formatPercent(
+                          breakdownTotal === 0
+                            ? 0
+                            : (entry?.byBridgeType?.[type]?.volume ?? 0) /
+                                breakdownTotal,
+                        )}
+                        )
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -105,7 +129,7 @@ export function InteropVolumeSection({
         </div>
 
         <div className="flex flex-col gap-5 md:flex-row md:gap-3">
-          {availableBridgeTypes.length > 1 && (
+          {bridgeTypesWithFlows.length > 1 && (
             <FlowSection
               title="TOTAL"
               badge={
@@ -131,7 +155,7 @@ export function InteropVolumeSection({
                   className="md:flex-1"
                 />
               ))
-            : availableBridgeTypes.map((type) => (
+            : bridgeTypesWithFlows.map((type) => (
                 <FlowSection
                   key={type}
                   title={bridgeTypeLabels[type].toUpperCase()}
