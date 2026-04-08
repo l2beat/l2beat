@@ -35,7 +35,7 @@ describe(TvsCleaner.name, () => {
         deleteSixHourlyUntil: mockFn().resolvesTo(4),
       })
 
-      const indexer = createIndexer({
+      const indexer = await createInitializedIndexer({
         db: mockDatabase({
           tvsTokenValue: tvsTokenValueRepository,
           tvsBlockTimestamp: tvsBlockTimestampRepository,
@@ -89,7 +89,7 @@ describe(TvsCleaner.name, () => {
         deleteSixHourlyUntil: mockFn().resolvesTo(3),
       })
 
-      const indexer = createIndexer({
+      const indexer = await createInitializedIndexer({
         db: mockDatabase({
           tvsTokenValue: tvsTokenValueRepository,
           tvsBlockTimestamp: tvsBlockTimestampRepository,
@@ -100,15 +100,23 @@ describe(TvsCleaner.name, () => {
 
       const from = day('2026-04-01T00:00:00Z')
       const to = day('2026-04-30T00:00:00Z')
-      const currentTarget = timestamp('2026-04-30T00:00:00Z')
+      const adjustedFrom =
+        from !== 0 ? UnixTime((from - 1) * UnixTime.DAY) : undefined
+      const adjustedTo = UnixTime(to * UnixTime.DAY)
       const syncOptimizer = testSyncOptimizer()
       const hourlyRange = {
-        from: undefined,
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(currentTarget),
+        from:
+          adjustedFrom !== undefined
+            ? syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedFrom)
+            : undefined,
+        to: syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
       }
       const sixHourlyRange = {
-        from: undefined,
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(currentTarget),
+        from:
+          adjustedFrom !== undefined
+            ? syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedFrom)
+            : undefined,
+        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
       }
 
       const result = await indexer.update(from, to)
@@ -146,11 +154,31 @@ function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
     }),
     syncOptimizer: testSyncOptimizer(),
     parents: [],
-    indexerService: mockObject<IndexerService>(),
-    minHeight: 0,
+    indexerService: mockObject<IndexerService>({
+      getSavedConfigurations: mockFn().resolvesTo([]),
+      insertConfigurations: mockFn().resolvesTo(undefined),
+      upsertConfigurations: mockFn().resolvesTo(undefined),
+      deleteConfigurations: mockFn().resolvesTo(undefined),
+      updateConfigurationsCurrentHeight: mockFn().resolvesTo(undefined),
+      setInitialState: mockFn().resolvesTo(undefined),
+    }),
+    repositories: [
+      'tvsTokenValue',
+      'tvsBlockTimestamp',
+      'tvsAmount',
+      'tvsPrice',
+    ],
   }
 
   return new TvsCleaner({ ...defaults, ...overrides }, Logger.SILENT)
+}
+
+async function createInitializedIndexer(
+  overrides: Partial<TvsCleanerDeps> = {},
+): Promise<TvsCleaner> {
+  const indexer = createIndexer(overrides)
+  await indexer.initialize()
+  return indexer
 }
 
 function timestamp(value: string): UnixTime {

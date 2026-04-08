@@ -225,9 +225,14 @@ export function initTvsModule({
     {
       parents: [dayTargetIndexer],
       indexerService,
-      minHeight: 0,
       db,
       syncOptimizer,
+      repositories: [
+        'tvsTokenValue',
+        'tvsBlockTimestamp',
+        'tvsAmount',
+        'tvsPrice',
+      ],
     },
     logger,
   )

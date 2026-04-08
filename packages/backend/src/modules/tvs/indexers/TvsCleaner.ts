@@ -3,34 +3,69 @@ import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
-import {
-  ManagedChildIndexer,
-  type ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
+import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
-export interface TvsCleanerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
-  db: Database
-  syncOptimizer: SyncOptimizer
+interface CleanableRepository {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number>
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number>
 }
 
-export class TvsCleaner extends ManagedChildIndexer {
+interface CleanDateRange {
+  from: UnixTime | undefined
+  to: UnixTime
+}
+
+type CleanableRepoName = {
+  [K in keyof Database]: Database[K] extends CleanableRepository ? K : never
+}[keyof Database]
+
+type TvsCleanerConfig = {
+  name: CleanableRepoName
+}
+
+export interface TvsCleanerDeps
+  extends Omit<
+    ManagedMultiIndexerOptions<TvsCleanerConfig>,
+    'name' | 'configurations'
+  > {
+  syncOptimizer: SyncOptimizer
+  repositories: CleanableRepoName[]
+}
+
+export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
   constructor(
     private readonly $: TvsCleanerDeps,
     logger: Logger,
   ) {
+    const { repositories, ...rest } = $
     super(
       {
-        ...$,
+        ...rest,
         name: INDEXER_NAMES.TVS_CLEANER,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+        dataWipingAfterDeleteDisabled: true,
+        configurations: repositories.map((name) => ({
+          id: this.repoNameToConfigId(name),
+          minHeight: 0,
+          maxHeight: null,
+          properties: { name },
+        })),
       },
       logger,
     )
   }
 
-  override async update(from: number, to: number): Promise<number> {
+  override multiUpdate(
+    from: number,
+    to: number,
+    configurations: Configuration<TvsCleanerConfig>[],
+  ) {
     const adjustedFrom = from !== 0 ? (from - 1) * UnixTime.DAY : undefined
     const adjustedTo = UnixTime(to * UnixTime.DAY)
     const hourlyRange = {
@@ -46,42 +81,34 @@ export class TvsCleaner extends ManagedChildIndexer {
       to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
     }
 
-    await this.$.db.transaction(async () => {
-      const tokenValueHourlyDeletedRecords =
-        await this.$.db.tvsTokenValue.deleteHourlyUntil(hourlyRange)
-      const blockTimestampHourlyDeletedRecords =
-        await this.$.db.tvsBlockTimestamp.deleteHourlyUntil(hourlyRange)
-      const amountHourlyDeletedRecords =
-        await this.$.db.tvsAmount.deleteHourlyUntil(hourlyRange)
-      const priceHourlyDeletedRecords =
-        await this.$.db.tvsPrice.deleteHourlyUntil(hourlyRange)
+    return Promise.resolve(async () => {
+      const details: Record<string, number> = {}
 
-      const tokenValueSixHourlyDeletedRecords =
-        await this.$.db.tvsTokenValue.deleteSixHourlyUntil(sixHourlyRange)
-      const blockTimestampSixHourlyDeletedRecords =
-        await this.$.db.tvsBlockTimestamp.deleteSixHourlyUntil(sixHourlyRange)
-      const amountSixHourlyDeletedRecords =
-        await this.$.db.tvsAmount.deleteSixHourlyUntil(sixHourlyRange)
-      const priceSixHourlyDeletedRecords =
-        await this.$.db.tvsPrice.deleteSixHourlyUntil(sixHourlyRange)
+      for (const configuration of configurations) {
+        const repository = this.$.db[configuration.properties.name]
+
+        const hourlyDeleted = await repository.deleteHourlyUntil(hourlyRange)
+        const sixHourlyDeleted =
+          await repository.deleteSixHourlyUntil(sixHourlyRange)
+
+        details[`${configuration.properties.name}Hourly`] = hourlyDeleted
+        details[`${configuration.properties.name}SixHourly`] = sixHourlyDeleted
+      }
 
       this.logger.info('Cleaned TVS records', {
         until: adjustedTo,
-        tokenValueHourlyDeletedRecords,
-        blockTimestampHourlyDeletedRecords,
-        amountHourlyDeletedRecords,
-        priceHourlyDeletedRecords,
-        tokenValueSixHourlyDeletedRecords,
-        blockTimestampSixHourlyDeletedRecords,
-        amountSixHourlyDeletedRecords,
-        priceSixHourlyDeletedRecords,
+        ...details,
       })
-    })
 
-    return to
+      return to
+    })
   }
 
-  override invalidate(targetHeight: number): Promise<number> {
-    return Promise.resolve(targetHeight)
+  override removeData(_configurations: RemovalConfiguration[]): Promise<void> {
+    return Promise.resolve()
+  }
+
+  private repoNameToConfigId(name: CleanableRepoName): string {
+    return name.padEnd(12, '_').slice(0, 12)
   }
 }
