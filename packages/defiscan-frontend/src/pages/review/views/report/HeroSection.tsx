@@ -32,6 +32,9 @@ export function HeroSection({ review, onExportPdf }: HeroSectionProps) {
       <div className="col-span-12 lg:col-span-7 flex flex-col justify-center py-8 lg:py-12">
         {/* Date row */}
         <div className="flex items-center gap-3 mb-4">
+          <span className="bg-[#059669] text-white font-bold text-[10px] uppercase tracking-[0.5px] px-[10px] py-[2px] rounded-[2px]">
+            Active
+          </span>
           <span className="font-mono text-xs text-text-muted uppercase">
             Updated: {updateDate}
           </span>

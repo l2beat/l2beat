@@ -119,7 +119,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Funds Tracking (DeBank API, Morpho vault onchain positions, `funds-data.json`, aggregate funds via The Graph subgraphs)
 - DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
   - Gallery Page (`/gallery` — card grid of all protocols with radar chart, filters, pagination, status badge)
-  - Report Page redesign (outer frame sections for admins/deps/governance, empty states, hero without tier badge)
+  - Report Page redesign (outer frame sections for admins/deps/TVS/activity/governance, ShowMore opens modal with explorer tab content, empty states, hero with Active badge)
 - Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 - Discovery Agent (`/run-discovery` Claude Code skill — iterative contract discovery, external/governance/funds tagging, handler configuration, array overflow error fixing)
@@ -277,6 +277,7 @@ packages/
 │   ├── FundsSection.tsx            # Funds display in DeFiScan panel (tokens, aggregate, contracts)
 │   ├── addressUtils.ts             # Frontend address utilities (stripChainPrefix, addressesEqual, normalizeForLookup, findByAddress)
 │   ├── ownerResolution.ts          # Shared owner/field path resolution (UI + backend data access)
+│   ├── functionNavigationStore.ts  # Zustand store for cross-panel function navigation (click-to-expand in Write Functions)
 │   └── icons/
 ├── l2b/src/implementations/discovery-ui/defidisco/
 │   ├── permissionOverrides.ts

@@ -65,9 +65,22 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
   const pieTotal = pieData.reduce((s, x) => s + x.value, 0)
 
   return (
-    <div className="flex flex-col sm:flex-row gap-[30px] items-stretch">
+    <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
+      {/* Section label */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+          </svg>
+          <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
+            Total Value Secured
+          </span>
+        </div>
+        <ShowMoreButton onClick={onShowMore} />
+      </div>
+      <div className="flex flex-col sm:flex-row gap-[30px] items-stretch">
       {/* Left stats card */}
-      <div className="sm:w-[312px] sm:shrink-0 bg-bg-card border border-border rounded-lg p-6 sm:p-[33px] flex flex-col sm:justify-center gap-6 sm:gap-8">
+      <div className="sm:w-[312px] sm:shrink-0 bg-bg-card rounded-lg p-6 sm:p-[33px] flex flex-col sm:justify-center gap-6 sm:gap-8">
         <div className="flex flex-col">
           <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
             Total TVS
@@ -97,12 +110,9 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
 
       {/* Right chart + legend */}
       <div className="flex-1 min-w-0 bg-white border border-border rounded-lg p-6 sm:p-[33px] flex flex-col gap-6 sm:gap-8">
-        <div className="flex items-center justify-between">
-          <p className="font-bold text-[12px] uppercase text-text-muted tracking-[1.2px]">
-            TVS Distribution
-          </p>
-          <ShowMoreButton onClick={onShowMore} />
-        </div>
+        <p className="font-bold text-[12px] uppercase text-text-muted tracking-[1.2px]">
+          TVS Distribution
+        </p>
 
         {pieData.length > 0 ? (
           <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
@@ -166,6 +176,7 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
         ) : (
           <p className="text-text-muted text-sm">No fund distribution data available.</p>
         )}
+      </div>
       </div>
     </div>
   )

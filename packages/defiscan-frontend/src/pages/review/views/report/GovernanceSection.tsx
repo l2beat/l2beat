@@ -111,7 +111,7 @@ export function GovernanceSection({ review, onShowMore }: GovernanceSectionProps
           </svg>
         }
         label="Governance"
-        action={<ShowMoreButton onClick={onShowMore} />}
+        action={governanceAdmins.length > 0 ? <ShowMoreButton onClick={onShowMore} /> : undefined}
       />
 
       {governanceAdmins.length === 0 ? (

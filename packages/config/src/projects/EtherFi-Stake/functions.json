@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-26T13:55:53.609Z",
+  "lastModified": "2026-04-08T15:24:18.421Z",
   "contracts": {
     "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": {
       "functions": [
@@ -1326,13 +1326,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:03.610Z",
+          "timestamp": "2026-04-08T15:24:08.544Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:03.610Z"
+            "date": "2026-04-08T15:24:08.544Z"
           }
         },
         {
@@ -1340,13 +1340,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:03.614Z",
+          "timestamp": "2026-04-08T15:24:18.421Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:03.614Z"
+            "date": "2026-04-08T15:24:18.421Z"
           }
         },
         {
@@ -2491,13 +2491,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.062Z",
+          "timestamp": "2026-04-08T08:57:38.681Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.062Z"
+            "date": "2026-04-08T08:57:38.681Z"
           }
         },
         {
@@ -2505,13 +2505,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.066Z",
+          "timestamp": "2026-04-08T08:58:12.451Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.066Z"
+            "date": "2026-04-08T08:58:12.451Z"
           }
         },
         {
@@ -3385,13 +3385,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.453Z",
+          "timestamp": "2026-04-08T15:23:08.863Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.453Z"
+            "date": "2026-04-08T15:23:08.863Z"
           }
         },
         {
@@ -3399,13 +3399,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.458Z",
+          "timestamp": "2026-04-08T15:23:18.319Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.458Z"
+            "date": "2026-04-08T15:23:18.319Z"
           }
         },
         {
@@ -4319,13 +4319,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.845Z",
+          "timestamp": "2026-04-08T15:22:54.670Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.845Z"
+            "date": "2026-04-08T15:22:54.670Z"
           }
         },
         {
@@ -4333,13 +4333,13 @@
           "isPermissioned": true,
           "ownerDefinitions": [
             {
-              "path": "@roleRegistry.roles.PROTOCOL_UPGRADER"
+              "path": "@roleRegistry.owner"
             }
           ],
-          "timestamp": "2026-03-24T10:31:04.849Z",
+          "timestamp": "2026-04-08T15:23:32.282Z",
           "lastChangedBy": {
             "author": "unknown",
-            "date": "2026-03-24T10:31:04.849Z"
+            "date": "2026-04-08T15:23:32.282Z"
           }
         },
         {

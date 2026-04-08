@@ -1,11 +1,11 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-07T16:00:00.000Z",
+  "lastModified": "2026-04-08T15:33:26.619Z",
   "protocolSlug": "Frankencoin",
   "protocolName": "Frankencoin",
   "tokenName": "ZCHF",
   "chain": "Ethereum",
-  "projectType": "cdp",
+  "projectType": "stablecoin",
   "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding {{equityReserve}}, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token.",
   "admins": {
     "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
@@ -141,18 +141,34 @@
               "type": "dataTable",
               "dataSource": "project.contracts",
               "columns": [
-                { "field": "name", "header": "Name" },
-                { "field": "address", "header": "Address", "format": "address" },
-                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
               ],
-              "filters": { "excludeExternal": true }
+              "filters": {
+                "excludeExternal": true
+              }
             }
           ]
         },
         {
           "title": "Audits",
           "content": [
-            { "type": "text", "content": "" }
+            {
+              "type": "text",
+              "content": ""
+            }
           ]
         }
       ]

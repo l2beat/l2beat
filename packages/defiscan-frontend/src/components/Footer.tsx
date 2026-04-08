@@ -3,15 +3,12 @@ export function Footer() {
     <footer className="bg-bg-primary border-t border-border/15 mt-16">
       <div className="mx-auto max-w-[1536px] px-6 md:px-12 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex flex-col items-center md:items-start gap-1">
-          <div className="flex items-center gap-2 pb-1">
+          <div className="flex items-center pb-1">
             <img
-              src="/defiscan-mark-blue.svg"
-              alt=""
-              className="size-6"
+              src="/defiscan-logo-blue.svg"
+              alt="DEFISCAN"
+              className="h-7"
             />
-            <span className="text-xl font-black text-text-primary tracking-[-1px]">
-              DEFISCAN
-            </span>
           </div>
           <p className="text-[11px] font-normal text-text-muted uppercase tracking-[0.55px]">
             &copy; {new Date().getFullYear()} DeFi Collective. All rights reserved.

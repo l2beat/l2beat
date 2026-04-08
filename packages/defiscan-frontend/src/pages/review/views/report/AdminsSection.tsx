@@ -120,13 +120,16 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
   return (
     <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
       {/* Section label */}
-      <div className="flex items-center gap-2">
-        <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-        </svg>
-        <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
-          Administrative Control
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+          </svg>
+          <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
+            Administrative Control
+          </span>
+        </div>
+        <ShowMoreButton onClick={onShowMore} />
       </div>
       <div className="flex flex-col sm:flex-row gap-[30px] items-start">
       {/* Left: bar chart card — contains header + rows */}
@@ -138,7 +141,6 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
             </svg>
           }
           label="Top Admins"
-          action={<ShowMoreButton onClick={onShowMore} />}
         />
         <div className="flex flex-col gap-[32px]">
           {displayedAdmins.map((admin) => {

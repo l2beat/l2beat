@@ -98,13 +98,16 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
   return (
     <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
       {/* Section label */}
-      <div className="flex items-center gap-2">
-        <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-        </svg>
-        <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
-          Dependencies
-        </span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+          </svg>
+          <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
+            Dependencies
+          </span>
+        </div>
+        <ShowMoreButton onClick={onShowMore} />
       </div>
       <div className="flex flex-col sm:flex-row gap-[30px] items-start">
       {/* Left sidebar — same bg as outer frame so it blends */}
@@ -145,7 +148,6 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
             </svg>
           }
           label="Top Dependencies"
-          action={<ShowMoreButton onClick={onShowMore} />}
         />
         {/* One row per entity group */}
         <div className="flex flex-col gap-6">

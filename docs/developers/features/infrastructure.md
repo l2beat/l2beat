@@ -221,7 +221,7 @@ When `ETHEREUM_RPC_URL_FOR_DISCOVERY` is set, defiscan-endpoints detects Morpho 
 - **Data Model**: Static JSON — reads pre-compiled `compiled-review.json` from `public/data/<slug>/`
 - **Build Script**: `scripts/compile-data.ts` — aggregates compiled reviews into `public/data/index.json` with global stats, entity-grouped dependency counts, and active admin counts (excludes Immutable/Revoked)
 - **Pages**: Landing (hero + stats + protocol table), Gallery (`/gallery` — card grid), Review (3 views: Report, Explorer, Activity), Compare (side-by-side charts), About (mission, methodology, team)
-- **Navigation**: Header "Reports" link → `/gallery`. "Back to all reviews" in ReviewPage → `/gallery`. Landing "Browse Gallery" CTA → `/gallery`. Old `/protocols` list page still exists but is no longer linked from the main nav.
+- **Navigation**: Header "Reports" link → `/gallery`. "Back to gallery" in ReviewPage → `/gallery`. Landing "Browse Gallery" CTA → `/gallery`. Old `/protocols` list page still exists but is no longer linked from the main nav.
 - **Explorer Tabs** (in order): Overview, Funds, Admins, Governance, Dependencies, Contracts
   - **Admins tab**: Shows non-governance human admins only (`getHumanAdmins().filter(!isGovernance)`)
   - **Governance tab**: Shows governance contracts only (`admins.filter(isGovernance)`), same table layout as Admins but without the Type column
@@ -253,26 +253,41 @@ The report view received a full visual redesign:
 
 - **Page background**: Entire `ReviewPage` is `bg-white`; hero section no longer has a bottom border
 - **Hero (`HeroSection.tsx`)**:
-  - No tier badge (previously "Verified Tier 1" — removed, no real logic behind it)
+  - Green "Active" badge (bg `#059669`, white bold 10px uppercase text, `px-[10px] py-[2px] rounded-[2px]`) to the left of the "Updated:" date
   - Description clamped to 3 lines with a "Show more" button to expand
   - Radar card background: `bg-[#f8fafc]` (slate-50)
   - Layout: `col-span-7` text / `col-span-5` radar chart
+- **Outer frame pattern** (shared by Admins, Dependencies, TVS, Activity sections):
+  - Outer container: `bg-bg-card border border-border rounded-lg p-5 sm:p-[33px]`
+  - Section label row at top with icon + uppercase label + ShowMore button (top-right, opens a modal with the full explorer tab content)
+  - Inner white card: `bg-white border border-border rounded-lg` for detailed content
+  - Sidebar stats card: same `bg-bg-card` as outer frame, no border (visually blends in)
 - **Admins section (`AdminsSection.tsx`)**:
-  - Outer frame: `bg-bg-card border border-border rounded-lg` with "ADMINISTRATIVE CONTROL" section label
-  - Inner list card: `bg-white border border-border rounded-lg` — top 3 admins sorted by `totalReachableCapital` descending, ShowMore button links to explorer tab
-  - Sidebar stats: same `bg-bg-card` as outer frame, no border (visually blends in), shows Impacted TVS % and admin count
+  - "ADMINISTRATIVE CONTROL" label, ShowMore button in outer frame header
+  - Inner white card: top 3 admins sorted by `totalReachableCapital` descending
+  - Sidebar stats: Impacted TVS % and admin count
   - **Empty state** (no admins or all Immutable): full frame with centered shield icon + "No permissioned resources" + zeroed stats sidebar
 - **Dependencies section (`DependenciesSection.tsx`)**:
-  - Same outer frame pattern as Admins, with "DEPENDENCIES" section label
+  - "DEPENDENCIES" label, ShowMore button in outer frame header
   - Groups sorted by total funds descending, top 3 shown
   - **Empty state**: full frame with centered shield icon + "No external dependencies detected" + zeroed stats sidebar
+- **TVS section (`TVSSection.tsx`)**:
+  - "TOTAL VALUE SECURED" label, ShowMore button in outer frame header
+  - Left sidebar stats (blends with outer frame): Total TVS, include-tokens checkbox, contracts count
+  - Right white card: "TVS Distribution" donut chart + legend
+- **Activity section (`ActivitySection.tsx`)**:
+  - "PROTOCOL ACTIVITY" label, ShowMore button in outer frame header
+  - Shows last 3 events; vertical ellipsis (⋮) button at bottom when more exist (triggers ShowMore)
+  - **Empty state**: full frame with centered shield icon + "No protocol changes recorded yet."
 - **Governance section (`GovernanceSection.tsx`)**:
+  - ShowMore button hidden when no governance admins (only shown when `governanceAdmins.length > 0`)
   - **Empty state** (no governance admins): white inner card with centered shield icon + "No governance system detected"
 - **`dependencyEntityGroups` (anti-double-counting)**: The report page groups deps by entity and previously summed `dep.totalFundsAtRisk` per group — double-counting when multiple deps of the same entity reach the same contracts. The compiler now emits a `dependencyEntityGroups` array with per-entity deduplicated totals. `DependenciesSection.tsx` uses these for bar chart values and the "Impacted TVS" stat, with a fallback for old compiled reviews.
-- **Code Quality section (`CodeQualitySection.tsx`)**:
+- **Source Code section (`CodeQualitySection.tsx`)**:
   - Audits sorted newest-first by `date` (format `yyyy-mm`, lexicographic sort)
   - Bug Bounty row is a clickable `<a>` linking to the bounty audit entry's URL (when a `bounty`-bearing audit exists)
   - Source code resources (`type: 'source-code'` / `type: 'github'`) are **excluded** from the Audit Reports carousel — only `audits[]` entries appear there
+- **Footer (`Footer.tsx`)**: Uses the same full logo (`defiscan-logo-blue.svg`) as the header
 
 ### Shareable Report View
 

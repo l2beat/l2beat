@@ -71,7 +71,7 @@ export function ReviewPage() {
             to="/gallery"
             className="mt-4 inline-block font-medium text-accent hover:text-blue-800"
           >
-            Back to all reviews
+            Back to gallery
           </Link>
         </div>
       </div>
@@ -100,7 +100,7 @@ export function ReviewPage() {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Back to all reviews
+            Back to gallery
           </Link>
           <div className="print:hidden">
             <ViewModeToggle current={view} onChange={handleViewChange}>

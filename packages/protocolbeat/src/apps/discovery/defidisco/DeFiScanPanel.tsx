@@ -14,6 +14,7 @@ import {
   stripChainPrefix,
 } from './addressUtils'
 import { useContractTags } from './hooks/useContractTags'
+import { useFunctionNavigationStore } from './functionNavigationStore'
 import { resolvePathExpression, UIContractDataAccess } from './ownerResolution'
 import { ProxyTypeTag } from './ProxyTypeTag'
 import { buildProxyTypeMap } from './proxyTypeUtils'
@@ -293,6 +294,11 @@ function StatusOfReviewSection({
               />
             </div>
           </div>
+
+          <UnresolvedPermissionsSection
+            projectData={projectData}
+            functions={functions}
+          />
         </div>
       </div>
     </div>
@@ -676,6 +682,212 @@ function ContractsWithPermissionsTable({
             </div>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+interface UnresolvedFunction {
+  functionName: string
+  /** The actual address where the function is stored (may be implementation address) */
+  sourceAddress: string
+  reason: string
+}
+
+interface UnresolvedContract {
+  address: string
+  name: string
+  functions: UnresolvedFunction[]
+}
+
+function UnresolvedPermissionsSection({
+  projectData,
+  functions,
+}: {
+  projectData: any
+  functions: any
+}) {
+  const selectGlobal = usePanelStore((state) => state.select)
+  const navigateToFunction = useFunctionNavigationStore(
+    (s) => s.navigateToFunction,
+  )
+
+  const unresolvedContracts = useMemo(() => {
+    if (!functions.contracts) return []
+
+    const allContracts = projectData?.entries
+      ? projectData.entries.flatMap((e: any) => [
+          ...e.initialContracts,
+          ...e.discoveredContracts,
+        ])
+      : []
+    const dataAccess = new UIContractDataAccess(allContracts)
+    const contractInfoMap = buildContractsMap(projectData)
+
+    // Build impl -> proxy map
+    const implToProxy = new Map<string, string>()
+    Object.keys(functions.contracts).forEach((addr) => {
+      const implAddr = getImplementationAddress(addr, projectData)
+      if (implAddr && functions.contracts[implAddr]) {
+        implToProxy.set(implAddr, addr)
+      }
+    })
+
+    const result = new Map<string, UnresolvedContract>()
+    const processed = new Set<string>()
+
+    const collectUnresolved = (
+      addr: string,
+      displayAddress: string,
+      displayName: string,
+    ) => {
+      const perms = functions.contracts[addr]
+      if (!perms) return
+
+      perms.functions.forEach((func: any) => {
+        if (func.isPermissioned !== true) return
+
+        let isUnresolved = false
+        let reason = ''
+
+        if (!func.ownerDefinitions || func.ownerDefinitions.length === 0) {
+          isUnresolved = true
+          reason = 'No owner defined'
+        } else {
+          const errors: string[] = []
+          let anyResolved = false
+
+          for (const ownerDef of func.ownerDefinitions) {
+            const result = resolvePathExpression(
+              dataAccess,
+              addr,
+              ownerDef.path,
+            )
+            if (!result.error && result.addresses.length > 0) {
+              anyResolved = true
+              break
+            }
+            if (result.error) {
+              errors.push(`${ownerDef.path}: ${result.error}`)
+            } else {
+              errors.push(`${ownerDef.path}: resolved to empty`)
+            }
+          }
+
+          if (!anyResolved) {
+            isUnresolved = true
+            reason = errors.join('; ')
+          }
+        }
+
+        if (isUnresolved) {
+          let entry = result.get(displayAddress)
+          if (!entry) {
+            entry = {
+              address: displayAddress,
+              name: displayName,
+              functions: [],
+            }
+            result.set(displayAddress, entry)
+          }
+          entry.functions.push({
+            functionName: func.functionName,
+            sourceAddress: addr,
+            reason,
+          })
+        }
+      })
+    }
+
+    Object.keys(functions.contracts).forEach((permissionAddress) => {
+      if (processed.has(permissionAddress)) return
+
+      const proxyAddr = implToProxy.get(permissionAddress)
+
+      if (proxyAddr) {
+        // Implementation with a proxy - merge under proxy
+        processed.add(permissionAddress)
+        processed.add(proxyAddr)
+
+        const contractInfo = contractInfoMap.get(proxyAddr) || {
+          address: proxyAddr,
+          name: 'Unknown Contract',
+        }
+        collectUnresolved(permissionAddress, proxyAddr, contractInfo.name)
+        collectUnresolved(proxyAddr, proxyAddr, contractInfo.name)
+      } else {
+        const implAddr = getImplementationAddress(
+          permissionAddress,
+          projectData,
+        )
+        if (implAddr && functions.contracts[implAddr]) {
+          return // handled in impl case
+        }
+
+        processed.add(permissionAddress)
+
+        const proxyForImpl = findProxyForImplementation(
+          permissionAddress,
+          projectData,
+        )
+        const displayAddress = proxyForImpl || permissionAddress
+        const contractInfo = contractInfoMap.get(displayAddress) || {
+          address: displayAddress,
+          name: 'Unknown Contract',
+        }
+        collectUnresolved(permissionAddress, displayAddress, contractInfo.name)
+      }
+    })
+
+    return Array.from(result.values())
+  }, [projectData, functions])
+
+  if (unresolvedContracts.length === 0) return null
+
+  const totalUnresolved = unresolvedContracts.reduce(
+    (sum, c) => sum + c.functions.length,
+    0,
+  )
+
+  return (
+    <div className="mt-2">
+      <div className="mb-1 font-semibold">Unresolved Permissions:</div>
+      <div className="ml-4 flex flex-col gap-1 text-xs">
+        <span>
+          Unresolved functions:{' '}
+          <span className="text-aux-red">{totalUnresolved}</span>
+        </span>
+        <div className="mt-1">
+          {unresolvedContracts.map((contract) => (
+            <div key={contract.address} className="mb-1">
+              <div
+                className="cursor-pointer rounded px-1 py-0.5 transition-colors hover:bg-coffee-500"
+                onClick={() => selectGlobal(contract.address)}
+              >
+                <span className="text-aux-orange">
+                  {getContractDisplayName(contract)}
+                </span>
+              </div>
+              <div className="ml-4 flex flex-col gap-0.5">
+                {contract.functions.map((fn) => (
+                  <div
+                    key={fn.functionName}
+                    className="cursor-pointer rounded px-1 py-0.5 transition-colors hover:bg-coffee-500"
+                    onClick={() => {
+                      selectGlobal(contract.address)
+                      navigateToFunction(fn.sourceAddress, fn.functionName)
+                    }}
+                  >
+                    <span className="text-white">{fn.functionName}</span>
+                    <span className="ml-2 text-[10px] text-coffee-400">
+                      {fn.reason}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

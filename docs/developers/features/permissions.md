@@ -91,6 +91,10 @@
 - **Performance**: Only re-resolves when discovery changes detected
 - **Documentation**: See `packages/backend/src/modules/permission-monitor/defidisco/README.md`
 
+## Unresolved Permissions Diagnostic
+
+The DeFiScan panel shows an **Unresolved Permissions** section listing permissioned functions with no owner definitions or where all owner path resolutions fail. Clicking a function selects the contract and auto-expands the function in the Values panel via `useFunctionNavigationStore` (`functionNavigationStore.ts`). Uses `sourceAddress` (may be implementation address) for navigation to match `FunctionFolder`'s `abi.address` prop.
+
 ## Permission Overrides Data Structure
 
 **Contract-Grouped Format**: Optimized for O(1) contract lookups and efficient data access

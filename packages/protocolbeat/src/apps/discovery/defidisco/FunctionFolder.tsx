@@ -46,6 +46,7 @@ import { IconLockOpen } from './IconLockOpen'
 import { IconOpen } from './IconOpen'
 import { IconVoltage } from './IconVoltage'
 import { IconVoltageSlash } from './IconVoltageSlash'
+import { useFunctionNavigationStore } from './functionNavigationStore'
 import {
   resolveFieldValue,
   resolvePathExpression,
@@ -171,6 +172,28 @@ export function FunctionFolder({
 }: FunctionFolderProps) {
   const { project } = useParams()
   const [isOpen, setIsOpen] = useState(false)
+  const folderRef = useRef<HTMLDivElement>(null)
+
+  // Auto-expand and scroll when targeted by function navigation
+  const navTarget = useFunctionNavigationStore((s) => s.target)
+  const clearNavTarget = useFunctionNavigationStore((s) => s.clearTarget)
+
+  useEffect(() => {
+    if (
+      navTarget &&
+      navTarget.functionName === functionName &&
+      addressesEqual(navTarget.contractAddress, contractAddress)
+    ) {
+      setIsOpen(true)
+      requestAnimationFrame(() => {
+        folderRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+        clearNavTarget()
+      })
+    }
+  }, [navTarget, functionName, contractAddress, clearNavTarget])
 
   // Get current function data for this function
   const currentFunction = functions.find(
@@ -1126,7 +1149,7 @@ export function FunctionFolder({
   }
 
   return (
-    <div className="overflow-x-auto border-coffee-600 border-t">
+    <div ref={folderRef} className="overflow-x-auto border-coffee-600 border-t">
       {/* Function header with icons and signature */}
       <button
         onClick={() => setIsOpen(!isOpen)}

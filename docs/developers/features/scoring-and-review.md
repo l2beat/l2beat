@@ -253,10 +253,10 @@ Security audit reports and bug bounty programs stored as a separate `AuditEntry[
   - `author`: Auditing firm name (e.g. `"Trail of Bits"`, `"OpenZeppelin"`)
   - `date`: Audit date in `"YYYY-MM"` or `"YYYY-MM-DD"` format
   - `scope`: Optional short description of what was audited (e.g. `"Core contracts"`, `"Staking module"`)
-  - `bounty`: Max bug bounty payout in USD as a plain number (e.g. `500000` for $500K). When set and non-zero, this value is used for the Bug Bounty stat in the defiscan-frontend Code Quality section.
+  - `bounty`: Max bug bounty payout in USD as a plain number (e.g. `500000` for $500K). When set and non-zero, this value is used for the Bug Bounty stat in the defiscan-frontend Source Code section.
 - **Bug bounty entries**: Use `author` = hosting platform (e.g. `"Immunefi"`, `"HackerOne"`), `scope: "Bug Bounty Program"`, and set `bounty` to the maximum payout. These are always separate entries — never merge bounty info into an audit report entry.
 - **Compiler**: Passed through to `compiled-review.json` as `audits: CompiledAuditEntry[]` (`CompiledAuditEntry = AuditEntry`)
-- **Frontend display**: `CodeQualitySection.tsx` in defiscan-frontend shows the audit count in the "Audits & Bug Bounties" card, the max bounty amount in the "Bug Bounty" stat (`$500K`, `$1M` format), and a scrollable carousel of audit cards with author, date, and scope.
+- **Frontend display**: `CodeQualitySection.tsx` (labeled "Source Code") in defiscan-frontend shows the audit count in the "Audits & Bug Bounties" card, the max bounty amount in the "Bug Bounty" stat (`$500K`, `$1M` format), and a scrollable carousel of audit cards with author, date, and scope.
 - **UI editor**: `ReviewResourcesEditor.tsx` renders a separate Audits section below the Resources list with the same add/edit/delete pattern (author, date, scope, bounty, URL fields).
 - **Gathering skill**: `/gather-resources <project> --audits-only` — skips resource discovery and only searches for audits + bug bounty programs, using the existing website/GitHub/docs URLs from `resources.json` as starting points.
 

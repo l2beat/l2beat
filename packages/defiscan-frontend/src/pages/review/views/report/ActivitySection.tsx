@@ -9,12 +9,32 @@ interface ActivitySectionProps {
 
 export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
   const { activity } = review
-  if (!activity || activity.length === 0) return null
+  if (!activity || activity.length === 0) {
+    return (
+      <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
+        <SectionHeader
+          icon={
+            <svg className="size-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          }
+          label="Protocol Activity"
+        />
+        <div className="bg-white border border-border rounded-lg p-[33px] flex flex-col items-center justify-center gap-4 min-h-[160px] sm:min-h-[220px]">
+          <svg className="size-14 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+          </svg>
+          <p className="text-sm text-text-muted">No protocol changes recorded yet.</p>
+        </div>
+      </div>
+    )
+  }
 
   const sorted = [...activity].sort(
     (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
   )
-  const recent = sorted.slice(0, 5)
+  const recent = sorted.slice(0, 3)
+  const hasMore = sorted.length > 3
 
   function formatDate(iso: string) {
     const d = new Date(iso)
@@ -86,6 +106,14 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
           )
         })}
       </div>
+      {hasMore && (
+        <button
+          onClick={onShowMore}
+          className="text-text-muted hover:text-accent text-lg font-bold tracking-widest transition-colors self-center"
+        >
+          &#8942;
+        </button>
+      )}
     </div>
   )
 }
