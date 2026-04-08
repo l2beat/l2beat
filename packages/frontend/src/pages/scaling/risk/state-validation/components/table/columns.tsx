@@ -246,26 +246,32 @@ function OptimisticProofSystemCell({
       <div className="flex items-center gap-1.5">
         {zkCatalog && (
           <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-            <div
+            <Badge
+              type={
+                zkCatalog.hasSuccessful
+                  ? 'green'
+                  : zkCatalog.hasUnsuccessful
+                    ? 'error'
+                    : 'gray'
+              }
               className={cn(
-                'flex items-center gap-1 rounded px-1.5 font-medium text-[13px]',
-                // Color priority: green if any successful, else red if any unsuccessful, else grey
-                'border border-secondary bg-secondary/20 text-[#2E3730]',
-                zkCatalog.hasUnsuccessful &&
-                  'border border-[#D24D4D] bg-[#D24D4D]/20 text-[#D91919]',
-                zkCatalog.hasSuccessful &&
-                  'border border-[#32EB4B] bg-[#32EB4B]/20 text-[#009620]',
+                'flex items-center gap-1',
+                zkCatalog.hasSuccessful
+                  ? null
+                  : zkCatalog.hasUnsuccessful
+                    ? 'border border-negative'
+                    : 'border-divider! bg-surface-secondary! text-primary',
               )}
             >
               {zkCatalog.name}
-              {zkCatalog.hasSuccessful && <VerifiedIcon className="size-3.5" />}
+              {zkCatalog.hasSuccessful && <VerifiedIcon className="size-4" />}
               {zkCatalog.hasNotVerified && (
-                <CircleQuestionMarkIcon className="size-3.5" />
+                <CircleQuestionMarkIcon className="size-4" />
               )}
               {zkCatalog.hasUnsuccessful && (
-                <UnverifiedIcon className="size-3.5" />
+                <UnverifiedIcon className="size-4" />
               )}
-            </div>
+            </Badge>
           </a>
         )}
         {proofSystem?.challengeProtocol && (
