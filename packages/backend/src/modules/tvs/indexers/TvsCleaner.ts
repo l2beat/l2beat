@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import { createHash } from 'crypto'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -112,5 +113,5 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
 }
 
 function repoNameToConfigId(name: CleanableRepoName): string {
-  return name.padEnd(12, '_').slice(0, 12)
+  return createHash('sha1').update(name).digest('hex').slice(0, 12)
 }
