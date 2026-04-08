@@ -352,7 +352,6 @@ async function getMockTvsBreakdownData(
           breakdown: {
             total: 60,
             canonical: 30,
-            customCanonical: 10,
             native: 20,
             external: 10,
             ether: 30,
@@ -366,7 +365,6 @@ async function getMockTvsBreakdownData(
           breakdown7d: {
             total: 50,
             canonical: 25,
-            customCanonical: 5,
             native: 15,
             external: 10,
             ether: 25,
@@ -380,7 +378,6 @@ async function getMockTvsBreakdownData(
           change: {
             total: 0.4,
             canonical: 0.5,
-            customCanonical: 0.25,
             native: 0.25,
             external: 0.25,
             ether: 0.25,
