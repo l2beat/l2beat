@@ -15,6 +15,7 @@ import {
   type SevenDayTvsBreakdown,
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { compareTvs } from '~/server/features/scaling/tvs/utils/compareTvs'
+import { getTvsSyncWarning } from '~/server/features/scaling/tvs/utils/syncStatus'
 import {
   getTrustedSetupsWithVerifiersAndAttesters,
   type TrustedSetupsByProofSystem,
@@ -240,6 +241,7 @@ export interface ScalingRiskStateValidationNoProofsEntry
     breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
     change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
     additionalTrustAssumptionsPercentage: number | undefined
+    syncWarning: string | undefined
   }
 }
 
@@ -262,6 +264,7 @@ function getScalingRiskStateValidationNoProofsEntry(
       change: projectTvs?.change,
       additionalTrustAssumptionsPercentage:
         projectTvs?.additionalTrustAssumptionsPercentage,
+      syncWarning: getTvsSyncWarning(projectTvs?.syncState),
     },
   }
 }

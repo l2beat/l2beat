@@ -223,6 +223,7 @@ export const scalingRiskStateValidationNoProofsColumns = [
             value.additionalTrustAssumptionsPercentage
           }
           change={value.change?.total}
+          syncWarning={value.syncWarning}
         />
       )
     },
