@@ -44,18 +44,20 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
     logger: Logger,
   ) {
     const { repositories, ...rest } = $
+
+    const configurations = repositories.map((name) => ({
+      id: repoNameToConfigId(name),
+      minHeight: 0,
+      maxHeight: null,
+      properties: { name },
+    }))
     super(
       {
         ...rest,
         name: INDEXER_NAMES.TVS_CLEANER,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
         dataWipingAfterDeleteDisabled: true,
-        configurations: repositories.map((name) => ({
-          id: this.repoNameToConfigId(name),
-          minHeight: 0,
-          maxHeight: null,
-          properties: { name },
-        })),
+        configurations,
       },
       logger,
     )
@@ -107,8 +109,8 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
   override removeData(_configurations: RemovalConfiguration[]): Promise<void> {
     return Promise.resolve()
   }
+}
 
-  private repoNameToConfigId(name: CleanableRepoName): string {
-    return name.padEnd(12, '_').slice(0, 12)
-  }
+function repoNameToConfigId(name: CleanableRepoName): string {
+  return name.padEnd(12, '_').slice(0, 12)
 }
