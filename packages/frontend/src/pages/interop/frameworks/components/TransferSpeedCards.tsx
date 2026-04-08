@@ -10,7 +10,6 @@ import {
 } from '~/components/core/Dialog'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { CloseIcon } from '~/icons/Close'
 import type {
   ChainInfo,
   FrameworkOverview,
@@ -179,6 +178,7 @@ function RouteComparisonDialog({
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-h-[90dvh] w-full bg-surface-primary max-md:w-[calc(100%-1rem)] md:max-w-[480px]">
+        <DialogClose />
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="flex items-center gap-1.5">
@@ -192,9 +192,6 @@ function RouteComparisonDialog({
               )}
               <span>{dstName}</span>
             </DialogTitle>
-            <DialogClose>
-              <CloseIcon className="size-4 fill-primary" />
-            </DialogClose>
           </div>
           <DialogDescription className="sr-only">
             Speed comparison for {srcName} to {dstName}

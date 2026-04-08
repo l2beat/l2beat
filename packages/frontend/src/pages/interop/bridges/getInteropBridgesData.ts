@@ -7,7 +7,7 @@ import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getInteropBridgesData(
-  _req: Request,
+  req: Request,
   manifest: Manifest,
   cache: InMemoryCache,
 ): Promise<RenderData> {
@@ -26,8 +26,8 @@ export async function getInteropBridgesData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: '/interop/intent',
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
       }),
