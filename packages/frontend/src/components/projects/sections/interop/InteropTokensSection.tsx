@@ -36,6 +36,28 @@ export function InteropTokensSection({
   ...sectionProps
 }: InteropTokensSectionProps) {
   const { selectionForApi } = useInteropSelectedChains()
+  const selectionKey = [
+    selectionForApi.from.join(','),
+    selectionForApi.to.join(','),
+  ].join(':')
+
+  return (
+    <InteropTokensSectionContent
+      key={selectionKey}
+      projectId={projectId}
+      sectionProps={sectionProps}
+    />
+  )
+}
+
+function InteropTokensSectionContent({
+  projectId,
+  sectionProps,
+}: {
+  projectId: ProjectId
+  sectionProps: ProjectSectionProps
+}) {
+  const { selectionForApi } = useInteropSelectedChains()
   const { data: protocolData, isLoading: isProtocolLoading } =
     api.interop.protocol.useQuery({
       ...selectionForApi,
@@ -60,7 +82,6 @@ export function InteropTokensSection({
 
   const columns = useMemo(() => getTopTokensColumns(), [])
   const isLoading = isProtocolLoading || isTokensLoading
-
   const table = useTable<TokenRow>({
     data: data ?? [],
     columns,
@@ -84,7 +105,6 @@ export function InteropTokensSection({
       },
     },
   })
-
   const pageCount = table.getPageCount()
   const currentPage = table.getState().pagination.pageIndex
   const paginationItems = useMemo(
