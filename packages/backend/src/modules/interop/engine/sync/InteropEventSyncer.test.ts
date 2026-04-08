@@ -771,7 +771,7 @@ describe(InteropEventSyncer.name, () => {
         ).toEqual(true)
       })
 
-      it('rejects when topic0 does not match', () => {
+      it('returns false when topic0 does not match', () => {
         const signature = 'event Transfer(address,address,uint256)'
         const plugin = makePlugin({
           dataRequests: [{ type: 'event', signature, addresses: '*' }],
@@ -786,7 +786,7 @@ describe(InteropEventSyncer.name, () => {
         ).toEqual(false)
       })
 
-      it('rejects when address does not match', () => {
+      it('returns false when address does not match', () => {
         const signature = 'event Transfer(address,address,uint256)'
         const address = EthereumAddress.random()
         const ethAddress = ChainSpecificAddress.fromLong('ethereum', address)
@@ -824,7 +824,7 @@ describe(InteropEventSyncer.name, () => {
         ).toEqual(true)
       })
 
-      it('rejects when log has no topics', () => {
+      it('returns false when log has no topics', () => {
         const signature = 'event Transfer(address,address,uint256)'
         const plugin = makePlugin({
           dataRequests: [{ type: 'event', signature, addresses: '*' }],
