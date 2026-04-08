@@ -73,6 +73,37 @@ describe(InteropEventSyncer.name, () => {
       expect(processNewestBlock).not.toHaveBeenCalled()
     })
 
+    it('refreshes cached log query', async () => {
+      const capture = mockFn().returns([makeInteropEventNoPlugin()])
+      const dataRequests: DataRequest[] = []
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          plugins: [
+            makePlugin({
+              name: 'across',
+              capture,
+              dataRequests,
+            }),
+          ],
+        }),
+      })
+
+      // Initially no data requests, so captureLog should skip
+      expect(syncer.captureLog(makeMatchingLogToCapture())).toEqual(undefined)
+      expect(capture).not.toHaveBeenCalled()
+
+      // Simulate config plugin updating data requests
+      dataRequests.push(makeWildcardDataRequest())
+      await syncer.run()
+
+      // After run(), the cached log query should be refreshed
+      const result = syncer.captureLog(makeMatchingLogToCapture())
+      expect(capture).toHaveBeenCalled()
+      expect(result).toEqual([
+        { ...makeInteropEventNoPlugin(), plugin: 'across' },
+      ])
+    })
+
     it('does not clear errors when checking blockProcessor status', async () => {
       const setLastError = mockFn().resolvesTo(undefined)
       const syncer = createSyncer({

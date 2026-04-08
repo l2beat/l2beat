@@ -201,6 +201,7 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async run() {
+    this.cachedLogQuery = this.buildLogQuery()
     await this.exclusiveExecutionMutex.tryRunExclusive(async () => {
       const state = this.state
       if (state.type === 'timeLoop') {
@@ -215,7 +216,6 @@ export class InteropEventSyncer extends TimeLoop {
 
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
-    this.cachedLogQuery = this.buildLogQuery()
 
     // It's fine to do this check outside of the exclusiveExecutionMutex because
     // even if we skip block, FollowingState will notice and switch to CatchingUpState
