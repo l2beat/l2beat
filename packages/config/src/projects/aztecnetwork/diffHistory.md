@@ -9,6 +9,7 @@ Generated with discovered.json: 0x36253eb4bd41b547d115e00ec21edefefdba852e
 ## Description
 
 Rollup contract has reached enough validators, so isBootstrapped is set to true.
+Now the rate of adding new validators is limited by the `getEntryQueueFlushSize` function (max 0.25% of the validator set growth per epoch, at least 1, at most 4).
 
 ## Watched changes
 

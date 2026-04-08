@@ -1,16 +1,26 @@
-Generated with discovered.json: 0x453cef6e67a637cdef152fc108d55894675fbf44
+Generated with discovered.json: 0xf8495f46267a9bfd62e39ac509e07b880b58e532
 
-# Diff at Tue, 07 Apr 2026 11:16:44 GMT:
+# Diff at Wed, 08 Apr 2026 08:26:26 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1775058712
-- current timestamp: 1775560540
+- current timestamp: 1775636722
 
 ## Description
 
-A trx on L2 initiated via the governance: https://tools.l2beat.com/decoder-new/?hash=0xa7d217b096fe11b935388c891811da7e9ac0c6c6e83ffa2b3fcc58d70660fabc&data=AwA.
+Two trxs on L2 initiated via the governance: https://tools.l2beat.com/decoder-new/?hash=0xa7d217b096fe11b935388c891811da7e9ac0c6c6e83ffa2b3fcc58d70660fabc&data=AwA and https://tools.l2beat.com/decoder-new/?hash=0xfe93a52cfe69dbe665ca3f562787dd5e47a81e5e3bc906b4bc20fe20d876596e&data=AwA.
+Also rotated MS member.
 
 ## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+    }
+```
 
 ```diff
     contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
@@ -18,11 +28,11 @@ A trx on L2 initiated via the governance: https://tools.l2beat.com/decoder-new/?
 +++ description: Number of executed proposals
       values.executedCount:
 -        38
-+        39
++        40
 +++ description: Number of scheduled transparent proposals
       values.scheduledTransparentCount:
 -        38
-+        39
++        40
     }
 ```
 
