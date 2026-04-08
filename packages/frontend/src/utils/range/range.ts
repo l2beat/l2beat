@@ -9,6 +9,7 @@ export const ChartRange = v.tuple([v.union([v.number(), v.null()]), v.number()])
 
 export type ChartRangePredefinedOption =
   | '1d'
+  | '3d'
   | '7d'
   | '30d'
   | '90d'
@@ -65,6 +66,8 @@ function optionToDays(option: ChartRangePredefinedOption): number | null {
   switch (option) {
     case '1d':
       return 1
+    case '3d':
+      return 3
     case '7d':
       return 7
     case '30d':

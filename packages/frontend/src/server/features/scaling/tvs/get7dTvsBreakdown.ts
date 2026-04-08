@@ -80,13 +80,25 @@ export async function get7dTvsBreakdown(
   )
 
   const [from, to] = params.customTarget
-    ? [params.customTarget - 7 * UnixTime.DAY, params.customTarget]
-    : await getFullySyncedTvsRange(optionToRange('7d'))
+    ? [params.customTarget - 3 * UnixTime.DAY, params.customTarget]
+    : await getFullySyncedTvsRange(optionToRange('3d'))
+
   assert(from !== null, 'from is null')
+
+  const sevenDaysAgoFrom = from - 7 * UnixTime.DAY
+  const sevenDaysAgoTo = to - 7 * UnixTime.DAY
+
+  console.log([
+    [from, to],
+    [sevenDaysAgoFrom, sevenDaysAgoTo],
+  ])
   const [values, syncMetadataRecords] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectForRange(
       tvsProjects.map((p) => p.projectId),
-      [from - 7 * UnixTime.DAY, to],
+      [
+        [from, to],
+        [sevenDaysAgoFrom, sevenDaysAgoTo],
+      ],
       {
         excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
         excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
@@ -189,7 +201,9 @@ export async function get7dTvsBreakdown(
       continue
     }
 
-    const sevenDaysAgoValue = sevenDaysAgoValues.at(-1)
+    const sevenDaysAgoValue = sevenDaysAgoValues.find(
+      (v) => v.timestamp === lastValue.timestamp - 7 * UnixTime.DAY,
+    )
     assert(sevenDaysAgoValue, 'sevenDaysAgoValue is undefined')
 
     const {
