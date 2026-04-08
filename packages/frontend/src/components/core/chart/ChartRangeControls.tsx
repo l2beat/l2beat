@@ -18,16 +18,25 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import {
   type ChartRange,
-  type ChartRangePredefinedOption,
+  optionToDays,
   optionToRange,
-  rangeToOption,
 } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
 
+export type ChartRangeOptionValue =
+  | '1d'
+  | '7d'
+  | '30d'
+  | '90d'
+  | '180d'
+  | '1y'
+  | 'max'
+
 interface ChartRangeOption {
-  value: ChartRangePredefinedOption
+  value: ChartRangeOptionValue
   disabled?: boolean
   label: string
 }
@@ -198,7 +207,7 @@ function PredefinedOptions({
   offset: UnixTime
   setValue: (range: ChartRange) => void
   setInternalValue: (dateRange: DateRange | undefined) => void
-  selectedOption: ChartRangePredefinedOption | 'custom'
+  selectedOption: ChartRangeOptionValue | 'custom'
   children?: React.ReactNode
 }) {
   const { track } = useTracking()
@@ -272,4 +281,23 @@ function CalendarComponent({
       className={cn('rounded-lg pb-3', className)}
     />
   )
+}
+
+function rangeToOption(
+  [from, to]: ChartRange,
+  options: { value: ChartRangeOptionValue }[],
+  offset: UnixTime,
+): ChartRangeOptionValue | 'custom' {
+  if (
+    UnixTime.toStartOf(to, 'day') !==
+    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
+  ) {
+    return 'custom'
+  }
+  if (from === null) return 'max'
+  const days = rangeToDays([from, to])
+  const option = options.find((option) => optionToDays(option.value) === days)
+  if (option) return option.value
+
+  return 'custom'
 }

@@ -1,6 +1,5 @@
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { rangeToDays } from './rangeToDays'
 
 export type ChartResolution = 'hourly' | 'sixHourly' | 'daily'
 
@@ -38,31 +37,14 @@ export function optionToRange(
   ]
 }
 
-export function rangeToOption(
-  [from, to]: ChartRange,
-  options: { value: ChartRangePredefinedOption }[],
-  offset: UnixTime,
-): ChartRangePredefinedOption | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !==
-    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
-  ) {
-    return 'custom'
-  }
-  if (from === null) return 'max'
-  const days = rangeToDays([from, to])
-  const option = options.find((option) => optionToDays(option.value) === days)
-  if (option) return option.value
-
-  return 'custom'
-}
-
-function optionToDays(option: 'max'): null
-function optionToDays(
+export function optionToDays(option: 'max'): null
+export function optionToDays(
   option: Exclude<ChartRangePredefinedOption, 'max'>,
 ): number
-function optionToDays(option: ChartRangePredefinedOption): number | null
-function optionToDays(option: ChartRangePredefinedOption): number | null {
+export function optionToDays(option: ChartRangePredefinedOption): number | null
+export function optionToDays(
+  option: ChartRangePredefinedOption,
+): number | null {
   switch (option) {
     case '1d':
       return 1
