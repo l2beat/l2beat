@@ -30,7 +30,7 @@ export async function getTvsLeaderboard(
   }
   const db = getDb()
 
-  const values = await db.tvsTokenValue.getSummedByProjectForRange(
+  const values = await db.tvsTokenValue.getSummedByProjectForRanges(
     props.projectIds,
     [
       [from, from],

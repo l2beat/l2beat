@@ -492,7 +492,7 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
-  async getSummedByProjectForRange(
+  async getSummedByProjectForRanges(
     projectIds: string[],
     ranges: [UnixTime | null, UnixTime][],
     opts: {
