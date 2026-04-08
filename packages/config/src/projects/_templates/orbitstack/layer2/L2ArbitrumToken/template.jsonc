@@ -3,6 +3,7 @@
   "displayName": "L2ArbitrumToken",
   "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of {{ mintCapPerYer }}%.",
   "ignoreMethods": ["getPastTotalSupply", "getTotalDelegationAt"],
+  "ignoreInWatchMode": ["getTotalDelegation"],
   "fields": {
     "mintCapPerYer": {
       "handler": {

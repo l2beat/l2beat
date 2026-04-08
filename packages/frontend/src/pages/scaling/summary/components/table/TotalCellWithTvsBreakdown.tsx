@@ -16,6 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
 import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
@@ -34,6 +35,7 @@ interface TotalCellProps {
     | undefined
   additionalTrustAssumptionsPercentage: number | undefined
   associatedTokens: ProjectAssociatedToken[]
+  syncWarning: string | undefined
   href: string
   change?: number
   tvsWarnings?: WarningWithSentiment[]
@@ -87,37 +89,40 @@ export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger disabledOnMobile className="h-full">
+      <TooltipTrigger disabledOnMobile className="h-full" asChild>
         <TableLink href={props.href}>
-          <div className="flex flex-col items-end max-md:py-1">
-            <div className="flex items-center">
-              {icon}
-              <ValueWithPercentageChange change={props.change}>
-                {formatDollarValueNumber(totalTvs)}
-              </ValueWithPercentageChange>
-            </div>
-            <div className="inline-flex flex-col items-end gap-1">
-              <ValueSecuredBreakdown
-                canonical={props.breakdown.canonical}
-                external={props.breakdown.external}
-                native={props.breakdown.native}
-              />
-              {props.additionalTrustAssumptionsPercentage !== undefined && (
-                <AdditionalTrustAssumptionsText
-                  percentage={props.additionalTrustAssumptionsPercentage}
+          <SyncStatusWrapper isSynced={!props.syncWarning}>
+            <div className="flex flex-col items-end max-md:py-1">
+              <div className="flex items-center">
+                {icon}
+                <ValueWithPercentageChange change={props.change}>
+                  {formatDollarValueNumber(totalTvs)}
+                </ValueWithPercentageChange>
+              </div>
+              <div className="inline-flex flex-col items-end gap-1">
+                <ValueSecuredBreakdown
+                  canonical={props.breakdown.canonical}
+                  external={props.breakdown.external}
+                  native={props.breakdown.native}
                 />
-              )}
+                {props.additionalTrustAssumptionsPercentage !== undefined && (
+                  <AdditionalTrustAssumptionsText
+                    percentage={props.additionalTrustAssumptionsPercentage}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </SyncStatusWrapper>
         </TableLink>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent className="flex flex-col gap-2">
         <ValueSecuredBreakdownTooltipContent
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
           change={props.change}
           tvsWarnings={tvsWarnings}
+          syncWarning={props.syncWarning}
         />
         {props.additionalTrustAssumptionsPercentage !== undefined && (
           <AdditionalTrustAssumptionsBanner

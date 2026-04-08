@@ -1,5 +1,7 @@
+import compact from 'lodash/compact'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import { getTvsSyncWarning } from '~/server/features/scaling/tvs/utils/syncStatus'
 
 export function toTableRows({
   entries,
@@ -19,6 +21,7 @@ export function toTableRows({
           breakdown: undefined,
           change: undefined,
           additionalTrustAssumptionsPercentage: undefined,
+          syncWarning: undefined,
         },
       }
     }
@@ -28,16 +31,27 @@ export function toTableRows({
       breakdown,
       change,
       additionalTrustAssumptionsPercentage,
+      syncState,
     } = projectData
+
+    const tvsSyncWarning = getTvsSyncWarning(syncState)
 
     return {
       ...entry,
+      statuses: {
+        ...entry.statuses,
+        syncWarning: compact([
+          tvsSyncWarning,
+          entry.statuses?.syncWarning,
+        ]).join('\n'),
+      },
       tvs: {
         ...entry.tvs,
         breakdown,
         change,
         warnings: [...entry.tvs.warnings, ...warnings],
         additionalTrustAssumptionsPercentage,
+        syncWarning: tvsSyncWarning,
       },
     }
   })

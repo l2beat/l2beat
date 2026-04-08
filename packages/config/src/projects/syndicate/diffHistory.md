@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf1ee73e827c7d5ec8e30cd92fef45e44ca8ee26f
+
+# Diff at Tue, 07 Apr 2026 22:03:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0abb07b4e46d76d6e92ec02beaddc56264e90c1e block: 1775083700
+- current timestamp: 1775599220
+
+## Description
+
+EigenDAOperationsMultisig member removed (0x4985...), threshold unchanged at 3, now 3-of-4 (75%) instead of 3-of-5 (60%). Shared contract with eigenda/megaeth.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x0b8e30dbd325ec5e95907644b0dbaa8fc9fc3c03
 
 # Diff at Fri, 13 Mar 2026 16:32:38 GMT:

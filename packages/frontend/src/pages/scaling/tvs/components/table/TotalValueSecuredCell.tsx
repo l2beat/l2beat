@@ -19,6 +19,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
@@ -48,6 +49,7 @@ interface TotalValueSecuredCellProps {
   change: number
   tvsWarnings?: WarningWithSentiment[]
   associatedTokens?: ProjectAssociatedToken[]
+  syncWarning: string | undefined
 }
 
 export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
@@ -58,42 +60,44 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
     <Tooltip>
       <TooltipTrigger asChild>
         <TableLink href={props.href}>
-          <div className="flex flex-col items-end max-md:py-1">
-            <div className="flex items-center gap-1">
-              {tvsWarnings.length ? (
-                <RoundedWarningIcon
-                  className="size-4"
-                  sentiment={anyBadWarnings ? 'bad' : 'warning'}
-                />
-              ) : null}
-              <ValueWithPercentageChange change={props.change}>
-                {formatDollarValueNumber(props.total)}
-              </ValueWithPercentageChange>
-            </div>
-            {props.breakdown.type === 'bridgeType' ? (
-              <div className="inline-flex flex-col items-end gap-1">
-                <ValueSecuredBreakdown
-                  canonical={props.breakdown.canonical}
-                  external={props.breakdown.external}
-                  native={props.breakdown.native}
-                />
-                <AdditionalTrustAssumptionsText
-                  percentage={props.additionalTrustAssumptionsPercentage}
-                />
+          <SyncStatusWrapper isSynced={!props.syncWarning}>
+            <div className="flex flex-col items-end max-md:py-1">
+              <div className="flex items-center gap-1">
+                {tvsWarnings.length ? (
+                  <RoundedWarningIcon
+                    className="size-4"
+                    sentiment={anyBadWarnings ? 'bad' : 'warning'}
+                  />
+                ) : null}
+                <ValueWithPercentageChange change={props.change}>
+                  {formatDollarValueNumber(props.total)}
+                </ValueWithPercentageChange>
               </div>
-            ) : (
-              <TokenBreakdown
-                total={props.total}
-                ether={props.breakdown.ether}
-                stablecoin={props.breakdown.stablecoin}
-                btc={props.breakdown.btc}
-                other={props.breakdown.other}
-                rwaPublic={props.breakdown.rwaPublic}
-                rwaRestricted={props.breakdown.rwaRestricted}
-                className="h-[3px] w-[200px]"
-              />
-            )}
-          </div>
+              {props.breakdown.type === 'bridgeType' ? (
+                <div className="inline-flex flex-col items-end gap-1">
+                  <ValueSecuredBreakdown
+                    canonical={props.breakdown.canonical}
+                    external={props.breakdown.external}
+                    native={props.breakdown.native}
+                  />
+                  <AdditionalTrustAssumptionsText
+                    percentage={props.additionalTrustAssumptionsPercentage}
+                  />
+                </div>
+              ) : (
+                <TokenBreakdown
+                  total={props.total}
+                  ether={props.breakdown.ether}
+                  stablecoin={props.breakdown.stablecoin}
+                  btc={props.breakdown.btc}
+                  other={props.breakdown.other}
+                  rwaPublic={props.breakdown.rwaPublic}
+                  rwaRestricted={props.breakdown.rwaRestricted}
+                  className="h-[3px] w-[200px]"
+                />
+              )}
+            </div>
+          </SyncStatusWrapper>
         </TableLink>
       </TooltipTrigger>
       <TooltipContent className="flex flex-col gap-2">
@@ -108,6 +112,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
               associatedTokenSymbols={props.associatedTokens?.map(
                 (t) => t.symbol,
               )}
+              syncWarning={props.syncWarning}
             />
             <AdditionalTrustAssumptionsBanner
               percentage={props.additionalTrustAssumptionsPercentage}

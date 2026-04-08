@@ -110,6 +110,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
               tvsWarnings={value.warnings}
               breakdown={tvsData?.breakdown}
               change={tvsData?.change.total}
+              syncWarning={ctx.row.original.tvsSyncWarning}
             />
           )
         },

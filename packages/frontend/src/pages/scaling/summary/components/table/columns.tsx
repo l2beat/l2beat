@@ -115,6 +115,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
                 value.additionalTrustAssumptionsPercentage
               }
               change={value.change?.total}
+              syncWarning={value.syncWarning}
             />
           )
         },

@@ -18,11 +18,11 @@ interface TvsTableProjectData extends ProjectSevenDayTvsBreakdown {
 
 export async function getTvsTableData(
   params: TvsBreakdownProjectFilter,
-): Promise<TvsTableData> {
+): Promise<{ total: number; projects: TvsTableData }> {
   const tvsProjects = await getTvsProjects(
     createTvsBreakdownProjectFilter(params),
   )
-  const { projects } = await get7dTvsBreakdown(params)
+  const { total, projects } = await get7dTvsBreakdown(params)
 
   const result: TvsTableData = {}
   for (const [projectId, values] of Object.entries(projects)) {
@@ -46,5 +46,5 @@ export async function getTvsTableData(
     }
   }
 
-  return result
+  return { total, projects: result }
 }
