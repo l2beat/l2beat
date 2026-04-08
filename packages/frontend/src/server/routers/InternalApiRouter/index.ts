@@ -21,10 +21,6 @@ export function createInternalApiRouter() {
     next()
   })
 
-  router.get('/api/hot-pages', (_, res) => {
-    res.json([])
-  })
-
   router.get('/api/discolupe', async (_, res) => {
     const discolupeProjects = await getDiscolupeProjects()
     res.json({
