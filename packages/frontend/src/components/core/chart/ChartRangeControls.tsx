@@ -18,6 +18,7 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import {
   type ChartRange,
+  type ChartRangePredefinedOption,
   optionToRange,
   rangeToOption,
 } from '~/utils/range/range'
@@ -25,17 +26,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
 
-export type ChartRangeOptionValue =
-  | '1d'
-  | '7d'
-  | '30d'
-  | '90d'
-  | '180d'
-  | '1y'
-  | 'max'
-
 interface ChartRangeOption {
-  value: ChartRangeOptionValue
+  value: ChartRangePredefinedOption
   disabled?: boolean
   label: string
 }
@@ -206,7 +198,7 @@ function PredefinedOptions({
   offset: UnixTime
   setValue: (range: ChartRange) => void
   setInternalValue: (dateRange: DateRange | undefined) => void
-  selectedOption: ChartRangeOptionValue | 'custom'
+  selectedOption: ChartRangePredefinedOption | 'custom'
   children?: React.ReactNode
 }) {
   const { track } = useTracking()
