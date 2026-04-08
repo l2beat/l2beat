@@ -30,15 +30,20 @@ export class TvsCleaner extends ManagedChildIndexer {
     )
   }
 
-  override async update(_: number, to: number): Promise<number> {
-    const currentTarget = UnixTime(to * UnixTime.DAY)
+  override async update(from: number, to: number): Promise<number> {
+    const adjustedFrom = from !== 0 ? (from - 1) * UnixTime.DAY : undefined
+    const adjustedTo = UnixTime(to * UnixTime.DAY)
     const hourlyRange = {
-      from: undefined,
-      to: this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(currentTarget),
+      from: adjustedFrom
+        ? this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedFrom)
+        : undefined,
+      to: this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
     }
     const sixHourlyRange = {
-      from: undefined,
-      to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(currentTarget),
+      from: adjustedFrom
+        ? this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedFrom)
+        : undefined,
+      to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
     }
 
     await this.$.db.transaction(async () => {
@@ -61,7 +66,7 @@ export class TvsCleaner extends ManagedChildIndexer {
         await this.$.db.tvsPrice.deleteSixHourlyUntil(sixHourlyRange)
 
       this.logger.info('Cleaned TVS records', {
-        until: currentTarget,
+        until: adjustedTo,
         tokenValueHourlyDeletedRecords,
         blockTimestampHourlyDeletedRecords,
         amountHourlyDeletedRecords,
