@@ -2,28 +2,34 @@ import { INTEROP_CHAINS } from '@l2beat/config'
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import {
-  assert,
   getInteropTransferValue,
   InMemoryCache,
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransferStats,
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
 } from './types'
+import {
+  buildTokensDetailsMap,
+  type TokensDetailsMap,
+} from './utils/buildTokensDetailsMap'
 
 interface TransfersWithStats {
   items: InteropTransferRecord[]
   transferStats: InteropProtocolTransferStats
+  tokensDetailsMap: TokensDetailsMap
 }
 
 const VALUE_TOLERANCE_RATIO = 0.01
 const MIN_VALUE_TOLERANCE = 0.01
 const PAGE_SIZE = 100
+const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
@@ -120,12 +126,12 @@ export async function getInteropProtocolTransfers({
     startIndex + PAGE_SIZE < result.items.length
       ? startIndex + PAGE_SIZE
       : undefined
-
   return {
     items: pagedItems.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_EXPLORER_URLS,
+        result.tokensDetailsMap,
       ),
     ),
     hasIntegrityMismatch: false,
@@ -168,18 +174,23 @@ async function getFilteredTransfersWithStats({
     volume += getInteropTransferValue(transfer) ?? 0
   }
 
+  const abstractTokenIds = getAbstractTokenIds(items)
+  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
+
   return {
     items,
     transferStats: {
       transferCount,
       volume,
     },
+    tokensDetailsMap,
   }
 }
 
 export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainExplorerUrlsById: Map<string, string>,
+  tokensDetailsMap: TokensDetailsMap,
 ): InteropProtocolTransferDetailsItem {
   const srcTxHashHref = getTxHashHref(
     chainExplorerUrlsById,
@@ -196,9 +207,17 @@ export function toInteropProtocolTransferDetailsItem(
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
-    srcSymbol: transfer.srcSymbol,
+    srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    srcTokenIconUrl: getTokenIconUrl(
+      transfer.srcAbstractTokenId,
+      tokensDetailsMap,
+    ),
     dstAmount: transfer.dstAmount,
-    dstSymbol: transfer.dstSymbol,
+    dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
+    dstTokenIconUrl: getTokenIconUrl(
+      transfer.dstAbstractTokenId,
+      tokensDetailsMap,
+    ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
     srcChain: transfer.srcChain,
@@ -210,13 +229,42 @@ export function toInteropProtocolTransferDetailsItem(
   }
 }
 
+function getAbstractTokenIds(transfers: InteropTransferRecord[]): string[] {
+  return [
+    ...new Set(
+      transfers
+        .flatMap((transfer) => [
+          transfer.srcAbstractTokenId,
+          transfer.dstAbstractTokenId,
+        ])
+        .filter((id): id is string => id !== undefined),
+    ),
+  ]
+}
+
+function getTokenIconUrl(
+  abstractTokenId: string | undefined,
+  tokensDetailsMap: TokensDetailsMap,
+): string {
+  if (!abstractTokenId) return TOKEN_PLACEHOLDER_ICON_URL
+  return (
+    tokensDetailsMap.get(abstractTokenId)?.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL
+  )
+}
+
 function getTxHashHref(
   chainExplorerUrlsById: Map<string, string>,
   chainId: string,
-  txHash: string,
-): string {
+  txHash: string | undefined,
+): string | undefined {
+  if (!txHash) {
+    return undefined
+  }
+
   const explorerUrl = chainExplorerUrlsById.get(chainId)
-  assert(explorerUrl, `Missing explorer URL for chain: ${chainId}`)
+  if (!explorerUrl) {
+    return undefined
+  }
 
   return `${explorerUrl}/tx/${txHash}`
 }

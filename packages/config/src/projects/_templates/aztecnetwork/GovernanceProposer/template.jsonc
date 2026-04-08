@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Intermediary contract that allows the L2 system (or specific L2 signals) to submit formal proposals to the L1 Governance contract.",
+  "description": "Intermediary contract that allows the L2 Sequencers operating the canonical rollup (as defined by the Registry) to submit formal proposals to the L1 Governance contract by signalling their support of any smart contract payload on L1 with each checkpoint proposal. A signalling round comprises {{ROUND_SIZE}} checkpoints. {{QUORUM_SIZE}} signals or more during one round allow submitting the payload as a governance proposal.",
   "ignoreMethods": ["computeRound", "getProposalProposer"],
-  "ignoreInWatchMode": ["getCurrentRound"]
+  "ignoreInWatchMode": ["getCurrentRound"],
+  "category": "gov"
 }

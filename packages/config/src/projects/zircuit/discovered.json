@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1772198396,
+  "timestamp": 1774433075,
   "configHash": "0xbbaa2e1b1eff42339e8e3910b0893c986677f882ef068e50241182eed41c6640",
   "entries": [
     {
@@ -99,8 +99,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 312784,
-          "prevBlockNum": 24547888
+          "prevBoughtGas": 395077,
+          "prevBlockNum": 24733839
         },
         "paused": false,
         "resolverRegistry": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
@@ -147,7 +147,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640701",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292640801",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -511,6 +511,18 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x691b3588eB87E6163260650D3BB465883EB6A575",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+          "role": ".proposer"
+        }
+      ]
+    },
+    {
       "name": "ResolverRegistry",
       "address": "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E",
       "type": "Contract",
@@ -717,9 +729,19 @@
             "2025-11-24T23:38:35.000Z",
             "0x284701d1524b8a7166ba82ea47dc77604122182f0a94ff1f24f85d8eb41b7016",
             ["eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"]
+          ],
+          [
+            "2026-03-19T11:32:11.000Z",
+            "0xde1731a6499e91bf3c8d7b575fc6b5e8b92966625ed4f890142c94d8de15ab5a",
+            ["eth:0xB0790b9d22F92131e9E8D46F5b0f99ab88C3a21d"]
+          ],
+          [
+            "2026-03-19T11:32:11.000Z",
+            "0xde1731a6499e91bf3c8d7b575fc6b5e8b92966625ed4f890142c94d8de15ab5a",
+            ["eth:0x5E66C2820666f4Fb490d2D2edE4dCB0E46CD03C6"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 11,
         "aggregationVkey": "0x0050b72e60cf8aef095d5718413fd32e1c18d0e54ebc4b9f560cf1cd93dd2605",
         "challenger": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "CHALLENGER": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
@@ -730,16 +752,16 @@
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "l2ChainId": 48900,
-        "latestBlockNumber": 26129036,
-        "latestOutputIndex": 37537,
+        "latestBlockNumber": 27246224,
+        "latestOutputIndex": 38155,
         "latestOutputProposedV2": 32836,
-        "latestOutputProposedV3": 37537,
-        "nextBlockNumber": 26129037,
-        "nextOutputIndex": 37538,
+        "latestOutputProposedV3": 38155,
+        "nextBlockNumber": 27246225,
+        "nextOutputIndex": 38156,
         "owner": "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proposer": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
-        "PROPOSER": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
+        "proposer": "eth:0x691b3588eB87E6163260650D3BB465883EB6A575",
+        "PROPOSER": "eth:0x691b3588eB87E6163260650D3BB465883EB6A575",
         "rangeVkeyCommitment": "0x04415a0d46de8b145eb5056969fa3b5900c3c23a21cb3feb2bdcb8da752de7a1",
         "rollupConfigHash": "0x276a52b0a54d364177f8ad6dc069bd5801791dcd5cf5c5d237edbe2541e1bac4",
         "startingBlockNumber": 0,
@@ -978,7 +1000,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 24,
+        "nonce": 25,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1018,18 +1040,6 @@
         "eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932": "Proxy",
         "eth:0xf885DA6A3B4c93905b02f36f9a13680922A554b0": "OptimismMintableERC20Factory"
       }
-    },
-    {
-      "address": "eth:0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4",
-          "role": ".proposer"
-        }
-      ]
     },
     {
       "name": "SP1VerifierGateway",
@@ -1138,21 +1148,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 133333530,
+        "basefee": 50008882,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
-        "blobBaseFee": 7371304,
+        "blobBaseFee": 2530624,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x959905e83f448d6ef5555a5171b955a6699127e8e55f640f7189531bd249c913",
+        "hash": "0x17ebb5c3708e2c5d6dcd447b71bf7030262926c3ad7147b94ca3ad1446e2f07f",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 24548519,
+        "number": 24733851,
         "operatorFeeConstant": 360000000000,
         "operatorFeeScalar": 4200000000,
-        "sequenceNumber": 5,
-        "timestamp": 1772198363,
+        "sequenceNumber": 8,
+        "timestamp": 1774433039,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2023,6 +2033,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 24548521, "zircuit": 26131090 },
-  "permissionsConfigHash": "0xe89730010d77ccd6b678d3897fa9abf678f723e91b6f997dbf149c7f47a2db22"
+  "usedBlockNumbers": { "ethereum": 24733854, "zircuit": 27248430 },
+  "permissionsConfigHash": "0x0d41346ed04d5d74993a8436868d9c00c943253eb50fc5d66e084dc25612f029"
 }

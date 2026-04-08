@@ -37,7 +37,7 @@ export const GeneratedToken = z.object({
   ]),
   iconUrl: z.string().optional(),
   chainId: z.number().transform(ChainId),
-  source: z.enum(['canonical', 'external', 'native']),
+  source: z.enum(['canonical', 'custom-canonical', 'external', 'native']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
   excludeFromTotal: z.literal(true).optional(),
   premint: z.string().optional(),
@@ -62,7 +62,9 @@ export const SourceEntry = z.object({
   category: z
     .enum(['ether', 'stablecoin', 'btc', 'rwaRestricted', 'rwaPublic', 'other'])
     .optional(),
-  source: z.enum(['canonical', 'external', 'native']).optional(),
+  source: z
+    .enum(['canonical', 'custom-canonical', 'external', 'native'])
+    .optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   bridgedUsing: z
     .object({

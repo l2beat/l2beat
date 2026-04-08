@@ -30,8 +30,8 @@ export async function getScalingDataAvailabilityData(
         title: 'Data Availability - L2BEAT',
         description:
           'Compare data availability solutions used by Ethereum scaling projects.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/data-availability/opengraph-image.png',
         },
       }),

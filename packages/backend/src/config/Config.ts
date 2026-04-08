@@ -1,7 +1,5 @@
 import type {
   BlockDaTrackingConfig,
-  ChainConfig,
-  OnchainVerifier,
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
@@ -23,11 +21,17 @@ import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { InteropAggregationConfig } from './features/interop'
 
+export type ConfigName =
+  | 'Backend/Local'
+  | 'Backend/Staging'
+  | 'Backend/Production'
+
 export interface Config {
-  readonly name: string
+  readonly name: ConfigName
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
+  readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -41,7 +45,6 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
-  readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
   readonly chainConfig: ChainApi[]
@@ -64,7 +67,6 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvs: boolean
     readonly liveness: boolean
-    readonly verifiers: boolean
   }
 }
 
@@ -181,7 +183,6 @@ export interface UpdateMonitorConfig {
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
-  readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
     readonly workerCount: number
@@ -190,20 +191,30 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface VerifiersConfig {
-  readonly verifiers: OnchainVerifier[]
-  readonly chains: ChainConfig[]
-}
-
-export interface DiscordConfig {
-  readonly token: string
-  readonly publicChannelId?: string
-  readonly internalChannelId: string
-  readonly callsPerMinute: number
+export interface NotificationsConfig {
+  readonly updateMonitor:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly anomalies:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly interop:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly ethereumBlobs:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
-  readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
 
@@ -222,6 +233,7 @@ export interface InteropFeatureConfig {
   }
   matching: boolean
   cleaner: boolean
+  dangerousOperationsEnabled: boolean
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
@@ -240,11 +252,7 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
-  notifications:
-    | {
-        discordWebhookUrl: string
-      }
-    | false
+  oneSidedChains: string[]
 }
 
 export interface DaBeatConfig {
@@ -255,6 +263,7 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {

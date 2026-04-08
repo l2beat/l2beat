@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/Info'
 import { AnomalyIndicator } from '../AnomalyIndicator'
@@ -89,7 +89,7 @@ export function getScalingLivenessColumns(hideProofSystem?: boolean) {
         return (
           <AnomalyIndicator
             anomalies={entry.anomalies}
-            hasTrackedContractsChanged={entry.hasTrackedContractsChanged}
+            href={`/scaling/projects/${entry.slug}#liveness`}
           />
         )
       },

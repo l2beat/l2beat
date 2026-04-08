@@ -154,4 +154,27 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'AVAX',
     explorerUrl: 'https://snowtrace.io',
   },
-]
+  {
+    id: 'hyperevm',
+    name: 'HyperEVM',
+    type: 'evm',
+    display: 'HYPER',
+    explorerUrl: 'https://hyperevmscan.io',
+  },
+  {
+    id: 'tempo',
+    name: 'Tempo',
+    type: 'evm',
+    display: 'TMP',
+    explorerUrl: 'https://explore.tempo.xyz',
+  },
+  {
+    id: 'monad',
+    name: 'Monad',
+    type: 'evm',
+    display: 'MON',
+    explorerUrl: 'https://monadscan.com',
+  },
+] as const
+
+export const INTEROP_ONE_SIDED_CHAINS = ['solana'] as const

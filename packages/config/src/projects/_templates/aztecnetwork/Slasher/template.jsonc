@@ -1,4 +1,30 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer."
+  "description": "The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.",
+  "fields": {
+    "SLASHING_DISABLE_DURATION_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "SLASHING_DISABLE_DURATION",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "VETOER": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "veto specific slashing payloads and/or disable all slashing for {{SLASHING_DISABLE_DURATION_fmt}} at a time."
+        }
+      ]
+    },
+    "GOVERNANCE": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "slash sequencers from the active set."
+        }
+      ]
+    }
+  }
 }

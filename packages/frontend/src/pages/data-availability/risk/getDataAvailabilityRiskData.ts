@@ -20,8 +20,8 @@ export async function getDataAvailabilityRiskData(
         title: 'Data Availability Risk Analysis - L2BEAT',
         description:
           'Learn more about the risks of data availability solutions.',
+        url,
         openGraph: {
-          url,
           image:
             '/meta-images/data-availability/risk-analysis/opengraph-image.png',
         },

@@ -1,5 +1,15 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "AZTEC token contract",
-  "ignoreInWatchMode": ["totalSupply"]
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "mint unlimited amounts of the AZTEC token and transfer the ownership of the contract."
+        }
+      ]
+    }
+  }
 }

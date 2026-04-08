@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { EthRpcClient, Http, UpsertMap } from '@l2beat/shared'
 import type { Block, Log, LongChainName } from '@l2beat/shared-pure'
+import type { ConfigName } from '../../../../config/Config'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { BlockProcessor } from '../../../types'
 import type { PluginCluster } from '../../plugins'
@@ -36,6 +37,7 @@ export class InteropSyncersManager {
     eventStore: InteropEventStore,
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly configName: ConfigName,
   ) {
     for (const cluster of pluginClusters) {
       const resyncablePlugins = cluster.plugins.filter(isPluginResyncable)
@@ -63,6 +65,7 @@ export class InteropSyncersManager {
           eventStore,
           db,
           logger,
+          this.configName,
         )
         clusterSyncers.push(eventSyncer)
         this.syncers
@@ -95,6 +98,21 @@ export class InteropSyncersManager {
     }
   }
 
+  areAllSyncersFollowing(): boolean {
+    for (const byChain of this.syncers.values()) {
+      for (const syncer of byChain.values()) {
+        if (
+          syncer.state.name !== 'following' ||
+          syncer.state.status === 'starting' ||
+          syncer.hasError
+        ) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   getSyncer(
     plugin: string,
     chain: LongChainName,
@@ -102,12 +120,23 @@ export class InteropSyncersManager {
     return this.syncers.get(plugin)?.get(chain)
   }
 
+  getChainsForPlugin(pluginName: string): LongChainName[] {
+    const chainMap = this.syncers.get(pluginName)
+    if (!chainMap) return []
+    return Array.from(chainMap.keys())
+  }
+
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
-    for (const v of this.syncers.values()) {
-      const syncer = v.get(chain)
-      if (syncer) {
-        await syncer.processNewestBlock(block, logs)
-      }
+    const results = await Promise.allSettled(
+      Array.from(this.syncers.values())
+        .map((syncersByChain) => syncersByChain.get(chain))
+        .filter((syncer): syncer is InteropEventSyncer => syncer !== undefined)
+        .map((syncer) => syncer.processNewestBlock(block, logs)),
+    )
+
+    const rejected = results.find((result) => result.status === 'rejected')
+    if (rejected?.status === 'rejected') {
+      throw rejected.reason
     }
   }
 
@@ -163,14 +192,10 @@ export class InteropSyncersManager {
       )
       const state = stateByKey.get(key)
       seen.add(key)
-      let syncMode = `${syncer?.state.name}-${syncer?.state.status}`
-      if (syncer?.logRangeDivider !== undefined) {
-        syncMode += ` (log div: ${syncer.logRangeDivider})`
-      }
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode,
+        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,

@@ -138,7 +138,7 @@ function getPerL2UopsCost(
   },
 ) {
   function divideIfValid(value: number | null): number | null {
-    return uops.costs && value !== null ? value / uops.costs : value
+    return uops.costs && value !== null ? value / uops.costs : null
   }
 
   return {

@@ -51,5 +51,23 @@
     "address": "eth:0xa271Df8660A318F155A31e64d0529ed85C2d1616",
     "chain": "ethereum",
     "blockNumber": 24519630
+  },
+  "ZkLighterVerifier_v0.0.8": {
+    "hash": "0xab9b5214c22d0889b51440a32845c66a27fb098824650b1525ac6dd4d5364f10",
+    "address": "eth:0x5D36a933de9A89550f6b1cDB561861c615199944",
+    "chain": "ethereum",
+    "blockNumber": 24619817
+  },
+  "ZkLighterVerifier_v0.0.9": {
+    "hash": "0x4b84ec2617ebb82301e3dd281aa9b96b8b0d157cc7d8b3d6232bdcc01f2592ad",
+    "address": "eth:0x840b49E7d53699C7eC4333ffFe27Dc679B171Db8",
+    "chain": "ethereum",
+    "blockNumber": 24640491
+  },
+  "ZkLighterVerifier_v0.0.10": {
+    "hash": "0x5e3d7b6d29089561516de79ebfb16ec22a67f997f4b1b656f9ba7c4caec453d7",
+    "address": "eth:0xb20De28D78b63bc0c94eef89Db53F6338af17825",
+    "chain": "ethereum",
+    "blockNumber": 24771042
   }
 }

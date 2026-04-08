@@ -1,4 +1,4 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, assert } from '@l2beat/shared-pure'
 import {
   createEventParser,
   createInteropEventType,
@@ -70,6 +70,10 @@ export class MesonPlugin implements InteropPlugin {
   readonly name = 'meson'
 
   capture(input: LogToCapture) {
+    if (input.tx.kind !== 'canonical') {
+      return
+    }
+
     const swapExecuted = parseSwapExecuted(input.log, null)
     if (swapExecuted) {
       const decoded = decodeSwap(swapExecuted.encodedSwap)
@@ -234,6 +238,8 @@ function resolveTokenData(input: LogToCapture, targetAmount: bigint) {
       wasMinted: transferMatch.transfer.from === Address32.ZERO,
     }
   }
+
+  assert(input.tx.kind === 'canonical')
 
   const txValue = input.tx.value ?? 0n
   if (txValue > 0n) {

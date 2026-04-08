@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
@@ -68,13 +68,6 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       ),
     )
   }
-  if (project.proofVerification) {
-    for (const verifier of project.proofVerification.verifiers) {
-      const chain = chains.find((x) => x.chainId === verifier.chainId)
-      assert(chain?.explorerUrl, `Missing explorerUrl for: ${verifier.chainId}`)
-      verifier.url = `${chain.explorerUrl}/address/${verifier.contractAddress}#code`
-    }
-  }
   adjustContracts(project, chains)
 }
 
@@ -88,7 +81,7 @@ function adjustContracts(
         const chain = chains.find((x) => x.name === contract.chain)
         assert(chain, `Missing chain: ${contract.chain}`)
         assert(chain.explorerUrl, `Missing explorer url: ${chain.name}`)
-        contract.url = `${chain.explorerUrl}/address/${contract.address}#code`
+        contract.url = `${chain.explorerUrl}/address/${ChainSpecificAddress.address(contract.address)}#code`
       }
     }
     const unverifiedContracts = getProjectUnverifiedContracts(project)

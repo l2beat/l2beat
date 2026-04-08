@@ -14,16 +14,35 @@ export const stargate: BaseProject = {
     plugins: [
       {
         plugin: 'stargate',
-        transferType: 'stargate-v2-taxi.Transfer',
         bridgeType: 'nonMinting',
       },
       {
         plugin: 'stargate',
-        transferType: 'stargate-v2-taxi.Transfer',
         bridgeType: 'lockAndMint',
       },
-      // TODO: needs bus/taxi duration split
     ],
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'Bus',
+          transferTypes: ['stargate-v2-bus.Transfer'],
+        },
+        {
+          label: 'Taxi',
+          transferTypes: ['stargate-v2-taxi.Transfer'],
+        },
+      ],
+      nonMinting: [
+        {
+          label: 'Bus',
+          transferTypes: ['stargate-v2-bus.Transfer'],
+        },
+        {
+          label: 'Taxi',
+          transferTypes: ['stargate-v2-taxi.Transfer'],
+        },
+      ],
+    },
     type: 'intent',
   },
   isInteropProtocol: true,

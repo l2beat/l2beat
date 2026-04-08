@@ -1,4 +1,4 @@
-import type { SsrData } from '../pages/ClientPageRouter'
+import type { SsrData } from '../pages/pageTypes'
 import type { HeadProps } from './head/Head'
 
 export interface RenderData {
@@ -8,10 +8,6 @@ export interface RenderData {
 
 export type RenderFunction = (data: RenderData, url: string) => Promise<string>
 
-export interface RenderOptions {
-  stylesheetUrl: string
-}
-
 export interface RenderResult {
   html: string
   head: string
@@ -20,5 +16,4 @@ export interface RenderResult {
 export type ServerRenderFunction = (
   data: RenderData,
   url: string,
-  options: RenderOptions,
 ) => RenderResult | Promise<RenderResult>

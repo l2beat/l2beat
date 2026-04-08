@@ -6,7 +6,7 @@ const COLLAPSE_THRESHOLD_PCT = 2
 
 const CHAIN_ALIASES: Record<string, string> = {
   Unknown_792703809: 'solana',
-  Unknown_30367: 'hyperliquid',
+  Unknown_30367: 'hyperevm',
   Unknown_30383: 'plasma',
   Unknown_30385: 'dinari',
   Unknown_30390: 'monad',
@@ -15,6 +15,8 @@ const CHAIN_ALIASES: Record<string, string> = {
   Unknown_30403: 'citrea',
   Unknown_30420: 'tron',
   Unknown_30362: 'berachain',
+  Unknown_30212: 'conflux',
+  Unknown_30150: 'klaytn',
 }
 
 interface AggregatedSlice {

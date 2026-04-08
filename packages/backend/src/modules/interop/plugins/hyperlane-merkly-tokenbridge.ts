@@ -13,11 +13,8 @@ import {
   parseDispatch,
   parseDispatchId,
 } from './hyperlane'
-import {
-  findParsedAround,
-  parseSentTransferRemote,
-  sentTransferRemoteLog,
-} from './hyperlane-hwr'
+import { parseSentTransferRemote, sentTransferRemoteLog } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createInteropEventType,
   type DataRequest,
@@ -82,6 +79,7 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chainId: 57073,
       address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
     },
+    // monad, tempo unsupported
   ],
 )
 

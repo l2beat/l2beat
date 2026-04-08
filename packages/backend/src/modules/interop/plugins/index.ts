@@ -15,6 +15,7 @@ import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AgglayerPlugin } from './agglayer'
 import { AllbridgePlugIn } from './allbridge'
+import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
@@ -85,6 +86,7 @@ export interface InteropPlugins {
 
 export interface InteropPluginDependencies {
   chains: { name: string; id: number }[]
+  oneSidedChains: string[]
   httpClient: HttpClient
   rpcClients: IRpcClient[]
   logger: Logger
@@ -160,7 +162,7 @@ export function createInteropPlugins(
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
       new MesonPlugin(),
-      new CCIPPlugin(deps.configs),
+      new CCIPPlugin(deps.configs, deps.oneSidedChains),
       new CentriFugePlugin(),
       {
         name: 'layerzero',
@@ -191,6 +193,7 @@ export function createInteropPlugins(
         ],
       },
       new AllbridgePlugIn(),
+      new AvalanchePlugin(),
       new LineaPlugin(),
       {
         name: 'axelar',

@@ -281,6 +281,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Layer 3'
     case 'da':
       return 'DA Layer'
+    case 'interop':
+      return 'Interop'
     case 'zkCatalog':
       return 'ZK Project'
     case 'ecosystem':

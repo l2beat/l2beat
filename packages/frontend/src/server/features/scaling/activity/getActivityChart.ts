@@ -1,4 +1,4 @@
-import { assert, ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -28,30 +28,35 @@ type ActivityChartDataPoint = [
   ethereumUopsCount: number | null,
 ]
 
+interface ActivityTotalCount {
+  count: number
+  sinceTimestamp: UnixTime
+}
+
+interface ActivityMetricStats {
+  pastDayCount: number | null
+  pastDaySum: number | null
+  maxCount: {
+    value: number
+    timestamp: number
+  }
+}
+
+export interface ActivityChartStats {
+  uops: ActivityMetricStats
+  tps: ActivityMetricStats & {
+    totalCount?: {
+      value: number
+      sinceTimestamp: number
+    }
+  }
+}
+
 export type ActivityChartData = {
   data: ActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
-  stats:
-    | {
-        uops: {
-          pastDayCount: number | null
-          pastDaySum: number | null
-          maxCount: {
-            value: number
-            timestamp: number
-          }
-        }
-        tps: {
-          pastDayCount: number | null
-          pastDaySum: number | null
-          maxCount: {
-            value: number
-            timestamp: number
-          }
-        }
-      }
-    | undefined
+  stats: ActivityChartStats | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
@@ -71,11 +76,13 @@ export async function getActivityChart({
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project
+  const projectId = isSingleProject ? projects[0] : undefined
   const adjustedRange = await getFullySyncedActivityRange(range)
 
-  const [entries, maxCounts] = await Promise.all([
+  const [entries, maxCounts, totalCounts] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(projects, adjustedRange),
     db.activity.getMaxCountsForProjects(),
+    isSingleProject ? db.activity.getTpsTotalsForProjects(projects) : undefined,
   ])
 
   // By default, we assume we're always synced...
@@ -84,9 +91,7 @@ export async function getActivityChart({
 
   // ...but if we are looking at a single project, we check the last day we have data for,
   // and use that as the cutoff.
-  if (isSingleProject) {
-    const projectId = projects[0]
-    assert(projectId, 'Project ID is required')
+  if (projectId) {
     const syncInfo = await getActivitySyncInfo(projectId, adjustedRange[1])
     if (!syncInfo.hasSyncData) {
       return {
@@ -136,8 +141,8 @@ export async function getActivityChart({
     ]
   })
 
-  const stats = isSingleProject
-    ? getActivityChartStats(projects, data, maxCounts)
+  const stats = projectId
+    ? getActivityChartStats(projects, data, maxCounts, totalCounts?.[projectId])
     : undefined
 
   return {
@@ -160,7 +165,8 @@ function getActivityChartStats(
       countTimestamp: number
     }
   >,
-): ActivityChartData['stats'] {
+  totalCount: ActivityTotalCount | undefined,
+): ActivityChartStats | undefined {
   const pastDaySumTps = data.at(-1)?.[1] ?? null
   const pastDaySumUops = data.at(-1)?.[3] ?? pastDaySumTps
 
@@ -187,6 +193,12 @@ function getActivityChartStats(
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,
       },
+      totalCount: totalCount
+        ? {
+            value: totalCount.count,
+            sinceTimestamp: totalCount.sinceTimestamp,
+          }
+        : undefined,
     },
   }
 }

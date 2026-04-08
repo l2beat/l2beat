@@ -264,7 +264,7 @@ export function SideNavLayout({
         },
         {
           title: 'Brand Kit',
-          href: externalLinks.brandKit,
+          href: '/brand-kit',
         },
         {
           title: 'FAQ',

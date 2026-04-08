@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -109,6 +109,7 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
       {
         projectId: ProjectId('galxegravity'),
         sinceTimestamp: UnixTime(1771445567),
+        untilTimestamp: UnixTime(1763420400),
       },
       {
         projectId: ProjectId('rari'),
@@ -138,13 +139,22 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     verifierHashes: [
       {
         hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
+        name: 'SP1 Hypercube Plonk v6.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
             ),
-            chain: 'ethereum',
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C',
+            ),
           },
         ],
         verificationStatus: 'successful',
@@ -188,13 +198,16 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
       },
       {
         hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
+        name: 'SP1 Hypercube Groth16 v6.0.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'successful',

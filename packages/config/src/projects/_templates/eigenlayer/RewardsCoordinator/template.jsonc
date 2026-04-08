@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.",
   "ignoreMethods": [
     "getCurrentClaimableDistributionRoot",

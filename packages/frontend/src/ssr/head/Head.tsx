@@ -7,7 +7,6 @@ import type { Metadata } from './getMetadata'
 export interface HeadProps {
   manifest: Manifest
   metadata: Metadata
-  stylesheetUrl?: string
 }
 
 const size = {
@@ -15,9 +14,7 @@ const size = {
   height: 630,
 }
 
-export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
-  const resolvedStylesheetUrl = stylesheetUrl ?? manifest.getUrl('/index.css')
-
+export function Head({ manifest, metadata }: HeadProps) {
   return (
     <>
       <meta charSet="UTF-8" />
@@ -34,14 +31,12 @@ export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
         type="image/png"
         sizes="180x180"
       />
-      <link rel="stylesheet" href={resolvedStylesheetUrl} />
-      {manifest.getImports('/src/ssr/ClientEntry.tsx').map((url) => (
-        <link key={url} rel="modulepreload" href={url} />
-      ))}
 
       <title>{metadata.title}</title>
       <meta name="description" content={metadata.description} />
-      {metadata.excludeFromSearchEngines && (
+      <link rel="canonical" href={metadata.canonicalUrl} />
+      {(metadata.excludeFromSearchEngines ||
+        env.DEPLOYMENT_ENV !== 'production') && (
         <meta name="robots" content="noindex" />
       )}
 
@@ -65,22 +60,23 @@ export function Head({ manifest, metadata, stylesheetUrl }: HeadProps) {
   )
 }
 
-function OpengraphMeta({ openGraph: opengraph, title, description }: Metadata) {
+function OpengraphMeta({
+  openGraph: opengraph,
+  title,
+  description,
+  url,
+}: Metadata) {
   return (
     <>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      {opengraph && <meta property="og:url" content={opengraph.url} />}
+      <meta property="og:url" content={url} />
       <meta property="og:site_name" content="L2BEAT" />
       {<meta property="og:type" content={opengraph.type} />}
-      {opengraph?.image && (
-        <>
-          <meta property="og:image" content={opengraph.image} />
-          <meta property="og:image:width" content={size.width.toString()} />
-          <meta property="og:image:height" content={size.height.toString()} />
-          <meta property="og:image:type" content="image/png" />
-        </>
-      )}
+      <meta property="og:image" content={opengraph.image} />
+      <meta property="og:image:width" content={size.width.toString()} />
+      <meta property="og:image:height" content={size.height.toString()} />
+      <meta property="og:image:type" content="image/png" />
     </>
   )
 }
@@ -91,14 +87,10 @@ function TwitterMeta({ title, description, openGraph: opengraph }: Metadata) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      {opengraph?.image && (
-        <>
-          <meta name="twitter:image" content={opengraph.image} />
-          <meta name="twitter:image:type" content="image/png" />
-          <meta name="twitter:image:width" content={size.width.toString()} />
-          <meta name="twitter:image:height" content={size.height.toString()} />
-        </>
-      )}
+      <meta name="twitter:image" content={opengraph.image} />
+      <meta name="twitter:image:type" content="image/png" />
+      <meta name="twitter:image:width" content={size.width.toString()} />
+      <meta name="twitter:image:height" content={size.height.toString()} />
     </>
   )
 }

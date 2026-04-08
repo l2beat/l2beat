@@ -510,6 +510,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
           category: 'ether',
           isAssociated: true,
         },
+        {
+          projectId: 'ethereum',
+          tokenId: 'i', // eth-custom-canonical-stablecoin
+          source: 'custom-canonical',
+          category: 'stablecoin',
+          isAssociated: false,
+        },
         // Arbitrum tokens
         {
           projectId: 'arbitrum',
@@ -588,6 +595,16 @@ describeDatabase(TokenValueRepository.name, (db) => {
           97.5,
         ),
         tokenValue(
+          'i', // eth-custom-canonical-stablecoin
+          'ethereum',
+          UnixTime(100),
+          50,
+          5000,
+          4000,
+          3000,
+          100,
+        ),
+        tokenValue(
           'f', // arb-canonical-ether
           'arbitrum',
           UnixTime(100),
@@ -664,7 +681,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -672,12 +689,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 12000.25,
+              value:
+                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -687,6 +706,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 16000.25 + 8000.5 + 6400.5,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 8000.5,
               native: 6400.5,
               ether: 16000.25,
@@ -700,6 +720,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(300),
               value: 24000.25 + 20000.25,
               canonical: 24000.25 + 20000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25 + 20000.25,
@@ -719,7 +740,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: true,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -727,12 +748,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 7500.75,
+              value:
+                5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000 + 7500.75,
               canonical: 5000.25 + 10000.5 + 500.5 + 7500.75,
+              customCanonical: 3000,
               external: 2500.5,
               native: 1500.75,
               ether: 5000.25 + 500.5 + 7500.75,
-              stablecoin: 10000.5,
+              stablecoin: 10000.5 + 3000,
               btc: 2500.5,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -742,6 +765,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 10000.5 + 5000.25 + 4000.5,
               canonical: 10000.5,
+              customCanonical: 0,
               external: 5000.25,
               native: 4000.5,
               ether: 10000.5,
@@ -755,6 +779,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(300),
               value: 15000.5 + 12500.75,
               canonical: 15000.5 + 12500.75,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 15000.5 + 12500.75,
@@ -774,7 +799,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -784,6 +809,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 16000.25 + 8000.5 + 6400.5,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 8000.5,
               native: 6400.5,
               ether: 16000.25,
@@ -797,6 +823,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(300),
               value: 24000.25 + 20000.25,
               canonical: 24000.25 + 20000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25 + 20000.25,
@@ -816,7 +843,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(200),
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -824,12 +851,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 12000.25,
+              value:
+                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -839,6 +868,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 16000.25 + 8000.5 + 6400.5,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 8000.5,
               native: 6400.5,
               ether: 16000.25,
@@ -858,7 +888,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(100),
             {
               forSummary: false,
-              excludeAssociated: true,
+              excludeAssociatedTokens: true,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -866,18 +896,34 @@ describeDatabase(TokenValueRepository.name, (db) => {
           expect(result).toEqualUnsorted([
             {
               timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 12000.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000 + 12000.25,
               canonical: 8000.5 + 16000.25 + 12000.25,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 12000.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
               other: 2400.5,
             },
           ])
+        })
+
+        it('returns empty array when projectIds is empty', async () => {
+          const result = await repository.getSummedByTimestampByProjects(
+            [],
+            null,
+            null,
+            {
+              forSummary: false,
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqual([])
         })
 
         it('returns empty array when no matching projects', async () => {
@@ -887,7 +933,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -902,7 +948,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(200),
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
             },
           )
@@ -914,6 +960,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Token 'g' (arbitrum, rwaRestricted) should be excluded
               value: 16000.25 + 6400.5, // 'a' + 'h'
               canonical: 16000.25, // 'a'
+              customCanonical: 0,
               external: 0, // 'g' was external but excluded
               native: 6400.5, // 'h'
               ether: 16000.25, // 'a'
@@ -956,7 +1003,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -966,12 +1013,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum tokens at timestamp 100
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
               canonical: 8000.5 + 16000.25 + 800.25,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -982,6 +1030,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 16000.25,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 16000.25,
@@ -996,6 +1045,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 8000.5 + 6400.5,
               canonical: 0,
+              customCanonical: 0,
               external: 8000.5,
               native: 6400.5,
               ether: 0,
@@ -1011,6 +1061,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Only arbitrum tokens at timestamp 300 (ethereum range ended at 200)
               value: 20000.25,
               canonical: 20000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 20000.25,
@@ -1042,7 +1093,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1054,6 +1105,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Only arbitrum at timestamp 100
               value: 12000.25,
               canonical: 12000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 12000.25,
@@ -1069,6 +1121,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Only ethereum at timestamp 200 (arbitrum range ended at 100)
               value: 16000.25,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 16000.25,
@@ -1084,6 +1137,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Only ethereum (no untilTimestamp)
               value: 24000.25,
               canonical: 24000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25,
@@ -1113,7 +1167,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1124,6 +1178,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 16000.25,
               canonical: 16000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 16000.25,
@@ -1138,6 +1193,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(200),
               value: 8000.5 + 6400.5,
               canonical: 0,
+              customCanonical: 0,
               external: 8000.5,
               native: 6400.5,
               ether: 0,
@@ -1152,6 +1208,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(300),
               value: 24000.25,
               canonical: 24000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25,
@@ -1166,6 +1223,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               timestamp: UnixTime(300),
               value: 20000.25,
               canonical: 20000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 20000.25,
@@ -1197,7 +1255,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1207,12 +1265,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Only ethereum
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25,
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
               canonical: 8000.5 + 16000.25 + 800.25,
+              customCanonical: 4000,
               external: 4000.75,
               native: 2400.5,
               ether: 8000.5 + 800.25,
-              stablecoin: 16000.25,
+              stablecoin: 16000.25 + 4000,
               btc: 4000.75,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1224,6 +1283,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               // Only arbitrum
               value: 20000.25,
               canonical: 20000.25,
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 20000.25,
@@ -1250,7 +1310,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: true,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1259,12 +1319,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
-              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5,
+              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000,
               canonical: 5000.25 + 10000.5 + 500.5,
+              customCanonical: 3000,
               external: 2500.5,
               native: 1500.75,
               ether: 5000.25 + 500.5,
-              stablecoin: 10000.5,
+              stablecoin: 10000.5 + 3000,
               btc: 2500.5,
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1281,7 +1342,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1303,7 +1364,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1325,7 +1386,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: true,
+                excludeAssociatedTokens: true,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1335,18 +1396,250 @@ describeDatabase(TokenValueRepository.name, (db) => {
               projectId: 'ethereum',
               timestamp: UnixTime(100),
               // Excludes token 'e' (associated token with valueForProject 800.25)
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i
               canonical: 8000.5 + 16000.25, // a + b
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5, // a
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,
               other: 2400.5, // d
             },
           ])
+        })
+      },
+    )
+
+    describe(
+      TokenValueRepository.prototype.getSummedByProjectForRange.name,
+      () => {
+        it('returns per-project valueForProject sums ordered by timestamp within the inclusive range', async () => {
+          const result = await repository.getSummedByProjectForRange(
+            ['ethereum', 'arbitrum'],
+            [UnixTime(100), UnixTime(300)],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          const sorted = [...result].sort(
+            (a, b) =>
+              a.timestamp - b.timestamp || a.project.localeCompare(b.project),
+          )
+
+          expect(sorted).toEqual([
+            {
+              timestamp: UnixTime(100),
+              project: 'arbitrum',
+              value: 12000.25,
+              canonical: 12000.25,
+              customCanonical: 0,
+              external: 0,
+              native: 0,
+              ether: 12000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+              associated: 0,
+            },
+            {
+              timestamp: UnixTime(100),
+              project: 'ethereum',
+              value: 8000.5 + 16000.25 + 4000 + 4000.75 + 2400.5 + 800.25,
+              canonical: 8000.5 + 16000.25 + 800.25,
+              customCanonical: 4000,
+              external: 4000.75,
+              native: 2400.5,
+              ether: 8000.5 + 800.25,
+              stablecoin: 16000.25 + 4000,
+              btc: 4000.75,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 2400.5,
+              associated: 800.25,
+            },
+            {
+              timestamp: UnixTime(200),
+              project: 'arbitrum',
+              value: 8000.5 + 6400.5,
+              canonical: 0,
+              customCanonical: 0,
+              external: 8000.5,
+              native: 6400.5,
+              ether: 0,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 8000.5,
+              rwaPublic: 6400.5,
+              other: 0,
+              associated: 0,
+            },
+            {
+              timestamp: UnixTime(200),
+              project: 'ethereum',
+              value: 16000.25,
+              canonical: 16000.25,
+              customCanonical: 0,
+              external: 0,
+              native: 0,
+              ether: 16000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+              associated: 0,
+            },
+            {
+              timestamp: UnixTime(300),
+              project: 'arbitrum',
+              value: 20000.25,
+              canonical: 20000.25,
+              customCanonical: 0,
+              external: 0,
+              native: 0,
+              ether: 20000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+              associated: 0,
+            },
+            {
+              timestamp: UnixTime(300),
+              project: 'ethereum',
+              value: 24000.25,
+              canonical: 24000.25,
+              customCanonical: 0,
+              external: 0,
+              native: 0,
+              ether: 24000.25,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 0,
+              associated: 0,
+            },
+          ])
+        })
+
+        it('applies no lower bound when range start is null', async () => {
+          const result = await repository.getSummedByProjectForRange(
+            ['ethereum'],
+            [null, UnixTime(150)],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+
+          expect(result).toEqual([
+            {
+              timestamp: UnixTime(100),
+              project: 'ethereum',
+              value: 8000.5 + 16000.25 + 4000 + 4000.75 + 2400.5 + 800.25,
+              canonical: 8000.5 + 16000.25 + 800.25,
+              customCanonical: 4000,
+              external: 4000.75,
+              native: 2400.5,
+              ether: 8000.5 + 800.25,
+              stablecoin: 16000.25 + 4000,
+              btc: 4000.75,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 2400.5,
+              associated: 800.25,
+            },
+          ])
+        })
+
+        it('respects excludeAssociated and excludeRwaRestrictedTokens', async () => {
+          const associatedExcluded =
+            await repository.getSummedByProjectForRange(
+              ['ethereum'],
+              [UnixTime(100), UnixTime(100)],
+              {
+                excludeAssociatedTokens: true,
+                excludeRwaRestrictedTokens: false,
+              },
+            )
+
+          expect(associatedExcluded).toEqual([
+            {
+              timestamp: UnixTime(100),
+              project: 'ethereum',
+              value: 8000.5 + 16000.25 + 4000 + 4000.75 + 2400.5,
+              canonical: 8000.5 + 16000.25,
+              customCanonical: 4000,
+              external: 4000.75,
+              native: 2400.5,
+              ether: 8000.5,
+              stablecoin: 16000.25 + 4000,
+              btc: 4000.75,
+              rwaRestricted: 0,
+              rwaPublic: 0,
+              other: 2400.5,
+              associated: 0,
+            },
+          ])
+
+          const rwaExcluded = await repository.getSummedByProjectForRange(
+            ['arbitrum'],
+            [UnixTime(200), UnixTime(200)],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: true,
+            },
+          )
+
+          expect(rwaExcluded).toEqual([
+            {
+              timestamp: UnixTime(200),
+              project: 'arbitrum',
+              value: 6400.5,
+              canonical: 0,
+              customCanonical: 0,
+              external: 0,
+              native: 6400.5,
+              ether: 0,
+              stablecoin: 0,
+              btc: 0,
+              rwaRestricted: 0,
+              rwaPublic: 6400.5,
+              other: 0,
+              associated: 0,
+            },
+          ])
+        })
+
+        it('returns no rows when project ids are empty or unknown', async () => {
+          const emptyIds = await repository.getSummedByProjectForRange(
+            [],
+            [UnixTime(100), UnixTime(300)],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+          expect(emptyIds).toEqual([])
+
+          const unknownProject = await repository.getSummedByProjectForRange(
+            ['non-existent'],
+            [UnixTime(100), UnixTime(300)],
+            {
+              excludeAssociatedTokens: false,
+              excludeRwaRestrictedTokens: false,
+            },
+          )
+          expect(unknownProject).toEqual([])
         })
       },
     )
@@ -1359,7 +1652,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // oldestTimestamp
             300, // latestTimestamp
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1369,12 +1662,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25, // a + b + c + d + e valueForProject
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000, // a + b + c + d + e + i valueForProject
               canonical: 8000.5 + 16000.25 + 800.25, // a + b + e
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5 + 800.25, // a + e
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1386,6 +1680,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 12000.25, // f valueForProject
               canonical: 12000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 12000.25, // f
@@ -1401,6 +1696,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'ethereum',
               value: 24000.25, // a valueForProject
               canonical: 24000.25, // a
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 24000.25, // a
@@ -1416,6 +1712,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 20000.25, // f valueForProject
               canonical: 20000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 20000.25, // f
@@ -1434,7 +1731,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // oldestTimestamp
             100, // latestTimestamp (only timestamp 100)
             {
-              excludeAssociated: true,
+              excludeAssociatedTokens: true,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1444,12 +1741,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
             {
               timestamp: UnixTime(100),
               project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5, // a + b + c + d (excluding e)
+              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i (excluding e)
               canonical: 8000.5 + 16000.25, // a + b (excluding e)
+              customCanonical: 4000, // i
               external: 4000.75, // c
               native: 2400.5, // d
               ether: 8000.5, // a (excluding e)
-              stablecoin: 16000.25, // b
+              stablecoin: 16000.25 + 4000, // b + i
               btc: 4000.75, // c
               rwaRestricted: 0,
               rwaPublic: 0,
@@ -1461,6 +1759,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               project: 'arbitrum',
               value: 12000.25, // f
               canonical: 12000.25, // f
+              customCanonical: 0,
               external: 0,
               native: 0,
               ether: 12000.25, // f
@@ -1479,7 +1778,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             400, // oldestTimestamp - no data at this timestamp
             500, // latestTimestamp - no data at this timestamp
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1494,7 +1793,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             200,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1522,7 +1821,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100,
             100,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1539,7 +1838,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200, // timestamp where we have rwaRestricted token 'g'
             200,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
               cutOffTimestamp: 50,
             },

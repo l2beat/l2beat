@@ -12,6 +12,7 @@ export type SummedByTimestampTvsValuesPerProjectRecord = [
   timestamp: UnixTime,
   value: number,
   canonical: number,
+  customCanonical: number,
   external: number,
   native: number,
   ether: number,
@@ -37,7 +38,7 @@ export async function getSummedByTimestampTvsValuesPerProjectQuery(
       range[1],
       {
         forSummary,
-        excludeAssociated,
+        excludeAssociatedTokens: excludeAssociated,
         excludeRwaRestrictedTokens,
       },
     )
@@ -47,6 +48,7 @@ export async function getSummedByTimestampTvsValuesPerProjectQuery(
     v.timestamp,
     v.value,
     v.canonical,
+    v.customCanonical,
     v.external,
     v.native,
     v.ether,

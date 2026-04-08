@@ -4,7 +4,11 @@ import type {
   TrustedSetup,
   ZkCatalogTag,
 } from '@l2beat/config'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
@@ -176,7 +180,11 @@ function getTrustedSetupsByProofSystem(
   const relevantVerifiers = project.zkCatalogInfo.verifierHashes.filter((v) =>
     v.knownDeployments.some((d) =>
       contractUtils
-        .getUsedIn(projectId, d.chain, d.address)
+        .getUsedIn(
+          projectId,
+          ChainSpecificAddress.longChain(d.address),
+          ChainSpecificAddress.address(d.address),
+        )
         .some((u) => u.id === projectId),
     ),
   )

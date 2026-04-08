@@ -11,9 +11,11 @@ import {
   type RpcLog,
   type RpcReceipt,
   type RpcTransaction,
+  toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import {
+  assert,
   type Block,
   ChainSpecificAddress,
   type EthereumAddress,
@@ -21,13 +23,17 @@ import {
   type LongChainName,
   type UnixTime,
 } from '@l2beat/shared-pure'
+import type { ConfigName } from '../../../../config/Config'
+import { AsyncMutex } from '../../../../tools/AsyncMutex'
 import { TimeLoop } from '../../../../tools/TimeLoop'
+import { toInteropTransaction } from '../../dto/interopTransaction'
 import type {
   InteropEvent,
   InteropPluginResyncable,
   LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
-import { getItemsToCapture } from '../capture/getItemsToCapture'
+import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
 import { FollowingState } from './FollowingState'
@@ -37,11 +43,23 @@ export class LogQuery {
   addresses: Set<EthereumAddress> | '*' = new Set()
   topicToTxEvents = new UpsertMap<string, Set<string>>()
   topic0sWithTx = new Set<string>()
+  private cachedLowercaseAddresses?: Set<string>
+
   isEmpty() {
     if (this.topic0s.size === 0) {
       return true
     }
     return this.addresses === '*' ? false : this.addresses.size === 0
+  }
+
+  matchesLog(log: { topics: string[]; address: string }): boolean {
+    const topic0 = log.topics[0]
+    if (!topic0 || !this.topic0s.has(topic0)) return false
+    if (this.addresses === '*') return true
+    this.cachedLowercaseAddresses ??= new Set(
+      [...this.addresses].map((a) => a.toLowerCase()),
+    )
+    return this.cachedLowercaseAddresses.has(log.address.toLowerCase())
   }
 }
 
@@ -75,9 +93,7 @@ function addPluginDataRequests(
       result.addresses = '*'
     } else {
       if (eventRequest.addresses.length === 0) {
-        throw new Error(
-          `Empty address list in data request for ${plugin.name} (${eventRequest.signature})`,
-        )
+        continue
       }
 
       let addressesOnThisChain = 0
@@ -127,15 +143,24 @@ export interface BlockProcessorState {
   type: 'blockProcessor'
   name: string
   status: string
+  checkStatus(): Promise<SyncerState>
   processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState>
+}
+
+export interface TxCaptureResult {
+  events: InteropEvent[]
+  fulfilledCreatorEvents: InteropEvent[]
 }
 
 export class InteropEventSyncer extends TimeLoop {
   public state: SyncerState
   public latestBlockNumber?: bigint
   public waitingForWipe = false
+  public hasError = false
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
+  private readonly exclusiveExecutionMutex = new AsyncMutex()
+  private cachedLogQuery: LogQuery
 
   constructor(
     readonly chain: LongChainName,
@@ -144,26 +169,28 @@ export class InteropEventSyncer extends TimeLoop {
     readonly store: InteropEventStore,
     readonly db: Database,
     protected logger: Logger,
+    readonly configName: ConfigName,
     intervalMs = 10000,
   ) {
     super({ intervalMs })
     this.logger = logger.for(this)
     this.state = new FollowingState(this, this.logger)
+    this.cachedLogQuery = this.buildLogQuery()
   }
 
   protected async triggerState<T extends SyncerState>(
     state: T,
     fn: (state: T) => Promise<SyncerState>,
+    options?: { clearError?: boolean },
   ) {
     try {
-      await this.clearChainSyncError()
-      this.state = await fn(state)
-      if (this.state.type === 'timeLoop') {
-        this.unpause()
-      } else {
-        this.pause()
+      if (options?.clearError ?? true) {
+        await this.clearChainSyncError()
       }
+      this.state = await fn(state)
+      this.hasError = false
     } catch (error) {
+      this.hasError = true
       this.logger.error('Error syncing chain', error, {
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -174,23 +201,45 @@ export class InteropEventSyncer extends TimeLoop {
   }
 
   async run() {
-    const state = this.state
-    if (state.type === 'timeLoop') {
-      await this.triggerState(state, (current) => current.run())
-    }
+    await this.exclusiveExecutionMutex.tryRunExclusive(async () => {
+      const state = this.state
+      if (state.type === 'timeLoop') {
+        await this.triggerState(state, (current) => current.run())
+      } else {
+        await this.triggerState(state, (current) => current.checkStatus(), {
+          clearError: false,
+        })
+      }
+    })
   }
 
   async processNewestBlock(block: Block, logs: Log[]) {
     this.latestBlockNumber = BigInt(block.number)
-    const state = this.state
-    if (state.type === 'blockProcessor') {
-      await this.triggerState(state, (current) =>
-        current.processNewestBlock(block, logs),
-      )
+    this.cachedLogQuery = this.buildLogQuery()
+
+    // It's fine to do this check outside of the exclusiveExecutionMutex because
+    // even if we skip block, FollowingState will notice and switch to CatchingUpState
+    if (this.state.type === 'timeLoop') {
+      return
     }
+
+    await this.exclusiveExecutionMutex.runExclusive(async () => {
+      const state = this.state
+      if (state.type === 'blockProcessor') {
+        await this.triggerState(state, (current) =>
+          current.processNewestBlock(block, logs),
+        )
+      }
+    })
   }
 
   captureLog(logToCapture: LogToCapture) {
+    if (
+      this.configName !== 'Backend/Production' &&
+      !this.cachedLogQuery.matchesLog(logToCapture.log)
+    ) {
+      return
+    }
     for (const plugin of this.cluster.plugins) {
       const produced = plugin.capture(logToCapture)
       if (produced) {
@@ -199,12 +248,87 @@ export class InteropEventSyncer extends TimeLoop {
     }
   }
 
+  captureTx(txToCapture: TxToCapture): TxCaptureResult | undefined {
+    for (const plugin of this.cluster.plugins) {
+      if (!plugin.captureTx) {
+        continue
+      }
+      const creatorEvents = txToCapture.tx.hash
+        ? this.store.derivedTxStore.getCreatorEvents(
+            txToCapture.chain,
+            txToCapture.tx.hash,
+            plugin.name,
+          )
+        : undefined
+      const produced = plugin.captureTx(txToCapture, creatorEvents)
+      if (produced) {
+        return {
+          events: produced.map((p) => ({ ...p, plugin: plugin.name })),
+          fulfilledCreatorEvents: creatorEvents ?? [],
+        }
+      }
+    }
+  }
+
+  async capturePendingHistoricalTxs(beforeBlock: bigint) {
+    const pluginNames = this.cluster.plugins.map((p) => p.name)
+    const txHashes = this.store.derivedTxStore.getHashesPendingHistoryCheck(
+      this.chain,
+      pluginNames,
+    )
+    const interopEvents: InteropEvent[] = []
+    const fulfilledCreatorEvents: InteropEvent[] = []
+
+    for (const txHash of txHashes) {
+      const tx = await this.getTransactionByHash(txHash)
+      if (!tx || tx.blockNumber === null || tx.blockNumber >= beforeBlock) {
+        continue
+      }
+
+      const receipt = await this.getTransactionReceipt(txHash)
+      assert(receipt, `Missing receipt for tx ${txHash}`)
+
+      const block = await this.getBlockByNumber(tx.blockNumber)
+      assert(block, `Missing block ${tx.blockNumber} for tx ${txHash}`)
+
+      const result = this.captureTx({
+        chain: this.chain,
+        tx: toTransaction(tx),
+        block: toBlock(block),
+        txLogs: receipt.logs
+          .map((log) => logToViemLog(toEVMLog(log)))
+          .sort((a, b) => (a.logIndex ?? 0) - (b.logIndex ?? 0)),
+      })
+      if (result) {
+        interopEvents.push(...result.events)
+        fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
+      }
+    }
+
+    const checkedInHistoryEvents =
+      this.store.derivedTxStore.markCheckedInHistory(
+        this.chain,
+        txHashes,
+        pluginNames,
+      )
+
+    return {
+      events: interopEvents,
+      fulfilledCreatorEvents,
+      checkedInHistoryEvents,
+    }
+  }
+
   async saveProducedInteropEvents(
     interopEvents: InteropEvent[],
     fullRange: BlockRangeWithTimestamps,
+    fulfilledCreatorEvents: InteropEvent[] = [],
+    checkedInHistoryEvents: InteropEvent[] = [],
   ) {
     await this.runInTransaction(async () => {
       await this.store.saveNewEvents(interopEvents) // TODO: make this idempotent?
+      await this.store.updateDerivedFulfilled(fulfilledCreatorEvents)
+      await this.store.updateDerivedCheckedInHistory(checkedInHistoryEvents)
       await this.db.interopPluginSyncedRange.upsert({
         pluginName: this.cluster.name,
         chain: this.chain,
@@ -213,7 +337,7 @@ export class InteropEventSyncer extends TimeLoop {
       await this.clearChainSyncError()
     })
 
-    this.logger.info('Events captured for resyncable cluster', {
+    this.logger.debug('Events captured for resyncable cluster', {
       plugin: this.cluster.name,
       chain: this.chain,
       blockNumber: fullRange.toBlock,
@@ -235,11 +359,6 @@ export class InteropEventSyncer extends TimeLoop {
       this.chain,
       errorToString(error),
     )
-  }
-
-  async isResyncRequestedFrom(): Promise<UnixTime | undefined> {
-    const { resyncFrom } = await this.getResyncState()
-    return resyncFrom
   }
 
   async getResyncState(): Promise<{
@@ -302,5 +421,22 @@ export class InteropEventSyncer extends TimeLoop {
 
   getItemsToCapture(block: Block, logs: Log[]) {
     return getItemsToCapture(this.chain, block, logs)
+  }
+}
+
+function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
+  return toInteropTransaction(tx)
+}
+
+function toBlock(block: RpcBlock): TxToCapture['block'] {
+  assert(block.hash, `Missing hash for block ${block.number}`)
+  assert(block.number !== null, 'Missing block number')
+
+  return {
+    number: Number(block.number),
+    hash: block.hash,
+    logsBloom: block.logsBloom,
+    timestamp: Number(block.timestamp),
+    transactions: [],
   }
 }

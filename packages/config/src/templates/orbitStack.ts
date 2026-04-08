@@ -175,6 +175,7 @@ interface OrbitStackConfigCommon {
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   celestiaProofSystemInactive?: boolean
+  nonTemplateZkVerifiers?: ChainSpecificAddress[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -532,6 +533,7 @@ function orbitStackCommon(
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
       programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
+      zkVerifiers: templateVars.nonTemplateZkVerifiers,
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,

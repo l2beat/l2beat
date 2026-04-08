@@ -60,6 +60,9 @@ export const HYPERLANE_NETWORKS = defineNetworks('hyperlane', [
   { chain: 'linea', chainId: 59144 },
   { chain: 'unichain', chainId: 130 },
   { chain: 'ink', chainId: 57073 },
+  { chain: 'hyperevm', chainId: 999 },
+  { chain: 'monad', chainId: 143 },
+  // tempo unsupported
 ])
 
 export class HyperlanePlugIn implements InteropPluginResyncable {

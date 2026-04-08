@@ -30,8 +30,8 @@ export async function getZkCatalogProjectData(
       metadata: getMetadata(manifest, {
         title: `${project.name} - L2BEAT`,
         description: project.display.description,
+        url,
         openGraph: {
-          url,
           image: `/meta-images/zk-catalog/projects/${project.slug}/opengraph-image.png`,
         },
       }),

@@ -38,8 +38,8 @@ export async function getScalingTvsData(
         title: 'Total Value Secured - L2BEAT',
         description:
           'Track total value secured across Ethereum scaling solutions.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/value-secured/opengraph-image.png',
         },
       }),
@@ -59,17 +59,16 @@ async function getCachedData(
   cache: InMemoryCache,
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
-  const [entries, queryState] = await Promise.all([
-    getScalingTvsEntries(),
-    cache.get(
-      {
-        key: ['scaling', 'tvs', 'data', 'query-state', tab],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getQueryState(tab),
-    ),
-  ])
+  const entries = await getScalingTvsEntries()
+
+  const queryState = await cache.get(
+    {
+      key: ['scaling', 'tvs', 'data', 'query-state', tab],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getQueryState(tab, entries),
+  )
 
   return {
     entries,
@@ -79,6 +78,7 @@ async function getCachedData(
 
 async function getQueryState(
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  entries: Awaited<ReturnType<typeof getScalingTvsEntries>>,
 ) {
   const helpers = getSsrHelpers()
 
@@ -98,6 +98,18 @@ async function getQueryState(
     }),
     helpers.tvs.table.prefetch({
       type: tab,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
+    helpers.tvs.chartStats.prefetch({
+      filter: {
+        type: 'projects',
+        projectIds: [
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
+        ].map((entry) => entry.id),
+      },
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),

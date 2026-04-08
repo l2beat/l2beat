@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import capitalize from 'lodash/capitalize'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import {
   Tooltip,
@@ -10,6 +9,7 @@ import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
+import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from './categoryToLabel'
@@ -63,7 +63,7 @@ export const columns = [
       return (
         <TwoRowCell>
           <TwoRowCell.First>
-            {capitalize(ctx.row.original.source)}
+            {sourceToLabel(ctx.row.original.source)}
           </TwoRowCell.First>
           <TwoRowCell.Second>
             <BridgedUsingCell {...ctx.row.original} />

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -64,13 +64,14 @@ export const zksyncprover: BaseProject = {
     verifierHashes: [
       {
         hash: '0xfa15bba967ebf892d9657359fb8ff07aea13e152c0d5160143a494abb4bc9df3',
+        name: 'ZKsync Lite verifier 1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -79,13 +80,14 @@ export const zksyncprover: BaseProject = {
       },
       {
         hash: '0xdfd9cbc5d113efddf3bfe382bcdd2cd67a9548fb62d758e9b18c8d8821ef1f22',
+        name: 'ZKsync Lite verifier 4',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',
@@ -94,13 +96,14 @@ export const zksyncprover: BaseProject = {
       },
       {
         hash: '0xdfd12090ec7d5f3cc8c98dcad49e938e9e33f6807b70679c6bdfe61fdf9fd329',
+        name: 'ZKsync Lite verifier 8',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Zksync,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x57B09100e6160503aBDEBC76012b6c358eA4e462',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

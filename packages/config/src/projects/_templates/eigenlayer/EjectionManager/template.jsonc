@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
   "fields": {
     "ejectors": {

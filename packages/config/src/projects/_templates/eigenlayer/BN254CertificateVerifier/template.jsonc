@@ -1,4 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "Verifies BLS (BN254 curve) certificates for EigenLayer operator sets by computing the aggregate public key of signers, performing pairing-based signature verification, and returning signed-stake weights for quorum threshold validation."
 }

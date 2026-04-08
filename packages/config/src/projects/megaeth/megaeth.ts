@@ -12,7 +12,13 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('megaeth')
+const discovery = new ProjectDiscovery('megaeth', undefined, {
+  reachableEntries: {
+    use: true,
+    // Only directly referenced eigen-da contracts
+    maxDepth: 0,
+  },
+})
 
 export const megaeth: ScalingProject = opStackL2({
   addedAt: UnixTime(1764143601),
@@ -34,6 +40,7 @@ export const megaeth: ScalingProject = opStackL2({
       discovery.getContractValue<string>('KailuaTreasury', 'FPVM_IMAGE_ID'),
     ),
   ],
+
   architectureImage: 'megaeth',
   stateValidationImage: 'megaeth',
   display: {
@@ -84,6 +91,7 @@ export const megaeth: ScalingProject = opStackL2({
     chainId: 4326,
     explorerUrl: 'https://megaeth.blockscout.com',
     sinceTimestamp: UnixTime(1762797011), // block 1
+    coingeckoPlatform: 'megaeth',
     gasTokens: ['ETH'],
     multicallContracts: [
       {
@@ -188,4 +196,10 @@ export const megaeth: ScalingProject = opStackL2({
   ],
   genesisTimestamp: UnixTime(1762797011),
   isNodeAvailable: 'UnderReview', // this is important because challenging is permissionless, but impossible without a node
+  nonTemplateZkVerifiers: [
+    discovery.getContractValue<ChainSpecificAddress>(
+      'RiscZeroVerifierRouter',
+      'verifier',
+    ),
+  ],
 })

@@ -10,7 +10,6 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import compact from 'lodash/compact'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getL2Risks } from '~/pages/scaling/utils/getL2Risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
@@ -27,7 +26,6 @@ import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnoma
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
-import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
@@ -90,7 +88,6 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   tvs: {
     associatedTokens: ProjectAssociatedToken[]
     warnings: WarningWithSentiment[]
-    associatedTokensExcludedWarnings: WarningWithSentiment[]
   }
   activity:
     | {
@@ -115,16 +112,6 @@ export function getScalingSummaryEntry(
   ongoingAnomaly: boolean,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
 ): ScalingSummaryEntry {
-  const associatedTokenWarning =
-    latestTvs && latestTvs.breakdown.total > 0
-      ? getAssociatedTokenWarning({
-          associatedRatio:
-            latestTvs.breakdown.associated / latestTvs.breakdown.total,
-          name: project.name,
-          associatedTokens: project.tvsInfo?.associatedTokens ?? [],
-        })
-      : undefined
-  const associatedTokensExcludedWarnings = compact(project.tvsInfo?.warnings)
   const activitySyncWarning = getActivitySyncWarning(activity?.syncState)
 
   return {
@@ -149,11 +136,7 @@ export function getScalingSummaryEntry(
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
       associatedTokens: project.tvsInfo?.associatedTokens ?? [],
-      warnings: compact([
-        ...associatedTokensExcludedWarnings,
-        associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
-      ]),
-      associatedTokensExcludedWarnings,
+      warnings: project.tvsInfo?.warnings ?? [],
     },
     activity: activity && {
       pastDayUops: activity.pastDayUops,

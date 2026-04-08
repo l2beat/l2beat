@@ -54,7 +54,8 @@ export function useChart() {
 }
 
 const chartContainerClassNames = cn(
-  "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+  "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent",
+  'select-none outline-none [&>svg]:outline-none [&_svg_*]:outline-none',
   // Tooltip cursor line
   '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
   // Tooltip cursor bar
@@ -62,7 +63,7 @@ const chartContainerClassNames = cn(
   // Tooltip
   '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:transition-none!',
   // Active dots
-  "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
+  "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none",
   // Cartesian grid line
   "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
   // Cartesian X axis tick text

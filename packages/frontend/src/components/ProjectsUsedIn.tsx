@@ -67,27 +67,27 @@ export function ProjectsUsedIn({
     >
       <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
         {cappedProjects.map((project, index) => {
-          const trigger = (
-            <TooltipTrigger>
-              <img
-                width={20}
-                height={20}
-                src={project.icon}
-                alt={`${project.name} logo`}
-                className="relative size-5 min-w-5 rounded-full bg-white shadow"
-                style={{ zIndex: maxProjects - index }}
-              />
-            </TooltipTrigger>
+          const image = (
+            <img
+              width={20}
+              height={20}
+              src={project.icon}
+              alt={`${project.name} logo`}
+              className="relative size-5 min-w-5 rounded-full bg-white shadow"
+              style={{ zIndex: maxProjects - index }}
+            />
           )
 
           return (
             <Tooltip key={project.slug}>
               {noLink ? (
-                trigger
+                <TooltipTrigger>{image}</TooltipTrigger>
               ) : (
-                <a href={project.url} className="size-5">
-                  {trigger}
-                </a>
+                <TooltipTrigger asChild disabledOnMobile>
+                  <a href={project.url} className="size-5">
+                    {image}
+                  </a>
+                </TooltipTrigger>
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>

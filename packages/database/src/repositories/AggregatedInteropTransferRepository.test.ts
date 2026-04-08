@@ -23,6 +23,9 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
             timestamp: UnixTime(100),
             srcChain: 'ethereum',
             dstChain: 'arbitrum',
+            transferTypeStats: {
+              taxi: { transferCount: 3, totalDurationSum: 120 },
+            },
             transferCount: 5,
             identifiedCount: 1000,
           }),
@@ -800,6 +803,36 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         expect(result).toEqualUnsorted([record1, record3])
       })
 
+      it('filters by protocolId when provided', async () => {
+        const record1 = record({
+          id: 'protocol1',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 5,
+          identifiedCount: 1000,
+        })
+        const record2 = record({
+          id: 'protocol2',
+          timestamp: UnixTime(300),
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          transferCount: 3,
+          identifiedCount: 2000,
+        })
+        await repository.insertMany([record1, record2])
+
+        const result = await repository.getByChainsAndTimestamp(
+          UnixTime(300),
+          ['ethereum', 'arbitrum'],
+          ['ethereum', 'arbitrum'],
+          undefined,
+          'protocol1',
+        )
+
+        expect(result).toEqual([record1])
+      })
+
       it('returns all matching records when bridgeType is undefined', async () => {
         const record1 = record({
           id: 'protocol1',
@@ -884,6 +917,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(300),
           ['ethereum', 'arbitrum'],
           ['ethereum', 'arbitrum'],
+          undefined,
           undefined,
           { includeSameChainTransfers: true },
         )
@@ -1251,7 +1285,9 @@ function record({
   timestamp,
   srcChain,
   dstChain,
+  transferTypeStats,
   transferCount = 1,
+  transfersWithDurationCount = transferCount,
   identifiedCount = 1,
   totalDurationSum = 0,
   bridgeType = 'unknown',
@@ -1272,7 +1308,9 @@ function record({
   timestamp: UnixTime
   srcChain: string
   dstChain: string
+  transferTypeStats?: AggregatedInteropTransferRecord['transferTypeStats']
   transferCount?: number
+  transfersWithDurationCount?: number
   identifiedCount?: number
   totalDurationSum?: number
   bridgeType?: InteropBridgeType
@@ -1294,7 +1332,9 @@ function record({
     id,
     srcChain,
     dstChain,
+    transferTypeStats,
     transferCount,
+    transfersWithDurationCount,
     identifiedCount,
     totalDurationSum,
     srcValueUsd,

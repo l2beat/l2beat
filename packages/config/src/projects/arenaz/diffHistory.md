@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x38a306541fcc34f7a0fc25b1ac1d0d810155519d
+
+# Diff at Wed, 01 Apr 2026 07:39:16 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@f7ea9128001c4f5cbcec9e8c1da7ffb72aff3ffe block: 1774433140
+- current timestamp: 1775029072
+
+## Description
+
+Operational changes: SystemConfig owner migrated from a 4-of-9 Gelato Multisig (GnosisSafe v1.3.0) to a 1-of-1 Safe v1.4.1 (0x111C...), concentrating control to a single signer. Batcher, unsafeBlockSigner, and proposer addresses rotated.
+
+Safe (GnosisSafe v1.3.0 → Safe v1.4.1): [diff](https://disco.l2beat.com/diff/eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552/eth:0x41675C099F32341bf84BFc5382aF534df5C7461a)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c)
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x2b8733E8c60A928b19BB7db1D79b918e8E09AC8c"
++        "eth:0x47827645bA78EB18c3d64Fe2146EfdE66F74894B"
+      values.owner:
+-        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0x111C7B3AF4434087a6E5dC6E18782181839e2b55"
+      values.unsafeBlockSigner:
+-        "eth:0xb774Ca8438319d2a97B9925F4CD248e4C470Ac5B"
++        "eth:0x63CE953Ca4fbb79495fc966043F5CB7B9F1F5827"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x658656A14AFdf9c507096aC406564497d13EC754) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGameArgs:
+-        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb9080c9ff654bcd0769142fe70951b0634c5ae19ba3c1d21c2535154d5d0337eda61df9c07f306aa17f70000000000000000000000000000000000000000000000000000000000001ed95f16e66d8736b689a430564a31c8d887ca357cd89ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
++        "0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e6463dee3828677f6270d83d45408044fc5edb9080c9ff654bcd0769142fe70951b0634c5ae19ba3c1d21c2535154d5d0337eda61df9c07f306aa17f70000000000000000000000000000000000000000000000000000000000001ed9da89371d5c940233b200f9a235bf0ea8ab9fae969ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
+      values.proposerFromDGF:
+-        "eth:0x5f16E66D8736B689a430564a31c8d887ca357CD8"
++        "eth:0xDA89371d5C940233B200f9a235bF0Ea8AB9fAe96"
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x111C7B3AF4434087a6E5dC6E18782181839e2b55)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => .flat/Safe/Safe.sol}         | 685 ++++++++++++---------
+ .../Safe/SafeProxy.p.sol}                          |  10 +-
+ 2 files changed, 416 insertions(+), 279 deletions(-)
+```
+
+Generated with discovered.json: 0x5023214e3430854388b94dda3413c542ead340e2
+
+# Diff at Wed, 25 Mar 2026 10:06:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f335de80b3c24849b3bcc1271bae84dc6e931f7 block: 1772198380
+- current timestamp: 1774433140
+
+## Description
+
+Three signers of the shared OpFoundation multisigs (OpFoundationUpgradeSafe and OpFoundationOperationsSafe) were rotated. The old signer at position 0 was a GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) which was replaced by a new EOA. Additionally, a Gelato Multisig signer (0x28bB9385A588EF4747264D19B9A9F1603591680c) has set an EIP-7702 delegation to an EIP7702StatelessDeleGator contract.
+## Watched changes
+
+```diff
+    EOA  (eth:0x28bB9385A588EF4747264D19B9A9F1603591680c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x28bB9385A588EF4747264D19B9A9F1603591680c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x4831558cc7e858c354d05912425f7b608f63f175997992468f288e0d88c4cc50","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64"
++        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
+      values.$members.2:
+-        "eth:0xE7dEA1306D9F829bA469d1904c50903b46ebd02e"
++        "eth:0xC2Db495f5a1F91172A361AAFA6FdE47c41de6dF5"
+      values.$members.6:
+-        "eth:0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
++        "eth:0xc222ab08333109243B1f4E2a80e3D0A190714AB5"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0xb0f43f66dd9a5cfc8299c5030b2e0dc803a42d29
 
 # Diff at Fri, 27 Feb 2026 13:20:54 GMT:

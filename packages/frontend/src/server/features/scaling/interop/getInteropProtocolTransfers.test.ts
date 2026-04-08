@@ -1,6 +1,7 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
@@ -18,15 +19,18 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ['ethereum', 'https://etherscan.io'],
         ['arbitrum', 'https://arbiscan.io'],
       ]),
+      new Map(),
     )
 
     expect(result).toEqual({
       transferId: 'transfer-id',
       timestamp: 123,
       srcAmount: undefined,
-      srcSymbol: undefined,
+      srcSymbol: 'Unknown',
+      srcTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
+      dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
       duration: 60,
       srcChain: 'ethereum',
@@ -45,10 +49,39 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
         ['ethereum', 'https://etherscan.io'],
         ['arbitrum', 'https://arbiscan.io'],
       ]),
+      new Map([
+        [
+          'eth',
+          { symbol: 'ETH', iconUrl: 'https://token/eth.png', issuer: null },
+        ],
+      ]),
     )
 
     expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
     expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
+    expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
+    expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
+  })
+
+  it('keeps transfer item valid when tx hashes are missing', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer({
+        srcTxHash: undefined,
+        dstTxHash: undefined,
+        duration: undefined,
+      }),
+      new Map([
+        ['ethereum', 'https://etherscan.io'],
+        ['arbitrum', 'https://arbiscan.io'],
+      ]),
+      new Map(),
+    )
+
+    expect(result.srcTxHash).toEqual(undefined)
+    expect(result.srcTxHashHref).toEqual(undefined)
+    expect(result.dstTxHash).toEqual(undefined)
+    expect(result.dstTxHashHref).toEqual(undefined)
+    expect(result.duration).toEqual(undefined)
   })
 })
 

@@ -7,7 +7,6 @@ import { createCacheWarmer } from './server/cacheWarmer'
 import { createServer } from './server/server'
 import { getLogger } from './server/utils/logger'
 import { render } from './ssr/ServerEntry'
-import { manifest } from './utils/Manifest'
 
 function main() {
   const logger = getLogger()
@@ -18,7 +17,6 @@ function main() {
     dev: false,
     app,
     render,
-    stylesheetUrl: manifest.getUrl('/index.css'),
   })
 
   if (env.REDIS_URL && env.DEPLOYMENT_ENV === 'production') {

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -128,15 +128,16 @@ export const risc0: BaseProject = {
         // contract sources are unknown, so the actual hash cannot be computed.
         // Fix once the sources are on etherscan.
         hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
+        name: 'RiscZero Soon verifier',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
             // Based on standard Risc0 verifier architecture, this contract should be
             // a verifier router that points to an actual verifier. But it's unverified, so idk
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'unsuccessful',
@@ -146,13 +147,14 @@ export const risc0: BaseProject = {
       },
       {
         hash: '0x1dcf73cbd51c9eba43c437c5a5ebc5328ca2d7a590c701a9a9bc1136eceeeea7',
+        name: 'RiscZero v2.2.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
             ),
-            chain: 'ethereum',
           },
           // {
           //   address: EthereumAddress(
@@ -167,25 +169,26 @@ export const risc0: BaseProject = {
       },
       {
         hash: '0xc6fcb1951eb5b45a669431346a01577df99f30d72baa9d5c7eea40ec6cccfab9',
+        name: 'RiscZero v3.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x2a098988600d87650Fb061FfAff08B97149Fa84D',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x7CCA385bdC790c25924333F5ADb7F4967F5d1599',
             ),
-            chain: 'ethereum',
           },
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
               '0x411e56a890c5fe0712f6F345977815Ba8E7785C3',
             ),
-            chain: 'ethereum',
           },
         ],
         verificationStatus: 'notVerified',

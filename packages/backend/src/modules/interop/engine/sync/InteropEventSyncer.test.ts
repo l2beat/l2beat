@@ -23,9 +23,11 @@ import type {
   InteropEvent,
   InteropPluginResyncable,
   LogToCapture,
+  TxToCapture,
 } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { toEventSelector } from '../utils'
+import type { DerivedTxStore } from './DerivedTxStore'
 import { FollowingState } from './FollowingState'
 import {
   type BlockProcessorState,
@@ -46,7 +48,7 @@ describe(InteropEventSyncer.name, () => {
   })
 
   describe(InteropEventSyncer.prototype.run.name, () => {
-    it('runs only for timeLoop state and unpauses', async () => {
+    it('runs timeLoop state', async () => {
       const syncer = createSyncer()
       const { state: timeLoopState, run } = makeTimeLoopState()
       syncer.state = timeLoopState
@@ -54,20 +56,41 @@ describe(InteropEventSyncer.name, () => {
       await syncer.run()
 
       expect(run).toHaveBeenCalled()
-      expect(syncer.unpauseCalls).toEqual(1)
     })
 
-    it('does nothing for blockProcessor state', async () => {
+    it('checks status for blockProcessor state', async () => {
       const syncer = createSyncer()
-      const { state: blockProcessorState, processNewestBlock } =
-        makeBlockProcessorState()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
       syncer.state = blockProcessorState
 
       await syncer.run()
 
+      expect(checkStatus).toHaveBeenCalled()
       expect(processNewestBlock).not.toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(0)
-      expect(syncer.unpauseCalls).toEqual(0)
+    })
+
+    it('does not clear errors when checking blockProcessor status', async () => {
+      const setLastError = mockFn().resolvesTo(undefined)
+      const syncer = createSyncer({
+        db: mockObject<InteropEventSyncer['db']>({
+          interopPluginSyncState: mockObject<
+            InteropEventSyncer['db']['interopPluginSyncState']
+          >({
+            setLastError,
+            findByPluginNameAndChain: mockFn().resolvesTo(undefined),
+          }),
+        }),
+      })
+      const { state: blockProcessorState } = makeBlockProcessorState()
+      syncer.state = blockProcessorState
+
+      await syncer.run()
+
+      expect(setLastError).not.toHaveBeenCalled()
     })
   })
 
@@ -82,7 +105,6 @@ describe(InteropEventSyncer.name, () => {
 
       expect(syncer.latestBlockNumber).toEqual(7n)
       expect(processNewestBlock).toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(1)
     })
 
     it('updates latest block number but skips when in timeLoop state', async () => {
@@ -94,11 +116,9 @@ describe(InteropEventSyncer.name, () => {
 
       expect(syncer.latestBlockNumber).toEqual(9n)
       expect(run).not.toHaveBeenCalled()
-      expect(syncer.pauseCalls).toEqual(0)
-      expect(syncer.unpauseCalls).toEqual(0)
     })
 
-    it('unpauses when switching to timeLoop state', async () => {
+    it('updates state when switching to timeLoop state', async () => {
       const syncer = createSyncer()
       const { state: timeLoopState } = makeTimeLoopState()
       const { state: blockProcessorState } =
@@ -107,8 +127,98 @@ describe(InteropEventSyncer.name, () => {
 
       await syncer.processNewestBlock(makeBlock(5), [])
 
-      expect(syncer.unpauseCalls).toEqual(1)
       expect(syncer.state as SyncerState).toEqual(timeLoopState)
+    })
+  })
+
+  describe('state execution serialization', () => {
+    it('does not wait for active timeLoop work before returning from processNewestBlock', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const { state: timeLoopState, run } = makeTimeLoopState()
+      run.executes(async () => await pending.promise)
+      syncer.state = timeLoopState
+
+      const runPromise = syncer.run()
+      let finished = false
+      const blockPromise = syncer
+        .processNewestBlock(makeBlock(7), [])
+        .then(() => {
+          finished = true
+        })
+
+      await new Promise<void>((resolve) => setImmediate(resolve))
+
+      expect(finished).toEqual(true)
+      expect(syncer.latestBlockNumber).toEqual(7n)
+
+      pending.resolve(timeLoopState)
+      await Promise.all([runPromise, blockPromise])
+    })
+
+    it('skips timer status checks while block processing is active', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
+      processNewestBlock.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      await syncer.run()
+
+      expect(checkStatus).not.toHaveBeenCalled()
+      pending.resolve(blockProcessorState)
+      await blockPromise
+    })
+
+    it('waits for status checks before processing a block', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        checkStatus,
+        processNewestBlock,
+      } = makeBlockProcessorState()
+      checkStatus.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const runPromise = syncer.run()
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      expect(processNewestBlock).not.toHaveBeenCalled()
+
+      pending.resolve(blockProcessorState)
+      await Promise.all([runPromise, blockPromise])
+
+      expect(checkStatus).toHaveBeenCalled()
+      expect(processNewestBlock).toHaveBeenCalled()
+    })
+
+    it('re-reads state after waiting for a status check', async () => {
+      const syncer = createSyncer()
+      const pending = deferred<SyncerState>()
+      const {
+        state: blockProcessorState,
+        processNewestBlock,
+        checkStatus,
+      } = makeBlockProcessorState()
+      const { state: timeLoopState } = makeTimeLoopState()
+      checkStatus.executes(async () => await pending.promise)
+      syncer.state = blockProcessorState
+
+      const runPromise = syncer.run()
+      const blockPromise = syncer.processNewestBlock(makeBlock(7), [])
+
+      pending.resolve(timeLoopState)
+      await Promise.all([runPromise, blockPromise])
+
+      expect(syncer.state as SyncerState).toEqual(timeLoopState)
+      expect(processNewestBlock).not.toHaveBeenCalled()
     })
   })
 
@@ -148,11 +258,17 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
-          plugins: [makePlugin({ name: 'across', capture })],
+          plugins: [
+            makePlugin({
+              name: 'across',
+              capture,
+              dataRequests: [makeWildcardDataRequest()],
+            }),
+          ],
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(makeMatchingLogToCapture())
 
       expect(capture).toHaveBeenCalled()
       expect(result).toEqual([{ ...event, plugin: 'across' }])
@@ -167,13 +283,21 @@ describe(InteropEventSyncer.name, () => {
         cluster: makeCluster({
           name: 'clusterName',
           plugins: [
-            makePlugin({ name: 'across', capture: firstCapture }),
-            makePlugin({ name: 'wormhole', capture: secondCapture }),
+            makePlugin({
+              name: 'across',
+              capture: firstCapture,
+              dataRequests: [makeWildcardDataRequest()],
+            }),
+            makePlugin({
+              name: 'wormhole',
+              capture: secondCapture,
+              dataRequests: [makeWildcardDataRequest()],
+            }),
           ],
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(makeMatchingLogToCapture())
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
@@ -188,28 +312,246 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({
               name: 'across',
               capture: mockFn().returns(undefined),
+              dataRequests: [makeWildcardDataRequest()],
             }),
           ],
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog(makeMatchingLogToCapture())
 
+      expect(result).toEqual(undefined)
+    })
+
+    it('skips capture when log does not match data requests', () => {
+      const capture = mockFn().returns([makeInteropEventNoPlugin()])
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({
+              name: 'across',
+              capture,
+              dataRequests: [makeWildcardDataRequest()],
+            }),
+          ],
+        }),
+      })
+
+      const nonMatchingLog = mockObject<LogToCapture>({
+        log: {
+          topics: ['0xdeadbeef'],
+          address: '0x0000000000000000000000000000000000000001',
+        } as any,
+      })
+      const result = syncer.captureLog(nonMatchingLog)
+
+      expect(capture).not.toHaveBeenCalled()
       expect(result).toEqual(undefined)
     })
   })
 
+  describe(InteropEventSyncer.prototype.captureTx.name, () => {
+    it('preserves plugin order and passes only plugin-local creator events', () => {
+      const event = makeInteropEventNoPlugin()
+      const firstCapture = mockFn().returns(undefined)
+      const secondCapture = mockFn().returns([event])
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
+      const creatorEvent = { ...makeInteropEvent(), plugin: 'wormhole' }
+      const getCreatorEvents = mockFn()
+        .returnsOnce(undefined)
+        .returnsOnce([creatorEvent])
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across', captureTx: firstCapture }),
+            makePlugin({ name: 'wormhole', captureTx: secondCapture }),
+          ],
+        }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
+      })
+
+      const result = syncer.captureTx(txToCapture)
+
+      expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
+      expect(secondCapture).toHaveBeenCalledWith(txToCapture, [creatorEvent])
+      expect(getCreatorEvents).toHaveBeenNthCalledWith(
+        1,
+        txToCapture.chain,
+        txToCapture.tx.hash,
+        'across',
+      )
+      expect(getCreatorEvents).toHaveBeenNthCalledWith(
+        2,
+        txToCapture.chain,
+        txToCapture.tx.hash,
+        'wormhole',
+      )
+      expect(result).toEqual({
+        events: [{ ...event, plugin: 'wormhole' }],
+        fulfilledCreatorEvents: [creatorEvent],
+      })
+    })
+
+    it('stops at the first plugin that captures even if a later plugin has creator events', () => {
+      const event = makeInteropEventNoPlugin()
+      const firstCapture = mockFn().returns([event])
+      const secondCapture = mockFn().returns([event])
+      const txToCapture = mockObject<TxToCapture>({
+        chain: 'base',
+        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
+      })
+      const getCreatorEvents = mockFn().returns(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [
+            makePlugin({ name: 'across', captureTx: firstCapture }),
+            makePlugin({ name: 'wormhole', captureTx: secondCapture }),
+          ],
+        }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
+      })
+
+      const result = syncer.captureTx(txToCapture)
+
+      expect(firstCapture).toHaveBeenCalledWith(txToCapture, undefined)
+      expect(secondCapture).not.toHaveBeenCalled()
+      expect(getCreatorEvents).toHaveBeenCalledTimes(1)
+      expect(result).toEqual({
+        events: [{ ...event, plugin: 'across' }],
+        fulfilledCreatorEvents: [],
+      })
+    })
+
+    it('returns early when no plugin has captureTx', () => {
+      const getCreatorEvents = mockFn().returns(undefined)
+      const syncer = createSyncer({
+        cluster: makeCluster({
+          name: 'clusterName',
+          plugins: [makePlugin({ name: 'across', captureTx: undefined })],
+        }),
+        store: mockObject<InteropEventStore>({
+          derivedTxStore: mockObject<DerivedTxStore>({
+            getCreatorEvents,
+          }),
+        }),
+      })
+
+      const result = syncer.captureTx(mockObject<TxToCapture>({}))
+
+      expect(result).toEqual(undefined)
+      expect(getCreatorEvents).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(
+    InteropEventSyncer.prototype.capturePendingHistoricalTxs.name,
+    () => {
+      it('captures pending txs that are older than the current block', async () => {
+        const event = makeInteropEventNoPlugin()
+        const captureTx = mockFn().returns([event])
+        const txHash = '0x123'
+        const syncer = createSyncer({
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [makePlugin({ name: 'across', captureTx })],
+          }),
+          store: mockObject<InteropEventStore>({
+            derivedTxStore: mockObject<DerivedTxStore>({
+              getHashesPendingHistoryCheck: mockFn().returns([txHash]),
+              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
+              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
+            }),
+          }),
+          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            getTransactionByHash: mockFn().resolvesTo(
+              makeRpcTransaction({ hash: txHash, blockNumber: 9n }),
+            ),
+            getTransactionReceipt: mockFn().resolvesTo(makeRpcReceipt()),
+            getBlockByNumber: mockFn().resolvesTo(makeRpcBlock(9n)),
+          }),
+        })
+
+        const result = await syncer.capturePendingHistoricalTxs(10n)
+
+        expect(captureTx).toHaveBeenCalled()
+        expect(result).toEqual({
+          events: [{ ...event, plugin: 'across' }],
+          fulfilledCreatorEvents: [makeInteropEvent()],
+          checkedInHistoryEvents: [makeInteropEvent()],
+        })
+      })
+
+      it('ignores pending txs from the current block or later', async () => {
+        const captureTx = mockFn().returns(undefined)
+        const getTransactionReceipt = mockFn().resolvesTo(makeRpcReceipt())
+        const getBlockByNumber = mockFn().resolvesTo(makeRpcBlock(10n))
+        const syncer = createSyncer({
+          cluster: makeCluster({
+            name: 'clusterName',
+            plugins: [makePlugin({ name: 'across', captureTx })],
+          }),
+          store: mockObject<InteropEventStore>({
+            derivedTxStore: mockObject<DerivedTxStore>({
+              getHashesPendingHistoryCheck: mockFn().returns(['0x123']),
+              getCreatorEvents: mockFn().returns([makeInteropEvent()]),
+              markCheckedInHistory: mockFn().returns([makeInteropEvent()]),
+            }),
+          }),
+          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            getTransactionByHash: mockFn().resolvesTo(
+              makeRpcTransaction({ hash: '0x123', blockNumber: 10n }),
+            ),
+            getTransactionReceipt,
+            getBlockByNumber,
+          }),
+        })
+
+        const result = await syncer.capturePendingHistoricalTxs(10n)
+
+        expect(result).toEqual({
+          events: [],
+          fulfilledCreatorEvents: [],
+          checkedInHistoryEvents: [makeInteropEvent()],
+        })
+        expect(captureTx).not.toHaveBeenCalled()
+        expect(getTransactionReceipt).not.toHaveBeenCalled()
+        expect(getBlockByNumber).not.toHaveBeenCalled()
+      })
+    },
+  )
+
   describe(InteropEventSyncer.prototype.saveProducedInteropEvents.name, () => {
     it('saves events and updates synced range in a transaction', async () => {
       const saveNewEvents = mockFn().resolvesTo(undefined)
+      const updateDerivedFulfilled = mockFn().resolvesTo(undefined)
+      const updateDerivedCheckedInHistory = mockFn().resolvesTo(undefined)
       const upsert = mockFn().resolvesTo(undefined)
       const setLastError = mockFn().resolvesTo(undefined)
+      const fulfilledCreatorEvent = makeInteropEvent()
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
-        store: mockObject<InteropEventStore>({ saveNewEvents }),
+        store: mockObject<InteropEventStore>({
+          saveNewEvents,
+          updateDerivedFulfilled,
+          updateDerivedCheckedInHistory,
+        }),
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncedRange: mockObject<
             InteropEventSyncer['db']['interopPluginSyncedRange']
@@ -227,10 +569,15 @@ describe(InteropEventSyncer.name, () => {
       await syncer.saveProducedInteropEvents(
         [{ ...makeInteropEvent(), plugin: 'cluster' }],
         makeSyncedRange(),
+        [fulfilledCreatorEvent],
       )
 
       expect(syncer.runInTransactionCalls).toEqual(1)
       expect(saveNewEvents).toHaveBeenCalled()
+      expect(updateDerivedFulfilled).toHaveBeenCalledWith([
+        fulfilledCreatorEvent,
+      ])
+      expect(updateDerivedCheckedInHistory).toHaveBeenCalledWith([])
       expect(upsert).toHaveBeenCalledWith({
         pluginName: 'clusterName',
         chain: 'ethereum',
@@ -240,8 +587,8 @@ describe(InteropEventSyncer.name, () => {
     })
   })
 
-  describe(InteropEventSyncer.prototype.isResyncRequestedFrom.name, () => {
-    it('returns undefined when no resync requested', async () => {
+  describe(InteropEventSyncer.prototype.getResyncState.name, () => {
+    it('returns empty resync state when no resync requested', async () => {
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncState: mockObject<
@@ -252,12 +599,15 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncState()
 
-      expect(result).toEqual(undefined)
+      expect(result).toEqual({
+        resyncFrom: undefined,
+        wipeRequired: false,
+      })
     })
 
-    it('returns resync timestamp when present', async () => {
+    it('returns resync state when present', async () => {
       const syncer = createSyncer({
         db: mockObject<InteropEventSyncer['db']>({
           interopPluginSyncState: mockObject<
@@ -265,15 +615,18 @@ describe(InteropEventSyncer.name, () => {
           >({
             findByPluginNameAndChain: mockFn().resolvesTo({
               resyncRequestedFrom: UnixTime(123),
-              wipeRequired: false,
+              wipeRequired: true,
             }),
           }),
         }),
       })
 
-      const result = await syncer.isResyncRequestedFrom()
+      const result = await syncer.getResyncState()
 
-      expect(result).toEqual(UnixTime(123))
+      expect(result).toEqual({
+        resyncFrom: UnixTime(123),
+        wipeRequired: true,
+      })
     })
   })
 
@@ -377,7 +730,7 @@ describe(InteropEventSyncer.name, () => {
       expect(query.topicToTxEvents.size).toEqual(0)
     })
 
-    it('throws when addresses list is empty', () => {
+    it('skips data request when addresses list is empty', () => {
       const signature = 'event Transfer(address,address,uint256)'
       const plugin = makePlugin({
         dataRequests: [
@@ -389,9 +742,100 @@ describe(InteropEventSyncer.name, () => {
         ],
       })
 
-      expect(() =>
-        buildLogQueryForCluster(makeCluster({ plugins: [plugin] }), 'ethereum'),
-      ).toThrow(/Empty address list/)
+      const query = buildLogQueryForCluster(
+        makeCluster({ plugins: [plugin] }),
+        'ethereum',
+      )
+
+      expect(query.isEmpty()).toEqual(true)
+    })
+
+    describe('matchesLog', () => {
+      it('matches when topic0 and address match', () => {
+        const signature = 'event Transfer(address,address,uint256)'
+        const address = EthereumAddress.random()
+        const ethAddress = ChainSpecificAddress.fromLong('ethereum', address)
+        const plugin = makePlugin({
+          dataRequests: [{ type: 'event', signature, addresses: [ethAddress] }],
+        })
+        const query = buildLogQueryForCluster(
+          makeCluster({ plugins: [plugin] }),
+          'ethereum',
+        )
+
+        expect(
+          query.matchesLog({
+            topics: [toEventSelector(signature)],
+            address: address.toLowerCase(),
+          }),
+        ).toEqual(true)
+      })
+
+      it('returns false when topic0 does not match', () => {
+        const signature = 'event Transfer(address,address,uint256)'
+        const plugin = makePlugin({
+          dataRequests: [{ type: 'event', signature, addresses: '*' }],
+        })
+        const query = buildLogQueryForCluster(
+          makeCluster({ plugins: [plugin] }),
+          'ethereum',
+        )
+
+        expect(
+          query.matchesLog({ topics: ['0xdeadbeef'], address: '0x1' }),
+        ).toEqual(false)
+      })
+
+      it('returns false when address does not match', () => {
+        const signature = 'event Transfer(address,address,uint256)'
+        const address = EthereumAddress.random()
+        const ethAddress = ChainSpecificAddress.fromLong('ethereum', address)
+        const plugin = makePlugin({
+          dataRequests: [{ type: 'event', signature, addresses: [ethAddress] }],
+        })
+        const query = buildLogQueryForCluster(
+          makeCluster({ plugins: [plugin] }),
+          'ethereum',
+        )
+
+        expect(
+          query.matchesLog({
+            topics: [toEventSelector(signature)],
+            address: EthereumAddress.random().toLowerCase(),
+          }),
+        ).toEqual(false)
+      })
+
+      it('matches any address when addresses is wildcard', () => {
+        const signature = 'event Transfer(address,address,uint256)'
+        const plugin = makePlugin({
+          dataRequests: [{ type: 'event', signature, addresses: '*' }],
+        })
+        const query = buildLogQueryForCluster(
+          makeCluster({ plugins: [plugin] }),
+          'ethereum',
+        )
+
+        expect(
+          query.matchesLog({
+            topics: [toEventSelector(signature)],
+            address: EthereumAddress.random().toLowerCase(),
+          }),
+        ).toEqual(true)
+      })
+
+      it('returns false when log has no topics', () => {
+        const signature = 'event Transfer(address,address,uint256)'
+        const plugin = makePlugin({
+          dataRequests: [{ type: 'event', signature, addresses: '*' }],
+        })
+        const query = buildLogQueryForCluster(
+          makeCluster({ plugins: [plugin] }),
+          'ethereum',
+        )
+
+        expect(query.matchesLog({ topics: [], address: '0x1' })).toEqual(false)
+      })
     })
 
     it('merges event requests across cluster plugins', () => {
@@ -547,8 +991,6 @@ describe(InteropEventSyncer.name, () => {
 })
 
 class TestSyncer extends InteropEventSyncer {
-  pauseCalls = 0
-  unpauseCalls = 0
   runInTransactionCalls = 0
 
   public triggerStatePublic<T extends SyncerState>(
@@ -556,15 +998,6 @@ class TestSyncer extends InteropEventSyncer {
     fn: (state: T) => Promise<SyncerState>,
   ) {
     return this.triggerState(state, fn)
-  }
-
-  override pause() {
-    this.pauseCalls++
-  }
-
-  override unpause() {
-    this.unpauseCalls++
-    return undefined
   }
 
   protected override async runInTransaction<T>(
@@ -576,16 +1009,17 @@ class TestSyncer extends InteropEventSyncer {
 }
 
 function createSyncer(overrides: Partial<TestSyncer> = {}) {
-  const plugin = makePlugin({ name: 'across' })
+  const { chain, cluster, rpcClient, store, db, ...rest } = overrides
   const syncer = new TestSyncer(
-    'ethereum',
-    makeCluster({ name: 'clusterName', plugins: [plugin] }),
-    mockRpcClient(),
-    mockStore(),
-    mockDb(),
+    chain ?? 'ethereum',
+    cluster ?? makeCluster({ name: 'clusterName', plugins: [makePlugin()] }),
+    rpcClient ?? mockRpcClient(),
+    store ?? mockStore(),
+    db ?? mockDb(),
     Logger.SILENT,
+    'Backend/Local',
   )
-  Object.assign(syncer, overrides)
+  Object.assign(syncer, rest)
   return syncer
 }
 
@@ -605,11 +1039,16 @@ function makePlugin(
     capture?: (
       input: LogToCapture,
     ) => Omit<InteropEvent, 'plugin'>[] | undefined
+    captureTx?: (
+      input: TxToCapture,
+      creatorEvents?: InteropEvent[],
+    ) => Omit<InteropEvent, 'plugin'>[] | undefined
   } = {},
 ): InteropPluginResyncable {
   return {
     name: params.name ?? 'across',
     capture: params.capture ?? mockFn().returns(undefined),
+    captureTx: params.captureTx,
     getDataRequests: () => params.dataRequests ?? [],
   }
 }
@@ -631,17 +1070,21 @@ function makeTimeLoopState(): {
 
 function makeBlockProcessorState(resultState?: SyncerState): {
   state: BlockProcessorState
+  checkStatus: ReturnType<typeof mockFn>
   processNewestBlock: ReturnType<typeof mockFn>
 } {
+  const checkStatus = mockFn<[], Promise<SyncerState>>()
   const processNewestBlock = mockFn<[], Promise<SyncerState>>()
   const state: BlockProcessorState = {
     type: 'blockProcessor',
     name: 'blockProcessor',
     status: 'idle',
+    checkStatus,
     processNewestBlock,
   }
+  checkStatus.resolvesTo(resultState ?? state)
   processNewestBlock.resolvesTo(resultState ?? state)
-  return { state, processNewestBlock }
+  return { state, checkStatus, processNewestBlock }
 }
 
 function makeBlock(number: number): Block {
@@ -719,6 +1162,8 @@ function makeInteropEventRecord(
     },
     matched: false,
     unsupported: false,
+    derivedFulfilled: false,
+    derivedCheckedInHistory: false,
     direction: undefined,
     ...overrides,
   }
@@ -728,6 +1173,8 @@ function makeRpcBlock(number: bigint): RpcBlock {
   return {
     number,
     timestamp: number,
+    hash: ZERO_HASH,
+    logsBloom: `0x${'00'.repeat(256)}`,
   } as RpcBlock
 }
 
@@ -766,6 +1213,7 @@ function makeRpcTransaction(
   overrides: Partial<RpcTransaction> = {},
 ): RpcTransaction {
   return {
+    type: 1n,
     blockHash: ZERO_HASH,
     blockNumber: 1n,
     from: EthereumAddress.random(),
@@ -791,7 +1239,14 @@ function mockRpcClient(): InteropEventSyncer['rpcClient'] {
 function mockStore() {
   return mockObject<InteropEventStore>({
     saveNewEvents: mockFn().resolvesTo(undefined),
+    updateDerivedFulfilled: mockFn().resolvesTo(undefined),
+    updateDerivedCheckedInHistory: mockFn().resolvesTo(undefined),
     deleteAllForPlugin: mockFn().resolvesTo(undefined),
+    derivedTxStore: mockObject<DerivedTxStore>({
+      getCreatorEvents: mockFn().returns(undefined),
+      getHashesPendingHistoryCheck: mockFn().returns([]),
+      markCheckedInHistory: mockFn().returns([]),
+    }),
   })
 }
 
@@ -824,4 +1279,30 @@ function mockDb(): InteropEventSyncer['db'] {
   })
 }
 
+function deferred<T>() {
+  let resolve!: (value: T) => void
+  const promise = new Promise<T>((res) => {
+    resolve = res
+  })
+  return { promise, resolve }
+}
+
 const ZERO_HASH = `0x${'00'.repeat(32)}`
+const TEST_EVENT_SIGNATURE = 'event Transfer(address,address,uint256)'
+
+function makeWildcardDataRequest(): DataRequest {
+  return {
+    type: 'event',
+    signature: TEST_EVENT_SIGNATURE,
+    addresses: '*',
+  }
+}
+
+function makeMatchingLogToCapture(): LogToCapture {
+  return mockObject<LogToCapture>({
+    log: {
+      topics: [toEventSelector(TEST_EVENT_SIGNATURE)],
+      address: '0x0000000000000000000000000000000000000001',
+    } as unknown as LogToCapture['log'],
+  })
+}

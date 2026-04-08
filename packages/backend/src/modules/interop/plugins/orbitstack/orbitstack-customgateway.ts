@@ -1,4 +1,5 @@
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { findParsedBefore } from '../logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -132,26 +133,22 @@ export class OrbitStackCustomGatewayPlugin implements InteropPlugin {
         gateway.l1Gateway,
       ])
       if (withdrawalFinalized) {
-        const outBoxTxLog = input.txLogs.find((log) => {
-          const parsed = parseOutBoxTransactionExecuted(log, [network.outbox])
-          return parsed !== undefined
-        })
+        const outBoxTx = findParsedBefore(
+          input.txLogs,
+          input.log.logIndex ?? -1,
+          (log) => parseOutBoxTransactionExecuted(log, [network.outbox]),
+        )
 
-        if (outBoxTxLog) {
-          const outBoxTx = parseOutBoxTransactionExecuted(outBoxTxLog, [
-            network.outbox,
-          ])
-          if (outBoxTx) {
-            return [
-              WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
-                chain: network.chain,
-                position: Number(outBoxTx.transactionIndex),
-                l1Token: Address32.from(withdrawalFinalized.l1Token),
-                amount: withdrawalFinalized._amount,
-                gatewayKey: gateway.key,
-              }),
-            ]
-          }
+        if (outBoxTx) {
+          return [
+            WithdrawalFinalizedOutBoxTransactionExecuted.create(input, {
+              chain: network.chain,
+              position: Number(outBoxTx.transactionIndex),
+              l1Token: Address32.from(withdrawalFinalized.l1Token),
+              amount: withdrawalFinalized._amount,
+              gatewayKey: gateway.key,
+            }),
+          ]
         }
       }
     } else {

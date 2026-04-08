@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x4afe0b87f1ae2b4c291855a07d0ef82ebacc97f8
+
+# Diff at Mon, 16 Mar 2026 12:26:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@edb0fff695048631d1d966c5e28186da0c4751ee block: 1772458852
+- current timestamp: 1773663853
+
+## Description
+
+A new PP aggchain is deployed: outpost-immutable-zkevm. This seems to be the agglayer connection of Immutable zkEVM. Their L2 also shows deployments:
+
+agglayerbridgel2: https://explorer.immutable.com/address/0xD5926C0055EDD94AF0CE595276fC2394dac75486
+GERL2: https://explorer.immutable.com/address/0x4c16450d4A8dcF884DaADa499155193E539200C7
+
+no activity or official announcement yet though.
+
+m changes.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        26
++        27
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.26:
++        {"rollupContract":"eth:0x5DdF600b83eaa5eC7F8e89315F9D8CaC5E7406b4","chainID":13371,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":14,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xAb3506507449bF1880f3337825efd19ac89E235E"
++        "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
+      values.$members.3:
+-        "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc"
++        "eth:0xEB5EeE1F1650b821E0d3a87C1341d85b3a16EA72"
+      values.$members.4:
+-        "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6"
++        "eth:0x8B9F18bcDD5838bB1bd4B3d6410e45DF813b782B"
+    }
+```
+
 Generated with discovered.json: 0xf138edf8f74d64377a136201ad1d3b1d3239b4ba
 
 # Diff at Mon, 02 Mar 2026 13:42:57 GMT:

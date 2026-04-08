@@ -16,7 +16,7 @@ export function getSyncState(
     ? record.target
     : (record.syncedUntil ?? UnixTime.now())
   return {
-    isSynced: isFeatureSynced(record, timestamp),
+    isSynced,
     syncedUntil: Math.min(syncedUntil, timestamp),
     target: record.target,
   }

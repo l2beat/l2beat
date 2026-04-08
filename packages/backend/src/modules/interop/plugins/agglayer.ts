@@ -4,7 +4,7 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { findParsedAround } from './hyperlane-hwr'
+import { findParsedAround } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
@@ -132,6 +132,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: bridgeEventLog,
+        includeTxEvents: [transferLog],
         addresses: bridges,
       },
       {

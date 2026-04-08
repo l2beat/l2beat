@@ -1,14 +1,16 @@
-import type { InteropDurationSplit } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
+  InteropTransferTypeStatsMap,
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
 export type ProtocolEntry = {
   id: ProjectId
+  slug: string
   iconUrl: string
   name: string
   shortName: string | undefined
@@ -45,22 +47,23 @@ export type ByBridgeTypeData = {
   burnAndMint: BurnAndMintProtocolData | undefined
 }
 
-export type LockAndMintProtocolData = {
+type BridgeTypeCommonData = {
   volume: number
-  netMintedValue: number | undefined
+  transferCount: number
+  averageValue: number | null
   tokens: TopItems<TokenData>
+  flows: InteropFlowData[]
 }
 
-export type NonMintingProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
+export type LockAndMintProtocolData = BridgeTypeCommonData & {
+  netMintedValue: number | undefined
+}
+
+export type NonMintingProtocolData = BridgeTypeCommonData & {
   averageValueInFlight: number
 }
 
-export type BurnAndMintProtocolData = {
-  volume: number
-  tokens: TopItems<TokenData>
-}
+export type BurnAndMintProtocolData = BridgeTypeCommonData
 
 export type InteropSelectionInput = v.infer<typeof InteropSelectionInput>
 const InteropSelectionInputShape = {
@@ -75,11 +78,27 @@ export const InteropDashboardParams = v.object({
   type: KnownInteropBridgeType.optional(),
 })
 
+export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>
+export const InteropProtocolParams = v.object({
+  id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
+})
+
 export type InteropProtocolTokensParams = v.infer<
   typeof InteropProtocolTokensParams
 >
 export const InteropProtocolTokensParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
+  ...InteropSelectionInputShape,
+  type: KnownInteropBridgeType.optional(),
+})
+
+export type InteropTopItemsParams = v.infer<typeof InteropTopItemsParams>
+export const InteropTopItemsParams = v.object({
+  id: v.union([
+    v.string().transform((value) => ProjectId(value)),
+    v.undefined(),
+  ]),
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
 })
@@ -101,17 +120,19 @@ export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
   srcAmount: number | undefined
-  srcSymbol: string | undefined
+  srcSymbol: string
+  srcTokenIconUrl: string
   dstAmount: number | undefined
-  dstSymbol: string | undefined
+  dstSymbol: string
+  dstTokenIconUrl: string
   valueUsd: number | undefined
-  duration: number
+  duration: number | undefined
   srcChain: string
-  srcTxHash: string
-  srcTxHashHref: string
+  srcTxHash: string | undefined
+  srcTxHashHref: string | undefined
   dstChain: string
-  dstTxHash: string
-  dstTxHashHref: string
+  dstTxHash: string | undefined
+  dstTxHashHref: string | undefined
 }
 
 export type InteropProtocolTransferStats = {
@@ -136,11 +157,9 @@ export type AggregatedInteropTransferWithTokens =
 export type CommonInteropData = {
   volume: number
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
-  inTransferCount: number
-  inDurationSum: number
-  outTransferCount: number
-  outDurationSum: number
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   minTransferValueUsd: number | undefined
   maxTransferValueUsd: number | undefined
   mintedValueUsd: number | undefined
@@ -174,6 +193,20 @@ export type TokenData = {
   flows: TokenFlowData[]
 }
 
+export type TokensPairData = {
+  id: string
+  tokenA: { symbol: string; iconUrl: string }
+  tokenB: { symbol: string; iconUrl: string }
+  volume: number | null
+  transferCount: number
+  avgDuration: AverageDuration | null
+  avgValue: number | null
+  minTransferValueUsd: number | undefined
+  maxTransferValueUsd: number | undefined
+  netMintedValue: number | undefined
+  flows: TokenFlowData[]
+}
+
 export type ChainData = {
   id: string
   name: string
@@ -194,14 +227,10 @@ export type SingleAverageDuration = {
 
 export type SplitAverageDuration = {
   type: 'split'
-  in: {
+  splits: {
     label: string
     duration: number | null
-  }
-  out: {
-    label: string
-    duration: number | null
-  }
+  }[]
 }
 
 export type UnknownAverageDuration = {
@@ -212,9 +241,3 @@ export type AverageDuration =
   | SingleAverageDuration
   | SplitAverageDuration
   | UnknownAverageDuration
-/** Two-level map: projectId -> bridgeType -> durationSplit config */
-
-export type DurationSplitMap = Map<
-  string,
-  Map<KnownInteropBridgeType, NonNullable<InteropDurationSplit>>
->

@@ -1,7 +1,14 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -28,8 +35,14 @@ export const columns = [
     header: 'Source token',
     enableSorting: false,
     cell: (ctx) => {
-      const { srcAmount, srcSymbol } = ctx.row.original
-      return <TokenAmount amount={srcAmount} symbol={srcSymbol} />
+      const { srcAmount, srcSymbol, srcTokenIconUrl } = ctx.row.original
+      return (
+        <TokenAmount
+          amount={srcAmount}
+          iconUrl={srcTokenIconUrl}
+          symbol={srcSymbol}
+        />
+      )
     },
     meta: {
       headClassName: 'text-2xs',
@@ -40,8 +53,14 @@ export const columns = [
     header: 'Destination token',
     enableSorting: false,
     cell: (ctx) => {
-      const { dstAmount, dstSymbol } = ctx.row.original
-      return <TokenAmount amount={dstAmount} symbol={dstSymbol} />
+      const { dstAmount, dstSymbol, dstTokenIconUrl } = ctx.row.original
+      return (
+        <TokenAmount
+          amount={dstAmount}
+          iconUrl={dstTokenIconUrl}
+          symbol={dstSymbol}
+        />
+      )
     },
     meta: {
       headClassName: 'text-2xs',
@@ -68,11 +87,16 @@ export const columns = [
   columnHelper.accessor('duration', {
     header: 'Transfer time',
     enableSorting: false,
-    cell: (ctx) => (
-      <span className="font-medium text-label-value-14 text-primary">
-        {formatSeconds(ctx.row.original.duration)}
-      </span>
-    ),
+    cell: (ctx) => {
+      const { duration } = ctx.row.original
+      if (duration === undefined) return <InteropNoDataBadge />
+
+      return (
+        <span className="font-medium text-label-value-14 text-primary">
+          {formatSeconds(duration)}
+        </span>
+      )
+    },
     meta: {
       headClassName: 'text-2xs',
       align: 'right',
@@ -133,19 +157,38 @@ export const columns = [
 function TokenAmount({
   amount,
   symbol,
+  iconUrl,
 }: {
   amount: number | undefined
-  symbol: string | undefined
+  symbol: string
+  iconUrl: string
 }) {
-  if (amount === undefined) return <NoDataBadge />
+  const label =
+    amount !== undefined
+      ? formatNumberWithCommas(amount, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 5,
+        })
+      : symbol
 
-  const formattedAmount = formatNumberWithCommas(amount, {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 5,
-  })
   return (
-    <span className="font-medium text-label-value-14 text-primary">
-      {symbol ? `${formattedAmount} ${symbol}` : formattedAmount}
+    <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
+      <span>{label}</span>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <img src={iconUrl} alt={symbol} className="size-4 rounded-full" />
+        </TooltipTrigger>
+        <TooltipPortal>
+          <TooltipContent
+            className="z-[1000]"
+            side="top"
+            align="center"
+            sideOffset={6}
+          >
+            {symbol}
+          </TooltipContent>
+        </TooltipPortal>
+      </Tooltip>
     </span>
   )
 }
@@ -155,8 +198,20 @@ function shortenHash(hash: string): string {
   return `${hash.slice(0, 6)}...${hash.slice(-4)}`
 }
 
-function TxHashCell({ hash, href }: { hash: string; href: string }) {
+function TxHashCell({
+  hash,
+  href,
+}: {
+  hash: string | undefined
+  href: string | undefined
+}) {
+  if (!hash) return <InteropNoDataBadge />
+
   const content = shortenHash(hash)
+  if (!href) {
+    return <span className="font-medium text-label-value-14">{content}</span>
+  }
+
   return (
     <a
       href={href}

@@ -2,6 +2,7 @@ import { type InteropBridgeType, UnixTime } from '@l2beat/shared-pure'
 import { type Insertable, type Selectable, sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { AggregatedInteropTransfer } from '../kysely/generated/types'
+import type { InteropTransferTypeStatsMap } from './InteropTransferTypeStats'
 
 export interface AggregatedInteropTransferRecord {
   timestamp: UnixTime
@@ -9,7 +10,9 @@ export interface AggregatedInteropTransferRecord {
   bridgeType: InteropBridgeType
   srcChain: string
   dstChain: string
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
   transferCount: number
+  transfersWithDurationCount: number
   identifiedCount: number
   totalDurationSum: number
   srcValueUsd: number | undefined
@@ -30,12 +33,15 @@ export interface AggregatedInteropTransferSeriesRecord {
   day: UnixTime
   id: string
   transferCount: number
+  totalSrcValueUsd: number
+  totalDstValueUsd: number
 }
 
 export interface AggregatedInteropTransferIdSeriesRecord {
   timestamp: UnixTime
   id: string
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
@@ -50,7 +56,11 @@ export function toRecord(
     bridgeType: row.bridgeType as InteropBridgeType,
     srcChain: row.srcChain ?? undefined,
     dstChain: row.dstChain ?? undefined,
+    transferTypeStats:
+      (row.transferTypeStats as InteropTransferTypeStatsMap | null) ??
+      undefined,
     transferCount: row.transferCount,
+    transfersWithDurationCount: row.transfersWithDurationCount,
     identifiedCount: row.identifiedCount,
     totalDurationSum: row.totalDurationSum,
     srcValueUsd: row.srcValueUsd ?? undefined,
@@ -77,7 +87,9 @@ export function toRow(
     bridgeType: record.bridgeType,
     srcChain: record.srcChain,
     dstChain: record.dstChain,
+    transferTypeStats: record.transferTypeStats,
     transferCount: record.transferCount,
+    transfersWithDurationCount: record.transfersWithDurationCount,
     identifiedCount: record.identifiedCount,
     totalDurationSum: record.totalDurationSum,
     srcValueUsd: record.srcValueUsd,
@@ -151,6 +163,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<Date>`"latest_per_day"."day"`.as('day'),
         sql<string>`"latest_per_day"."id"`.as('id'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
+        eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
       ])
       .groupBy(['latest_per_day.day', 'latest_per_day.id'])
       .orderBy('latest_per_day.id', 'asc')
@@ -161,6 +175,8 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       day: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
+      totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
     }))
   }
 
@@ -198,6 +214,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
         sql<string>`"latest_per_day"."id"`.as('id'),
         sql<Date>`"latest_per_day"."day"`.as('day'),
         eb.fn.sum('transferCount').as('transfer_count'),
+        eb.fn.sum('transfersWithDurationCount').as('duration_count'),
         eb.fn.sum('totalDurationSum').as('total_duration_sum'),
         eb.fn.sum('srcValueUsd').as('total_src_value_usd'),
         eb.fn.sum('dstValueUsd').as('total_dst_value_usd'),
@@ -210,6 +227,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.day),
       id: row.id,
       transferCount: Number(row.transfer_count ?? 0),
+      transfersWithDurationCount: Number(row.duration_count ?? 0),
       totalDurationSum: Number(row.total_duration_sum ?? 0),
       totalSrcValueUsd: Number(row.total_src_value_usd ?? 0),
       totalDstValueUsd: Number(row.total_dst_value_usd ?? 0),
@@ -281,6 +299,7 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
     sourceChains: string[],
     destinationChains: string[],
     type?: InteropBridgeType,
+    protocolId?: string,
     options?: {
       includeSameChainTransfers?: boolean
     },
@@ -295,6 +314,10 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('srcChain', 'in', sourceChains)
       .where('dstChain', 'in', destinationChains)
+
+    if (protocolId) {
+      query = query.where('id', '=', protocolId)
+    }
 
     if (!options?.includeSameChainTransfers) {
       query = query.whereRef('srcChain', '!=', 'dstChain')

@@ -20,7 +20,6 @@ interface Props {
   project: ChartProject
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
   milestones: Milestone[]
   defaultRange: ChartRange
   isArchived: boolean
@@ -31,7 +30,6 @@ export function ProjectLivenessChart({
   project,
   configuredSubtypes,
   anomalies,
-  hasTrackedContractsChanged,
   milestones,
   isArchived,
   defaultRange,
@@ -112,7 +110,6 @@ export function ProjectLivenessChart({
         stats={chart?.stats}
         anomalies={anomalies}
         configuredSubtypes={configuredSubtypes}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
         isArchived={isArchived}
       />
     </div>

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -191,14 +196,13 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('ESP'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
-    // TODO: add economicSecurity token config once DaBeatStatsProvider supports espresso
-    // economicSecurity: {
-    //   token: {
-    //     symbol: 'ESP',
-    //     decimals: 18,
-    //     coingeckoId: 'espresso',
-    //   },
-    // },
+    economicSecurity: {
+      token: {
+        symbol: 'ESP',
+        decimals: 18,
+        coingeckoId: 'espresso',
+      },
+    },
     throughput: [
       {
         size: 1000000, // 1 MB max_block_size (from genesis config)
@@ -207,8 +211,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       },
     ],
     validators: {
-      type: 'static', // permissionless PoS, but active set is always top 100 by ESP stake
-      count: 100,
+      type: 'dynamic',
     },
   },
   daBridge: {
@@ -286,6 +289,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
         text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
+    zkVerifiers: getVerifiers(),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
@@ -307,4 +311,13 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
     },
   ],
   discoveryInfo: getDiscoveryInfo([discovery]),
+}
+
+// should return the address of deployed plonk verifier library
+function getVerifiers(): ChainSpecificAddress[] {
+  const libraries = discovery.getContractValue<ChainSpecificAddress[]>(
+    'HotShotLightClient',
+    '$libraries',
+  )
+  return [libraries[1]]
 }

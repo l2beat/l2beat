@@ -1,12 +1,12 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
+import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
 import { TrustedSetupCell } from '../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
@@ -84,26 +84,6 @@ export const zkCatalogColumns = [
         },
       }),
       columnHelper.display({
-        id: 'used-in',
-        header: 'Used in',
-        cell: (ctx) => {
-          const first = Object.values(
-            ctx.row.original.trustedSetupsByProofSystem,
-          )[0]
-          if (!first) return null
-          return <ProjectsUsedIn usedIn={first.projectsUsedIn} />
-        },
-        meta: {
-          additionalRows: (ctx) => {
-            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
-              .slice(1)
-              .map(([key, ts]) => (
-                <ProjectsUsedIn key={key} usedIn={ts.projectsUsedIn} />
-              ))
-          },
-        },
-      }),
-      columnHelper.display({
         id: 'verifiers',
         header: 'Verifiers',
         cell: (ctx) => {
@@ -125,6 +105,29 @@ export const zkCatalogColumns = [
           },
         },
       }),
+      columnHelper.display({
+        id: 'used-in',
+        header: 'Used in',
+        cell: (ctx) => {
+          const first = Object.values(
+            ctx.row.original.trustedSetupsByProofSystem,
+          )[0]
+          if (!first) return null
+          return <ProjectsUsedInByStatus data={first.projectsUsedInByStatus} />
+        },
+        meta: {
+          additionalRows: (ctx) => {
+            return Object.entries(ctx.row.original.trustedSetupsByProofSystem)
+              .slice(1)
+              .map(([key, ts]) => (
+                <ProjectsUsedInByStatus
+                  key={key}
+                  data={ts.projectsUsedInByStatus}
+                />
+              ))
+          },
+        },
+      }),
     ],
   }),
   columnHelper.display({
@@ -141,6 +144,8 @@ export const zkCatalogColumns = [
       )
     },
     meta: {
+      tooltip:
+        'Technical attributes of the main proving system itself, which could be a zkVM or circuit-based. For validity L2s, this system produces a proof of valid state transition of one or more L2 blocks, possibly with recursive proving.',
       cellClassName: 'pr-1!',
     },
   }),
@@ -170,6 +175,10 @@ export const zkCatalogColumns = [
           className="md:min-w-[180px]"
         />
       )
+    },
+    meta: {
+      tooltip:
+        'Technical attributes of the final wrap proving system, if applicable. Final wrap is a circuit-based SNARK that compresses the proof from the main prover and produces the proof that is submitted onchain for efficient verification.',
     },
   }),
 ]

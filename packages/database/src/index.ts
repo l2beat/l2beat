@@ -1,5 +1,5 @@
 export { createDatabase, type Database } from './database'
-export { type Transaction } from './kysely'
+export { type KyselyLogEvent, type Transaction } from './kysely'
 export { createTokenDatabase, type TokenDatabase } from './tokenDatabase'
 export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 
@@ -11,6 +11,7 @@ export type {
 } from './repositories/AbstractTokenRepository'
 export type { ActivityRecord } from './repositories/ActivityRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
+export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
   AggregatedInteropTransferRecord,
   AggregatedInteropTransferSeriesRecord,
@@ -19,7 +20,7 @@ export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepo
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
-export type { BlobRecord } from './repositories/BlobsRepository'
+export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
 export type { CurrentPriceRecord } from './repositories/CurrentPriceRepository'
 export type {
   DataAvailabilityRecord,
@@ -54,11 +55,16 @@ export type {
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
 export type {
   InteropMissingTokenInfo,
+  InteropSuspiciousTransferRecord,
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
+export type {
+  InteropTransferTypeStats,
+  InteropTransferTypeStatsMap,
+} from './repositories/InteropTransferTypeStats'
 export type { L2CostPriceRecord } from './repositories/L2CostPriceRepository'
 export type { L2CostRecord } from './repositories/L2CostRepository'
 export type { LivenessRecord } from './repositories/LivenessRepository'
@@ -78,7 +84,11 @@ export type {
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
-export type { TokenValueRecord } from './repositories/TokenValueRepository'
+export type {
+  SummedByTimestampTokenValuePerProjectRecord,
+  SummedByTimestampTokenValueRecord,
+  TokenValueRecord,
+} from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'
@@ -86,4 +96,3 @@ export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
-export type { VerifierStatusRecord } from './repositories/VerifierStatusRepository'

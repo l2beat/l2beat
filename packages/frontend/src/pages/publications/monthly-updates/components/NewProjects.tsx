@@ -40,7 +40,12 @@ function NewProject({
             className="flex w-fit items-center gap-2 rounded-[4px] p-1 hover:bg-primary/10"
             href={`/scaling/projects/${project.slug}`}
           >
-            <img src={project.iconUrl} className="size-5" />
+            <img
+              src={project.iconUrl}
+              alt={project.name}
+              loading="lazy"
+              className="size-5"
+            />
             <span className="font-bold text-sm">{project.name}</span>
           </a>
           <span className="font-medium">{project.category}</span>
@@ -72,7 +77,12 @@ function NewProject({
       {/* Mobile */}
       <div className="md:hidden">
         <div className="flex items-center gap-2">
-          <img src={project.iconUrl} className="size-5" />
+          <img
+            src={project.iconUrl}
+            alt={project.name}
+            loading="lazy"
+            className="size-5"
+          />
           <span className="font-bold text-sm">{project.name}</span>
         </div>
         {project.badges.length > 0 && (

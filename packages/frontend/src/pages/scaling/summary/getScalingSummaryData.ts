@@ -33,8 +33,8 @@ export async function getScalingSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/summary/opengraph-image.png',
         },
       }),
@@ -60,6 +60,8 @@ async function getCachedData() {
     getScalingSummaryEntries(),
     helpers.tvs.recategorisedChart.prefetch({
       range: tvsChartRange,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
       filter: { type: 'layer2' },
     }),
     helpers.activity.recategorisedChart.prefetch({

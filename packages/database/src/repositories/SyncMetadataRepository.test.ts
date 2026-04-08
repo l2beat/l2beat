@@ -124,6 +124,59 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
     })
   })
 
+  describe(SyncMetadataRepository.prototype.getByFeature.name, () => {
+    it('returns all records for the feature and excludes other features', async () => {
+      const records: SyncMetadataRecord[] = [
+        {
+          feature: 'activity',
+          id: 'arbitrum',
+          target: roundedHour,
+          syncedUntil: roundedHour,
+          blockTarget: 200,
+          blockSyncedUntil: 100,
+        },
+        {
+          feature: 'activity',
+          id: 'base',
+          target: roundedHour + UnixTime.HOUR,
+          syncedUntil: roundedHour + UnixTime.HOUR,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
+        },
+        {
+          feature: 'l2costs',
+          id: 'base',
+          target: roundedHour + 2 * UnixTime.HOUR,
+          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+          blockTarget: 300,
+          blockSyncedUntil: 200,
+        },
+      ]
+      await repository.upsertMany(records)
+
+      const result = await repository.getByFeature('activity')
+      expect(result).toEqualUnsorted(
+        records.filter((r) => r.feature === 'activity'),
+      )
+    })
+
+    it('returns empty array when no records exist for the feature', async () => {
+      await repository.upsertMany([
+        {
+          feature: 'l2costs',
+          id: 'base',
+          target: roundedHour,
+          syncedUntil: roundedHour,
+          blockTarget: 100,
+          blockSyncedUntil: 100,
+        },
+      ])
+
+      const result = await repository.getByFeature('activity')
+      expect(result).toEqual([])
+    })
+  })
+
   describe(SyncMetadataRepository.prototype.getByFeatureAndId.name, () => {
     it('should return record for existing feature and id', async () => {
       const records: SyncMetadataRecord[] = [

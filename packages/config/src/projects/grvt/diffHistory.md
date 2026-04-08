@@ -1,3 +1,153 @@
+Generated with discovered.json: 0xf8495f46267a9bfd62e39ac509e07b880b58e532
+
+# Diff at Wed, 08 Apr 2026 08:26:26 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1775058712
+- current timestamp: 1775636722
+
+## Description
+
+Two trxs on L2 initiated via the governance: https://tools.l2beat.com/decoder-new/?hash=0xa7d217b096fe11b935388c891811da7e9ac0c6c6e83ffa2b3fcc58d70660fabc&data=AwA and https://tools.l2beat.com/decoder-new/?hash=0xfe93a52cfe69dbe665ca3f562787dd5e47a81e5e3bc906b4bc20fe20d876596e&data=AwA.
+Also rotated MS member.
+
+## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4"
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        38
++        40
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        38
++        40
+    }
+```
+
+Generated with discovered.json: 0xf8bc7bc4743a3a9971640a644a70452176f8c63e
+
+# Diff at Wed, 01 Apr 2026 15:52:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5445bef09c974966a397a84d1af27e8a50f5ae3e block: 1774881143
+- current timestamp: 1775058712
+
+## Description
+
+Another proposal https://tools.l2beat.com/decoder-new/?hash=0xc6e49ea96a2f8e5fa8c305588783139488df8199772c6e20c673f8fdd14f9c3a&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        37
++        38
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        37
++        38
+    }
+```
+
+Generated with discovered.json: 0x7d456808200368d1910c1ab73fcf19d57cb83fe7
+
+# Diff at Mon, 30 Mar 2026 14:33:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@b5657976f9d454d5888a0b417a0c3fc9c8226d31 block: 1774435159
+- current timestamp: 1774881143
+
+## Description
+
+Another gov L2 upgrade: https://tools.l2beat.com/decoder-new/?hash=0x2ca64710efc0b4f21461ce86f124ce6cb1f7a8d5744cbf5c8d817fb6a36cfa9a&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        36
++        37
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        36
++        37
+    }
+```
+
+Generated with discovered.json: 0x7ee0c068a774c1c81e92faf982177331ff619a36
+
+# Diff at Wed, 25 Mar 2026 10:40:21 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@987d24ffeda681f8398eee54cc913598017a3226 block: 1773662988
+- current timestamp: 1774435159
+
+## Description
+
+Gov upgrade on L2: https://tools.l2beat.com/decoder-new/?hash=0x923c6a7d1189587410f25b5dbbc9e1a424a86c9da4b0f6a92d84d0e75e062b0f&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        34
++        36
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        34
++        36
+    }
+```
+
+Generated with discovered.json: 0x18f1c281c2a9bc5bc15631cea679d14a171fc7aa
+
+# Diff at Mon, 16 Mar 2026 12:10:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@4f9027fb4eca3a54a9d262b70624fce630b92ff0 block: 1772795015
+- current timestamp: 1773662988
+
+## Description
+
+Another upgrade on L2: https://tools.l2beat.com/decoder-new/?hash=0x7c1018383fb3497a7357518c6a597bf2e79feb352e370e3cea32b4e94ec9f634&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        33
++        34
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        33
++        34
+    }
+```
+
 Generated with discovered.json: 0x2f4589cda2910e6081866a8993f13168fc2b075b
 
 # Diff at Fri, 06 Mar 2026 11:04:40 GMT:

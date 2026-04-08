@@ -3,6 +3,7 @@ import { getCoreRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -197,6 +198,7 @@ function TransferDetailsDialog({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[560px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3">
+        <DialogClose />
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
             <span>Transfers for </span>

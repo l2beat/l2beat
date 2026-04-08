@@ -26,7 +26,7 @@ export function ScalingActivityCard(props: Props) {
 
   return (
     <>
-      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-x-2 max-md:mt-4 max-md:px-4">
         <TableFilters entries={props.entries} />
         <UopsExplorerLink />
       </div>
