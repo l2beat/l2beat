@@ -28,6 +28,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
+  quantumResistant?: boolean
   tvs: {
     value: number
     numberOfProjects: number
@@ -82,6 +83,7 @@ function getZkCatalogEntry(
     name: project.name,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     tvs: {
       value: tvsForProject,
       numberOfProjects,

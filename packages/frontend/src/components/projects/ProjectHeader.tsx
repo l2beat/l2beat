@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
@@ -13,6 +14,7 @@ interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
   secondLine?: string
+  nameSuffix?: ReactNode
   livenessSectionHref?: string
 }
 
@@ -20,6 +22,7 @@ export function ProjectHeader({
   project,
   ongoingAnomaly,
   secondLine,
+  nameSuffix,
   livenessSectionHref = '#liveness',
 }: Props) {
   return (
@@ -40,8 +43,9 @@ export function ProjectHeader({
             />
           )}
           <div className="flex flex-col">
-            <span className="text-heading-28 leading-none!">
+            <span className="flex flex-wrap items-center gap-2 text-heading-28 leading-none!">
               {project.name}
+              {nameSuffix}
             </span>
             {secondLine && (
               <span className="font-bold text-label-value-15 text-secondary">

@@ -25,6 +25,7 @@ export interface ProjectZkCatalogEntry {
   name: string
   shortName: string | undefined
   creator?: string
+  quantumResistant?: boolean
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
@@ -97,6 +98,7 @@ export async function getZkCatalogProjectEntry(
   const common = {
     name: project.name,
     creator: project.zkCatalogInfo.creator,
+    quantumResistant: project.zkCatalogInfo.quantumResistant,
     shortName: project.shortName,
     slug: project.slug,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),

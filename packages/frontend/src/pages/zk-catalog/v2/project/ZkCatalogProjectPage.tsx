@@ -15,6 +15,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
+import { QuantumResistanceTag } from '../components/QuantumResistanceTag'
 import { ProjectZkCatalogSummary } from './components/header/ZkCatalogProjectSummary'
 
 interface Props extends AppLayoutProps {
@@ -50,6 +51,11 @@ export function ZkCatalogProjectPage({
                   <ProjectHeader
                     project={projectEntry}
                     secondLine={projectEntry.creator}
+                    nameSuffix={
+                      projectEntry.quantumResistant ? (
+                        <QuantumResistanceTag />
+                      ) : undefined
+                    }
                   />
                   <ProjectSummaryBars project={projectEntry} />
                   {projectEntry.header.description && (
