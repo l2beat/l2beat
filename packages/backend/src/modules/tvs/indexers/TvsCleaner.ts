@@ -42,28 +42,23 @@ export class TvsCleaner extends ManagedChildIndexer {
     }
 
     await this.$.db.transaction(async () => {
-      const [
-        tokenValueHourlyDeletedRecords,
-        blockTimestampHourlyDeletedRecords,
-        amountHourlyDeletedRecords,
-        priceHourlyDeletedRecords,
-      ] = await Promise.all([
-        this.$.db.tvsTokenValue.deleteHourlyUntil(hourlyRange),
-        this.$.db.tvsBlockTimestamp.deleteHourlyUntil(hourlyRange),
-        this.$.db.tvsAmount.deleteHourlyUntil(hourlyRange),
-        this.$.db.tvsPrice.deleteHourlyUntil(hourlyRange),
-      ])
-      const [
-        tokenValueSixHourlyDeletedRecords,
-        blockTimestampSixHourlyDeletedRecords,
-        amountSixHourlyDeletedRecords,
-        priceSixHourlyDeletedRecords,
-      ] = await Promise.all([
-        this.$.db.tvsTokenValue.deleteSixHourlyUntil(sixHourlyRange),
-        this.$.db.tvsBlockTimestamp.deleteSixHourlyUntil(sixHourlyRange),
-        this.$.db.tvsAmount.deleteSixHourlyUntil(sixHourlyRange),
-        this.$.db.tvsPrice.deleteSixHourlyUntil(sixHourlyRange),
-      ])
+      const tokenValueHourlyDeletedRecords =
+        await this.$.db.tvsTokenValue.deleteHourlyUntil(hourlyRange)
+      const blockTimestampHourlyDeletedRecords =
+        await this.$.db.tvsBlockTimestamp.deleteHourlyUntil(hourlyRange)
+      const amountHourlyDeletedRecords =
+        await this.$.db.tvsAmount.deleteHourlyUntil(hourlyRange)
+      const priceHourlyDeletedRecords =
+        await this.$.db.tvsPrice.deleteHourlyUntil(hourlyRange)
+
+      const tokenValueSixHourlyDeletedRecords =
+        await this.$.db.tvsTokenValue.deleteSixHourlyUntil(sixHourlyRange)
+      const blockTimestampSixHourlyDeletedRecords =
+        await this.$.db.tvsBlockTimestamp.deleteSixHourlyUntil(sixHourlyRange)
+      const amountSixHourlyDeletedRecords =
+        await this.$.db.tvsAmount.deleteSixHourlyUntil(sixHourlyRange)
+      const priceSixHourlyDeletedRecords =
+        await this.$.db.tvsPrice.deleteSixHourlyUntil(sixHourlyRange)
 
       this.logger.info('Cleaned TVS records', {
         until: currentTarget,
