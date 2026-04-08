@@ -2,8 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { alignTimestamp } from '../../../tools/alignTimestamp'
 import type { Clock } from '../../../tools/Clock'
 
-const HOURLY_CUTOFF_DAYS = 30
-const SIX_HOURLY_CUTOFF_DAYS = 180
+// Frontend shows hourly data for max range of 7 days but we use 14 days to be safe
+const HOURLY_CUTOFF_DAYS = 14
+// Frontend shows six hourly data for max range of 90 days but we use 100 days to be safe
+const SIX_HOURLY_CUTOFF_DAYS = 100
 
 export class SyncOptimizer {
   constructor(private readonly clock: Clock) {}
