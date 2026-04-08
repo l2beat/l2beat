@@ -681,7 +681,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -740,7 +740,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: true,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -799,7 +799,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -843,7 +843,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(200),
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -888,7 +888,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(100),
             {
               forSummary: false,
-              excludeAssociated: true,
+              excludeAssociatedTokens: true,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -918,7 +918,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -933,7 +933,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             null,
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -948,7 +948,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             UnixTime(200),
             {
               forSummary: false,
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
             },
           )
@@ -1003,7 +1003,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1093,7 +1093,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1167,7 +1167,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1255,7 +1255,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1310,7 +1310,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: true,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1342,7 +1342,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1364,7 +1364,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: false,
+                excludeAssociatedTokens: false,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1386,7 +1386,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               null,
               {
                 forSummary: false,
-                excludeAssociated: true,
+                excludeAssociatedTokens: true,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1421,7 +1421,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum', 'arbitrum'],
             [UnixTime(100), UnixTime(300)],
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -1536,7 +1536,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['ethereum'],
             [null, UnixTime(150)],
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -1567,7 +1567,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
               ['ethereum'],
               [UnixTime(100), UnixTime(100)],
               {
-                excludeAssociated: true,
+                excludeAssociatedTokens: true,
                 excludeRwaRestrictedTokens: false,
               },
             )
@@ -1595,7 +1595,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['arbitrum'],
             [UnixTime(200), UnixTime(200)],
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
             },
           )
@@ -1625,7 +1625,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             [],
             [UnixTime(100), UnixTime(300)],
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -1635,7 +1635,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             ['non-existent'],
             [UnixTime(100), UnixTime(300)],
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
             },
           )
@@ -1652,7 +1652,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // oldestTimestamp
             300, // latestTimestamp
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1731,7 +1731,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100, // oldestTimestamp
             100, // latestTimestamp (only timestamp 100)
             {
-              excludeAssociated: true,
+              excludeAssociatedTokens: true,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1778,7 +1778,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             400, // oldestTimestamp - no data at this timestamp
             500, // latestTimestamp - no data at this timestamp
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1793,7 +1793,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200,
             200,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1821,7 +1821,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             100,
             100,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: false,
               cutOffTimestamp: 50,
             },
@@ -1838,7 +1838,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
             200, // timestamp where we have rwaRestricted token 'g'
             200,
             {
-              excludeAssociated: false,
+              excludeAssociatedTokens: false,
               excludeRwaRestrictedTokens: true,
               cutOffTimestamp: 50,
             },

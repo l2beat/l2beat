@@ -18,7 +18,7 @@ export interface TokenValueRecord {
   priceUsd: number
 }
 
-interface SummedByTimestampTokenValueRecord {
+export interface SummedByTimestampTokenValueRecord {
   timestamp: UnixTime
   value: number
   canonical: number
@@ -33,7 +33,7 @@ interface SummedByTimestampTokenValueRecord {
   other: number
 }
 
-interface SummedByTimestampTokenValuePerProjectRecord {
+export interface SummedByTimestampTokenValuePerProjectRecord {
   projectId: string
   timestamp: UnixTime
   value: number
@@ -234,7 +234,7 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     opts: {
       forSummary: boolean
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
@@ -273,7 +273,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -309,7 +309,7 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     opts: {
       forSummary: boolean
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValuePerProjectRecord[]> {
@@ -365,7 +365,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -396,7 +396,7 @@ export class TokenValueRepository extends BaseRepository {
     oldestTimestamp: number,
     latestTimestamp: number,
     opts: {
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
     },
@@ -463,7 +463,7 @@ export class TokenValueRepository extends BaseRepository {
       )
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -495,7 +495,7 @@ export class TokenValueRepository extends BaseRepository {
     projectIds: string[],
     range: [UnixTime | null, UnixTime],
     opts: {
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
     },
@@ -561,7 +561,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '>=', UnixTime.toDate(from))
     }
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 

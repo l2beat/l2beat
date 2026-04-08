@@ -1,5 +1,4 @@
 import type { ProjectService } from '@l2beat/config'
-import type { QueryExecutor } from '@l2beat/dal'
 import type { Database } from '@l2beat/database'
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
@@ -14,7 +13,6 @@ export function addTvsRoutes(
   openapi: OpenApi,
   ps: ProjectService,
   db: Database,
-  queryExecutor: QueryExecutor,
   cache: InMemoryCache,
 ) {
   openapi.get(
@@ -39,7 +37,7 @@ export function addTvsRoutes(
         async () => {
           const projectIds = await getTvsProjects(ps)
 
-          return getTvsData(queryExecutor, range, projectIds)
+          return getTvsData(db, range, projectIds)
         },
       )
 
@@ -85,7 +83,7 @@ export function addTvsRoutes(
           ttl: 5 * UnixTime.MINUTE,
           staleWhileRevalidate: 5 * UnixTime.MINUTE,
         },
-        () => getTvsData(queryExecutor, range, [project.id]),
+        () => getTvsData(db, range, [project.id]),
       )
 
       res.json(data)

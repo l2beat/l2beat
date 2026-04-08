@@ -34,7 +34,7 @@ export async function getTvsLeaderboard(
     props.projectIds,
     range,
     {
-      excludeAssociated: true,
+      excludeAssociatedTokens: true,
       excludeRwaRestrictedTokens: true,
     },
   )

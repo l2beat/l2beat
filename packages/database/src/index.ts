@@ -84,7 +84,11 @@ export type {
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
-export type { TokenValueRecord } from './repositories/TokenValueRepository'
+export type {
+  SummedByTimestampTokenValuePerProjectRecord,
+  SummedByTimestampTokenValueRecord,
+  TokenValueRecord,
+} from './repositories/TokenValueRepository'
 export type { TvsAmountRecord } from './repositories/TvsAmountRepository'
 export type { TvsBlockTimestampRecord } from './repositories/TvsBlockTimestampRepository'
 export type { TvsPriceRecord } from './repositories/TvsPriceRepository'

@@ -18,7 +18,6 @@
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/database": "workspace:*",
-    "@l2beat/dal": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "express": "^5.0.0",
     "lodash": "^4.17.21",

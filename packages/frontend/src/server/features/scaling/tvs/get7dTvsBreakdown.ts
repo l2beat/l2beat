@@ -88,7 +88,7 @@ export async function get7dTvsBreakdown(
       tvsProjects.map((p) => p.projectId),
       [from - 7 * UnixTime.DAY, to],
       {
-        excludeAssociated: params.excludeAssociatedTokens ?? false,
+        excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
         excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
       },
     ),
