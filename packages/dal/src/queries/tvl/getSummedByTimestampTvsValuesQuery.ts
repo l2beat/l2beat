@@ -38,7 +38,7 @@ export async function getSummedByTimestampTvsValuesQuery(
     range[1],
     {
       forSummary,
-      excludeAssociated,
+      excludeAssociatedTokens: excludeAssociated,
       excludeRwaRestrictedTokens,
     },
   )
