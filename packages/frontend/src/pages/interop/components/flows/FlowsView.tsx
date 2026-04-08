@@ -4,7 +4,7 @@ import type { InteropChainWithIcon } from '../chain-selector/types'
 import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
-import { FlowsGraph } from './graph/FlowsGraph'
+import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
 import { InteropFlowsProvider } from './utils/InteropFlowsContext'
 
 interface FlowsViewProps {
@@ -24,7 +24,7 @@ export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
             <FlowsChainsSelector allChains={interopChains} />
             <FlowsProtocolsSelector allProtocols={protocols} />
           </div>
-          <FlowsGraph />
+          <FlowsGraphPanel />
         </div>
       </PrimaryCard>
     </InteropFlowsProvider>
