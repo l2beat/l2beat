@@ -139,6 +139,7 @@ export class EtherscanClient implements IEtherscanClient {
     let files: Record<string, string> = {}
     let remappings: string[] = []
     let libraries: Record<string, EthereumAddress> = {}
+    let rawJsonSettings: Record<string, unknown> | undefined
     const name = result.ContractName.trim()
     const solidityVersion = result.CompilerVersion
     const source = result.SourceCode
@@ -153,6 +154,7 @@ export class EtherscanClient implements IEtherscanClient {
         files = Object.fromEntries(decodedSource.sources)
         remappings = decodedSource.remappings
         libraries = decodedSource.libraries
+        rawJsonSettings = decodedSource.rawJsonSettings
       } catch (e) {
         this.logger.error(e)
       }
@@ -167,6 +169,15 @@ export class EtherscanClient implements IEtherscanClient {
       remappings,
       libraries,
       files,
+      compilerSettings: isVerified
+        ? {
+            optimizationUsed: result.OptimizationUsed === '1',
+            runs: Number.parseInt(result.Runs, 10) || 200,
+            evmVersion:
+              result.EVMVersion === 'Default' ? 'default' : result.EVMVersion,
+            rawJsonSettings,
+          }
+        : undefined,
     }
   }
 
@@ -303,6 +314,7 @@ interface DecodedSource {
   sources: [string, string][]
   remappings: string[]
   libraries: Record<string, EthereumAddress>
+  rawJsonSettings?: Record<string, unknown>
 }
 
 function decodeEtherscanSource(
@@ -333,6 +345,7 @@ function decodeEtherscanSource(
   let validated: Record<string, { content: string }>
   let remappings: string[] = []
   const libraries: Record<string, EthereumAddress> = {}
+  let rawJsonSettings: Record<string, unknown> | undefined
   try {
     const verified = EtherscanSource.parse(parsed)
     if (verified.settings.libraries !== undefined) {
@@ -349,6 +362,11 @@ function decodeEtherscanSource(
 
     validated = verified.sources
     remappings = verified.settings.remappings ?? []
+    // Capture the full settings object from the JSON input for solc compilation
+    const parsedObj = parsed as Record<string, unknown>
+    if (typeof parsedObj.settings === 'object' && parsedObj.settings !== null) {
+      rawJsonSettings = parsedObj.settings as Record<string, unknown>
+    }
   } catch {
     validated = Sources.parse(parsed)
   }
@@ -360,5 +378,6 @@ function decodeEtherscanSource(
     ]),
     remappings,
     libraries,
+    rawJsonSettings,
   }
 }
