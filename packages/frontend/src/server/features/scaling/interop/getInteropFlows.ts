@@ -18,9 +18,16 @@ interface ChainVolume {
   netFlow: number
 }
 
+interface FlowsStats {
+  totalVolume: number
+  numberOfTransactions: number
+  activeFlows: number
+}
+
 export type InteropFlowsData = {
   flows: Flow[]
   chainVolumes: ChainVolume[]
+  stats: FlowsStats
 }
 
 export async function getInteropFlows(
@@ -32,7 +39,11 @@ export async function getInteropFlows(
 
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp || params.chains.length === 0) {
-    return { flows: [], chainVolumes: [] }
+    return {
+      flows: [],
+      chainVolumes: [],
+      stats: { totalVolume: 0, numberOfTransactions: 0, activeFlows: 0 },
+    }
   }
 
   const db = getDb()
@@ -50,10 +61,12 @@ export async function getInteropFlows(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
-  // Aggregate transfer volumes by srcChain::dstChain pair
+  // Aggregate transfer volumes and counts by srcChain::dstChain pair
   const flowMap = new Map<string, number>()
+  let totalTransferCount = 0
   for (const record of transfers) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
+    totalTransferCount += record.transferCount
     const key = `${record.srcChain}::${record.dstChain}`
     flowMap.set(
       key,
@@ -70,7 +83,17 @@ export async function getInteropFlows(
     }
   }
 
-  return { flows, chainVolumes: computeChainVolumes(flows, params.chains) }
+  const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
+
+  return {
+    flows,
+    chainVolumes: computeChainVolumes(flows, params.chains),
+    stats: {
+      totalVolume,
+      numberOfTransactions: totalTransferCount,
+      activeFlows: flows.length,
+    },
+  }
 }
 
 function computeChainVolumes(flows: Flow[], chainIds: string[]): ChainVolume[] {
@@ -110,5 +133,16 @@ function getMockInteropFlows(): InteropFlowsData {
     }
   }
 
-  return { flows, chainVolumes: computeChainVolumes(flows, chainIds) }
+  const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
+  const totalTransferCount = flows.length * 150 // deterministic mock count
+
+  return {
+    flows,
+    chainVolumes: computeChainVolumes(flows, chainIds),
+    stats: {
+      totalVolume,
+      numberOfTransactions: totalTransferCount,
+      activeFlows: flows.length,
+    },
+  }
 }
