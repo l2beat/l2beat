@@ -215,7 +215,7 @@ export const scalingRiskStateValidationNoProofsColumns = [
       const value = ctx.row.original.tvs
       return (
         <TotalCellWithTvsBreakdown
-          href={`/scaling/tvs?highlight=${ctx.row.original.slug}`}
+          href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           associatedTokens={value.associatedTokens}
           tvsWarnings={value.warnings}
           breakdown={value.breakdown}
