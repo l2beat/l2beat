@@ -6,7 +6,7 @@ import type { InteropFlowsParams } from './types'
 import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
 import { getInteropChains } from './utils/getInteropChains'
 
-interface Flow {
+export interface Flow {
   srcChain: string
   dstChain: string
   volume: number
@@ -22,6 +22,7 @@ interface FlowsStats {
   totalVolume: number
   numberOfTransactions: number
   activeFlows: number
+  topRoute: { srcChain: string; dstChain: string } | undefined
 }
 
 export type InteropFlowsData = {
@@ -42,7 +43,12 @@ export async function getInteropFlows(
     return {
       flows: [],
       chainVolumes: [],
-      stats: { totalVolume: 0, numberOfTransactions: 0, activeFlows: 0 },
+      stats: {
+        totalVolume: 0,
+        numberOfTransactions: 0,
+        activeFlows: 0,
+        topRoute: undefined,
+      },
     }
   }
 
@@ -84,6 +90,10 @@ export async function getInteropFlows(
   }
 
   const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
+  const topFlow = flows.reduce<Flow | undefined>(
+    (max, f) => (!max || f.volume > max.volume ? f : max),
+    undefined,
+  )
 
   return {
     flows,
@@ -92,6 +102,9 @@ export async function getInteropFlows(
       totalVolume,
       numberOfTransactions: totalTransferCount,
       activeFlows: flows.length,
+      topRoute: topFlow
+        ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+        : undefined,
     },
   }
 }
@@ -135,6 +148,10 @@ function getMockInteropFlows(): InteropFlowsData {
 
   const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
   const totalTransferCount = flows.length * 150 // deterministic mock count
+  const topFlow = flows.reduce<Flow | undefined>(
+    (max, f) => (!max || f.volume > max.volume ? f : max),
+    undefined,
+  )
 
   return {
     flows,
@@ -143,6 +160,9 @@ function getMockInteropFlows(): InteropFlowsData {
       totalVolume,
       numberOfTransactions: totalTransferCount,
       activeFlows: flows.length,
+      topRoute: topFlow
+        ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+        : undefined,
     },
   }
 }

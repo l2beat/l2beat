@@ -12,8 +12,7 @@ import type { InteropChainWithIcon } from '../../chain-selector/types'
 interface InteropFlowsContextType {
   selectedChains: string[]
   selectedProtocols: string[]
-  allChainIds: string[]
-  allProtocolNames: string[]
+  allChains: InteropChainWithIcon[]
   toggleChainSelection: (chainId: string) => void
   toggleProtocolSelection: (protocolName: string) => void
 }
@@ -63,8 +62,7 @@ export function InteropFlowsProvider({
   return (
     <InteropFlowsContext.Provider
       value={{
-        allChainIds,
-        allProtocolNames,
+        allChains: chains,
         selectedChains,
         selectedProtocols,
         toggleChainSelection,
