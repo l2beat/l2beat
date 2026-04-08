@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
   Drawer,
   DrawerContent,
@@ -14,31 +13,20 @@ import {
 } from '~/components/core/Popover'
 import { ChainSelectorChainToggle } from '../chain-selector/ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from '../chain-selector/types'
+import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsChainsSelector({
   allChains,
 }: {
   allChains: InteropChainWithIcon[]
 }) {
-  const [selectedChains, setSelectedChains] = useState<string[]>(
-    allChains.map((chain) => chain.id),
-  )
-
+  const { selectedChains, toggleChainSelection } = useInteropFlows()
   const chainsWithDetails = allChains.map(({ id, name, iconUrl }) => ({
     id,
     name,
     iconUrl,
     isSelected: selectedChains.includes(id),
   }))
-
-  const toggleSelected = (chainId: string) => {
-    setSelectedChains((prev) => {
-      if (prev.includes(chainId)) {
-        return prev.filter((id) => id !== chainId)
-      }
-      return [...prev, chainId]
-    })
-  }
 
   const selectedChainsWithDetails = chainsWithDetails.filter(
     (chain) => chain.isSelected,
@@ -89,7 +77,7 @@ export function FlowsChainsSelector({
                 key={chain.id}
                 chain={chain}
                 isSelected={chain.isSelected}
-                toggleSelected={(chainId) => toggleSelected(chainId)}
+                toggleSelected={toggleChainSelection}
               />
             ))}
           </div>
@@ -111,7 +99,7 @@ export function FlowsChainsSelector({
                 key={chain.id}
                 chain={chain}
                 isSelected={chain.isSelected}
-                toggleSelected={(chainId) => toggleSelected(chainId)}
+                toggleSelected={toggleChainSelection}
               />
             ))}
           </div>

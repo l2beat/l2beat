@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
@@ -18,30 +17,20 @@ import {
 } from '~/components/core/Drawer'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsProtocolsSelector({
   allProtocols,
 }: {
   allProtocols: ProtocolDisplayable[]
 }) {
-  const [selectedProtocols, setSelectedProtocols] = useState<string[]>(
-    allProtocols.map((protocol) => protocol.name),
-  )
+  const { selectedProtocols, toggleProtocolSelection } = useInteropFlows()
 
   const protocolsWithDetails = allProtocols.map(({ name, iconUrl }) => ({
     name,
     iconUrl,
     isSelected: selectedProtocols.includes(name),
   }))
-
-  const toggleSelected = (protocolName: string) => {
-    setSelectedProtocols((prev) => {
-      if (prev.includes(protocolName)) {
-        return prev.filter((name) => name !== protocolName)
-      }
-      return [...prev, protocolName]
-    })
-  }
 
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
@@ -77,7 +66,10 @@ export function FlowsProtocolsSelector({
       {/* Mobile */}
       <Drawer>
         <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
-        <DrawerContent className="max-h-[90dvh] pb-4" contentClassName="min-h-0 flex flex-col">
+        <DrawerContent
+          className="max-h-[90dvh] pb-4"
+          contentClassName="min-h-0 flex flex-col"
+        >
           <DrawerHeader className="mb-4 gap-2">
             <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
               Protocol selector
@@ -93,7 +85,7 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                onCheckedChange={() => toggleSelected(protocol.name)}
+                onCheckedChange={() => toggleProtocolSelection(protocol.name)}
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -129,7 +121,7 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                onCheckedChange={() => toggleSelected(protocol.name)}
+                onCheckedChange={() => toggleProtocolSelection(protocol.name)}
               >
                 <div className="flex items-center gap-2">
                   <img
