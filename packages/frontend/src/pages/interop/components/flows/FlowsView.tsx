@@ -4,6 +4,7 @@ import type { InteropChainWithIcon } from '../chain-selector/types'
 import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
+import { FlowsGraph } from './graph/FlowsGraph'
 import { InteropFlowsProvider } from './utils/InteropFlowsContext'
 
 interface FlowsViewProps {
@@ -15,14 +16,15 @@ export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
   return (
     <InteropFlowsProvider chains={interopChains} protocols={protocols}>
       <PrimaryCard className="grid grid-cols-1 lg:grid-cols-[240px_1fr]">
-        <div className="max-lg:order-2">
+        <div className="h-full max-lg:order-2">
           <FlowsGeneralStats />
         </div>
-        <div className="mx-auto flex flex-col">
+        <div className="mx-auto flex flex-col items-center gap-10">
           <div className="flex gap-2 max-lg:order-1">
             <FlowsChainsSelector allChains={interopChains} />
             <FlowsProtocolsSelector allProtocols={protocols} />
           </div>
+          <FlowsGraph />
         </div>
       </PrimaryCard>
     </InteropFlowsProvider>
