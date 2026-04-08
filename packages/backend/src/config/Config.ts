@@ -21,13 +21,8 @@ import type { ChainApi } from './chain/ChainApi'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { InteropAggregationConfig } from './features/interop'
 
-export type ConfigName =
-  | 'Backend/Local'
-  | 'Backend/Staging'
-  | 'Backend/Production'
-
 export interface Config {
-  readonly name: ConfigName
+  readonly name: string
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false

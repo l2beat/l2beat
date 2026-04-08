@@ -42,7 +42,6 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
-            'Backend/Local',
           ),
       ).toThrow(/mix of non- and resyncable plugins/)
     })
@@ -69,7 +68,6 @@ describe(InteropSyncersManager.name, () => {
           mockStore(),
           mockDb(),
           Logger.SILENT,
-          'Backend/Local',
         )
 
         manager.start()
@@ -93,7 +91,6 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
-            'Backend/Local',
           ),
       ).toThrow('Missing configuration for chain ethereum')
     })
@@ -108,7 +105,6 @@ describe(InteropSyncersManager.name, () => {
             mockStore(),
             mockDb(),
             Logger.SILENT,
-            'Backend/Local',
           ),
       ).toThrow('Missing RPC config for chain ethereum')
     })
@@ -420,7 +416,6 @@ function makeManager(params: {
     mockStore(),
     params.db ?? mockDb(),
     Logger.SILENT,
-    'Backend/Local',
   )
 }
 

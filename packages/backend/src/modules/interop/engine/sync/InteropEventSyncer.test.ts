@@ -258,17 +258,11 @@ describe(InteropEventSyncer.name, () => {
       const syncer = createSyncer({
         cluster: makeCluster({
           name: 'clusterName',
-          plugins: [
-            makePlugin({
-              name: 'across',
-              capture,
-              dataRequests: [makeWildcardDataRequest()],
-            }),
-          ],
+          plugins: [makePlugin({ name: 'across', capture })],
         }),
       })
 
-      const result = syncer.captureLog(makeMatchingLogToCapture())
+      const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(capture).toHaveBeenCalled()
       expect(result).toEqual([{ ...event, plugin: 'across' }])
@@ -283,21 +277,13 @@ describe(InteropEventSyncer.name, () => {
         cluster: makeCluster({
           name: 'clusterName',
           plugins: [
-            makePlugin({
-              name: 'across',
-              capture: firstCapture,
-              dataRequests: [makeWildcardDataRequest()],
-            }),
-            makePlugin({
-              name: 'wormhole',
-              capture: secondCapture,
-              dataRequests: [makeWildcardDataRequest()],
-            }),
+            makePlugin({ name: 'across', capture: firstCapture }),
+            makePlugin({ name: 'wormhole', capture: secondCapture }),
           ],
         }),
       })
 
-      const result = syncer.captureLog(makeMatchingLogToCapture())
+      const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
@@ -312,41 +298,13 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({
               name: 'across',
               capture: mockFn().returns(undefined),
-              dataRequests: [makeWildcardDataRequest()],
             }),
           ],
         }),
       })
 
-      const result = syncer.captureLog(makeMatchingLogToCapture())
+      const result = syncer.captureLog(mockObject<LogToCapture>({}))
 
-      expect(result).toEqual(undefined)
-    })
-
-    it('skips capture when log does not match data requests', () => {
-      const capture = mockFn().returns([makeInteropEventNoPlugin()])
-      const syncer = createSyncer({
-        cluster: makeCluster({
-          name: 'clusterName',
-          plugins: [
-            makePlugin({
-              name: 'across',
-              capture,
-              dataRequests: [makeWildcardDataRequest()],
-            }),
-          ],
-        }),
-      })
-
-      const nonMatchingLog = mockObject<LogToCapture>({
-        log: {
-          topics: ['0xdeadbeef'],
-          address: '0x0000000000000000000000000000000000000001',
-        } as any,
-      })
-      const result = syncer.captureLog(nonMatchingLog)
-
-      expect(capture).not.toHaveBeenCalled()
       expect(result).toEqual(undefined)
     })
   })
@@ -730,7 +688,7 @@ describe(InteropEventSyncer.name, () => {
       expect(query.topicToTxEvents.size).toEqual(0)
     })
 
-    it('skips data request when addresses list is empty', () => {
+    it('throws when addresses list is empty', () => {
       const signature = 'event Transfer(address,address,uint256)'
       const plugin = makePlugin({
         dataRequests: [
@@ -742,100 +700,9 @@ describe(InteropEventSyncer.name, () => {
         ],
       })
 
-      const query = buildLogQueryForCluster(
-        makeCluster({ plugins: [plugin] }),
-        'ethereum',
-      )
-
-      expect(query.isEmpty()).toEqual(true)
-    })
-
-    describe('matchesLog', () => {
-      it('matches when topic0 and address match', () => {
-        const signature = 'event Transfer(address,address,uint256)'
-        const address = EthereumAddress.random()
-        const ethAddress = ChainSpecificAddress.fromLong('ethereum', address)
-        const plugin = makePlugin({
-          dataRequests: [{ type: 'event', signature, addresses: [ethAddress] }],
-        })
-        const query = buildLogQueryForCluster(
-          makeCluster({ plugins: [plugin] }),
-          'ethereum',
-        )
-
-        expect(
-          query.matchesLog({
-            topics: [toEventSelector(signature)],
-            address: address.toLowerCase(),
-          }),
-        ).toEqual(true)
-      })
-
-      it('returns false when topic0 does not match', () => {
-        const signature = 'event Transfer(address,address,uint256)'
-        const plugin = makePlugin({
-          dataRequests: [{ type: 'event', signature, addresses: '*' }],
-        })
-        const query = buildLogQueryForCluster(
-          makeCluster({ plugins: [plugin] }),
-          'ethereum',
-        )
-
-        expect(
-          query.matchesLog({ topics: ['0xdeadbeef'], address: '0x1' }),
-        ).toEqual(false)
-      })
-
-      it('returns false when address does not match', () => {
-        const signature = 'event Transfer(address,address,uint256)'
-        const address = EthereumAddress.random()
-        const ethAddress = ChainSpecificAddress.fromLong('ethereum', address)
-        const plugin = makePlugin({
-          dataRequests: [{ type: 'event', signature, addresses: [ethAddress] }],
-        })
-        const query = buildLogQueryForCluster(
-          makeCluster({ plugins: [plugin] }),
-          'ethereum',
-        )
-
-        expect(
-          query.matchesLog({
-            topics: [toEventSelector(signature)],
-            address: EthereumAddress.random().toLowerCase(),
-          }),
-        ).toEqual(false)
-      })
-
-      it('matches any address when addresses is wildcard', () => {
-        const signature = 'event Transfer(address,address,uint256)'
-        const plugin = makePlugin({
-          dataRequests: [{ type: 'event', signature, addresses: '*' }],
-        })
-        const query = buildLogQueryForCluster(
-          makeCluster({ plugins: [plugin] }),
-          'ethereum',
-        )
-
-        expect(
-          query.matchesLog({
-            topics: [toEventSelector(signature)],
-            address: EthereumAddress.random().toLowerCase(),
-          }),
-        ).toEqual(true)
-      })
-
-      it('returns false when log has no topics', () => {
-        const signature = 'event Transfer(address,address,uint256)'
-        const plugin = makePlugin({
-          dataRequests: [{ type: 'event', signature, addresses: '*' }],
-        })
-        const query = buildLogQueryForCluster(
-          makeCluster({ plugins: [plugin] }),
-          'ethereum',
-        )
-
-        expect(query.matchesLog({ topics: [], address: '0x1' })).toEqual(false)
-      })
+      expect(() =>
+        buildLogQueryForCluster(makeCluster({ plugins: [plugin] }), 'ethereum'),
+      ).toThrow(/Empty address list/)
     })
 
     it('merges event requests across cluster plugins', () => {
@@ -1017,7 +884,6 @@ function createSyncer(overrides: Partial<TestSyncer> = {}) {
     store ?? mockStore(),
     db ?? mockDb(),
     Logger.SILENT,
-    'Backend/Local',
   )
   Object.assign(syncer, rest)
   return syncer
@@ -1288,21 +1154,3 @@ function deferred<T>() {
 }
 
 const ZERO_HASH = `0x${'00'.repeat(32)}`
-const TEST_EVENT_SIGNATURE = 'event Transfer(address,address,uint256)'
-
-function makeWildcardDataRequest(): DataRequest {
-  return {
-    type: 'event',
-    signature: TEST_EVENT_SIGNATURE,
-    addresses: '*',
-  }
-}
-
-function makeMatchingLogToCapture(): LogToCapture {
-  return mockObject<LogToCapture>({
-    log: {
-      topics: [toEventSelector(TEST_EVENT_SIGNATURE)],
-      address: '0x0000000000000000000000000000000000000001',
-    } as unknown as LogToCapture['log'],
-  })
-}

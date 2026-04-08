@@ -1,7 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
-import type { Config, ConfigName } from './Config'
+import type { Config } from './Config'
 import { getChainConfig } from './chain/getChainConfig'
 import { FeatureFlags } from './FeatureFlags'
 import { getActivityConfig } from './features/activity'
@@ -15,7 +15,7 @@ import { getUpdateMonitorConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
-  name: ConfigName
+  name: string
   isLocal?: boolean
   minTimestampOverride?: UnixTime
 }
