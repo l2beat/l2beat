@@ -80,7 +80,6 @@ export async function getInteropSummaryData(
         interopChains: interopChainsWithIcons.filter(
           (chain) => !chain.isUpcoming,
         ),
-        onboardingInteropChains: interopChainsWithIcons,
         initialSelection,
       },
     },

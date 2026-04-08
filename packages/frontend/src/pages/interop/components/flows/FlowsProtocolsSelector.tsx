@@ -1,0 +1,151 @@
+import { useState } from 'react'
+import { Checkbox } from '~/components/core/Checkbox'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/core/Dialog'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/core/Drawer'
+import { ScrollWithGradient } from '~/components/ScrollWithGradient'
+import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+
+export function FlowsProtocolsSelector({
+  allProtocols,
+}: {
+  allProtocols: ProtocolDisplayable[]
+}) {
+  const [selectedProtocols, setSelectedProtocols] = useState<string[]>(
+    allProtocols.map((protocol) => protocol.name),
+  )
+
+  const protocolsWithDetails = allProtocols.map(({ name, iconUrl }) => ({
+    name,
+    iconUrl,
+    isSelected: selectedProtocols.includes(name),
+  }))
+
+  const toggleSelected = (protocolName: string) => {
+    setSelectedProtocols((prev) => {
+      if (prev.includes(protocolName)) {
+        return prev.filter((name) => name !== protocolName)
+      }
+      return [...prev, protocolName]
+    })
+  }
+
+  const selectedProtocolsWithDetails = protocolsWithDetails.filter(
+    (protocol) => protocol.isSelected,
+  )
+
+  const trigger = (
+    <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
+      <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
+      <span className="font-bold text-lg leading-none">Protocols</span>
+      <div className="flex items-center gap-1">
+        <div className="-space-x-2 md:-space-x-1 flex items-center">
+          {selectedProtocolsWithDetails.slice(0, 5).map((protocol, i) => (
+            <img
+              key={protocol.name}
+              src={protocol.iconUrl}
+              alt={protocol.name}
+              className="size-5 rounded-full bg-white shadow"
+              style={{ zIndex: selectedProtocols.length - i }}
+            />
+          ))}
+        </div>
+        {selectedProtocolsWithDetails.length > 5 && (
+          <span className="font-semibold text-xs leading-none">
+            +{selectedProtocolsWithDetails.length - 5} more
+          </span>
+        )}
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-3">
+      {/* Mobile */}
+      <Drawer>
+        <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
+        <DrawerContent className="max-h-[90dvh] pb-4" contentClassName="min-h-0 flex flex-col">
+          <DrawerHeader className="mb-4 gap-2">
+            <DrawerTitle className="mb-0 font-semibold text-lg text-primary leading-none">
+              Protocol selector
+            </DrawerTitle>
+            <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
+              Select protocols
+            </DrawerDescription>
+          </DrawerHeader>
+          <ScrollWithGradient className="min-h-0">
+            {protocolsWithDetails.map((protocol) => (
+              <Checkbox
+                key={protocol.name}
+                name={protocol.name}
+                className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
+                checked={protocol.isSelected}
+                onCheckedChange={() => toggleSelected(protocol.name)}
+              >
+                <div className="flex items-center gap-2">
+                  <img
+                    src={protocol.iconUrl}
+                    alt={protocol.name}
+                    className="size-4"
+                  />
+                  <span className="font-semibold text-xs leading-none">
+                    {protocol.name}
+                  </span>
+                </div>
+              </Checkbox>
+            ))}
+          </ScrollWithGradient>
+        </DrawerContent>
+      </Drawer>
+      {/* Desktop */}
+      <Dialog>
+        <DialogTrigger className="cursor-pointer max-md:hidden" asChild>
+          {trigger}
+        </DialogTrigger>
+        <DialogContent className="flex max-h-[60dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Protocols</DialogTitle>
+            <DialogDescription className="sr-only">
+              Select protocols
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollWithGradient>
+            {protocolsWithDetails.map((protocol) => (
+              <Checkbox
+                key={protocol.name}
+                name={protocol.name}
+                className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
+                checked={protocol.isSelected}
+                onCheckedChange={() => toggleSelected(protocol.name)}
+              >
+                <div className="flex items-center gap-2">
+                  <img
+                    src={protocol.iconUrl}
+                    alt={protocol.name}
+                    className="size-4"
+                  />
+                  <span className="font-semibold text-xs leading-none">
+                    {protocol.name}
+                  </span>
+                </div>
+              </Checkbox>
+            ))}
+          </ScrollWithGradient>
+        </DialogContent>
+      </Dialog>
+    </div>
+  )
+}
