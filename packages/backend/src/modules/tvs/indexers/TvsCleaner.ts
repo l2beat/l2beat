@@ -15,15 +15,6 @@ export interface TvsCleanerDeps
   syncOptimizer: SyncOptimizer
 }
 
-interface ArchiveDateRange {
-  from: UnixTime | undefined
-  to: UnixTime
-}
-interface ArchivableRepository {
-  deleteHourlyUntil(dateRange: ArchiveDateRange): Promise<number>
-  deleteSixHourlyUntil(dateRange: ArchiveDateRange): Promise<number>
-}
-
 export class TvsCleaner extends ManagedChildIndexer {
   constructor(
     private readonly $: TvsCleanerDeps,
@@ -49,46 +40,42 @@ export class TvsCleaner extends ManagedChildIndexer {
       from: undefined,
       to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(currentTarget),
     }
-    const repositories = {
-      tokenValue: this.$.db.tvsTokenValue,
-      blockTimestamp: this.$.db.tvsBlockTimestamp,
-      amount: this.$.db.tvsAmount,
-      price: this.$.db.tvsPrice,
-    } satisfies Record<string, ArchivableRepository>
 
-    const [
-      tokenValueHourlyDeletedRecords,
-      blockTimestampHourlyDeletedRecords,
-      amountHourlyDeletedRecords,
-      priceHourlyDeletedRecords,
-    ] = await Promise.all([
-      repositories.tokenValue.deleteHourlyUntil(hourlyRange),
-      repositories.blockTimestamp.deleteHourlyUntil(hourlyRange),
-      repositories.amount.deleteHourlyUntil(hourlyRange),
-      repositories.price.deleteHourlyUntil(hourlyRange),
-    ])
-    const [
-      tokenValueSixHourlyDeletedRecords,
-      blockTimestampSixHourlyDeletedRecords,
-      amountSixHourlyDeletedRecords,
-      priceSixHourlyDeletedRecords,
-    ] = await Promise.all([
-      repositories.tokenValue.deleteSixHourlyUntil(sixHourlyRange),
-      repositories.blockTimestamp.deleteSixHourlyUntil(sixHourlyRange),
-      repositories.amount.deleteSixHourlyUntil(sixHourlyRange),
-      repositories.price.deleteSixHourlyUntil(sixHourlyRange),
-    ])
+    await this.$.db.transaction(async () => {
+      const [
+        tokenValueHourlyDeletedRecords,
+        blockTimestampHourlyDeletedRecords,
+        amountHourlyDeletedRecords,
+        priceHourlyDeletedRecords,
+      ] = await Promise.all([
+        this.$.db.tvsTokenValue.deleteHourlyUntil(hourlyRange),
+        this.$.db.tvsBlockTimestamp.deleteHourlyUntil(hourlyRange),
+        this.$.db.tvsAmount.deleteHourlyUntil(hourlyRange),
+        this.$.db.tvsPrice.deleteHourlyUntil(hourlyRange),
+      ])
+      const [
+        tokenValueSixHourlyDeletedRecords,
+        blockTimestampSixHourlyDeletedRecords,
+        amountSixHourlyDeletedRecords,
+        priceSixHourlyDeletedRecords,
+      ] = await Promise.all([
+        this.$.db.tvsTokenValue.deleteSixHourlyUntil(sixHourlyRange),
+        this.$.db.tvsBlockTimestamp.deleteSixHourlyUntil(sixHourlyRange),
+        this.$.db.tvsAmount.deleteSixHourlyUntil(sixHourlyRange),
+        this.$.db.tvsPrice.deleteSixHourlyUntil(sixHourlyRange),
+      ])
 
-    this.logger.info('Cleaned TVS records', {
-      until: currentTarget,
-      tokenValueHourlyDeletedRecords,
-      blockTimestampHourlyDeletedRecords,
-      amountHourlyDeletedRecords,
-      priceHourlyDeletedRecords,
-      tokenValueSixHourlyDeletedRecords,
-      blockTimestampSixHourlyDeletedRecords,
-      amountSixHourlyDeletedRecords,
-      priceSixHourlyDeletedRecords,
+      this.logger.info('Cleaned TVS records', {
+        until: currentTarget,
+        tokenValueHourlyDeletedRecords,
+        blockTimestampHourlyDeletedRecords,
+        amountHourlyDeletedRecords,
+        priceHourlyDeletedRecords,
+        tokenValueSixHourlyDeletedRecords,
+        blockTimestampSixHourlyDeletedRecords,
+        amountSixHourlyDeletedRecords,
+        priceSixHourlyDeletedRecords,
+      })
     })
 
     return to
