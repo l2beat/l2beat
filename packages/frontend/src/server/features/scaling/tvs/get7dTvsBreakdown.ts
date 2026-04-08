@@ -132,6 +132,7 @@ export async function get7dTvsBreakdown(
       other: latestOther,
       associated: latestAssociated,
     } = lastValue
+    const canonical = latestCanonical + latestCustomCanonical
 
     const additionalTrustAssumptionsPercentage =
       getAdditionalTrustAssumptionsPercentage({
@@ -146,7 +147,7 @@ export async function get7dTvsBreakdown(
         breakdown: {
           total: latestValue,
           native: latestNative,
-          canonical: latestCanonical,
+          canonical: canonical,
           external: latestExternal,
           ether: latestEther,
           stablecoin: latestStablecoin,
@@ -205,8 +206,6 @@ export async function get7dTvsBreakdown(
       other: oldestOther,
       associated: oldestAssociated,
     } = sevenDaysAgoValue
-
-    const canonical = latestCanonical + latestCustomCanonical
     const sevenDaysAgoCanonical = oldestCanonical + oldestCustomCanonical
 
     projects[projectId] = {

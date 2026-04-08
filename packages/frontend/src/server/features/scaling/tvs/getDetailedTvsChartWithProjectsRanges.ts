@@ -8,6 +8,7 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { ChartRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
+import { type MergedCanonical, mergeCanonical } from './utils/mergeCanonical'
 import { rangeToResolution } from './utils/range'
 
 export const TvsChartWithProjectsRangesDataParams = v.object({
@@ -92,11 +93,12 @@ export async function getDetailedTvsChartWithProjectsRanges({
     ),
   ])
 
-  return getChartData(values, ethPrices, projectIds, range)
+  const summedValues = values.map(mergeCanonical)
+  return getChartData(summedValues, ethPrices, projectIds, range)
 }
 
 function getChartData(
-  values: SummedByTimestampTokenValuePerProjectRecord[],
+  values: MergedCanonical<SummedByTimestampTokenValuePerProjectRecord>[],
   ethPrices: Record<number, number>,
   projectIds: ProjectId[],
   range: ChartRange,
