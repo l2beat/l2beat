@@ -88,10 +88,6 @@ export async function get7dTvsBreakdown(
   const sevenDaysAgoFrom = from - 7 * UnixTime.DAY
   const sevenDaysAgoTo = to - 7 * UnixTime.DAY
 
-  console.log([
-    [from, to],
-    [sevenDaysAgoFrom, sevenDaysAgoTo],
-  ])
   const [values, syncMetadataRecords] = await Promise.all([
     db.tvsTokenValue.getSummedByProjectForRanges(
       tvsProjects.map((p) => p.projectId),
