@@ -1,6 +1,6 @@
 {
   "name": "syndicate",
-  "timestamp": 1775083700,
+  "timestamp": 1775599220,
   "configHash": "0x1d76554d7c5671cab922c84bb7b4dcd4b817d975bdb51eef7206bd4205506516",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -136,7 +136,6 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
-          "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
           "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
@@ -145,8 +144,8 @@
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 38,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 39,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -517,7 +516,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6414,
+        "batchCount": 6556,
         "batchPosterManager": "eth:0x9A64b61bdfb2375d43A90e7BbF09EFe18bd6CADC",
         "batchPosters": ["eth:0x54dD1659c232DEC31386C52507982a4983D9BCb8"],
         "bridge": "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277",
@@ -689,7 +688,7 @@
         "$immutable": true,
         "AIRDROP_MANAGER_ROLE": "0x84fe74c71a28b69aa960486ca0e8c1418c86e9ea2cd6b5849b95e2c8f407a674",
         "BRIDGE_MANAGER_ROLE": "0xcce296b040332a080e6df13515a3ec2869e21cd20f7344af0987ddb938d8bd21",
-        "clock": 24787835,
+        "clock": 24830658,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -867,8 +866,8 @@
         "nativeTokenDecimals": 18,
         "rollup": "eth:0x451bD7813909B899DA6EbEC55E8fF823c057e14A",
         "sequencerInbox": "eth:0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
-        "sequencerMessageCount": 6414,
-        "sequencerReportedSubMessageCount": 1656600
+        "sequencerMessageCount": 6556,
+        "sequencerReportedSubMessageCount": 1705887
       },
       "implementationNames": {
         "eth:0x3C8cF0ae6E89AC0796f29B3a58e7dEa1cD072277": "",
@@ -925,12 +924,12 @@
         "confirmPeriodBlocks": 50400,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5502,
+        "firstUnresolvedNode": 5643,
         "inbox": "eth:0x5EA55Fd41D42Eb307D281bdE78E4e7572A35ea13",
         "isPostBoLD": false,
         "lastStakeBlock": 23028349,
-        "latestConfirmed": 5501,
-        "latestNodeCreated": 5667,
+        "latestConfirmed": 5642,
+        "latestNodeCreated": 5808,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf555Bc86D1C953414F676479Bf7C979b1A737E8C",
@@ -1030,11 +1029,6 @@
       "implementationNames": {
         "eth:0x481D290473e4f6929AA45CFb7Ef7c7847aBeD007": ""
       }
-    },
-    {
-      "address": "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "EigenLayerPauserMultisig",
@@ -1757,7 +1751,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 44,
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3549,6 +3543,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24787835 },
-  "permissionsConfigHash": "0xffc8b9f4d1fe16372fdc843b8370de1ee9529562d5fb0fcf43eaf04503c440df"
+  "usedBlockNumbers": { "ethereum": 24830658 },
+  "permissionsConfigHash": "0xa33505d4d6505e0657515cc992277f55aa2b896e2ce476779cfd6f6998d32ab0"
 }

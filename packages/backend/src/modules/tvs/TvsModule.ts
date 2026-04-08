@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { Database, TokenMetadataRecord } from '@l2beat/database'
-import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -57,14 +57,6 @@ export function initTvsModule({
             (!t.untilTimestamp || t.untilTimestamp >= targetTimestamp),
         )
         recordIds.push(...tokensWithRanges.map((t) => t.id))
-
-        const { since, until } = getProjectSyncRange(tokensWithRanges)
-
-        if (since > targetTimestamp || (until && until < targetTimestamp)) {
-          continue
-        }
-
-        recordIds.push(project.projectId)
       }
 
       await db.syncMetadata.upsertMany(
@@ -242,7 +234,6 @@ export function initTvsModule({
   }
 }
 
-type TokenWithRanges = ReturnType<typeof getTokensWithRanges>[number]
 function getTokensWithRanges(tokens: TvsToken[]) {
   return tokens.map((t) => {
     const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
@@ -253,29 +244,6 @@ function getTokensWithRanges(tokens: TvsToken[]) {
       untilTimestamp,
     }
   })
-}
-
-function getProjectSyncRange(tokens: TokenWithRanges[]) {
-  const since = tokens.reduce(
-    (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
-    Number.POSITIVE_INFINITY,
-  )
-
-  const hasUndefinedTimestamp = tokens.some(
-    (token) => token.untilTimestamp === undefined,
-  )
-
-  const until = hasUndefinedTimestamp
-    ? null
-    : tokens
-        .map((t) => t.untilTimestamp)
-        .filter(notUndefined)
-        .reduce((prev, curr) => (prev < curr ? curr : prev), UnixTime(0))
-
-  return {
-    since,
-    until,
-  }
 }
 
 async function updateTokenMetadata(

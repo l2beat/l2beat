@@ -173,12 +173,13 @@ export function ProjectScalingSummary({ project }: Props) {
                     </div>
                   </ConditionalLink>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="flex flex-col gap-2">
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     external={project.header.tvs?.breakdown?.external ?? 0}
                     native={project.header.tvs?.breakdown?.native ?? 0}
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
+                    syncWarning={undefined}
                     tvsWarnings={[]}
                   />
                   {project.header.tvs?.additionalTrustAssumptionsPercentage !==
@@ -190,7 +191,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     />
                   )}
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                    <p className="text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
                     </p>
                   )}

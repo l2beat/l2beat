@@ -328,8 +328,8 @@ model InteropEvent {
   args        Json
   ctx         Json   @default("{}")
 
-  matched          Boolean
-  unsupported      Boolean
+  matched                 Boolean
+  unsupported             Boolean
   derivedFulfilled        Boolean?
   derivedCheckedInHistory Boolean?
   direction               String?

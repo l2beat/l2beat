@@ -4,6 +4,7 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HorizontalSeparator } from '../core/HorizontalSeparator'
+import { NoDataBanner } from '../NoDataBanner'
 import { Square } from '../Square'
 import { ValueWithPercentageChange } from '../table/cells/ValueWithPercentageChange'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
@@ -20,6 +21,7 @@ interface ValueSecuredBreakdownTooltipContentProps
   extends ValueSecuredBreakdownProps {
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]
+  syncWarning: string | undefined
   change?: number
 }
 
@@ -50,6 +52,7 @@ export function ValueSecuredBreakdownTooltipContent({
   native,
   change,
   tvsWarnings,
+  syncWarning,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
 
@@ -83,6 +86,7 @@ export function ValueSecuredBreakdownTooltipContent({
             {formatCurrency(total, 'usd')}
           </ValueWithPercentageChange>
         </div>
+        {syncWarning && <NoDataBanner content={syncWarning} />}
         <HorizontalSeparator className="mt-1.5 mb-3" />
         <div className="space-y-1">
           {values.map(

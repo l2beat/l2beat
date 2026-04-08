@@ -24,10 +24,9 @@ import {
   getScalingSummaryEntry,
   type ScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
-import {
-  get7dTvsBreakdown,
-  type ProjectSevenDayTvsBreakdown,
-} from '../scaling/tvs/get7dTvsBreakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import { getTvsTableData } from '../scaling/tvs/getTvsTableData'
+import { getTvsSyncWarning } from '../scaling/tvs/utils/syncStatus'
 import {
   getScalingUpcomingEntry,
   type ScalingUpcomingEntry,
@@ -117,6 +116,10 @@ export interface EcosystemProjectEntry extends ScalingSummaryEntry {
     withRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
     withoutRwaRestricted: ProjectSevenDayTvsBreakdown | undefined
   }
+  tvsSyncWarning: {
+    withoutRwaRestricted: string | undefined
+    withRwaRestricted: string | undefined
+  }
 }
 
 export async function getEcosystemEntry(
@@ -185,8 +188,8 @@ export async function getEcosystemEntry(
     token,
   ] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    get7dTvsBreakdown({ type: 'layer2', excludeRwaRestrictedTokens: false }),
+    getTvsTableData({ type: 'layer2' }),
+    getTvsTableData({ type: 'layer2', excludeRwaRestrictedTokens: false }),
     getActivityLatestUops(allScalingProjects),
     getApprovedOngoingAnomalies(),
     getBlobsData(liveProjects),
@@ -202,8 +205,8 @@ export async function getEcosystemEntry(
 
   const hasRwaRestrictedTvs = liveProjects.some(
     (project) =>
-      (tvsWithRwasRestricted.projects[project.id]?.breakdown.rwaRestricted ??
-        0) > 0,
+      (tvsWithRwasRestricted.projects[project.id.toString()]?.breakdown
+        .rwaRestricted ?? 0) > 0,
   )
 
   const allScalingProjectsUops = allScalingProjects.reduce(
@@ -267,6 +270,9 @@ export async function getEcosystemEntry(
         zkCatalogProjects,
       )
 
+      const tvsWithoutRwaRestricted = tvs.projects[project.id.toString()]
+      const tvsWithRwaRestricted =
+        tvsWithRwasRestricted.projects[project.id.toString()]
       const result: EcosystemProjectEntry = {
         ...entry,
         gasTokens: project.chainConfig?.gasTokens,
@@ -281,9 +287,14 @@ export async function getEcosystemEntry(
           ) ?? []),
         ]),
         tvsData: {
-          withoutRwaRestricted: tvs.projects[project.id.toString()],
-          withRwaRestricted:
-            tvsWithRwasRestricted.projects[project.id.toString()],
+          withoutRwaRestricted: tvsWithoutRwaRestricted,
+          withRwaRestricted: tvsWithRwaRestricted,
+        },
+        tvsSyncWarning: {
+          withoutRwaRestricted: getTvsSyncWarning(
+            tvsWithoutRwaRestricted?.syncState,
+          ),
+          withRwaRestricted: getTvsSyncWarning(tvsWithRwaRestricted?.syncState),
         },
       }
       return result

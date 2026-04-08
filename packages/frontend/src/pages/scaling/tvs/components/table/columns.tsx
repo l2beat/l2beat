@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import type { CommonProjectColumnsOptions } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
@@ -90,6 +91,7 @@ export const getScalingTvsColumns = (
                 }
                 change={data.change.total}
                 associatedTokens={ctx.row.original.tvs.associatedTokens}
+                syncWarning={ctx.row.original.tvs.syncWarning}
               />
             )
           },
@@ -328,10 +330,12 @@ function BreakdownCell({
           : undefined
       }
     >
-      <ValueSecuredCell
-        value={data.breakdown[dataKey]}
-        change={data.change[dataKey]}
-      />
+      <SyncStatusWrapper isSynced={!row.tvs.syncWarning}>
+        <ValueSecuredCell
+          value={data.breakdown[dataKey]}
+          change={data.change[dataKey]}
+        />
+      </SyncStatusWrapper>
     </TableLink>
   )
 }
