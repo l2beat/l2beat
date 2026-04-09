@@ -54,22 +54,18 @@ export function flattenStartingFrom(
 }
 
 function entryIsPurelyDynamic(
-  relationDictionary: Record<string, string[]>,
+  relationDictionary: Record<string, boolean>,
   contract: DeclarationFilePair,
 ): boolean {
   const uniqueContractId = getUniqueContractId(contract)
-  return (
-    relationDictionary[uniqueContractId]?.every(
-      (entry) => entry === 'dynamic',
-    ) ?? false
-  )
+  return relationDictionary[uniqueContractId] ?? false
 }
 
 function generateUsedFromDictionary(
   parsedFileManager: ParsedFilesManager,
   rootContract: DeclarationFilePair,
-): Record<string, EntryType[]> {
-  const result: Record<string, EntryType[]> = {}
+): Record<string, boolean> {
+  const result: Record<string, boolean> = {}
   const stack: ContractNameFilePair[] = getStackEntries(rootContract).reverse()
 
   while (stack.length > 0) {
@@ -83,11 +79,16 @@ function generateUsedFromDictionary(
     assert(foundContract, `Failed to find contract ${entry.contractName}`)
 
     const uniqueContractId = getUniqueContractId(foundContract)
-    if (result[uniqueContractId]?.includes(entry.type)) {
+    const alreadyVisited = uniqueContractId in result
+
+    result[uniqueContractId] ??= true
+    if (entry.type !== 'dynamic') {
+      result[uniqueContractId] = false
+    }
+
+    if (alreadyVisited) {
       continue
     }
-    result[uniqueContractId] ??= []
-    result[uniqueContractId]?.push(entry.type)
 
     const entries = getStackEntries(foundContract)
     if (entry.type === 'dynamic') {

@@ -174,6 +174,42 @@ contract R1 is C2, C3, C4 {
     )
   })
 
+  it('contract used both dynamically and via inheritance is not purely dynamic', () => {
+    // R1 visits Base first because it is the first inherited contract.
+    // Base then pushes its dynamic reference to DC1 on top of the stack,
+    // so Shared is first reached through the dynamic path DC1 -> Shared.
+    // R1 also inherits Static, which reaches Shared via inheritance later.
+    // With first-write-wins logic, Shared stays marked as purely dynamic
+    // even though it is also used through inheritance.
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract Shared { function s() public {} }
+
+contract DC1 is Shared { function df() public {} }
+
+contract Base {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}
+
+contract Static is Shared { }
+
+contract R1 is Base, Static { }
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file], [], {
+      includeAll: true,
+    })
+
+    // Shared is used via inheritance (through Static) AND dynamically (through DC1),
+    // so it must NOT be turned into an interface
+    expect(flattened).toInclude('contract Shared')
+    expect(flattened).not.toInclude('interface Shared')
+  })
+
   it('inheritance namespacing', () => {
     const rootFile: FileContent = {
       path: 'Root.sol',
