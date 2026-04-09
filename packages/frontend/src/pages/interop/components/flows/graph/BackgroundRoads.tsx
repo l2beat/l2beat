@@ -1,9 +1,9 @@
-import type { ChainNodeLayout } from './utils/computeGraphLayout'
+import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getConnectionPath } from './utils/getConnectionPath'
 
 interface Props {
   chainIds: string[]
-  layout: Map<string, ChainNodeLayout>
+  layout: FlowsGraphLayout
   centerX: number
   centerY: number
   hoveredChainId: string | null

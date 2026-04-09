@@ -3,6 +3,7 @@ import type { InteropFlowsData } from '~/server/features/scaling/interop/getInte
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BackgroundRoads } from './BackgroundRoads'
+import { ChainBubblesLayer } from './ChainBubblesLayer'
 import { ParticleLayer } from './ParticleLayer'
 import { computeGraphLayout } from './utils/computeGraphLayout'
 
@@ -45,6 +46,11 @@ export function FlowsGraph({
         centerY={height / 2}
         maxVolume={maxVolume}
         hoveredChainId={null}
+      />
+      <ChainBubblesLayer
+        interopChains={interopChains}
+        layout={layout}
+        chainVolumes={data.chainVolumes}
       />
     </svg>
   )

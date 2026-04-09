@@ -20,7 +20,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
 
   return (
     <div
-      className="h-[400px] w-full md:h-[580px] lg:h-[700px]"
+      className="h-[500px] w-full md:h-[580px] lg:h-[600px]"
       ref={containerRef}
     >
       {isLoading || !data || !width || !height ? (

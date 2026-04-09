@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-import type { ChainNodeLayout } from './utils/computeGraphLayout'
+import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
 import { getConnectionPath } from './utils/getConnectionPath'
 
 interface Props {
   flows: Flow[]
-  layout: Map<string, ChainNodeLayout>
+  layout: FlowsGraphLayout
   interopChains: InteropChainWithIcon[]
   centerX: number
   centerY: number

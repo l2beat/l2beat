@@ -12,7 +12,7 @@ export interface Flow {
   volume: number
 }
 
-interface ChainVolume {
+export interface ChainVolume {
   chainId: string
   totalVolume: number
   netFlow: number

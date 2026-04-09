@@ -1,30 +1,39 @@
 export interface ChainNodeLayout {
   x: number
   y: number
+  radius: number
 }
+export type FlowsGraphLayout = Map<string, ChainNodeLayout>
 
-// Extra space reserved around the circle for chain name + net flow labels
-const LABEL_PADDING = 0
+const MIN_BUBBLE_RADIUS = 8
+const MAX_BUBBLE_RADIUS = 50
 
-// Places chains evenly around a circle
+/**
+ * Places chains evenly around a circle and sizes each bubble
+ * using sqrt scaling of total volume (inflows + outflows).
+ * Sqrt makes the bubble area proportional to volume. This means:
+ *   - 10x volume → ~3.2x radius → 10x area
+ *   - Low-volume chains still get a small but visible bubble (MIN_RADIUS = 8px)
+ */
 export function computeGraphLayout(
   chainIds: string[],
   chainVolumes: { chainId: string; totalVolume: number }[],
   width: number,
   height: number,
-): Map<string, ChainNodeLayout> {
-  const layout = new Map<string, ChainNodeLayout>()
+): FlowsGraphLayout {
+  const layout: FlowsGraphLayout = new Map()
   if (chainIds.length === 0 || width === 0 || height === 0) return layout
 
   const volumeMap = new Map(
     chainVolumes.map((cv) => [cv.chainId, cv.totalVolume]),
   )
+  const maxVolume = Math.max(...chainVolumes.map((cv) => cv.totalVolume))
 
   const spreadIds = spreadByVolume(chainIds, volumeMap)
 
   const centerX = width / 2
   const centerY = height / 2
-  const circleRadius = Math.min(width, height) * 0.42 - LABEL_PADDING
+  const circleRadius = Math.min(width, height) * 0.4
 
   for (let i = 0; i < spreadIds.length; i++) {
     const chainId = spreadIds[i]
@@ -32,9 +41,16 @@ export function computeGraphLayout(
     // Start from the top (-π/2) and distribute evenly
     const angle = (2 * Math.PI * i) / spreadIds.length - Math.PI / 2
 
+    // sqrt scaling: bubble area is proportional to volume
+    const ratio = (volumeMap.get(chainId) ?? 0) / maxVolume
+    const radius =
+      MIN_BUBBLE_RADIUS +
+      (MAX_BUBBLE_RADIUS - MIN_BUBBLE_RADIUS) * Math.sqrt(ratio)
+
     layout.set(chainId, {
       x: centerX + circleRadius * Math.cos(angle),
       y: centerY + circleRadius * Math.sin(angle),
+      radius,
     })
   }
 
