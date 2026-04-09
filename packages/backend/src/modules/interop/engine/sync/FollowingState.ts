@@ -32,36 +32,36 @@ export class FollowingState implements BlockProcessorState {
   async processNewestBlock(block: Block, logs: Log[]): Promise<SyncerState> {
     this.status = 'processing'
 
-    const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-
-    if (wipeRequired) {
-      return new CatchingUpState(this.syncer, this.logger)
-    }
-
-    const resyncRequested = resyncFrom !== undefined
-    const lastSyncedRecord = resyncRequested
-      ? undefined
-      : await this.syncer.getLastSyncedRange()
-
-    const decision = decideFollowingAction({
-      resyncRequested,
-      lastSyncedRecord,
-      blockNumber: BigInt(block.number),
-      blockTimestamp: block.timestamp,
-    })
-
-    if (decision.type === 'catchUp') {
-      return new CatchingUpState(this.syncer, this.logger)
-    }
-
-    if (decision.type === 'ignore') {
-      this.status = 'idle'
-      return this
-    }
-
     const start = performance.now()
     let cpuMs = 0
     try {
+      const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
+
+      if (wipeRequired) {
+        return new CatchingUpState(this.syncer, this.logger)
+      }
+
+      const resyncRequested = resyncFrom !== undefined
+      const lastSyncedRecord = resyncRequested
+        ? undefined
+        : await this.syncer.getLastSyncedRange()
+
+      const decision = decideFollowingAction({
+        resyncRequested,
+        lastSyncedRecord,
+        blockNumber: BigInt(block.number),
+        blockTimestamp: block.timestamp,
+      })
+
+      if (decision.type === 'catchUp') {
+        return new CatchingUpState(this.syncer, this.logger)
+      }
+
+      if (decision.type === 'ignore') {
+        this.status = 'idle'
+        return this
+      }
+
       const updatedSyncedRange =
         decision.type === 'bootstrap'
           ? await this.bootstrapSyncedRange(block)
