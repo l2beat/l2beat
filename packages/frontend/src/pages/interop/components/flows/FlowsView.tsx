@@ -24,7 +24,7 @@ export function FlowsView({ interopChains, protocols }: FlowsViewProps) {
             <FlowsChainsSelector allChains={interopChains} />
             <FlowsProtocolsSelector allProtocols={protocols} />
           </div>
-          <FlowsGraphPanel />
+          <FlowsGraphPanel interopChains={interopChains} />
         </div>
       </PrimaryCard>
     </InteropFlowsProvider>

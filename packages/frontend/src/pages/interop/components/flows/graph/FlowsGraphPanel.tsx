@@ -2,10 +2,15 @@ import { useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { api } from '~/trpc/React'
+import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 
-export function FlowsGraphPanel() {
+interface FlowsGraphPanelProps {
+  interopChains: InteropChainWithIcon[]
+}
+
+export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   const { selectedChains } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
@@ -21,7 +26,12 @@ export function FlowsGraphPanel() {
       {isLoading || !data || !width || !height ? (
         <Skeleton className="h-full w-full rounded-lg" />
       ) : (
-        <FlowsGraph data={data} width={width} height={height} />
+        <FlowsGraph
+          interopChains={interopChains}
+          data={data}
+          width={width}
+          height={height}
+        />
       )}
     </div>
   )
