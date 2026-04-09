@@ -4,6 +4,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import { createTestApiServer } from '../../../../test/testApiServer'
+import { renderMainPage } from './MainPage'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { createInteropRouter } from './InteropRouter'
 
@@ -291,6 +292,83 @@ describe(createInteropRouter.name, () => {
         wipeRequired: true,
       })
       expect(response.body).toEqual({ updatedChains: ['chain-a', 'chain-b'] })
+    })
+  })
+
+  describe('GET /interop/messages/:type', () => {
+    it('forwards plugin and chain filters to the repository', async () => {
+      const getByType = mockFn().resolvesTo([])
+      const interopMessage = mockObject<Database['interopMessage']>({
+        getByType,
+      })
+      const db = mockObject<Database>({
+        interopMessage,
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        getPluginSyncStatuses: mockFn().resolvesTo([]),
+      })
+
+      const router = createInteropRouter(
+        db,
+        makeConfig(),
+        [],
+        syncersManager,
+        Logger.SILENT,
+      )
+      const api = createTestApiServer([router])
+
+      await api
+        .get(
+          '/interop/messages/opstack.L1ToL2Message?plugin=base&type=ignored&srcChain=ethereum&dstChain=base',
+        )
+        .expect(200)
+
+      expect(getByType).toHaveBeenCalledTimes(1)
+      expect(getByType).toHaveBeenCalledWith('opstack.L1ToL2Message', {
+        plugin: 'base',
+        srcChain: 'ethereum',
+        dstChain: 'base',
+      })
+    })
+  })
+
+  describe(renderMainPage.name, () => {
+    it('scopes message detail links by plugin', () => {
+      const html = renderMainPage({
+        events: [],
+        messages: [
+          {
+            plugin: 'base',
+            type: 'opstack.L1ToL2Message',
+            count: 108,
+            avgDuration: 120,
+            knownAppCount: 50,
+            chains: [
+              {
+                plugin: 'base',
+                type: 'opstack.L1ToL2Message',
+                srcChain: 'ethereum',
+                dstChain: 'base',
+                count: 12,
+                avgDuration: 90,
+              },
+            ],
+          },
+        ],
+        transfers: [],
+        status: [],
+        missingTokens: [],
+        uniqueApps: [],
+        pluginSyncStatuses: [],
+        getExplorerUrl: () => undefined,
+      })
+
+      expect(html).toInclude(
+        '/interop/messages/opstack.L1ToL2Message?plugin=base',
+      )
+      expect(html).toInclude(
+        '/interop/messages/opstack.L1ToL2Message?plugin=base&amp;srcChain=ethereum&amp;dstChain=base',
+      )
     })
   })
 })

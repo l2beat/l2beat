@@ -80,6 +80,26 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
 
 const NETWORKS = generateNetworkPairs(INTEROP_CHAINS)
 
+function buildMessagesUrl(options: {
+  plugin: string
+  type: string
+  srcChain?: string
+  dstChain?: string
+}) {
+  const params = new URLSearchParams({
+    plugin: options.plugin,
+  })
+
+  if (options.srcChain) {
+    params.set('srcChain', options.srcChain)
+  }
+  if (options.dstChain) {
+    params.set('dstChain', options.dstChain)
+  }
+
+  return `/interop/messages/${options.type}?${params.toString()}`
+}
+
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
     <table id={props.id} className="display">
@@ -119,7 +139,9 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
               <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
-                <a href={`/interop/messages/${t.type}`}>{t.count}</a>
+                <a href={buildMessagesUrl({ plugin: t.plugin, type: t.type })}>
+                  {t.count}
+                </a>
               </td>
               <td data-order={t.avgDuration} data-sort={t.avgDuration}>
                 {formatSeconds(t.avgDuration)}
@@ -149,7 +171,12 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {srcDstCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
+                          href={buildMessagesUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[0].id,
+                            dstChain: n[1].id,
+                          })}
                         >
                           {srcDstCount}
                         </a>
@@ -164,7 +191,12 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {dstSrcCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
+                          href={buildMessagesUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[1].id,
+                            dstChain: n[0].id,
+                          })}
                         >
                           {dstSrcCount}
                         </a>

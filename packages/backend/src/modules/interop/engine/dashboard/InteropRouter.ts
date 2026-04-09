@@ -384,12 +384,14 @@ export function createInteropRouter(
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
       .object({
+        plugin: v.string().optional(),
         srcChain: v.string().optional(),
         dstChain: v.string().optional(),
       })
       .validate(ctx.query)
     const status = getProcessorsStatus(processors)
     const messages = await db.interopMessage.getByType(params.type, {
+      plugin: query.plugin,
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })
