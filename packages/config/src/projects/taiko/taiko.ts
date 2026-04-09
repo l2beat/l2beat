@@ -361,9 +361,12 @@ export const taiko: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
       forcedInclusionPermissionlessDelay,
     ),
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-      mainnetInboxConfig.permissionlessProvingDelay,
-    ),
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+        mainnetInboxConfig.permissionlessProvingDelay,
+      ),
+      description: `Anyone can propose after ${formatSeconds(forcedInclusionPermissionlessDelay)} if forced inclusions are ignored, and proving becomes permissionless after ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} if a proposal remains unproven.`,
+    },
   },
   stage: getStage(
     {
