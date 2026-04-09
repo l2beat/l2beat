@@ -16,9 +16,7 @@ export function SortableHeader<TData extends RowData, TValue>({
       variant="ghost"
       size="sm"
       className={cn('-ml-3', !canBeSorted && 'pointer-events-none')}
-      onClick={() =>
-        canBeSorted && header.column.toggleSorting(sortState === 'asc')
-      }
+      onClick={() => canBeSorted && header.column.toggleSorting()}
     >
       {header.isPlaceholder
         ? null
