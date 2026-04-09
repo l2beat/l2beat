@@ -14,8 +14,10 @@ export type BlockProcessingStat = {
   cluster: string
   chain: string
   totalMs: number
+  cpuMs: number
   count: number
   avgMs: number
+  avgCpuMs: number
 }
 
 export type PluginSyncStatus = {
@@ -184,13 +186,11 @@ export class InteropSyncersManager {
     const result: BlockProcessingStat[] = []
     for (const chainMap of this.syncers.values()) {
       for (const syncer of chainMap.values()) {
-        const { totalMs, count, avgMs } = syncer.blockProcessingStats.get()
+        const stats = syncer.blockProcessingStats.get()
         result.push({
           cluster: syncer.cluster.name,
           chain: syncer.chain,
-          totalMs,
-          count,
-          avgMs,
+          ...stats,
         })
       }
     }

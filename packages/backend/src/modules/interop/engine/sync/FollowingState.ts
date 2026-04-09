@@ -59,42 +59,50 @@ export class FollowingState implements BlockProcessorState {
       return this
     }
 
-    const updatedSyncedRange =
-      decision.type === 'bootstrap'
-        ? await this.bootstrapSyncedRange(block)
-        : decision.updatedSyncedRange
+    const start = performance.now()
+    let cpuMs = 0
+    try {
+      const updatedSyncedRange =
+        decision.type === 'bootstrap'
+          ? await this.bootstrapSyncedRange(block)
+          : decision.updatedSyncedRange
 
-    const historical = await this.syncer.capturePendingHistoricalTxs(
-      BigInt(block.number),
-    )
-    const interopEvents = [...historical.events]
-    const fulfilledCreatorEvents = [...historical.fulfilledCreatorEvents]
-    const checkedInHistoryEvents = [...historical.checkedInHistoryEvents]
-    const toCapture = this.syncer.getItemsToCapture(block, logs)
-    for (const txToCapture of toCapture.txsToCapture) {
-      const result = this.syncer.captureTx(txToCapture)
-      if (result) {
-        interopEvents.push(...result.events)
-        fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
+      const historical = await this.syncer.capturePendingHistoricalTxs(
+        BigInt(block.number),
+      )
+      const cpuStart = performance.now()
+      const interopEvents = [...historical.events]
+      const fulfilledCreatorEvents = [...historical.fulfilledCreatorEvents]
+      const checkedInHistoryEvents = [...historical.checkedInHistoryEvents]
+      const toCapture = this.syncer.getItemsToCapture(block, logs)
+      for (const txToCapture of toCapture.txsToCapture) {
+        const result = this.syncer.captureTx(txToCapture)
+        if (result) {
+          interopEvents.push(...result.events)
+          fulfilledCreatorEvents.push(...result.fulfilledCreatorEvents)
+        }
       }
-    }
-    for (const logToCapture of toCapture.logsToCapture) {
-      const produced = this.syncer.captureLog(logToCapture)
-      if (produced) {
-        interopEvents.push(...produced)
+      for (const logToCapture of toCapture.logsToCapture) {
+        const produced = this.syncer.captureLog(logToCapture)
+        if (produced) {
+          interopEvents.push(...produced)
+        }
       }
+      cpuMs = performance.now() - cpuStart
+
+      await this.syncer.saveProducedInteropEvents(
+        interopEvents,
+        updatedSyncedRange,
+        fulfilledCreatorEvents,
+        checkedInHistoryEvents,
+      )
+
+      this.syncer.clearChainSyncError()
+      this.status = 'idle'
+      return this
+    } finally {
+      this.syncer.blockProcessingStats.record(performance.now() - start, cpuMs)
     }
-
-    await this.syncer.saveProducedInteropEvents(
-      interopEvents,
-      updatedSyncedRange,
-      fulfilledCreatorEvents,
-      checkedInHistoryEvents,
-    )
-
-    this.syncer.clearChainSyncError()
-    this.status = 'idle'
-    return this
   }
 
   // If Syncer runs for the first time on existing data,

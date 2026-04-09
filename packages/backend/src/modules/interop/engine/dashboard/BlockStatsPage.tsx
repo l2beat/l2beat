@@ -3,18 +3,24 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import type { BlockProcessingStat } from '../sync/InteropSyncersManager'
 import { DataTablePage } from './DataTablePage'
 
-function StatsTable(props: {
-  rows: { label: string; totalMs: number; count: number; avgMs: number }[]
-  tableId: string
-}) {
+interface StatsRow {
+  label: string
+  totalMs: number
+  cpuMs: number
+  count: number
+  avgMs: number
+  avgCpuMs: number
+}
+
+function StatsTable(props: { rows: StatsRow[]; tableId: string }) {
   return (
     <table id={props.tableId} className="display">
       <thead>
         <tr>
           <th>name</th>
           <th>calls</th>
-          <th>total (ms)</th>
           <th>avg (ms)</th>
+          <th>avg cpu (ms)</th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +28,8 @@ function StatsTable(props: {
           <tr key={row.label}>
             <td>{row.label}</td>
             <td>{row.count}</td>
-            <td>{row.totalMs}</td>
             <td>{row.avgMs}</td>
+            <td>{row.avgCpuMs}</td>
           </tr>
         ))}
       </tbody>
@@ -35,19 +41,25 @@ function aggregate(
   stats: BlockProcessingStat[],
   keyFn: (s: BlockProcessingStat) => string,
 ) {
-  const map = new Map<string, { totalMs: number; count: number }>()
+  const map = new Map<
+    string,
+    { totalMs: number; cpuMs: number; count: number }
+  >()
   for (const s of stats) {
     const key = keyFn(s)
-    const entry = map.get(key) ?? { totalMs: 0, count: 0 }
+    const entry = map.get(key) ?? { totalMs: 0, cpuMs: 0, count: 0 }
     entry.totalMs += s.totalMs
+    entry.cpuMs += s.cpuMs
     entry.count += s.count
     map.set(key, entry)
   }
-  return [...map.entries()].map(([label, { totalMs, count }]) => ({
+  return [...map.entries()].map(([label, { totalMs, cpuMs, count }]) => ({
     label,
     totalMs,
+    cpuMs,
     count,
     avgMs: count > 0 ? Math.round(totalMs / count) : 0,
+    avgCpuMs: count > 0 ? Math.round(cpuMs / count) : 0,
   }))
 }
 
@@ -55,8 +67,10 @@ export function renderBlockStatsPage(stats: BlockProcessingStat[]) {
   const perClusterChain = stats.map((s) => ({
     label: `${s.cluster}:${s.chain}`,
     totalMs: s.totalMs,
+    cpuMs: s.cpuMs,
     count: s.count,
     avgMs: s.avgMs,
+    avgCpuMs: s.avgCpuMs,
   }))
   const perChain = aggregate(stats, (s) => s.chain)
   const perCluster = aggregate(stats, (s) => s.cluster)
@@ -71,19 +85,19 @@ export function renderBlockStatsPage(stats: BlockProcessingStat[]) {
             <StatsTable rows={perClusterChain} tableId="perClusterChain" />
           ),
           tableId: 'perClusterChain',
-          dataTableOptions: { order: [[3, 'desc']] },
+          dataTableOptions: { order: [[2, 'desc']] },
         },
         {
           title: 'Per chain (aggregated)',
           table: <StatsTable rows={perChain} tableId="perChain" />,
           tableId: 'perChain',
-          dataTableOptions: { order: [[3, 'desc']] },
+          dataTableOptions: { order: [[2, 'desc']] },
         },
         {
           title: 'Per cluster (aggregated)',
           table: <StatsTable rows={perCluster} tableId="perCluster" />,
           tableId: 'perCluster',
-          dataTableOptions: { order: [[3, 'desc']] },
+          dataTableOptions: { order: [[2, 'desc']] },
         },
       ]}
     />

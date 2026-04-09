@@ -213,14 +213,9 @@ export class InteropEventSyncer extends TimeLoop {
     await this.exclusiveExecutionMutex.runExclusive(async () => {
       const state = this.state
       if (state.type === 'blockProcessor') {
-        await this.triggerState(state, async (current) => {
-          const start = performance.now()
-          try {
-            return await current.processNewestBlock(block, logs)
-          } finally {
-            this.blockProcessingStats.record(performance.now() - start)
-          }
-        })
+        await this.triggerState(state, (current) =>
+          current.processNewestBlock(block, logs),
+        )
       }
     })
   }
