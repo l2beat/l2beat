@@ -104,6 +104,15 @@ export async function getScalingRiskStateValidationEntries() {
   }
 }
 
+export interface TvsData {
+  associatedTokens: ProjectAssociatedToken[]
+  warnings: WarningWithSentiment[]
+  breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
+  change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
+  additionalTrustAssumptionsPercentage: number | undefined
+  syncWarning: string | undefined
+}
+
 export interface ScalingRiskStateValidationValidityEntry
   extends CommonScalingEntry {
   tvsOrder: number
@@ -111,12 +120,13 @@ export interface ScalingRiskStateValidationValidityEntry
   isa: string | undefined
   trustedSetupsByProofSystem: TrustedSetupsByProofSystem
   executionDelay: number | undefined
+  tvs: TvsData
 }
 
 function getScalingRiskStateValidationValidityEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
-    'contracts'
+    'contracts' | 'tvsInfo'
   >,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
@@ -144,9 +154,10 @@ function getScalingRiskStateValidationValidityEntry(
     { id: project.id, contracts: project.contracts },
   )
 
+  const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonScalingEntry({ project, changes }),
-    tvsOrder: tvs.projects[project.id.toString()]?.breakdown?.total ?? -1,
+    tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
@@ -154,6 +165,7 @@ function getScalingRiskStateValidationValidityEntry(
     isa: isa?.name,
     trustedSetupsByProofSystem,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
+    tvs: getTvsData(project, projectTvs),
   }
 }
 
@@ -164,6 +176,7 @@ export interface ScalingRiskStateValidationOptimisticEntry
   executionDelay: number | undefined
   challengePeriod: number | undefined
   initialBond: string | undefined
+  tvs: TvsData
   zkCatalog:
     | {
         name: string
@@ -178,7 +191,7 @@ export interface ScalingRiskStateValidationOptimisticEntry
 function getScalingRiskStateValidationOptimisticEntry(
   project: Project<
     'scalingInfo' | 'statuses' | 'display' | 'scalingRisks',
-    'contracts'
+    'contracts' | 'tvsInfo'
   >,
   changes: ProjectChanges,
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
@@ -218,9 +231,10 @@ function getScalingRiskStateValidationOptimisticEntry(
     }
   }
 
+  const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonScalingEntry({ project, changes }),
-    tvsOrder: tvs.projects[project.id.toString()]?.breakdown?.total ?? -1,
+    tvsOrder: projectTvs?.breakdown?.total ?? -1,
     proofSystem: {
       ...proofSystem,
       name: proofSystem.name ?? zkCatalogProject?.name,
@@ -228,6 +242,7 @@ function getScalingRiskStateValidationOptimisticEntry(
     executionDelay: stateValidation?.executionDelay,
     challengePeriod: stateValidation?.challengeDelay,
     initialBond: stateValidation?.initialBond,
+    tvs: getTvsData(project, projectTvs),
     zkCatalog,
   }
 }
@@ -235,14 +250,7 @@ function getScalingRiskStateValidationOptimisticEntry(
 export interface ScalingRiskStateValidationNoProofsEntry
   extends CommonScalingEntry {
   tvsOrder: number
-  tvs: {
-    associatedTokens: ProjectAssociatedToken[]
-    warnings: WarningWithSentiment[]
-    breakdown: SevenDayTvsBreakdown['projects'][string]['breakdown'] | undefined
-    change: SevenDayTvsBreakdown['projects'][string]['change'] | undefined
-    additionalTrustAssumptionsPercentage: number | undefined
-    syncWarning: string | undefined
-  }
+  tvs: TvsData
 }
 
 function getScalingRiskStateValidationNoProofsEntry(
@@ -257,14 +265,27 @@ function getScalingRiskStateValidationNoProofsEntry(
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvsOrder: projectTvs?.breakdown?.total ?? -1,
-    tvs: {
-      associatedTokens: project.tvsInfo?.associatedTokens ?? [],
-      warnings: project.tvsInfo?.warnings ?? [],
-      breakdown: projectTvs?.breakdown,
-      change: projectTvs?.change,
-      additionalTrustAssumptionsPercentage:
-        projectTvs?.additionalTrustAssumptionsPercentage,
-      syncWarning: getTvsSyncWarning(projectTvs?.syncState),
-    },
+    tvs: getTvsData(project, projectTvs),
+  }
+}
+
+function getTvsData(
+  project: {
+    id: { toString(): string }
+    tvsInfo?: {
+      associatedTokens?: ProjectAssociatedToken[]
+      warnings?: WarningWithSentiment[]
+    }
+  },
+  projectTvs: SevenDayTvsBreakdown['projects'][string] | undefined,
+): TvsData {
+  return {
+    associatedTokens: project.tvsInfo?.associatedTokens ?? [],
+    warnings: project.tvsInfo?.warnings ?? [],
+    breakdown: projectTvs?.breakdown,
+    change: projectTvs?.change,
+    additionalTrustAssumptionsPercentage:
+      projectTvs?.additionalTrustAssumptionsPercentage,
+    syncWarning: getTvsSyncWarning(projectTvs?.syncState),
   }
 }

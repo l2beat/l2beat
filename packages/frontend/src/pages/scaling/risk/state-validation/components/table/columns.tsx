@@ -1,4 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
+import type { ColumnHelper } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
@@ -7,12 +8,45 @@ import { getScalingCommonProjectColumns } from '~/components/table/common-projec
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
+import type { CommonScalingEntry } from '~/server/features/scaling/getCommonScalingEntry'
 import type {
   ScalingRiskStateValidationNoProofsEntry,
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
+  TvsData,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { OptimisticProofSystemCell } from './OptimisticProofSystemCell'
+
+function getTvsColumn<T extends CommonScalingEntry & { tvs: TvsData }>(
+  columnHelper: ColumnHelper<T>,
+) {
+  return columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
+    id: 'total',
+    header: 'Total value secured',
+    cell: (ctx) => {
+      const value = ctx.row.original.tvs
+      return (
+        <TotalCellWithTvsBreakdown
+          href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+          associatedTokens={value.associatedTokens}
+          tvsWarnings={value.warnings}
+          breakdown={value.breakdown}
+          additionalTrustAssumptionsPercentage={
+            value.additionalTrustAssumptionsPercentage
+          }
+          change={value.change?.total}
+          syncWarning={value.syncWarning}
+        />
+      )
+    },
+    meta: {
+      align: 'right' as const,
+      cellClassName: 'pl-3',
+      tooltip:
+        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+    },
+  })
+}
 
 const validityColumnHelper =
   createColumnHelper<ScalingRiskStateValidationValidityEntry>()
@@ -113,6 +147,7 @@ export const scalingRiskStateValidationValidityColumns = [
         'Trusted setup information for the proof system used by this project',
     },
   }),
+  getTvsColumn(validityColumnHelper),
 ]
 
 const optimisticColumnHelper =
@@ -180,6 +215,7 @@ export const scalingRiskStateValidationOptimisticColumns = [
       />
     ),
   }),
+  getTvsColumn(optimisticColumnHelper),
 ]
 
 const noProofsColumnHelper =
@@ -199,30 +235,5 @@ export const scalingRiskStateValidationNoProofsColumns = [
       </Badge>
     ),
   }),
-  noProofsColumnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
-    id: 'total',
-    header: 'Total value secured',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvs
-      return (
-        <TotalCellWithTvsBreakdown
-          href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-          associatedTokens={value.associatedTokens}
-          tvsWarnings={value.warnings}
-          breakdown={value.breakdown}
-          additionalTrustAssumptionsPercentage={
-            value.additionalTrustAssumptionsPercentage
-          }
-          change={value.change?.total}
-          syncWarning={value.syncWarning}
-        />
-      )
-    },
-    meta: {
-      align: 'right',
-      cellClassName: 'pl-3',
-      tooltip:
-        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
-    },
-  }),
+  getTvsColumn(noProofsColumnHelper),
 ]
