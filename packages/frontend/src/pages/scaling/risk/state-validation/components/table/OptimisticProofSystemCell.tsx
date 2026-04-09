@@ -1,6 +1,7 @@
 import type { ProjectScalingProofSystem } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, pluralize } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
+import { Callout } from '~/components/Callout'
 import {
   Tooltip,
   TooltipContent,
@@ -18,39 +19,82 @@ export function OptimisticProofSystemCell({
   slug,
   zkCatalog,
 }: ScalingRiskStateValidationOptimisticEntry) {
+  const hasSuccessful = zkCatalog && zkCatalog.successful.count > 0
+  const hasUnsuccessful = zkCatalog && zkCatalog.unsuccessful.count > 0
+  const hasNotVerified = zkCatalog && zkCatalog.notVerified.count > 0
+  const isMixed =
+    (hasSuccessful && hasUnsuccessful) ||
+    (hasSuccessful && hasNotVerified) ||
+    (hasUnsuccessful && hasNotVerified)
+
   return (
     <div className="flex h-full items-center gap-4">
       <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
       <div className="flex items-center gap-1.5">
         {zkCatalog && (
-          <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-            <Badge
-              type={
-                zkCatalog.hasSuccessful
-                  ? 'green'
-                  : zkCatalog.hasUnsuccessful
-                    ? 'error'
-                    : 'gray'
-              }
-              className={cn(
-                'flex items-center gap-1',
-                zkCatalog.hasSuccessful
-                  ? null
-                  : zkCatalog.hasUnsuccessful
-                    ? 'border border-negative'
-                    : 'border-divider! bg-surface-secondary! text-primary',
-              )}
-            >
-              {zkCatalog.name}
-              {zkCatalog.hasSuccessful && <VerifiedIcon className="size-4" />}
-              {zkCatalog.hasNotVerified && (
-                <CircleQuestionMarkIcon className="size-4" />
-              )}
-              {zkCatalog.hasUnsuccessful && (
-                <UnverifiedIcon className="size-4" />
-              )}
-            </Badge>
-          </a>
+          <Tooltip>
+            <TooltipTrigger>
+              <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
+                <Badge
+                  type={
+                    isMixed || hasNotVerified
+                      ? 'gray'
+                      : hasSuccessful
+                        ? 'green'
+                        : hasUnsuccessful
+                          ? 'error'
+                          : null
+                  }
+                  className={cn(
+                    'flex items-center gap-1',
+                    isMixed || hasNotVerified
+                      ? 'border-divider! bg-surface-secondary! text-primary'
+                      : hasUnsuccessful
+                        ? 'border border-negative'
+                        : null,
+                  )}
+                >
+                  {zkCatalog.name}
+                  {hasSuccessful && <VerifiedIcon className="size-4" />}
+                  {hasNotVerified && (
+                    <CircleQuestionMarkIcon className="size-4" />
+                  )}
+                  {hasUnsuccessful && <UnverifiedIcon className="size-4" />}
+                </Badge>
+              </a>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div className="flex flex-col gap-2">
+                {hasSuccessful && (
+                  <Callout
+                    color="green"
+                    small
+                    icon={<VerifiedIcon className="mt-px size-4" />}
+                    className="p-2"
+                    body={getSuccessfulText(zkCatalog.successful)}
+                  />
+                )}
+                {hasNotVerified && (
+                  <Callout
+                    color="gray"
+                    small
+                    className="p-2"
+                    icon={<CircleQuestionMarkIcon className="mt-px size-4" />}
+                    body={getNotVerifiedText(zkCatalog.notVerified)}
+                  />
+                )}
+                {hasUnsuccessful && (
+                  <Callout
+                    color="red"
+                    small
+                    className="p-2"
+                    icon={<UnverifiedIcon className="mt-px size-4" />}
+                    body={getUnsuccessfulText(zkCatalog.unsuccessful)}
+                  />
+                )}
+              </div>
+            </TooltipContent>
+          </Tooltip>
         )}
         {proofSystem?.challengeProtocol && (
           <Tooltip>
@@ -67,6 +111,25 @@ export function OptimisticProofSystemCell({
       </div>
     </div>
   )
+}
+
+interface VerifierStatus {
+  count: number
+  attesters: string[]
+}
+
+function getSuccessfulText({ count, attesters }: VerifierStatus) {
+  const by = attesters.length > 0 ? ` by ${attesters.join(', ')}` : ''
+  return `${count} ${pluralize(count, 'verifier')} ${count === 1 ? 'was' : 'were'} successfully regenerated${by}`
+}
+
+function getNotVerifiedText({ count }: VerifierStatus) {
+  return `Regeneration of ${count} ${pluralize(count, 'verifier')} ${count === 1 ? 'has' : 'have'} not been attempted yet`
+}
+
+function getUnsuccessfulText({ count, attesters }: VerifierStatus) {
+  const by = attesters.length > 0 ? ` by ${attesters.join(', ')}` : ''
+  return `${count} ${pluralize(count, 'verifier')} could not be regenerated${by}`
 }
 
 function challengeToDescription(

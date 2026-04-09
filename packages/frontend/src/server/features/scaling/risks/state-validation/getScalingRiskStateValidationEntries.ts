@@ -4,8 +4,9 @@ import type {
   ProjectScalingProofSystem,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
+import uniq from 'lodash/uniq'
 import {
   getProjectsChangeReport,
   type ProjectChanges,
@@ -181,9 +182,9 @@ export interface ScalingRiskStateValidationOptimisticEntry
     | {
         name: string
         id: string
-        hasSuccessful: boolean
-        hasUnsuccessful: boolean
-        hasNotVerified: boolean
+        successful: { count: number; attesters: string[] }
+        unsuccessful: { count: number; attesters: string[] }
+        notVerified: { count: number; attesters: string[] }
       }
     | undefined
 }
@@ -218,16 +219,24 @@ function getScalingRiskStateValidationOptimisticEntry(
       { id: project.id, contracts: project.contracts },
     )
     const allVerifiers = Object.values(trustedSetups).map((ts) => ts.verifiers)
-    const hasUnsuccessful = allVerifiers.some((v) => v.unsuccessful)
-    const hasNotVerified = allVerifiers.some((v) => v.notVerified)
-    const hasSuccessful = allVerifiers.some((v) => v.successful)
+
+    const aggregateStatus = (
+      key: 'successful' | 'unsuccessful' | 'notVerified',
+    ) => {
+      const verifiers = allVerifiers.flatMap((v) => v[key]).filter(notUndefined)
+      const count = verifiers.reduce((sum, v) => sum + v.count, 0)
+      const attesters = uniq(
+        verifiers.flatMap((v) => v.attesters.map((a) => a.name)),
+      )
+      return { count, attesters }
+    }
 
     zkCatalog = {
       name: zkCatalogProject.name,
       id: proofSystem.zkCatalogId,
-      hasSuccessful,
-      hasUnsuccessful,
-      hasNotVerified,
+      successful: aggregateStatus('successful'),
+      unsuccessful: aggregateStatus('unsuccessful'),
+      notVerified: aggregateStatus('notVerified'),
     }
   }
 
