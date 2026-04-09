@@ -54,8 +54,8 @@ export function OptimisticProofSystemCell({
         )}
         {proofSystem?.challengeProtocol && (
           <Tooltip>
-            <TooltipTrigger className="h-6">
-              <Badge type="blue" className="block h-6">
+            <TooltipTrigger>
+              <Badge type="blue" className="block h-5 md:h-6">
                 {proofSystem.challengeProtocol}
               </Badge>
             </TooltipTrigger>
