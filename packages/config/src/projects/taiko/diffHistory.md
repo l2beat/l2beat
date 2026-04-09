@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfda917b8fcf5b836d57b5e56bf3860856fe93464
+Generated with discovered.json: 0x3b700ab586c7035947595f19d7fbd9a309486ceb
 
-# Diff at Thu, 09 Apr 2026 11:31:45 GMT:
+# Diff at Thu, 09 Apr 2026 15:19:53 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@c9ede6c9bdb2aae4daeb2b2d95dc56f1420b43ab block: 1775136182
-- current timestamp: 1775721669
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1775136182
+- current timestamp: 1775747881
 
 ## Description
 
@@ -90,9 +90,11 @@ add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta 
     +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
       values.proposalCount:
 -        27
-+        28
++        29
       values.proposalIds.27:
 +        "604072306347775205060623596830012262580693762075"
+      values.proposalIds.28:
++        "604252334775688929080375373293834029676709806108"
     }
 ```
 
@@ -173,7 +175,7 @@ add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta 
 
 ```diff
     contract AnchorForkRouter (taiko:0x1670000000000000000000000000000000010001) {
-    +++ description: None
+    +++ description: Routes to the Shasta Anchor contract post shasta fork.
       name:
 -        "TaikoAnchor"
 +        "AnchorForkRouter"
@@ -185,6 +187,7 @@ add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta 
 +        "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
       description:
 -        "Handles cross-layer message verification and manages EIP-1559 gas pricing for L2 operations. Anchors L1 block details to L2 for cross-layer communication."
++        "Routes to the Shasta Anchor contract post shasta fork."
       values.$implementation:
 -        "taiko:0xf381868DD6B2aC8cca468D63B42F9040DE2257E9"
 +        "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585"
@@ -229,6 +232,8 @@ add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta 
 -        "TaikoAnchor"
       implementationNames.taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585:
 +        "AnchorForkRouter"
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -257,7 +262,7 @@ add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta 
 ```diff
 +   Status: CREATED
     contract Anchor (taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA)
-    +++ description: None
+    +++ description: Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.
 ```
 
 ## Source code changes
@@ -583,7 +588,7 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae)
-    +++ description: Defines a whitelist of addresses.
+    +++ description: Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.
 ```
 
 ```diff

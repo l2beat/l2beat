@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1775721669,
+  "timestamp": 1775747881,
   "configHash": "0x1e26c661c8b4f97d132620380073a15b09d22a6e1c83527396922e6efc923ad7",
   "entries": [
     {
@@ -87,7 +87,8 @@
       },
       "implementationNames": {
         "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b": "Risc0Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SgxVerifier",
@@ -382,7 +383,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1775721659,
+        "clock": 1775747879,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -926,12 +927,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 1528,
-          "lastProposalBlockId": 24840800,
-          "lastFinalizedProposalId": 1525,
-          "lastFinalizedTimestamp": 1775721107,
-          "lastCheckpointTimestamp": 1775721107,
-          "lastFinalizedBlockHash": "0x388e3c870ce6f7b31a7bbd274bfbde87206b79b6fe39cf1ebe3f8cd00a34c586"
+          "nextProposalId": 1597,
+          "lastProposalBlockId": 24843002,
+          "lastFinalizedProposalId": 1590,
+          "lastFinalizedTimestamp": 1775746031,
+          "lastCheckpointTimestamp": 1775746031,
+          "lastFinalizedBlockHash": "0x2482b9e73a546c02720e18dbd1ea730b507c764e5f66b52bfd8f94d31c0f298a"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 0, "tail_": 0 },
@@ -1369,7 +1370,8 @@
       },
       "implementationNames": {
         "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6": "SP1Verifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OptimisticTokenVotingPlugin",
@@ -1410,7 +1412,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 28,
+        "proposalCount": 29,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1439,7 +1441,8 @@
           "601724541768498866969402779460601617583941091352",
           "602381146540321106777275740158610369409831665689",
           "603470345479562597234986338918793351448504565786",
-          "604072306347775205060623596830012262580693762075"
+          "604072306347775205060623596830012262580693762075",
+          "604252334775688929080375373293834029676709806108"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1559,7 +1562,8 @@
       },
       "implementationNames": {
         "eth:0x9cAa4948381590900FCdd8a4F06EB24138eD665d": "MainnetVerifier"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Taiko Multisig",
@@ -2300,7 +2304,7 @@
         "impl": "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 38979,
+        "nextMessageId": 38983,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -2386,7 +2390,7 @@
         "0x324653368e7bcaa7121b944af4794caa9a627937a3fa5afc9e643541abefb9a8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines a whitelist of addresses.",
+      "description": "Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.",
       "ignoreInWatchMode": ["whitelisted"],
       "sinceTimestamp": 1772641607,
       "sinceBlock": 24585282,
@@ -2414,7 +2418,8 @@
       "implementationNames": {
         "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae": "ERC1967Proxy",
         "eth:0xebb393746A4Eee84Ad14EDFf3764c3F839D1034b": "ProverWhitelist"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1SharedAddressManager",
@@ -2773,7 +2778,7 @@
           ]
         ],
         "$upgradeCount": 4,
-        "getOperatorForCurrentEpoch": "eth:0xCbeB5d484b54498d3893A0c3Eb790331962e9e9d",
+        "getOperatorForCurrentEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
         "getOperatorForNextEpoch": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
@@ -3027,6 +3032,7 @@
         "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Routes to the Shasta Anchor contract post shasta fork.",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -3073,7 +3079,8 @@
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
         "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585": "AnchorForkRouter"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SignalService",
@@ -3115,6 +3122,7 @@
         "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
       ],
       "proxyType": "immutable",
+      "description": "Immutable L2 contract that anchors L1 block details to L2 for cross-layer communication and manages EIP-1559 gas pricing for L2 operations.",
       "sinceTimestamp": 1772641261,
       "sinceBlock": 4642135,
       "values": {
@@ -3137,7 +3145,8 @@
       },
       "implementationNames": {
         "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA": "Anchor"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DelegateController",
@@ -5139,6 +5148,6 @@
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
-  "usedBlockNumbers": { "ethereum": 24840827, "taiko": 5279322 },
+  "usedBlockNumbers": { "ethereum": 24843005, "taiko": 5292411 },
   "permissionsConfigHash": "0xb102850648172431d7a14ffc3809ce2fe19f0ab8be8c351721361c21c65fce45"
 }
