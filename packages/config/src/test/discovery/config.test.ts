@@ -38,6 +38,9 @@ export const onChainProjects: string[] = [
   'gateway',
   'opcm16',
   'debridge',
+  'railgun',
+  'privacy-pools',
+  'tornado-cash',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 

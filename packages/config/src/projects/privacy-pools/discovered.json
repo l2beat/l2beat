@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
-  "timestamp": 1775742787,
-  "configHash": "0x975f54c2b64fdd430b06cc4fd9dac4d422ab90f2ea001e607c72ba3897ba600b",
+  "timestamp": 1775744016,
+  "configHash": "0xa8ba95ef6b79e105fe136a8e53f49a84842d7fe1ebb231e02437e7ea4a0a2fad",
   "entries": [
     {
       "name": "WithdrawalVerifier",
@@ -250,7 +250,6 @@
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "fieldMeta": {
         "pools": { "description": "All currently registered privacy pools" },
         "tokens": {
@@ -1435,6 +1434,6 @@
     "privacy-pools/PrivacyPoolComplex": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da",
     "privacy-pools/PrivacyPoolSimple": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da"
   },
-  "usedBlockNumbers": { "ethereum": 24842580 },
+  "usedBlockNumbers": { "ethereum": 24842683 },
   "permissionsConfigHash": "0xa590e8404b4ec3dd8ecb91a0d536eec8a310c3f993a5fa6eb18ac57eceff622d"
 }

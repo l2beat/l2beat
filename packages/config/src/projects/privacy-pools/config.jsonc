@@ -10,7 +10,8 @@
         "latestRoot",
         "rootByIndex",
         "usedPrecommitments",
-        "scopeToPool"
+        "scopeToPool",
+        "proxiableUUID"
       ]
     }
   }

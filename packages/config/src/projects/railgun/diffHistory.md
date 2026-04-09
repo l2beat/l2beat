@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xfb4d17171b1b0891c7b694d3ac4d855d33daacbd
+Generated with discovered.json: 0x987c8a60b5e15ccc3665be0ed4b51ecd9028b50a
 
-# Diff at Wed, 08 Apr 2026 16:15:08 GMT:
+# Diff at Thu, 09 Apr 2026 14:20:33 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1775664147
+- current timestamp: 1775744335
 
 ## Description
 
@@ -13,25 +13,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract ArbitrumSender (eth:0x20Fa11c4F794eC1db3527bF618B02754FF393bD5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Sweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RailgunSmartWallet (eth:0x321617E18bE9EC7CFE5ab8856DE2aAbAA478E13B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OnlyAddress (eth:0x3F9297FA8e166492E66DF2215eB29E4f3c7AaaC5)
     +++ description: None
 ```
 

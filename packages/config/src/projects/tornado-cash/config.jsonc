@@ -31,6 +31,12 @@
     "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": { "category": "core" },
     "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": { "category": "core" },
     "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": { "category": "core" },
-    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": { "category": "core" }
+    "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": { "category": "core" },
+    "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9": {
+      "ignoreMethods": ["accountRoots"]
+    },
+    "eth:0x5cab7692D4E94096462119ab7bF57319726Eed2A": {
+      "ignoreMethods": ["getExpectedReturn"]
+    }
   }
 }
