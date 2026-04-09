@@ -11,11 +11,11 @@ export class BlockProcessingStats {
 
   get() {
     return {
-      totalMs: Math.round(this.totalMs),
-      cpuMs: Math.round(this.cpuMs),
+      totalMs: this.totalMs,
+      cpuMs: this.cpuMs,
       count: this.count,
-      avgMs: this.count > 0 ? Math.round(this.totalMs / this.count) : 0,
-      avgCpuMs: this.count > 0 ? Math.round(this.cpuMs / this.count) : 0,
+      avgMs: this.count > 0 ? this.totalMs / this.count : 0,
+      avgCpuMs: this.count > 0 ? this.cpuMs / this.count : 0,
     }
   }
 }

@@ -12,6 +12,13 @@ interface StatsRow {
   avgCpuMs: number
 }
 
+function formatMs(value: number) {
+  const rounded = Math.round(value * 100) / 100
+  return Number.isInteger(rounded)
+    ? rounded.toString()
+    : rounded.toFixed(2).replace(/\.?0+$/, '')
+}
+
 function StatsTable(props: { rows: StatsRow[]; tableId: string }) {
   return (
     <table id={props.tableId} className="display">
@@ -28,8 +35,8 @@ function StatsTable(props: { rows: StatsRow[]; tableId: string }) {
           <tr key={row.label}>
             <td>{row.label}</td>
             <td>{row.count}</td>
-            <td>{row.avgMs}</td>
-            <td>{row.avgCpuMs}</td>
+            <td data-order={row.avgMs}>{formatMs(row.avgMs)}</td>
+            <td data-order={row.avgCpuMs}>{formatMs(row.avgCpuMs)}</td>
           </tr>
         ))}
       </tbody>
@@ -58,8 +65,8 @@ function aggregate(
     totalMs,
     cpuMs,
     count,
-    avgMs: count > 0 ? Math.round(totalMs / count) : 0,
-    avgCpuMs: count > 0 ? Math.round(cpuMs / count) : 0,
+    avgMs: count > 0 ? totalMs / count : 0,
+    avgCpuMs: count > 0 ? cpuMs / count : 0,
   }))
 }
 
