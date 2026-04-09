@@ -40,7 +40,7 @@ export function ReportView({ review, onExportPdf }: ReportViewProps) {
   }
 
   return (
-    <div className="flex flex-col gap-10 sm:gap-16 md:gap-[80px] pb-12 md:pb-24">
+    <div className="flex flex-col gap-10 sm:gap-16 md:gap-[80px] pt-8 sm:pt-12 md:pt-16 pb-12 md:pb-24">
       {/* Hero */}
       <section className="w-full">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
@@ -94,10 +94,10 @@ export function ReportView({ review, onExportPdf }: ReportViewProps) {
           title={MODAL_TITLES[activeModal]}
           onClose={() => setActiveModal(null)}
         >
-          {activeModal === 'funds' && <FundsTab review={review} />}
-          {activeModal === 'admins' && <AdminsTab review={review} />}
-          {activeModal === 'governance' && <GovernanceTab review={review} />}
-          {activeModal === 'dependencies' && <DepsTab review={review} />}
+          {activeModal === 'funds' && <FundsTab review={review} variant="modal" />}
+          {activeModal === 'admins' && <AdminsTab review={review} variant="modal" />}
+          {activeModal === 'governance' && <GovernanceTab review={review} variant="modal" />}
+          {activeModal === 'dependencies' && <DepsTab review={review} variant="modal" />}
         </Modal>
       )}
     </div>

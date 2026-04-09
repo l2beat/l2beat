@@ -262,6 +262,9 @@ The report view received a full visual redesign:
   - Section label row at top with icon + uppercase label + ShowMore button (top-right, opens a modal with the full explorer tab content)
   - Inner white card: `bg-white border border-border rounded-lg` for detailed content
   - Sidebar stats card: same `bg-bg-card` as outer frame, no border (visually blends in)
+- **ShowMore modals** (`ReportView.tsx` + `Modal.tsx`):
+  - Modal chrome matches the outer-frame branding: `bg-bg-card` background, `rounded-lg border border-border`, uppercase bold `[11px]` label header (same style as `SectionHeader`), round bordered close button (matches `CarouselNav` style)
+  - Tabs render inside with `variant="modal"` — hides heavy visualizations (`FundsTab` stacked bar chart, `DepsTab` `DependencyRiskDiagram`) so the modal shows the table content only. `AdminsTab` / `GovernanceTab` accept the `variant` prop for parity even though they don't currently branch on it
 - **Admins section (`AdminsSection.tsx`)**:
   - "ADMINISTRATIVE CONTROL" label, ShowMore button in outer frame header
   - Inner white card: top 3 admins sorted by `totalReachableCapital` descending

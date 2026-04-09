@@ -213,8 +213,7 @@ export function AdminFunctionTable({
           <th className="text-left pb-1 font-medium">Contract</th>
           <th className="text-left pb-1 font-medium">Function</th>
           <th className="text-left pb-1 font-medium">Mitigations</th>
-          <th className="text-right pb-1 font-medium">TVL</th>
-          <th className="text-right pb-1 font-medium">Reachable Contracts</th>
+          <th className="text-right pb-1 font-medium">TVS</th>
         </tr>
       </thead>
       <tbody>
@@ -249,26 +248,6 @@ export function AdminFunctionTable({
               {fn.directFundsUsd > 0 ? (
                 <span className="text-capital font-medium">
                   {formatUsdValue(fn.directFundsUsd)}
-                </span>
-              ) : (
-                <span className="text-text-muted">-</span>
-              )}
-            </td>
-            <td className="py-1.5 text-right">
-              {fn.reachableContracts.length > 0 ? (
-                <span className="text-text-primary">
-                  {fn.reachableContracts.length}
-                  {fn.reachableContracts.some((rc) => rc.fundsAtRisk) && (
-                    <span className="ml-1 text-capital">
-                      (
-                      {formatUsdValue(
-                        fn.reachableContracts
-                          .filter((rc) => rc.fundsAtRisk)
-                          .reduce((s, rc) => s + rc.fundsUsd, 0),
-                      )}
-                      )
-                    </span>
-                  )}
                 </span>
               ) : (
                 <span className="text-text-muted">-</span>

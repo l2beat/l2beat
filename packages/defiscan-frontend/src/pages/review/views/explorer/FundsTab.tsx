@@ -15,12 +15,14 @@ import type { CompiledReview, CompiledFundHolder } from '../../../../types'
 
 interface FundsTabProps {
   review: CompiledReview
+  variant?: 'page' | 'modal'
 }
 
 type SortField = 'name' | 'total'
 type SortDir = 'asc' | 'desc'
 
-export function FundsTab({ review }: FundsTabProps) {
+export function FundsTab({ review, variant = 'page' }: FundsTabProps) {
+  const isModal = variant === 'modal'
   const { funds } = review
   const [sortField, setSortField] = useState<SortField>('total')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
@@ -98,27 +100,17 @@ export function FundsTab({ review }: FundsTabProps) {
       <div className="flex items-center gap-6 mb-4 text-sm flex-wrap">
         <FundsSummaryLabel funds={funds} />
         <span className="text-text-secondary">
-          TVL:{' '}
+          TVS:{' '}
           <UsdValue
-            value={totalCapital}
+            value={totalCapital + totalTokenValue}
             variant="capital"
             className="text-sm"
           />
         </span>
-        {totalTokenValue > 0 && (
-          <span className="text-text-secondary">
-            Token:{' '}
-            <UsdValue
-              value={totalTokenValue}
-              variant="token"
-              className="text-sm"
-            />
-          </span>
-        )}
       </div>
 
       {/* Stacked bar chart */}
-      {chartData.length > 0 && (
+      {!isModal && chartData.length > 0 && (
         <div className="rounded-lg border border-border bg-white p-4 mb-4">
           <h3 className="text-sm font-semibold text-text-primary mb-3">
             TVS Distribution

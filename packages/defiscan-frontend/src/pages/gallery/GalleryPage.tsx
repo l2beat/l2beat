@@ -165,12 +165,12 @@ function ProtocolCard({
   const radarData = review ? deriveRadarData(review) : null
 
   return (
-    <div className="flex flex-col rounded-lg border border-border bg-white overflow-hidden">
+    <div className="flex flex-col rounded-xl border border-border bg-bg-card overflow-hidden">
       {/* Card header */}
-      <div className="flex items-start justify-between p-5 pb-3">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="size-9 rounded bg-accent-tint-light flex items-center justify-center shrink-0">
-            <img src="/defiscan-mark-blue.svg" alt="" className="h-5 w-5" />
+      <div className="flex items-start justify-between p-6 pb-3">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="size-12 rounded bg-white border border-hover flex items-center justify-center shrink-0 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[9px]">
+            <img src="/defiscan-mark-blue.svg" alt="" className="h-full w-full" />
           </div>
           <div className="min-w-0">
             <h3 className="font-semibold text-sm text-text-primary truncate">
@@ -401,22 +401,27 @@ export function GalleryPage() {
 
   if (indexLoading) {
     return (
-      <div className="mx-auto max-w-[1280px] px-6 py-12">
-        <p className="text-text-muted">Loading protocols...</p>
+      <div className="bg-white min-h-screen">
+        <div className="mx-auto max-w-[1280px] px-6 py-12">
+          <p className="text-text-muted">Loading protocols...</p>
+        </div>
       </div>
     )
   }
 
   if (!indexData) {
     return (
-      <div className="mx-auto max-w-[1280px] px-6 py-12">
-        <p className="text-status-red">Failed to load data.</p>
+      <div className="bg-white min-h-screen">
+        <div className="mx-auto max-w-[1280px] px-6 py-12">
+          <p className="text-status-red">Failed to load data.</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-8 sm:py-10">
+    <div className="bg-white min-h-screen">
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-8 sm:py-10">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-text-primary tracking-tight">
@@ -548,6 +553,7 @@ export function GalleryPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }

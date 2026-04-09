@@ -12,12 +12,14 @@ import { SortHeader, MitigationsSummary } from './shared'
 
 interface DepsTabProps {
   review: CompiledReview
+  variant?: 'page' | 'modal'
 }
 
 type SortField = 'name' | 'entity' | 'fundsAtRisk' | 'functions'
 type SortDir = 'asc' | 'desc'
 
-export function DepsTab({ review }: DepsTabProps) {
+export function DepsTab({ review, variant = 'page' }: DepsTabProps) {
+  const isModal = variant === 'modal'
   const { dependencies } = review
   const [sortField, setSortField] = useState<SortField>('fundsAtRisk')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
@@ -110,7 +112,7 @@ export function DepsTab({ review }: DepsTabProps) {
         )}
         {totalFundsAtRisk > 0 && (
           <span className="text-text-secondary">
-            TVL{' '}
+            TVS{' '}
             <UsdValue
               value={totalFundsAtRisk}
               variant="capital"
@@ -127,15 +129,17 @@ export function DepsTab({ review }: DepsTabProps) {
       </div>
 
       {/* Dependency risk diagram */}
-      <ShareableDiagram
-        id="dependency-diagram"
-        title="Dependency Entity Concentration"
-        linkQuery="?view=explorer&tab=dependencies"
-        downloadName="dependency-concentration.png"
-        className="mb-4"
-      >
-        <DependencyRiskDiagram dependencies={dependencies} />
-      </ShareableDiagram>
+      {!isModal && (
+        <ShareableDiagram
+          id="dependency-diagram"
+          title="Dependency Entity Concentration"
+          linkQuery="?view=explorer&tab=dependencies"
+          downloadName="dependency-concentration.png"
+          className="mb-4"
+        >
+          <DependencyRiskDiagram dependencies={dependencies} />
+        </ShareableDiagram>
+      )}
 
       {/* Table */}
       <div className="rounded-lg border border-border bg-white shadow-sm overflow-hidden">
@@ -151,14 +155,11 @@ export function DepsTab({ review }: DepsTabProps) {
               />
               <SortHeader
                 field="entity"
-                label="Entity"
+                label="Vendor"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
               />
-              <th className="px-4 py-2 font-medium text-text-secondary text-left">
-                Access
-              </th>
               <SortHeader
                 field="functions"
                 label="Used By"
@@ -172,7 +173,7 @@ export function DepsTab({ review }: DepsTabProps) {
               </th>
               <SortHeader
                 field="fundsAtRisk"
-                label="TVL"
+                label="TVS"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -246,11 +247,6 @@ function DependencyRow({
             <span className="text-text-muted">-</span>
           )}
         </td>
-        <td className="px-4 py-2.5">
-          <div className="flex items-center gap-1.5">
-            {dep.viewOnlyPath ? <ReadBadge /> : <WriteBadge />}
-          </div>
-        </td>
         <td className="px-4 py-2.5 text-right">
           <span className="font-medium text-text-primary">
             {dep.functions.length}
@@ -279,7 +275,7 @@ function DependencyRow({
       {expanded && (
         <tr>
           <td
-            colSpan={6}
+            colSpan={5}
             className="px-0 py-0 bg-bg-muted/50 border-b border-border"
           >
             <ExpandedDependency dep={dep} />
@@ -365,7 +361,7 @@ function FunctionList({
           <th className="text-left pb-1 font-medium">Contract</th>
           <th className="text-left pb-1 font-medium">Function</th>
           <th className="text-left pb-1 font-medium">Mitigations</th>
-          <th className="text-right pb-1 font-medium">TVL</th>
+          <th className="text-right pb-1 font-medium">TVS</th>
         </tr>
       </thead>
       <tbody>

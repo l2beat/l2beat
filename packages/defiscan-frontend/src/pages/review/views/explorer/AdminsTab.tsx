@@ -13,14 +13,10 @@ import {
 
 interface AdminsTabProps {
   review: CompiledReview
+  variant?: 'page' | 'modal'
 }
 
-type SortField =
-  | 'name'
-  | 'type'
-  | 'reachableCapital'
-  | 'tokenValue'
-  | 'functions'
+type SortField = 'name' | 'type' | 'tvs' | 'functions'
 type SortDir = 'asc' | 'desc'
 
 export function AdminsTab({ review }: AdminsTabProps) {
@@ -29,7 +25,7 @@ export function AdminsTab({ review }: AdminsTabProps) {
     () => getHumanAdmins(admins).filter((a) => !a.isGovernance),
     [admins],
   )
-  const [sortField, setSortField] = useState<SortField>('reachableCapital')
+  const [sortField, setSortField] = useState<SortField>('tvs')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
@@ -44,11 +40,11 @@ export function AdminsTab({ review }: AdminsTabProps) {
         case 'type':
           cmp = a.adminType.localeCompare(b.adminType)
           break
-        case 'reachableCapital':
-          cmp = a.totalReachableCapital - b.totalReachableCapital
-          break
-        case 'tokenValue':
-          cmp = a.totalReachableTokenValue - b.totalReachableTokenValue
+        case 'tvs':
+          cmp =
+            a.totalReachableCapital +
+            a.totalReachableTokenValue -
+            (b.totalReachableCapital + b.totalReachableTokenValue)
           break
         case 'functions':
           cmp = a.functions.length - b.functions.length
@@ -99,23 +95,13 @@ export function AdminsTab({ review }: AdminsTabProps) {
       <div className="flex items-center gap-6 mb-4 text-sm">
         <AdminsSummaryLabel admins={humanAdmins} />
         <span className="text-text-secondary">
-          TVL:{' '}
+          TVS:{' '}
           <UsdValue
-            value={totals.totalCapitalAtRisk}
+            value={totals.totalCapitalAtRisk + totals.totalTokenValueAtRisk}
             variant="capital"
             className="text-sm"
           />
         </span>
-        {totals.totalTokenValueAtRisk > 0 && (
-          <span className="text-text-secondary">
-            Market Cap:{' '}
-            <UsdValue
-              value={totals.totalTokenValueAtRisk}
-              variant="token"
-              className="text-sm"
-            />
-          </span>
-        )}
       </div>
 
       {/* Sortable table */}
@@ -138,16 +124,8 @@ export function AdminsTab({ review }: AdminsTabProps) {
                 onClick={handleSort}
               />
               <SortHeader
-                field="reachableCapital"
-                label="TVL"
-                current={sortField}
-                dir={sortDir}
-                onClick={handleSort}
-                className="text-right"
-              />
-              <SortHeader
-                field="tokenValue"
-                label="Market Cap"
+                field="tvs"
+                label="TVS"
                 current={sortField}
                 dir={sortDir}
                 onClick={handleSort}
@@ -229,21 +207,12 @@ function AdminRow({
           </Badge>
         </td>
         <td className="px-4 py-2.5 text-right tabular-nums">
-          {admin.totalReachableCapital > 0 ? (
+          {admin.totalReachableCapital + admin.totalReachableTokenValue > 0 ? (
             <UsdValue
-              value={admin.totalReachableCapital}
+              value={
+                admin.totalReachableCapital + admin.totalReachableTokenValue
+              }
               variant="capital"
-              className="text-sm"
-            />
-          ) : (
-            <span className="text-text-muted">-</span>
-          )}
-        </td>
-        <td className="px-4 py-2.5 text-right tabular-nums">
-          {admin.totalReachableTokenValue > 0 ? (
-            <UsdValue
-              value={admin.totalReachableTokenValue}
-              variant="token"
               className="text-sm"
             />
           ) : (
@@ -259,7 +228,7 @@ function AdminRow({
       </tr>
       {isExpanded && (
         <tr>
-          <td colSpan={6} className="px-0 py-0">
+          <td colSpan={5} className="px-0 py-0">
             <ExpandedAdminFunctions admin={admin} />
           </td>
         </tr>

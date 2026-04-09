@@ -10,6 +10,7 @@ import {
 
 interface GovernanceTabProps {
   review: CompiledReview
+  variant?: 'page' | 'modal'
 }
 
 type SortField = 'name' | 'reachableCapital' | 'tokenValue' | 'functions'
