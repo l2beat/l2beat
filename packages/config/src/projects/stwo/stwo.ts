@@ -34,7 +34,6 @@ export const stwo: BaseProject = {
   },
   zkCatalogInfo: {
     creator: 'Starkware',
-    quantumResistant: true,
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stwo,
