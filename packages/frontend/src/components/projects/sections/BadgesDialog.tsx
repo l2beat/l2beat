@@ -67,7 +67,7 @@ export function BadgesDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="primary-card flex max-h-[90dvh] w-[960px] flex-col overflow-hidden bg-surface-primary p-0">
+      <DialogContent className="primary-card flex max-h-[90dvh] w-[768px] flex-col overflow-hidden bg-surface-primary p-0 lg:w-[960px]">
         <DialogClose className="top-5 right-5" />
         <DialogHeader className="sr-only">
           <DialogTitle>Badge details</DialogTitle>
@@ -110,7 +110,7 @@ function BadgesDialogBody({
 
   return (
     <div className="bg-surface-primary">
-      <div className="overflow-hidden bg-linear-to-r from-branding-primary/10 via-branding-secondary/10 to-transparent px-4 py-6 md:px-6 md:py-7">
+      <div className="overflow-hidden bg-radial-[at_50%_200%] from-brand-red/30 via-brand-black/10 to-transparent px-4 py-6 md:px-6 md:py-7">
         <div
           className={cn(
             'flex gap-4',
@@ -161,7 +161,7 @@ function BadgesDialogBody({
                     alt={`${badge.name} badge`}
                     width={badge.width}
                     height={badge.height}
-                    className="h-16 w-auto"
+                    className="h-20 w-auto"
                   />
                 </button>
               ))}
@@ -172,7 +172,7 @@ function BadgesDialogBody({
 
       <HorizontalSeparator />
       <BadgeDialogSection title={`Projects (${data.projectCount})`}>
-        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {data.projects.map((project) => (
             <CustomLink
               key={project.slug}
@@ -183,9 +183,9 @@ function BadgesDialogBody({
               <img
                 src={project.icon}
                 alt={`${project.name} logo`}
-                width={40}
-                height={40}
-                className="mb-2 size-10 rounded-md"
+                width={30}
+                height={30}
+                className="mb-2 size-8 rounded-md"
               />
               <div className="font-bold text-lg leading-none">
                 {project.name}
@@ -219,7 +219,7 @@ function BadgeDialogSection({
 function BadgesDialogSkeleton({ mobile }: { mobile?: boolean }) {
   return (
     <div className="bg-surface-primary">
-      <div className="overflow-hidden bg-linear-to-r from-branding-primary/10 via-branding-secondary/10 to-transparent px-4 py-6 md:px-6 md:py-7">
+      <div className="overflow-hidden bg-radial-[at_50%_200%] from-brand-red/30 via-brand-black/10 to-transparent px-4 py-6 md:px-6 md:py-7">
         <div
           className={cn(
             'flex gap-4',
@@ -242,15 +242,15 @@ function BadgesDialogSkeleton({ mobile }: { mobile?: boolean }) {
         <Skeleton className="h-7 w-48 md:h-6 md:w-56" />
         <div className="mt-4 flex flex-wrap gap-2">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="size-16 rounded-md" />
+            <Skeleton key={i} className="h-20 w-16 rounded-md" />
           ))}
         </div>
       </section>
       <HorizontalSeparator />
       <section className="px-3 py-4 md:px-4 md:py-5">
         <Skeleton className="h-7 w-40 md:h-6" />
-        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-          {Array.from({ length: 12 }).map((_, i) => (
+        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+          {Array.from({ length: 24 }).map((_, i) => (
             <Skeleton key={i} className="min-h-24 rounded-lg" />
           ))}
         </div>

@@ -2,18 +2,19 @@ import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 
+type ScalingBadge = NonNullable<ReturnType<typeof getBadgeWithParams>>
+
 export interface ScalingBadgeDialogProject {
   slug: string
   name: string
-  shortName: string | undefined
   icon: string
   type: string
 }
 
 export interface ScalingBadgeDialogData {
-  badge: NonNullable<ReturnType<typeof getBadgeWithParams>>
+  badge: ScalingBadge
   projectCount: number
-  relatedBadges: NonNullable<ReturnType<typeof getBadgeWithParams>>[]
+  relatedBadges: ScalingBadge[]
   projects: ScalingBadgeDialogProject[]
 }
 
@@ -26,17 +27,13 @@ export async function getScalingBadgeDialogData(input: {
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 
-  const badgesByType = new Map<
-    string,
-    Map<string, NonNullable<ReturnType<typeof getBadgeWithParams>>>
-  >()
+  const badgesByType = new Map<string, Map<string, ScalingBadge>>()
   const projectsByBadge = new Map<string, ScalingBadgeDialogProject[]>()
 
   for (const project of projects) {
     const projectSummary: ScalingBadgeDialogProject = {
       slug: project.slug,
       name: project.name,
-      shortName: project.shortName,
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       type: project.scalingInfo.type ?? project.scalingInfo.layer,
     }
@@ -55,9 +52,7 @@ export async function getScalingBadgeDialogData(input: {
     }
   }
 
-  let selectedBadge:
-    | NonNullable<ReturnType<typeof getBadgeWithParams>>
-    | undefined
+  let selectedBadge: ScalingBadge | undefined
   for (const badgesOfType of badgesByType.values()) {
     const badge = badgesOfType.get(input.badgeId)
     if (badge) {
