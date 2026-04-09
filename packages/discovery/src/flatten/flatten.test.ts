@@ -152,19 +152,16 @@ contract C3 is C2 { }
 
 contract C4 { }
 
-// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
-interface DC2 is C2 {
-    struct S1 {
-        uint256 x;
+contract DC2 is C2 {
+    struct S1 { uint256 x; }
+    function f1() public {
+        S1 memory s;
+        s.somethingmagic();
+        s.thiswillberemoved();
     }
-
-    function f1() external;
 }
 
-// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
-interface DC1 is DC2 {
-    function df() external;
-}
+contract DC1 is DC2 { function df() public {} }
 
 contract R1 is C2, C3, C4 {
     function f(address x) public {
@@ -208,6 +205,64 @@ contract R1 is Base, Static { }
     // so it must NOT be turned into an interface
     expect(flattened).toInclude('contract Shared')
     expect(flattened).not.toInclude('interface Shared')
+  })
+
+  it('dynamic abstract contract extending a non-dynamic base is not turned into an interface', () => {
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+abstract contract Shared { }
+
+abstract contract Dynamic is Shared {
+    function df() public virtual;
+}
+
+contract R1 is Shared {
+    function f(address x) public {
+        Dynamic(x).df();
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file], [], {
+      includeAll: true,
+    })
+
+    // Shared stays a contract because R1 inherits it directly, so Dynamic
+    // cannot be turned into `interface Dynamic is Shared`.
+    expect(flattened).toInclude('abstract contract Shared')
+    expect(flattened).toInclude('abstract contract Dynamic is Shared')
+    expect(flattened).not.toInclude('interface Dynamic is Shared')
+  })
+
+  it('dynamic contract extending a non-dynamic base is not turned into an interface', () => {
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+abstract contract Shared { }
+
+contract Dynamic is Shared {
+    function df() public virtual;
+}
+
+contract R1 is Shared {
+    function f(address x) public {
+        Dynamic(x).df();
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file], [], {
+      includeAll: true,
+    })
+
+    // Shared stays a contract because R1 inherits it directly, so Dynamic
+    // cannot be turned into `interface Dynamic is Shared`.
+    expect(flattened).toInclude('abstract contract Shared')
+    expect(flattened).toInclude('contract Dynamic is Shared')
+    expect(flattened).not.toInclude('interface Dynamic is Shared')
   })
 
   it('inheritance namespacing', () => {

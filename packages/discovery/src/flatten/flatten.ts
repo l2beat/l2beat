@@ -29,39 +29,54 @@ export function flattenStartingFrom(
     options,
   )
   const rootContract = parsedFileManager.findRootDeclaration(rootContractName)
-  const relationDictionary = generateUsedFromDictionary(
+  const order = topologicalSort(parsedFileManager, rootContract)
+  const shouldBeInterface = generateShouldBeInterfaceDictionary(
     parsedFileManager,
     rootContract,
+    order,
   )
 
-  // Topological sort so base contracts precede derived contracts
-  const order = topologicalSort(parsedFileManager, rootContract)
-
   let flatSource = ''
-  for (const foundContract of order) {
-    const generateInterface =
-      entryIsPurelyDynamic(relationDictionary, foundContract) &&
-      isContract(foundContract)
-
-    const content = generateInterface
-      ? generateInterfaceSourceFromContract(foundContract.declaration)
-      : foundContract.declaration.content
-
+  for (const contract of order) {
+    const content = shouldBeInterface[getUniqueContractId(contract)]
+      ? generateInterfaceSourceFromContract(contract.declaration)
+      : contract.declaration.content
     flatSource += formatSource(content)
   }
 
   return changeLineEndingsToUnix(flatSource.trimEnd())
 }
 
-function entryIsPurelyDynamic(
-  relationDictionary: Record<string, boolean>,
-  contract: DeclarationFilePair,
-): boolean {
-  const uniqueContractId = getUniqueContractId(contract)
-  return relationDictionary[uniqueContractId] ?? false
+function generateShouldBeInterfaceDictionary(
+  parsedFileManager: ParsedFilesManager,
+  rootContract: DeclarationFilePair,
+  order: DeclarationFilePair[],
+): Record<string, boolean> {
+  const purelyDynamic = generatePurelyDynamicDictionary(
+    parsedFileManager,
+    rootContract,
+  )
+  const result: Record<string, boolean> = {}
+
+  for (const contract of order) {
+    const id = getUniqueContractId(contract)
+
+    if (!purelyDynamic[id] || !isContract(contract)) {
+      result[id] = false
+      continue
+    }
+
+    result[id] = contract.declaration.inheritsFrom.every((name) => {
+      const base = parsedFileManager.tryFindDeclaration(name, contract.file)
+      assert(base, `Failed to find contract ${name}`)
+      return !isContract(base) || result[getUniqueContractId(base)]
+    })
+  }
+
+  return result
 }
 
-function generateUsedFromDictionary(
+function generatePurelyDynamicDictionary(
   parsedFileManager: ParsedFilesManager,
   rootContract: DeclarationFilePair,
 ): Record<string, boolean> {
