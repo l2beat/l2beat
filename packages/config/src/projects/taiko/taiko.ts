@@ -536,14 +536,11 @@ export const taiko: ScalingProject = {
 
 function getTaikoVKeys(): string[] {
   const sp1Programs = discovery.getContractValue<string[]>(
-    'SP1VerifierGateway',
+    'TaikoSP1Verifier',
     'trustedPrograms',
   )
   return sp1Programs.concat(
-    discovery.getContractValue<string[]>(
-      'Risc0VerifierGateway',
-      'trustedImages',
-    ),
+    discovery.getContractValue<string[]>('TaikoRisc0Verifier', 'trustedImages'),
   )
 }
 
@@ -551,14 +548,14 @@ function getVerifiers(): ChainSpecificAddress[] {
   const result: ChainSpecificAddress[] = []
   result.push(
     discovery.getContractValue<ChainSpecificAddress>(
-      'SP1VerifierGateway',
-      'sp1RemoteVerifier',
+      'TaikoSP1Verifier',
+      'sp1RemoteVerifier', // another router, tracking the actual verifiers is hard
     ),
   )
   result.push(
     discovery.getContractValue<ChainSpecificAddress>(
-      'Risc0VerifierGateway',
-      'riscoGroth16Verifier',
+      'TaikoRisc0Verifier',
+      'riscoGroth16Verifier', // another router, tracking the actual verifiers is hard
     ),
   )
   return result
