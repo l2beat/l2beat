@@ -3,13 +3,19 @@ import type {
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  CoingeckoId,
+  Configuration,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -93,6 +99,11 @@ export interface TvsConfig {
   readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
+  readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export type TvsCleanerConfig = {
+  name: CleanableRepoName
 }
 
 export interface TrackedTxProject {

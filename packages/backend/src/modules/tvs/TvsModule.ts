@@ -5,7 +5,6 @@ import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import { DayTargetIndexer } from '../activity/indexers/DayTargetIndexer'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
@@ -38,6 +37,7 @@ export function initTvsModule({
     prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
     chains: config.tvs.chains.length,
+    tvsCleaner: config.tvs.cleaner,
     maxSources: config.tvs.projects.reduce(
       (prev, curr) =>
         prev < curr.amountSources.length ? curr.amountSources.length : prev,
@@ -220,22 +220,19 @@ export function initTvsModule({
     valueIndexers.push(tokenValueIndexer)
   }
 
-  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
-  const tvsCleaner = new TvsCleaner(
-    {
-      parents: [dayTargetIndexer],
-      indexerService,
-      db,
-      syncOptimizer,
-      repositories: [
-        'tvsTokenValue',
-        'tvsBlockTimestamp',
-        'tvsAmount',
-        'tvsPrice',
-      ],
-    },
-    logger,
-  )
+  let cleaner: TvsCleaner | undefined
+  if (config.tvs.cleaner) {
+    cleaner = new TvsCleaner(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        db,
+        syncOptimizer,
+        configurations: config.tvs.cleaner,
+      },
+      logger,
+    )
+  }
 
   const tvsProjects = config.tvs.projects
   const start = async () => {
@@ -255,8 +252,9 @@ export function initTvsModule({
       await indexer.start()
     }
 
-    await dayTargetIndexer.start()
-    await tvsCleaner.start()
+    if (cleaner) {
+      await cleaner.start()
+    }
   }
 
   return {

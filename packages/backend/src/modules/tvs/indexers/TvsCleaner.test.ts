@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { createTvsCleanerConfigurations } from '../../../config/features/tvs'
 import { mockDatabase } from '../../../test/database'
 import { Clock } from '../../../tools/Clock'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -154,12 +155,12 @@ function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
       updateConfigurationsCurrentHeight: mockFn().resolvesTo(undefined),
       setInitialState: mockFn().resolvesTo(undefined),
     }),
-    repositories: [
+    configurations: createTvsCleanerConfigurations([
       'tvsTokenValue',
       'tvsBlockTimestamp',
       'tvsAmount',
       'tvsPrice',
-    ],
+    ]),
   }
 
   return new TvsCleaner({ ...defaults, ...overrides }, Logger.SILENT)

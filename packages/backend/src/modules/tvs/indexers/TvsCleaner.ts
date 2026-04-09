@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { createHash } from 'crypto'
+import type { TvsCleanerConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -12,31 +11,9 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
-interface CleanableRepository {
-  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number>
-  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number>
-}
-
-interface CleanDateRange {
-  from: UnixTime | undefined
-  to: UnixTime
-}
-
-type CleanableRepoName = {
-  [K in keyof Database]: Database[K] extends CleanableRepository ? K : never
-}[keyof Database]
-
-type TvsCleanerConfig = {
-  name: CleanableRepoName
-}
-
 export interface TvsCleanerDeps
-  extends Omit<
-    ManagedMultiIndexerOptions<TvsCleanerConfig>,
-    'name' | 'configurations'
-  > {
+  extends Omit<ManagedMultiIndexerOptions<TvsCleanerConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
-  repositories: CleanableRepoName[]
 }
 
 export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
@@ -44,21 +21,13 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
     private readonly $: TvsCleanerDeps,
     logger: Logger,
   ) {
-    const { repositories, ...rest } = $
-
-    const configurations = repositories.map((name) => ({
-      id: repoNameToConfigId(name),
-      minHeight: 0,
-      maxHeight: null,
-      properties: { name },
-    }))
+    const { syncOptimizer: _syncOptimizer, ...managedOptions } = $
     super(
       {
-        ...rest,
+        ...managedOptions,
         name: INDEXER_NAMES.TVS_CLEANER,
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
         dataWipingAfterDeleteDisabled: true,
-        configurations,
       },
       logger,
     )
@@ -118,8 +87,4 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
   override removeData(_configurations: RemovalConfiguration[]): Promise<void> {
     return Promise.resolve()
   }
-}
-
-function repoNameToConfigId(name: CleanableRepoName): string {
-  return createHash('sha1').update(name).digest('hex').slice(0, 12)
 }

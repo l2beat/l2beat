@@ -1,5 +1,6 @@
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
+import type { Database } from '../database'
 import type { QueryBuilder } from '../kysely'
 import type { DB } from '../kysely/generated/types'
 
@@ -8,6 +9,17 @@ export interface CleanDateRange {
   from: UnixTime | undefined
   to: UnixTime
 }
+
+interface CleanableArchivedRepository {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number>
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number>
+}
+
+export type CleanableRepoName = {
+  [K in keyof Database]: Database[K] extends CleanableArchivedRepository
+    ? K
+    : never
+}[keyof Database]
 
 type TablesWithTimestamp = {
   [K in keyof DB]: DB[K] extends { timestamp: unknown } ? K : never
