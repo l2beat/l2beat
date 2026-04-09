@@ -24,6 +24,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -564,18 +565,9 @@ function getTaikoVKeys(): string[] {
 }
 
 function getVerifiers(): ChainSpecificAddress[] {
-  const result: ChainSpecificAddress[] = []
+  const result: ChainSpecificAddress[] = getSP1Verifiers(discovery)
   result.push(
-    discovery.getContractValue<ChainSpecificAddress>(
-      'TaikoSP1Verifier',
-      'sp1RemoteVerifier', // another router, tracking the actual verifiers is hard
-    ),
-  )
-  result.push(
-    discovery.getContractValue<ChainSpecificAddress>(
-      'TaikoRisc0Verifier',
-      'riscoGroth16Verifier', // another router, tracking the actual verifiers is hard
-    ),
+    discovery.getContract('RiscZeroGroth16Verifier').address,
   )
   return result
 }

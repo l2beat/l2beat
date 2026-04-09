@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x238c42b0b59049e4dfd68463b8c8af772e331405
+Generated with discovered.json: 0xfda917b8fcf5b836d57b5e56bf3860856fe93464
 
-# Diff at Thu, 09 Apr 2026 10:13:31 GMT:
+# Diff at Thu, 09 Apr 2026 11:31:45 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@a0c6d4495d3102a590451254ec3b7506796d5887 block: 1775136182
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@c9ede6c9bdb2aae4daeb2b2d95dc56f1420b43ab block: 1775136182
 - current timestamp: 1775721669
 
 ## Description
@@ -522,6 +522,12 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+```
+
+```diff
++   Status: CREATED
     contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e)
     +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
@@ -554,6 +560,12 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 +   Status: CREATED
     contract MainnetVerifier (eth:0x9cAa4948381590900FCdd8a4F06EB24138eD665d)
     +++ description: Enforces the Taiko Multiprover policy and routes to the downstream router contracts.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696)
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
 ```
 
 ```diff
