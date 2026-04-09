@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "privacy-pools",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xf241d57c6debae225c0f2e6ea1529373c9a9c9fb"]
+}

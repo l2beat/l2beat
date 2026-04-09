@@ -1,0 +1,197 @@
+{
+  "name": "tornado-cash",
+  "timestamp": 1775665924,
+  "configHash": "0xce91b9b0f8ce3d88f72e258af6e596b4f815757ed152fa4073cd32caa4bbd90f",
+  "entries": [
+    {
+      "name": "TornadoCash_Eth_01",
+      "address": "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x91a886957e3ef7c9535bebca9bb03c531cad68939e97b09ba97127e311ea5b4e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1576523323,
+      "sinceBlock": 9116966,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 27,
+        "denomination": "100000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "filledSubtrees": [
+          "0x1004d2d5cbb69925addb13d5eac04016dfd55dea9ba4a1f11b2d0e320edb7589",
+          "0x29c2864a3a65a6d007f72ead4f93602e64bffc9d30dfad25b7facaaca419e966",
+          "0x0d85dc46ecbd7bf5a7683377f8bcf46dc85e70397ace02b28c3b89b616534ea2",
+          "0x1a8108aeae4296cee1ec57220b228ca496d3519502366a45b755e6b6c8e8c287",
+          "0x28c4c8c73638b7c1b9c2dd2425f1de1288996c3766da455fe50ff262ba045f05"
+        ],
+        "getLastRoot": "0x1998803da17824907bffcf6014ff35c130531a1b3a0b6c8998f2e2e32f0d0c47",
+        "isMigrated": true,
+        "levels": 20,
+        "nextIndex": 52983,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "roots": [
+          "0x1faecea5a904383727f8af3bc93fafd457497bc03cac523403b5abbce1132065",
+          "0x0e83d912ef1d698370e686b8e6d5c6b9433bf33f56ecb2d1fbdd346d344c1470",
+          "0x00931306b3e761d27ef7e6afbca678cc8ee1b5cd103243e43c9481efd5fbba65",
+          "0x2f3d0b78374526197f4309bf48cd50fd69bc776bd7f001f43ce9653703a2d696",
+          "0x0a4db2c3e899907811aef99b1ba3e48a0d227123968cbb596329d6ae493af38a"
+        ],
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292",
+        "zeros": [
+          "0x2fe54c60d3acabf3343a35b6eba15db4821b340f76e741e2249685ed4899af6c",
+          "0x256a6135777eee2fd26f54b8b7037a25439d5235caee224154186d2b8a52e31d",
+          "0x1151949895e82ab19924de92c40a3d6f7bcb60d92b00504b8199613683f0c200",
+          "0x20121ee811489ff8d61f09fb89e313f14959a0f28bb428a20dba6b0b068b3bdb",
+          "0x0a89ca6ffa14cc462cfedb842c30ed221a50a3d6bf022a6a57dc82ab24c157c9"
+        ]
+      },
+      "errors": {
+        "filledSubtrees": "Processing error occurred.",
+        "roots": "Processing error occurred.",
+        "zeros": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": "TornadoCash_Eth_01"
+      }
+    },
+    {
+      "name": "TornadoCash_eth",
+      "address": "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1576534673,
+      "sinceBlock": 9117609,
+      "values": {
+        "$immutable": true,
+        "currentRootIndex": 92,
+        "denomination": "1000000000000000000",
+        "FIELD_SIZE": "21888242871839275222246405745257275088548364400416034343698204186575808495617",
+        "filledSubtrees": [
+          "0x09e5bb172bd20f08b8b3d8b895fe6ea909dad3b9bb815307c46121cdb779009f",
+          "0x18448088f002b7f4234a604f7c0bb1985443d9a78b9f27481f89a71ff63077d3",
+          "0x0967a73e09d86bdc6117824789b5c06e6a79a3477c0596d094cc246ac6864f7f",
+          "0x0d71602a8b4191a610e34fb18b662c72640d22feef91ac25cde7929fe36afeef",
+          "0x1a6a68558cb6380079cb89928f4df1cbe0eb28a89880817f64ad8db864db3257"
+        ],
+        "getLastRoot": "0x1dc6ce83239522391ee56b393a446753211573d81036da75cbcc243865b3cdf5",
+        "levels": 20,
+        "nextIndex": 81792,
+        "operator": "eth:0x0000000000000000000000000000000000000000",
+        "ROOT_HISTORY_SIZE": 100,
+        "roots": [
+          "0x2d2ddc8f03c6b53cd9a1a5746c4aa88654d81bb086aaa9e04028d80ada4cdd76",
+          "0x03529437c6db6fcf53a11ea0434968479e6de9c59e8b10d5ef31e04cb62ac2d0",
+          "0x02d08f33e5e0df2e7af99a70050c364c9fe6da2f94d0b29677b5ee07679b7aeb",
+          "0x11956d148d037c00e89a15500f18d8eee89049d05c76f94e3bfdbe88510142c2",
+          "0x2163049bbe86edf1b71ad70f6bb2fe39f8a421349aa84c27cdc5423d324f3443"
+        ],
+        "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+        "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292",
+        "zeros": [
+          "0x2fe54c60d3acabf3343a35b6eba15db4821b340f76e741e2249685ed4899af6c",
+          "0x256a6135777eee2fd26f54b8b7037a25439d5235caee224154186d2b8a52e31d",
+          "0x1151949895e82ab19924de92c40a3d6f7bcb60d92b00504b8199613683f0c200",
+          "0x20121ee811489ff8d61f09fb89e313f14959a0f28bb428a20dba6b0b068b3bdb",
+          "0x0a89ca6ffa14cc462cfedb842c30ed221a50a3d6bf022a6a57dc82ab24c157c9"
+        ]
+      },
+      "errors": {
+        "filledSubtrees": "Processing error occurred.",
+        "roots": "Processing error occurred.",
+        "zeros": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": "TornadoCash_eth"
+      }
+    },
+    {
+      "name": "Verifier",
+      "address": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1dffb25bccfe38aa825fa7a4413a34a8d34b7e1614b2950afbb06a0aed7a215d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1589278208,
+      "sinceBlock": 10050743,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": "Verifier"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function initializeTreeForMigration(bytes32[] _filledSubtrees, bytes32 _root)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function finishMigration() payable",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function migrateState(bytes32[] _commitments, bytes32[] _nullifierHashes)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function isMigrated() view returns (bool)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": [
+      "function changeOperator(address _newOperator)",
+      "function nullifierHashes(bytes32) view returns (bool)",
+      "function withdraw(bytes _proof, bytes32 _root, bytes32 _nullifierHash, address _recipient, address _relayer, uint256 _fee, uint256 _refund) payable",
+      "function verifier() view returns (address)",
+      "function hashLeftRight(bytes32 _left, bytes32 _right) pure returns (bytes32)",
+      "function FIELD_SIZE() view returns (uint256)",
+      "function levels() view returns (uint32)",
+      "function operator() view returns (address)",
+      "function isKnownRoot(bytes32 _root) view returns (bool)",
+      "function commitments(bytes32) view returns (bool)",
+      "function denomination() view returns (uint256)",
+      "function currentRootIndex() view returns (uint32)",
+      "function updateVerifier(address _newVerifier)",
+      "function isSpentArray(bytes32[] _nullifierHashes) view returns (bool[] spent)",
+      "function deposit(bytes32 _commitment) payable",
+      "function getLastRoot() view returns (bytes32)",
+      "function roots(uint256) view returns (bytes32)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function isSpent(bytes32 _nullifierHash) view returns (bool)",
+      "function zeros(uint256) view returns (bytes32)",
+      "function ZERO_VALUE() view returns (uint256)",
+      "function filledSubtrees(uint256) view returns (bytes32)",
+      "function nextIndex() view returns (uint32)",
+      "constructor(address _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)",
+      "event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp)",
+      "event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)"
+    ],
+    "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A": [
+      "function verifyProof(bytes proof, uint256[6] input) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 24836203 },
+  "permissionsConfigHash": "0x7e223ad694a964f43e5267363d91621c2b191dc464d6a2bd0170d811f197da78"
+}

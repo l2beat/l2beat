@@ -1,0 +1,319 @@
+{
+  "name": "privacy-pools",
+  "timestamp": 1775663274,
+  "configHash": "0xa1c1d7e2a2646ea70851592cd6cf8ff64dfae4b5e2936fbeb8a93c0b456f93cf",
+  "entries": [
+    {
+      "name": "WithdrawalVerifier",
+      "address": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x07cd5a627237e701cfe28108fb25dba3f03b259350b88d0e07401568e8ac8dcd"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743265199,
+      "sinceBlock": 22153709,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": "WithdrawalVerifier"
+      }
+    },
+    {
+      "name": "Entrypoint",
+      "address": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
+        "0x2a185e630005e18ddf039fbf7c694eaa05c51c5497249d11744f1146a8ac64df"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1743265247,
+      "sinceBlock": 22153713,
+      "values": {
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c",
+        "$pastUpgrades": [
+          [
+            "2025-03-29T16:20:47.000Z",
+            "0x4987385c58c49c9e3117244180094c5b7c5a0566c8547d13880df5e19076776c",
+            ["eth:0xdD8aA0560a08E39C0b3A84BBa356Bc025AfbD4C1"]
+          ],
+          [
+            "2025-05-22T20:30:23.000Z",
+            "0xde1c41f546e3b6064433e0db1309d8ca5a3ac78a8fc626f934b13d05ee67578f",
+            ["eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "associationSets": [
+          [
+            "6190063327416914933526649807596711562942473403260874688056563820140429817158",
+            "bafkreidpc2faaadoyp6bejzdjxnsaxqpbzbm2kwrg3cim4v6k6ilijngfq",
+            1743431771
+          ],
+          [
+            "3870142846635472744697142941044828814142065550921821896992086278427583110973",
+            "bafkreics3qwm5avrvbybbikg7m52dm4bxvemggof2u25bnqgclw34kyts4",
+            1743440567
+          ],
+          [
+            "11668755652791000937250180279985747512718339283222491121659424366360504393370",
+            "bafkreidjub7cw2clbh5s7whhaa2rbr7evgvsb2yackenm5y7mhzl3nwg4e",
+            1743535763
+          ],
+          [
+            "17531302184812247891614406270946394349354467019444146735467288176064113542222",
+            "bafkreiaoeyjh6uo4vcvasxykoykflcbyf2lcvhac5u2bl2epa5sm4n5roq",
+            1743613931
+          ],
+          [
+            "3153825146059881549629545176502988487846681022255191580581651058995918643194",
+            "bafkreif76kieyf2frt7bkgmxcsd6pl26wkjvrnnwp5qg4gbrfmgicbffru",
+            1743767327
+          ]
+        ],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "latestRoot": "20744917482605577264993352711607588297453976641762532233243731286456911269774",
+        "rootByIndex": [
+          "6190063327416914933526649807596711562942473403260874688056563820140429817158",
+          "3870142846635472744697142941044828814142065550921821896992086278427583110973",
+          "11668755652791000937250180279985747512718339283222491121659424366360504393370",
+          "17531302184812247891614406270946394349354467019444146735467288176064113542222",
+          "3153825146059881549629545176502988487846681022255191580581651058995918643194"
+        ],
+        "scopeToPool": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "usedPrecommitments": [false, false, false, false, false]
+      },
+      "errors": {
+        "associationSets": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred.",
+        "rootByIndex": "Processing error occurred.",
+        "scopeToPool": "Processing error occurred.",
+        "usedPrecommitments": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": "ERC1967Proxy",
+        "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": "Entrypoint"
+      }
+    },
+    {
+      "name": "CommitmentVerifier",
+      "address": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x68c7357a788298156bf6491b7f63e41b5ce2cb6863646cb5f6f031011abede4e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743265211,
+      "sinceBlock": 22153710,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": "CommitmentVerifier"
+      }
+    },
+    {
+      "address": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PrivacyPoolSimple",
+      "address": "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6cd03829f963a4753b1197064a6fc568184d89cdc380b934148ff6c8941f7ae9"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1743265259,
+      "sinceBlock": 22153714,
+      "values": {
+        "$immutable": true,
+        "ASSET": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "currentRoot": "8244922638534734488693642334286504651873305203589033882098329426615246685635",
+        "currentRootIndex": 23,
+        "currentTreeDepth": 13,
+        "currentTreeSize": 7447,
+        "dead": false,
+        "depositors": [
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
+        ],
+        "ENTRYPOINT": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+        "MAX_TREE_DEPTH": 32,
+        "nonce": 3846,
+        "nullifierHashes": [false, false, false, false, false],
+        "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
+        "ROOT_HISTORY_SIZE": 64,
+        "roots": [
+          "14994444975030549503684022777631955480110274453160080215750623280037052050614",
+          "20785264709575970406325929530270106676791418029590021068319225326994888678890",
+          "5208559471227322513443097066485691647608764772118643108623887279070021085114",
+          "21206995290700837780253937219057319488844207727776246846755428604028792509836",
+          "19138051319779271866101991790530853921521799597242509570176131913945704216103"
+        ],
+        "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
+        "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
+      },
+      "errors": {
+        "depositors": "Processing error occurred.",
+        "nullifierHashes": "Processing error occurred.",
+        "roots": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": "PrivacyPoolSimple"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[8] _pubSignals) view returns (bool)"
+    ],
+    "eth:0x15e355024de1CDc74ADdea7EBDf98418Ba5B1a2c": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error AssetMismatch()",
+      "error AssetPoolAlreadyRegistered()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EmptyRoot()",
+      "error FailedCall()",
+      "error InvalidEntrypointForPool()",
+      "error InvalidFeeBPS()",
+      "error InvalidIPFSCIDLength()",
+      "error InvalidIndex()",
+      "error InvalidInitialization()",
+      "error InvalidPoolState()",
+      "error InvalidProcessooor()",
+      "error InvalidWithdrawalAmount()",
+      "error MinimumDepositAmount()",
+      "error NativeAssetNotAccepted()",
+      "error NativeAssetTransferFailed()",
+      "error NoRootsAvailable()",
+      "error NotInitializing()",
+      "error PoolIsDead()",
+      "error PoolNotFound()",
+      "error PrecommitmentAlreadyUsed()",
+      "error ReentrancyGuardReentrantCall()",
+      "error RelayFeeGreaterThanMax()",
+      "error SafeERC20FailedOperation(address token)",
+      "error ScopePoolAlreadyRegistered()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error ZeroAddress()",
+      "event Deposited(address indexed _depositor, address indexed _pool, uint256 _commitment, uint256 _amount)",
+      "event FeesWithdrawn(address _asset, address _recipient, uint256 _amount)",
+      "event Initialized(uint64 version)",
+      "event PoolConfigurationUpdated(address _pool, address _asset, uint256 _newMinimumDepositAmount, uint256 _newVettingFeeBPS, uint256 _newMaxRelayFeeBPS)",
+      "event PoolRegistered(address _pool, address _asset, uint256 _scope)",
+      "event PoolRemoved(address _pool, address _asset, uint256 _scope)",
+      "event PoolWindDown(address _pool)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RootUpdated(uint256 _root, string _ipfsCID, uint256 _timestamp)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawalRelayed(address indexed _relayer, address indexed _recipient, address indexed _asset, uint256 _amount, uint256 _feeAmount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function assetConfig(address _asset) view returns (address pool, uint256 minimumDepositAmount, uint256 vettingFeeBPS, uint256 maxRelayFeeBPS)",
+      "function associationSets(uint256) view returns (uint256 root, string ipfsCID, uint256 timestamp)",
+      "function deposit(address _asset, uint256 _value, uint256 _precommitment) returns (uint256 _commitment)",
+      "function deposit(uint256 _precommitment) payable returns (uint256 _commitment)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _owner, address _postman)",
+      "function latestRoot() view returns (uint256 _root)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerPool(address _asset, address _pool, uint256 _minimumDepositAmount, uint256 _vettingFeeBPS, uint256 _maxRelayFeeBPS)",
+      "function relay(tuple(address processooor, bytes data) _withdrawal, tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[8] pubSignals) _proof, uint256 _scope)",
+      "function removePool(address _asset)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rootByIndex(uint256 _index) view returns (uint256 _root)",
+      "function scopeToPool(uint256 _scope) view returns (address _pool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updatePoolConfiguration(address _asset, uint256 _minimumDepositAmount, uint256 _vettingFeeBPS, uint256 _maxRelayFeeBPS)",
+      "function updateRoot(uint256 _root, string _ipfsCID) returns (uint256 _index)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function usedPrecommitments(uint256 _precommitment) view returns (bool _used)",
+      "function windDownPool(address _pool)",
+      "function withdrawFees(address _asset, address _recipient)"
+    ],
+    "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": [
+      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[4] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": [
+      "constructor(address _entrypoint, address _withdrawalVerifier, address _ragequitVerifier)",
+      "error ContextMismatch()",
+      "error FailedToSendNativeAsset()",
+      "error IncorrectASPRoot()",
+      "error InsufficientValue()",
+      "error InvalidCommitment()",
+      "error InvalidDepositValue()",
+      "error InvalidProcessooor()",
+      "error InvalidProof()",
+      "error InvalidTreeDepth()",
+      "error LeafAlreadyExists()",
+      "error LeafCannotBeZero()",
+      "error LeafGreaterThanSnarkScalarField()",
+      "error MaxTreeDepthReached()",
+      "error NotYetRagequitteable()",
+      "error NullifierAlreadySpent()",
+      "error OnlyEntrypoint()",
+      "error OnlyOriginalDepositor()",
+      "error PoolIsDead()",
+      "error ScopeMismatch()",
+      "error UnknownStateRoot()",
+      "error ZeroAddress()",
+      "event Deposited(address indexed _depositor, uint256 _commitment, uint256 _label, uint256 _value, uint256 _precommitmentHash)",
+      "event LeafInserted(uint256 _index, uint256 _leaf, uint256 _root)",
+      "event PoolDied()",
+      "event Ragequit(address indexed _ragequitter, uint256 _commitment, uint256 _label, uint256 _value)",
+      "event Withdrawn(address indexed _processooor, uint256 _value, uint256 _spentNullifier, uint256 _newCommitment)",
+      "function ASSET() view returns (address)",
+      "function ENTRYPOINT() view returns (address)",
+      "function MAX_TREE_DEPTH() view returns (uint32)",
+      "function RAGEQUIT_VERIFIER() view returns (address)",
+      "function ROOT_HISTORY_SIZE() view returns (uint32)",
+      "function SCOPE() view returns (uint256)",
+      "function WITHDRAWAL_VERIFIER() view returns (address)",
+      "function currentRoot() view returns (uint256 _root)",
+      "function currentRootIndex() view returns (uint32)",
+      "function currentTreeDepth() view returns (uint256 _depth)",
+      "function currentTreeSize() view returns (uint256 _size)",
+      "function dead() view returns (bool)",
+      "function deposit(address _depositor, uint256 _value, uint256 _precommitmentHash) payable returns (uint256 _commitment)",
+      "function depositors(uint256 _label) view returns (address _depositooor)",
+      "function nonce() view returns (uint256)",
+      "function nullifierHashes(uint256 _nullifierHash) view returns (bool _spent)",
+      "function ragequit(tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[4] pubSignals) _proof)",
+      "function roots(uint256 _index) view returns (uint256 _root)",
+      "function windDown()",
+      "function withdraw(tuple(address processooor, bytes data) _withdrawal, tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[8] pubSignals) _proof)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 24835983 },
+  "permissionsConfigHash": "0x8ff47b06e9a1520816115c5073a5736ff15474ca38ff10837960c330c1f04178"
+}
