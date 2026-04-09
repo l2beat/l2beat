@@ -10,6 +10,8 @@ import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFramework
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
 import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
+import { createPrivacyRouter } from './privacy/PrivacyRouter'
+// Privacy router serves static HTML, doesn't need manifest/render
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
@@ -78,6 +80,9 @@ export function createServerPageRouter(
       router.use('/', subRouter)
     }
   }
+
+  // Privacy dashboard (static HTML, no SSR needed)
+  router.use('/', createPrivacyRouter())
 
   return router
 }

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L2BEAT Privacy Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;--surface:#17191f;--surface-hover:#2b303b;--surface-2:#3b3f45;
+  --header:#1a1c20;--header-2:#23262b;--divider:#40444c;
+  --text:#fafafa;--text-2:#868b98;--text-3:#62666c;
+  --green:#50e35f;--yellow:#ffc107;--red:#f94a24;
+  --green-bg:rgba(80,227,95,.12);--yellow-bg:rgba(255,193,7,.12);--red-bg:rgba(249,74,36,.12);
+  --link:#66b2ff;--radius:8px;
+}
+html{font-family:'Roboto',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Layout */
+.page{max-width:1280px;margin:0 auto;padding:24px 16px 64px}
+.header{display:flex;align-items:center;gap:12px;padding:16px 0 32px;border-bottom:1px solid var(--divider);margin-bottom:32px}
+.logo{font-size:20px;font-weight:700;letter-spacing:-.5px}
+.logo span{color:var(--text-2)}
+.nav-pill{background:var(--surface);color:var(--text-2);padding:6px 14px;border-radius:6px;font-size:13px;font-weight:500;cursor:default}
+.nav-pill.active{background:var(--green-bg);color:var(--green)}
+
+/* Section titles */
+h1{font-size:28px;font-weight:700;margin-bottom:4px}
+h2{font-size:20px;font-weight:700;margin-bottom:16px;padding-top:32px}
+h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.subtitle{color:var(--text-2);font-size:14px;margin-bottom:24px}
+
+/* Summary grid */
+.summary-table{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface);border-radius:var(--radius);overflow:hidden;margin-bottom:32px}
+.summary-table th,.summary-table td{padding:10px 14px;text-align:center;border-bottom:1px solid var(--divider);font-size:13px}
+.summary-table th{background:var(--header);color:var(--text-2);font-weight:500;position:sticky;top:0;white-space:nowrap}
+.summary-table th:first-child,.summary-table td:first-child{text-align:left;padding-left:16px;font-weight:500}
+.summary-table tr:last-child td{border-bottom:none}
+.summary-table tbody tr:hover{background:var(--surface-hover)}
+
+/* Badges */
+.badge{display:inline-block;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:600;letter-spacing:.3px}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-yellow{background:var(--yellow-bg);color:var(--yellow)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+
+/* Protocol cards grid */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;margin-bottom:32px}
+.card{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);overflow:hidden;transition:border-color .15s}
+.card:hover{border-color:var(--text-3)}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--divider);cursor:pointer;user-select:none}
+.card-header h3{margin:0}
+.card-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.card-type{font-size:11px;color:var(--text-2);background:var(--header);padding:2px 8px;border-radius:4px;font-weight:500}
+.card-chain{font-size:11px;color:var(--text-3)}
+.expand-icon{color:var(--text-3);font-size:18px;transition:transform .2s}
+.card.open .expand-icon{transform:rotate(180deg)}
+
+/* Rosette inside card */
+.card-rosette{display:flex;align-items:center;gap:20px;padding:16px}
+.rosette-wrap{flex-shrink:0}
+.rosette-labels{flex:1;display:flex;flex-direction:column;gap:4px}
+.rosette-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.rosette-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.rosette-dim{color:var(--text-2);min-width:130px}
+.rosette-val{font-weight:600}
+
+/* Card details */
+.card-details{display:none;padding:0 16px 16px}
+.card.open .card-details{display:block}
+.detail-row{padding:10px 0;border-bottom:1px solid var(--divider)}
+.detail-row:last-child{border-bottom:none}
+.detail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.detail-rationale{color:var(--text-2);font-size:12px;line-height:1.6}
+
+/* Ranking bar */
+.ranking{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.rank-item{display:flex;align-items:center;gap:6px;background:var(--surface);padding:6px 12px;border-radius:6px;font-size:12px;border:1px solid var(--divider)}
+.rank-count{font-weight:700}
+
+/* Spectrum */
+.spectrum{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);padding:20px;margin-bottom:32px;overflow-x:auto}
+.spectrum-bar{display:flex;align-items:stretch;min-width:700px;height:64px;border-radius:6px;overflow:hidden;margin-bottom:12px}
+.spectrum-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;padding:0 8px;text-align:center;line-height:1.3;transition:flex .3s}
+.spectrum-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);min-width:700px}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--divider);margin-bottom:24px}
+.tab{padding:8px 20px;color:var(--text-2);font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* Sections */
+.section{display:none}
+.section.active{display:block}
+
+/* Methodology cards */
+.method-card{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.method-card h3{margin-bottom:4px}
+.method-card p{color:var(--text-2);margin-bottom:12px;font-size:13px}
+.method-row{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--divider);font-size:13px;color:var(--text-2);line-height:1.6}
+.method-row .badge{flex-shrink:0}
+
+/* Risk dimension tables */
+.risk-dim{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);margin-bottom:16px;overflow:hidden}
+.risk-dim-header{padding:14px 16px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px}
+.risk-dim-header h3{margin:0}
+.risk-dim-header em{color:var(--text-2);font-size:12px;font-style:normal}
+.risk-dim table{width:100%;border-collapse:collapse}
+.risk-dim td{padding:10px 16px;border-bottom:1px solid var(--divider);font-size:13px;vertical-align:top}
+.risk-dim tr:last-child td{border-bottom:none}
+.risk-dim tr:hover{background:var(--surface-hover)}
+.risk-dim td:first-child{font-weight:600;white-space:nowrap;width:130px}
+.risk-dim td:nth-child(2){width:80px;text-align:center}
+.risk-dim td:last-child{color:var(--text-2);line-height:1.6}
+
+/* Responsive */
+@media(max-width:768px){
+  .cards{grid-template-columns:1fr}
+  .summary-table{font-size:12px}
+  .summary-table th,.summary-table td{padding:8px 6px}
+  h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">L2BEAT <span>Privacy</span></div>
+  <nav style="display:flex;gap:6px;margin-left:auto">
+    <div class="nav-pill active" onclick="switchSection(this,'summary')">Summary</div>
+    <div class="nav-pill" onclick="switchSection(this,'risk')">Risk Analysis</div>
+    <div class="nav-pill" onclick="switchSection(this,'methodology')">Methodology</div>
+  </nav>
+</div>
+
+<!-- Title -->
+<h1>Privacy Protocols</h1>
+<p class="subtitle">Risk assessment of privacy protocols using a 5-dimension rosette framework. Evaluating cryptographic privacy, fund safety, censorship resistance, trust assumptions, and compliance compatibility.</p>
+
+<!-- SECTION: Summary -->
+<div class="section active" id="section-summary">
+  <h2 style="padding-top:0">Summary</h2>
+  <table class="summary-table" id="summaryTable">
+    <thead>
+      <tr>
+        <th style="min-width:140px">Protocol</th>
+        <th>Type</th>
+        <th>Privacy</th>
+        <th>Fund Safety</th>
+        <th>Censorship</th>
+        <th>Trust</th>
+        <th>Compliance</th>
+        </tr>
+    </thead>
+    <tbody id="summaryBody"></tbody>
+  </table>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('overview')">Protocol Cards</div>
+    <div class="tab" onclick="switchTab('spectrums')">Spectrums</div>
+  </div>
+
+  <div class="tab-content active" id="tab-overview">
+    <div class="cards" id="protocolCards"></div>
+  </div>
+
+  <div class="tab-content" id="tab-spectrums">
+    <h3>Privacy Strength</h3>
+    <div class="spectrum" id="privacySpectrum"></div>
+    <h3>Compliance Compatibility</h3>
+    <div class="spectrum" id="complianceSpectrum"></div>
+  </div>
+</div>
+
+<!-- SECTION: Risk Analysis -->
+<div class="section" id="section-risk">
+  <h2 style="padding-top:0">Risk Analysis</h2>
+  <p class="subtitle">Dimension-by-dimension comparison across all protocols.</p>
+
+  <div id="riskDimensions"></div>
+</div>
+
+<!-- SECTION: Methodology -->
+<div class="section" id="section-methodology">
+  <h2 style="padding-top:0">Methodology</h2>
+  <p class="subtitle">How each dimension is evaluated. Adapted from L2BEAT's risk rosette framework for rollups.</p>
+
+  <div class="method-card">
+    <h3>1. Privacy Guarantees</h3>
+    <p><em>How strong is the cryptographic privacy provided?</em></p>
+    <div class="method-row"><span class="badge badge-green">GREEN</span> Full cryptographic privacy via ZK proofs. Sender, receiver, and amounts hidden. Anonymity set grows over time. Variable amounts supported.</div>
+    <div class="method-row"><span class="badge badge-yellow">YELLOW</span> Cryptographic privacy with meaningful limitations: fixed denominations, partial metadata exposure, operator visibility, or deposits public.</div>
+    <div class="method-row"><span class="badge badge-red">RED</span> No cryptographic privacy. Privacy is encryption-based only (breakable with key compromise) or operational only.</div>
+  </div>
+
+  <div class="method-card">
+    <h3>2. Fund Safety</h3>
+    <p><em>Can funds be stolen, locked, or drained by any party?</em></p>
+    <div class="method-row"><span class="badge badge-green">GREEN</span> Core contracts immutable or non-upgradeable for fund logic. No admin can drain funds. No material past exploits.</div>
+    <div class="method-row"><span class="badge badge-yellow">YELLOW</span> Core fund logic secure, but upgradeability via governance (DAO + timelock). Or: ZK proofs prevent theft but operator can freeze funds. Fallback exit exists.</div>
+    <div class="method-row"><span class="badge badge-red">RED</span> Funds can be frozen/seized/lost through validator collusion, insolvency, admin action, or known unpatched vulnerabilities.</div>
+  </div>
+
+  <div class="method-card">
+    <h3>3. Censorship Resistance</h3>
+    <p><em>Can deposits or withdrawals be blocked by any party?</em></p>
+    <div class="method-row"><span class="badge badge-green">GREEN</span> No party can censor at protocol level. Permissionless deposit/withdrawal. Decentralized relayer/sequencer. Fallback to direct submission.</div>
+    <div class="method-row"><span class="badge badge-yellow">YELLOW</span> Soft censorship possible by compliance layer, but guaranteed fallback exit exists (e.g., ragequit, forced inclusion).</div>
+    <div class="method-row"><span class="badge badge-red">RED</span> Centralized parties can censor with no protocol-level fallback. Permissioned by design with no exit mechanism.</div>
+  </div>
+
+  <div class="method-card">
+    <h3>4. Trust Assumptions</h3>
+    <p><em>What external trust is required?</em></p>
+    <div class="method-row"><span class="badge badge-green">GREEN</span> Green trusted setup (L2BEAT framework). Contracts immutable. All data on-chain. No admin keys. Strong economic security or Ethereum-anchored.</div>
+    <div class="method-row"><span class="badge badge-yellow">YELLOW</span> Adequate trusted setup. Upgradeable via governance with timelocks. Some centralized components with checks.</div>
+    <div class="method-row"><span class="badge badge-red">RED</span> Significant trust in small validator set, centralized admin keys, reputation-only security, or history of exploits/insolvency.</div>
+  </div>
+
+  <div class="method-card">
+    <h3>5. Compliance Compatibility</h3>
+    <p><em>Can users demonstrate regulatory compliance without sacrificing privacy?</em></p>
+    <div class="method-row"><span class="badge badge-green">GREEN</span> Built-in compliance mechanism preserving privacy: viewing keys, ZK proofs of fund legitimacy, or programmable compliance.</div>
+    <div class="method-row"><span class="badge badge-yellow">YELLOW</span> Partial compliance: voluntary public exit sacrificing privacy, or compliance mechanism exists but centralized.</div>
+    <div class="method-row"><span class="badge badge-red">RED</span> No compliance mechanism. Protocol sanctioned or facing significant regulatory action.</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ── Data ──
+const DIM = ['privacy','safety','censorship','trust','compliance'];
+const DIM_LABELS = {
+  privacy:'Privacy Guarantees', safety:'Fund Safety',
+  censorship:'Censorship Resistance', trust:'Trust Assumptions',
+  compliance:'Compliance'
+};
+
+const protocols = [
+  {
+    name:'Railgun', type:'Shielded UTXO', chain:'Ethereum, Polygon, BSC, Arbitrum',
+    category:'application',
+    ratings:{privacy:'green',safety:'yellow',censorship:'green',trust:'yellow',compliance:'green'},
+    rationale:{
+      privacy:'Full ZK privacy: sender, receiver, amounts, token types all hidden. Variable amounts via UTXO model. Per-token anonymity set grows monotonically. Private DeFi composability via Adapt modules. 54 specialized Groth16 circuits.',
+      safety:'DAO governance can upgrade implementation via proxy (2M RAIL quorum, 7-day window). Governance attack could theoretically drain vault. No admin EOA. Proxy can be paused. 7+ audits mitigate risk.',
+      censorship:'Permissionless deposit/withdrawal. Decentralized Waku P2P broadcasters. Direct submission always available. Token blocklist prevents new shields only -- can\'t block internal transfers or unshields.',
+      trust:'Perpetual Powers of Tau (open participation). DAO-upgradeable proxy (2M RAIL quorum, 7-day window). 7+ audits (Trail of Bits, Zokyo). All data on-chain.',
+      compliance:'Private Proof of Innocence (PPOI): ZK proof that funds NOT from sanctioned sources. Exclusion-based ("not in bad set"). Multiple decentralized List Providers. Not sanctioned.'
+    }
+  },
+  {
+    name:'Zcash', type:'L1 Chain', chain:'Own PoW chain',
+    category:'l1',
+    ratings:{privacy:'green',safety:'green',censorship:'yellow',trust:'yellow',compliance:'green'},
+    rationale:{
+      privacy:'Full ZK privacy for shielded txs. ~5M ZEC ($1.66B) anonymity set in Orchard. Halo 2 proofs. Arity-hiding actions. All-or-nothing censorship resistance (shielded txs indistinguishable).',
+      safety:'Protocol-level (no smart contract risk). Turnstile prevents hidden inflation. Fixed 21M supply. March 2026 Sprout vulnerability patched before exploitation.',
+      censorship:'All-or-nothing at protocol level (strong: can\'t selectively censor shielded txs). But 73 exchange delistings limit practical access. PoW 51% attack risk being mitigated by Crosslink PoS transition.',
+      trust:'Orchard: NO trusted setup (Halo 2). But governance fragility (ECC team departed Jan 2026). Standalone PoW chain security. Sapling pool still relies on 87-person Groth16 setup.',
+      compliance:'Viewing keys (incoming/full) enable selective disclosure at protocol level. Payment disclosure proofs. Avoided Binance delisting via selective disclosure capabilities.'
+    }
+  },
+  {
+    name:'Aztec', type:'L2 Rollup', chain:'Ethereum L2',
+    category:'l2',
+    ratings:{privacy:'green',safety:'red',censorship:'green',trust:'yellow',compliance:'green'},
+    rationale:{
+      privacy:'Strongest model: programmable private smart contracts via Noir. Sender, receiver, amounts, function calls, AND state all hidden. Private-by-default. Unified anonymity set (all notes). Client-side proof generation.',
+      safety:'Critical unpatched proving system vulnerability (March 2026, fix July 2026). NOT mitigated by re-execution committee. AVM audits incomplete. Alpha software. ~$6.5M security ceiling.',
+      censorship:'3,500+ sequencers from launch. Escape hatch every 16 hours (any address can propose blocks). Forced inclusion via L1. All txs look like "uniform random numbers" -- selective censorship nearly impossible.',
+      trust:'Universal PLONK setup (good -- one ceremony for all circuits). 3,500+ sequencers from day one. But Alpha status, critical unpatched bug, incomplete audits.',
+      compliance:'App-siloed viewing keys: share per-app without cross-app exposure. Programmable compliance via Noir. Per-application auditability. Issuers can enforce viewability.'
+    }
+  },
+  {
+    name:'Privacy Pools', type:'Mixer + ASP', chain:'Ethereum',
+    category:'application',
+    ratings:{privacy:'yellow',safety:'green',censorship:'yellow',trust:'yellow',compliance:'green'},
+    rationale:{
+      privacy:'ZK proof hides deposit-withdrawal link with variable amounts and partial withdrawals. But deposits are PUBLIC (address, amount, label visible). Anonymity set limited to ASP-approved deposits only.',
+      safety:'Pool contracts non-upgradeable, verifiers immutable. Ragequit guarantees funds always withdrawable by original depositor. Entrypoint upgradeable but holds no funds.',
+      censorship:'ASP can soft-censor by excluding labels from approval tree. But ragequit guarantees public exit bypassing ASP. Currently single ASP (0xbow) = single soft-censorship point.',
+      trust:'500+ participant trusted setup (Oxorio audit). Pool contracts non-upgradeable. But Entrypoint UUPS-upgradeable. Single ASP. 4 audit reports.',
+      compliance:'Purpose-built for "privacy AND compliance." ASP model: prove fund legitimacy in ZK. Co-designed by Vitalik Buterin + Chainalysis chief scientist. EF Kohaku wallet integration.'
+    }
+  },
+  {
+    name:'Tornado Cash', type:'ZK Mixer', chain:'Ethereum',
+    category:'application',
+    ratings:{privacy:'yellow',safety:'green',censorship:'green',trust:'green',compliance:'red'},
+    rationale:{
+      privacy:'Strong ZK for deposit-withdrawal link. But fixed denominations limit anonymity set diversity. ~35% deanonymizable via timing/amount/wallet fingerprinting. Post-sanctions volume drop shrank sets.',
+      safety:'Core mixer contracts completely immutable. No admin, pause, selfdestruct, or upgrade. Funds move only via valid ZK proof + unused nullifier. 2023 governance attack affected TORN/governance only.',
+      censorship:'No blocklist or admin pause in core contracts. Anyone can deposit/withdraw. Decentralized TORN-staked relayers. Direct submission always available.',
+      trust:'1,114-participant trusted setup (NCC Group audit). Core contracts immutable. All data on Ethereum L1. No admin keys. ABDK audit -- no critical issues. Green trusted setup (L2BEAT framework).',
+      compliance:'No compliance mechanism. OFAC-sanctioned August 2022 (partially reversed 2024-2025). Developers arrested. No way to prove legitimate use within the protocol.'
+    }
+  },
+  {
+    name:'Prividium', type:'Validium (ZK Stack)', chain:'Ethereum L2',
+    category:'institutional',
+    ratings:{privacy:'yellow',safety:'yellow',censorship:'red',trust:'yellow',compliance:'green'},
+    rationale:{
+      privacy:'Nothing reaches Ethereum (strong external privacy). But operator sees ALL transactions in plaintext. Zero privacy from the operator. "Selective disclosure" is OIDC access-control, not cryptographic.',
+      safety:'ZK proofs prevent theft (Ethereum verifies). But operator can freeze funds by withholding data. L1 priority queue exists but constrained by filterer. Shared bridge systemic risk.',
+      censorship:'Centralized sequencer. PrividiumTransactionFilterer restricts L1 forced txs. Non-allowlisted: self-deposits only (if depositsAllowed=true). Operator can toggle depositsAllowed to false.',
+      trust:'Ethereum-anchored state verification (strong). STARK proofs on L1. But single operator for DA (no DAC). Shared bridge with zero-delay emergency upgrade.',
+      compliance:'Proxy RPC with OIDC/Keycloak identity. Institutional KYC built-in. Role-based access control. Operator has full visibility. Permissioned by design.'
+    }
+  },
+  {
+    name:'Canton', type:'Coordination Protocol', chain:'Own infrastructure',
+    category:'institutional',
+    ratings:{privacy:'yellow',safety:'red',censorship:'red',trust:'red',compliance:'green'},
+    rationale:{
+      privacy:'Per-view encryption -- no single infrastructure node sees all data. But not ZK-based: metadata leaks (communication frequency, message size). No amounts hidden cryptographically.',
+      safety:'No unilateral exit mechanism. Zero economic security (no staking/slashing). Mediator can fabricate verdicts. Cross-domain transfers have limbo states. No external anchor prevents theft.',
+      censorship:'Domain operator has complete censorship power on private sync domains. No protocol-level forced inclusion. Client-side amplification is not a guarantee. Recourse: disconnect.',
+      trust:'~40 invited Super Validators. Zero economic security. Reputation and legal agreements only. Mediator trusted to produce correct verdicts. No external verifier.',
+      compliance:'Purpose-built for institutional compliance. DAML signatory model. GDPR-compliant pruning. Deployed by Broadridge ($385B daily), DTCC.'
+    }
+  }
+];
+
+// ── Helpers ──
+const colorMap = {green:'var(--green)',yellow:'var(--yellow)',red:'var(--red)'};
+const bgMap = {green:'var(--green-bg)',yellow:'var(--yellow-bg)',red:'var(--red-bg)'};
+const scoreMap = {green:2,yellow:1,red:0};
+const score = p => DIM.reduce((s,d) => s + scoreMap[p.ratings[d]], 0);
+
+function badgeHTML(rating) {
+  return `<span class="badge badge-${rating}">${rating.toUpperCase()}</span>`;
+}
+
+// ── Rosette SVG (L2BEAT exact paths) ──
+const PIZZA_PATHS = [
+  "M80.1197 98.1908C82.7076 97.3794 85.3357 99.3241 85.3164 102.036L84.8545 166.765C84.8377 169.125 82.8003 170.931 80.4746 170.529C72.5287 169.154 55.2512 165.197 41.8799 155.303C27.3325 144.539 19.099 129.668 15.8256 122.729C14.8485 120.658 15.9867 118.3 18.1718 117.615L80.1197 98.1908Z",
+  "M79.6957 83.0363C81.2478 85.2605 80.1834 88.3517 77.591 89.1488L15.1534 108.347C12.8974 109.04 10.5622 107.639 10.2458 105.3C9.15861 97.2612 7.71374 79.4261 13.1797 63.5516C19.1266 46.2807 30.9507 33.8483 36.6192 28.6114C38.3013 27.0574 40.8936 27.4331 42.2042 29.3111L79.6957 83.0363Z",
+  "M93.3478 76.656C91.7501 78.8477 88.4808 78.8477 86.8831 76.656L48.7521 24.3486C47.3618 22.4413 47.9253 19.7777 50.0343 18.7178C57.2394 15.0966 73.4815 8.00005 90.1154 8.00005C108.212 8.00005 123.676 15.0564 130.435 18.6869C132.452 19.7706 132.94 22.3436 131.591 24.1941L93.3478 76.656Z",
+  "M102.815 89.0557C100.252 88.1686 99.2962 85.0421 100.925 82.8735L139.798 31.1155C141.216 29.2282 143.928 28.9884 145.558 30.6953C151.128 36.5269 162.663 49.9844 167.526 65.8915C172.817 83.1978 170.59 100.049 169.094 107.574C168.648 109.82 166.33 111.039 164.166 110.29L102.815 89.0557Z",
+  "M95.8885 101.938C95.9165 99.2258 98.5781 97.3273 101.151 98.1838L162.57 118.625C164.809 119.371 165.897 121.866 164.796 123.954C161.033 131.086 151.931 146.295 138.389 155.955C123.656 166.464 106.969 169.699 99.3581 170.668C97.0864 170.957 95.195 169.146 95.2186 166.856L95.8885 101.938Z"
+];
+// Order: compliance(0), censorship(1), trust(2), safety(3), privacy(4)
+const DIM_TO_SLICE = {privacy:4, safety:3, censorship:1, trust:2, compliance:0};
+
+function rosetteSVG(ratings, size=130) {
+  const id = 'r' + Math.random().toString(36).slice(2,8);
+  let svg = `<svg width="${size}" height="${size}" viewBox="0 0 180 180">`;
+  svg += `<defs>
+    <clipPath id="${id}-outer"><rect width="180" height="180" rx="90"/></clipPath>
+    <clipPath id="${id}-inner"><rect x="73.09" y="-23.57" width="162.42" height="162.42" rx="81.21" transform="rotate(36.45 73.09 -23.57)"/></clipPath>
+  </defs>`;
+  svg += `<g clip-path="url(#${id}-outer)">`;
+  svg += `<circle cx="90" cy="90" r="90" fill="#23262b" stroke="#40444c" stroke-width="2"/>`;
+  svg += `<g clip-path="url(#${id}-inner)">`;
+  DIM.forEach(d => {
+    const i = DIM_TO_SLICE[d];
+    svg += `<path d="${PIZZA_PATHS[i]}" fill="${colorMap[ratings[d]]}" opacity=".9"/>`;
+  });
+  svg += '</g></g></svg>';
+  return svg;
+}
+
+// ── Render Protocol Cards ──
+function renderCards() {
+  const container = document.getElementById('protocolCards');
+  const sorted = [...protocols].sort((a,b) => score(b) - score(a));
+  sorted.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+        <div>
+          <h3>${p.name}</h3>
+          <div class="card-meta">
+            <span class="card-type">${p.type}</span>
+            <span class="card-chain">${p.chain}</span>
+          </div>
+        </div>
+        <span class="expand-icon">&#9662;</span>
+      </div>
+      <div class="card-rosette">
+        <div class="rosette-wrap">${rosetteSVG(p.ratings, 110)}</div>
+        <div class="rosette-labels">
+          ${DIM.map(d => `
+            <div class="rosette-row">
+              <div class="rosette-dot" style="background:${colorMap[p.ratings[d]]}"></div>
+              <span class="rosette-dim">${DIM_LABELS[d]}</span>
+              <span class="rosette-val" style="color:${colorMap[p.ratings[d]]}">${p.ratings[d].toUpperCase()}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card-details">
+        ${DIM.map(d => `
+          <div class="detail-row">
+            <div class="detail-header">
+              <span>${DIM_LABELS[d]}</span>
+              ${badgeHTML(p.ratings[d])}
+            </div>
+            <div class="detail-rationale">${p.rationale[d]}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ── Render Spectrums ──
+function renderSpectrums() {
+  // Privacy spectrum
+  const privOrder = ['Canton','Prividium','Privacy Pools','Tornado Cash','Zcash','Railgun','Aztec'];
+  const privLabels = ['Encryption only','Operator sees all','Deposits public','Fixed denominations','Full ZK (L1)','Full ZK + DeFi','Programmable privacy'];
+  const privColors = ['#f94a24','#f94a24','#ffc107','#ffc107','#50e35f','#50e35f','#50e35f'];
+  let privHTML = '<div class="spectrum-bar">';
+  privOrder.forEach((name,i) => {
+    privHTML += `<div class="spectrum-seg" style="flex:1;background:${privColors[i]}20;color:${privColors[i]};border-right:1px solid var(--divider)">${name}</div>`;
+  });
+  privHTML += '</div><div class="spectrum-label"><span>Weakest privacy</span><span>Strongest privacy</span></div>';
+  document.getElementById('privacySpectrum').innerHTML = privHTML;
+
+  // Compliance spectrum
+  const compOrder = ['Tornado Cash','Railgun','Zcash','Privacy Pools','Aztec','Prividium','Canton'];
+  const compLabels2 = ['No mechanism','Exclusion ZK','Viewing keys','Inclusion ZK','Programmable','Institutional KYC','Full institutional'];
+  const compColors = ['#f94a24','#50e35f','#50e35f','#50e35f','#50e35f','#50e35f','#50e35f'];
+  let compHTML = '<div class="spectrum-bar">';
+  compOrder.forEach((name,i) => {
+    compHTML += `<div class="spectrum-seg" style="flex:1;background:${compColors[i]}20;color:${compColors[i]};border-right:1px solid var(--divider)"><div>${name}</div><div style="font-size:9px;opacity:.7;margin-top:2px">${compLabels2[i]}</div></div>`;
+  });
+  compHTML += '</div><div class="spectrum-label"><span>No compliance</span><span>Full institutional compliance</span></div>';
+  document.getElementById('complianceSpectrum').innerHTML = compHTML;
+}
+
+// ── Tab switching ──
+function switchTab(id) {
+  const parent = event.target.closest('.section');
+  parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  parent.querySelector('#tab-'+id).classList.add('active');
+}
+
+// ── Section switching (nav pills) ──
+function switchSection(el, id) {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('section-'+id).classList.add('active');
+}
+
+// ── Render Risk Analysis ──
+function renderRiskAnalysis() {
+  const container = document.getElementById('riskDimensions');
+  const sorted = [...protocols].sort((a,b) => score(b) - score(a));
+  const questions = {
+    privacy:'How strong is the cryptographic privacy?',
+    safety:'Can funds be stolen, locked, or drained?',
+    censorship:'Can deposits or withdrawals be blocked?',
+    trust:'What external trust is required?',
+    compliance:'Can users demonstrate compliance without sacrificing privacy?'
+  };
+  DIM.forEach(d => {
+    const dimSorted = [...protocols].sort((a,b) => scoreMap[b.ratings[d]] - scoreMap[a.ratings[d]]);
+    let html = `<div class="risk-dim">
+      <div class="risk-dim-header"><h3>${DIM_LABELS[d]}</h3><em>${questions[d]}</em></div>
+      <table>`;
+    dimSorted.forEach(p => {
+      html += `<tr>
+        <td>${p.name}</td>
+        <td>${badgeHTML(p.ratings[d])}</td>
+        <td>${p.rationale[d]}</td>
+      </tr>`;
+    });
+    html += '</table></div>';
+    container.innerHTML += html;
+  });
+}
+
+// ── Render Summary with category tabs ──
+function renderSummaryTabs() {
+  const publicProtos = protocols.filter(p => p.category !== 'institutional').sort((a,b) => score(b) - score(a));
+  const instProtos = protocols.filter(p => p.category === 'institutional').sort((a,b) => score(b) - score(a));
+
+  const tbody = document.getElementById('summaryBody');
+  tbody.dataset.category = 'public';
+
+  function fillTable(list) {
+    tbody.innerHTML = '';
+    list.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${p.name}</strong></td>
+        <td><span class="card-type">${p.type}</span></td>
+        <td>${badgeHTML(p.ratings.privacy)}</td>
+        <td>${badgeHTML(p.ratings.safety)}</td>
+        <td>${badgeHTML(p.ratings.censorship)}</td>
+        <td>${badgeHTML(p.ratings.trust)}</td>
+        <td>${badgeHTML(p.ratings.compliance)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Add category tabs before the table
+  const tabsDiv = document.createElement('div');
+  tabsDiv.className = 'tabs';
+  tabsDiv.style.marginBottom = '0';
+  tabsDiv.innerHTML = `
+    <div class="tab active" onclick="switchCategoryTab(this,'public')">Public Protocols</div>
+    <div class="tab" onclick="switchCategoryTab(this,'institutional')">Institutional Protocols</div>
+  `;
+  document.getElementById('summaryTable').parentNode.insertBefore(tabsDiv, document.getElementById('summaryTable'));
+
+  window.switchCategoryTab = function(el, cat) {
+    el.parentNode.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    fillTable(cat === 'public' ? publicProtos : instProtos);
+  };
+
+  fillTable(publicProtos);
+}
+
+// ── Init ──
+renderSummaryTabs();
+renderCards();
+renderSpectrums();
+renderRiskAnalysis();
+</script>
+</body>
+</html>
