@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Defines a whitelist of addresses.",
+  "description": "Defines the whitelist of addresses allowed to prove proposals. Non-whitelisted provers must wait for the permissionless proving delay before they can submit proofs.",
+  "category": "core",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": ["whitelisted"],
   "fields": {
