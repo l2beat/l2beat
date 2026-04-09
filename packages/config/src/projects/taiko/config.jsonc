@@ -65,9 +65,9 @@
             "method": "function getVerifier(bytes4 selector) view returns (address)",
             "args": ["0x73c457ba"]
           },
-          "description": "Currently used Risc0 verifier contract, selector determined manually from calldata",
+          "description": "Currently used Risc0 verifier contract, selector determined manually from calldata"
         }
       }
-    } 
+    }
   }
 }
