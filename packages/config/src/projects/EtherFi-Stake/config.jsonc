@@ -29,7 +29,7 @@
     // External: Curve stETH/ETH pool
     "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022": {
       "ignoreRelatives": ["coins","future_owner","lp_token","owner"],
-      "ignoreInWatchMode": ["admin_balances", "admin_fee", "balances", "get_virtual_price"]
+      "ignoreInWatchMode": ["admin_balances", "balances", "get_virtual_price"]
     },
     // External: Lido WithdrawalQueueERC721
     "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": {
@@ -43,7 +43,7 @@
     // External: Curve pool
     "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6": {
       "ignoreRelatives": ["admin_fee_receiver","coins","DOMAIN_SEPARATOR","factory","owner"],
-      "ignoreInWatchMode": ["admin_balances", "admin_fee", "balances", "ema_price", "get_p", "get_virtual_price", "last_price", "ma_last_time", "price_oracle", "stored_rates", "totalSupply"]
+      "ignoreInWatchMode": ["admin_balances", "balances", "ema_price", "get_p", "get_virtual_price", "last_price", "ma_last_time", "price_oracle", "stored_rates", "totalSupply"]
     },
     // External: Curve cbETH pool
     "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A": {
