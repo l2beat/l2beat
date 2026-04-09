@@ -334,7 +334,6 @@ const protocols = [
 
 // ── Helpers ──
 const colorMap = {green:'var(--green)',yellow:'var(--yellow)',red:'var(--red)'};
-const bgMap = {green:'var(--green-bg)',yellow:'var(--yellow-bg)',red:'var(--red-bg)'};
 const scoreMap = {green:2,yellow:1,red:0};
 const score = p => DIM.reduce((s,d) => s + scoreMap[p.ratings[d]], 0);
 
@@ -421,7 +420,6 @@ function renderCards() {
 function renderSpectrums() {
   // Privacy spectrum
   const privOrder = ['Canton','Prividium','Privacy Pools','Tornado Cash','Zcash','Railgun','Aztec'];
-  const privLabels = ['Encryption only','Operator sees all','Deposits public','Fixed denominations','Full ZK (L1)','Full ZK + DeFi','Programmable privacy'];
   const privColors = ['#f94a24','#f94a24','#ffc107','#ffc107','#50e35f','#50e35f','#50e35f'];
   let privHTML = '<div class="spectrum-bar">';
   privOrder.forEach((name,i) => {
@@ -443,6 +441,8 @@ function renderSpectrums() {
 }
 
 // ── Tab switching ──
+window.switchTab = switchTab;
+window.switchSection = switchSection;
 function switchTab(id) {
   const parent = event.target.closest('.section');
   parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -462,7 +462,6 @@ function switchSection(el, id) {
 // ── Render Risk Analysis ──
 function renderRiskAnalysis() {
   const container = document.getElementById('riskDimensions');
-  const sorted = [...protocols].sort((a,b) => score(b) - score(a));
   const questions = {
     privacy:'How strong is the cryptographic privacy?',
     safety:'Can funds be stolen, locked, or drained?',

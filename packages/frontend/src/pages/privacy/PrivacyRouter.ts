@@ -1,6 +1,6 @@
-import express from 'express'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import express from 'express'
 
 export function createPrivacyRouter() {
   const router = express.Router()
