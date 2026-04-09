@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AaveOracle",
+  "category": "core",
+  "description": "Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.",
+  "ignoreMethods": ["getReservePrice"],
+  "fields": {
+    "_reserveCount": {
+      "handler": {
+        "type": "call",
+        "method": "function getReserveCount() view returns (uint256)",
+        "args": [],
+        "address": "{{ spoke }}"
+      }
+    },
+    "getReserveSource": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Per-reserveId price source contract. Manipulating any of these breaks the spoke's collateral / debt accounting.",
+      "handler": {
+        "type": "array",
+        "method": "getReserveSource",
+        "length": "{{ _reserveCount }}"
+      }
+    }
+  }
+}

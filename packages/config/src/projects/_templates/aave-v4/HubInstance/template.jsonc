@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HubInstance",
+  "category": "core",
+  "description": "Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance role members in the AccessManager (authority) can change every per-asset parameter and the spoke whitelist; the HubProxyAdmin can swap the implementation.",
+  "ignoreRelatives": ["getAsset", "getAssetConfig"],
+  "ignoreMethods": [
+    "getAddedAssets",
+    "getAddedShares",
+    "getAssetUnderlyingAndDecimals",
+    "getAssetDrawnIndex",
+    "getAssetOwed",
+    "getAssetTotalOwed",
+    "getAssetPremiumRay",
+    "getAssetDrawnShares",
+    "getAssetPremiumData",
+    "getAssetLiquidity",
+    "getAssetDeficitRay",
+    "getAssetAccruedFees",
+    "getAssetSwept",
+    "getAssetDrawnRate",
+    "getAssetId"
+  ],
+  "fields": {
+    "authority": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "AccessManager authority gating every privileged hub function."
+    },
+    "getAsset": {
+      "description": "Per-assetId struct: liquidity, fees, decimals, drawn shares, premium data, plus the underlying token, irStrategy, reinvestmentController, and feeReceiver.",
+      "handler": {
+        "type": "array",
+        "method": "getAsset",
+        "length": "{{ getAssetCount }}"
+      }
+    },
+    "getAssetConfig": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-assetId config: feeReceiver (treasury), liquidityFee, irStrategy, reinvestmentController.",
+      "handler": {
+        "type": "array",
+        "method": "getAssetConfig",
+        "length": "{{ getAssetCount }}"
+      }
+    },
+    "getSpokeCount": {
+      "description": "Number of registered spokes per assetId. The hub is cross-chain so multiple spokes (one per chain or market) may register interest in the same asset.",
+      "handler": {
+        "type": "array",
+        "method": "getSpokeCount",
+        "length": "{{ getAssetCount }}"
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessManagerEnumerable",
+  "category": "gov",
+  "description": "OpenZeppelin V5 AccessManager with an enumerable extension. The single source of truth for which roles can call which functions on which Aave V4 contracts. Trusting any Aave V4 instance ultimately reduces to trusting the role members and target gating registered here.",
+  "fields": {
+    "getRole": {
+      "description": "Flat enumeration of every roleId registered in the manager.",
+      "handler": {
+        "type": "array",
+        "method": "getRole",
+        "length": "{{ getRoleCount }}"
+      }
+    },
+    "getRoleLabel": {
+      "description": "Human-readable label per role index. Pair with getRole.",
+      "handler": {
+        "type": "array",
+        "method": "getRoleLabel",
+        "length": "{{ getRoleLabelCount }}"
+      }
+    },
+    "roleMembers": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Per-role membership keyed by roleId, derived live from RoleGranted/RoleRevoked events. The address set here is the trust root of every privileged Aave V4 action gated through this manager.",
+      "handler": {
+        "type": "event",
+        "groupBy": "roleId",
+        "select": "account",
+        "add": { "event": "RoleGranted" },
+        "remove": { "event": "RoleRevoked" }
+      }
+    },
+    "roleAdmins": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Per-role admin role, derived from RoleAdminChanged events. The admin role can grant and revoke the role.",
+      "handler": {
+        "type": "event",
+        "groupBy": "roleId",
+        "select": "admin",
+        "set": { "event": "RoleAdminChanged" }
+      }
+    },
+    "roleGuardians": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Per-role guardian role, derived from RoleGuardianChanged events. The guardian role can cancel scheduled operations of the gated role.",
+      "handler": {
+        "type": "event",
+        "groupBy": "roleId",
+        "select": "guardian",
+        "set": { "event": "RoleGuardianChanged" }
+      }
+    },
+    "roleGrantDelays": {
+      "severity": "HIGH",
+      "description": "Per-role grant delay (seconds), derived from RoleGrantDelayChanged events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "roleId",
+        "select": ["delay", "since"],
+        "set": { "event": "RoleGrantDelayChanged" }
+      }
+    },
+    "targetGatedFunctions": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Per-target list of (selector, roleId) tuples, i.e. which function selectors on which targets require which role.",
+      "handler": {
+        "type": "event",
+        "groupBy": "target",
+        "select": ["selector", "roleId"],
+        "add": { "event": "TargetFunctionRoleUpdated" }
+      }
+    },
+    "targetAdminDelays": {
+      "severity": "HIGH",
+      "description": "Per-target admin delay (seconds), derived from TargetAdminDelayUpdated events. Time the AccessManager must wait before applying a configuration change that affects the target.",
+      "handler": {
+        "type": "event",
+        "groupBy": "target",
+        "select": ["delay", "since"],
+        "set": { "event": "TargetAdminDelayUpdated" }
+      }
+    },
+    "$gatedTargets": {
+      "description": "Flat deduped list of every gated target address. Helper field so the BFS picks up these addresses (groupBy keys are not walked).",
+      "handler": {
+        "type": "event",
+        "select": "target",
+        "add": { "event": "TargetFunctionRoleUpdated" }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ACLManager",
+  "description": "Aave V4 ACLManager (legacy bytes32 role variant). Tracks roles like RISK_ADMIN, EMERGENCY_ADMIN, BRIDGE, etc. for the price-cap adapters and other contracts that consult it via ACL_MANAGER. Distinct from the OZ V5 AccessManager that gates Hub/Spoke functions."
+}

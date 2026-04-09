@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HubConfigurator",
+  "description": "Aave V4 HubConfigurator. Privileged interface (gated through the AccessManager) for configuring per-asset parameters on the Hub: irStrategy, treasury, premium, spoke whitelist, asset listing/delisting."
+}

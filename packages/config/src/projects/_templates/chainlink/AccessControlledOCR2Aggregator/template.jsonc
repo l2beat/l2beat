@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AccessControlledOCR2Aggregator",
+  "description": "Chainlink OCR2 price aggregator. Off-chain reporting feeds; admin chain (transmitters, billing, requester access, owner) belongs to Chainlink.",
+  "ignoreRelatives": [
+    "getBillingAccessController",
+    "getRequesterAccessController",
+    "getLinkToken",
+    "getTransmitters",
+    "getValidatorConfig",
+    "owner",
+    "validator",
+    "aggregator"
+  ]
+}

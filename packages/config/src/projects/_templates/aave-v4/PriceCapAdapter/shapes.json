@@ -1,0 +1,74 @@
+{
+  "WstETHPriceCapAdapter": {
+    "hash": "0x7140fbae1cae631b576727c057742eacdd61b1418f8abae2fc3b9c276863ab23",
+    "address": "eth:0x869C9Ae2C8fbe82a8b0F768b9F791f89E083222C",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "WeETHPriceCapAdapter": {
+    "hash": "0x65ab2677d4d71c1b59a8b1a973f4562a750fd7c1db16f993cc80bc60646b62ce",
+    "address": "eth:0xf112aF6F0A332B815fbEf3Ff932c057E570b62d3",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "PriceCapAdapterStable": {
+    "hash": "0x875f16df2561b3a6ed8fa9b4a5070d169218b67a156c6cd222e66961af512842",
+    "address": "eth:0x25DEd2f9aE6ae9416693AB63Abe3aB25493861FD",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "EURPriceCapAdapterStable": {
+    "hash": "0x1ca39b61338d08d003c3a91ece7ec83ce12c65963415e1737efc8dd2b786dfe0",
+    "address": "eth:0xa6aB031A4d189B24628EC9Eb155F0a0f1A0E55a3",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "FixedPriceAdapter": {
+    "hash": "0x2483dc27678f5572f0e12581de1c57153399ad8979c38685a63859d68b1392dc",
+    "address": "eth:0xF29b1e3b68Fd59DD0a413811fD5d0AbaE653216d",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "GhoOracle": {
+    "hash": "0xc89310669937bba7d74c3cda101be974596bf47b663a8879a27420f4aaf29bb6",
+    "address": "eth:0xD110cac5d8682A3b045D5524a9903E031d70FCCd",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "PriceCapAdapterStableV2": {
+    "hash": "0x5b83bc3ec699e850057c3856beaea90a1518e32eab69ce8ca8d14e852ff1da24",
+    "address": "eth:0x260326c220E469358846b187eE53328303Efe19C",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "RsETHPriceCapAdapter": {
+    "hash": "0xf2bb753073accac34f8bf868b93e2b357850856417ed6a156edc7944b1948765",
+    "address": "eth:0x47F52B2e43D0386cF161e001835b03Ad49889e3b",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "PendlePriceCapAdapter": {
+    "hash": "0x85b4600d16be9aa39a41ca104fbffadfae0439e68d5103727e4b57751591f791",
+    "address": "eth:0x0a72df02CE3E4185b6CEDf561f0AE651E9BeE235",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "SUSDePriceCapAdapter": {
+    "hash": "0xd55771cf55fb1ffa76fb03af616b8095d8c8b0e95ae271f48aabce8a04c0c463",
+    "address": "eth:0x42bc86f2f08419280a99d8fbEa4672e7c30a86ec",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "LBTCPriceCapAdapter": {
+    "hash": "0x5327c827c527f5b1ecf521f6e67506c6d8b13177dc135e181a1c413a7a351c7b",
+    "address": "eth:0x5C1771583dbbAE5AFEd71ACD2BfC0eA4029EBB04",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "PriceCapAdapterStableV4": {
+    "hash": "0x935d1fd5524ec30c37faf4aff0f85c5e8bb7654041820857adf9dddb084c6cca",
+    "address": "eth:0xC26D4a1c46d884cfF6dE9800B6aE7A8Cf48B4Ff8",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  }
+}

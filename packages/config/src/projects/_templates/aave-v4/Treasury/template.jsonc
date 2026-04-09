@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Treasury",
+  "description": "Aave V4 Treasury (a TreasurySpoke instance). Receives the per-asset accrued fees defined in HubInstance.getAssetConfig.feeReceiver. Owned by an Aave-controlled GnosisSafe; upgradeable via the TreasuryProxyAdmin."
+}

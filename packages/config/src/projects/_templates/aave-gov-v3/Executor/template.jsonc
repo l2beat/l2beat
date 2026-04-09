@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Executor",
+  "description": "Aave Governance V3 Executor. The chain-specific executor that runs proposals approved by Aave Governance V3. From Aave V4's perspective, this is the upgrade authority of the AccessManager and a leaf trust root: deeper Aave Gov V3 internals (PayloadsController, Governance, voting portals) belong in Aave Gov V3's own discovery.",
+  "ignoreRelatives": ["owner"]
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SpokeInstance",
+  "category": "core",
+  "description": "Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.",
+  "ignoreRelatives": ["getReserve"],
+  "ignoreMethods": [
+    "getReserveSuppliedAssets",
+    "getReserveSuppliedShares",
+    "getReserveDebt",
+    "getReserveTotalDebt",
+    "getReserveId"
+  ],
+  "fields": {
+    "ORACLE": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Price oracle the spoke consults for every reserve. Manipulating it lets a caller mint, withdraw, and liquidate at attacker-chosen prices."
+    },
+    "authority": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "AccessManager authority gating every privileged spoke function. Whoever holds the relevant role members on this manager can reconfigure reserves, change liquidation params, and trigger emergency actions."
+    },
+    "getLiquidationLogic": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Delegatecall logic for liquidations. Replacing this contract changes how positions are liquidated; the change is gated by the authority."
+    },
+    "getLiquidationConfig": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Liquidation parameters: target health factor, threshold for max bonus, liquidation bonus."
+    },
+    "getReserve": {
+      "description": "Per-reserve struct: underlying token, paired Hub, assetId on the Hub, decimals, collateralRisk, flags, dynamicConfigKey.",
+      "handler": {
+        "type": "array",
+        "method": "getReserve",
+        "length": "{{ getReserveCount }}"
+      }
+    },
+    "getReserveConfig": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-reserve config flags: collateral, borrow, paused, frozen, etc.",
+      "handler": {
+        "type": "array",
+        "method": "getReserveConfig",
+        "length": "{{ getReserveCount }}"
+      }
+    }
+  }
+}

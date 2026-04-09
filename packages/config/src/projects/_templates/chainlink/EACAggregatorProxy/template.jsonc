@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EACAggregatorProxy",
+  "description": "Chainlink price feed proxy. Wraps an underlying aggregator and forwards latestAnswer / latestRoundData; the admin chain belongs to Chainlink, not the consuming protocol.",
+  "ignoreRelatives": [
+    "aggregator",
+    "proposedAggregator",
+    "accessController",
+    "owner",
+    "$admin"
+  ],
+  "ignoreMethods": [
+    "getAnswer",
+    "getTimestamp",
+    "getRoundData",
+    "proposedGetRoundData",
+    "proposedLatestRoundData"
+  ]
+}

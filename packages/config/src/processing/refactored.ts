@@ -1,3 +1,4 @@
+import { aavev4 } from '../projects/aave-v4/aave-v4'
 import { across } from '../projects/across/across'
 import { airbender } from '../projects/airbender/airbender'
 import { avail } from '../projects/avail/avail'
@@ -120,4 +121,6 @@ export const refactored: BaseProject[] = [
   cbridge,
   hyperevm,
   freetunnel,
+  // defi (no proper category yet, hosted under scaling for the project page)
+  aavev4,
 ]

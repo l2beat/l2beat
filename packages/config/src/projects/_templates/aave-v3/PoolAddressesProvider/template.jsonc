@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolAddressesProvider",
+  "description": "Aave V3 addresses provider (registry). Reached from Aave V4 because some V4 reserves are GHO-related contracts that route through the V3 GHO module. Cut walks into V3 internals; the V3 stack belongs to its own discovery.",
+  "ignoreRelatives": [
+    "getPool",
+    "getPoolConfigurator",
+    "getPoolDataProvider",
+    "getPriceOracle",
+    "getPriceOracleSentinel",
+    "getACLAdmin",
+    "getACLManager",
+    "owner"
+  ]
+}

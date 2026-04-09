@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PriceCapAdapter",
+  "category": "core",
+  "description": "Aave-deployed price oracle adapter that wraps a Chainlink feed (BASE_TO_USD_AGGREGATOR) with a growth-rate cap and an optional ratio provider (RATIO_PROVIDER) for liquid-staked or correlated assets. The cap bounds how fast the wrapped price can grow; the ACL_MANAGER is the only contract that can re-snapshot or re-arm the cap. The ratio provider is the underlying staked-asset contract; the trust analysis treats it as a foreign asset, not as something to walk.",
+  "ignoreRelatives": ["RATIO_PROVIDER", "PENDLE_PRINCIPAL_TOKEN"],
+  "fields": {
+    "ACL_MANAGER": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Aave V4 ACLManager that gates re-snapshot / re-arm of the growth cap."
+    },
+    "BASE_TO_USD_AGGREGATOR": {
+      "severity": "HIGH",
+      "type": "CODE_CHANGE",
+      "description": "Underlying Chainlink price feed driving this adapter's output."
+    },
+    "getMaxYearlyGrowthRatePercent": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Maximum yearly growth rate of the underlying ratio, in basis points. Larger values let the price move faster off-snapshot."
+    }
+  }
+}

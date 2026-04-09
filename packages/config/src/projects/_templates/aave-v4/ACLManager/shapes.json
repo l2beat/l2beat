@@ -1,0 +1,14 @@
+{
+  "ACLManagerV2": {
+    "hash": "0x10ae02757905b0f84cbf982bbd894c3a77297f01aebe9ef458230ddca3b10642",
+    "address": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "ACLManagerV1": {
+    "hash": "0x425b3258535c78df5266359c3bdc2475381b1687b101fbfe7d6c3dfebe2dd251",
+    "address": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  }
+}

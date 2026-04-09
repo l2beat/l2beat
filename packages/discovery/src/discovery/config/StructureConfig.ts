@@ -102,7 +102,7 @@ export const _StructureConfig = {
   maxAddresses: v
     .number()
     .check((x) => x >= 0)
-    .default(100),
+    .default(500),
   maxDepth: v.number().default(Number.POSITIVE_INFINITY),
   overrides: v
     .record(

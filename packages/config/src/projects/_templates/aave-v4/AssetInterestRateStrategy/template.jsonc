@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AssetInterestRateStrategy",
+  "category": "core",
+  "description": "Per-asset interest rate model used by the Aave V4 Hub. Stores the kink + growth-rate parameters per assetId; the assetId space is owned by HUB.getAssetCount. Trust assumption: anyone who can change these parameters can squeeze borrowers or starve depositors.",
+  "fields": {
+    "_assetCount": {
+      "handler": {
+        "type": "call",
+        "method": "function getAssetCount() view returns (uint256)",
+        "args": [],
+        "address": "{{ HUB }}"
+      }
+    },
+    "getInterestRateData": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-asset interest rate config: optimal usage ratio, base rate, slope before / after kink, max rate.",
+      "handler": {
+        "type": "array",
+        "method": "getInterestRateData",
+        "length": "{{ _assetCount }}"
+      }
+    },
+    "getOptimalUsageRatio": {
+      "handler": {
+        "type": "array",
+        "method": "getOptimalUsageRatio",
+        "length": "{{ _assetCount }}"
+      }
+    },
+    "getBaseDrawnRate": {
+      "handler": {
+        "type": "array",
+        "method": "getBaseDrawnRate",
+        "length": "{{ _assetCount }}"
+      }
+    },
+    "getRateGrowthBeforeOptimal": {
+      "handler": {
+        "type": "array",
+        "method": "getRateGrowthBeforeOptimal",
+        "length": "{{ _assetCount }}"
+      }
+    },
+    "getRateGrowthAfterOptimal": {
+      "handler": {
+        "type": "array",
+        "method": "getRateGrowthAfterOptimal",
+        "length": "{{ _assetCount }}"
+      }
+    },
+    "getMaxDrawnRate": {
+      "handler": {
+        "type": "array",
+        "method": "getMaxDrawnRate",
+        "length": "{{ _assetCount }}"
+      }
+    }
+  }
+}

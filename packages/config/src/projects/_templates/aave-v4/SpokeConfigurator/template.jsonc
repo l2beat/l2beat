@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SpokeConfigurator",
+  "description": "Aave V4 SpokeConfigurator. Privileged interface (gated through the AccessManager) for configuring per-reserve parameters on a Spoke: collateral flags, borrow flags, freeze, pause, and reserve listing/delisting."
+}
