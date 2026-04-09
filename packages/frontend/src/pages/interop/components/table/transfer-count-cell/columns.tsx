@@ -8,6 +8,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { BasicTableRow } from '~/components/table/BasicTable'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
@@ -31,40 +33,37 @@ export const columns = [
       headClassName: 'text-2xs',
     },
   }),
-  columnHelper.accessor('srcAmount', {
-    header: 'Source token',
+  columnHelper.display({
+    id: 'tokens',
+    header: 'Tokens',
     enableSorting: false,
     cell: (ctx) => {
-      const { srcAmount, srcSymbol, srcTokenIconUrl } = ctx.row.original
+      const {
+        srcAmount,
+        srcSymbol,
+        srcTokenIconUrl,
+        dstAmount,
+        dstSymbol,
+        dstTokenIconUrl,
+      } = ctx.row.original
       return (
-        <TokenAmount
-          amount={srcAmount}
-          iconUrl={srcTokenIconUrl}
-          symbol={srcSymbol}
-        />
+        <div className="flex w-max items-center gap-2 whitespace-nowrap">
+          <TokenAmount
+            amount={srcAmount}
+            iconUrl={srcTokenIconUrl}
+            symbol={srcSymbol}
+          />
+          <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
+          <TokenAmount
+            amount={dstAmount}
+            iconUrl={dstTokenIconUrl}
+            symbol={dstSymbol}
+          />
+        </div>
       )
     },
     meta: {
       headClassName: 'text-2xs',
-      align: 'right',
-    },
-  }),
-  columnHelper.accessor('dstAmount', {
-    header: 'Destination token',
-    enableSorting: false,
-    cell: (ctx) => {
-      const { dstAmount, dstSymbol, dstTokenIconUrl } = ctx.row.original
-      return (
-        <TokenAmount
-          amount={dstAmount}
-          iconUrl={dstTokenIconUrl}
-          symbol={dstSymbol}
-        />
-      )
-    },
-    meta: {
-      headClassName: 'text-2xs',
-      align: 'right',
     },
   }),
   columnHelper.accessor('valueUsd', {
@@ -106,50 +105,41 @@ export const columns = [
     header: 'Source chain',
     enableSorting: false,
     cell: (ctx) => (
-      <div className="font-medium text-label-value-14 capitalize">
-        {ctx.row.original.srcChain}
-      </div>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('srcTxHash', {
-    header: 'Source tx hash',
-    enableSorting: false,
-    cell: (ctx) => (
-      <TxHashCell
-        hash={ctx.row.original.srcTxHash}
+      <ChainCell
+        chain={ctx.row.original.srcChain}
+        iconUrl={ctx.row.original.srcChainIconUrl}
         href={ctx.row.original.srcTxHashHref}
       />
     ),
     meta: {
-      headClassName: 'text-2xs',
+      headClassName: 'text-2xs w-0',
+      cellClassName: 'pr-0 md:pr-0',
+    },
+  }),
+  columnHelper.display({
+    id: 'direction',
+    header: '',
+    enableSorting: false,
+    cell: () => (
+      <ArrowRightIcon className="mx-2 size-3.5 shrink-0 fill-brand" />
+    ),
+    meta: {
+      cellClassName: 'w-0 px-0 md:px-0',
     },
   }),
   columnHelper.accessor('dstChain', {
     header: 'Destination chain',
     enableSorting: false,
     cell: (ctx) => (
-      <div className="font-medium text-label-value-14 capitalize">
-        {ctx.row.original.dstChain}
-      </div>
-    ),
-    meta: {
-      headClassName: 'text-2xs',
-    },
-  }),
-  columnHelper.accessor('dstTxHash', {
-    header: 'Destination tx hash',
-    enableSorting: false,
-    cell: (ctx) => (
-      <TxHashCell
-        hash={ctx.row.original.dstTxHash}
+      <ChainCell
+        chain={ctx.row.original.dstChain}
+        iconUrl={ctx.row.original.dstChainIconUrl}
         href={ctx.row.original.dstTxHashHref}
       />
     ),
     meta: {
-      headClassName: 'text-2xs',
+      headClassName: 'text-2xs w-0',
+      cellClassName: 'w-0',
     },
   }),
 ]
@@ -172,7 +162,7 @@ function TokenAmount({
       : symbol
 
   return (
-    <span className="inline-flex items-center gap-1 font-medium text-label-value-14 text-primary">
+    <span className="inline-flex shrink-0 items-center gap-1 font-medium text-label-value-14 text-primary">
       <span>{label}</span>
       <Tooltip>
         <TooltipTrigger asChild>
@@ -193,23 +183,31 @@ function TokenAmount({
   )
 }
 
-function shortenHash(hash: string): string {
-  if (hash.length <= 12) return hash
-  return `${hash.slice(0, 6)}...${hash.slice(-4)}`
-}
-
-function TxHashCell({
-  hash,
+function ChainCell({
+  chain,
+  iconUrl,
   href,
 }: {
-  hash: string | undefined
+  chain: string
+  iconUrl: string | undefined
   href: string | undefined
 }) {
-  if (!hash) return <InteropNoDataBadge />
+  const content = (
+    <>
+      {iconUrl ? (
+        <img src={iconUrl} alt={chain} className="size-4 shrink-0" />
+      ) : null}
+      <span>{chain}</span>
+      {href ? <CustomLinkIcon className="size-3.5 shrink-0" /> : null}
+    </>
+  )
 
-  const content = shortenHash(hash)
   if (!href) {
-    return <span className="font-medium text-label-value-14">{content}</span>
+    return (
+      <span className="inline-flex items-center gap-1.5 font-medium text-label-value-14 capitalize">
+        {content}
+      </span>
+    )
   }
 
   return (
@@ -217,7 +215,7 @@ function TxHashCell({
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="font-medium text-label-value-14 text-link hover:underline"
+      className="flex items-center gap-1.5 font-medium text-label-value-14 text-link capitalize hover:underline"
     >
       {content}
     </a>

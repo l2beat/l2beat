@@ -34,9 +34,11 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       valueUsd: 12.34,
       duration: 60,
       srcChain: 'ethereum',
+      srcChainIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       srcTxHash: '0xsrc',
       srcTxHashHref: 'https://etherscan.io/tx/0xsrc',
       dstChain: 'arbitrum',
+      dstChainIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstTxHash: '0xdst',
       dstTxHashHref: 'https://arbiscan.io/tx/0xdst',
     })
