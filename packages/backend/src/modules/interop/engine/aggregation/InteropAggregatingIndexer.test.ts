@@ -12,8 +12,10 @@ import type { InteropAggregationConfig } from '../../../../config/features/inter
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
+import type { InteropNotifier } from '../notifications/InteropNotifier'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
 import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
+import type { InteropAggregationAnalyzer } from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 describe(InteropAggregatingIndexer.name, () => {
@@ -439,6 +441,105 @@ describe(InteropAggregatingIndexer.name, () => {
       expect(
         aggregatedInteropTokensPair.deleteByTimestamp,
       ).toHaveBeenCalledWith(nextTo)
+    })
+
+    it('notifies when aggregate analysis finds suspicious groups', async () => {
+      const transfers: InteropTransferRecord[] = []
+
+      const interopTransfer = mockObject<Database['interopTransfer']>({
+        getByRange: mockFn().resolvesTo(transfers),
+      })
+      const aggregatedInteropTransfer = mockObject<
+        Database['aggregatedInteropTransfer']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropToken = mockObject<
+        Database['aggregatedInteropToken']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const aggregatedInteropTokensPair = mockObject<
+        Database['aggregatedInteropTokensPair']
+      >({
+        deleteAllButEarliestPerDayBefore: mockFn().resolvesTo(0),
+        deleteByTimestamp: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
+      })
+      const transaction = mockFn(async (fn: any) => await fn())
+
+      const db = mockDatabase({
+        transaction,
+        interopTransfer,
+        aggregatedInteropTransfer,
+        aggregatedInteropToken,
+        aggregatedInteropTokensPair,
+      })
+      const syncersManager = mockObject<InteropSyncersManager>({
+        areAllSyncersFollowing: mockFn().returns(true),
+      })
+      const aggregationService = mockObject<InteropAggregationService>({
+        aggregate: mockFn().returns({
+          aggregatedTransfers: [],
+          aggregatedTokens: [],
+          aggregatedTokensPairs: [],
+          warnings: [],
+        }),
+      })
+      const aggregationAnalyzer = mockObject<InteropAggregationAnalyzer>({
+        analyze: mockFn().resolvesTo({
+          checkedGroups: 2,
+          suspiciousGroups: [
+            {
+              id: 'stargate',
+              bridgeType: 'nonMinting',
+              srcChain: 'ethereum',
+              dstChain: 'arbitrum',
+              reasons: ['Count z-score=12.34'],
+            },
+          ],
+        }),
+      })
+      const notifier = mockObject<
+        Pick<InteropNotifier, 'notifySuspiciousAggregates'>
+      >({
+        notifySuspiciousAggregates: mockFn().returns(undefined),
+      })
+
+      const indexer = new InteropAggregatingIndexer(
+        {
+          db,
+          configs: [],
+          aggregationAnalyzer,
+          aggregationService,
+          notifier,
+          syncersManager,
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+          minHeight: 0,
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.update(from, to)
+
+      expect(aggregationAnalyzer.analyze).toHaveBeenCalledWith(to, [])
+      expect(notifier.notifySuspiciousAggregates).toHaveBeenCalledWith(to, {
+        checkedGroups: 2,
+        suspiciousGroups: [
+          {
+            id: 'stargate',
+            bridgeType: 'nonMinting',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            reasons: ['Count z-score=12.34'],
+          },
+        ],
+      })
     })
   })
 })

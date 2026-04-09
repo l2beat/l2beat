@@ -1,19 +1,24 @@
 import type { AggregatedInteropTransferSeriesRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import sum from 'lodash/sum'
-export const Z_CLASSIC_THRESHOLD = 7
-export const Z_ROBUST_THRESHOLD = {
-  warn: 4,
-  drop: -6,
-  spike: 6,
-}
+import {
+  getWindowedLogZScore,
+  hasEnoughNonZeroHistory,
+  log1Plus,
+  MAD,
+  median,
+  Z_CLASSIC_THRESHOLD,
+  Z_ROBUST_THRESHOLD,
+  type ZScore,
+  zClassic,
+  zRobust,
+} from '../zScore'
+
+export { Z_CLASSIC_THRESHOLD } from '../zScore'
 export const VALUE_DIFF_ALERT_THRESHOLD_PERCENT = 5
 
 const FLAT_LINE_WINDOW_DAYS = 3
 const RATIO_WINDOW_DAYS = 14
-const MIN_NON_ZERO_HISTORY_POINTS = 3
-const Z_WINDOW_DAYS = 14
 
 export type DataRow = AggregatedInteropTransferSeriesRecord
 
@@ -21,11 +26,6 @@ type PeriodPoints = {
   last: DataRow
   prevDay: DataRow | undefined
   prev7d: DataRow | undefined
-}
-
-type ZScore = {
-  robust: number | null
-  classic: number | null
 }
 
 type CountStats = {
@@ -227,10 +227,6 @@ export function interpretZRobust(value: number) {
   }
 }
 
-function log1Plus(x: number) {
-  return Math.log(1 + x)
-}
-
 function avgVolumePerTransfer(volume: number, transferCount: number) {
   if (transferCount <= 0) {
     return null
@@ -251,16 +247,14 @@ function relativePercentDifference(left: number, right: number) {
 function buildCountStats(points: PeriodPoints, counts: number[]): CountStats {
   const period = mapPeriodPoints(points, (dp) => dp.transferCount)
   const ratioWindow = pick.lastNDays(counts, RATIO_WINDOW_DAYS)
-  const zWindow = pick.lastNDays(counts.map(log1Plus), Z_WINDOW_DAYS)
   const flatLineWindow = pick.lastNDays(counts, FLAT_LINE_WINDOW_DAYS)
-  const hasSignal = hasEnoughNonZeroHistory(
-    ratioWindow,
-    MIN_NON_ZERO_HISTORY_POINTS,
-  )
+  const hasSignal = hasEnoughNonZeroHistory(ratioWindow)
 
   return {
     ...period,
-    z: getZScore(zWindow, hasSignal),
+    z: hasSignal
+      ? getWindowedLogZScore(counts)
+      : { robust: null, classic: null },
     isFlatLine:
       flatLineWindow.length >= FLAT_LINE_WINDOW_DAYS &&
       detect.flatLine(flatLineWindow),
@@ -279,16 +273,14 @@ function buildVolumeStats(
     avgVolumePerTransfer(getValueUsd(dp), dp.transferCount),
   )
   const ratioWindow = pick.lastNDays(values, RATIO_WINDOW_DAYS)
-  const zWindow = pick.lastNDays(values.map(log1Plus), Z_WINDOW_DAYS)
-  const hasSignal = hasEnoughNonZeroHistory(
-    ratioWindow,
-    MIN_NON_ZERO_HISTORY_POINTS,
-  )
+  const hasSignal = hasEnoughNonZeroHistory(ratioWindow)
 
   return {
     valueUsd,
     avgValuePerTransfer,
-    z: getZScore(zWindow, hasSignal),
+    z: hasSignal
+      ? getWindowedLogZScore(values)
+      : { robust: null, classic: null },
     isRatioDrop: hasSignal && detect.ratioDrop(ratioWindow),
     isRatioSpike:
       hasSignal && detect.ratioSpike(ratioWindow, 10 /* 10x sudden spike */),
@@ -306,17 +298,6 @@ function buildSrcDstDiffStats(points: PeriodPoints): SrcDstDiffStats {
     prev7dPercent: period.prev7d,
     isHigh:
       period.last !== null && period.last > VALUE_DIFF_ALERT_THRESHOLD_PERCENT,
-  }
-}
-
-function getZScore(values: number[], hasSignal: boolean): ZScore {
-  if (!hasSignal) {
-    return { robust: null, classic: null }
-  }
-
-  return {
-    robust: zRobust(values),
-    classic: zClassic(values),
   }
 }
 
@@ -377,58 +358,6 @@ function byDay(a: DataRow, b: DataRow) {
   return a.day - b.day
 }
 
-export function median(values: number[]) {
-  assert(values.length > 0, 'Values must be non-empty')
-  const sorted = [...values].sort((a, b) => a - b)
-  const middle = Math.floor(sorted.length / 2)
-  if (sorted.length % 2 === 0) {
-    return (sorted[middle - 1] + sorted[middle]) / 2
-  }
-  return sorted[middle]
-}
-
-export function MAD(values: number[]) {
-  const med = median(values)
-  const deviations = values.map((value) => Math.abs(value - med))
-  return median(deviations)
-}
-
-/**
- * For a standard normal distribution:
- * - Median = 0
- * - Median of |X| ≈ 0.67449
- *
- * σ ≈ MAD / 0.67449 ≈ MAD × 1.4826
- */
-export function zRobust(values: number[]) {
-  if (values.length < 2) {
-    return null
-  }
-
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-  assert(current !== undefined, 'Current value must be defined')
-  const med = median(prev)
-  const mad = MAD(prev)
-  if (mad === 0) return current === med ? 0 : null
-  return (current - med) / (1.4826 * mad)
-}
-
-export function zClassic(values: number[]) {
-  if (values.length < 2) {
-    return null
-  }
-
-  const prev = values.slice(0, -1)
-  const current = values.at(-1)
-  assert(current !== undefined, 'Current value must be defined')
-  const mean = sum(prev) / prev.length
-  const varPop = prev.reduce((acc, v) => acc + (v - mean) ** 2, 0) / prev.length
-  const std = Math.sqrt(varPop)
-  if (std === 0) return current === mean ? 0 : null
-  return (current - mean) / std
-}
-
 function flatLine(values: number[]) {
   const unique = [...new Set(values)]
 
@@ -461,16 +390,6 @@ function ratioSpike(values: number[], threshold = 1.9 /* +90% */) {
     return false
   }
   return current / base > threshold
-}
-
-function hasEnoughNonZeroHistory(values: number[], minNonZeroPoints: number) {
-  if (values.length <= 2) {
-    return false
-  }
-
-  const prev = values.slice(0, -1)
-  const nonZeroPoints = prev.filter((value) => value > 0).length
-  return nonZeroPoints >= minNonZeroPoints
 }
 
 function lastNDays(values: number[], n: number) {

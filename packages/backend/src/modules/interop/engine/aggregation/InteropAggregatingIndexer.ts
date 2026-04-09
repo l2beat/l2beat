@@ -6,7 +6,9 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
+import type { InteropNotifier } from '../notifications/InteropNotifier'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
+import type { InteropAggregationAnalyzer } from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 export interface InteropAggregatingIndexerDeps
@@ -14,6 +16,8 @@ export interface InteropAggregatingIndexerDeps
   db: Database
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
+  aggregationAnalyzer?: InteropAggregationAnalyzer
+  notifier?: Pick<InteropNotifier, 'notifySuspiciousAggregates'>
   syncersManager: InteropSyncersManager
 }
 
@@ -41,6 +45,10 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const { aggregatedTransfers, aggregatedTokens, aggregatedTokensPairs } =
       this.$.aggregationService.aggregate(transfers, this.$.configs, to)
+    const analysis = await this.$.aggregationAnalyzer?.analyze(
+      to,
+      aggregatedTransfers,
+    )
 
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
@@ -61,10 +69,22 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
         aggregatedTokensPairs,
       )
     })
+
+    if (analysis && analysis.suspiciousGroups.length > 0) {
+      this.logger.warn('Suspicious interop aggregates detected', {
+        timestamp: to,
+        checkedGroups: analysis.checkedGroups,
+        suspiciousGroups: analysis.suspiciousGroups.length,
+        details: analysis.suspiciousGroups,
+      })
+      this.$.notifier?.notifySuspiciousAggregates(to, analysis)
+    }
+
     this.logger.info('Aggregated interop transfers saved to db', {
       aggregatedRecords: aggregatedTransfers.length,
       aggregatedTokens: aggregatedTokens.length,
       aggregatedTokenPairs: aggregatedTokensPairs.length,
+      suspiciousGroups: analysis?.suspiciousGroups.length ?? 0,
     })
 
     return to
