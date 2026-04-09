@@ -172,6 +172,16 @@ export class InteropSyncersManager {
     return client
   }
 
+  getBlockProcessingStats() {
+    const result: Record<string, { totalMs: number; count: number; avgMs: number }> = {}
+    for (const chainMap of this.syncers.values()) {
+      for (const syncer of chainMap.values()) {
+        result[`${syncer.cluster.name}:${syncer.chain}`] = syncer.blockProcessingStats.get()
+      }
+    }
+    return result
+  }
+
   async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {
     const syncedRanges = await this.db.interopPluginSyncedRange.getAll()
     const syncStates = await this.db.interopPluginSyncState.getAll()

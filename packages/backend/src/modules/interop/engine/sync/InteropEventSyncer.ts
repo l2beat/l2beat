@@ -35,6 +35,7 @@ import type {
 import { getItemsToCapture, logToViemLog } from '../capture/getItemsToCapture'
 import type { InteropEventStore } from '../capture/InteropEventStore'
 import { errorToString, toEventSelector } from '../utils'
+import { BlockProcessingStats } from './BlockProcessingStats'
 import { FollowingState } from './FollowingState'
 
 export class LogQuery {
@@ -146,6 +147,7 @@ export class InteropEventSyncer extends TimeLoop {
   public latestBlockNumber?: bigint
   public waitingForWipe = false
   public hasError = false
+  public readonly blockProcessingStats = new BlockProcessingStats()
   // Number of times the log range has been halved due to size-limit errors.
   public logRangeDivider?: number
   private readonly exclusiveExecutionMutex = new AsyncMutex()
@@ -211,9 +213,14 @@ export class InteropEventSyncer extends TimeLoop {
     await this.exclusiveExecutionMutex.runExclusive(async () => {
       const state = this.state
       if (state.type === 'blockProcessor') {
-        await this.triggerState(state, (current) =>
-          current.processNewestBlock(block, logs),
-        )
+        await this.triggerState(state, async (current) => {
+          const start = performance.now()
+          try {
+            return await current.processNewestBlock(block, logs)
+          } finally {
+            this.blockProcessingStats.record(performance.now() - start)
+          }
+        })
       }
     })
   }

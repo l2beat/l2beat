@@ -271,6 +271,10 @@ export function createInteropRouter(
     ctx.body = getMemoryUsage()
   })
 
+  router.get('/interop/block-stats', (ctx) => {
+    ctx.body = syncersManager.getBlockProcessingStats()
+  })
+
   router.get('/interop.json', async (ctx) => {
     const events = await db.interopEvent.getStats()
     const messages = await db.interopMessage.getStats()
