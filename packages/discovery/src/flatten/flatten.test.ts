@@ -71,10 +71,10 @@ describe('flatten', () => {
 
     expect(flattened).toEqual(
       [
+        CONTRACT3_SOURCE,
+        CONTRACT2_SOURCE,
         LIBRARY_SOURCE,
         CONTRACT4_SOURCE,
-        CONTRACT2_SOURCE,
-        CONTRACT3_SOURCE,
         ROOT_CONTRACT_SOURCE,
       ].join('\n\n'),
     )
@@ -101,11 +101,11 @@ contract R1 is C2, C3, C4 {
 
     const flattened = flattenStartingFrom('R1', [file], [])
     expect(flattened).toEqual(
-      String.raw`contract C4 { }
+      String.raw`contract C2 { }
 
 contract C3 is C2 { }
 
-contract C2 { }
+contract C4 { }
 
 contract R1 is C2, C3, C4 {
     function f(address x) public {
@@ -146,7 +146,13 @@ contract R1 is C2, C3, C4 {
       includeAll: true,
     })
     expect(flattened).toEqual(
-      String.raw`// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+      String.raw`contract C2 { }
+
+contract C3 is C2 { }
+
+contract C4 { }
+
+// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
 interface DC2 is C2 {
     struct S1 {
         uint256 x;
@@ -159,12 +165,6 @@ interface DC2 is C2 {
 interface DC1 is DC2 {
     function df() external;
 }
-
-contract C4 { }
-
-contract C3 is C2 { }
-
-contract C2 { }
 
 contract R1 is C2, C3, C4 {
     function f(address x) public {
@@ -264,11 +264,11 @@ contract R1 {
     })
 
     expect(flattened).toEqual(
-      String.raw`error CustomError(address account);
+      String.raw`event EventHappened(uint256 value, address account);
 
 uint256 constant GLOBAL_VALUE = 42;
 
-event EventHappened(uint256 value, address account);
+error CustomError(address account);
 
 contract R1 {
   function doSomething() public {

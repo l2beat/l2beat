@@ -34,36 +34,20 @@ export function flattenStartingFrom(
     rootContract,
   )
 
-  let flatSource = formatSource(rootContract.declaration.content)
-  // Depth first search
-  const visited = new Set<string>()
-  const stack: ContractNameFilePair[] = getStackEntries(rootContract).reverse()
-  while (stack.length > 0) {
-    const entry = stack.pop()
-    assert(entry !== undefined, 'Stack should not be empty')
+  // Topological sort so base contracts precede derived contracts
+  const order = topologicalSort(parsedFileManager, rootContract)
 
-    const foundContract = parsedFileManager.tryFindDeclaration(
-      entry.contractName,
-      entry.file,
-    )
-    assert(foundContract, `Failed to find contract ${entry.contractName}`)
-
-    const uniqueContractId = getUniqueContractId(foundContract)
-    if (visited.has(uniqueContractId)) {
-      continue
-    }
-    visited.add(uniqueContractId)
-
-    const { declaration: contract } = foundContract
-    let content = contract.content
-    if (
+  let flatSource = ''
+  for (const foundContract of order) {
+    const generateInterface =
       entryIsPurelyDynamic(relationDictionary, foundContract) &&
       isContract(foundContract)
-    ) {
-      content = generateInterfaceSourceFromContract(foundContract.declaration)
-    }
-    flatSource = formatSource(content) + flatSource
-    stack.push(...getStackEntries(foundContract))
+
+    const content = generateInterface
+      ? generateInterfaceSourceFromContract(foundContract.declaration)
+      : foundContract.declaration.content
+
+    flatSource += formatSource(content)
   }
 
   return changeLineEndingsToUnix(flatSource.trimEnd())
@@ -113,6 +97,32 @@ function generateUsedFromDictionary(
   }
 
   return result
+}
+
+function topologicalSort(
+  parsedFileManager: ParsedFilesManager,
+  rootContract: DeclarationFilePair,
+): DeclarationFilePair[] {
+  const order: DeclarationFilePair[] = []
+  const visited = new Set<string>()
+
+  function visit(pair: DeclarationFilePair | undefined): void {
+    assert(pair !== undefined, "Pair shouldn't be undefined")
+
+    const id = getUniqueContractId(pair)
+    if (visited.has(id)) return
+    visited.add(id)
+
+    for (const { contractName, file } of getStackEntries(pair)) {
+      visit(parsedFileManager.tryFindDeclaration(contractName, file))
+    }
+
+    order.push(pair)
+  }
+
+  visit(rootContract)
+
+  return order
 }
 
 function isContract(entry: DeclarationFilePair): boolean {
