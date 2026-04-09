@@ -38,8 +38,12 @@ const mainnetInboxActivationTimestamp = UnixTime(
 )
 const mainnetInboxSourceUrl =
   'https://etherscan.io/address/0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f#code'
+const proverWhitelistSourceUrl =
+  'https://etherscan.io/address/0xEa798547d97e345395dA071a0D7ED8144CD612Ae#code'
 
 interface MainnetInboxConfig extends Record<string, ContractValue> {
+  minBond: number
+  livenessBond: number
   provingWindow: number
   permissionlessProvingDelay: number
   forcedInclusionDelay: number
@@ -58,6 +62,10 @@ const forcedInclusionPermissionlessDelay =
 const whitelistedOperatorsCount = discovery.getContractValue<number>(
   'PreconfWhitelist',
   'operatorCount',
+)
+const whitelistedProverCount = discovery.getContractValue<number>(
+  'ProverWhitelist',
+  'proverCount',
 )
 
 const chainId = 167000
@@ -335,8 +343,7 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description:
-        'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the `prove` call and is checked against the accompanying SGX/zkVM proof. A proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together.',
+      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a proposal range, and SGX (Geth) is mandatory. The end state root is supplied during the \`prove\` call and is checked against the accompanying SGX/zkVM proof. Proving is currently gated by ProverWhitelist, which has ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'} in discovery, and becomes permissionless only after an unproven proposal is > ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} old.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
       executionDelay: 0,
@@ -350,13 +357,12 @@ export const taiko: ScalingProject = {
       sentiment: 'bad',
       value: 'None',
     },
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
-    proposerFailure: {
-      value: 'Self propose',
-      description: `Only whitelisted preconfirmers can normally submit new proposals to MainnetInbox. If a forced inclusion remains unprocessed for more than ${formatSeconds(forcedInclusionPermissionlessDelay)}, proposing becomes permissionless until the backlog is processed.`,
-      sentiment: 'warning',
-      orderHint: forcedInclusionPermissionlessDelay,
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+      forcedInclusionPermissionlessDelay,
+    ),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+      mainnetInboxConfig.permissionlessProvingDelay,
+    ),
   },
   stage: getStage(
     {
@@ -392,7 +398,7 @@ export const taiko: ScalingProject = {
     categories: [
       {
         title: 'Validity proofs',
-        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}, and proving becomes permissionless after ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)}. The multi-proof system allows detecting bugs in the verifiers if they produce different results for the same proposal range. If such a bug is detected, the system gets automatically paused.`,
+        description: `Taiko uses a multi-proof system to validate state transitions. The system requires two proofs among four available verifiers: SGX (Geth), SGX (Reth), SP1, and RISC0. The use of SGX (Geth) is mandatory, while the other three can be used interchangeably. This means that a proposal range can be proven without providing a ZK proof if SGX (Geth) and SGX (Reth) are used together. New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}. Proving is currently centralized behind ProverWhitelist with ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}. Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} before the whitelist is dropped, and MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}. The multi-proof system allows detecting bugs in the verifiers if they produce different results for the same proposal range. If such a bug is detected, the system gets automatically paused.`,
         references: [
           {
             title:
@@ -402,6 +408,10 @@ export const taiko: ScalingProject = {
           {
             title: 'MainnetInbox.sol - Etherscan source code, prove function',
             url: mainnetInboxSourceUrl,
+          },
+          {
+            title: 'ProverWhitelist.sol - Etherscan source code',
+            url: proverWhitelistSourceUrl,
           },
         ],
         risks: [
@@ -422,11 +432,12 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     operator: {
-      name: 'The system uses whitelist-based rotating operators',
+      name: 'The system uses whitelist-based sequencing and proving',
       description: `The system uses a whitelist-based sequencing mechanism to allow for fast preconfirmations on the L2. On the L1, whitelisted preconfirmers can propose Taiko L2 data to the MainnetInbox contract.
         The whitelist is managed by the \`PreconfWhitelist\` contract, which currently has ${whitelistedOperatorsCount} active operators registered.
-        New proposals target a proof submission cadence of ${formatSeconds(mainnetInboxConfig.provingWindow)}.
-        Proving is restricted to whitelisted provers for the first ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} after submission and becomes permissionless afterward.
+        Forced inclusions become mandatory after ${formatSeconds(mainnetInboxConfig.forcedInclusionDelay)} and proposing becomes permissionless after ${formatSeconds(forcedInclusionPermissionlessDelay)} if the queue is still ignored.
+        Proving is controlled separately by \`ProverWhitelist\`, which currently has ${whitelistedProverCount} whitelisted prover${whitelistedProverCount === 1 ? '' : 's'}.
+        Non-whitelisted actors must wait ${formatSeconds(mainnetInboxConfig.permissionlessProvingDelay)} after an unproven proposal before the whitelist is dropped. MainnetInbox currently sets minBond=${mainnetInboxConfig.minBond} and livenessBond=${mainnetInboxConfig.livenessBond}.
         Currently, proving a proposal requires SGX (Geth), plus either SGX (Reth), SP1, or RISC0.`,
       references: [
         {
@@ -441,18 +452,26 @@ export const taiko: ScalingProject = {
           title: 'PreconfWhitelist.sol - Etherscan source code',
           url: 'https://etherscan.io/address/0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149#code',
         },
+        {
+          title: 'ProverWhitelist.sol - Etherscan source code',
+          url: proverWhitelistSourceUrl,
+        },
       ],
       risks: [FRONTRUNNING_RISK],
     },
     forceTransactions: {
       name: 'Users can force any transaction via L1',
       description: `Users can submit a blob reference containing a standalone transaction by calling the \`saveForcedInclusion()\` function on the \`MainnetInbox\` contract.
-        A forced inclusion becomes due after ${formatSeconds(mainnetInboxConfig.forcedInclusionDelay)}.
-        If the oldest queued forced inclusion remains unprocessed for more than ${formatSeconds(forcedInclusionPermissionlessDelay)}, proposing becomes permissionless until it is handled.`,
+        Once any forced inclusion has been queued for ${formatSeconds(mainnetInboxConfig.forcedInclusionDelay)}, whitelisted proposers cannot submit new proposals unless they process all due forced inclusions.
+        If the oldest queued forced inclusion is still ignored for ${formatSeconds(forcedInclusionPermissionlessDelay)}, proposing becomes permissionless and anyone can include it.`,
       references: [
         {
           title:
             'MainnetInbox.sol - Etherscan source code, saveForcedInclusion function',
+          url: mainnetInboxSourceUrl,
+        },
+        {
+          title: 'MainnetInbox.sol - Etherscan source code, propose function',
           url: mainnetInboxSourceUrl,
         },
       ],
