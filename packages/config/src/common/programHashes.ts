@@ -1095,6 +1095,28 @@ chmod +x script/publish-image.sh
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
     `,
   },
+  '0x0079682c7b5af614273de79761aaad20d1c8e1a65091388b81be836632d382f8': {
+    ...RAIKO_BATCH('v1.16.1'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
+  },
   '0x0026ff63d649779a5dbc88c3359ab83399a21fb6ef9b7ec082f77a8a465806e7': {
     ...RAIKO_BATCH('v1.16.0'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1115,6 +1137,28 @@ chmod +x script/publish-image.sh
 ./script/publish-image.sh
 \`\`\`
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
+  },
+  '0x3cb4163d56bd850967bcf2ec1aaad20d0e470d324244e22e037d06cc32d382f8': {
+    ...RAIKO_BATCH('v1.16.1'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
     `,
   },
   '0x137fb1eb125de6973791186659ab83394d10fdb73e6dfb0205eef514465806e7': {
@@ -1139,6 +1183,28 @@ chmod +x script/publish-image.sh
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
     `,
   },
+  '0x0002ac747570512099ca19c17f5a3b9f39697e5617a19ff2f2b2464229a50c7c': {
+    ...RAIKO_AGG('v1.16.1'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
+  },
   '0x008e24716118be9594358d8882d93d5425f0827cf0a7a4fd0ea2fc4414debfe7': {
     ...RAIKO_AGG('v1.16.0'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1159,6 +1225,28 @@ chmod +x script/publish-image.sh
 ./script/publish-image.sh
 \`\`\`
 In the options choose latest tag and zk. The hash will be labeled sp1 elf vk bn256.
+    `,
+  },
+  '0x01563a3a5c1448263943382f75a3b9f34b4bf2b05e867fcb65648c8429a50c7c': {
+    ...RAIKO_AGG('v1.16.1'),
+    proverSystemProject: ProjectId('sp1turbo'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled sp1 elf vk hash_bytes and will not have \`0x\` prefix.
     `,
   },
   '0x471238b0462fa56506b1b1102d93d5422f8413e7429e93f41d45f88814debfe7': {
@@ -1424,6 +1512,28 @@ chmod +x script/publish-image.sh
 In the options choose latest tag and zk. The hash will be labeled risc0 elf image id and will not have \`0x\` prefix.
     `,
   },
+  '0x46efe5e0c74976548ee6856789fbfb4929b8f2f9118a119c57ced6e1062e727b': {
+    ...RAIKO_BATCH('v1.16.1'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled risc0 elf image id and will not have \`0x\` prefix.
+    `,
+  },
   '0x779c032b91d0730ef13b26eafa47b32df7ebdaa4ed766d587fe905530afa2544': {
     ...RAIKO_BATCH('v1.16.0'),
     proverSystemProject: ProjectId('risc0'),
@@ -1437,6 +1547,28 @@ In the options choose latest tag and zk. The hash will be labeled risc0 elf imag
 git clone https://github.com/taikoxyz/raiko.git
 cd raiko
 git checkout b9da2b011d5427f3602cd7fbe7882b7a37b88f71
+\`\`\`
+3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
+\`\`\`
+chmod +x script/publish-image.sh
+./script/publish-image.sh
+\`\`\`
+In the options choose latest tag and zk. The hash will be labeled risc0 elf image id and will not have \`0x\` prefix.
+    `,
+  },
+  '0xdfbce2039ad8b78b236b5a9dceba5d8cee0d9e4638fc8f1fe11a0b2d8bfa039e': {
+    ...RAIKO_AGG('v1.16.1'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
+    verificationStatus: 'notVerified',
+    verificationSteps: `
+1. Install docker.
+2. Check out the correct branch in [raiko repo](https://github.com/taikoxyz/raiko/tree/main):
+\`\`\`
+git clone https://github.com/taikoxyz/raiko.git
+cd raiko
+git checkout hotfix/hotfix-based-on-1.16.1
 \`\`\`
 3. Execute \`script/publish-image.sh\` script that will rebuild zk programs from sources and output the necessary program hash:
 \`\`\`

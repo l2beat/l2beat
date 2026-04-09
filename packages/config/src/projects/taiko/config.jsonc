@@ -27,7 +27,6 @@
     "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": {
       "ignoreMethods": ["proxiableUUID"]
     },
-    // SC members below
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": {
       "category": "spam"
     },

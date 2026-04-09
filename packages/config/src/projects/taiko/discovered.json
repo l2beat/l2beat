@@ -55,13 +55,15 @@
       }
     },
     {
-      "name": "Risc0Verifier",
+      "name": "TaikoRisc0Verifier",
       "address": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
       "type": "Contract",
+      "template": "taiko/Risc0Verifier",
       "sourceHashes": [
         "0xa750071d4c85280eb006caef33e2d65c25ba3c05b6160ce789076d7d00b68cf5"
       ],
       "proxyType": "immutable",
+      "description": "Gating router contract to verify batches using RISC Zero.",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -69,7 +71,19 @@
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "riscoGroth16Verifier": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-        "taikoChainId": 167000
+        "taikoChainId": 167000,
+        "trustedImages": [
+          "0x779c032b91d0730ef13b26eafa47b32df7ebdaa4ed766d587fe905530afa2544",
+          "0x26abb0237d10e891443e2a76bd3c1f6704c1ad03c07cb2165f4afcfc64b3cee7",
+          "0x46efe5e0c74976548ee6856789fbfb4929b8f2f9118a119c57ced6e1062e727b",
+          "0xdfbce2039ad8b78b236b5a9dceba5d8cee0d9e4638fc8f1fe11a0b2d8bfa039e"
+        ]
+      },
+      "fieldMeta": {
+        "trustedImages": {
+          "severity": "HIGH",
+          "description": "Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."
+        }
       },
       "implementationNames": {
         "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b": "Risc0Verifier"
@@ -79,10 +93,13 @@
       "name": "SgxVerifier",
       "address": "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1",
       "type": "Contract",
+      "template": "taiko/SgxVerifier",
       "sourceHashes": [
         "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SGX proven blocks.",
+      "ignoreInWatchMode": ["nextInstanceId"],
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -90,19 +107,11 @@
         "automataDcapAttestation": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "instances": [
-          ["eth:0xFca61adDFB74215Fd435f67c4bDF2eC883eA9e67", 1775024279],
-          ["eth:0xA12926e9Ede7EdfaF5581f89E4C43087F672EAaa", 1775024435],
-          ["eth:0x47e52ED5dB4f894185aa6f6Ec31E51257D496521", 1775210111],
-          ["eth:0x95748aa6b5F2131014e01ADdD70c52976Ee3C44A", 1775720135],
-          ["eth:0x5cdf3b15d5A7aD4a45F663Ac6326e8Fe38729FA2", 1775720447]
-        ],
         "nextInstanceId": 5,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "taikoChainId": 167000
       },
-      "errors": { "instances": "Processing error occurred." },
       "implementationNames": {
         "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1": "SgxVerifier"
       }
@@ -122,7 +131,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -606,11 +615,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x3A21e51AF21d159B32C3971de3e501094C65F537",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -770,11 +774,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "eth:0x47e52ED5dB4f894185aa6f6Ec31E51257D496521",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -820,11 +819,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x5cdf3b15d5A7aD4a45F663Ac6326e8Fe38729FA2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Gattaca",
       "address": "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E",
       "type": "Contract",
@@ -858,11 +852,6 @@
       }
     },
     {
-      "address": "eth:0x63892693d1850553E6113906431b0263921eE691",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
       "type": "EOA",
       "proxyType": "EOA"
@@ -877,6 +866,7 @@
         "0x8d260fddbc7a72c54273017cb2c35c4eab2166aed34e0ab7265950bbed7bef3f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.",
       "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
       "sinceTimestamp": 1772642207,
       "sinceBlock": 24585332,
@@ -935,10 +925,16 @@
       "implementationNames": {
         "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f": "ERC1967Proxy",
         "eth:0x0680c84378FA6A7D2F46ADa5A70637Fa2A938d42": "MainnetInbox"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -956,6 +952,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+          "description": "update the trusted image ids",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1",
+          "description": "can add new instances without a DCAP attestation",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner"
@@ -964,6 +972,24 @@
           "permission": "interact",
           "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
+          "description": "manage trusted program hashes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6",
+          "description": "can add new instances without a DCAP attestation",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae",
+          "description": "manage the prover whitelist.",
           "role": ".owner"
         },
         {
@@ -1272,18 +1298,20 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x95748aa6b5F2131014e01ADdD70c52976Ee3C44A",
+      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "SP1Verifier",
+      "name": "TaikoSP1Verifier",
       "address": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
       "type": "Contract",
+      "template": "taiko/SP1Verifier",
       "sourceHashes": [
         "0x1dcfcdf3dd450e8a527f8693f22f23affb00864ffba663c0a9b03a0083fb0b60"
       ],
       "proxyType": "immutable",
+      "description": "Gating router contract to verify batches using SP1.",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -1291,7 +1319,23 @@
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "sp1RemoteVerifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-        "taikoChainId": 167000
+        "taikoChainId": 167000,
+        "trustedPrograms": [
+          "0x0026ff63d649779a5dbc88c3359ab83399a21fb6ef9b7ec082f77a8a465806e7",
+          "0x137fb1eb125de6973791186659ab83394d10fdb73e6dfb0205eef514465806e7",
+          "0x008e24716118be9594358d8882d93d5425f0827cf0a7a4fd0ea2fc4414debfe7",
+          "0x471238b0462fa56506b1b1102d93d5422f8413e7429e93f41d45f88814debfe7",
+          "0x0079682c7b5af614273de79761aaad20d1c8e1a65091388b81be836632d382f8",
+          "0x3cb4163d56bd850967bcf2ec1aaad20d0e470d324244e22e037d06cc32d382f8",
+          "0x0002ac747570512099ca19c17f5a3b9f39697e5617a19ff2f2b2464229a50c7c",
+          "0x01563a3a5c1448263943382f75a3b9f34b4bf2b05e867fcb65648c8429a50c7c"
+        ]
+      },
+      "fieldMeta": {
+        "trustedPrograms": {
+          "severity": "HIGH",
+          "description": "Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."
+        }
       },
       "implementationNames": {
         "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6": "SP1Verifier"
@@ -1466,10 +1510,12 @@
       "name": "MainnetVerifier",
       "address": "eth:0x9cAa4948381590900FCdd8a4F06EB24138eD665d",
       "type": "Contract",
+      "template": "taiko/MainnetVerifier",
       "sourceHashes": [
         "0xd8de34f4010b0ba1199cd462c21f7b3a427abf428f6dc49344a1317c8381c469"
       ],
       "proxyType": "immutable",
+      "description": "Enforces the Taiko Multiprover policy and routes to the downstream router contracts.",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -1496,6 +1542,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae",
+          "description": "manage the prover whitelist.",
+          "role": ".proverManager"
+        },
         {
           "permission": "interact",
           "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
@@ -1544,6 +1596,24 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+          "description": "update the trusted image ids",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1",
+          "description": "can add new instances without a DCAP attestation",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner",
@@ -1555,6 +1625,33 @@
           "permission": "interact",
           "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
+          "description": "manage trusted program hashes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6",
+          "description": "can add new instances without a DCAP attestation",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae",
+          "description": "manage the prover whitelist.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a" }
@@ -1792,10 +1889,13 @@
       "name": "SgxVerifier",
       "address": "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6",
       "type": "Contract",
+      "template": "taiko/SgxVerifier",
       "sourceHashes": [
         "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SGX proven blocks.",
+      "ignoreInWatchMode": ["nextInstanceId"],
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
       "values": {
@@ -1803,27 +1903,14 @@
         "automataDcapAttestation": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "instances": [
-          ["eth:0x63892693d1850553E6113906431b0263921eE691", 1775024135],
-          ["eth:0xD3A787458D34EdbB0AE9833E80ced8c7562206E2", 1775209751],
-          ["eth:0x3A21e51AF21d159B32C3971de3e501094C65F537", 1775209835],
-          ["eth:0xcab4b40280f91B845Ac7EC18CBba1C82Dec5b80c", 1775720063],
-          ["eth:0xEccCe3d013Dcd803d432Cbc23C283F0F80E4C7a9", 1775720387]
-        ],
         "nextInstanceId": 5,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "taikoChainId": 167000
       },
-      "errors": { "instances": "Processing error occurred." },
       "implementationNames": {
         "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6": "SgxVerifier"
       }
-    },
-    {
-      "address": "eth:0xA12926e9Ede7EdfaF5581f89E4C43087F672EAaa",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Toni Wahrstätter",
@@ -1858,6 +1945,11 @@
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0xa5cb34B75bD72f15290ef37A01F06183E8036875",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Gustavo Gonzalez Agent",
@@ -1938,6 +2030,11 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1981,11 +2078,6 @@
     {
       "name": "Gattaca Agent",
       "address": "eth:0xc4414B079bC4A013916B3dc241555F6f505c1619",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xcab4b40280f91B845Ac7EC18CBba1C82Dec5b80c",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2060,11 +2152,6 @@
     },
     {
       "address": "eth:0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xD3A787458D34EdbB0AE9833E80ced8c7562206E2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2234,11 +2321,14 @@
       "name": "ProverWhitelist",
       "address": "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae",
       "type": "Contract",
+      "template": "taiko/ProverWhitelist",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x324653368e7bcaa7121b944af4794caa9a627937a3fa5afc9e643541abefb9a8"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Defines a whitelist of addresses.",
+      "ignoreInWatchMode": ["whitelisted"],
       "sinceTimestamp": 1772641607,
       "sinceBlock": 24585282,
       "values": {
@@ -2258,18 +2348,14 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proverCount": 1,
-        "resolver": "eth:0x0000000000000000000000000000000000000000"
+        "proverManager": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "resolver": "eth:0x0000000000000000000000000000000000000000",
+        "whitelisted": ["eth:0xa5cb34B75bD72f15290ef37A01F06183E8036875"]
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae": "ERC1967Proxy",
         "eth:0xebb393746A4Eee84Ad14EDFf3764c3F839D1034b": "ProverWhitelist"
       }
-    },
-    {
-      "address": "eth:0xEccCe3d013Dcd803d432Cbc23C283F0F80E4C7a9",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1SharedAddressManager",
@@ -2407,6 +2493,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+          "description": "pause and unpause the rollup system.",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
           "role": "admin"
@@ -2473,6 +2565,63 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+          "description": "add/remove verifiers and the selectors they are mapped to.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+              "delay": 259200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+          "delay": 259200,
+          "role": ".Executor"
+        }
+      ]
+    },
+    {
       "address": "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2513,11 +2662,6 @@
         "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
       },
       "category": { "name": "Governance", "priority": 3 }
-    },
-    {
-      "address": "eth:0xFca61adDFB74215Fd435f67c4bDF2eC883eA9e67",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "PreconfWhitelist",
@@ -2812,6 +2956,7 @@
       "name": "AnchorForkRouter",
       "address": "taiko:0x1670000000000000000000000000000000010001",
       "type": "Contract",
+      "template": "taiko/AnchorForkRouter",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
@@ -2860,7 +3005,6 @@
         "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
         "taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585": "AnchorForkRouter"
@@ -2901,6 +3045,7 @@
       "name": "Anchor",
       "address": "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA",
       "type": "Contract",
+      "template": "taiko/Anchor",
       "sourceHashes": [
         "0xd28d4f02b54957df5dd4894f6b101e59efaea4c568ce8ea8f87870f81cd977f1"
       ],
@@ -2910,13 +3055,6 @@
       "values": {
         "$immutable": true,
         "ANCHOR_GAS_LIMIT": 1000000,
-        "blockHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "checkpointStore": "taiko:0x1670000000000000000000000000000000000005",
         "getBlockState": {
           "anchorBlockNumber": 0,
@@ -2932,7 +3070,6 @@
         "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
         "resolver": "taiko:0x0000000000000000000000000000000000000000"
       },
-      "errors": { "blockHashes": "Processing error occurred." },
       "implementationNames": {
         "taiko:0x7e83Af941FDcf90EB44ED7dc8754a201B156E0BA": "Anchor"
       }
@@ -4869,6 +5006,8 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
+    "taiko/Anchor": "0xef9fa58f79fdf4747e5257a8e16ac32b4ea1ecc8142c47d27719d495a3c2d040",
+    "taiko/AnchorForkRouter": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
@@ -4876,21 +5015,26 @@
     "taiko/L1SharedAddressManager": "0x53e383d79bc5a05364962d3a986723394e3f04e839085710857c1b3a050bef18",
     "taiko/L2AddressManager": "0x5533ac608c033768586f5ca8b97411e964866cfc7b52b48ffe5b89768761840b",
     "taiko/L2Bridge": "0xc2dc1d358fbc1ae1bf71b9f4eff9ff6831387f28b39a3699baca69a1f6b11666",
-    "taiko/MainnetInbox": "0x65c5ef9a64393ec05e1ecd3388a21ade19639cbdd44c497c2b79681289cbdeb9",
+    "taiko/MainnetInbox": "0x6a4d893b48c0d55e9095068167987cc4ddb72fa261c5606105bd2f128e19179e",
+    "taiko/MainnetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
     "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/PreconfWhitelist": "0xc8bf10aee39f914d8f5d16e212c002a62a2efebf2fbc4088f5078ea430073d55",
+    "taiko/ProverWhitelist": "0xe12012394588dfbd083c538fc677d0bdaef28b9d522be4acdd1571bff287f860",
     "taiko/QuotaManager": "0x60a9974b6da61ae37b06e2fc4839dece6d902b60d2baac895e8886d1609be020",
+    "taiko/Risc0Verifier": "0x3fa557cec14d97be6232113d04d63fded6df9ff5a9d22702c21906fd451fcf07",
+    "taiko/SgxVerifier": "0xd42ec836c8b504381d98c03e28d09de32afa1e9589d105971b14fc840af60f77",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/SignalService": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/SignalServiceForkRouter": "0x568c79493fab52ca11cee253ad22ef20e8dd32afcde694ec673eed09a5da2016",
     "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
   },
   "usedBlockNumbers": { "ethereum": 24840827, "taiko": 5279322 },
-  "permissionsConfigHash": "0x8284399ef6c5c8c864350783acf5ef232349b83e4543a64d005fdbb00ce7bede"
+  "permissionsConfigHash": "0x9def1bbc788a6539bf1272e3f185fcf8fd81158260f243bd0b7061faef5b8955"
 }

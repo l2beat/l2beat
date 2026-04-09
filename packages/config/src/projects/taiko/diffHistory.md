@@ -1,51 +1,28 @@
-Generated with discovered.json: 0x7092aa4abeca8a31bdc8882449b68f75ffdd640e
+Generated with discovered.json: 0x238c42b0b59049e4dfd68463b8c8af772e331405
 
-# Diff at Thu, 09 Apr 2026 08:22:02 GMT:
+# Diff at Thu, 09 Apr 2026 10:13:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c9ede6c9bdb2aae4daeb2b2d95dc56f1420b43ab block: 1775136182
+- comparing to: main@a0c6d4495d3102a590451254ec3b7506796d5887 block: 1775136182
 - current timestamp: 1775721669
 
 ## Description
 
-add new mainnet inbox and ignore old one.
+add new mainnet inbox and ignore old one. i overlooked the new inbox pre-shasta because there were no refs and the old inbox also got an upgrade.
 
 ## Watched changes
 
 ```diff
-    contract SgxVerifier (eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1) {
-    +++ description: None
-      values.instances.2.1:
--        0
-+        1775210111
-      values.instances.2.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0x47e52ED5dB4f894185aa6f6Ec31E51257D496521"
-      values.instances.3.1:
--        0
-+        1775720135
-      values.instances.3.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0x95748aa6b5F2131014e01ADdD70c52976Ee3C44A"
-      values.instances.4.1:
--        0
-+        1775720447
-      values.instances.4.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0x5cdf3b15d5A7aD4a45F663Ac6326e8Fe38729FA2"
-      values.nextInstanceId:
--        2
-+        5
-    }
-```
-
-```diff
-    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
-    +++ description: A timelock with access control. The current minimum delay is 3d.
-      directlyReceivedPermissions:
--        [{"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"manage all access control roles.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"}]
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"manage all access control roles.","role":".defaultAdminAC"},{"permission":"interact","from":"eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"}]
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) {
+    +++ description: Gating router contract to verify batches using RISC Zero.
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.2:
++        "0x46efe5e0c74976548ee6856789fbfb4929b8f2f9118a119c57ced6e1062e727b"
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.3:
++        "0xdfbce2039ad8b78b236b5a9dceba5d8cee0d9e4638fc8f1fe11a0b2d8bfa039e"
     }
 ```
 
@@ -69,7 +46,7 @@ add new mainnet inbox and ignore old one.
 
 ```diff
     contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) {
-    +++ description: None
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.
       values.pendingOwner:
 -        "eth:0x0000000000000000000000000000000000000000"
 +        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
@@ -87,6 +64,28 @@ add new mainnet inbox and ignore old one.
 ```
 
 ```diff
+    contract TaikoSP1Verifier (eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6) {
+    +++ description: Gating router contract to verify batches using SP1.
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.4:
++        "0x0079682c7b5af614273de79761aaad20d1c8e1a65091388b81be836632d382f8"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.5:
++        "0x3cb4163d56bd850967bcf2ec1aaad20d0e470d324244e22e037d06cc32d382f8"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.6:
++        "0x0002ac747570512099ca19c17f5a3b9f39697e5617a19ff2f2b2464229a50c7c"
++++ description: Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedPrograms.7:
++        "0x01563a3a5c1448263943382f75a3b9f34b4bf2b05e867fcb65648c8429a50c7c"
+    }
+```
+
+```diff
     contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) {
     +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
       values.proposalCount:
@@ -94,39 +93,6 @@ add new mainnet inbox and ignore old one.
 +        28
       values.proposalIds.27:
 +        "604072306347775205060623596830012262580693762075"
-    }
-```
-
-```diff
-    contract SgxVerifier (eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6) {
-    +++ description: None
-      values.instances.1.1:
--        0
-+        1775209751
-      values.instances.1.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0xD3A787458D34EdbB0AE9833E80ced8c7562206E2"
-      values.instances.2.1:
--        0
-+        1775209835
-      values.instances.2.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0x3A21e51AF21d159B32C3971de3e501094C65F537"
-      values.instances.3.1:
--        0
-+        1775720063
-      values.instances.3.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0xcab4b40280f91B845Ac7EC18CBba1C82Dec5b80c"
-      values.instances.4.1:
--        0
-+        1775720387
-      values.instances.4.0:
--        "eth:0x0000000000000000000000000000000000000000"
-+        "eth:0xEccCe3d013Dcd803d432Cbc23C283F0F80E4C7a9"
-      values.nextInstanceId:
--        1
-+        5
     }
 ```
 
@@ -213,6 +179,7 @@ add new mainnet inbox and ignore old one.
 +        "AnchorForkRouter"
       template:
 -        "taiko/TaikoAnchor"
++        "taiko/AnchorForkRouter"
       sourceHashes.1:
 -        "0x3b17f3b24c2a1ab8b2cc942628d831d030a6c4a03ae0c5fb548b7142843c4e6d"
 +        "0x457bd8a81361da7cd33cf0749e16158c846ae643a1a69451a84aaac7f62cc16b"
@@ -262,8 +229,6 @@ add new mainnet inbox and ignore old one.
 -        "TaikoAnchor"
       implementationNames.taiko:0x38e4A497aD70aa0581BAc29747b0Ea7a53258585:
 +        "AnchorForkRouter"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -359,19 +324,37 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
     contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
     +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
       directlyReceivedPermissions.0:
--        {"permission":"interact","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"pause and unpause the rollup system.","role":".owner"}
++        {"permission":"interact","from":"eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b","description":"update the trusted image ids","role":".owner"}
+      directlyReceivedPermissions.0.description:
+-        "pause and unpause the rollup system."
++        "can add new instances without a DCAP attestation"
+      directlyReceivedPermissions.0.from:
+-        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1"
       directlyReceivedPermissions.2:
 -        {"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner"}
       directlyReceivedPermissions.3:
 -        {"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner"}
       directlyReceivedPermissions.4:
 -        {"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner"}
-      directlyReceivedPermissions.6:
--        {"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner"}
-      directlyReceivedPermissions.7:
--        {"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner"}
-      directlyReceivedPermissions.8:
--        {"permission":"interact","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","description":"pause/unpause.","role":".owner"}
+      directlyReceivedPermissions.6.description:
+-        "can add new instances without a DCAP attestation"
++        "manage trusted program hashes."
+      directlyReceivedPermissions.6.from:
+-        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6"
+      directlyReceivedPermissions.7.description:
+-        "can update the program being verified"
++        "can add new instances without a DCAP attestation"
+      directlyReceivedPermissions.7.from:
+-        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6"
+      directlyReceivedPermissions.8.description:
+-        "pause/unpause."
++        "manage the prover whitelist."
+      directlyReceivedPermissions.8.from:
+-        "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"
++        "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae"
       directlyReceivedPermissions.11:
 -        {"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"}
       directlyReceivedPermissions.12:
@@ -392,7 +375,7 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 -        {"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
       directlyReceivedPermissions.26:
 -        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin"}
-      directlyReceivedPermissions.11:
+      directlyReceivedPermissions.16:
 +        {"permission":"upgrade","from":"eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae","role":"admin"}
     }
 ```
@@ -410,22 +393,48 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae","description":"manage the prover whitelist.","role":".proverManager"}
+    }
+```
+
+```diff
     contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
     +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
       receivedPermissions.0:
--        {"permission":"interact","from":"eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","description":"pause and unpause the rollup system.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
++        {"permission":"interact","from":"eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b","description":"update the trusted image ids","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.0.description:
+-        "pause and unpause the rollup system."
++        "can add new instances without a DCAP attestation"
+      receivedPermissions.0.from:
+-        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1"
       receivedPermissions.2:
 -        {"permission":"interact","from":"eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a","description":"can update the contract address for a given name","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
       receivedPermissions.3:
 -        {"permission":"interact","from":"eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
       receivedPermissions.4:
 -        {"permission":"interact","from":"eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782","description":"can add new instances without a DCAP attestation","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
-      receivedPermissions.6:
--        {"permission":"interact","from":"eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136","description":"can add new instances without a DCAP attestation","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
-      receivedPermissions.7:
--        {"permission":"interact","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","description":"can update the program being verified","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
-      receivedPermissions.8:
--        {"permission":"interact","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","description":"pause/unpause.","role":".owner","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
+      receivedPermissions.6.description:
+-        "can add new instances without a DCAP attestation"
++        "manage trusted program hashes."
+      receivedPermissions.6.from:
+-        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6"
+      receivedPermissions.7.description:
+-        "can update the program being verified"
++        "can add new instances without a DCAP attestation"
+      receivedPermissions.7.from:
+-        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6"
+      receivedPermissions.8.description:
+-        "pause/unpause."
++        "manage the prover whitelist."
+      receivedPermissions.8.from:
+-        "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a"
++        "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae"
       receivedPermissions.11:
 -        {"permission":"upgrade","from":"eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
       receivedPermissions.12:
@@ -446,7 +455,7 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 -        {"permission":"upgrade","from":"eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
       receivedPermissions.27:
 -        {"permission":"upgrade","from":"eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
-      receivedPermissions.12:
+      receivedPermissions.17:
 +        {"permission":"upgrade","from":"eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae","role":"admin","via":[{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"}]}
     }
 ```
@@ -495,14 +504,14 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Risc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b)
-    +++ description: None
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b)
+    +++ description: Gating router contract to verify batches using RISC Zero.
 ```
 
 ```diff
 +   Status: CREATED
     contract SgxVerifier (eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1)
-    +++ description: None
+    +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
@@ -520,7 +529,7 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f)
-    +++ description: None
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2.
 ```
 
 ```diff
@@ -537,20 +546,20 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract SP1Verifier (eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6)
-    +++ description: None
+    contract TaikoSP1Verifier (eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6)
+    +++ description: Gating router contract to verify batches using SP1.
 ```
 
 ```diff
 +   Status: CREATED
     contract MainnetVerifier (eth:0x9cAa4948381590900FCdd8a4F06EB24138eD665d)
-    +++ description: None
+    +++ description: Enforces the Taiko Multiprover policy and routes to the downstream router contracts.
 ```
 
 ```diff
 +   Status: CREATED
     contract SgxVerifier (eth:0xa1018Ba2e22139076f91dA2A856B2CAB22d968F6)
-    +++ description: None
+    +++ description: Verifier contract for SGX proven blocks.
 ```
 
 ```diff
@@ -562,7 +571,7 @@ discovery. Values are for block 1775136182 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae)
-    +++ description: None
+    +++ description: Defines a whitelist of addresses.
 ```
 
 ```diff

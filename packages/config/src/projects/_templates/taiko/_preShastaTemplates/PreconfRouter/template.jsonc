@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "PreconfRouter",
   "description": "Routes batch proposals for preconfirmed blocks to the main Taiko contract. It ensures that only operators from the {{preconfWhitelist}} (or a designated fallback) can successfully submit a batch.",
   "fields": {
