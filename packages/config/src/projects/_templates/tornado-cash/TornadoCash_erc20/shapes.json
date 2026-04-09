@@ -1,0 +1,14 @@
+{
+  "TornadoCash_erc20": {
+    "hash": "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1",
+    "address": "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3",
+    "chain": "ethereum",
+    "blockNumber": 24842254
+  },
+  "ERC20Tornado": {
+    "hash": "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f",
+    "address": "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730",
+    "chain": "ethereum",
+    "blockNumber": 24842254
+  }
+}

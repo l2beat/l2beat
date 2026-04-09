@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "deposits",
+    "getRegisteredDeposits",
+    "getRegisteredWithdrawals",
+    "withdrawals"
+  ],
+  "ignoreInWatchMode": [
+    "lastProcessedDepositLeaf",
+    "lastProcessedWithdrawalLeaf",
+    "withdrawalRoot"
+  ]
+}

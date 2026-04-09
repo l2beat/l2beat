@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": { "dead": { "severity": "HIGH" } },
+  "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
+  "ignoreRelatives": ["ASSET"],
+  "ignoreMethods": ["roots", "depositors", "nullifierHashes"]
+}

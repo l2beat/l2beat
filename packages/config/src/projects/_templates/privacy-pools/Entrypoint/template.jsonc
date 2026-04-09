@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "pools": {
+      "handler": {
+        "type": "event",
+        "select": ["_pool", "_scope"],
+        "add": { "event": "PoolRegistered" },
+        "remove": { "event": "PoolRemoved" },
+        "groupBy": "_pool"
+      },
+      "description": "All currently registered privacy pools"
+    },
+    "tokens": {
+      "handler": {
+        "type": "event",
+        "select": "_asset",
+        "add": { "event": "PoolRegistered" },
+        "ignoreRelative": true
+      },
+      "description": "All tokens that were ever registered for pools"
+    }
+  }
+}
