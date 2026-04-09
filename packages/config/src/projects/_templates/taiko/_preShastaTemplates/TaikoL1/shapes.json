@@ -41,7 +41,7 @@
     "chain": "ethereum",
     "blockNumber": 23932452
   },
-  "MainnetInbox_shasta": {
+  "MainnetInbox_preshasta": {
     "hash": "0x0ac653f7058ad40c6ffac7239e47de4da0e6cb079cc88095eb2be8e359c25ef2",
     "address": "eth:0x38Dd73fed93F8051E7A0dDd6FB3b9E7C25668187",
     "chain": "ethereum",
