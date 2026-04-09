@@ -61,8 +61,10 @@ export function InteropTokensSection({
   const columns = useMemo(() => getTopTokensColumns(), [])
   const isLoading = isProtocolLoading || isTokensLoading
 
+  const tableData = useMemo(() => data ?? [], [data])
+
   const table = useTable<TokenRow>({
-    data: data ?? [],
+    data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
