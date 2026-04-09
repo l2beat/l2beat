@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-08T08:24:16.463Z",
+  "compiledAt": "2026-04-09T08:29:57.406Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "dex",
     "tokenName": "UNI",
-    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $792.55M."
+    "description": "Uniswap V2 is an automated market maker (AMM) DEX that uses constant-product (x*y=k) liquidity pools for permissionless token swaps on Ethereum. All 9 protocol contracts are immutable with no upgradeability. Governance (GovernorBravo with a 48-hour Timelock) exists but controls only the protocol fee switch via FeeToSetter and FeeTo — it cannot modify the core swap or liquidity logic. Total liquidity across all pairs is $768.02M."
   },
   "totals": {
     "contractCount": 9,
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 0,
     "adminCount": 1,
     "dependencyCount": 0,
-    "totalCapitalAtRisk": 792545784.4081675,
+    "totalCapitalAtRisk": 768019260.1545913,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0
   },
@@ -58,13 +58,13 @@
     {
       "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
       "name": "UniswapV2Factory (All Pairs)",
-      "description": "Factory contract that has deployed 493739 liquidity pair contracts holding $792.55M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
+      "description": "Factory contract that has deployed 493832 liquidity pair contracts holding $768.02M in aggregate liquidity. Each pair is an independent immutable contract holding reserves of two ERC-20 tokens. Liquidity is deposited by LPs and used for constant-product swaps.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 792545784.4081675,
-        "contractCount": 493739,
+        "totalUsdValue": 768019260.1545913,
+        "contractCount": 493832,
         "handlerName": "uniswap-v2-factory",
         "label": "All Uniswap-v2 Pairs"
       }

@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-04T12:22:18.271Z",
+  "lastModified": "2026-04-09T08:33:42.788Z",
   "contracts": {
     "eth:0x66017d22b0f8556afdd19fc67041899eb65a21bb": {
-      "lastFetched": "2026-03-04T12:22:13.028Z",
+      "lastFetched": "2026-04-09T08:33:37.503Z",
       "balances": {
         "tokens": [
           {
@@ -13,6 +13,14 @@
             "balance": "32",
             "decimals": 0,
             "usdValue": 0
+          },
+          {
+            "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
+            "symbol": "HEX",
+            "name": "HEX",
+            "balance": "100000000",
+            "decimals": 8,
+            "usdValue": 0.0006261406140801448
           },
           {
             "assetAddress": "0x4b2f7bbf111af95652263000f6f18829111f35d2",
@@ -42,9 +50,9 @@
             "assetAddress": "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
             "symbol": "LUSD",
             "name": "LUSD Stablecoin",
-            "balance": "1.250821435330153e+25",
+            "balance": "8.254191236855313e+24",
             "decimals": 18,
-            "usdValue": 12684626.38568048
+            "usdValue": 8274479.82051454
           },
           {
             "assetAddress": "0x6051c1354ccc51b4d561e43b02735deae64768b8",
@@ -79,6 +87,22 @@
             "usdValue": 0
           },
           {
+            "assetAddress": "0x82866b4a71ba9d930fe338c386b6a45a7133eb36",
+            "symbol": "QCORE",
+            "name": "QCORE.FINANCE",
+            "balance": "2000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9d24364b97270961b2948734afe8d58832efd43a",
+            "symbol": "FAM",
+            "name": "yefam.finance",
+            "balance": "3000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
+          {
             "assetAddress": "0xa09a4e239fa3f604e23975622ba82798f30d393d",
             "symbol": "$ USDBonus.net - Visit to claim bonus rewards",
             "name": "$ USDBonus.net",
@@ -92,15 +116,15 @@
             "name": "USD Coin",
             "balance": "5090000100",
             "decimals": 6,
-            "usdValue": 5090.509150915092
+            "usdValue": 5088.982303539293
           },
           {
             "assetAddress": "0xa3e7833775a9cc022db2c72eb900378f90ce89b4",
             "symbol": "MALLY",
             "name": "Malamute.Finance",
-            "balance": "2093640664722",
+            "balance": "2093642073700",
             "decimals": 9,
-            "usdValue": 7.044000697192369e-10
+            "usdValue": 7.523299380696934e-10
           },
           {
             "assetAddress": "0xa5e82be31023af98014882742fe33fd793a8b7e7",
@@ -116,7 +140,7 @@
             "name": "Wrapped Ether",
             "balance": "100000000000",
             "decimals": 18,
-            "usdValue": 0.00020439999999999998
+            "usdValue": 0.000218386
           },
           {
             "assetAddress": "0xd119d172e51bf7cdb6e62d6ba12351cca059554b",
@@ -148,7 +172,7 @@
             "name": "GameStop",
             "balance": "100000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0010253939585175647
+            "usdValue": 0.0010959828314608872
           },
           {
             "assetAddress": "0xe89c2dccfa045f3538ae3ebbfff3daec6a40a73a",
@@ -170,18 +194,18 @@
             "assetAddress": "eth",
             "symbol": "ETH",
             "name": "ETH",
-            "balance": "649256252321116200000",
+            "balance": "626827236688352900000",
             "decimals": 18,
-            "usdValue": 1327079.7797443615
+            "usdValue": 1368902.9291142265
           }
         ],
-        "totalUsdValue": 14016796.67580555,
-        "timestamp": "2026-03-04T12:22:13.573Z",
+        "totalUsdValue": 9648471.733872816,
+        "timestamp": "2026-04-09T08:33:37.861Z",
         "source": "debank"
       }
     },
     "eth:0xdf9eb223bafbe5c5271415c75aecd68c21fe3d7f": {
-      "lastFetched": "2026-03-04T12:22:13.586Z",
+      "lastFetched": "2026-04-09T08:33:37.862Z",
       "balances": {
         "tokens": [
           {
@@ -246,7 +270,7 @@
             "name": "Sheesha Finance",
             "balance": "10000000000000000",
             "decimals": 18,
-            "usdValue": 0.011165578941749082
+            "usdValue": 0.011804496852647013
           },
           {
             "assetAddress": "0x236a2d0cfe7eb540253dcc671aa664c10efec030",
@@ -262,7 +286,7 @@
             "name": "Shina Inu",
             "balance": "10000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000012464099946372043
+            "usdValue": 0.000001011805686156972
           },
           {
             "assetAddress": "0x2ee543b8866f46cc3dc93224c6742a8911a59750",
@@ -302,7 +326,7 @@
             "name": "똥코인",
             "balance": "6900000000000000000",
             "decimals": 18,
-            "usdValue": 3.2908542049901166e-10
+            "usdValue": 3.58718791256201e-10
           },
           {
             "assetAddress": "0x43009ed5f36011f14066b452d6ea207a43227548",
@@ -318,7 +342,7 @@
             "name": "FUCK THE MATRIX",
             "balance": "13333333333333334000",
             "decimals": 18,
-            "usdValue": 0.2652400190843066
+            "usdValue": 0.27154596583624285
           },
           {
             "assetAddress": "0x552cd48d0119cd4c83fccb46a32c83867afbbf18",
@@ -342,7 +366,15 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000030872831056291646
+            "usdValue": 0.00003267510727723385
+          },
+          {
+            "assetAddress": "0x5a52b7c9ee14a6740f6a3563013054b3de4c6f65",
+            "symbol": "OBS",
+            "name": "Orbitshield",
+            "balance": "3333333333333333500",
+            "decimals": 18,
+            "usdValue": 0.07895114942537655
           },
           {
             "assetAddress": "0x5aa7231952f8c24ae12c9a5d2251f3a135ad001c",
@@ -358,7 +390,7 @@
             "name": "Kohenoor",
             "balance": "50000000000000000",
             "decimals": 18,
-            "usdValue": 0.9641182412766961
+            "usdValue": 1.0637020303107048
           },
           {
             "assetAddress": "0x5fe0d5d1ae0dc12ae6a304603868ecb840bfbd4d",
@@ -398,7 +430,7 @@
             "name": "World Liberty Financial",
             "balance": "78202500000",
             "decimals": 9,
-            "usdValue": 5.84544805218198e-9
+            "usdValue": 1.09495694902925e-9
           },
           {
             "assetAddress": "0x6bd71a44af6d03477eb6f47a92265bb41e8b33f9",
@@ -430,7 +462,7 @@
             "name": "IRYNA",
             "balance": "912726000000",
             "decimals": 9,
-            "usdValue": 9.937141802716446e-7
+            "usdValue": 3.279044793916993e-7
           },
           {
             "assetAddress": "0x9175746e1fb611843cec72ae4d6fa13c6184c9d0",
@@ -454,7 +486,7 @@
             "name": "henlo",
             "balance": "7469064761704210000",
             "decimals": 9,
-            "usdValue": 3.171529963520285
+            "usdValue": 3.4339430560757327
           },
           {
             "assetAddress": "0x9aae1d486e0b61f3a45a2804ae1e9d8fb8b21c63",
@@ -470,7 +502,7 @@
             "name": "QSTAR",
             "balance": "900000000000",
             "decimals": 9,
-            "usdValue": 0.03382261615007386
+            "usdValue": 0.03629155821065618
           },
           {
             "assetAddress": "0x9b8bae5410c40f2cf8e9a7ef32dc77ef68bb6a9f",
@@ -478,6 +510,14 @@
             "name": "Coin Dawn Land",
             "balance": "10000000000000",
             "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9d24364b97270961b2948734afe8d58832efd43a",
+            "symbol": "FAM",
+            "name": "yefam.finance",
+            "balance": "3000000000",
+            "decimals": 18,
             "usdValue": 0
           },
           {
@@ -542,7 +582,7 @@
             "name": "America Party",
             "balance": "2e+26",
             "decimals": 18,
-            "usdValue": 13.480037649052653
+            "usdValue": 14.530102205314563
           },
           {
             "assetAddress": "0xb46bd6f438554ea26e08a33767d496f82adac3ec",
@@ -590,7 +630,7 @@
             "name": "Wrapped Ether",
             "balance": "100000000000",
             "decimals": 18,
-            "usdValue": 0.000204425
+            "usdValue": 0.000218386
           },
           {
             "assetAddress": "0xc5fb36dd2fb59d3b98deff88425a3f425ee469ed",
@@ -598,7 +638,7 @@
             "name": "Dejitaru Tsuka",
             "balance": "1000000000",
             "decimals": 9,
-            "usdValue": 0.0012176591234711455
+            "usdValue": 0.0011960908859700386
           },
           {
             "assetAddress": "0xc6e7822e713b09cccf8a4655a83fc6b4f131a85b",
@@ -657,6 +697,14 @@
             "usdValue": 0
           },
           {
+            "assetAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "symbol": "USDT",
+            "name": "Tether USD",
+            "balance": "20000",
+            "decimals": 6,
+            "usdValue": 0.02
+          },
+          {
             "assetAddress": "0xddfbfdbff7732633be5a04f5b3e2352f79ee0cad",
             "symbol": "TOKEN2049",
             "name": "token2049.top",
@@ -670,7 +718,7 @@
             "name": "American Bitcoin",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 3.2510481080762627e-7
+            "usdValue": 3.0506135227277954e-7
           },
           {
             "assetAddress": "0xe2ee3d54d7c1dad96611baf33dd039a597c46c28",
@@ -710,7 +758,7 @@
             "name": "Alchemy",
             "balance": "500000000",
             "decimals": 8,
-            "usdValue": 0.034550000000000004
+            "usdValue": 0.0293
           },
           {
             "assetAddress": "0xee2b9b7e168b5b2d40c507b891c7cfb13a6aaf2b",
@@ -718,7 +766,7 @@
             "name": "Zygo The Frog",
             "balance": "6.5e+21",
             "decimals": 18,
-            "usdValue": 0.1106653124147337
+            "usdValue": 0.11820531220464128
           },
           {
             "assetAddress": "0xeed9e4f2450035d6426276a8aa2084966ee3b1bb",
@@ -734,7 +782,7 @@
             "name": "Charlie Kirk",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 0.0000014141277255970877
+            "usdValue": 2.841580700704892e-7
           },
           {
             "assetAddress": "0xf4fb0e69b3f1322971c813c18b1fff4dd4872ca3",
@@ -766,7 +814,7 @@
             "name": "Peepo",
             "balance": "1000000000",
             "decimals": 9,
-            "usdValue": 0.0000035605095463094764
+            "usdValue": 0.0000037931287851599066
           },
           {
             "assetAddress": "0xfb6c3360e9c069ee48c9e1e4c6b3169427c9b84b",
@@ -796,33 +844,49 @@
             "assetAddress": "eth",
             "symbol": "ETH",
             "name": "ETH",
-            "balance": "7.746996689840568e+22",
+            "balance": "7.616587219943615e+22",
             "decimals": 18,
-            "usdValue": 158367979.8320658
+            "usdValue": 166335601.66146064
           }
         ],
-        "totalUsdValue": 158367997.90465567,
-        "timestamp": "2026-03-04T12:22:14.814Z",
+        "totalUsdValue": 166335621.2567593,
+        "timestamp": "2026-04-09T08:33:38.934Z",
         "source": "debank"
       }
     },
     "eth:0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d": {
-      "lastFetched": "2026-03-04T12:22:14.819Z",
+      "lastFetched": "2026-04-09T08:33:38.935Z",
       "tokenInfo": {
         "symbol": "LQTY",
         "name": "LQTY",
         "decimals": 18,
-        "price": 0.292,
-        "totalSupply": "100000000000000000000000000",
-        "tokenValue": 29200000,
-        "timestamp": "2026-03-04T12:22:15.325Z",
+        "price": 0.2745,
+        "totalSupply": "99999993.13759817",
+        "tokenValue": 27449998.1162707,
+        "timestamp": "2026-04-09T08:33:39.664Z",
         "source": "debank"
       }
     },
     "eth:0x3d32e8b97ed5881324241cf03b2da5e2ebce5521": {
-      "lastFetched": "2026-03-04T12:22:15.325Z",
+      "lastFetched": "2026-04-09T08:33:39.664Z",
       "balances": {
         "tokens": [
+          {
+            "assetAddress": "0x82866b4a71ba9d930fe338c386b6a45a7133eb36",
+            "symbol": "QCORE",
+            "name": "QCORE.FINANCE",
+            "balance": "2000",
+            "decimals": 9,
+            "usdValue": 0
+          },
+          {
+            "assetAddress": "0x9d24364b97270961b2948734afe8d58832efd43a",
+            "symbol": "FAM",
+            "name": "yefam.finance",
+            "balance": "3000000000",
+            "decimals": 18,
+            "usdValue": 0
+          },
           {
             "assetAddress": "0xa09a4e239fa3f604e23975622ba82798f30d393d",
             "symbol": "$ USDBonus.net - Visit to claim bonus rewards",
@@ -835,9 +899,9 @@
             "assetAddress": "0xa3e7833775a9cc022db2c72eb900378f90ce89b4",
             "symbol": "MALLY",
             "name": "Malamute.Finance",
-            "balance": "2325007048074",
+            "balance": "2325008612758",
             "decimals": 9,
-            "usdValue": 7.822427001715245e-10
+            "usdValue": 8.35469256001174e-10
           },
           {
             "assetAddress": "0xa4c6984e817c086ddc3ebaeedbdcc01469586918",
@@ -869,7 +933,7 @@
             "name": "Wrapped Ether",
             "balance": "100000000000",
             "decimals": 18,
-            "usdValue": 0.000204425
+            "usdValue": 0.000218386
           },
           {
             "assetAddress": "0xdb99b0477574ac0b2d9c8cec56b42277da3fdb82",
@@ -877,7 +941,7 @@
             "name": "DEC Token",
             "balance": "1.044e+21",
             "decimals": 18,
-            "usdValue": 0.21451393155298942
+            "usdValue": 0.2302086031296755
           },
           {
             "assetAddress": "0xdbc163d52adde75a78bc16931da7e65fff8b4e80",
@@ -891,44 +955,44 @@
             "assetAddress": "eth",
             "symbol": "ETH",
             "name": "ETH",
-            "balance": "1.577536262369892e+21",
+            "balance": "2.0207395630340998e+21",
             "decimals": 18,
-            "usdValue": 3224878.5043496517
+            "usdValue": 4413012.302127649
           }
         ],
-        "totalUsdValue": 3224878.719068009,
-        "timestamp": "2026-03-04T12:22:16.432Z",
+        "totalUsdValue": 4413012.5325546395,
+        "timestamp": "2026-04-09T08:33:40.890Z",
         "source": "debank"
       }
     },
     "eth:0x9555b042f969e561855e5f28cb1230819149a8d9": {
-      "lastFetched": "2026-03-04T12:22:16.435Z",
+      "lastFetched": "2026-04-09T08:33:40.891Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
             "symbol": "LUSD",
             "name": "LUSD Stablecoin",
-            "balance": "2.1e+22",
+            "balance": "1.94e+22",
             "decimals": 18,
-            "usdValue": 21296.177581812874
+            "usdValue": 19447.684686687604
           }
         ],
-        "totalUsdValue": 21296.177581812874,
-        "timestamp": "2026-03-04T12:22:17.463Z",
+        "totalUsdValue": 19447.684686687604,
+        "timestamp": "2026-04-09T08:33:41.795Z",
         "source": "debank"
       }
     },
     "eth:0x5f98805a4e8be255a32880fdec7f6728c6568ba0": {
-      "lastFetched": "2026-03-04T12:22:17.466Z",
+      "lastFetched": "2026-04-09T08:33:41.795Z",
       "tokenInfo": {
         "symbol": "LUSD",
         "name": "LUSD Stablecoin",
         "decimals": 18,
-        "price": 1.0141036943720416,
-        "totalSupply": "30769488242648096976632102",
-        "tokenValue": 31203451.700806536,
-        "timestamp": "2026-03-04T12:22:18.270Z",
+        "price": 1.002457973540598,
+        "totalSupply": "29298598.071941692",
+        "tokenValue": 29370613.250779144,
+        "timestamp": "2026-04-09T08:33:42.788Z",
         "source": "debank"
       }
     }
