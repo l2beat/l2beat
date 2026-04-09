@@ -1,3 +1,4 @@
+import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getConnectionPath } from './utils/getConnectionPath'
 
@@ -6,20 +7,15 @@ interface Props {
   layout: FlowsGraphLayout
   centerX: number
   centerY: number
-  hoveredChainId: string | null
 }
 
 /**
  * Renders a faint curved line for every unique chain pair,
  * so the "roads" between nodes are always visible in the background.
  */
-export function BackgroundRoads({
-  chainIds,
-  layout,
-  centerX,
-  centerY,
-  hoveredChainId,
-}: Props) {
+export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
+  const { highlightedChains } = useInteropFlows()
+
   const pairs: { a: string; b: string }[] = []
   for (let i = 0; i < chainIds.length; i++) {
     for (let j = i + 1; j < chainIds.length; j++) {
@@ -37,14 +33,16 @@ export function BackgroundRoads({
         if (!srcLayout || !dstLayout) return null
 
         const highlighted =
-          !hoveredChainId || a === hoveredChainId || b === hoveredChainId
+          highlightedChains.length === 0 ||
+          highlightedChains.every((chain) => chain === a || chain === b)
+
         return (
           <path
             key={`road-${a}-${b}`}
             d={getConnectionPath(srcLayout, dstLayout, centerX, centerY)}
             fill="none"
             className="stroke-divider"
-            strokeWidth={highlighted && hoveredChainId ? 1.5 : 1}
+            strokeWidth={highlighted && highlightedChains.length > 0 ? 1.5 : 1}
             opacity={highlighted ? 0.4 : 0.08}
           />
         )

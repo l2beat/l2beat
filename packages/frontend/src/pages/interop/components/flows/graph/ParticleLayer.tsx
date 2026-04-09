@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
+import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
 import { getConnectionPath } from './utils/getConnectionPath'
@@ -12,7 +13,6 @@ interface Props {
   centerX: number
   centerY: number
   maxVolume: number
-  hoveredChainId: string | null
 }
 
 // Each particle represents 50 USD of volume
@@ -45,8 +45,8 @@ export function ParticleLayer({
   centerX,
   centerY,
   maxVolume,
-  hoveredChainId,
 }: Props) {
+  const { highlightedChains } = useInteropFlows()
   const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
   const visibleFlows = flows.filter((f) => f.volume >= threshold)
 
@@ -78,9 +78,11 @@ export function ParticleLayer({
         const color = getChainColor(interopChains, flow.srcChain)
 
         const highlighted =
-          !hoveredChainId ||
-          flow.srcChain === hoveredChainId ||
-          flow.dstChain === hoveredChainId
+          highlightedChains.length === 0 ||
+          highlightedChains.every(
+            (chain) => chain === flow.srcChain || chain === flow.dstChain,
+          )
+
         const groupOpacity = highlighted ? 1 : 0.15
 
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale

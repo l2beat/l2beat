@@ -36,7 +36,6 @@ export function FlowsGraph({
         layout={layout}
         centerX={width / 2}
         centerY={height / 2}
-        hoveredChainId={null}
       />
       <ParticleLayer
         flows={data.flows}
@@ -45,7 +44,6 @@ export function FlowsGraph({
         centerX={width / 2}
         centerY={height / 2}
         maxVolume={maxVolume}
-        hoveredChainId={null}
       />
       <ChainBubblesLayer
         interopChains={interopChains}

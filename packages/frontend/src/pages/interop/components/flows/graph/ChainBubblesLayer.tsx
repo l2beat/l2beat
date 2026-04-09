@@ -2,6 +2,7 @@ import type { ChainVolume } from '~/server/features/scaling/interop/getInteropFl
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
+import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type {
   ChainNodeLayout,
   FlowsGraphLayout,
@@ -19,6 +20,8 @@ export function ChainBubblesLayer({
   layout,
   chainVolumes,
 }: ChainBubblesLayerProps) {
+  const { highlightedChains, toggleHighlightedChain } = useInteropFlows()
+
   return interopChains.map((chain) => {
     const nodeLayout = layout.get(chain.id)
     if (!chain || !nodeLayout) return null
@@ -31,11 +34,10 @@ export function ChainBubblesLayer({
         key={chain.id}
         chain={chain}
         layout={nodeLayout}
-        selected={false}
-        hovered={false}
+        highlighted={highlightedChains.includes(chain.id)}
         color={getChainColor(interopChains, chain.id)}
         netFlow={netFlow}
-        onClick={() => {}}
+        onClick={() => toggleHighlightedChain(chain.id)}
       />
     )
   })
@@ -44,8 +46,7 @@ export function ChainBubblesLayer({
 interface ChainBubbleProps {
   chain: InteropChainWithIcon
   layout: ChainNodeLayout
-  selected: boolean
-  hovered: boolean
+  highlighted: boolean
   color: string
   netFlow: number
   onClick: () => void
@@ -54,8 +55,7 @@ interface ChainBubbleProps {
 function ChainBubble({
   chain,
   layout,
-  selected,
-  hovered,
+  highlighted,
   color,
   netFlow,
   onClick,
@@ -70,10 +70,10 @@ function ChainBubble({
         cy={y}
         r={radius}
         fill={color}
-        fillOpacity={selected ? 0.25 : hovered ? 0.2 : 0.15}
         stroke={color}
-        strokeWidth={selected ? 2.5 : 1.5}
-        strokeOpacity={selected ? 1 : hovered ? 0.8 : 0.5}
+        fillOpacity={highlighted ? 0.25 : 0.15}
+        strokeWidth={highlighted ? 2.5 : 1.5}
+        strokeOpacity={highlighted ? 1 : 0.5}
       />
       <image
         href={chain.iconUrl}

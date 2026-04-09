@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import {
   createContext,
   type ReactNode,
@@ -15,6 +16,8 @@ interface InteropFlowsContextType {
   allChains: InteropChainWithIcon[]
   toggleChainSelection: (chainId: string) => void
   toggleProtocolSelection: (protocolName: string) => void
+  highlightedChains: string[]
+  toggleHighlightedChain: (chainId: string) => void
 }
 
 export const InteropFlowsContext = createContext<
@@ -40,6 +43,7 @@ export function InteropFlowsProvider({
   const [selectedChains, setSelectedChains] = useState<string[]>(allChainIds)
   const [selectedProtocols, setSelectedProtocols] =
     useState<string[]>(allProtocolNames)
+  const [highlightedChains, setHighlightedChains] = useState<string[]>([])
 
   const toggleChainSelection = useCallback((chainId: string) => {
     setSelectedChains((prev) => {
@@ -59,6 +63,19 @@ export function InteropFlowsProvider({
     })
   }, [])
 
+  const toggleHighlightedChain = useCallback((chainId: string) => {
+    setHighlightedChains((prev) => {
+      if (prev.includes(chainId)) {
+        return prev.filter((id) => id !== chainId)
+      }
+      if (prev.length < 2) {
+        return [...prev, chainId]
+      }
+      assert(prev[1])
+      return [prev[1], chainId]
+    })
+  }, [])
+
   return (
     <InteropFlowsContext.Provider
       value={{
@@ -67,6 +84,8 @@ export function InteropFlowsProvider({
         selectedProtocols,
         toggleChainSelection,
         toggleProtocolSelection,
+        highlightedChains,
+        toggleHighlightedChain,
       }}
     >
       {children}
