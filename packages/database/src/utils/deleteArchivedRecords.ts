@@ -3,6 +3,7 @@ import { sql } from 'kysely'
 import type { QueryBuilder } from '../kysely'
 import type { DB } from '../kysely/generated/types'
 
+/** Both bounds are inclusive: `from <= timestamp <= to` (when `from` is set). */
 export interface CleanDateRange {
   from: UnixTime | undefined
   to: UnixTime
@@ -25,7 +26,7 @@ export async function deleteHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          eb('timestamp', '<=', UnixTime.toDate(dateRange.to)),
           dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,
@@ -51,7 +52,7 @@ export async function deleteSixHourlyUntil(
     .where((eb) =>
       eb.and(
         [
-          eb('timestamp', '<', UnixTime.toDate(dateRange.to)),
+          eb('timestamp', '<=', UnixTime.toDate(dateRange.to)),
           dateRange.from !== undefined
             ? eb('timestamp', '>=', UnixTime.toDate(dateRange.from))
             : undefined,

@@ -44,16 +44,16 @@ describe(TvsCleaner.name, () => {
         }),
       })
 
-      const to = day('2026-04-07T00:00:00Z')
-      const currentTarget = timestamp('2026-04-07T00:00:00Z')
+      const to = timestamp('2026-04-07T00:00:00Z')
+      const adjustedTo = UnixTime.toStartOf(to, 'day')
       const syncOptimizer = testSyncOptimizer()
       const hourlyRange = {
         from: undefined,
-        to: syncOptimizer.getHourlyCutOffWithGracePeriod(currentTarget),
+        to: syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
       }
       const sixHourlyRange = {
         from: undefined,
-        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(currentTarget),
+        to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
       }
 
       const result = await indexer.update(0, to)
@@ -98,24 +98,16 @@ describe(TvsCleaner.name, () => {
         }),
       })
 
-      const from = day('2026-04-01T00:00:00Z')
-      const to = day('2026-04-30T00:00:00Z')
-      const adjustedFrom =
-        from !== 0 ? UnixTime((from - 1) * UnixTime.DAY) : undefined
-      const adjustedTo = UnixTime(to * UnixTime.DAY)
+      const from = timestamp('2026-04-01T00:00:00Z')
+      const to = timestamp('2026-04-30T00:00:00Z')
+      const adjustedTo = UnixTime.toStartOf(to, 'day')
       const syncOptimizer = testSyncOptimizer()
       const hourlyRange = {
-        from:
-          adjustedFrom !== undefined
-            ? syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedFrom)
-            : undefined,
+        from: syncOptimizer.getHourlyCutOffWithGracePeriod(from),
         to: syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
       }
       const sixHourlyRange = {
-        from:
-          adjustedFrom !== undefined
-            ? syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedFrom)
-            : undefined,
+        from: syncOptimizer.getSixHourlyCutOffWithGracePeriod(from),
         to: syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
       }
 
@@ -183,10 +175,6 @@ async function createInitializedIndexer(
 
 function timestamp(value: string): UnixTime {
   return UnixTime.fromDate(new Date(value))
-}
-
-function day(value: string): number {
-  return UnixTime.toDays(timestamp(value))
 }
 
 function testSyncOptimizer(): SyncOptimizer {

@@ -69,18 +69,25 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
     to: number,
     configurations: Configuration<TvsCleanerConfig>[],
   ) {
-    const adjustedFrom = from !== 0 ? (from - 1) * UnixTime.DAY : undefined
-    const adjustedTo = UnixTime(to * UnixTime.DAY)
+    // If not a midnight, skip the update
+    // On first run, run even not at midnight and round `to` to the previous midnight
+    if (from !== 0 && to !== UnixTime.toStartOf(to, 'day')) {
+      return Promise.resolve(() => Promise.resolve(to))
+    }
+    const adjustedTo = UnixTime.toStartOf(to, 'day')
+
     const hourlyRange = {
-      from: adjustedFrom
-        ? this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedFrom)
-        : undefined,
+      from:
+        from !== 0
+          ? this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(from)
+          : undefined,
       to: this.$.syncOptimizer.getHourlyCutOffWithGracePeriod(adjustedTo),
     }
     const sixHourlyRange = {
-      from: adjustedFrom
-        ? this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedFrom)
-        : undefined,
+      from:
+        from !== 0
+          ? this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(from)
+          : undefined,
       to: this.$.syncOptimizer.getSixHourlyCutOffWithGracePeriod(adjustedTo),
     }
 
@@ -99,7 +106,8 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
       }
 
       this.logger.info('Cleaned TVS records', {
-        until: adjustedTo,
+        from,
+        to: adjustedTo,
         ...details,
       })
 
