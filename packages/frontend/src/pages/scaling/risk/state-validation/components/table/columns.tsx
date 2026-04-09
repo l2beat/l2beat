@@ -1,18 +1,9 @@
-import type { ProjectScalingProofSystem } from '@l2beat/config'
-import { assertUnreachable, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
-import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
-import { UnverifiedIcon } from '~/icons/Unverified'
-import { VerifiedIcon } from '~/icons/Verified'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
@@ -21,7 +12,7 @@ import type {
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
-import { cn } from '~/utils/cn'
+import { OptimisticProofSystemCell } from './OptimisticProofSystemCell'
 
 const validityColumnHelper =
   createColumnHelper<ScalingRiskStateValidationValidityEntry>()
@@ -235,74 +226,3 @@ export const scalingRiskStateValidationNoProofsColumns = [
     },
   }),
 ]
-
-function OptimisticProofSystemCell({
-  proofSystem,
-  slug,
-  zkCatalog,
-}: ScalingRiskStateValidationOptimisticEntry) {
-  return (
-    <div className="flex h-full items-center gap-4">
-      <ProofSystemCell proofSystem={proofSystem} slug={slug} hideType />
-      <div className="flex items-center gap-1.5">
-        {zkCatalog && (
-          <a href={`/zk-catalog?highlight=${zkCatalog.id}`}>
-            <Badge
-              type={
-                zkCatalog.hasSuccessful
-                  ? 'green'
-                  : zkCatalog.hasUnsuccessful
-                    ? 'error'
-                    : 'gray'
-              }
-              className={cn(
-                'flex items-center gap-1',
-                zkCatalog.hasSuccessful
-                  ? null
-                  : zkCatalog.hasUnsuccessful
-                    ? 'border border-negative'
-                    : 'border-divider! bg-surface-secondary! text-primary',
-              )}
-            >
-              {zkCatalog.name}
-              {zkCatalog.hasSuccessful && <VerifiedIcon className="size-4" />}
-              {zkCatalog.hasNotVerified && (
-                <CircleQuestionMarkIcon className="size-4" />
-              )}
-              {zkCatalog.hasUnsuccessful && (
-                <UnverifiedIcon className="size-4" />
-              )}
-            </Badge>
-          </a>
-        )}
-        {proofSystem?.challengeProtocol && (
-          <Tooltip>
-            <TooltipTrigger className="h-6">
-              <Badge type="blue" className="block h-6">
-                {proofSystem.challengeProtocol}
-              </Badge>
-            </TooltipTrigger>
-            <TooltipContent>
-              {challengeToDescription(proofSystem.challengeProtocol)}
-            </TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function challengeToDescription(
-  challengeProtocol: NonNullable<
-    ProjectScalingProofSystem['challengeProtocol']
-  >,
-) {
-  switch (challengeProtocol) {
-    case 'Single-step':
-      return 'To dispute a proposed state transition, challengers submit a single transaction with the correct state together with a ZK (validity) proof.'
-    case 'Interactive':
-      return 'To dispute a proposed state transition, challengers and proposers participate in a multi-step interactive process to identify and re-execute a single contested instruction.'
-    default:
-      return assertUnreachable(challengeProtocol)
-  }
-}
