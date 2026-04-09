@@ -10,6 +10,14 @@ import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
 
+export type BlockProcessingStat = {
+  cluster: string
+  chain: string
+  totalMs: number
+  count: number
+  avgMs: number
+}
+
 export type PluginSyncStatus = {
   pluginName: string
   chain: string
@@ -173,10 +181,17 @@ export class InteropSyncersManager {
   }
 
   getBlockProcessingStats() {
-    const result: Record<string, { totalMs: number; count: number; avgMs: number }> = {}
+    const result: BlockProcessingStat[] = []
     for (const chainMap of this.syncers.values()) {
       for (const syncer of chainMap.values()) {
-        result[`${syncer.cluster.name}:${syncer.chain}`] = syncer.blockProcessingStats.get()
+        const { totalMs, count, avgMs } = syncer.blockProcessingStats.get()
+        result.push({
+          cluster: syncer.cluster.name,
+          chain: syncer.chain,
+          totalMs,
+          count,
+          avgMs,
+        })
       }
     }
     return result

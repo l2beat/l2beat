@@ -15,6 +15,7 @@ import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from './anomalies/constants'
+import { renderBlockStatsPage } from './BlockStatsPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
@@ -272,7 +273,7 @@ export function createInteropRouter(
   })
 
   router.get('/interop/block-stats', (ctx) => {
-    ctx.body = syncersManager.getBlockProcessingStats()
+    ctx.body = renderBlockStatsPage(syncersManager.getBlockProcessingStats())
   })
 
   router.get('/interop.json', async (ctx) => {
