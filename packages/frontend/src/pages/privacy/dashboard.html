@@ -49,7 +49,7 @@ h3{font-size:16px;font-weight:600;margin-bottom:8px}
 
 /* Protocol cards grid */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;margin-bottom:32px}
-.card{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);overflow:hidden;transition:border-color .15s}
+.card{background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);transition:border-color .15s}
 .card:hover{border-color:var(--text-3)}
 .card-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--divider);cursor:pointer;user-select:none}
 .card-header h3{margin:0}
@@ -94,6 +94,16 @@ h3{font-size:16px;font-weight:600;margin-bottom:8px}
 .tab.active{color:var(--green);border-bottom-color:var(--green)}
 .tab-content{display:none}
 .tab-content.active{display:block}
+
+/* Rosette tooltip */
+.rosette-tooltip{display:none;position:fixed;z-index:999;background:var(--surface);border:1px solid var(--divider);border-radius:var(--radius);padding:12px;width:300px;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
+.rosette-tooltip.visible{display:block}
+.rosette-tooltip-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.rosette-tooltip-title span{font-size:13px;font-weight:600}
+.rosette-tooltip-desc{font-size:12px;color:var(--text-2);line-height:1.6}
+.rosette-wrap svg path[data-dim]{cursor:pointer;transition:opacity .15s}
+.rosette-wrap:hover svg path[data-dim]{opacity:.25}
+.rosette-wrap svg path[data-dim]:hover{opacity:1 !important}
 
 /* Sections */
 .section{display:none}
@@ -364,7 +374,7 @@ function rosetteSVG(ratings, size=130) {
   svg += `<g clip-path="url(#${id}-inner)">`;
   DIM.forEach(d => {
     const i = DIM_TO_SLICE[d];
-    svg += `<path d="${PIZZA_PATHS[i]}" fill="${colorMap[ratings[d]]}" opacity=".9"/>`;
+    svg += `<path d="${PIZZA_PATHS[i]}" fill="${colorMap[ratings[d]]}" opacity=".9" data-dim="${d}"/>`;
   });
   svg += '</g></g></svg>';
   return svg;
@@ -389,7 +399,9 @@ function renderCards() {
         <span class="expand-icon">&#9662;</span>
       </div>
       <div class="card-rosette">
-        <div class="rosette-wrap">${rosetteSVG(p.ratings, 110)}</div>
+        <div class="rosette-wrap" data-protocol="${p.name}">
+          ${rosetteSVG(p.ratings, 110)}
+        </div>
         <div class="rosette-labels">
           ${DIM.map(d => `
             <div class="rosette-row">
@@ -413,6 +425,44 @@ function renderCards() {
       </div>
     `;
     container.appendChild(card);
+  });
+}
+
+// ── Wire rosette tooltips ──
+function wireRosetteTooltips() {
+  const protoMap = {};
+  protocols.forEach(p => { protoMap[p.name] = p; });
+
+  // Single global tooltip appended to body
+  const tooltip = document.createElement('div');
+  tooltip.className = 'rosette-tooltip';
+  document.body.appendChild(tooltip);
+
+  document.querySelectorAll('.rosette-wrap[data-protocol]').forEach(wrap => {
+    const name = wrap.dataset.protocol;
+    const p = protoMap[name];
+
+    wrap.querySelectorAll('path[data-dim]').forEach(path => {
+      path.addEventListener('mouseenter', () => {
+        const d = path.dataset.dim;
+        tooltip.innerHTML = `
+          <div class="rosette-tooltip-title">
+            <span>${DIM_LABELS[d]}</span>
+            ${badgeHTML(p.ratings[d])}
+          </div>
+          <div class="rosette-tooltip-desc">${p.rationale[d]}</div>
+        `;
+        // Position next to the rosette
+        const rect = wrap.getBoundingClientRect();
+        tooltip.style.top = (rect.bottom + 8) + 'px';
+        tooltip.style.left = (rect.left - 60) + 'px';
+        tooltip.classList.add('visible');
+      });
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('visible');
+    });
   });
 }
 
@@ -533,6 +583,7 @@ function renderSummaryTabs() {
 // ── Init ──
 renderSummaryTabs();
 renderCards();
+wireRosetteTooltips();
 renderSpectrums();
 renderRiskAnalysis();
 </script>
