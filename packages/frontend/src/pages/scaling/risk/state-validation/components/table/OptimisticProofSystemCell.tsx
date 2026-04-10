@@ -64,7 +64,10 @@ export function OptimisticProofSystemCell({
               </a>
             </TooltipTrigger>
             <TooltipContent>
-              <div className="flex flex-col gap-2">
+              <p className="text-label-value-15 md:text-label-value-16">
+                The project uses {zkCatalog.name} prover.
+              </p>
+              <div className="mt-2 flex flex-col gap-2">
                 {hasSuccessful && (
                   <Callout
                     color="green"
@@ -93,6 +96,9 @@ export function OptimisticProofSystemCell({
                   />
                 )}
               </div>
+              <p className="mt-2 text-label-value-13 text-secondary">
+                Click to view details
+              </p>
             </TooltipContent>
           </Tooltip>
         )}
