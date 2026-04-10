@@ -79,7 +79,7 @@
     "koa-compress": "^5.1.1",
     "koa-conditional-get": "^3.0.0",
     "koa-etag": "^4.0.0",
-    "jose": "^6.1.0",
+    "jose": "5.10.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.7",
     "react": "^19.0.0",
