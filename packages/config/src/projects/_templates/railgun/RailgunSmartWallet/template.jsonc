@@ -5,5 +5,19 @@
     "snarkSafetyVector",
     "zeros"
   ],
-  "ignoreInWatchMode": ["lastEventBlock", "merkleRoot", "nextLeafIndex"]
+  "ignoreInWatchMode": ["lastEventBlock", "merkleRoot", "nextLeafIndex"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set zk verification key to upgrade the verifier circuit."
+        },
+        {
+          "type": "interact",
+          "description": "add/remove tokens to/from the blacklist."
+        }
+      ]
+    }
+  }
 }

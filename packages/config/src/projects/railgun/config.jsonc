@@ -5,7 +5,9 @@
   "initialAddresses": [
     "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
     "eth:0xe90275239D734899e8D94646139213F6F97bEB0E",
-    "eth:0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9"
+    "eth:0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9",
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598", // this address has permissions to update railgun verifier
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46" // this address has permissions to update railgun verifier
   ],
   "overrides": {
     "eth:0x20Fa11c4F794eC1db3527bF618B02754FF393bD5": {

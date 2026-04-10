@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x987c8a60b5e15ccc3665be0ed4b51ecd9028b50a
+Generated with discovered.json: 0x5e007825af25420656d1512b460f61856eef7f89
 
-# Diff at Thu, 09 Apr 2026 14:20:33 GMT:
+# Diff at Thu, 09 Apr 2026 15:20:55 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
 - current timestamp: 1775744335
 
 ## Description
@@ -20,6 +20,18 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ProxyAdmin (eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VKeySetter (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VKeySetter (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46)
     +++ description: None
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "railgun",
   "timestamp": 1775744335,
-  "configHash": "0xa96c7568ccb6abf9f84b3b658d11c25a016985f125825ce97cff029de1ebcad5",
+  "configHash": "0x2e8d3c793988e709ce86c3589e41ac71472accfefdb1c20d94a4ba04f5d097d0",
   "entries": [
     {
       "name": "Sweeper",
@@ -62,6 +62,27 @@
       }
     },
     {
+      "name": "VKeySetter",
+      "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x97c32fbfee382b7fe3932651160b482c01c51e25cee46e8e174218dadd7bcae8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1752516023,
+      "sinceBlock": 22919063,
+      "values": {
+        "$immutable": true,
+        "delegator": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "owner": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+        "state": 2,
+        "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+      },
+      "implementationNames": {
+        "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VKeySetter"
+      }
+    },
+    {
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "type": "EOA",
       "proxyType": "EOA",
@@ -72,6 +93,28 @@
           "role": "admin"
         }
       ]
+    },
+    {
+      "name": "VKeySetter",
+      "address": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+      "type": "Contract",
+      "template": "railgun/VKeySetter",
+      "sourceHashes": [
+        "0x4c94632d11362a5297c31f6eba9f37322caadd6a88247c9032529d66ebd04cdf"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1677376967,
+      "sinceBlock": 16709316,
+      "values": {
+        "$immutable": true,
+        "delegator": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+        "owner": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
+        "state": 2,
+        "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+      },
+      "implementationNames": {
+        "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VKeySetter"
+      }
     },
     {
       "name": "GovernorRewards",
@@ -110,19 +153,61 @@
       "name": "Delegator",
       "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
       "type": "Contract",
+      "template": "railgun/Delegator",
       "sourceHashes": [
         "0xb2e5d4b92141657f0ac259d83e128a7a6504cd491e1326fa625354186d937b28"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add/remove tokens to/from the blacklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "set zk verification key to upgrade the verifier circuit.",
+          "role": ".owner"
+        }
+      ],
       "sinceTimestamp": 1625810239,
       "sinceBlock": 12791440,
       "values": {
         "$immutable": true,
+        "grantedPermissions": {
+          "eth:0x0219B4C1ADcEC8f4206b528832F66aB76766873D": [],
+          "eth:0x17cF6Db98B05a0329c983f3a3b45d37d9cf1De86": [],
+          "eth:0xCC29DBF69896278a0C6B886Ef8Cc30A56fA6164a": [],
+          "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": [
+            {
+              "contractAddress": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ],
+          "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": [
+            {
+              "contractAddress": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+              "selector": "0x2ec0f359"
+            }
+          ]
+        },
         "owner": "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC"
+      },
+      "fieldMeta": {
+        "grantedPermissions": {
+          "description": "Selector 0x2ec0f359 is function setVerificationKey on the main railgun contract."
+        }
       },
       "implementationNames": {
         "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": "Delegator"
       }
+    },
+    {
+      "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Voting",
@@ -311,6 +396,42 @@
       "function transferProxyOwnership(address _proxy, address _newOwner)",
       "function unpause(address _proxy)",
       "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": [
+      "constructor(address _admin, address _delegator, address _verifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function batchCommitVerificationKey(uint256[] _nullifiers, uint256[] _commitments)",
+      "function batchSetVerificationKey(uint256[] _nullifiers, uint256[] _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic)[] _verifyingKey)",
+      "function commitVerificationKey(uint256 _nullifiers, uint256 _commitments)",
+      "function delegator() view returns (address)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function state() view returns (uint8)",
+      "function stateToCommitting()",
+      "function stateToSetting()",
+      "function stateToWaiting()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)"
+    ],
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": [
+      "constructor(address _admin, address _delegator, address _verifier)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function batchCommitVerificationKey(uint256[] _nullifiers, uint256[] _commitments)",
+      "function batchSetVerificationKey(uint256[] _nullifiers, uint256[] _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic)[] _verifyingKey)",
+      "function commitVerificationKey(uint256 _nullifiers, uint256 _commitments)",
+      "function delegator() view returns (address)",
+      "function getVerificationKey(uint256 _nullifiers, uint256 _commitments) view returns (tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic))",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setVerificationKey(uint256 _nullifiers, uint256 _commitments, tuple(string artifactsIPFSHash, tuple(uint256 x, uint256 y) alpha1, tuple(uint256[2] x, uint256[2] y) beta2, tuple(uint256[2] x, uint256[2] y) gamma2, tuple(uint256[2] x, uint256[2] y) delta2, tuple(uint256 x, uint256 y)[] ic) _verifyingKey)",
+      "function state() view returns (uint8)",
+      "function stateToCommitting()",
+      "function stateToSetting()",
+      "function stateToWaiting()",
+      "function transferOwnership(address newOwner)",
+      "function verifier() view returns (address)"
     ],
     "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": [
       "constructor(address _admin)",
@@ -567,8 +688,10 @@
     ]
   },
   "usedTemplates": {
-    "railgun/RailgunSmartWallet": "0xf459fec3a30906768716032cc636b8fa5892fbde47f2a46328fdb53f321bc989"
+    "railgun/Delegator": "0xc04930700142a4832ff948883e6ed52b480426c2852cc39659daf374c9ca78d3",
+    "railgun/RailgunSmartWallet": "0x46cd2e548955a00bd5c05242179d4ceb46ddcf0c3cfbaa85f4e5ed70b30f1da8",
+    "railgun/VKeySetter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24842709 },
-  "permissionsConfigHash": "0xe73282cc7718b1d5cd8e7c2e47a7a22e75ed95a9cdbb784b03d77f3eba219011"
+  "permissionsConfigHash": "0x2974addee2c039fb525805334b282504e5706aa8e412c00f79acf340d64ccfdd"
 }

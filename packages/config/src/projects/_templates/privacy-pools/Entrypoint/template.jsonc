@@ -1,6 +1,49 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e": "_OWNER_ROLE",
+          "0xfc84ade01695dae2ade01aa4226dc40bdceaf9d5dbd3bf8630b1dd5af195bbc5": "_ASP_POSTMAN"
+        }
+      }
+    },
+    "OwnerRole": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e": "_OWNER_ROLE"
+        },
+        "pickRoleMembers": "_OWNER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade the system."
+        },
+        {
+          "type": "interact",
+          "description": "register new pools or wind down (disable deposits) existing ones."
+        }
+      ]
+    },
+    "AspPostman": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xfc84ade01695dae2ade01aa4226dc40bdceaf9d5dbd3bf8630b1dd5af195bbc5": "_ASP_POSTMAN"
+        },
+        "pickRoleMembers": "_ASP_POSTMAN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "control the whitelisted deposit/withdrawal list (update the association set)."
+        }
+      ]
+    },
     "pools": {
       "handler": {
         "type": "event",

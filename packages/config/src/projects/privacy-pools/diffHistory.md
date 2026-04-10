@@ -1,8 +1,8 @@
-Generated with discovered.json: 0xa298b7f5302317421fae55cc6e3a87e329c9c210
+Generated with discovered.json: 0x4d7614ca97bbd1166e063a418b8dcd3485a03e60
 
-# Diff at Thu, 09 Apr 2026 14:15:40 GMT:
+# Diff at Thu, 09 Apr 2026 14:51:38 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
 - current timestamp: 1775744016
 
 ## Description
@@ -55,6 +55,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract Safe (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract PrivacyPoolComplex (eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86)
     +++ description: None
 ```
@@ -86,6 +92,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract PrivacyPoolComplex (eth:0xD14F4B36E1D1D98c218db782c49149876042BC56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E)
     +++ description: None
 ```
 

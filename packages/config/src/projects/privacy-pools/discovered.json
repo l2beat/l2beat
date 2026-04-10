@@ -118,6 +118,29 @@
       }
     },
     {
+      "address": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "control the whitelisted deposit/withdrawal list (update the association set).",
+          "role": ".AspPostman"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Entrypoint",
       "address": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
       "type": "Contract",
@@ -145,7 +168,26 @@
           ]
         ],
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": { "adminRole": "_OWNER_ROLE", "members": [] },
+          "_OWNER_ROLE": {
+            "adminRole": "_OWNER_ROLE",
+            "members": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"]
+          },
+          "_ASP_POSTMAN": {
+            "adminRole": "_OWNER_ROLE",
+            "members": [
+              "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
+              "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
+            ]
+          }
+        },
+        "AspPostman": [
+          "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
+          "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "OwnerRole": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
         "pools": {
           "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": [
             {
@@ -308,6 +350,66 @@
       "implementationNames": {
         "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": "CommitmentVerifier"
       }
+    },
+    {
+      "name": "Safe",
+      "address": "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "control the whitelisted deposit/withdrawal list (update the association set).",
+          "role": ".AspPostman"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "register new pools or wind down (disable deposits) existing ones.",
+          "role": ".OwnerRole"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "upgrade the system.",
+          "role": ".OwnerRole"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1742919851,
+      "sinceBlock": 22125088,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
+          "eth:0xb1A1D5b0f3d4E8e89E55daBFEb0B96118cbc16fc",
+          "eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4",
+          "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xf282a84b0bf6eade58a219ecc69f1555f4dcd5e4259840fcf40eebc823a2fc3b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 31,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "eth:0xb1A1D5b0f3d4E8e89E55daBFEb0B96118cbc16fc",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PrivacyPoolComplex",
@@ -505,6 +607,35 @@
       "fieldMeta": { "dead": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": "PrivacyPoolComplex"
+      }
+    },
+    {
+      "address": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xd76eEb2A6fcf55dc80D046FFbc96D1A2B45AB52E",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x70dcc1ae15e9fd0cf5bcb845c601e787067e3a5596214dc08fd6a5fcc1933061",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
       }
     },
     {
@@ -868,6 +999,106 @@
       "function windDown()",
       "function withdraw(tuple(address processooor, bytes data) _withdrawal, tuple(uint256[2] pA, uint256[2][2] pB, uint256[2] pC, uint256[8] pubSignals) _proof)"
     ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
     "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -928,6 +1159,9 @@
     ],
     "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6": [
       "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[4] _pubSignals) view returns (bool)"
+    ],
+    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": [
+      "constructor(address _singleton)"
     ],
     "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": [
       "constructor(address _entrypoint, address _withdrawalVerifier, address _ragequitVerifier, address _asset)",
@@ -1430,10 +1664,11 @@
     ]
   },
   "usedTemplates": {
-    "privacy-pools/Entrypoint": "0x22a0609b197409f8a47c4f12459b1b3a05ca5ef6ad3e3cee3ff9427f4dfa3423",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "privacy-pools/Entrypoint": "0x5447b86553ef31c32dcfd7c36385ffbb387af2c3f04ed000b2b120e5353dd271",
     "privacy-pools/PrivacyPoolComplex": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da",
     "privacy-pools/PrivacyPoolSimple": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da"
   },
   "usedBlockNumbers": { "ethereum": 24842683 },
-  "permissionsConfigHash": "0xa590e8404b4ec3dd8ecb91a0d536eec8a310c3f993a5fa6eb18ac57eceff622d"
+  "permissionsConfigHash": "0xd543dbf5f3eb33d975d355f48846a30c8eba5ae9832a81ed3a019f4450c5c5bc"
 }
