@@ -1,5 +1,6 @@
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { SingleChainStats } from './SingleChainStats'
+import { MultipleChainsStats } from './TwoChainStats'
 
 export function FlowsSelectedPathPanel() {
   const { allChains, highlightedChains, selectedChains } = useInteropFlows()
@@ -29,14 +30,23 @@ export function FlowsSelectedPathPanel() {
       {highlightedChains.length === 1 && (
         <SingleChainStats chainId={chainA.id} selectedChains={selectedChains} />
       )}
-      <div className="mt-auto pt-4">
-        <a
-          href={detailsUrl}
-          className="block w-full rounded-lg bg-brand py-2.5 text-center font-bold text-label-value-14 text-primary-invert transition-colors hover:bg-brand/90"
-        >
-          View path details
-        </a>
-      </div>
+      {highlightedChains.length === 2 && chainB && (
+        <>
+          <MultipleChainsStats
+            chainIdA={chainA.id}
+            chainIdB={chainB.id}
+            selectedChains={selectedChains}
+          />
+          <div className="mt-auto pt-4">
+            <a
+              href={detailsUrl}
+              className="block w-full rounded-lg bg-brand py-2.5 text-center font-bold text-label-value-14 text-primary-invert transition-colors hover:bg-brand/90"
+            >
+              View path details
+            </a>
+          </div>
+        </>
+      )}
     </div>
   )
 }
