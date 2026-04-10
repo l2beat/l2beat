@@ -2157,21 +2157,22 @@ Verify:
     programUrl:
       'https://github.com/morph-l2/morph/tree/v0.5.3/prover/bin/client',
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
-    //     verificationSteps: `
-    // Prepare:
+    verificationStatus: 'successful',
+    verificationSteps: `
+The steps below should be done on a Linux machine to reproduce the program hash. To prepare:
 
-    // 1. Install cargo make: \`cargo install --debug --locked cargo-make\`
-    // 2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
-    // 3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain version \`v5.2.4\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up --version v5.2.4\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
 
-    // Verify:
+Verify:
 
-    // 1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.3\`. Commit hash should be \`a20bbfa25014a20ba229ca0c9621001d6b334b44\`
-    // 2. Make sure docker is running by running \`docker ps\`
-    // 3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v5.2.4\`
-    // 4. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.  // I get 0x00ace704070ae2713399584c269c502f5b30e2a983659f41cf4d1968e653a916
-    //   `,
+1. Checkout the correct branch in [morph repo](https://github.com/morph-l2/morph): \`git checkout v0.5.3\`. Commit hash should be \`a20bbfa25014a20ba229ca0c9621001d6b334b44\`
+2. Make sure docker is running by running \`docker ps\`
+3. Build the program binary from \`prover/bin/client\` dir using a docker container build for reproducibility: \`cargo prove build --docker --tag v5.2.4\`
+4. The generated elf binary \`verifier-client\` will be placed in \`prover/target/elf-compilation/docker/riscv32im-succinct-zkvm-elf/release\`. Move it to \`prover/bin/client/elf\`.
+5. Regenerate and print the vkey from the elf binary by calling \`cargo run --release --bin vkey\` from \`prover\` dir.
+  `,
   },
   '0x001d6dd65980c80ef8496f4a0bd9b2ccc1c9e66aeb122f841e0b90e322bbacdd': {
     title: 'Aggregation program of Ethscriptions ZK Fault Proofs',
