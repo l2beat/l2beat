@@ -1,0 +1,142 @@
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { Skeleton } from '~/components/core/Skeleton'
+import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
+import { api } from '~/trpc/React'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { formatInteger } from '~/utils/number-format/formatInteger'
+import { formatNumber } from '~/utils/number-format/formatNumber'
+import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
+
+export function SingleChainStats({
+  chainId,
+  selectedChains,
+}: {
+  chainId: string
+  selectedChains: string[]
+}) {
+  const { data, isLoading } = api.interop.flows.useQuery({
+    chains: selectedChains,
+  })
+
+  if (!data || isLoading) {
+    return null
+  }
+
+  return (
+    <>
+      <Stats data={data} isLoading={isLoading} chainId={chainId} />
+      <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
+    </>
+  )
+}
+
+function Stats({
+  data,
+  isLoading,
+  chainId,
+}: {
+  data: InteropFlowsData
+  isLoading: boolean
+  chainId: string
+}) {
+  const chainData = data?.chainData.find((cv) => cv.chainId === chainId)
+  assert(chainData, 'Chain data not found')
+
+  const totalTransfers = chainData.transfersIn + chainData.transfersOut
+  const avgTransferValue =
+    totalTransfers > 0 ? chainData.totalVolume / totalTransfers : 0
+
+  // Compute particles/s from total chain volume / 86400 / $50
+  const volumePerSecond = chainData.totalVolume / UnixTime.DAY
+  const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
+
+  return (
+    <div className="mt-3 rounded-lg border border-divider bg-surface-primary p-4">
+      <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
+      <div className="space-y-1.5">
+        <StatRow
+          label="Volume in"
+          value={formatCurrency(chainData.inflow, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Volume out"
+          value={formatCurrency(chainData.outflow, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Net flow"
+          value={formatCurrency(chainData.netFlow, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Transfers in"
+          value={formatInteger(chainData.transfersIn)}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Transfers out"
+          value={formatInteger(chainData.transfersOut)}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Avg. transfer value"
+          value={formatCurrency(avgTransferValue, 'usd')}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Connected"
+          value={`${chainData.connectedChains} chains`}
+          isLoading={isLoading}
+        />
+        <StatRow
+          label="Particles"
+          value={`${formatNumber(particlesPerSecond, 1)}/s (${formatCurrency(volumePerSecond, 'usd')}/s)`}
+          isLoading={isLoading}
+        />
+      </div>
+    </div>
+  )
+}
+
+function TopRoutes({
+  data,
+  isLoading,
+  chainId,
+}: {
+  data: InteropFlowsData
+  isLoading: boolean
+  chainId: string
+}) {
+  const flows = data?.flows.filter(
+    (cv) => cv.srcChain === chainId || cv.dstChain === chainId,
+  )
+  assert(flows, 'Chain flows not found')
+
+  return (
+    <div className="mt-3 rounded-lg border border-divider bg-surface-primary p-4">
+      <div className="mb-1.5 font-bold text-label-value-12">TOP ROUTES</div>
+    </div>
+  )
+}
+
+function StatRow({
+  label,
+  value,
+  isLoading,
+}: {
+  label: string
+  value: string
+  isLoading: boolean
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 text-[13px]">
+      <span className="font-medium text-secondary leading-none">{label}</span>
+      {isLoading ? (
+        <Skeleton className="h-4 w-16" />
+      ) : (
+        <span className="font-semibold leading-[1.15]">{value}</span>
+      )}
+    </div>
+  )
+}

@@ -16,7 +16,7 @@ interface Props {
 }
 
 // Each particle represents 50 USD of volume
-const DOLLARS_PER_PARTICLE = 50
+export const DOLLARS_PER_PARTICLE = 50
 // Base travel time for a particle to cross the full path
 const BASE_DURATION_S = 5
 // Per-flow upper bound to avoid excessive DOM nodes

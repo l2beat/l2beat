@@ -40,7 +40,7 @@ export function FlowsGeneralStats() {
         />
         <Card
           title="Transfers"
-          value={formatInteger(data?.stats.numberOfTransactions ?? 0)}
+          value={formatInteger(data?.stats.totalTransferCount ?? 0)}
           isLoading={isLoading}
         />
         <HorizontalSeparator className="my-4" />

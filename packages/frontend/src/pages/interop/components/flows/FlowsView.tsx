@@ -5,8 +5,8 @@ import type { InteropChainWithIcon } from '../chain-selector/types'
 import { FlowsChainsSelector } from './FlowsChainsSelector'
 import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
-import { FlowsSelectedPathPanel } from './FlowsSelectedPathPanel'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
+import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
 import {
   InteropFlowsProvider,
   useInteropFlows,

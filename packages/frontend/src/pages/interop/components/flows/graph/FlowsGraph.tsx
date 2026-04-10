@@ -23,8 +23,8 @@ export function FlowsGraph({
   const { selectedChains } = useInteropFlows()
 
   const layout = useMemo(
-    () => computeGraphLayout(selectedChains, data.chainVolumes, width, height),
-    [selectedChains, data.chainVolumes, width, height],
+    () => computeGraphLayout(selectedChains, data.chainData, width, height),
+    [selectedChains, data.chainData, width, height],
   )
 
   const maxVolume = Math.max(...data.flows.map((f) => f.volume))
@@ -48,7 +48,7 @@ export function FlowsGraph({
       <ChainBubblesLayer
         interopChains={interopChains}
         layout={layout}
-        chainVolumes={data.chainVolumes}
+        chainData={data.chainData}
       />
     </svg>
   )

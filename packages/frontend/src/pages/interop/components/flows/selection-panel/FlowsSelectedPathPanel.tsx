@@ -1,7 +1,8 @@
-import { useInteropFlows } from './utils/InteropFlowsContext'
+import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { SingleChainStats } from './SingleChainStats'
 
 export function FlowsSelectedPathPanel() {
-  const { allChains, highlightedChains } = useInteropFlows()
+  const { allChains, highlightedChains, selectedChains } = useInteropFlows()
   const chainA = allChains.find((c) => c.id === highlightedChains[0])
   const chainB =
     highlightedChains.length === 2
@@ -25,6 +26,9 @@ export function FlowsSelectedPathPanel() {
       <div className="mt-1 font-medium text-label-value-14 text-secondary">
         {title}
       </div>
+      {highlightedChains.length === 1 && (
+        <SingleChainStats chainId={chainA.id} selectedChains={selectedChains} />
+      )}
       <div className="mt-auto pt-4">
         <a
           href={detailsUrl}

@@ -1,4 +1,4 @@
-import type { ChainVolume } from '~/server/features/scaling/interop/getInteropFlows'
+import type { ChainData } from '~/server/features/scaling/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
@@ -12,13 +12,13 @@ import { getChainColor } from './utils/getChainColor'
 interface ChainBubblesLayerProps {
   interopChains: InteropChainWithIcon[]
   layout: FlowsGraphLayout
-  chainVolumes: ChainVolume[]
+  chainData: ChainData[]
 }
 
 export function ChainBubblesLayer({
   interopChains,
   layout,
-  chainVolumes,
+  chainData,
 }: ChainBubblesLayerProps) {
   const { highlightedChains, toggleHighlightedChain } = useInteropFlows()
 
@@ -26,8 +26,7 @@ export function ChainBubblesLayer({
     const nodeLayout = layout.get(chain.id)
     if (!chain || !nodeLayout) return null
 
-    const netFlow =
-      chainVolumes.find((f) => f.chainId === chain.id)?.netFlow ?? 0
+    const netFlow = chainData.find((f) => f.chainId === chain.id)?.netFlow ?? 0
 
     return (
       <ChainBubble

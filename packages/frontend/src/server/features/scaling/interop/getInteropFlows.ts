@@ -10,24 +10,30 @@ export interface Flow {
   srcChain: string
   dstChain: string
   volume: number
+  transferCount: number
 }
 
-export interface ChainVolume {
+export interface ChainData {
   chainId: string
   totalVolume: number
   netFlow: number
+  inflow: number
+  outflow: number
+  transfersIn: number
+  transfersOut: number
+  connectedChains: number
 }
 
 interface FlowsStats {
   totalVolume: number
-  numberOfTransactions: number
+  totalTransferCount: number
   activeFlows: number
   topRoute: { srcChain: string; dstChain: string } | undefined
 }
 
 export type InteropFlowsData = {
   flows: Flow[]
-  chainVolumes: ChainVolume[]
+  chainData: ChainData[]
   stats: FlowsStats
 }
 
@@ -42,10 +48,10 @@ export async function getInteropFlows(
   if (!snapshotTimestamp || params.chains.length === 0) {
     return {
       flows: [],
-      chainVolumes: [],
+      chainData: [],
       stats: {
         totalVolume: 0,
-        numberOfTransactions: 0,
+        totalTransferCount: 0,
         activeFlows: 0,
         topRoute: undefined,
       },
@@ -59,7 +65,7 @@ export async function getInteropFlows(
     params.chains,
   )
 
-  // Skip subgroup projects to avoid double-counting (same pattern as getInteropDashboardData)
+  // Skip subgroup projects to avoid double-counting
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
@@ -68,28 +74,42 @@ export async function getInteropFlows(
   )
 
   // Aggregate transfer volumes and counts by srcChain::dstChain pair
-  const flowMap = new Map<string, number>()
-  let totalTransferCount = 0
+  const flowDataMap = new Map<
+    string,
+    { volume: number; transferCount: number }
+  >()
   for (const record of transfers) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
-    totalTransferCount += record.transferCount
     const key = `${record.srcChain}::${record.dstChain}`
-    flowMap.set(
-      key,
-      (flowMap.get(key) ?? 0) + (getInteropTransferValue(record) ?? 0),
-    )
+    const current = flowDataMap.get(key) ?? { volume: 0, transferCount: 0 }
+    flowDataMap.set(key, {
+      volume: current.volume + (getInteropTransferValue(record) ?? 0),
+      transferCount: current.transferCount + record.transferCount,
+    })
   }
 
   const flows: Flow[] = []
-  for (const [key, volume] of flowMap) {
+  for (const [key, { volume, transferCount }] of flowDataMap.entries()) {
     if (volume <= 0) continue
     const [srcChain, dstChain] = key.split('::')
     if (srcChain && dstChain) {
-      flows.push({ srcChain, dstChain, volume })
+      flows.push({
+        srcChain,
+        dstChain,
+        volume,
+        transferCount,
+      })
     }
   }
 
-  const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
+  const { totalVolume, totalTransferCount } = flows.reduce(
+    (sum, f) => {
+      sum.totalVolume += f.volume
+      sum.totalTransferCount += f.transferCount
+      return sum
+    },
+    { totalVolume: 0, totalTransferCount: 0 },
+  )
   const topFlow = flows.reduce<Flow | undefined>(
     (max, f) => (!max || f.volume > max.volume ? f : max),
     undefined,
@@ -97,10 +117,10 @@ export async function getInteropFlows(
 
   return {
     flows,
-    chainVolumes: computeChainVolumes(flows, params.chains),
+    chainData: computeChainsData(flows, params.chains),
     stats: {
       totalVolume,
-      numberOfTransactions: totalTransferCount,
+      totalTransferCount,
       activeFlows: flows.length,
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
@@ -109,15 +129,35 @@ export async function getInteropFlows(
   }
 }
 
-function computeChainVolumes(flows: Flow[], chainIds: string[]): ChainVolume[] {
+function computeChainsData(flows: Flow[], chainIds: string[]): ChainData[] {
   const inflows = new Map<string, number>()
   const outflows = new Map<string, number>()
+  const transfersIn = new Map<string, number>()
+  const transfersOut = new Map<string, number>()
+
   for (const flow of flows) {
     outflows.set(
       flow.srcChain,
       (outflows.get(flow.srcChain) ?? 0) + flow.volume,
     )
     inflows.set(flow.dstChain, (inflows.get(flow.dstChain) ?? 0) + flow.volume)
+    transfersOut.set(
+      flow.srcChain,
+      (transfersOut.get(flow.srcChain) ?? 0) + flow.transferCount,
+    )
+    transfersIn.set(
+      flow.dstChain,
+      (transfersIn.get(flow.dstChain) ?? 0) + flow.transferCount,
+    )
+  }
+
+  // Count connected chains
+  const connected = new Map<string, Set<string>>()
+  for (const flow of flows) {
+    if (!connected.has(flow.srcChain)) connected.set(flow.srcChain, new Set())
+    if (!connected.has(flow.dstChain)) connected.set(flow.dstChain, new Set())
+    connected.get(flow.srcChain)?.add(flow.dstChain)
+    connected.get(flow.dstChain)?.add(flow.srcChain)
   }
 
   return chainIds.map((chainId) => {
@@ -127,6 +167,11 @@ function computeChainVolumes(flows: Flow[], chainIds: string[]): ChainVolume[] {
       chainId,
       totalVolume: inflow + outflow,
       netFlow: inflow - outflow,
+      inflow: inflows.get(chainId) ?? 0,
+      outflow,
+      transfersIn: transfersIn.get(chainId) ?? 0,
+      transfersOut: transfersOut.get(chainId) ?? 0,
+      connectedChains: connected.get(chainId)?.size ?? 0,
     }
   })
 }
@@ -140,9 +185,11 @@ function getMockInteropFlows(): InteropFlowsData {
     for (let j = 0; j < chainIds.length; j++) {
       if (i === j) continue
       const volume = (((i + 1) * (j + 2) * 7_123_456) % 50_000_000) + 500_000
+      const transferCount = Math.round(volume / 1250) // ~$1250 avg transfer
       const srcChain = chainIds[i]
       const dstChain = chainIds[j]
-      if (srcChain && dstChain) flows.push({ srcChain, dstChain, volume })
+      if (srcChain && dstChain)
+        flows.push({ srcChain, dstChain, volume, transferCount })
     }
   }
 
@@ -155,10 +202,10 @@ function getMockInteropFlows(): InteropFlowsData {
 
   return {
     flows,
-    chainVolumes: computeChainVolumes(flows, chainIds),
+    chainData: computeChainsData(flows, chainIds),
     stats: {
       totalVolume,
-      numberOfTransactions: totalTransferCount,
+      totalTransferCount: totalTransferCount,
       activeFlows: flows.length,
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
