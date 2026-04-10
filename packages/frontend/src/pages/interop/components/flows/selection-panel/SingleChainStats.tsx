@@ -1,11 +1,13 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
+import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
+import { useInteropFlows } from '../utils/InteropFlowsContext'
 
 export function SingleChainStats({
   chainId,
@@ -108,14 +110,57 @@ function TopRoutes({
   isLoading: boolean
   chainId: string
 }) {
-  const flows = data?.flows.filter(
-    (cv) => cv.srcChain === chainId || cv.dstChain === chainId,
-  )
-  assert(flows, 'Chain flows not found')
+  const { allChains } = useInteropFlows()
+
+  const flows = data?.flows
+    .filter((cv) => cv.srcChain === chainId || cv.dstChain === chainId)
+    .sort((a, b) => b.volume - a.volume)
+    .slice(0, 3)
+
+  if (flows.length === 0) {
+    return null
+  }
 
   return (
-    <div className="mt-3 rounded-lg border border-divider bg-surface-primary p-4">
+    <div className="mt-2 rounded-lg border border-divider bg-surface-primary p-4">
       <div className="mb-1.5 font-bold text-label-value-12">TOP ROUTES</div>
+      <div className="space-y-1">
+        {flows.map((flow) => {
+          const srcChain = allChains.find((c) => c.id === flow.srcChain)
+          const dstChain = allChains.find((c) => c.id === flow.dstChain)
+          return (
+            <div
+              key={`${flow.srcChain}-${flow.dstChain}`}
+              className="flex items-center justify-between gap-2 text-[13px]"
+            >
+              <div className="flex items-center gap-1">
+                {srcChain && (
+                  <img
+                    src={srcChain.iconUrl}
+                    alt={srcChain.name}
+                    className="size-4"
+                  />
+                )}
+                <ArrowRightIcon className="size-4 fill-brand" />
+                {dstChain && (
+                  <img
+                    src={dstChain.iconUrl}
+                    alt={dstChain.name}
+                    className="size-4"
+                  />
+                )}
+              </div>
+              {isLoading ? (
+                <Skeleton className="h-4 w-16" />
+              ) : (
+                <span className="font-semibold leading-[1.15]">
+                  {formatCurrency(flow.volume, 'usd')}
+                </span>
+              )}
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
