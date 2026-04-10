@@ -43,8 +43,8 @@ export interface TopLevelDeclaration {
   ast: AST.ASTNode
   content: string
 
-  inheritsFrom: string[]
-  dynamicReferences: string[]
+  implementationReferences: string[]
+  signatureReferences: string[]
 }
 
 // If import is:
@@ -133,7 +133,7 @@ export class ParsedFilesManager {
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        declaration.dynamicReferences = result.resolveDynamicReferences(
+        declaration.signatureReferences = result.resolveSignatureReferences(
           file,
           declaration.ast,
         )
@@ -182,9 +182,9 @@ export class ParsedFilesManager {
     const declarations = declarationNodes.map((d) => {
       assert(d.range !== undefined, 'Invalid contract definition')
 
-      const inheritsFrom = []
+      const implementationReferences = []
       if (d.type === 'ContractDefinition') {
-        inheritsFrom.push(
+        implementationReferences.push(
           ...d.baseContracts.map((c) => {
             // biome-ignore lint/style/noNonNullAssertion: we know it's there
             return c.baseName.namePath.split('.').at(-1)!
@@ -202,10 +202,10 @@ export class ParsedFilesManager {
         ast: d,
         name: d.name ?? '',
         type: getDeclarationType(d),
-        inheritsFrom,
-        dynamicReferences: [],
+        implementationReferences,
+        signatureReferences: [],
         content: file.content.slice(adjustedStart, d.range[1] + 1),
-      }
+      } satisfies TopLevelDeclaration
     })
 
     return declarations
@@ -320,7 +320,10 @@ export class ParsedFilesManager {
     })
   }
 
-  private resolveDynamicReferences(file: ParsedFile, c: AST.ASTNode): string[] {
+  private resolveSignatureReferences(
+    file: ParsedFile,
+    c: AST.ASTNode,
+  ): string[] {
     let subNodes: AST.BaseASTNode[] = []
     if (c.type === 'ContractDefinition') {
       subNodes = c.subNodes

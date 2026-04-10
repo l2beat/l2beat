@@ -9,7 +9,7 @@ import {
 } from './ParsedFilesManager'
 import type { FlattenOptions } from './types'
 
-type EntryType = 'inheritance' | 'dynamic'
+type EntryType = 'implementation' | 'signature'
 
 interface ContractNameFilePair {
   contractName: string
@@ -66,7 +66,7 @@ function generateShouldBeInterfaceDictionary(
       continue
     }
 
-    result[id] = contract.declaration.inheritsFrom.every((name) => {
+    result[id] = contract.declaration.implementationReferences.every((name) => {
       const base = parsedFileManager.tryFindDeclaration(name, contract.file)
       assert(base, `Failed to find contract ${name}`)
       return !isContract(base) || result[getUniqueContractId(base)]
@@ -97,7 +97,7 @@ function generatePurelyDynamicDictionary(
     const alreadyVisited = uniqueContractId in result
 
     result[uniqueContractId] ??= true
-    if (entry.type !== 'dynamic') {
+    if (entry.type !== 'signature') {
       result[uniqueContractId] = false
     }
 
@@ -106,8 +106,8 @@ function generatePurelyDynamicDictionary(
     }
 
     const entries = getStackEntries(foundContract)
-    if (entry.type === 'dynamic') {
-      entries.forEach((e) => (e.type = 'dynamic'))
+    if (entry.type === 'signature') {
+      entries.forEach((e) => (e.type = 'signature'))
     }
     stack.push(...entries)
   }
@@ -163,29 +163,20 @@ function getUniqueContractId(entry: DeclarationFilePair): string {
 }
 
 function getStackEntries(pair: DeclarationFilePair): ContractNameFilePair[] {
-  const inheritanceReferences: ContractNameFilePair[] =
-    pair.declaration.inheritsFrom.map((contractName) => ({
+  const {
+    file,
+    declaration: { implementationReferences, signatureReferences },
+  } = pair
+  const seen = new Set(implementationReferences)
+
+  return [
+    ...implementationReferences.map((contractName) => ({
       contractName,
-      file: pair.file,
-      type: 'inheritance',
-    }))
-
-  const dynamicReferences: ContractNameFilePair[] =
-    pair.declaration.dynamicReferences
-      .map(
-        (contractName) =>
-          ({
-            contractName,
-            file: pair.file,
-            type: 'dynamic',
-          }) as ContractNameFilePair,
-      )
-      .filter(
-        (entry) =>
-          !inheritanceReferences.some(
-            (e) => e.contractName === entry.contractName,
-          ),
-      )
-
-  return inheritanceReferences.concat(dynamicReferences)
+      file,
+      type: 'implementation',
+    })),
+    ...signatureReferences
+      .filter((name) => !seen.has(name))
+      .map((contractName) => ({ contractName, file, type: 'signature' })),
+  ] as ContractNameFilePair[]
 }
