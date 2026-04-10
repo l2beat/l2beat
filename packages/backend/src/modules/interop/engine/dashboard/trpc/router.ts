@@ -1,4 +1,5 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import type { ProcessorStatus } from '../impls/processors'
 import { createAnomaliesRouter } from './routers/anomalies'
 import { createChainsRouter } from './routers/chains'
 import { createEventsRouter } from './routers/events'
@@ -9,7 +10,6 @@ import { createMissingTokensRouter } from './routers/missingTokens'
 import { createStatusRouter } from './routers/status'
 import { createTransfersRouter } from './routers/transfers'
 import { router } from './trpc'
-import type { ProcessorStatus } from '../impls/processors'
 
 export function createInteropTrpcRouter(deps: {
   getExplorerUrl: (chain: string) => string | undefined
