@@ -90,7 +90,6 @@ const items = [
         title: 'Financial actions',
         url: '/financials/actions',
         icon: CircleDollarSignIcon,
-        isUpcoming: true,
       },
     ],
   },
