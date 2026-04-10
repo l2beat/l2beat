@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe2160e92e1c3342c09b63c7e8a1a757ce706fea4
 
 ## Description
 
-Upgraded executor facet on ADI Diamond to a new version, then upgraded back. Upgrade params saty the same, the only diff in the contracts is `MAINNET_COMMIT_TIMESTAMP_NOT_OLDER` change from 3 days to 10 days: 
+Upgraded executor facet on ADI Diamond to a new version, then upgraded back. Upgrade params stay the same, the only diff in the contracts is `MAINNET_COMMIT_TIMESTAMP_NOT_OLDER` change from 3 days to 10 days: 
 https://disco.l2beat.com/diff/eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81/eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c.
 
 Probably they did that to post old batches (>3 days) from when the chain was down.
