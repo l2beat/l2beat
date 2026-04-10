@@ -101,45 +101,38 @@ export const columns = [
       align: 'right',
     },
   }),
-  columnHelper.accessor('srcChain', {
-    header: 'Source chain',
-    enableSorting: false,
-    cell: (ctx) => (
-      <ChainCell
-        chain={ctx.row.original.srcChain}
-        iconUrl={ctx.row.original.srcChainIconUrl}
-        href={ctx.row.original.srcTxHashHref}
-      />
-    ),
-    meta: {
-      headClassName: 'text-2xs w-0',
-      cellClassName: 'pr-0 md:pr-0',
-    },
-  }),
   columnHelper.display({
-    id: 'direction',
-    header: '',
+    id: 'chains',
+    header: 'Chains',
     enableSorting: false,
-    cell: () => (
-      <ArrowRightIcon className="mx-2 size-3.5 shrink-0 fill-brand" />
-    ),
-    meta: {
-      cellClassName: 'w-0 px-0 md:px-0',
+    cell: (ctx) => {
+      const {
+        srcChain,
+        srcChainIconUrl,
+        srcTxHashHref,
+        dstChain,
+        dstChainIconUrl,
+        dstTxHashHref,
+      } = ctx.row.original
+
+      return (
+        <div className="flex w-max items-center gap-2 whitespace-nowrap">
+          <ChainCell
+            chain={srcChain}
+            iconUrl={srcChainIconUrl}
+            href={srcTxHashHref}
+          />
+          <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
+          <ChainCell
+            chain={dstChain}
+            iconUrl={dstChainIconUrl}
+            href={dstTxHashHref}
+          />
+        </div>
+      )
     },
-  }),
-  columnHelper.accessor('dstChain', {
-    header: 'Destination chain',
-    enableSorting: false,
-    cell: (ctx) => (
-      <ChainCell
-        chain={ctx.row.original.dstChain}
-        iconUrl={ctx.row.original.dstChainIconUrl}
-        href={ctx.row.original.dstTxHashHref}
-      />
-    ),
     meta: {
-      headClassName: 'text-2xs w-0',
-      cellClassName: 'w-0',
+      headClassName: 'text-2xs',
     },
   }),
 ]
