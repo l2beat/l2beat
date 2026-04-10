@@ -1,8 +1,11 @@
 import { createDatabase } from '@l2beat/database'
 import * as trpcExpress from '@trpc/server/adapters/express'
+import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { appRouter } from './trpc/appRouter'
 import { createContext } from './trpc/trpc'
+
+dotenv()
 
 function main() {
   const connectionString = process.env['LOCAL_DB_URL']

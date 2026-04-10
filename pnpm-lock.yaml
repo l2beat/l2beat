@@ -1139,6 +1139,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
       earl:
         specifier: ^1.1.0
         version: 1.3.0
