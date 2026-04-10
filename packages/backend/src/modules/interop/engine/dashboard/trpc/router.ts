@@ -9,9 +9,11 @@ import { createMissingTokensRouter } from './routers/missingTokens'
 import { createStatusRouter } from './routers/status'
 import { createTransfersRouter } from './routers/transfers'
 import { router } from './trpc'
+import type { ProcessorStatus } from '../impls/processors'
 
 export function createInteropTrpcRouter(deps: {
   getExplorerUrl: (chain: string) => string | undefined
+  getProcessorStatuses: () => ProcessorStatus[]
 }) {
   return router({
     anomalies: createAnomaliesRouter(),
@@ -21,7 +23,9 @@ export function createInteropTrpcRouter(deps: {
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
     missingTokens: createMissingTokensRouter(),
-    status: createStatusRouter(),
+    status: createStatusRouter({
+      getProcessorStatuses: deps.getProcessorStatuses,
+    }),
     transfers: createTransfersRouter(),
   })
 }

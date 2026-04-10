@@ -11,6 +11,7 @@ import { MessageDetailsPage } from './pages/messages/MessageDetailsPage'
 import { MessagesPage } from './pages/messages/MessagesPage'
 import { MissingTokensPage } from './pages/missing-tokens/MissingTokensPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { ProcessorStatusesPage } from './pages/processor-statuses/ProcessorStatusesPage'
 import { StatusPage } from './pages/status/StatusPage'
 import { SummaryPage } from './pages/summary/SummaryPage'
 import { TransferDetailsPage } from './pages/transfers/TransferDetailsPage'
@@ -38,6 +39,10 @@ export function App() {
             <Route path="/messages" element={<MessagesPage />} />
             <Route path="/messages/:type" element={<MessageDetailsPage />} />
             <Route path="/known-apps" element={<KnownAppsPage />} />
+            <Route
+              path="/indexing/processor-statuses"
+              element={<ProcessorStatusesPage />}
+            />
 
             <Route path="/transfers" element={<TransfersPage />} />
             <Route path="/transfers/:type" element={<TransferDetailsPage />} />

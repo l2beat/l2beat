@@ -84,7 +84,6 @@ const items = [
         title: 'Processor statuses',
         url: '/indexing/processor-statuses',
         icon: CpuIcon,
-        isUpcoming: true,
       },
       {
         title: 'Financial actions',
