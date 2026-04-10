@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd7a87f517ef7c6f4957e03fbafc7f6c804f743b6
+Generated with discovered.json: 0xd5242dc7d79b6563ea1dd001d25789afa00f530e
 
-# Diff at Fri, 10 Apr 2026 08:42:29 GMT:
+# Diff at Fri, 10 Apr 2026 10:18:10 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1775051589
@@ -33,7 +33,7 @@ Upgraded one (out of two) SP1 verifiers to a standard SP1 Turbo version.
 ```diff
 +   Status: CREATED
     contract ZkEvmVerifierV1 (eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63)
-    +++ description: None
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
 ```
 
 ## Source code changes

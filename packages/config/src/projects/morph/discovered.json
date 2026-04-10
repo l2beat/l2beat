@@ -57,10 +57,12 @@
       "name": "ZkEvmVerifierV1",
       "address": "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63",
       "type": "Contract",
+      "template": "morph/ZkEvmVerifierV1",
       "sourceHashes": [
         "0xe768d966c7b9e6eba422736e59046849ce9b3236ab36b790ec7b87cadfa383b8"
       ],
       "proxyType": "immutable",
+      "description": "A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.",
       "sinceTimestamp": 1775555411,
       "sinceBlock": 24827021,
       "values": {
