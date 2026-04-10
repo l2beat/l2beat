@@ -370,6 +370,139 @@ contract R1 {
     )
   })
 
+  it('contracts which are called with new are not turned into interfaces', () => {
+    const rootFile: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract Newing {
+    constructor() payable { }
+}
+
+contract NewingValues {
+    constructor() payable { }
+}
+
+contract R1 {
+    function f(address x) public {
+        new Newing();
+        new NewingValues{ value: 123 }();
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [rootFile], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      String.raw`contract Newing {
+    constructor() payable { }
+}
+
+contract NewingValues {
+    constructor() payable { }
+}
+
+contract R1 {
+    function f(address x) public {
+        new Newing();
+        new NewingValues{ value: 123 }();
+    }
+}`,
+    )
+  })
+
+  // TODO(radomski): This should be smart enough to understand that the body
+  // is gone and we no longer reference UsesNewing
+  it('regression - drops used things when turned into an interface', () => {
+    const rootFile: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract Newing {
+    constructor() payable { }
+}
+
+library UsesNewing {
+    function use() internal {
+        new Newing{ value: 123 }();
+    }
+}
+
+abstract contract DynamicContract {
+    struct Structure {
+        uint256 field;
+    }
+
+    function usingLibrary() {
+        UsesNewing.use();
+    }
+}
+
+contract R1 {
+    function f(address x) public {
+        return DynamicContract.Structure({ field: 1337 });
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [rootFile], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      String.raw`contract Newing {
+    constructor() payable { }
+}
+
+library UsesNewing {
+    function use() internal {
+        new Newing{ value: 123 }();
+    }
+}
+
+// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+interface DynamicContract {
+    struct Structure {
+        uint256 field;
+    }
+
+    function usingLibrary() external;
+}
+
+contract R1 {
+    function f(address x) public {
+        return DynamicContract.Structure({ field: 1337 });
+    }
+}`,
+    )
+  })
+
+  // TODO(radomski): This should be smart enough to understand that the body
+  // is gone and we no longer reference UsesNewing
+  it('regression - new a base type', () => {
+    const rootFile: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract R1 {
+    function f(address x) public {
+        new bytes(12);
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [rootFile], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      String.raw`contract R1 {
+    function f(address x) public {
+        new bytes(12);
+    }
+}`,
+    )
+  })
+
   describe('leading comments preservation', () => {
     it('does NOT include leading comments without includeAll (default)', () => {
       const file: FileContent = {

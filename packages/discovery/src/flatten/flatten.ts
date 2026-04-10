@@ -91,7 +91,9 @@ function generatePurelyDynamicDictionary(
       entry.contractName,
       entry.file,
     )
-    assert(foundContract, `Failed to find contract ${entry.contractName}`)
+        if(foundContract === undefined) {
+            continue
+        }
 
     const uniqueContractId = getUniqueContractId(foundContract)
     const alreadyVisited = uniqueContractId in result
@@ -105,11 +107,7 @@ function generatePurelyDynamicDictionary(
       continue
     }
 
-    const entries = getStackEntries(foundContract)
-    if (entry.type === 'signature') {
-      entries.forEach((e) => (e.type = 'signature'))
-    }
-    stack.push(...entries)
+    stack.push(...getStackEntries(foundContract))
   }
 
   return result
@@ -122,15 +120,16 @@ function topologicalSort(
   const order: DeclarationFilePair[] = []
   const visited = new Set<string>()
 
-  function visit(pair: DeclarationFilePair | undefined): void {
-    assert(pair !== undefined, "Pair shouldn't be undefined")
-
+  function visit(pair: DeclarationFilePair): void {
     const id = getUniqueContractId(pair)
     if (visited.has(id)) return
     visited.add(id)
 
     for (const { contractName, file } of getStackEntries(pair)) {
-      visit(parsedFileManager.tryFindDeclaration(contractName, file))
+      const pair = parsedFileManager.tryFindDeclaration(contractName, file)
+      if (pair !== undefined) {
+        visit(pair)
+      }
     }
 
     order.push(pair)

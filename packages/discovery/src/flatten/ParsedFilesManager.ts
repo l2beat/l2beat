@@ -133,10 +133,11 @@ export class ParsedFilesManager {
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        declaration.signatureReferences = result.resolveSignatureReferences(
-          file,
-          declaration.ast,
-        )
+        const { signatureReferences, implementationReferences } =
+          result.resolveSignatureReferences(file, declaration.ast)
+
+        declaration.signatureReferences = signatureReferences
+        declaration.implementationReferences.push(...implementationReferences)
       }
     }
 
@@ -323,7 +324,7 @@ export class ParsedFilesManager {
   private resolveSignatureReferences(
     file: ParsedFile,
     c: AST.ASTNode,
-  ): string[] {
+  ): { signatureReferences: string[]; implementationReferences: string[] } {
     let subNodes: AST.BaseASTNode[] = []
     if (c.type === 'ContractDefinition') {
       subNodes = c.subNodes
@@ -345,11 +346,20 @@ export class ParsedFilesManager {
       throw new Error('Invalid node type')
     }
 
+    const implementationReferences: string[] = []
     const identifiers = new Set(
-      subNodes.flatMap((n) => getASTIdentifiers(n)).map(extractNamespace),
+      subNodes
+        .flatMap((n) =>
+          getASTIdentifiers(n, (n, i) => {
+            if (n.type === 'NewExpression') {
+              implementationReferences.push(...i)
+            }
+          }),
+        )
+        .map(extractNamespace),
     )
 
-    const referenced = []
+    const signatureReferences = []
     for (const identifier of identifiers) {
       const result = this.tryFindDeclaration(identifier, file)
       if (result === undefined) {
@@ -375,10 +385,10 @@ export class ParsedFilesManager {
         continue
       }
 
-      referenced.push(identifier)
+      signatureReferences.push(identifier)
     }
 
-    return referenced
+    return { signatureReferences, implementationReferences }
   }
 
   tryFindDeclaration(
