@@ -19,8 +19,9 @@
         }
       ]
     },
-    "state": { 
-        "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)",
-        "severity": "HIGH" }
+    "state": {
+      "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)",
+      "severity": "HIGH"
+    }
   }
 }

@@ -1,6 +1,35 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "fields": { "dead": { "severity": "HIGH" } },
+  "fields": {
+    "dead": { "severity": "HIGH" },
+    "totalDeposits": {
+      "description": "Total number of deposits made to this pool.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549"
+        ]
+      }
+    },
+    "totalRagequits": {
+      "description": "Total number of ragequits from this pool.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xd2b3e868ae101106371f2bd93abc8d5a4de488b9fe47ed122c23625aa7172f13"
+        ]
+      }
+    },
+    "totalWithdrawals": {
+      "description": "Total number of withdrawals from this pool.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21"
+        ]
+      }
+    }
+  },
   "ignoreInWatchMode": ["currentRoot", "currentTreeSize", "nonce"],
   "ignoreRelatives": ["ASSET"],
   "ignoreMethods": ["roots", "depositors", "nullifierHashes"]

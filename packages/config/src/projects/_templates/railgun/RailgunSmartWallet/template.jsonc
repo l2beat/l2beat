@@ -19,6 +19,24 @@
           "description": "add/remove tokens to/from the blacklist."
         }
       ]
+    },
+    "totalShielded": {
+      "description": "Total number of deposits into Railgun, all tokens combined.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x3a5b9dc26075a3801a6ddccf95fec485bb7500a91b44cec1add984c21ee6db3b"
+        ]
+      }
+    },
+    "totalUnshielded": {
+      "description": "Total number of withdrawals from Railgun, all tokens combined.",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284"
+        ]
+      }
     }
   }
 }

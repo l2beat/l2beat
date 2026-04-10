@@ -2,6 +2,9 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "ETH token Tornado Cash pool. Owned by operator.",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
-  "ignoreInWatchMode": ["getLastRoot"],
-  "fields": { "operator": { "severity": "HIGH" } }
+  "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
+  "fields": {
+    "operator": { "severity": "HIGH" },
+    "nextIndex": { "description": "Total number of deposits into the pool" },
+  }
 }

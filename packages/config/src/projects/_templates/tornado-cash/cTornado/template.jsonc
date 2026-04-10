@@ -1,7 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
-  "ignoreInWatchMode": ["getLastRoot"],
+  "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
   "ignoreRelatives": ["token", "comp"],
-  "description": "Ownerless compounding Tornado Cash pool."
+  "description": "Ownerless compounding Tornado Cash pool.",
+  "fields": {
+    "nextIndex": { "description": "Total number of deposits into the pool" }
+  }
 }

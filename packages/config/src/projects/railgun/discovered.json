@@ -407,10 +407,20 @@
         "nftFee": 0,
         "owner": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
         "shieldFee": 25,
+        "totalShielded": 51980,
+        "totalUnshielded": 75016,
         "treasury": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
         "treeNumber": 3,
         "unshieldFee": 25,
         "ZERO_VALUE": "0x0488f89b25bc7011eaf6a5edce71aeafb9fe706faa3c0a5cd9cbe868ae3b9ffc"
+      },
+      "fieldMeta": {
+        "totalShielded": {
+          "description": "Total number of deposits into Railgun, all tokens combined."
+        },
+        "totalUnshielded": {
+          "description": "Total number of withdrawals from Railgun, all tokens combined."
+        }
       },
       "implementationNames": {
         "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9": "PausableUpgradableProxy",
@@ -740,7 +750,7 @@
   },
   "usedTemplates": {
     "railgun/Delegator": "0xc04930700142a4832ff948883e6ed52b480426c2852cc39659daf374c9ca78d3",
-    "railgun/RailgunSmartWallet": "0x46cd2e548955a00bd5c05242179d4ceb46ddcf0c3cfbaa85f4e5ed70b30f1da8",
+    "railgun/RailgunSmartWallet": "0xbd0e212266f20188ba4f5347869d904bfba8f748e6be147db4ebe9dc7153e620",
     "railgun/VKeySetter": "0xa776e2f4ac35e4d76017ef554585cdcbf5a1134b3d0741a972261951d375ffcb"
   },
   "usedBlockNumbers": { "ethereum": 24842709 },

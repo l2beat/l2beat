@@ -12,7 +12,8 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless compounding Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616155055,
       "sinceBlock": 12069037,
       "values": {
@@ -31,6 +32,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x03893a7c7463AE47D46bc7f091665f1893656003": "cTornado"
       },
@@ -45,7 +49,8 @@
         "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616114822,
       "sinceBlock": 12066007,
       "values": {
@@ -62,6 +67,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730": "ERC20Tornado"
       },
@@ -76,7 +84,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577298985,
       "sinceBlock": 9162012,
       "values": {
@@ -92,6 +101,9 @@
         "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f": "TornadoCash_erc20"
@@ -122,7 +134,8 @@
         "0x91a886957e3ef7c9535bebca9bb03c531cad68939e97b09ba97127e311ea5b4e"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "ETH token Tornado Cash pool. Owned by operator.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1576523323,
       "sinceBlock": 9116966,
       "values": {
@@ -136,8 +149,13 @@
         "nextIndex": 53012,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
+        "totalDeposits": 53013,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "operator": { "severity": "HIGH" },
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc": "TornadoCash_Eth_01"
@@ -153,7 +171,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577298900,
       "sinceBlock": 9162005,
       "values": {
@@ -170,6 +189,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B": "TornadoCash_erc20"
       },
@@ -184,7 +206,8 @@
         "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616134868,
       "sinceBlock": 12067529,
       "values": {
@@ -201,6 +224,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1": "ERC20Tornado"
       },
@@ -215,7 +241,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577297782,
       "sinceBlock": 9161938,
       "values": {
@@ -232,6 +259,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b": "TornadoCash_erc20"
       },
@@ -246,7 +276,8 @@
         "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616115387,
       "sinceBlock": 12066048,
       "values": {
@@ -263,6 +294,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x23773E65ed146A459791799d01336DB287f25334": "ERC20Tornado"
       },
@@ -277,7 +311,8 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless compounding Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616135923,
       "sinceBlock": 12067606,
       "values": {
@@ -295,6 +330,9 @@
         "token": "eth:0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701": "cTornado"
@@ -357,7 +395,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577298155,
       "sinceBlock": 9161965,
       "values": {
@@ -374,6 +413,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D": "TornadoCash_erc20"
       },
@@ -388,7 +430,8 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "ETH token Tornado Cash pool. Owned by operator.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1576534673,
       "sinceBlock": 9117609,
       "values": {
@@ -401,8 +444,13 @@
         "nextIndex": 81817,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
+        "totalDeposits": 81817,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "operator": { "severity": "HIGH" },
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936": "TornadoCash_eth"
@@ -707,7 +755,8 @@
         "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616123193,
       "sinceBlock": 12066652,
       "values": {
@@ -723,6 +772,9 @@
         "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x610B717796ad172B316836AC95a2ffad065CeaB4": "ERC20Tornado"
@@ -884,7 +936,8 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "ETH token Tornado Cash pool. Owned by operator.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1576536415,
       "sinceBlock": 9117720,
       "values": {
@@ -897,8 +950,13 @@
         "nextIndex": 70257,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
+        "totalDeposits": 70257,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "operator": { "severity": "HIGH" },
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF": "TornadoCash_eth"
@@ -914,7 +972,8 @@
         "0xb9f259b7c2f71a46e05fabbe6115a88fae883d7fb1fbf41c56bcfe7757bc6bf4"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "ETH token Tornado Cash pool. Owned by operator.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577296976,
       "sinceBlock": 9161895,
       "values": {
@@ -927,8 +986,13 @@
         "nextIndex": 45388,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
+        "totalDeposits": 45388,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "operator": { "severity": "HIGH" },
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291": "TornadoCash_eth"
@@ -1020,7 +1084,8 @@
         "0xaa0353330a0e3eb0194f6d9dbc3128739baeaa1e337a6a170a46fe03f087c45f"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616135758,
       "sinceBlock": 12067591,
       "values": {
@@ -1036,6 +1101,9 @@
         "token": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498": "ERC20Tornado"
@@ -1079,7 +1147,8 @@
         "0x3595897ef0046fd4c32c4e501fcbd40cc3ce12673aee48ec5a351e35e361eeb2"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless compounding Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1616115450,
       "sinceBlock": 12066053,
       "values": {
@@ -1098,6 +1167,9 @@
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
+      },
       "implementationNames": {
         "eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af": "cTornado"
       },
@@ -1112,7 +1184,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1576534688,
       "sinceBlock": 9117612,
       "values": {
@@ -1128,6 +1201,9 @@
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3": "TornadoCash_erc20"
@@ -1176,7 +1252,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577298068,
       "sinceBlock": 9161958,
       "values": {
@@ -1192,6 +1269,9 @@
         "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307": "TornadoCash_erc20"
@@ -1237,7 +1317,8 @@
         "0xb7cd104e33e4e698596b88be297029b5a3285517f6c200c6c21625dbfe935ae1"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": ["getLastRoot"],
+      "description": "Ownerless ERC-20 Tornado Cash pool.",
+      "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
       "sinceTimestamp": 1577297383,
       "sinceBlock": 9161917,
       "values": {
@@ -1253,6 +1334,9 @@
         "token": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
+      },
+      "fieldMeta": {
+        "nextIndex": { "description": "Total number of deposits into the pool" }
       },
       "implementationNames": {
         "eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144": "TornadoCash_erc20"
@@ -2273,11 +2357,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "tornado-cash/cTornado": "0xc14333712ec8117b95543a8554bcb43f8700d945cc970a9cabbd1959237f7ff7",
+    "tornado-cash/cTornado": "0xd397d085f74e3318bd4a192dbb39845f62bdae9792a157cfd90a0d3f6b56e16d",
     "tornado-cash/GovernanceProposalStateUpgrade": "0x17d6bbcc75e8a601721e292fb86a1273a449f246fdd7b0402ae60749d1d81d4e",
     "tornado-cash/Proposal": "0xe37afe51ed69dad9249ac8b842769488ba155e920bc5f3c08f3bbfec9e25945a",
-    "tornado-cash/TornadoCash_erc20": "0xcc02cd3cc760c296b47fed3110dabd1792e917ac40a5caed9e4b7a15a922e435",
-    "tornado-cash/TornadoCash_Eth": "0xbeffee3d9222f6bca08bdbba3d816f06e8958575c65331af54d6866465d573f5",
+    "tornado-cash/TornadoCash_erc20": "0x627381c1e1f6b0e6db2536aa62e6f26d8169aa4f49c8f187a70fe378dfa4590a",
+    "tornado-cash/TornadoCash_Eth": "0x1aea2570a3459560b78c62b65be7c54fcd12a2f039f60f8112b087e8822a2c0d",
     "tornado-cash/TornadoTrees": "0x626f32eb736e95a01504acb75dc14dd1a1a0f37cab18a278931f05121fed9448"
   },
   "usedBlockNumbers": { "ethereum": 24842715 },

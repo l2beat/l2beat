@@ -6,7 +6,6 @@
   "overrides": {
     "eth:0x6818809EefCe719E480a7526D76bD3e561526b46": {
       "ignoreMethods": [
-        "associationSets",
         "latestRoot",
         "rootByIndex",
         "usedPrecommitments",

@@ -19,10 +19,7 @@
         "pickRoleMembers": "_OWNER_ROLE"
       },
       "permissions": [
-        {
-          "type": "interact",
-          "description": "upgrade the system."
-        },
+        { "type": "interact", "description": "upgrade the system." },
         {
           "type": "interact",
           "description": "register new pools or wind down (disable deposits) existing ones."
@@ -63,5 +60,6 @@
       },
       "description": "All tokens that were ever registered for pools"
     }
-  }
+  },
+  "ignoreMethods": ["associationSets"]
 }

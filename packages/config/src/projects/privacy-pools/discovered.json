@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
   "timestamp": 1775744016,
-  "configHash": "0xa8ba95ef6b79e105fe136a8e53f49a84842d7fe1ebb231e02437e7ea4a0a2fad",
+  "configHash": "0xf37fcceaff3ca1d3489db3cf95ae9102af92388edcbdbb35261f325395c5db22",
   "entries": [
     {
       "name": "WithdrawalVerifier",
@@ -44,9 +44,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "10083421949316970946867916491567109470259179563818386567305777802830033294482",
+        "totalDeposits": 14,
+        "totalRagequits": 8,
+        "totalWithdrawals": 8,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": "PrivacyPoolComplex"
       }
@@ -77,9 +91,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "472674026048933344947929992064610492276304547390666782210980269768303717449",
+        "totalDeposits": 31,
+        "totalRagequits": 8,
+        "totalWithdrawals": 26,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0x1A604E9DFa0EFDC7FFda378AF16Cb81243b61633": "PrivacyPoolComplex"
       }
@@ -110,9 +138,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15036211945525489305347805074288289358577232744970551616130812771908439733411",
+        "totalDeposits": 5,
+        "totalRagequits": 0,
+        "totalWithdrawals": 2,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0x1c31C03B8CB2EE674D0F11De77135536db828257": "PrivacyPoolComplex"
       }
@@ -185,6 +227,33 @@
         "AspPostman": [
           "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
+        ],
+        "associationSets": [
+          [
+            "6190063327416914933526649807596711562942473403260874688056563820140429817158",
+            "bafkreidpc2faaadoyp6bejzdjxnsaxqpbzbm2kwrg3cim4v6k6ilijngfq",
+            1743431771
+          ],
+          [
+            "3870142846635472744697142941044828814142065550921821896992086278427583110973",
+            "bafkreics3qwm5avrvbybbikg7m52dm4bxvemggof2u25bnqgclw34kyts4",
+            1743440567
+          ],
+          [
+            "11668755652791000937250180279985747512718339283222491121659424366360504393370",
+            "bafkreidjub7cw2clbh5s7whhaa2rbr7evgvsb2yackenm5y7mhzl3nwg4e",
+            1743535763
+          ],
+          [
+            "17531302184812247891614406270946394349354467019444146735467288176064113542222",
+            "bafkreiaoeyjh6uo4vcvasxykoykflcbyf2lcvhac5u2bl2epa5sm4n5roq",
+            1743613931
+          ],
+          [
+            "3153825146059881549629545176502988487846681022255191580581651058995918643194",
+            "bafkreif76kieyf2frt7bkgmxcsd6pl26wkjvrnnwp5qg4gbrfmgicbffru",
+            1743767327
+          ]
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "OwnerRole": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
@@ -292,6 +361,7 @@
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "errors": { "associationSets": "Processing error occurred." },
       "fieldMeta": {
         "pools": { "description": "All currently registered privacy pools" },
         "tokens": {
@@ -329,9 +399,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16898919049235900033552063077301976558571004961846668515709160815006981236808",
+        "totalDeposits": 4,
+        "totalRagequits": 1,
+        "totalWithdrawals": 2,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0x7d2959bCFb936a84531518e8391DdBa844e03ebE": "PrivacyPoolComplex"
       }
@@ -437,9 +521,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "16452108168275993030962142353354044100680963945240756716593099151407051066232",
+        "totalDeposits": 413,
+        "totalRagequits": 20,
+        "totalWithdrawals": 750,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xb419c2867aB3CBc78921660cB95150d95A94ce86": "PrivacyPoolComplex"
       }
@@ -470,9 +568,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "12594345321156708920712766274402096360984745412708601457862140420990105325804",
+        "totalDeposits": 18,
+        "totalRagequits": 4,
+        "totalWithdrawals": 23,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xb4b5Fd38Fd4788071d7287e3cB52948e0d10b23E": "PrivacyPoolComplex"
       }
@@ -503,9 +615,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "2712591485699559808625639968151776585195565171751537345918418329806863214557",
+        "totalDeposits": 11,
+        "totalRagequits": 6,
+        "totalWithdrawals": 4,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xBBdA2173CDFEA1c3bD7F2908798F1265301d750c": "PrivacyPoolComplex"
       }
@@ -536,9 +662,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "2226641097145324517602489545296816163847340455393839014355318716099039951794",
+        "totalDeposits": 4,
+        "totalRagequits": 0,
+        "totalWithdrawals": 1,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xc0A8Bc0F4F982b4d4f1fFae8F4FCCb58c9B29c98": "PrivacyPoolComplex"
       }
@@ -569,9 +709,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "6204545812131907406091007816562088763876564430686560668923081212690640630114",
+        "totalDeposits": 9,
+        "totalRagequits": 2,
+        "totalWithdrawals": 5,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xC6C769fac7AABEadd31a03fAe5Ca0Ec5B4C50f84": "PrivacyPoolComplex"
       }
@@ -602,9 +756,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "18721688563067625530889443380856806549268759616049984113232683385397425859801",
+        "totalDeposits": 72,
+        "totalRagequits": 11,
+        "totalWithdrawals": 99,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xD14F4B36E1D1D98c218db782c49149876042BC56": "PrivacyPoolComplex"
       }
@@ -664,9 +832,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "14948241600724488898497604617894553378727680542246736212613234875544074387056",
+        "totalDeposits": 1,
+        "totalRagequits": 0,
+        "totalWithdrawals": 1,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xe6D36B33b00A7C0cB0C2a8d39D07e7dB0c526Abc": "PrivacyPoolComplex"
       }
@@ -697,9 +879,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "15021418340692283880916004685565940332387258944710606800522765380598358159605",
+        "totalDeposits": 86,
+        "totalRagequits": 17,
+        "totalWithdrawals": 125,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xe859C0bD25f260BaEE534Fb52e307D3b64D24572": "PrivacyPoolComplex"
       }
@@ -730,9 +926,26 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "4916574638117198869413701114161172350986437430914933850166949084132905299523",
+        "totalDeposits": 3848,
+        "totalRagequits": 237,
+        "totalWithdrawals": 3604,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "currentTreeSize": {
+          "description": "Total number of deposits in the pool."
+        },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB": "PrivacyPoolSimple"
       }
@@ -763,9 +976,23 @@
         "RAGEQUIT_VERIFIER": "eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
         "ROOT_HISTORY_SIZE": 64,
         "SCOPE": "9583811136054309663087994285053104517603064138421869930481915957893514499997",
+        "totalDeposits": 4,
+        "totalRagequits": 0,
+        "totalWithdrawals": 6,
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
-      "fieldMeta": { "dead": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "dead": { "severity": "HIGH" },
+        "totalDeposits": {
+          "description": "Total number of deposits made to this pool."
+        },
+        "totalRagequits": {
+          "description": "Total number of ragequits from this pool."
+        },
+        "totalWithdrawals": {
+          "description": "Total number of withdrawals from this pool."
+        }
+      },
       "implementationNames": {
         "eth:0xF973f4B180A568157Cd7A0E6006449139E6Bfc32": "PrivacyPoolComplex"
       }
@@ -1665,9 +1892,9 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "privacy-pools/Entrypoint": "0x5447b86553ef31c32dcfd7c36385ffbb387af2c3f04ed000b2b120e5353dd271",
-    "privacy-pools/PrivacyPoolComplex": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da",
-    "privacy-pools/PrivacyPoolSimple": "0xcb582a3f546ab796438a3ec3cc13cc56e1d5ebebc1116e5f70577d848f83d1da"
+    "privacy-pools/Entrypoint": "0xaa9a6819484b4c77e3f5356a283925f0c3200343be09fc9ae91baa828db3c266",
+    "privacy-pools/PrivacyPoolComplex": "0x6a74fcab770d30e2e1f1de1e32b7a6f38d36d93acc092bc69116258b6ad23894",
+    "privacy-pools/PrivacyPoolSimple": "0xa5d0366f01ec76ae19d35ca1ecc644f8976bbb2c65573dc3ad431863d374c083"
   },
   "usedBlockNumbers": { "ethereum": 24842683 },
   "permissionsConfigHash": "0xd543dbf5f3eb33d975d355f48846a30c8eba5ae9832a81ed3a019f4450c5c5bc"

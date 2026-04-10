@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x446bb5840a19673d407d2394069a03245e0909a1
+Generated with discovered.json: 0xa5ce6cecc9d1eeaafaa168c966e0660573675b4d
 
-# Diff at Thu, 09 Apr 2026 14:23:46 GMT:
+# Diff at Fri, 10 Apr 2026 15:41:58 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - current timestamp: 1775744401
@@ -14,19 +14,19 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract cTornado (eth:0x03893a7c7463AE47D46bc7f091665f1893656003)
-    +++ description: None
+    +++ description: Ownerless compounding Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract ERC20Tornado (eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
@@ -38,37 +38,37 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TornadoCash_Eth_01 (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc)
-    +++ description: None
+    +++ description: ETH token Tornado Cash pool. Owned by operator.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract ERC20Tornado (eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract ERC20Tornado (eth:0x23773E65ed146A459791799d01336DB287f25334)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract cTornado (eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701)
-    +++ description: None
+    +++ description: Ownerless compounding Tornado Cash pool.
 ```
 
 ```diff
@@ -86,13 +86,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_eth (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936)
-    +++ description: None
+    +++ description: ETH token Tornado Cash pool. Owned by operator.
 ```
 
 ```diff
@@ -134,7 +134,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ERC20Tornado (eth:0x610B717796ad172B316836AC95a2ffad065CeaB4)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
@@ -188,13 +188,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TornadoCash_eth (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF)
-    +++ description: None
+    +++ description: ETH token Tornado Cash pool. Owned by operator.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_eth (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291)
-    +++ description: None
+    +++ description: ETH token Tornado Cash pool. Owned by operator.
 ```
 
 ```diff
@@ -212,7 +212,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract ERC20Tornado (eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
@@ -230,13 +230,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract cTornado (eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af)
-    +++ description: None
+    +++ description: Ownerless compounding Tornado Cash pool.
 ```
 
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
@@ -254,7 +254,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
 
 ```diff
@@ -272,5 +272,5 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract TornadoCash_erc20 (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144)
-    +++ description: None
+    +++ description: Ownerless ERC-20 Tornado Cash pool.
 ```
