@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "delegator": {
+      "description": "Address that approves verification key update on the core Railgun contract",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approve verification key update (i.e. zk circuit logic update) on the key contract."
+        }
+      ]
+    },
+    "owner": {
+      "description": "Address that proposes verification key update on the core Railgun contract",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose verification key update (i.e. zk circuit logic update) on the key contract."
+        }
+      ]
+    },
+    "state": { 
+        "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)",
+        "severity": "HIGH" }
+  }
+}

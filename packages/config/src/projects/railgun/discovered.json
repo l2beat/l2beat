@@ -65,6 +65,7 @@
       "name": "VKeySetter",
       "address": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
       "type": "Contract",
+      "template": "railgun/VKeySetter",
       "sourceHashes": [
         "0x97c32fbfee382b7fe3932651160b482c01c51e25cee46e8e174218dadd7bcae8"
       ],
@@ -78,6 +79,18 @@
         "state": 2,
         "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
       },
+      "fieldMeta": {
+        "delegator": {
+          "description": "Address that approves verification key update on the core Railgun contract"
+        },
+        "owner": {
+          "description": "Address that proposes verification key update on the core Railgun contract"
+        },
+        "state": {
+          "severity": "HIGH",
+          "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)"
+        }
+      },
       "implementationNames": {
         "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": "VKeySetter"
       }
@@ -87,6 +100,12 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "propose verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
@@ -111,6 +130,18 @@
         "owner": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
         "state": 2,
         "verifier": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+      },
+      "fieldMeta": {
+        "delegator": {
+          "description": "Address that approves verification key update on the core Railgun contract"
+        },
+        "owner": {
+          "description": "Address that proposes verification key update on the core Railgun contract"
+        },
+        "state": {
+          "severity": "HIGH",
+          "description": "0 = SETTING (owner can upload new keys to the contract), 1 = WAITING (all update functions are locked until delegator approves), 2 = COMMITTING (owner can push the keys to the actual verifier)"
+        }
       },
       "implementationNames": {
         "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": "VKeySetter"
@@ -150,7 +181,7 @@
       }
     },
     {
-      "name": "Delegator",
+      "name": "DAO",
       "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
       "type": "Contract",
       "template": "railgun/Delegator",
@@ -159,6 +190,18 @@
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "approve verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "approve verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".delegator"
+        },
         {
           "permission": "interact",
           "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
@@ -207,7 +250,15 @@
     {
       "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "propose verification key update (i.e. zk circuit logic update) on the key contract.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "name": "Voting",
@@ -333,7 +384,7 @@
       }
     },
     {
-      "name": "RailgunSmartWallet",
+      "name": "RailgunCore",
       "address": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
       "type": "Contract",
       "template": "railgun/RailgunSmartWallet",
@@ -690,8 +741,8 @@
   "usedTemplates": {
     "railgun/Delegator": "0xc04930700142a4832ff948883e6ed52b480426c2852cc39659daf374c9ca78d3",
     "railgun/RailgunSmartWallet": "0x46cd2e548955a00bd5c05242179d4ceb46ddcf0c3cfbaa85f4e5ed70b30f1da8",
-    "railgun/VKeySetter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "railgun/VKeySetter": "0xa776e2f4ac35e4d76017ef554585cdcbf5a1134b3d0741a972261951d375ffcb"
   },
   "usedBlockNumbers": { "ethereum": 24842709 },
-  "permissionsConfigHash": "0x2974addee2c039fb525805334b282504e5706aa8e412c00f79acf340d64ccfdd"
+  "permissionsConfigHash": "0x3aae860f4a132fb1cc35d70b26068228ff5cbbaa1d0cab558901abd23600a01b"
 }

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DAO",
   "fields": {
     "grantedPermissions": {
       "description": "Selector 0x2ec0f359 is function setVerificationKey on the main railgun contract.",

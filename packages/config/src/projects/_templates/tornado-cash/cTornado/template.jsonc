@@ -2,5 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": ["filledSubtrees", "roots", "zeros"],
   "ignoreInWatchMode": ["getLastRoot"],
-  "ignoreRelatives": ["token", "comp"]
+  "ignoreRelatives": ["token", "comp"],
+  "description": "Ownerless compounding Tornado Cash pool."
 }

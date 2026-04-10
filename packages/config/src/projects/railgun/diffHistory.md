@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5e007825af25420656d1512b460f61856eef7f89
+Generated with discovered.json: 0xdf96a70b133a990a0019ef436d9a9c9dcd76f403
 
-# Diff at Thu, 09 Apr 2026 15:20:55 GMT:
+# Diff at Fri, 10 Apr 2026 10:59:56 GMT:
 
 - author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
 - current timestamp: 1775744335
@@ -43,7 +43,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)
+    contract DAO (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)
     +++ description: None
 ```
 
@@ -79,6 +79,6 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9)
+    contract RailgunCore (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9)
     +++ description: None
 ```
