@@ -1,3 +1,4 @@
+import { keepPreviousData } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -26,6 +27,7 @@ export function BadgesSection({
     { badgeId: selectedBadgeId ?? '' },
     {
       enabled: !!selectedBadgeId,
+      placeholderData: keepPreviousData,
     },
   )
 
