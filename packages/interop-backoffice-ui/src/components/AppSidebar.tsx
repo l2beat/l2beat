@@ -75,10 +75,9 @@ const items = [
     title: 'Indexing',
     items: [
       {
-        title: 'Resyncable plugins',
+        title: 'Plugin statuses',
         url: '/indexing/plugin-statuses',
         icon: RefreshCwIcon,
-        isUpcoming: true,
       },
       {
         title: 'Processor statuses',

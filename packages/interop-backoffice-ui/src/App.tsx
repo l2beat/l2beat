@@ -6,6 +6,7 @@ import { SuspiciousTransfersPage } from './pages/anomalies/SuspiciousTransfersPa
 import { EventDetailsPage } from './pages/events/EventDetailsPage'
 import { EventsPage } from './pages/events/EventsPage'
 import { KnownAppsPage } from './pages/known-apps/KnownAppsPage'
+import { MemoryPage } from './pages/memory/MemoryPage'
 import { MessageDetailsPage } from './pages/messages/MessageDetailsPage'
 import { MessagesPage } from './pages/messages/MessagesPage'
 import { MissingTokensPage } from './pages/missing-tokens/MissingTokensPage'
@@ -37,12 +38,13 @@ export function App() {
             <Route path="/transfers" element={<TransfersPage />} />
             <Route path="/transfers/:type" element={<TransferDetailsPage />} />
             <Route path="/missing-tokens" element={<MissingTokensPage />} />
+            <Route path="/indexing/plugin-statuses" element={<StatusPage />} />
 
             <Route
               path="/insights/anomalies/suspicious-transfers"
               element={<SuspiciousTransfersPage />}
             />
-            <Route path="/insights/memory" element={<StatusPage />} />
+            <Route path="/insights/memory" element={<MemoryPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

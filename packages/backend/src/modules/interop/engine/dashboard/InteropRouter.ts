@@ -63,6 +63,7 @@ export function createInteropRouter(
       {
         db,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        syncersManager,
         dashboard: config.dashboard,
       },
       { prefix: '/interop/trpc' },
