@@ -235,7 +235,7 @@ export const topTokensPairsColumns = [
           return <span className="font-bold">Unknown pairs</span>
         }
         return (
-          <div className="flex items-center gap-1 font-bold">
+          <div className="flex w-max items-center gap-1 whitespace-nowrap font-bold">
             <img
               className="size-[20px] rounded-full bg-white shadow"
               src={tokenA.iconUrl}
