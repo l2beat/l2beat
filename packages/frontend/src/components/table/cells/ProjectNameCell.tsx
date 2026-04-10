@@ -22,7 +22,6 @@ import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { cn } from '~/utils/cn'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
@@ -76,152 +75,153 @@ function MobileProjectIconTooltip({
   )
 }
 
-export function ProjectNameCell({
+function DesktopStatusIcons({
   project,
-  className,
-  withInfoTooltip,
   ignoreUnderReviewIcon,
-}: ProjectCellProps) {
-  const projectName = project.shortName ?? project.name
-  const redWarningHref = redWarningDetailHref(project)
-
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
   return (
-    <div className={className}>
-      <div className="flex items-center gap-1.5">
-        <PrimaryValueCell className="font-bold leading-none!">
-          {projectName}
-        </PrimaryValueCell>
-        {withInfoTooltip && (
-          <div className="hidden items-center gap-1.5 md:flex">
-            {project.isLayer3 && <Layer3Icon className="size-4" />}
-            {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
-            {project.statuses?.verificationWarnings &&
-              Object.values(project.statuses.verificationWarnings).some(
-                (value) => value !== undefined,
-              ) && <UnverifiedIcon className="size-4 fill-red-300" />}
-            {project.statuses?.redWarning && (
-              <ShieldIcon className="size-4 fill-red-300" />
-            )}
-            {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-              <UnderReviewIcon className="size-4" />
-            )}
-            {project.statuses?.yellowWarning && (
-              <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-            )}
-            {project.statuses?.syncWarning && <ClockIcon className="size-4" />}
-            {project.statuses?.ongoingAnomaly && <LiveIndicator />}
-          </div>
-        )}
-        <div
-          className={cn(
-            'flex items-center gap-1.5',
-            withInfoTooltip && 'md:hidden',
-          )}
-        >
-          {project.isLayer3 && (
-            <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
-              {project.nameSecondLine}
-            </MobileProjectIconTooltip>
-          )}
-          {project.ecosystemInfo?.isPartOfSuperchain && (
-            <MobileProjectIconTooltip icon={<SuperchainIcon />}>
-              The project is officially part of the Superchain - it contributes
-              revenue to the Optimism Collective and uses the SuperchainConfig
-              to manage chain configuration values.
-            </MobileProjectIconTooltip>
-          )}
-          {project.statuses?.verificationWarnings &&
-            Object.values(project.statuses.verificationWarnings).some(
-              (value) => value !== undefined,
-            ) && (
-              <MobileProjectIconTooltip
-                icon={<UnverifiedIcon className="size-4 fill-red-300" />}
-                contentClassName="flex flex-col gap-2"
-              >
-                {project.statuses.verificationWarnings.contracts && (
-                  <>
-                    <p>{project.statuses.verificationWarnings.contracts}</p>
-                    <CustomLink
-                      href={`/scaling/projects/${project.slug}#contracts`}
-                      className="inline-block text-label-value-13"
-                    >
-                      View details
-                    </CustomLink>
-                  </>
-                )}
-                {project.statuses.verificationWarnings.programHashes && (
-                  <>
-                    <p>{project.statuses.verificationWarnings.programHashes}</p>
-                    <CustomLink
-                      href={`/scaling/projects/${project.slug}#program-hashes`}
-                      className="inline-block text-label-value-13"
-                    >
-                      View details
-                    </CustomLink>
-                  </>
-                )}
-              </MobileProjectIconTooltip>
-            )}
-          {project.statuses?.redWarning && (
-            <MobileProjectIconTooltip
-              icon={<ShieldIcon className="size-4 fill-red-300" />}
-              contentClassName="flex flex-col gap-2"
-            >
-              <Markdown inline ignoreGlossary>
-                {project.statuses.redWarning.text}
-              </Markdown>
-              {redWarningHref && (
+    <div className="flex items-center gap-1.5">
+      {project.isLayer3 && <Layer3Icon className="size-4" />}
+      {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
+      {project.statuses?.verificationWarnings &&
+        Object.values(project.statuses.verificationWarnings).some(
+          (value) => value !== undefined,
+        ) && <UnverifiedIcon className="size-4 fill-red-300" />}
+      {project.statuses?.redWarning && (
+        <ShieldIcon className="size-4 fill-red-300" />
+      )}
+      {project.statuses?.underReview && !ignoreUnderReviewIcon && (
+        <UnderReviewIcon className="size-4" />
+      )}
+      {project.statuses?.yellowWarning && (
+        <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+      )}
+      {project.statuses?.syncWarning && <ClockIcon className="size-4" />}
+      {project.statuses?.ongoingAnomaly && <LiveIndicator />}
+    </div>
+  )
+}
+
+function MobileStatusIcons({
+  project,
+  ignoreUnderReviewIcon,
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
+  const redWarningHref = redWarningDetailHref(project)
+  return (
+    <div className="flex items-center gap-1.5">
+      {project.isLayer3 && (
+        <MobileProjectIconTooltip icon={<Layer3Icon className="size-4" />}>
+          {project.nameSecondLine}
+        </MobileProjectIconTooltip>
+      )}
+      {project.ecosystemInfo?.isPartOfSuperchain && (
+        <MobileProjectIconTooltip icon={<SuperchainIcon />}>
+          The project is officially part of the Superchain - it contributes
+          revenue to the Optimism Collective and uses the SuperchainConfig to
+          manage chain configuration values.
+        </MobileProjectIconTooltip>
+      )}
+      {project.statuses?.verificationWarnings &&
+        Object.values(project.statuses.verificationWarnings).some(
+          (value) => value !== undefined,
+        ) && (
+          <MobileProjectIconTooltip
+            icon={<UnverifiedIcon className="size-4 fill-red-300" />}
+            contentClassName="flex flex-col gap-2"
+          >
+            {project.statuses.verificationWarnings.contracts && (
+              <>
+                <p>{project.statuses.verificationWarnings.contracts}</p>
                 <CustomLink
-                  href={redWarningHref}
+                  href={`/scaling/projects/${project.slug}#contracts`}
                   className="inline-block text-label-value-13"
                 >
                   View details
                 </CustomLink>
-              )}
-            </MobileProjectIconTooltip>
-          )}
-          {project.statuses?.underReview && !ignoreUnderReviewIcon && (
-            <MobileProjectIconTooltip
-              icon={<UnderReviewIcon className="size-4" />}
+              </>
+            )}
+            {project.statuses.verificationWarnings.programHashes && (
+              <>
+                <p>{project.statuses.verificationWarnings.programHashes}</p>
+                <CustomLink
+                  href={`/scaling/projects/${project.slug}#program-hashes`}
+                  className="inline-block text-label-value-13"
+                >
+                  View details
+                </CustomLink>
+              </>
+            )}
+          </MobileProjectIconTooltip>
+        )}
+      {project.statuses?.redWarning && (
+        <MobileProjectIconTooltip
+          icon={<ShieldIcon className="size-4 fill-red-300" />}
+          contentClassName="flex flex-col gap-2"
+        >
+          <Markdown inline ignoreGlossary>
+            {project.statuses.redWarning.text}
+          </Markdown>
+          {redWarningHref && (
+            <CustomLink
+              href={redWarningHref}
+              className="inline-block text-label-value-13"
             >
-              {getUnderReviewText(project.statuses.underReview)}
-            </MobileProjectIconTooltip>
+              View details
+            </CustomLink>
           )}
-          {project.statuses?.yellowWarning && (
-            <MobileProjectIconTooltip
-              icon={
-                <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
-              }
-            >
-              <Markdown inline ignoreGlossary>
-                {project.statuses.yellowWarning}
-              </Markdown>
-            </MobileProjectIconTooltip>
-          )}
-          {project.statuses?.syncWarning && (
-            <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
-              {project.statuses.syncWarning}
-            </MobileProjectIconTooltip>
-          )}
-          {project.statuses?.ongoingAnomaly && (
-            <MobileProjectIconTooltip
-              icon={<LiveIndicator />}
-              contentClassName="flex flex-col gap-2"
-            >
-              <p>
-                There's an ongoing anomaly. Check detailed page for more
-                information.
-              </p>
-              <CustomLink
-                href={`/scaling/projects/${project.slug}#liveness`}
-                className="inline-block text-label-value-13"
-              >
-                View details
-              </CustomLink>
-            </MobileProjectIconTooltip>
-          )}
-        </div>
-      </div>
+        </MobileProjectIconTooltip>
+      )}
+      {project.statuses?.underReview && !ignoreUnderReviewIcon && (
+        <MobileProjectIconTooltip icon={<UnderReviewIcon className="size-4" />}>
+          {getUnderReviewText(project.statuses.underReview)}
+        </MobileProjectIconTooltip>
+      )}
+      {project.statuses?.yellowWarning && (
+        <MobileProjectIconTooltip
+          icon={
+            <ShieldIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+          }
+        >
+          <Markdown inline ignoreGlossary>
+            {project.statuses.yellowWarning}
+          </Markdown>
+        </MobileProjectIconTooltip>
+      )}
+      {project.statuses?.syncWarning && (
+        <MobileProjectIconTooltip icon={<ClockIcon className="size-4" />}>
+          {project.statuses.syncWarning}
+        </MobileProjectIconTooltip>
+      )}
+      {project.statuses?.ongoingAnomaly && (
+        <MobileProjectIconTooltip
+          icon={<LiveIndicator />}
+          contentClassName="flex flex-col gap-2"
+        >
+          <p>
+            There's an ongoing anomaly. Check detailed page for more
+            information.
+          </p>
+          <CustomLink
+            href={`/scaling/projects/${project.slug}#liveness`}
+            className="inline-block text-label-value-13"
+          >
+            View details
+          </CustomLink>
+        </MobileProjectIconTooltip>
+      )}
+    </div>
+  )
+}
+
+function CellBottomContent({ project }: { project: ProjectCellProject }) {
+  return (
+    <>
       {project.nameSecondLine && !project.isLayer3 && (
         <span className="block font-medium text-[0.8125rem] text-secondary leading-3.75">
           {project.nameSecondLine}
@@ -234,16 +234,71 @@ export function ProjectNameCell({
             {project.purposes.join(', ')}
           </div>
         )}
+    </>
+  )
+}
+
+export function ProjectNameCell({
+  project,
+  className,
+  withInfoTooltip,
+  ignoreUnderReviewIcon,
+}: ProjectCellProps) {
+  const projectName = project.shortName ?? project.name
+
+  if (!withInfoTooltip) {
+    return (
+      <div className={className}>
+        <div className="flex items-center gap-1.5">
+          <PrimaryValueCell className="font-bold leading-none!">
+            {projectName}
+          </PrimaryValueCell>
+          <MobileStatusIcons
+            project={project}
+            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          />
+        </div>
+        <CellBottomContent project={project} />
+      </div>
+    )
+  }
+
+  return (
+    <div className={className}>
+      <DesktopInfoTooltip project={project}>
+        <div className="flex items-center gap-1.5">
+          <PrimaryValueCell className="font-bold leading-none!">
+            {projectName}
+          </PrimaryValueCell>
+          <DesktopStatusIcons
+            project={project}
+            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          />
+        </div>
+        <CellBottomContent project={project} />
+      </DesktopInfoTooltip>
+      <div className="md:hidden">
+        <div className="flex items-center gap-1.5">
+          <PrimaryValueCell className="font-bold leading-none!">
+            {projectName}
+          </PrimaryValueCell>
+          <MobileStatusIcons
+            project={project}
+            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          />
+        </div>
+        <CellBottomContent project={project} />
+      </div>
     </div>
   )
 }
 
-export function ProjectInfoTooltip({
+function DesktopInfoTooltip({
   project,
   children,
 }: {
   project: ProjectCellProject
-  children: React.ReactElement
+  children: React.ReactNode
 }) {
   const projectName = project.shortName ?? project.name
   const warningSections = getTooltipWarningSections(project)
@@ -253,13 +308,13 @@ export function ProjectInfoTooltip({
     warningSections.length > 0
 
   if (!hasTooltipContent) {
-    return children
+    return <div className="max-md:hidden">{children}</div>
   }
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger asChild disabledOnMobile>
-        {children}
+      <TooltipTrigger asChild>
+        <div className="max-md:hidden">{children}</div>
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">

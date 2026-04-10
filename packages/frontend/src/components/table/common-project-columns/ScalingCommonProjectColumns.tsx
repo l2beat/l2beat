@@ -1,7 +1,7 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import { TableLink } from '~/components/table/TableLink'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { ProjectInfoTooltip, ProjectNameCell } from '../cells/ProjectNameCell'
+import { ProjectNameCell } from '../cells/ProjectNameCell'
 import type { CommonProjectColumnsOptions } from './CommonProjectColumns'
 import { getCommonProjectColumns } from './CommonProjectColumns'
 
@@ -15,15 +15,13 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => (
-        <ProjectInfoTooltip project={ctx.row.original}>
-          <TableLink href={getHref(ctx.row.original)}>
-            <ProjectNameCell
-              project={ctx.row.original}
-              withInfoTooltip
-              ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
-            />
-          </TableLink>
-        </ProjectInfoTooltip>
+        <TableLink href={getHref(ctx.row.original)}>
+          <ProjectNameCell
+            project={ctx.row.original}
+            withInfoTooltip
+            ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
+          />
+        </TableLink>
       ),
       enableHiding: false,
     }),
