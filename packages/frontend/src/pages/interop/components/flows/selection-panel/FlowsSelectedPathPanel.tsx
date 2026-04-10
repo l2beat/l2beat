@@ -1,6 +1,6 @@
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { MultipleChainsStats } from './MultipleChainsStats'
 import { SingleChainStats } from './SingleChainStats'
-import { MultipleChainsStats } from './TwoChainStats'
 
 export function FlowsSelectedPathPanel() {
   const { allChains, highlightedChains, selectedChains } = useInteropFlows()
