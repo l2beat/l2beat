@@ -1,10 +1,10 @@
 import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
-import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import type { InteropFlowsParams } from './types'
-import { getAggregatedInteropSnapshotTimestamp } from './utils/getAggregatedInteropTimestamp'
+import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
+import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 
 export interface Flow {
   srcChain: string
@@ -29,6 +29,7 @@ interface FlowsStats {
   totalTransferCount: number
   activeFlows: number
   topRoute: { srcChain: string; dstChain: string } | undefined
+  topToken: { symbol: string; iconUrl: string; volume: number } | undefined
 }
 
 export type InteropFlowsData = {
@@ -44,8 +45,11 @@ export async function getInteropFlows(
     return getMockInteropFlows()
   }
 
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  if (!snapshotTimestamp || params.chains.length === 0) {
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    from: params.chains,
+    to: params.chains,
+  })
+  if (records.length === 0) {
     return {
       flows: [],
       chainData: [],
@@ -54,16 +58,10 @@ export async function getInteropFlows(
         totalTransferCount: 0,
         activeFlows: 0,
         topRoute: undefined,
+        topToken: undefined,
       },
     }
   }
-
-  const db = getDb()
-  const transfers = await db.aggregatedInteropTransfer.getByChainsAndTimestamp(
-    snapshotTimestamp,
-    params.chains,
-    params.chains,
-  )
 
   // Skip subgroup projects to avoid double-counting
   const interopProjects = await ps.getProjects({
@@ -73,19 +71,27 @@ export async function getInteropFlows(
     interopProjects.filter((p) => p.interopConfig.subgroupId).map((p) => p.id),
   )
 
-  // Aggregate transfer volumes and counts by srcChain::dstChain pair
   const flowDataMap = new Map<
     string,
     { volume: number; transferCount: number }
   >()
-  for (const record of transfers) {
+  const tokenVolumeMap = new Map<string, number>()
+  for (const record of records) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
+
+    // Aggregate transfer volumes and counts by srcChain::dstChain pair
     const key = `${record.srcChain}::${record.dstChain}`
     const current = flowDataMap.get(key) ?? { volume: 0, transferCount: 0 }
     flowDataMap.set(key, {
       volume: current.volume + (getInteropTransferValue(record) ?? 0),
       transferCount: current.transferCount + record.transferCount,
     })
+
+    // Aggregate token volumes to find top token
+    for (const token of record.tokens) {
+      const current = tokenVolumeMap.get(token.abstractTokenId) ?? 0
+      tokenVolumeMap.set(token.abstractTokenId, current + token.volume)
+    }
   }
 
   const flows: Flow[] = []
@@ -115,6 +121,25 @@ export async function getInteropFlows(
     undefined,
   )
 
+  const topTokenEntry = [...tokenVolumeMap.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([abstractTokenId, volume]) => ({ abstractTokenId, volume }))[0]
+
+  let topToken: FlowsStats['topToken']
+  if (topTokenEntry) {
+    const detailsMap = await buildTokensDetailsMap([
+      topTokenEntry.abstractTokenId,
+    ])
+    const details = detailsMap.get(topTokenEntry.abstractTokenId)
+    if (details) {
+      topToken = {
+        symbol: details.symbol,
+        iconUrl: details.iconUrl,
+        volume: topTokenEntry.volume,
+      }
+    }
+  }
+
   return {
     flows,
     chainData: computeChainsData(flows, params.chains),
@@ -125,6 +150,7 @@ export async function getInteropFlows(
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
         : undefined,
+      topToken,
     },
   }
 }
@@ -210,6 +236,11 @@ function getMockInteropFlows(): InteropFlowsData {
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
         : undefined,
+      topToken: {
+        symbol: 'ETH',
+        iconUrl: '/icons/tokens/ether.png',
+        volume: 253_700_000,
+      },
     },
   }
 }

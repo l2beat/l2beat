@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { useInteropFlows } from './utils/InteropFlowsContext'
@@ -20,6 +22,7 @@ export function FlowsGeneralStats() {
   const dstChain = topRoute
     ? allChains.find((c) => c.id === topRoute.dstChain)
     : undefined
+  const topToken = data?.stats.topToken
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
@@ -44,29 +47,56 @@ export function FlowsGeneralStats() {
           isLoading={isLoading}
         />
         <HorizontalSeparator className="my-4" />
-        <div className="flex flex-col items-center justify-center gap-1 rounded-lg border border-divider bg-surface-primary px-4 py-2">
-          <span className="font-medium text-label-value-14 text-secondary">
-            Top route
-          </span>
-          {isLoading ? (
-            <Skeleton className="h-6 w-20" />
-          ) : srcChain && dstChain ? (
-            <div className="flex items-center gap-1.5">
-              <img
-                src={srcChain.iconUrl}
-                alt={srcChain.id}
-                className="size-5"
-              />
-              <ArrowRightIcon className="size-4 fill-brand" />
-              <img
-                src={dstChain.iconUrl}
-                alt={dstChain.id}
-                className="size-5"
-              />
-            </div>
-          ) : (
-            <div className="font-bold text-heading-20">-</div>
-          )}
+        <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-divider bg-surface-primary p-4">
+          <Card
+            title="Top route"
+            isLoading={isLoading}
+            className="border-0 p-0!"
+            value={
+              srcChain && dstChain ? (
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={srcChain.iconUrl}
+                    alt={srcChain.id}
+                    className="size-5"
+                  />
+                  <ArrowRightIcon className="size-4 fill-brand" />
+                  <img
+                    src={dstChain.iconUrl}
+                    alt={dstChain.id}
+                    className="size-5"
+                  />
+                </div>
+              ) : (
+                '-'
+              )
+            }
+          />
+          <HorizontalSeparator />
+          <Card
+            title="Top token"
+            isLoading={isLoading}
+            className="border-0 p-0!"
+            value={
+              topToken ? (
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={topToken.iconUrl}
+                    alt={topToken.symbol}
+                    className="size-5"
+                  />
+                  <span className="font-bold text-heading-20">
+                    {topToken.symbol}
+                  </span>
+                  <span className="font-medium text-label-value-14 text-secondary">
+                    {formatCurrency(topToken.volume, 'usd')}
+                  </span>
+                </div>
+              ) : (
+                '-'
+              )
+            }
+          />
         </div>
       </div>
     </div>
@@ -77,13 +107,20 @@ function Card({
   title,
   value,
   isLoading,
+  className,
 }: {
   title: string
-  value: string
+  value: ReactNode
   isLoading: boolean
+  className?: string
 }) {
   return (
-    <div className="flex flex-col items-center justify-center gap-1 rounded-lg border border-divider bg-surface-primary px-4 py-2">
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center gap-1 rounded-lg border border-divider bg-surface-primary px-4 py-2',
+        className,
+      )}
+    >
       <span className="font-medium text-label-value-14 text-secondary">
         {title}
       </span>
