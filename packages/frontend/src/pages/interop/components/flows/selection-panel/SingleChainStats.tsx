@@ -1,4 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
+import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
@@ -129,35 +130,30 @@ function TopRoutes({
           const srcChain = allChains.find((c) => c.id === flow.srcChain)
           const dstChain = allChains.find((c) => c.id === flow.dstChain)
           return (
-            <div
+            <StatRow
               key={`${flow.srcChain}-${flow.dstChain}`}
-              className="flex items-center justify-between gap-2 text-[13px]"
-            >
-              <div className="flex items-center gap-1">
-                {srcChain && (
-                  <img
-                    src={srcChain.iconUrl}
-                    alt={srcChain.name}
-                    className="size-4"
-                  />
-                )}
-                <ArrowRightIcon className="size-4 fill-brand" />
-                {dstChain && (
-                  <img
-                    src={dstChain.iconUrl}
-                    alt={dstChain.name}
-                    className="size-4"
-                  />
-                )}
-              </div>
-              {isLoading ? (
-                <Skeleton className="h-4 w-16" />
-              ) : (
-                <span className="font-semibold leading-[1.15]">
-                  {formatCurrency(flow.volume, 'usd')}
+              label={
+                <span className="flex items-center gap-1">
+                  {srcChain && (
+                    <img
+                      src={srcChain.iconUrl}
+                      alt={srcChain.name}
+                      className="size-4"
+                    />
+                  )}
+                  <ArrowRightIcon className="size-4 fill-brand" />
+                  {dstChain && (
+                    <img
+                      src={dstChain.iconUrl}
+                      alt={dstChain.name}
+                      className="size-4"
+                    />
+                  )}
                 </span>
-              )}
-            </div>
+              }
+              value={formatCurrency(flow.volume, 'usd')}
+              isLoading={isLoading}
+            />
           )
         })}
       </div>
@@ -170,7 +166,7 @@ function StatRow({
   value,
   isLoading,
 }: {
-  label: string
+  label: ReactNode
   value: string
   isLoading: boolean
 }) {
