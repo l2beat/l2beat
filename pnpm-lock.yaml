@@ -1117,9 +1117,21 @@ importers:
 
   packages/token-knowledge:
     dependencies:
+      '@l2beat/database':
+        specifier: workspace:*
+        version: link:../database
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@trpc/server':
         specifier: ^11.0.0-rc.446
         version: 11.0.0-rc.599
+      clingo-wasm:
+        specifier: 0.3.2
+        version: 0.3.2
+      ohm-js:
+        specifier: ^17.1.0
+        version: 17.1.0
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1127,9 +1139,15 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      earl:
+        specifier: ^1.1.0
+        version: 1.3.0
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      mocha:
+        specifier: ^10.2.0
+        version: 10.7.3
 
   packages/token-knowledge-ui:
     dependencies:

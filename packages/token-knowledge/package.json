@@ -7,8 +7,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node build/server.js",
-    "dev": "node --watch -r esbuild-register src/server.ts",
+    "dev": "node -r esbuild-register src/server.ts",
     "clean": "rm -rf build",
+    "test": "mocha",
     "typecheck": "tsc --noEmit",
     "format": "biome format .",
     "format:fix": "biome format --write .",
@@ -16,11 +17,17 @@
     "lint:fix": "biome check --formatter-enabled=false --write ."
   },
   "dependencies": {
-    "@trpc/server": "^11.0.0-rc.446"
+    "@l2beat/database": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "@trpc/server": "^11.0.0-rc.446",
+    "clingo-wasm": "0.3.2",
+    "ohm-js": "^17.1.0"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
-    "express": "^5.1.0"
+    "earl": "^1.1.0",
+    "express": "^5.1.0",
+    "mocha": "^10.2.0"
   }
 }

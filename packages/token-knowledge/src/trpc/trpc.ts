@@ -1,10 +1,13 @@
+import type { Database } from '@l2beat/database'
 import { initTRPC } from '@trpc/server'
 
-export const createContext = () => ({})
+export interface AppContext {
+  db: Database
+}
 
-type Context = Awaited<ReturnType<typeof createContext>>
+export const createContext = (db: Database) => () => ({ db })
 
-const t = initTRPC.context<Context>().create({
+const t = initTRPC.context<AppContext>().create({
   transformer: {
     serialize: JSON.stringify,
     deserialize: JSON.parse,
