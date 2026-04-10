@@ -25,7 +25,6 @@ import { cn } from '~/utils/cn'
 type BadgeDialogData = NonNullable<RouterOutputs['projects']['badgesDialog']>
 
 interface BadgesDialogProps {
-  open: boolean
   onOpenChange: (open: boolean) => void
   data: BadgeDialogData | undefined
   isLoading: boolean
@@ -33,7 +32,6 @@ interface BadgesDialogProps {
 }
 
 export function BadgesDialog({
-  open,
   onOpenChange,
   data,
   isLoading,
@@ -43,9 +41,9 @@ export function BadgesDialog({
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={onOpenChange}>
+      <Drawer open onOpenChange={onOpenChange}>
         <DrawerContent
-          className="max-h-[100dvh] min-h-[85dvh]"
+          className="max-h-[90dvh]"
           contentClassName="flex min-h-0 flex-col px-0 pb-0"
         >
           <DrawerHeader className="sr-only">
@@ -66,7 +64,7 @@ export function BadgesDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open onOpenChange={onOpenChange}>
       <DialogContent className="primary-card flex max-h-[90dvh] w-[768px] flex-col overflow-hidden bg-surface-primary p-0 lg:w-[960px]">
         <DialogClose className="top-5 right-5" />
         <DialogHeader className="sr-only">

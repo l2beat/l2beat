@@ -19,20 +19,15 @@ export function BadgesSection({
   className,
   withDialog,
 }: BadgesSectionProps) {
-  const [open, setOpen] = useState(false)
   const [selectedBadgeId, setSelectedBadgeId] = useState<string>()
+  const utils = api.useUtils()
 
-  const { data, isLoading, isFetching } = api.projects.badgesDialog.useQuery(
+  const { data, isLoading } = api.projects.badgesDialog.useQuery(
     { badgeId: selectedBadgeId ?? '' },
     {
-      enabled: !!selectedBadgeId && open,
+      enabled: !!selectedBadgeId,
     },
   )
-
-  function openBadgeDialog(badgeId: string) {
-    setSelectedBadgeId(badgeId)
-    setOpen(true)
-  }
 
   return (
     <>
@@ -54,7 +49,10 @@ export function BadgesSection({
                 <button
                   key={key}
                   className="cursor-pointer"
-                  onClick={() => openBadgeDialog(badge.id)}
+                  onMouseEnter={() =>
+                    utils.projects.badgesDialog.prefetch({ badgeId: badge.id })
+                  }
+                  onClick={() => setSelectedBadgeId(badge.id)}
                 >
                   <ProjectBadge badge={badge} disableInteraction />
                 </button>
@@ -67,10 +65,13 @@ export function BadgesSection({
       </div>
       {withDialog && selectedBadgeId && (
         <BadgesDialog
-          open={open}
-          onOpenChange={setOpen}
+          onOpenChange={(open) => {
+            if (!open) {
+              setSelectedBadgeId(undefined)
+            }
+          }}
           data={data}
-          isLoading={isLoading || isFetching}
+          isLoading={isLoading}
           onBadgeSelect={setSelectedBadgeId}
         />
       )}

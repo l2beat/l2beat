@@ -27,7 +27,8 @@ export async function getScalingBadgeDialogData(input: {
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 
-  const badgesByType = new Map<string, Map<string, ScalingBadge>>()
+  const badgesById = new Map<string, ScalingBadge>()
+  const badgesByType = new Map<string, ScalingBadge[]>()
   const projectsByBadge = new Map<string, ScalingBadgeDialogProject[]>()
 
   for (const project of projects) {
@@ -42,8 +43,12 @@ export async function getScalingBadgeDialogData(input: {
       const badgeWithParams = getBadgeWithParams(badge)
       if (!badgeWithParams) continue
 
-      const badgesOfType = badgesByType.get(badge.type) ?? new Map()
-      badgesOfType.set(badge.id, badgeWithParams)
+      badgesById.set(badge.id, badgeWithParams)
+
+      const badgesOfType = badgesByType.get(badge.type) ?? []
+      if (!badgesOfType.some((badge) => badge.id === badgeWithParams.id)) {
+        badgesOfType.push(badgeWithParams)
+      }
       badgesByType.set(badge.type, badgesOfType)
 
       const projectsWithBadge = projectsByBadge.get(badge.id) ?? []
@@ -52,23 +57,13 @@ export async function getScalingBadgeDialogData(input: {
     }
   }
 
-  let selectedBadge: ScalingBadge | undefined
-  for (const badgesOfType of badgesByType.values()) {
-    const badge = badgesOfType.get(input.badgeId)
-    if (badge) {
-      selectedBadge = badge
-      break
-    }
-  }
-
+  const selectedBadge = badgesById.get(input.badgeId)
   if (!selectedBadge) return undefined
 
   const projectsWithBadge = (projectsByBadge.get(input.badgeId) ?? []).sort(
     (a, b) => a.name.localeCompare(b.name),
   )
-  const relatedBadges = Array.from(
-    badgesByType.get(selectedBadge.type)?.values() ?? [],
-  )
+  const relatedBadges = (badgesByType.get(selectedBadge.type) ?? [])
     .filter((badge) => badge.id !== input.badgeId)
     .sort((a, b) => a.name.localeCompare(b.name))
 
