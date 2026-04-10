@@ -1,0 +1,26 @@
+{
+  "name": "@l2beat/token-knowledge",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node build/server.js",
+    "dev": "node --watch -r esbuild-register src/server.ts",
+    "clean": "rm -rf build",
+    "typecheck": "tsc --noEmit",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write ."
+  },
+  "dependencies": {
+    "@trpc/server": "^11.0.0-rc.446"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
+    "express": "^5.1.0"
+  }
+}
