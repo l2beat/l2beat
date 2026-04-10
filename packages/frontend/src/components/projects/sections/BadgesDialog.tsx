@@ -170,19 +170,19 @@ function BadgesDialogBody({
 
       <HorizontalSeparator />
       <BadgeDialogSection title={`Projects (${data.projectCount})`}>
-        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+        <div className="grid grid-cols-3 gap-3.5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7">
           {data.projects.map((project) => (
             <CustomLink
               key={project.slug}
               href={`/scaling/projects/${project.slug}`}
               underline={false}
-              className="flex min-h-24 flex-col items-center rounded-lg py-2 text-center text-primary transition-colors hover:bg-surface-secondary hover:text-primary"
+              className="flex h-32 flex-col items-center justify-center rounded-lg border-1 border-divider p-2 text-center text-primary transition-colors hover:bg-surface-secondary hover:text-primary"
             >
               <img
                 src={project.icon}
                 alt={`${project.name} logo`}
-                width={30}
-                height={30}
+                width={32}
+                height={32}
                 className="mb-2 size-8 rounded-md"
               />
               <div className="font-bold text-lg leading-none">
