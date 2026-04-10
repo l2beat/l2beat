@@ -16,8 +16,8 @@ describe(runClingo.name, () => {
 
 describe(extractFacts.name, () => {
   it('throws on non-satisfiable result', () => {
-    expect(() =>
-      extractFacts({ Result: 'UNSATISFIABLE', Call: [] }),
-    ).toThrow('Clingo result: UNSATISFIABLE')
+    expect(() => extractFacts({ Result: 'UNSATISFIABLE', Call: [] })).toThrow(
+      'Clingo result: UNSATISFIABLE',
+    )
   })
 })

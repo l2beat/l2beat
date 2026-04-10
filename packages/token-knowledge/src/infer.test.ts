@@ -23,14 +23,22 @@ describe(infer.name, () => {
     const kb = await infer(facts, rules)
 
     // Direct: ethereum->base, base->zora
-    expect(kb.getFacts('same_token', ['ethereum', '0xA0b8', 'base', '0x833']).length).toEqual(1)
-    expect(kb.getFacts('same_token', ['base', '0x833', 'zora', '0xCcc']).length).toEqual(1)
+    expect(
+      kb.getFacts('same_token', ['ethereum', '0xA0b8', 'base', '0x833']).length,
+    ).toEqual(1)
+    expect(
+      kb.getFacts('same_token', ['base', '0x833', 'zora', '0xCcc']).length,
+    ).toEqual(1)
 
     // Transitive: ethereum->zora (via base)
-    expect(kb.getFacts('same_token', ['ethereum', '0xA0b8', 'zora', '0xCcc']).length).toEqual(1)
+    expect(
+      kb.getFacts('same_token', ['ethereum', '0xA0b8', 'zora', '0xCcc']).length,
+    ).toEqual(1)
 
     // Symmetric: base->ethereum
-    expect(kb.getFacts('same_token', ['base', '0x833', 'ethereum', '0xA0b8']).length).toEqual(1)
+    expect(
+      kb.getFacts('same_token', ['base', '0x833', 'ethereum', '0xA0b8']).length,
+    ).toEqual(1)
   })
 
   it('does not infer same_token for non-canonical bridges', async () => {

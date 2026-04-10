@@ -1,6 +1,6 @@
+import type { InteropTransferRecord } from '@l2beat/database'
 import { expect } from 'earl'
 import { transfersToFacts } from './transfersToFacts'
-import type { InteropTransferRecord } from '@l2beat/database'
 
 function makeTransfer(
   overrides: Partial<InteropTransferRecord>,
@@ -63,18 +63,14 @@ describe(transfersToFacts.name, () => {
   })
 
   it('skips transfers missing token addresses', () => {
-    const transfers = [
-      makeTransfer({ srcTokenAddress: undefined }),
-    ]
+    const transfers = [makeTransfer({ srcTokenAddress: undefined })]
 
     const result = transfersToFacts(transfers)
     expect(result).toEqual('')
   })
 
   it('uses "unknown" for missing bridge type', () => {
-    const transfers = [
-      makeTransfer({ bridgeType: undefined }),
-    ]
+    const transfers = [makeTransfer({ bridgeType: undefined })]
 
     const result = transfersToFacts(transfers)
     expect(result).toInclude('"unknown"')
