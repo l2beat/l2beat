@@ -111,6 +111,9 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
+      jose:
+        specifier: ^6.1.0
+        version: 6.1.0
       koa:
         specifier: ^2.14.1
         version: 2.16.0

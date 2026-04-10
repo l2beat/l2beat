@@ -16,6 +16,7 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { createRemoteJWKSet } from 'jose'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -241,6 +242,7 @@ export interface InteropFeatureConfig {
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
+    auth: InteropDashboardAuthConfig | false
   }
   compare: {
     enabled: boolean
@@ -257,6 +259,12 @@ export interface InteropFeatureConfig {
   }
   inMemoryEventCap: number
   oneSidedChains: string[]
+}
+
+export interface InteropDashboardAuthConfig {
+  JWKS: ReturnType<typeof createRemoteJWKSet>
+  aud: string
+  teamDomain: string
 }
 
 export interface DaBeatConfig {
