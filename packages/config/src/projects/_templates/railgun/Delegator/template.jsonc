@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "grantedPermissions": {
+      "description": "Selector 0x2ec0f359 is function setVerificationKey on the main railgun contract.",
+      "handler": {
+        "type": "event",
+        "select": ["contractAddress", "selector"],
+        "add": { "event": "GrantPermission" },
+        "remove": { "event": "RevokePermission" },
+        "groupBy": "caller"
+      }
+    }
+  }
+}
