@@ -61,6 +61,7 @@ import {
   updateEntityDescription,
 } from './defidisco/reviewConfig'
 import { getAudits, getResources, updateAudits, updateResources } from './defidisco/resources'
+import { getGovernance, updateGovernance } from './defidisco/governance'
 import { ReviewCompiler } from './defidisco/reviewCompiler'
 import {
   attachTemplateRouter,
@@ -735,6 +736,46 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error updating audits:', error)
       res.status(500).json({ error: 'Failed to update audits' })
+    }
+  })
+
+  // Governance endpoints
+  app.get('/api/projects/:project/governance', (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const governance = getGovernance(paths, project)
+      res.json(governance ?? null)
+    } catch (error) {
+      console.error('Error loading governance:', error)
+      res.status(500).json({ error: 'Failed to load governance' })
+    }
+  })
+
+  app.put('/api/projects/:project/governance', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      updateGovernance(paths, project, req.body ?? null)
+      res.json({ success: true })
+    } catch (error) {
+      console.error('Error updating governance:', error)
+      res.status(500).json({ error: 'Failed to update governance' })
     }
   })
 

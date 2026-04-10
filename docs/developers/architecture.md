@@ -56,21 +56,29 @@ For implementation details, see [Infrastructure: External Contract Attributes](f
 
 ### Review Builder
 
-The Review Builder stores all review configuration in a single `review-config.json` file per project. This includes protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, project resources (links to frontends, docs, GitHub, X, source code), and section content (e.g., Code & Audits).
+The Review Builder stores review configuration across **three sibling files** per project, which split intentionally so the AI-regenerated content does not clobber hand-authored data:
 
-**Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/reviewConfig.ts` handles CRUD operations. Three API endpoints are registered in `main.ts`:
+- **`review-config.json`** — protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, and section content (e.g., Code & Audits). **Wiped and regenerated** by `/generate-review`.
+- **`resources.json`** — project resources (links to frontends, docs, GitHub, X, source code) and security audits. Shape: `{ resources: ResourceEntry[], audits: AuditEntry[] }` (with legacy bare-array fallback). Survives `/generate-review`.
+- **`governance.json`** — governance config (framework, vote execution, voting unit, proposal requirements, voting process, proposal period, execution delay). Survives `/generate-review`.
 
-- `GET /api/projects/:project/review-config` — returns the full config plus available templates
-- `PUT /api/projects/:project/review-config` — saves the full config
-- `PUT /api/projects/:project/review-config/entity` — partial update for a single admin/dependency/funds entry
+**Backend**: Three CRUD modules under `packages/l2b/src/implementations/discovery-ui/defidisco/`: `reviewConfig.ts`, `resources.ts`, `governance.ts`. Each module reads its own file with a **legacy-fallback read** from the old location inside `review-config.json`, and on write performs a one-time migration by stripping the legacy key. Endpoints registered in `main.ts`:
 
-**Frontend**: The `ReviewBuilderPanel.tsx` component provides the editor UI, with `ReviewDescriptionsEditor.tsx` for entity descriptions, `ReviewResourcesEditor.tsx` for project resource links (frontends, docs, socials), and `ReviewSectionEditor.tsx` for section tabs. Data source definitions in `reviewDataSources.ts` power the data table blocks.
+- `GET`/`PUT /api/projects/:project/review-config` (+ `PUT .../review-config/entity` for partial entity updates)
+- `GET`/`PUT /api/projects/:project/resources`
+- `GET`/`PUT /api/projects/:project/governance`
 
-**AI Generation**: The `/generate-review` Claude Code skill fetches pre-processed data from the l2b API, analyzes the protocol structure, and writes generated descriptions directly to `review-config.json`. Human-specified `resources` (project links) are automatically preserved across regenerations.
+**Frontend**: `ReviewBuilderPanel.tsx` hosts the tabbed editor UI. `ReviewDescriptionsEditor.tsx` edits entity descriptions (part of review-config). `ReviewResourcesEditor.tsx` and `ReviewGovernanceEditor.tsx` are **self-contained auto-saving editors** — they own their own `useQuery`/`useMutation` against the dedicated endpoints and do not go through `ReviewBuilderPanel`'s save button. `ReviewSectionEditor.tsx` handles section tabs with data source definitions in `reviewDataSources.ts`.
 
-**Resources**: The `resources` field is a flat array of `ResourceEntry` objects (`{ url, type, label?, frontendSubtype? }`). Resource types: `frontend` (with subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`. Resources are compiled as-is into `compiled-review.json` and rendered in the frontend's "More Information" section.
+**Resources**: `ResourceEntry = { url, type, label?, frontendSubtype? }` with types `frontend` (subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`. `AuditEntry = { url, author, date, scope?, bounty? }` where `bounty` is the max bug bounty USD amount. Compiled as-is into `compiled-review.json`.
 
-For implementation details, see [Scoring & Review: Review Builder](features/scoring-and-review.md#review-builder).
+**Governance**: `GovernanceConfig = { framework, voteExecution, votingUnit, proposalRequirements, votingProcess, proposalPeriod, executionDelay }`. Both period/delay are `GovernanceDuration` = `{ kind: 'fieldRef', ref: { contractAddress, fieldName, unit? } } | { kind: 'fixed', value: string } | { kind: 'none' }`. `unit` is one of `seconds | blocks | minutes | hours | days` (default `seconds`; `blocks` assumes 12s Ethereum block time). Field refs are resolved by `resolveGovernance()` in `governanceCompiler.ts` — it reads the raw numeric value from `discovered.json`, multiplies by `unitToSecondsFactor(unit)`, and writes the converted seconds to `compiled-review.json`. The unit is purely an input to conversion; it never appears on `CompiledGovernanceDuration` and downstream consumers only see the resolved seconds.
+
+**AI Generation**:
+- `/generate-review` writes only `review-config.json` (after `mv`-ing the old one aside). Resources and governance survive untouched.
+- `/generate-governance` writes only `governance.json` — researches the protocol's voting framework, prefers `fieldRef` durations pointing at real timelock/governor fields, and picks the right `unit` (notably `"blocks"` for Compound/OZ Governor `votingPeriod`).
+
+For implementation details, see [Scoring & Review: Review Builder](features/scoring-and-review.md#review-builder) and [Scoring & Review: Governance](features/scoring-and-review.md#governance).
 
 ### Continuous Monitoring Service
 

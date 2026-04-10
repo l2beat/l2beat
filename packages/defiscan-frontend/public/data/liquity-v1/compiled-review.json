@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-09T08:33:43.125Z",
+  "compiledAt": "2026-04-09T14:35:09.346Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -3777,6 +3777,19 @@
       "url": "https://www.coinspect.com/doc/Liquity%20-%20Smart%20Contract%20Audit%202021.pdf"
     }
   ],
+  "governance": {
+    "framework": "None (immutable)",
+    "voteExecution": "offchain",
+    "votingUnit": "None",
+    "proposalRequirements": "None — protocol is immutable",
+    "votingProcess": "Governance-free: core contracts are immutable with no admin keys. A 3/8 multisig only controls LQTY token allocations, not protocol parameters.",
+    "proposalPeriod": {
+      "kind": "none"
+    },
+    "executionDelay": {
+      "kind": "none"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

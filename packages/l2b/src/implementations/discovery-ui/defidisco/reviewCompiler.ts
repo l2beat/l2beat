@@ -19,6 +19,11 @@ import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
 import { getAudits, getResources } from './resources'
+import { getGovernance } from './governance'
+import {
+  type CompiledGovernance,
+  resolveGovernance,
+} from './governanceCompiler'
 import {
   normalizeChainAddress,
   addressesEqual,
@@ -88,6 +93,9 @@ export interface CompiledReview {
   resources: CompiledResourceEntry[]
   audits: CompiledAuditEntry[]
   activity?: ActivityEvent[]
+
+  /** Compiled governance metadata — resolved field refs, fixed values, or absent. */
+  governance?: CompiledGovernance
 
   sections: Record<string, unknown>
 }
@@ -806,6 +814,11 @@ export class ReviewCompiler {
       resources,
       audits,
       activity: activity.length > 0 ? activity : undefined,
+      governance: resolveGovernance(
+        getGovernance(this.paths, project),
+        this.paths,
+        project,
+      ),
       sections: reviewConfig.sections ?? {},
     }
   }

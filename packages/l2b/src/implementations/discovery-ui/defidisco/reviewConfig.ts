@@ -55,6 +55,8 @@ export function updateReviewConfig(
   config.lastModified = new Date().toISOString()
   // Defensively strip resources (now stored in resources.json)
   delete (config as any).resources
+  // Defensively strip governance (now stored in governance.json)
+  delete (config as any).governance
   writeReviewConfig(paths, project, config)
 }
 

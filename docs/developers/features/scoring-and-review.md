@@ -298,6 +298,64 @@ Security audit reports and bug bounty programs stored as a separate `AuditEntry[
 - `funds`: Per-fund-holding contract name + description of what tokens it holds
 - `sections.codeAndAudits`: Contract listing (dataTable block) + audits placeholder
 
+## Governance
+
+**Separate per-project file**: `governance.json` lives next to `review-config.json` and `resources.json` in each project's config directory. It's intentionally split from the review config so `/generate-review` (which wipes `review-config.json` on every run) can't accidentally throw away authored governance metadata.
+
+### File location
+
+`packages/config/src/projects/{project}/governance.json`
+
+### Data Structure (`GovernanceConfig`)
+
+Defined in `packages/l2b/src/implementations/discovery-ui/defidisco/types.ts`:
+
+```typescript
+interface GovernanceConfig {
+  framework: string                // e.g. "Compound Governor Bravo"
+  voteExecution: 'onchain' | 'offchain'
+  votingUnit: string              // e.g. "COMP token"
+  proposalRequirements: string    // Who can submit proposals
+  votingProcess: string           // 1-2 sentences, ≤150 chars
+  proposalPeriod: GovernanceDuration
+  executionDelay: GovernanceDuration
+}
+
+type GovernanceDurationUnit = 'seconds' | 'blocks' | 'minutes' | 'hours' | 'days'
+
+type GovernanceDuration =
+  | {
+      kind: 'fieldRef'
+      ref: {
+        contractAddress: string
+        fieldName: string
+        unit?: GovernanceDurationUnit  // default: 'seconds'
+      }
+    }
+  | { kind: 'fixed'; value: string }
+  | { kind: 'none' }
+```
+
+**`fieldRef` durations** are resolved against `discovered.json` numeric fields at compile time — the same mechanism as function delays. This keeps on-chain governance parameters (Timelock delays, Governor voting periods) in sync with reality. Use `fixed` for free text like `"~3 days (configurable)"` when there's no on-chain source, and `none` for N/A.
+
+**`unit` field** describes how the raw on-chain value should be converted to seconds. Default (omitted) → `seconds`. The compiler multiplies the resolved raw value by the unit's factor before writing it into `CompiledGovernanceDuration.seconds`. Factors: `seconds`=1, `blocks`=12 (Ethereum block time), `minutes`=60, `hours`=3600, `days`=86400. Use `blocks` for Compound/OZ Governor `votingPeriod` / `votingDelay`; leave `unit` omitted for Timelock `delay` (already in seconds). The unit is **input-only** — it never appears on `CompiledGovernanceDuration` or in the rendered UI; downstream consumers only see the converted seconds. Frontend editor (`ReviewGovernanceEditor.tsx`) exposes a Unit dropdown in the fieldRef picker and applies the same factor in its live preview via a local `unitToSecondsFactor` mirror — keep this in sync with `governanceCompiler.ts`.
+
+### Backend
+
+- **CRUD**: `packages/l2b/src/implementations/discovery-ui/defidisco/governance.ts` — mirrors `resources.ts`. `getGovernance()` reads `governance.json` primary, falls back to `review-config.json.governance` for legacy configs. `updateGovernance()` accepts `GovernanceConfig | null` (null = delete file), and on any write strips the legacy `governance` key from `review-config.json` as a one-time migration.
+- **Compiler**: `governanceCompiler.ts`'s `resolveGovernance()` resolves field refs via `resolveDelayFromDiscovered()` (which returns the **raw** numeric value) and multiplies by `unitToSecondsFactor(ref.unit)` before emitting `CompiledGovernance.seconds`. `resolveDelayFromDiscovered()` is shared with function-mitigation delays and is intentionally left labeling its return as `seconds` — governance is the only consumer that overlays a unit conversion on top.
+- **Endpoints**: `GET /api/projects/:project/governance`, `PUT /api/projects/:project/governance`.
+
+### Frontend
+
+- **Editor**: `ReviewGovernanceEditor.tsx` — self-contained, `useQuery(['governance', project])` + `useMutation` with optimistic updates. Takes only `project: string`. Lives in the Review Builder panel's "Governance" tab but doesn't plumb through `ReviewConfig` — `ReviewConfig` does not have a `governance` field.
+- **API**: `getGovernance(project)` / `updateGovernance(project, GovernanceConfig | null)` in `api.ts`.
+- **Rendering**: `defiscan-frontend`'s `GovernanceSection.tsx` reads `review.governance`. Middle card shows Voting Period + Execution Delay metrics + the Voting Process prose below them. Left card shows framework/vote execution/voting unit + Proposal Requirements. Right card is a blurred "Voting Power Distribution — Coming Soon" placeholder. When `governance` is absent, the whole grid is blurred with "Not Yet Documented".
+
+### Governance Generation Agent
+
+**`/generate-governance <project>`** — Claude Code skill at `.claude/skills/generate-governance/SKILL.md`. Researches the protocol's governance system via web search, maps what it finds to `GovernanceConfig`, prefers `fieldRef` durations against discovered numeric fields when `voteExecution === 'onchain'`, picks the right `unit` for each fieldRef (notably `"blocks"` for Compound/OZ Governor `votingPeriod`), and writes `governance.json`. **Only touches `governance.json`** — never `review-config.json`.
+
 ## Review Compiler
 
 **Thin assembly layer**: Calls `ProjectAnalysis` internally, then overlays human-written descriptions, funds data, and activity feeds to produce a self-contained review JSON. Shared between l2b UI and the monitor.

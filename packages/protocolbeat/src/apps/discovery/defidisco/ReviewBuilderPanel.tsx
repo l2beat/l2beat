@@ -18,19 +18,21 @@ import { registerPanelDirtyCheck } from './panelDirtyState'
 import { ReviewSectionEditor } from './ReviewSectionEditor'
 import { ReviewDataKeysEditor } from './ReviewDataKeysEditor'
 import { ReviewDescriptionsEditor } from './ReviewDescriptionsEditor'
+import { ReviewGovernanceEditor } from './ReviewGovernanceEditor'
 import { useReviewImportData } from './useReviewImportData'
 
 const SECTION_KEYS = ['codeAndAudits'] as const
 type SectionKey = (typeof SECTION_KEYS)[number]
 
-type TabKey = SectionKey | 'descriptions'
+type TabKey = SectionKey | 'descriptions' | 'governance'
 
 const TAB_LABELS: Record<TabKey, string> = {
   descriptions: 'Descriptions',
+  governance: 'Governance',
   codeAndAudits: 'Code & Audits',
 }
 
-const ALL_TABS: TabKey[] = ['descriptions', ...SECTION_KEYS]
+const ALL_TABS: TabKey[] = ['descriptions', 'governance', ...SECTION_KEYS]
 
 export function ReviewBuilderPanel() {
   const { project } = useParams()
@@ -269,6 +271,8 @@ export function ReviewBuilderPanel() {
               setLocalConfig((prev) => (prev ? updater(prev) : prev))
             }
           />
+        ) : activeTab === 'governance' ? (
+          <ReviewGovernanceEditor project={project} />
         ) : (
           <ReviewSectionEditor
             section={localConfig.sections[activeTab]}

@@ -47,7 +47,33 @@ export interface CompiledReview {
   resources?: CompiledResourceEntry[]
   audits?: AuditEntry[]
   activity?: ActivityEvent[]
+  governance?: CompiledGovernance
   sections: Record<string, unknown>
+}
+
+export type GovernanceVoteExecution = 'onchain' | 'offchain'
+
+export interface CompiledGovernanceDuration {
+  kind: 'fieldRef' | 'fixed' | 'none'
+  // fieldRef-resolved:
+  seconds?: number
+  resolved?: boolean
+  error?: string
+  contractAddress?: string
+  contractName?: string
+  fieldName?: string
+  // fixed:
+  value?: string
+}
+
+export interface CompiledGovernance {
+  framework: string
+  voteExecution: GovernanceVoteExecution
+  votingUnit: string
+  proposalRequirements: string
+  votingProcess: string
+  proposalPeriod: CompiledGovernanceDuration
+  executionDelay: CompiledGovernanceDuration
 }
 
 export type CompiledResourceType =

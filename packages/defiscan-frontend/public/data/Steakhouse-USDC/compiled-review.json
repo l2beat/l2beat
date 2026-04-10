@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-09T08:33:33.779Z",
+  "compiledAt": "2026-04-09T15:01:59.608Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -1427,6 +1427,21 @@
       ]
     }
   ],
+  "governance": {
+    "framework": "Aragon OSx",
+    "voteExecution": "onchain",
+    "votingUnit": "Vault shares",
+    "proposalRequirements": "Via DAO plugin",
+    "votingProcess": "An Aragon OSx DAO (v1.3.0) is the vault guardian and can veto the timelocked actions.",
+    "proposalPeriod": {
+      "kind": "fixed",
+      "value": "Unknown"
+    },
+    "executionDelay": {
+      "kind": "fixed",
+      "value": "Unknown"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

@@ -33,6 +33,7 @@ import type {
   ApiDependenciesResponse,
   AuditEntry,
   ResourceEntry,
+  GovernanceConfig,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -662,6 +663,30 @@ export async function updateResources(
   const res = await fetch(`/api/projects/${project}/resources`, {
     method: 'PUT',
     body: JSON.stringify(resources),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
+export async function getGovernance(
+  project: string,
+): Promise<GovernanceConfig | null> {
+  const res = await fetch(`/api/projects/${project}/governance`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function updateGovernance(
+  project: string,
+  governance: GovernanceConfig | null,
+): Promise<void> {
+  const res = await fetch(`/api/projects/${project}/governance`, {
+    method: 'PUT',
+    body: JSON.stringify(governance),
     headers: { 'Content-Type': 'application/json' },
   })
   if (!res.ok) {

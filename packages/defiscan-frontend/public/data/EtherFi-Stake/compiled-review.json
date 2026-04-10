@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-09T08:36:52.037Z",
+  "compiledAt": "2026-04-09T14:33:07.624Z",
   "project": "EtherFi-Stake",
   "metadata": {
     "protocolName": "EtherFi Stake",
@@ -14205,6 +14205,20 @@
       ]
     }
   ],
+  "governance": {
+    "framework": "Snapshot",
+    "voteExecution": "offchain",
+    "votingUnit": "ETHFI",
+    "proposalRequirements": "Permissioned",
+    "votingProcess": "Snapshot vote (4-day window, 1M ETHFI quorum). Foundation multisig executes the proposals arbitrarily",
+    "proposalPeriod": {
+      "kind": "fixed",
+      "value": "4 days"
+    },
+    "executionDelay": {
+      "kind": "none"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

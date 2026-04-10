@@ -1,0 +1,17 @@
+{
+  "framework": "Custom",
+  "voteExecution": "onchain",
+  "votingUnit": "LQTY",
+  "proposalRequirements": "0.01% voting power + 100 BOLD fee",
+  "votingProcess": "Proposals direct BOLD rewards to initiative addresses. Weekly epochs split into 6-day vote/veto + 1-day veto-only; initiatives need 2% of votes.",
+  "proposalPeriod": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
+      "fieldName": "EPOCH_DURATION"
+    }
+  },
+  "executionDelay": {
+    "kind": "none"
+  }
+}

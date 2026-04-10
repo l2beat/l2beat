@@ -1,0 +1,22 @@
+{
+  "framework": "Compound Governor",
+  "voteExecution": "onchain",
+  "votingUnit": "COMP",
+  "proposalRequirements": "25k COMP",
+  "votingProcess": "Proposals execute arbitrary calls via Timelock. 400k COMP quorum; For votes must exceed Against and meet quorum to pass.",
+  "proposalPeriod": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
+      "fieldName": "votingPeriod",
+      "unit": "blocks"
+    }
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+      "fieldName": "delay"
+    }
+  }
+}

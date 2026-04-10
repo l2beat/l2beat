@@ -108,6 +108,8 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Audits (`audits` array in `resources.json` — `AuditEntry[]` with `url`, `author`, `date`, `scope?`, `bounty?`; `bounty` = max bug bounty USD amount; separate from `ResourceEntry[]`)
 - Resource Gathering Agent (`/gather-resources` Claude Code skill — web search + verify for official links, licenses, socials, security audits, and bug bounty programs; `--audits-only` flag skips resource gathering and only discovers/saves audits using existing resources as starting points)
 - Review Generation Agent (`/generate-review` Claude Code skill)
+- Governance (`governance.json` — separate per-project file storing `GovernanceConfig`: framework, vote execution, voting unit, proposal requirements, voting process, proposal period + execution delay as `fieldRef`/`fixed`/`none` durations. `fieldRef` carries an optional `unit` (`seconds`|`blocks`|`minutes`|`hours`|`days`, default `seconds`; `blocks` = 12s Ethereum block time) so the compiler can convert raw on-chain values — required for Compound/OZ Governor `votingPeriod` which is in blocks. Auto-saves via its own `/api/projects/:project/governance` CRUD endpoints. Survives `/generate-review` wipes. Legacy fallback reads from `review-config.json.governance` and migrates on next write. Compiled into `compiled-review.json.governance` via `governanceCompiler.ts` with field refs resolved against `discovered.json` and unit converted via local `unitToSecondsFactor`. Editor `ReviewGovernanceEditor.tsx` exposes the unit dropdown and mirrors the same factor in its live preview. Rendered in defiscan-frontend's `GovernanceSection`)
+- Governance Agent (`/generate-governance` Claude Code skill — research protocol governance, map periods/delays to on-chain numeric fields, **pick the right `unit` per fieldRef** (notably `"blocks"` for Compound/OZ Governor `votingPeriod`), write `governance.json`; never touches `review-config.json`)
 - Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint, `adminTotals`/`dependencyTotals` for cross-entity deduplicated capital)
 - Impact Cap (`impactCap` on mitigations — structured field reference or hardcoded USD, `ImpactCapUnit` scaling, `effectiveCapUsd` on reachable contracts, "$X Max Impact" badge display)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
@@ -169,6 +171,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - ❌ Duplicating scoring utilities — use `scoringShared.tsx` (`OwnerSection`, capital display)
 - ❌ Computing admin/dependency data in the compiler or frontend — change `ProjectAnalysis` instead
 - ❌ Joining contract-tags client-side for isExternal/isGovernance — these are in the `/admins` response
+- ❌ Adding a `governance` field to `ReviewConfig` — governance lives in its own `governance.json` with its own CRUD module (`governance.ts`), same pattern as `resources.json`. Keeps `/generate-review` from wiping authored governance.
 
 **Proxy/Implementation Pattern:**
 
@@ -189,6 +192,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **Resources**: Use `useQuery` with `getResources(project)` — auto-saves on mutation via `updateResources()`, no panel Save button needed. Stored in `resources.json` (separate from review-config)
 - **Audits**: Use `useQuery` with `getAudits(project)` — auto-saves on mutation via `updateAudits(project, audits[])`. Stored in same `resources.json` under `audits[]`, separate array from resources. `bounty` field (optional number) on an entry = max bug bounty USD (shown in defiscan-frontend Bug Bounty stat)
+- **Governance**: Use `useQuery` with `getGovernance(project)` — auto-saves on mutation via `updateGovernance(project, governance | null)`. Stored in `governance.json` (separate from review-config, survives `/generate-review` wipes). Pass `null` to delete the file. Never add governance to `ReviewConfig` — it's intentionally not on that type.
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
 ### Address Handling
@@ -272,6 +276,7 @@ packages/
 │   ├── FunctionBreakdown.tsx         # Functions section
 │   ├── ReviewDescriptionsEditor.tsx  # Review descriptions editor (Descriptions tab)
 │   ├── ReviewResourcesEditor.tsx    # Resources & audits editor (links, frontends, socials, security audits, bug bounties)
+│   ├── ReviewGovernanceEditor.tsx   # Governance editor (framework, voting, durations with unit picker)
 │   ├── ResourcesPanel.tsx          # Standalone Resources panel (wraps ReviewResourcesEditor)
 │   ├── FundsTagsButton.tsx         # Funds fetching controls (balances, positions, token, aggregate)
 │   ├── FundsSection.tsx            # Funds display in DeFiScan panel (tokens, aggregate, contracts)
@@ -285,6 +290,8 @@ packages/
 │   ├── projectAnalysis.ts            # Central computation class (getAdmins, getDependencies, getSummary, getMitigationsForOwner)
 │   ├── reviewConfig.ts              # Review config CRUD
 │   ├── resources.ts                  # Resources & audits CRUD (resources.json wrapper format { resources, audits }, legacy bare-array fallback)
+│   ├── governance.ts                 # Governance CRUD (governance.json, legacy fallback to review-config.json.governance + migration)
+│   ├── governanceCompiler.ts         # Resolves GovernanceConfig → CompiledGovernance (field refs → seconds via discovered.json)
 │   ├── reviewCompiler.ts            # Compiled review builder (thin layer over ProjectAnalysis)
 │   ├── generatePermissionsReport.ts
 │   ├── callGraph.ts                  # Slither-based external call detection
@@ -315,6 +322,7 @@ packages/
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
     ├── resources.json                # Per-project resources + audits ({ resources: ResourceEntry[], audits: AuditEntry[] })
+    ├── governance.json                # Per-project GovernanceConfig (separate from review-config so /generate-review doesn't wipe it)
     └── review-config.json            # Per-project review config
 ```
 

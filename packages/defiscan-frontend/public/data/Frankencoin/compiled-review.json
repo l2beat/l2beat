@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-09T08:33:58.214Z",
+  "compiledAt": "2026-04-09T14:40:04.562Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -4224,6 +4224,20 @@
       "scope": "V2 Smart Contracts"
     }
   ],
+  "governance": {
+    "framework": "Custom",
+    "voteExecution": "onchain",
+    "votingUnit": "FPS",
+    "proposalRequirements": "1000 ZCHF fee",
+    "votingProcess": "Anyone with > 2% of the voting power can veto a proposal. Proposals can change the savings rate, add new collaterals, or add minting modules.",
+    "proposalPeriod": {
+      "kind": "none"
+    },
+    "executionDelay": {
+      "kind": "fixed",
+      "value": "3-14 Days"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

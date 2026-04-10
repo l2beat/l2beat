@@ -1,0 +1,21 @@
+{
+  "framework": "Aragon",
+  "voteExecution": "onchain",
+  "votingUnit": "LDO",
+  "proposalRequirements": "LDO holders",
+  "votingProcess": "5d vote (3d main + 2d objection), then 3d+1d Dual Governance timelock. stETH holders can extend delay up to 45 days or trigger the rage quit stage.",
+  "proposalPeriod": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+      "fieldName": "voteTime"
+    }
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
+      "fieldName": "getAfterSubmitDelay"
+    }
+  }
+}

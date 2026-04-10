@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-09T08:32:51.786Z",
+  "compiledAt": "2026-04-09T15:04:39.868Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -33293,6 +33293,29 @@
       ]
     }
   ],
+  "governance": {
+    "framework": "Aragon",
+    "voteExecution": "onchain",
+    "votingUnit": "LDO",
+    "proposalRequirements": "LDO holders",
+    "votingProcess": "5d vote (3d main + 2d objection), then 3d+1d Dual Governance timelock. stETH holders can extend delay up to 45 days or trigger the rage quit stage.",
+    "proposalPeriod": {
+      "kind": "fieldRef",
+      "contractAddress": "eth:0x2e59A20f205bB85a89C53f1936454680651E618e",
+      "fieldName": "voteTime",
+      "contractName": "Voting",
+      "resolved": true,
+      "seconds": 432000
+    },
+    "executionDelay": {
+      "kind": "fieldRef",
+      "contractAddress": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
+      "fieldName": "getAfterSubmitDelay",
+      "contractName": "EmergencyProtectedTimelock",
+      "resolved": true,
+      "seconds": 259200
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",
