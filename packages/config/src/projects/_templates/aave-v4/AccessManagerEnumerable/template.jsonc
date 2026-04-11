@@ -3,87 +3,80 @@
   "displayName": "AccessManagerEnumerable",
   "category": "gov",
   "description": "OpenZeppelin V5 AccessManager with an enumerable extension. The single source of truth for which roles can call which functions on which Aave V4 contracts. Trusting any Aave V4 instance ultimately reduces to trusting the role members and target gating registered here.",
+  "canActIndependently": false,
   "fields": {
-    "getRole": {
-      "description": "Flat enumeration of every roleId registered in the manager.",
+    "accessControl": {
       "handler": {
-        "type": "array",
-        "method": "getRole",
-        "length": "{{ getRoleCount }}"
+        "type": "accessManagerV5"
       }
     },
-    "getRoleLabel": {
-      "description": "Human-readable label per role index. Pair with getRole.",
-      "handler": {
-        "type": "array",
-        "method": "getRoleLabel",
-        "length": "{{ getRoleLabelCount }}"
-      }
+    // Permissions block: extract each role's members and describe what they can do.
+    // Role 0 = ADMIN_ROLE (OZ V5 built-in)
+    "adminRoleMembers": {
+      "copy": "accessControl",
+      "edit": [
+        "pipe",
+        ["get", "roles", "ADMIN_ROLE", "members"],
+        ["map", ["get", "member"]]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "swap oracle price sources on any Spoke." },
+        { "type": "interact", "description": "activate/deactivate position managers that can act on behalf of all users." },
+        { "type": "interact", "description": "pause/freeze individual reserves or entire markets on any Spoke." },
+        { "type": "interact", "description": "list/delist assets on any Hub." },
+        { "type": "interact", "description": "swap interest rate strategies and update interest rate parameters." },
+        { "type": "interact", "description": "redirect protocol fee receivers on any Hub." },
+        { "type": "interact", "description": "change reinvestment controllers (who can sweep idle liquidity)." },
+        { "type": "interact", "description": "halt/deactivate any Spoke or asset on any Hub." },
+        { "type": "interact", "description": "grant/revoke any AccessManager role and change role-to-function mappings." },
+        { "type": "interact", "description": "swap the authority pointer on any gated contract, replacing the governance system." }
+      ]
     },
-    "roleMembers": {
-      "severity": "HIGH",
-      "type": "PERMISSION",
-      "description": "Per-role membership keyed by roleId, derived live from RoleGranted/RoleRevoked events. The address set here is the trust root of every privileged Aave V4 action gated through this manager.",
-      "handler": {
-        "type": "event",
-        "groupBy": "roleId",
-        "select": "account",
-        "add": { "event": "RoleGranted" },
-        "remove": { "event": "RoleRevoked" }
-      }
+    // Role 101 = HUB_CONFIGURATOR_ROLE
+    "hubConfiguratorRoleMembers": {
+      "copy": "accessControl",
+      "edit": [
+        "pipe",
+        ["get", "roles", "HUB_CONFIGURATOR_ROLE", "members"],
+        ["map", ["get", "member"]]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "list/delist assets on the Hub." },
+        { "type": "interact", "description": "swap interest rate strategies and update rate parameters." },
+        { "type": "interact", "description": "redirect fee receivers on the Hub." },
+        { "type": "interact", "description": "change reinvestment controllers." },
+        { "type": "interact", "description": "add/remove/halt/deactivate spokes on the Hub." },
+        { "type": "interact", "description": "reset or set spoke add/draw caps." }
+      ]
     },
-    "roleAdmins": {
-      "severity": "HIGH",
-      "type": "PERMISSION",
-      "description": "Per-role admin role, derived from RoleAdminChanged events. The admin role can grant and revoke the role.",
-      "handler": {
-        "type": "event",
-        "groupBy": "roleId",
-        "select": "admin",
-        "set": { "event": "RoleAdminChanged" }
-      }
+    // Role 200 = HUB_CONFIGURATOR_DOMAIN_ADMIN_ROLE
+    "hubConfiguratorDomainAdminRoleMembers": {
+      "copy": "accessControl",
+      "edit": [
+        "pipe",
+        ["get", "roles", "HUB_CONFIGURATOR_DOMAIN_ADMIN_ROLE", "members"],
+        ["map", ["get", "member"]]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "grant/revoke the HUB_CONFIGURATOR_ROLE." },
+        { "type": "interact", "description": "grant/revoke the HUB_FEE_MINTER_ROLE and HUB_DEFICIT_ELIMINATOR_ROLE." }
+      ]
     },
-    "roleGuardians": {
-      "severity": "HIGH",
-      "type": "PERMISSION",
-      "description": "Per-role guardian role, derived from RoleGuardianChanged events. The guardian role can cancel scheduled operations of the gated role.",
-      "handler": {
-        "type": "event",
-        "groupBy": "roleId",
-        "select": "guardian",
-        "set": { "event": "RoleGuardianChanged" }
-      }
-    },
-    "roleGrantDelays": {
-      "severity": "HIGH",
-      "description": "Per-role grant delay (seconds), derived from RoleGrantDelayChanged events.",
-      "handler": {
-        "type": "event",
-        "groupBy": "roleId",
-        "select": ["delay", "since"],
-        "set": { "event": "RoleGrantDelayChanged" }
-      }
-    },
-    "targetGatedFunctions": {
-      "severity": "HIGH",
-      "type": "PERMISSION",
-      "description": "Per-target list of (selector, roleId) tuples, i.e. which function selectors on which targets require which role.",
-      "handler": {
-        "type": "event",
-        "groupBy": "target",
-        "select": ["selector", "roleId"],
-        "add": { "event": "TargetFunctionRoleUpdated" }
-      }
-    },
-    "targetAdminDelays": {
-      "severity": "HIGH",
-      "description": "Per-target admin delay (seconds), derived from TargetAdminDelayUpdated events. Time the AccessManager must wait before applying a configuration change that affects the target.",
-      "handler": {
-        "type": "event",
-        "groupBy": "target",
-        "select": ["delay", "since"],
-        "set": { "event": "TargetAdminDelayUpdated" }
-      }
+    // Role 301 = SPOKE_CONFIGURATOR_ROLE
+    "spokeConfiguratorRoleMembers": {
+      "copy": "accessControl",
+      "edit": [
+        "pipe",
+        ["get", "roles", "SPOKE_CONFIGURATOR_ROLE", "members"],
+        ["map", ["get", "member"]]
+      ],
+      "permissions": [
+        { "type": "interact", "description": "swap oracle price sources on Spokes." },
+        { "type": "interact", "description": "activate/deactivate position managers on Spokes." },
+        { "type": "interact", "description": "change collateral risk weights and liquidation parameters." },
+        { "type": "interact", "description": "pause/freeze individual reserves or all reserves." },
+        { "type": "interact", "description": "list/delist reserves on Spokes." }
+      ]
     },
     "$gatedTargets": {
       "description": "Flat deduped list of every gated target address. Helper field so the BFS picks up these addresses (groupBy keys are not walked).",

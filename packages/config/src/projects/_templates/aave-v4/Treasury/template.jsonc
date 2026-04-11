@@ -1,5 +1,24 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Treasury",
-  "description": "Aave V4 Treasury (a TreasurySpoke instance). Receives the per-asset accrued fees defined in HubInstance.getAssetConfig.feeReceiver. Owned by an Aave-controlled GnosisSafe; upgradeable via the TreasuryProxyAdmin."
+  "category": "core",
+  "description": "Receives the per-asset accrued protocol fees (configured in Hub.getAssetConfig.feeReceiver). Uses Ownable2Step (NOT the AccessManager), meaning the owner (a GnosisSafe multisig) has unconstrained authority. The transfer(token, to, amount) and withdraw(hub, assetId, amount, to) functions can move any token the Treasury holds to any address with no timelock. Ownership transfer requires acceptance by the new owner (2-step).",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Controls all Treasury operations: can transfer any ERC20 out of the contract to any address, can withdraw from any Hub, and can transfer ownership. No timelock on any of these operations.",
+      "permissions": [
+        { "type": "interact", "description": "transfer any ERC20 token the Treasury holds to any address, with no timelock." },
+        { "type": "interact", "description": "withdraw assets from any Hub to any address, with no timelock." },
+        { "type": "interact", "description": "invest Treasury funds into Hubs." },
+        { "type": "interact", "description": "transfer ownership of the Treasury (2-step, must be accepted by new owner)." }
+      ]
+    },
+    "pendingOwner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Address that can accept ownership of the Treasury via acceptOwnership(). If non-zero, an ownership transfer is in progress."
+    }
+  }
 }

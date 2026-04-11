@@ -189,7 +189,7 @@ These are NOT the same. They have different return types and different uses:
 - `getDiscoveredContracts()` → `Record<chain, ProjectContract[]>`. The right input for `contracts.addresses`. Strips most of the discovery metadata.
 - `getContracts()` → `EntryParameters[]`. The raw discovery entries with `template`, `address`, all the values. The right thing to use for filtering / counting / introspection inside your .ts file.
 
-If you want to embed live numbers in the prose (e.g. "the discovery surfaces 3 Hubs and 10 Spokes"), use `getContracts()`, filter on `template`, drop the count into a template literal:
+If you want to embed live numbers in the prose (e.g. "there are 3 Hubs and 10 Spokes"), use `getContracts()`, filter on `template`, drop the count into a template literal:
 
 ```ts
 const NUM_SPOKES = discovery.getContracts()
@@ -202,15 +202,50 @@ The first thing a reader sees is `display.description` and the start of `scaling
 
 The two descriptions render adjacently, so they have to share a tone. Don't make `display.description` technical and `detailedDescription` user-friendly. Readers see two different writers and bounce.
 
-### 6. Per-contract descriptions belong in templates, not the .ts file
+**Never reference internal tooling in user-facing content.** Don't write "Static analysis confirmed..." or "the discovery surfaces..." in `display.description`, `detailedDescription`, `otherConsiderations`, or `contracts.risks`. State facts directly: "All admin functions carry the restricted modifier", not "Static analysis confirmed 9 admin functions carry the restricted modifier." The reader is a reviewer assessing the protocol, not an auditor reviewing your process.
 
-Do NOT write per-contract documentation in your `<name>.ts`. Put `description`, `category`, `severity`, and field-level annotations in `_templates/<project>/<Template>/template.jsonc`. The frontend renders these automatically in the Contracts panel.
+### 6. How template annotations map to the rendered project page
+
+The project page has two discovery-driven sections: **Smart contracts** and **Permissions**. Both are populated entirely from the template annotations you wrote in milestone 3 of the discovery guide. Understanding what feeds what saves you from debugging an empty section.
+
+**Smart contracts section** (fed by `discovery.getDiscoveredContracts()`):
+- Each contract's `description` from its template shows as the body text
+- `category` determines grouping
+- `severity` and `type` on fields control how changes are highlighted by the watcher
+- `names` overrides from `config.jsonc` replace raw hex addresses with meaningful names (MainSpoke, EthenaHub, etc.)
+
+**Permissions section** (fed by `discovery.getDiscoveredPermissions()`):
+- Populated by `permissions` arrays on address-typed fields in templates (see the discovery guide, milestone 3, "Defining permissions on address-typed fields")
+- Each `permissions` entry with `type` ("interact", "upgrade", "act", "guard") and `description` renders as a bullet point under "Can interact with <ContractName>". Use ONE entry per operation (not one blob listing everything). The rendered output should look like a scannable list of capabilities, not a paragraph
+- Without `permissions` arrays, this section only shows auto-detected proxy-admin relationships (who can upgrade what) and misses every protocol-specific trust relationship (who can swap oracles, who can drain the treasury, who can pause markets)
+
+**The Permissions section should only show end actors**: EOAs, multisigs, DAOs/governors. These are the actual trusted parties in the system. Intermediary contracts (access managers, configurators, timelocks, proxy admins, executors) should NOT appear as actors; they should only appear in the "via" chains that connect an end actor to the contracts it can act on. If you see an intermediary contract showing as an actor, its template is missing `canActIndependently: false`. See the discovery guide, milestone 3, for the full pattern.
+
+**If the Permissions section looks empty**, go back to the templates and add `permissions` arrays to role member extraction fields. Don't add permissions to `authority` or `accessManager` references on target contracts (that makes the intermediary show as an actor). Instead, extract the role holders on the access control contract itself and put permissions on those extracted fields.
+
+**If the Permissions section shows intermediary contracts as actors**, add `canActIndependently: false` to those contracts' templates. Common intermediaries that need this: AccessManager, ACLManager, ProxyAdmin (already set in the global template), UpgradeExecutor, HubConfigurator, SpokeConfigurator, timelocks.
+
+**Double-check the output** after every change to permissions. Build the config (`pnpm build`) and run:
+```bash
+node -e "
+const { ProjectDiscovery } = require('./build/discovery/ProjectDiscovery');
+const d = new ProjectDiscovery('<name>');
+const perms = d.getDiscoveredPermissions();
+for (const a of perms.ethereum?.actors || []) {
+  const types = [...new Set(a.accounts.map(acc => acc.type))];
+  console.log(a.name, '(' + types.join(',') + ')');
+}
+"
+```
+Every actor should be an EOA or a multisig. If a `Contract` type appears that isn't a multisig or DAO, investigate.
+
+Do NOT write per-contract documentation in your `<name>.ts`. Put `description`, `category`, `severity`, `permissions`, and field-level annotations in `_templates/<project>/<Template>/template.jsonc`.
 
 The .ts file is for protocol-level prose only. Keeping per-contract content in templates lets you avoid two sources of truth and keeps the .ts file short.
 
 ### 7. Names overrides are a UX requirement, not a polish step
 
-Without `names` overrides in `config.jsonc`, the rendered Contracts panel shows raw hex addresses everywhere because the same template is used by N instances of the same shape. With them, the panel reads as a trust map (MainSpoke, EthenaIsolatedOracle, AaveGovV3Executor, ...).
+Without `names` overrides in `config.jsonc`, the Smart contracts section shows raw hex addresses everywhere because the same template is used by N instances of the same shape. With them, the section reads as a trust map (MainSpoke, EthenaIsolatedOracle, AaveGovV3Executor, ...).
 
 Treat the names block as **required** for any project with multi-instance templates, not an optional milestone-3 nicety. The discovery guide already covers this in milestone 3, but it's worth re-emphasizing here because the difference between "named" and "raw hex" is the difference between a useful page and a useless one.
 

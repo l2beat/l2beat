@@ -1,0 +1,97 @@
+rules:
+  - id: restricted-oracle-source
+    message: "Privileged function can change oracle/price source. AccessManager role holders can manipulate prices."
+    pattern-either:
+      - pattern: |
+          function updateReservePriceSource(...) external restricted { ... }
+      - pattern: |
+          function setReserveSource(...) external { ... }
+    languages: [solidity]
+    severity: ERROR
+
+  - id: restricted-pause-freeze-halt
+    message: "Privileged function controls pause/freeze/halt. AccessManager role holders can halt user operations."
+    pattern-either:
+      - pattern: |
+          function $F(...) external restricted { ... }
+      - pattern: |
+          function $F(...) public restricted { ... }
+    metavariable-regex:
+      metavariable: $F
+      regex: "(pause|freeze|halt|deactivate|Pause|Freeze|Halt|Deactivate).*"
+    languages: [solidity]
+    severity: WARNING
+
+  - id: restricted-position-manager
+    message: "Privileged function controls position manager. Can authorize contracts to act on behalf of all users."
+    pattern: |
+      function updatePositionManager(...) external restricted { ... }
+    languages: [solidity]
+    severity: ERROR
+
+  - id: restricted-interest-rate
+    message: "Privileged function changes interest rate parameters or strategy."
+    pattern-either:
+      - pattern: |
+          function updateInterestRateStrategy(...) external restricted { ... }
+      - pattern: |
+          function updateInterestRateData(...) external restricted { ... }
+    languages: [solidity]
+    severity: WARNING
+
+  - id: restricted-fee-receiver
+    message: "Privileged function redirects fee receiver. Can redirect protocol revenue."
+    pattern-either:
+      - pattern: |
+          function updateFeeReceiver(...) external restricted { ... }
+      - pattern: |
+          function updateFeeConfig(...) external restricted { ... }
+    languages: [solidity]
+    severity: WARNING
+
+  - id: restricted-caps-reset
+    message: "Privileged function resets position caps. Removing limits can expose the protocol to oversized positions."
+    pattern-either:
+      - pattern: |
+          function resetAssetCaps(...) external restricted { ... }
+      - pattern: |
+          function resetSpokeCaps(...) external restricted { ... }
+      - pattern: |
+          function updateSpokeAddCap(...) external restricted { ... }
+      - pattern: |
+          function updateSpokeDrawCap(...) external restricted { ... }
+    languages: [solidity]
+    severity: WARNING
+
+  - id: owner-unrestricted-transfer
+    message: "Owner can transfer any ERC20 from the contract. Can drain accumulated funds."
+    pattern: |
+      function transfer(address $TOKEN, address $TO, uint256 $AMOUNT) external onlyOwner { ... }
+    languages: [solidity]
+    severity: ERROR
+
+  - id: owner-unrestricted-withdraw
+    message: "Owner can withdraw assets to any address. Can drain protocol reserves."
+    pattern-either:
+      - pattern: |
+          function withdraw(...) ... onlyOwner { ... }
+      - pattern: |
+          function withdraw(...) external onlyOwner { ... }
+    languages: [solidity]
+    severity: ERROR
+
+  - id: authority-changeable
+    message: "The access control authority can be changed. Swapping the authority replaces the entire governance system."
+    pattern: |
+      function setAuthority(address $NEW) ... {
+        ...
+      }
+    languages: [solidity]
+    severity: ERROR
+
+  - id: permissionless-liquidation
+    message: "Liquidation function has no access control beyond reentrancy guard. Anyone can liquidate undercollateralized positions."
+    pattern: |
+      function liquidationCall(...) external nonReentrant { ... }
+    languages: [solidity]
+    severity: INFO

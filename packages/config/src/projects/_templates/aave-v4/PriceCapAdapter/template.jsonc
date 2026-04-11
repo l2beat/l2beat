@@ -8,7 +8,7 @@
     "ACL_MANAGER": {
       "severity": "HIGH",
       "type": "PERMISSION",
-      "description": "Aave V4 ACLManager that gates re-snapshot / re-arm of the growth cap."
+      "description": "Aave V4 ACLManager that gates re-snapshot / re-arm of the growth cap. RISK_ADMIN and POOL_ADMIN role holders on this contract can change the discount rate which directly affects the price cap and liquidation thresholds."
     },
     "BASE_TO_USD_AGGREGATOR": {
       "severity": "HIGH",

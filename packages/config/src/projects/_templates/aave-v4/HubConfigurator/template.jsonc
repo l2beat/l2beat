@@ -1,5 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "HubConfigurator",
-  "description": "Aave V4 HubConfigurator. Privileged interface (gated through the AccessManager) for configuring per-asset parameters on the Hub: irStrategy, treasury, premium, spoke whitelist, asset listing/delisting."
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Privileged admin interface for the Hub, gated through the AccessManager's restricted modifier. Every function on this contract is a trust-critical operation: listing/delisting assets, swapping interest rate strategies, redirecting fee receivers, adding/removing spokes, and setting position caps. The HubConfigurator is the primary path through which governance changes Hub-side parameters.",
+  "fields": {
+    "authority": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "AccessManager that gates every function on this contract. Whoever controls the relevant roles on this manager controls all Hub-side parameters.",
+    }
+  }
 }

@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AaveAgent",
+  "canActIndependently": false,
+  "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
+  "ignoreRelatives": [
+    "POOL",
+    "AAVE_ORACLE",
+    "AGENT_HUB",
+    "RANGE_VALIDATION_MODULE",
+    "getMarkets"
+  ]
+}

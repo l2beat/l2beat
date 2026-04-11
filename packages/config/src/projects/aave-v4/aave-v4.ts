@@ -110,17 +110,30 @@ Aave V4 splits its protocol into two contract families that talk to each other a
 - A **Hub** holds the per-asset accounting that needs to be globally consistent across chains: the registry of supported assets, the per-asset interest rate strategy, the per-asset spoke registry, and the per-asset treasury split.
 - A **Spoke** sits on a specific chain, holds the actual asset reserves and the per-reserve config (collateral and borrow flags, freeze, pause, oracle source), and routes liquidity through its paired Hub.
 
-On Ethereum, the discovery surfaces ${NUM_HUBS} Hubs and ${NUM_SPOKES} Spokes. The Spokes are organized by market type: a main "Prime" spoke that lists most blue-chip assets, plus several risk-isolated spokes for stables, BTC, Ethena, and the major correlated-LST pairs (wstETH, weETH, rsETH).
+On Ethereum there are ${NUM_HUBS} Hubs and ${NUM_SPOKES} Spokes. The Spokes are organized by market type: a main "Prime" spoke that lists most blue-chip assets, plus several risk-isolated spokes for stables, BTC, Ethena, and the major correlated-LST pairs (wstETH, weETH, rsETH).
 
 ## Trust map
 
-Every privileged action on every Hub and every Spoke is gated through one OpenZeppelin V5 **AccessManager**. The AccessManager is the protocol's single trust root: whoever holds the role members registered there can reconfigure reserves, change interest rate parameters, swap interest rate strategies, swap oracles, freeze and pause markets, and (via the proxy admins) upgrade the implementations.
+Users trust five actors across two independent access control systems:
 
-The AccessManager itself is owned by an Aave Governance V3 **Executor**. Aave V4 inherits its top-level governance from Aave Governance V3: any change to the AccessManager configuration ultimately has to be scheduled and ratified by Aave Governance V3 proposals.
+**System 1: OpenZeppelin V5 AccessManager** gates every privileged action on every Hub and every Spoke through the \`restricted\` modifier. Two actors hold the top-level ADMIN_ROLE:
+- The **AaveGovV3Executor** (Aave Governance V3 proposal execution). Changes through this path require a full governance proposal and voting cycle.
+- The **AaveV4AdminMultisig** (5/8 multisig). This multisig can bypass the governance proposal process entirely: it holds ADMIN_ROLE directly and can reconfigure reserves, swap oracles, change position managers, freeze markets, and upgrade all proxy implementations with no delay.
+
+**System 2: legacy ACLManager** (bytes32 roles from Aave V3) gates PriceCapAdapter discount rates and risk parameter adjustments. Three additional actors operate through this system:
+- The **RiskCouncilMultisig** (2/2 multisig): can adjust supply/borrow caps, interest rates, and LTV ratios within governance-set bounds, without a governance proposal (via the RiskSteward contracts).
+- The **GhoRiskCouncilMultisig** (3/4 multisig): can adjust GHO borrow rates and bucket capacities within bounds, and pause/unpause GHO minting (via the GhoAaveSteward and GhoDirectMinter contracts).
+- The **EmergencyAdminMultisig** (5/9 multisig): can trigger emergency actions on the legacy Aave V3 system.
+
+The most critical privileged operations:
+
+- **\`updatePositionManager\`** (on every Spoke, gated by \`restricted\`): can activate or deactivate any contract as a position manager. An active position manager can supply, withdraw, borrow, and repay on behalf of ALL users who have approved it. Changing this to a malicious contract is the most direct path to draining user funds. Only the AaveV4AdminMultisig and AaveGovV3Executor (ADMIN_ROLE holders) can do this.
+- **\`updateReservePriceSource\`** (on every Spoke, gated by \`restricted\`): can swap the oracle price feed for any reserve. A malicious feed enables unfair liquidations or prevents legitimate ones. Same ADMIN_ROLE gating.
+- **\`transfer\` / \`withdraw\`** (on the Treasury, gated by \`onlyOwner\`): the **AaveV4AdminMultisig** (5/8 multisig) can move any ERC20 token the Treasury holds to any address with no timelock.
 
 ## Oracles
 
-Each Spoke has its own paired **AaveOracle** that exposes one price source per reserveId. The price sources are typically Aave-deployed **PriceCapAdapters** that wrap a Chainlink feed (or for liquid-staked / wrapped assets, a ratio provider) with a growth-rate cap. The cap can only be re-snapshotted or re-armed by addresses with the appropriate role on the **ACLManager** (a separate, legacy bytes32 access-control contract distinct from the V5 AccessManager).
+Each Spoke has its own paired **AaveOracle** that exposes one price source per reserveId. The price sources are typically Aave-deployed **PriceCapAdapters** that wrap a Chainlink feed (or for liquid-staked / wrapped assets, a ratio provider) with a growth-rate cap. The discount rate on these caps can be adjusted by the **RiskCouncilMultisig** (2/2) and **GhoRiskCouncilMultisig** (3/4) through the RiskSteward and GhoAaveSteward automation contracts, within governance-set bounds. These adjustments go through the legacy **ACLManager** (separate from the V5 AccessManager), not through the governance proposal process.
 `,
     otherConsiderations: [
       {
@@ -132,7 +145,14 @@ Each Spoke has its own paired **AaveOracle** that exposes one price source per r
       },
       {
         name: 'Multi-market topology',
-        description: `Aave V4 deploys ${NUM_SPOKES} distinct Spokes on Ethereum, each with its own asset list and risk parameters. The discovery names them by their primary asset cluster (MainSpoke, StablesSpoke, BTCSpoke, EthenaIsolatedSpoke, RsETHCorrelatedSpoke, ...). All Spokes share the same AccessManager and the same governance chain, so a single Aave Governance V3 vote can reconfigure any of them.`,
+        description: `Aave V4 deploys ${NUM_SPOKES} distinct Spokes on Ethereum, each with its own asset list and risk parameters (MainSpoke, StablesSpoke, BTCSpoke, EthenaIsolatedSpoke, RsETHCorrelatedSpoke, ...). All Spokes share the same AccessManager and the same governance chain, so a single Aave Governance V3 vote can reconfigure any of them. All Spoke implementations use the same access control pattern: restricted modifier on every admin function, onlyPositionManager on user functions, permissionless liquidation.`,
+        references: [],
+        risks: [],
+      },
+      {
+        name: 'Two independent access control systems',
+        description:
+          'Aave V4 uses two separate, independent access control systems with five total end actors. The OZ V5 AccessManager gates all Hub and Spoke admin functions (reserve listing, oracle source replacement, interest rate changes, pause/freeze, position manager assignment) and is controlled by the AaveV4AdminMultisig (5/8) and AaveGovV3Executor. The legacy ACLManager gates PriceCapAdapter discount rate changes and is operated by the RiskCouncilMultisig (2/2), GhoRiskCouncilMultisig (3/4), and EmergencyAdminMultisig (5/9) through automation steward contracts. The two systems have different role holders, different admin hierarchies, and different trust chains.',
         references: [],
         risks: [],
       },
@@ -147,15 +167,27 @@ Each Spoke has its own paired **AaveOracle** that exposes one price source per r
     risks: [
       {
         category: 'Funds can be lost if',
-        text: 'a malicious code upgrade is pushed through the AccessManager / Aave Governance V3 chain. Upgrade authority on every Hub, Spoke and Treasury proxy reduces to addresses controlled by Aave Governance V3.',
+        text: 'the position manager on a Spoke is changed to a malicious contract via updatePositionManager (gated by AccessManager roles). An active position manager can supply, withdraw, borrow, and repay on behalf of all users who approved it.',
       },
       {
         category: 'Funds can be lost if',
-        text: 'an oracle source returned by AaveOracle.getReserveSource is manipulated. Several reserves rely on Aave-deployed PriceCapAdapters that cap growth but ultimately wrap a Chainlink feed; the cap can be re-armed by ACLManager role members.',
+        text: 'an oracle price source is swapped to a malicious feed via updateReservePriceSource (gated by AccessManager roles). The oracle controls all collateral valuations; a wrong price enables unfair liquidations or prevents legitimate ones.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a malicious code upgrade is pushed through the proxy admin chain. Every Hub, Spoke, and Treasury is behind a TransparentUpgradeableProxy; the upgrade authority traces back to the Aave Governance V3 Executor.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the AaveV4AdminMultisig (5/8) calls transfer() or withdraw() on the Treasury to drain accumulated protocol fees. These functions have no timelock.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'the interest rate strategy is swapped to a malicious contract via updateInterestRateStrategy on the HubConfigurator, or the fee receiver is redirected via updateFeeReceiver. Both are gated by AccessManager roles.',
       },
       {
         category: 'Funds can be frozen if',
-        text: 'a privileged role on the AccessManager freezes or pauses a Spoke or its reserves.',
+        text: 'AccessManager role holders freeze or pause reserves via the SpokeConfigurator (freezeReserve, pauseReserve, freezeAllReserves, pauseAllReserves) or halt/deactivate Spokes or assets via the HubConfigurator.',
       },
     ],
   },

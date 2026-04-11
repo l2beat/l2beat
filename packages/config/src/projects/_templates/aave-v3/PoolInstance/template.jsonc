@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PoolInstance",
+  "description": "Aave V3 Pool. Reached from Aave V4 because automation agents interact with V3 markets. Internal V3 state belongs in its own discovery.",
+  "ignoreRelatives": [
+    "getReservesList",
+    "getBorrowLogic",
+    "getFlashLoanLogic",
+    "getLiquidationLogic",
+    "getPoolLogic",
+    "getSupplyLogic",
+    "ADDRESSES_PROVIDER",
+    "RESERVE_INTEREST_RATE_STRATEGY",
+    "$admin"
+  ]
+}

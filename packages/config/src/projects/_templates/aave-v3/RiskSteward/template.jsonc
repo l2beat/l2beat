@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RiskSteward",
+  "canActIndependently": false,
+  "description": "Aave V3 RiskSteward. Automation contract that holds RISK_ADMIN to adjust risk parameters within hardcoded bounds (3-day cooldown per parameter). The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
+  "ignoreRelatives": [
+    "POOL",
+    "POOL_DATA_PROVIDER",
+    "CONFIG_ENGINE",
+    "ADDRESSES_PROVIDER"
+  ],
+  "fields": {
+    "RISK_COUNCIL": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Can trigger risk parameter changes (supply/borrow caps, interest rates, LTV ratios) within hardcoded bounds without a governance proposal.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "adjust supply/borrow caps, interest rate parameters, LTV ratios, and price cap configs within hardcoded bounds, with a 3-day cooldown between updates per parameter."
+        }
+      ]
+    }
+  }
+}

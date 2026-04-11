@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc95962501cab0f4c35b48a4bf093e2a2e73306ac
+Generated with discovered.json: 0x8e24a33c465ef92ae4b0e498b3c787b88a37dd0c
 
-# Diff at Thu, 09 Apr 2026 10:28:06 GMT:
+# Diff at Sat, 11 Apr 2026 10:15:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1775724196
@@ -20,7 +20,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract RsETHACLManager (eth:0x013E2C7567b6231e865BB9273F8c7656103611c0)
-    +++ description: Aave V4 ACLManager (legacy bytes32 role variant). Tracks roles like RISK_ADMIN, EMERGENCY_ADMIN, BRIDGE, etc. for the price-cap adapters and other contracts that consult it via ACL_MANAGER. Distinct from the OZ V5 AccessManager that gates Hub/Spoke functions.
+    +++ description: Legacy Aave V3 access control contract (OpenZeppelin AccessControl with bytes32 roles). This is the SECOND trust path in Aave V4, independent of the OZ V5 AccessManager. RISK_ADMIN and POOL_ADMIN role holders can change PriceCapAdapter discount rates (setDiscountRatePerYear), which directly affects wrapped-asset price caps and liquidation thresholds. DEFAULT_ADMIN_ROLE can grant and revoke every other role. Users must trust both access control systems independently.
 ```
 
 ```diff
@@ -32,7 +32,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract EthenaHub (eth:0x06002e9c4412CB7814a791eA3666D905871E536A)
-    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance role members in the AccessManager (authority) can change every per-asset parameter and the spoke whitelist; the HubProxyAdmin can swap the implementation.
+    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
 ```diff
@@ -61,7 +61,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Safe (eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9)
+    contract AaveV4AdminMultisig (eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9)
     +++ description: None
 ```
 
@@ -73,6 +73,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract MainDiscountRateAgent (eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d)
+    +++ description: Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.
+```
+
+```diff
++   Status: CREATED
     contract ProxyAdmin (eth:0x1De446C91cF141c76f6eeF2331128ED7A4536846)
     +++ description: None
 ```
@@ -80,7 +86,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract HubConfigurator (eth:0x1F0753480bB03EaA00863224602267B7E0525C3d)
-    +++ description: Aave V4 HubConfigurator. Privileged interface (gated through the AccessManager) for configuring per-asset parameters on the Hub: irStrategy, treasury, premium, spoke whitelist, asset listing/delisting.
+    +++ description: Privileged admin interface for the Hub, gated through the AccessManager's restricted modifier. Every function on this contract is a trust-critical operation: listing/delisting assets, swapping interest rate strategies, redirecting fee receivers, adding/removing spokes, and setting position caps. The HubConfigurator is the primary path through which governance changes Hub-side parameters.
 ```
 
 ```diff
@@ -127,6 +133,18 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RsETHGhoDirectMinter (eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285)
+    +++ description: Aave V3 GhoDirectMinter. Contract that can mint/burn GHO tokens via an Aave V3 Pool facilitator. Holds RISK_ADMIN on the ACLManager. The guardian can pause minting. Owned by Aave Governance (Executor).
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolEmergencyGuardian (eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract PoolAddressesProvider (eth:0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e)
     +++ description: Aave V3 addresses provider (registry). Reached from Aave V4 because some V4 reserves are GHO-related contracts that route through the V3 GHO module. Cut walks into V3 internals; the V3 stack belongs to its own discovery.
 ```
@@ -140,7 +158,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract RsETHCorrelatedSpoke (eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -163,8 +181,26 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RiskCouncilMultisig (eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract CappedRsETHPriceAdapter (eth:0x47F52B2e43D0386cF161e001835b03Ad49889e3b)
     +++ description: Aave-deployed price oracle adapter that wraps a Chainlink feed (BASE_TO_USD_AGGREGATOR) with a growth-rate cap and an optional ratio provider (RATIO_PROVIDER) for liquid-staked or correlated assets. The cap bounds how fast the wrapped price can grow; the ACL_MANAGER is the only contract that can re-snapshot or re-arm the cap. The ratio provider is the underlying staked-asset contract; the trust analysis treats it as a foreign asset, not as something to walk.
+```
+
+```diff
++   Status: CREATED
+    contract MainEModeAgent (eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4)
+    +++ description: Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.
+```
+
+```diff
++   Status: CREATED
+    contract RsETHCapoAgent (eth:0x52E652182b22C41d0202bB8D834982F43B12Cd21)
+    +++ description: Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.
 ```
 
 ```diff
@@ -181,6 +217,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract MainGhoDirectMinter (eth:0x5513224daaEABCa31af5280727878d52097afA05)
+    +++ description: Aave V3 GhoDirectMinter. Contract that can mint/burn GHO tokens via an Aave V3 Pool facilitator. Holds RISK_ADMIN on the ACLManager. The guardian can pause minting. Owned by Aave Governance (Executor).
+```
+
+```diff
++   Status: CREATED
     contract MainHubProxyAdmin (eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf)
     +++ description: None
 ```
@@ -188,7 +230,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract EthenaIsolatedSpoke (eth:0x58131E79531caB1d52301228d1f7b842F26B9649)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -211,6 +253,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RsETHGhoAaveSteward (eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731)
+    +++ description: Aave V3 GhoAaveSteward. Automation contract that holds RISK_ADMIN to adjust GHO-specific parameters within hardcoded bounds: max 5% rate parameter change per update, 1-day cooldown. The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).
+```
+
+```diff
++   Status: CREATED
     contract EACAggregatorProxy (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419)
     +++ description: Chainlink price feed proxy. Wraps an underlying aggregator and forwards latestAnswer / latestRoundData; the admin chain belongs to Chainlink, not the consuming protocol.
 ```
@@ -218,7 +266,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract StablesPlusTBTCSpoke (eth:0x65407b940966954b23dfA3caA5C0702bB42984DC)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -229,8 +277,20 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract RsETHRiskSteward (eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3)
+    +++ description: Aave V3 RiskSteward. Automation contract that holds RISK_ADMIN to adjust risk parameters within hardcoded bounds (3-day cooldown per parameter). The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).
+```
+
+```diff
++   Status: CREATED
     contract BTCSpoke (eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
+```
+
+```diff
++   Status: CREATED
+    contract GhoRiskCouncilMultisig (eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60)
+    +++ description: None
 ```
 
 ```diff
@@ -248,7 +308,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract LiquidationLogic (eth:0x88dF535473C5adf1f57789734A05E555F7Deb8DB)
-    +++ description: Aave V4 LiquidationLogic. Delegatecall library invoked by every Spoke to execute liquidations. Replacing this changes the liquidation pricing/bonus logic for every market that points to it.
+    +++ description: Delegatecall library shared by every Spoke to execute liquidations. Immutable (set at Spoke construction time, cannot be changed at runtime). The liquidationCall entry point is permissionless by design: anyone can liquidate undercollateralized positions. The liquidator transfers their own tokens to repay part of the debt and receives the borrower's collateral at a discount determined by the Spoke's liquidation config.
 ```
 
 ```diff
@@ -266,19 +326,25 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract CorePrimeHub (eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931)
-    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance role members in the AccessManager (authority) can change every per-asset parameter and the spoke whitelist; the HubProxyAdmin can swap the implementation.
+    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
 ```diff
 +   Status: CREATED
     contract MainSpoke (eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
 +   Status: CREATED
     contract MainSpokeV2 (eth:0x973a023A77420ba610f06b3858aD991Df6d85A08)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
+```
+
+```diff
++   Status: CREATED
+    contract MainGhoAaveSteward (eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34)
+    +++ description: Aave V3 GhoAaveSteward. Automation contract that holds RISK_ADMIN to adjust GHO-specific parameters within hardcoded bounds: max 5% rate parameter change per update, 1-day cooldown. The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).
 ```
 
 ```diff
@@ -302,7 +368,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract SpokeConfigurator (eth:0x9BFFf48BFb5A7AE70c348d4d4cb97E8DEFa5389a)
-    +++ description: Aave V4 SpokeConfigurator. Privileged interface (gated through the AccessManager) for configuring per-reserve parameters on a Spoke: collateral flags, borrow flags, freeze, pause, and reserve listing/delisting.
+    +++ description: Privileged admin interface for Spokes, gated through the AccessManager's restricted modifier. Controls the most security-sensitive Spoke operations: oracle price source replacement (updateReservePriceSource), position manager activation (updatePositionManager), per-reserve pause/freeze flags, collateral risk weights, liquidation parameters, and reserve listing/delisting. All functions carry the restricted modifier.
 ```
 
 ```diff
@@ -344,13 +410,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Treasury (eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155)
-    +++ description: Aave V4 Treasury (a TreasurySpoke instance). Receives the per-asset accrued fees defined in HubInstance.getAssetConfig.feeReceiver. Owned by an Aave-controlled GnosisSafe; upgradeable via the TreasuryProxyAdmin.
+    +++ description: Receives the per-asset accrued protocol fees (configured in Hub.getAssetConfig.feeReceiver). Uses Ownable2Step (NOT the AccessManager), meaning the owner (a GnosisSafe multisig) has unconstrained authority. The transfer(token, to, amount) and withdraw(hub, assetId, amount, to) functions can move any token the Treasury holds to any address with no timelock. Ownership transfer requires acceptance by the new owner (2-step).
 ```
 
 ```diff
 +   Status: CREATED
     contract EthenaPlusStablesSpoke (eth:0xba1B3D55D249692b669A164024A838309B7508AF)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -362,7 +428,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract WeETHCorrelatedSpoke (eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -374,7 +440,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract MainACLManager (eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
-    +++ description: Aave V4 ACLManager (legacy bytes32 role variant). Tracks roles like RISK_ADMIN, EMERGENCY_ADMIN, BRIDGE, etc. for the price-cap adapters and other contracts that consult it via ACL_MANAGER. Distinct from the OZ V5 AccessManager that gates Hub/Spoke functions.
+    +++ description: Legacy Aave V3 access control contract (OpenZeppelin AccessControl with bytes32 roles). This is the SECOND trust path in Aave V4, independent of the OZ V5 AccessManager. RISK_ADMIN and POOL_ADMIN role holders can change PriceCapAdapter discount rates (setDiscountRatePerYear), which directly affects wrapped-asset price caps and liquidation thresholds. DEFAULT_ADMIN_ROLE can grant and revoke every other role. Users must trust both access control systems independently.
 ```
 
 ```diff
@@ -385,8 +451,14 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract CapoAgent (eth:0xCc18Be380838956aad41FD22466085eD66aaBB46)
+    +++ description: Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.
+```
+
+```diff
++   Status: CREATED
     contract MainHub (eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9)
-    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance role members in the AccessManager (authority) can change every per-asset parameter and the spoke whitelist; the HubProxyAdmin can swap the implementation.
+    +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
 ```diff
@@ -416,13 +488,19 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract StablesSpoke (eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
 +   Status: CREATED
     contract MainSpokeV2Oracle (eth:0xdA1266a7b8620819dAE3F8bd6B546Da36e505bB8)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
+```
+
+```diff
++   Status: CREATED
+    contract MainRatesAgent (eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6)
+    +++ description: Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.
 ```
 
 ```diff
@@ -440,7 +518,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract WstETHCorrelatedSpoke (eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd)
-    +++ description: Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.
+    +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
@@ -465,6 +543,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract EACAggregatorProxy (eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c)
     +++ description: Chainlink price feed proxy. Wraps an underlying aggregator and forwards latestAnswer / latestRoundData; the admin chain belongs to Chainlink, not the consuming protocol.
+```
+
+```diff
++   Status: CREATED
+    contract MainRiskSteward (eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E)
+    +++ description: Aave V3 RiskSteward. Automation contract that holds RISK_ADMIN to adjust risk parameters within hardcoded bounds (3-day cooldown per parameter). The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).
 ```
 
 ```diff

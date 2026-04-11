@@ -320,6 +320,145 @@ For each template, edit `template.jsonc` and add:
 
 These show up in the L2BEAT UI and feed the watcher's diff filtering.
 
+**Never reference internal tooling in descriptions.** Template descriptions and field descriptions are user-facing content. Don't write "Static analysis confirmed 9 admin functions carry the restricted modifier" or "the discovery surfaces 3 Hubs." State facts about the contracts directly: "All admin functions carry the restricted modifier" or "There are 3 Hubs." The reader doesn't need to know what tools you used to verify the facts.
+
+### Defining permissions on address-typed fields
+
+The `permissions` array on address-typed fields declares "address X can do Y" in a machine-readable way. Without it, the trust map captures what contracts exist and what state they hold, but not what each privileged address is empowered to do.
+
+#### End actors vs intermediary contracts
+
+The permissions system should surface **end actors**: EOAs, multisigs, DAOs/governors, and other entities that are the actual trusted parties. Intermediary contracts (access managers, configurators, timelocks, executors, proxy admins) should NOT appear as actors. They are the plumbing through which trust flows, not the source of trust.
+
+To achieve this:
+
+- **Intermediary contracts** (anything that delegates authority but isn't the final trust root) get `"canActIndependently": false` at the template level. This tells the system not to show them as actors. Examples: AccessManager, ProxyAdmin, HubConfigurator, SpokeConfigurator, timelocks.
+- **End actor fields** (the addresses that ARE the trusted parties) get `"permissions": [{ "type": "act" }]` or `"permissions": [{ "type": "interact", "description": "..." }]`. Examples: multisig owners, role members extracted via `copy`/`edit`, guardian addresses.
+
+The system then auto-resolves the "via" chain: if a multisig is the owner of a ProxyAdmin (`type: "act"`) which is the admin of a proxy, the rendered output shows "Multisig can upgrade Contract via ProxyAdmin".
+
+#### Role-based access control: extract the actual holders
+
+For contracts that manage roles (OpenZeppelin AccessControl, AccessManager, custom role registries), don't put `permissions` on the `authority` reference on the target contract (that would make the access control contract itself show as an actor). Instead:
+
+1. On the access control contract's template, add `"canActIndependently": false`.
+2. Extract specific role members into named fields using `copy`/`edit` (for event-handler-produced grouped data) or `pickRoleMembers` (for the built-in `accessControl` handler).
+3. Put `permissions` on those extracted fields with `"type": "interact"` and a description of what that role can do.
+
+Example for an OZ V5 AccessManager — use the `accessManagerV5` handler. It automatically decodes function selectors into human-readable signatures and labels roles by name instead of numeric ID:
+
+```jsonc
+{
+  "canActIndependently": false,
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessManagerV5" }
+    },
+    "adminRoleMembers": {
+      "copy": "accessControl",
+      "edit": ["pipe", ["get", "roles", "ADMIN_ROLE", "members"], ["map", ["get", "member"]]],
+      "permissions": [
+        { "type": "interact", "description": "swap oracle price sources on any Spoke." },
+        { "type": "interact", "description": "pause/freeze individual reserves or entire markets." },
+        { "type": "interact", "description": "grant/revoke any role and change role-to-function mappings." }
+      ]
+    }
+  }
+}
+```
+
+**Prefer `accessManagerV5` over manual event handlers for OZ V5 AccessManager contracts.** The `accessManagerV5` handler decodes the `TargetFunctionRoleUpdated` event's 4-byte selectors against the target contract's ABI, producing output like `addAsset(address,address,...)` instead of `0xa7aeae20`. It also labels roles by their `RoleLabel` event names. The decoded output is dramatically more useful for reviewers than raw hex. The `copy`/`edit` pattern then extracts per-role members from the handler's structured output.
+
+Example for an OZ legacy AccessControl (bytes32 roles):
+
+```jsonc
+{
+  "canActIndependently": false,
+  "ignoreRelatives": ["accessControl", "riskAdmins", "poolAdmins"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "roleNames": { "0x12ad...": "POOL_ADMIN", "0x8aa8...": "RISK_ADMIN" } }
+    },
+    "poolAdmins": {
+      "handler": { "type": "accessControl", "roleNames": { "0x12ad...": "POOL_ADMIN" }, "pickRoleMembers": "POOL_ADMIN" },
+      "permissions": [{ "type": "interact", "description": "change discount rates on price adapters, affecting liquidation thresholds." }]
+    }
+  }
+}
+```
+
+Note the `ignoreRelatives` on the role member fields: this prevents the BFS from walking every role holder (which can include flash borrower contracts, automation agents, etc. that would explode the discovery). The addresses still appear in the field values and in the permissions output, but don't get BFS-walked. If a role holder turns out to be an important actor you want fully discovered, add it to `initialAddresses` explicitly.
+
+#### Simple owner/guardian patterns
+
+For contracts with a single `owner` or `guardian` (not role-based), put `permissions` directly on the owner field. The owner IS the end actor.
+
+```jsonc
+{
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [{ "type": "interact", "description": "transfer any ERC20 out of the contract, withdraw from any Hub, and transfer ownership. No timelock." }]
+    }
+  }
+}
+```
+
+Each permission entry has:
+- **`type`**: `"interact"` (can call privileged functions), `"upgrade"` (can upgrade the implementation), `"act"` (can act through this contract as a proxy/intermediary), or `"guard"` (guardian role, can cancel/pause).
+- **`description`**: a plain-language sentence describing ONE specific operation. Not a comma-separated list of everything.
+
+**Use one permission entry per operation, not one entry for all operations.** The rendered output shows each entry as a separate bullet point under "Can interact with <ContractName>". Compare:
+
+Bad (one blob):
+```jsonc
+"permissions": [{
+  "type": "interact",
+  "description": "reconfigure the entire permission system, change all parameters, upgrade contracts, and do everything else."
+}]
+```
+
+Good (one per operation):
+```jsonc
+"permissions": [
+  { "type": "interact", "description": "swap oracle price sources on any Spoke." },
+  { "type": "interact", "description": "activate/deactivate position managers that can act on behalf of all users." },
+  { "type": "interact", "description": "pause/freeze individual reserves or entire markets." },
+  { "type": "interact", "description": "list/delist assets on any Hub." },
+  { "type": "interact", "description": "swap interest rate strategies." },
+  { "type": "interact", "description": "redirect protocol fee receivers." },
+  { "type": "interact", "description": "grant/revoke any AccessManager role." }
+]
+```
+
+The rendered output for the good version shows each operation as a separate bullet point, making it trivial for a reviewer to scan what each actor can do. The bad version forces the reviewer to parse a run-on sentence.
+
+#### Verifying the permissions output
+
+After setting up permissions, always verify the output before committing. Check two things:
+
+1. **Only end actors appear.** Run `getDiscoveredPermissions()` and confirm that every actor is an EOA, multisig, or DAO/governor. If you see an intermediary contract (an AccessManager, a ProxyAdmin, a Configurator, a Timelock) showing as an actor, it's missing `canActIndependently: false` on its template.
+
+2. **Every trust path is represented.** If the protocol has N separate access control systems (e.g., an OZ V5 AccessManager AND a legacy ACLManager), every system's role holders must show as actors. If a trust path is described in the project description but doesn't appear in the permissions output, you're missing a role extraction field.
+
+```bash
+# Quick check: list actors and their types
+node -e "
+const { ProjectDiscovery } = require('./build/discovery/ProjectDiscovery');
+const d = new ProjectDiscovery('<name>');
+const perms = d.getDiscoveredPermissions();
+for (const a of perms.ethereum?.actors || []) {
+  const types = [...new Set(a.accounts.map(acc => acc.type))];
+  console.log(a.name, '(' + types.join(',') + ')');
+}
+"
+```
+
+If any actor shows type `Contract` and it's an intermediary (not a multisig or DAO), investigate.
+
+**Don't skip this step.** A project with `severity: "HIGH"` and `type: "PERMISSION"` on every trust-critical field but no properly configured `permissions` and `canActIndependently` annotations captures the contract topology but not the trust relationships. The permissions system turns raw address references into "who do I trust" statements. Getting this wrong means the rendered project page either shows an empty permissions section (missing permissions arrays) or shows intermediary contracts as actors (missing `canActIndependently: false`), both of which mislead the reader.
+
 ### Fetching state behind events with the `event` handler
 
 Many contracts only expose state through events (e.g. OpenZeppelin's V5 `AccessManager` uses `RoleGranted` / `RoleRevoked` instead of an enumerable mapping). The `event` handler reads logs and reconstructs state from them.

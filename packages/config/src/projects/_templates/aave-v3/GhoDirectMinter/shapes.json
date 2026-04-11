@@ -1,0 +1,14 @@
+{
+  "GhoDirectMinter": {
+    "hash": "0x309ed20dc30bd2dc0cae6d7ba62ff775db277197fc7d1ca30a02c758d68adc6d",
+    "address": "eth:0xE4C958dE49303c9be571E00582CF9454586dE76F",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "GhoDirectMinterV2": {
+    "hash": "0x4fce31ea0dd99f8ee639ced4ee7c723708444623fade1365eca3056944b1e873",
+    "address": "eth:0xc718786A7E45353835De634897385b3371A749f0",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  }
+}

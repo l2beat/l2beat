@@ -209,7 +209,7 @@
 
     "accessControl": {
       "handler": {
-        "type": "kintoAccessControl"
+        "type": "accessManagerV5"
       }
     },
     "initialAdminRole": {

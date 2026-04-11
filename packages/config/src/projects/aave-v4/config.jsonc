@@ -2,7 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aave-v4",
   "import": ["../globalConfig.jsonc"],
-  "maxAddresses": 120,
+  "maxAddresses": 150,
   "initialAddresses": [
     "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485",
     "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9",
@@ -63,6 +63,21 @@
     "eth:0xf0eaC18E908B34770FDEe46d069c846bDa866759": "CappedRLUSDPriceAdapter",
     "eth:0xF29b1e3b68Fd59DD0a413811fD5d0AbaE653216d": "FixedUSDGPriceAdapter",
     "eth:0xC26D4a1c46d884cfF6dE9800B6aE7A8Cf48B4Ff8": "CappedUSDePriceAdapter",
-    "eth:0xD110cac5d8682A3b045D5524a9903E031d70FCCd": "GhoPriceOracle"
+    "eth:0xD110cac5d8682A3b045D5524a9903E031d70FCCd": "GhoPriceOracle",
+    "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9": "AaveV4AdminMultisig",
+    "eth:0x2CFe3ec4d5a6811f4B8067F0DE7e47DfA938Aa30": "ProtocolEmergencyGuardian",
+    "eth:0x47c71dFEB55Ebaa431Ae3fbF99Ea50e0D3d30fA8": "RiskCouncilMultisig",
+    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "GhoRiskCouncilMultisig",
+    "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34": "MainGhoAaveSteward",
+    "eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731": "RsETHGhoAaveSteward",
+    "eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E": "MainRiskSteward",
+    "eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3": "RsETHRiskSteward",
+    "eth:0x5513224daaEABCa31af5280727878d52097afA05": "MainGhoDirectMinter",
+    "eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285": "RsETHGhoDirectMinter",
+    "eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d": "MainDiscountRateAgent",
+    "eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4": "MainEModeAgent",
+    "eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6": "MainRatesAgent",
+    "eth:0xCc18Be380838956aad41FD22466085eD66aaBB46": "CapoAgent",
+    "eth:0x52E652182b22C41d0202bB8D834982F43B12Cd21": "RsETHCapoAgent"
   }
 }

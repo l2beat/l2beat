@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AaveProtocolDataProvider",
+  "description": "Aave V3 protocol data provider. Reached from Aave V4 via automation agents. Internal V3 state belongs in its own discovery.",
+  "ignoreRelatives": [
+    "getAllATokens",
+    "getAllReservesTokens",
+    "ADDRESSES_PROVIDER"
+  ]
+}

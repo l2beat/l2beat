@@ -6,11 +6,11 @@ import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type KintoAccessControlHandlerDefinition = v.infer<
-  typeof KintoAccessControlHandlerDefinition
+export type AccessManagerV5HandlerDefinition = v.infer<
+  typeof AccessManagerV5HandlerDefinition
 >
-export const KintoAccessControlHandlerDefinition = v.strictObject({
-  type: v.literal('kintoAccessControl'),
+export const AccessManagerV5HandlerDefinition = v.strictObject({
+  type: v.literal('accessManagerV5'),
   roleNames: v
     .record(
       v.string().check((v) => /^0x[a-f\d]*$/i.test(v)),
@@ -33,12 +33,12 @@ const abi = new utils.Interface([
   'event TargetAdminDelayUpdated(address indexed target, uint32 delay, uint48 since)',
 ])
 
-export class KintoAccessControlHandler implements Handler {
+export class AccessManagerV5Handler implements Handler {
   readonly dependencies: string[] = []
 
   constructor(
     readonly field: string,
-    readonly definition: KintoAccessControlHandlerDefinition,
+    readonly definition: AccessManagerV5HandlerDefinition,
     _: string[],
   ) {}
 

@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "HubInstance",
   "category": "core",
-  "description": "Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance role members in the AccessManager (authority) can change every per-asset parameter and the spoke whitelist; the HubProxyAdmin can swap the implementation.",
+  "description": "Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.",
   "ignoreRelatives": ["getAsset", "getAssetConfig"],
   "ignoreMethods": [
     "getAddedAssets",
@@ -25,7 +25,7 @@
     "authority": {
       "severity": "HIGH",
       "type": "PERMISSION",
-      "description": "AccessManager authority gating every privileged hub function."
+      "description": "AccessManager authority gating every privileged hub function.",
     },
     "getAsset": {
       "description": "Per-assetId struct: liquidity, fees, decimals, drawn shares, premium data, plus the underlying token, irStrategy, reinvestmentController, and feeReceiver.",

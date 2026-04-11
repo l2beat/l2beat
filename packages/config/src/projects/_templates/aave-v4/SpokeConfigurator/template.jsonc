@@ -1,5 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SpokeConfigurator",
-  "description": "Aave V4 SpokeConfigurator. Privileged interface (gated through the AccessManager) for configuring per-reserve parameters on a Spoke: collateral flags, borrow flags, freeze, pause, and reserve listing/delisting."
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Privileged admin interface for Spokes, gated through the AccessManager's restricted modifier. Controls the most security-sensitive Spoke operations: oracle price source replacement (updateReservePriceSource), position manager activation (updatePositionManager), per-reserve pause/freeze flags, collateral risk weights, liquidation parameters, and reserve listing/delisting. All functions carry the restricted modifier.",
+  "fields": {
+    "authority": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "AccessManager that gates every function on this contract. Whoever controls the relevant roles on this manager controls all Spoke-side parameters including oracle feeds and position managers.",
+    }
+  }
 }

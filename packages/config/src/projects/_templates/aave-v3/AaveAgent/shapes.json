@@ -1,0 +1,26 @@
+{
+  "AaveDiscountRateAgent": {
+    "hash": "0x26afbffc78844fc6eaa4d85eef26fd13b16b0f9f4b55a4ca7bf9ca7abd669279",
+    "address": "eth:0x1B3bD355c43d2247946b8e0889d4b4e701bf430d",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "AaveCapoAgent": {
+    "hash": "0xcd8cf801863f26bfbede86fa542d05a72727f4dff4fbc2aead13efe7b940bed4",
+    "address": "eth:0xCc18Be380838956aad41FD22466085eD66aaBB46",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "AaveRatesAgent": {
+    "hash": "0xdc84fa1c9cc48632a75ff8477c3399106f69d9538ab40b618c4d1affe9087abd",
+    "address": "eth:0xdA626E64f34f24e0236E0C9cD2F11ce4549a08c6",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  },
+  "AaveEModeAgent": {
+    "hash": "0x11ed0e0ad94a19b0d95d9361b03d61802d5afd4a292b4d6d1d16d2cb0d8ed15b",
+    "address": "eth:0x4F2858d4A4e4464b34Aa4a22C41B2Ef540a59BF4",
+    "chain": "ethereum",
+    "blockNumber": 24841035
+  }
+}

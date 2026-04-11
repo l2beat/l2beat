@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SpokeInstance",
   "category": "core",
-  "description": "Aave V4 Spoke. Holds the per-asset reserves on this chain and routes liquidity through the Hub. Trust assumption: if you trust this contract you trust the Aave V4 governance role members in the AccessManager (authority) to upgrade it via the SpokeProxyAdmin and to reconfigure its reserve list, and you trust the AaveOracle to price each reserve correctly.",
+  "description": "Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.",
   "ignoreRelatives": ["getReserve"],
   "ignoreMethods": [
     "getReserveSuppliedAssets",
@@ -20,7 +20,7 @@
     "authority": {
       "severity": "HIGH",
       "type": "PERMISSION",
-      "description": "AccessManager authority gating every privileged spoke function. Whoever holds the relevant role members on this manager can reconfigure reserves, change liquidation params, and trigger emergency actions."
+      "description": "AccessManager authority gating every privileged spoke function. Whoever holds the relevant role members on this manager can reconfigure reserves, change liquidation params, and trigger emergency actions.",
     },
     "getLiquidationLogic": {
       "severity": "HIGH",

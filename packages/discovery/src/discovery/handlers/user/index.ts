@@ -54,9 +54,9 @@ import {
 } from './EventTraceHandler'
 import { HardCodedDefinition, HardCodedHandler } from './HardcodedHandler'
 import {
-  KintoAccessControlHandler,
-  KintoAccessControlHandlerDefinition,
-} from './KintoAccessControlHandler'
+  AccessManagerV5Handler,
+  AccessManagerV5HandlerDefinition,
+} from './AccessManagerV5Handler'
 import {
   LayerZeroMultisigHandler,
   LayerZeroMultisigHandlerDefinition,
@@ -120,7 +120,7 @@ const DEFINITIONS = [
   StarkWareNamedStorageHandlerDefinition,
   AccessControlHandlerDefinition,
   ScrollAccessControlHandlerDefinition,
-  KintoAccessControlHandlerDefinition,
+  AccessManagerV5HandlerDefinition,
   LineaRolesModuleHandlerDefinition,
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
@@ -159,7 +159,7 @@ export const UserHandlers: Record<HandlerType, AvailableHandlers> = {
   event: EventHandlerDefinition,
   starkWareNamedStorage: StarkWareNamedStorageHandlerDefinition,
   accessControl: AccessControlHandlerDefinition,
-  kintoAccessControl: KintoAccessControlHandlerDefinition,
+  accessManagerV5: AccessManagerV5HandlerDefinition,
   scrollAccessControl: ScrollAccessControlHandlerDefinition,
   lineaRolesModule: LineaRolesModuleHandlerDefinition,
   constructorArgs: ConstructorArgsDefinition,
@@ -207,8 +207,8 @@ export function getUserHandler(
       return new StarkWareNamedStorageHandler(field, definition)
     case 'accessControl':
       return new AccessControlHandler(field, definition, abi)
-    case 'kintoAccessControl':
-      return new KintoAccessControlHandler(field, definition, abi)
+    case 'accessManagerV5':
+      return new AccessManagerV5Handler(field, definition, abi)
     case 'scrollAccessControl':
       return new ScrollAccessControlHandler(field, definition, abi)
     case 'lineaRolesModule':

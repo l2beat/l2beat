@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LiquidationLogic",
-  "description": "Aave V4 LiquidationLogic. Delegatecall library invoked by every Spoke to execute liquidations. Replacing this changes the liquidation pricing/bonus logic for every market that points to it."
+  "category": "core",
+  "description": "Delegatecall library shared by every Spoke to execute liquidations. Immutable (set at Spoke construction time, cannot be changed at runtime). The liquidationCall entry point is permissionless by design: anyone can liquidate undercollateralized positions. The liquidator transfers their own tokens to repay part of the debt and receives the borrower's collateral at a discount determined by the Spoke's liquidation config."
 }

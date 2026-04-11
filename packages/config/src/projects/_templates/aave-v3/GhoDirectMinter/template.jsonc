@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GhoDirectMinter",
+  "canActIndependently": false,
+  "description": "Aave V3 GhoDirectMinter. Contract that can mint/burn GHO tokens via an Aave V3 Pool facilitator. Holds RISK_ADMIN on the ACLManager. The guardian can pause minting. Owned by Aave Governance (Executor).",
+  "ignoreRelatives": [
+    "POOL",
+    "POOL_CONFIGURATOR",
+    "GHO",
+    "GHO_A_TOKEN",
+    "COLLECTOR",
+    "owner",
+    "$admin"
+  ],
+  "fields": {
+    "guardian": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Can pause GHO minting/burning on this facilitator.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause GHO minting and burning on this facilitator."
+        }
+      ]
+    }
+  }
+}

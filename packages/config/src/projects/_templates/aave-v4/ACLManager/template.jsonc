@@ -1,5 +1,65 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ACLManager",
-  "description": "Aave V4 ACLManager (legacy bytes32 role variant). Tracks roles like RISK_ADMIN, EMERGENCY_ADMIN, BRIDGE, etc. for the price-cap adapters and other contracts that consult it via ACL_MANAGER. Distinct from the OZ V5 AccessManager that gates Hub/Spoke functions."
+  "category": "gov",
+  "canActIndependently": false,
+  "description": "Legacy Aave V3 access control contract (OpenZeppelin AccessControl with bytes32 roles). This is the SECOND trust path in Aave V4, independent of the OZ V5 AccessManager. RISK_ADMIN and POOL_ADMIN role holders can change PriceCapAdapter discount rates (setDiscountRatePerYear), which directly affects wrapped-asset price caps and liquidation thresholds. DEFAULT_ADMIN_ROLE can grant and revoke every other role. Users must trust both access control systems independently.",
+  "ignoreRelatives": ["accessControl"],
+  "fields": {
+    "accessControl": {
+      "ignoreRelative": true,
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN",
+          "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN",
+          "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN",
+          "0x19c860a63258efbd0ecb7d55c626237bf5c2044c26c073390b74f0c13c857433": "ASSET_LISTING_ADMIN",
+          "0x08fb31c3e81624356c3314088aa971b73bcc82d22bc3e3b184b4593077ae3278": "BRIDGE",
+          "0x939b8dfb57ecef2aea54a93a15e86768b9d4089f1ba61c245e6ec980695f4ca4": "FLASH_BORROWER"
+        }
+      }
+    },
+    "poolAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x12ad05bde78c5ab75238ce885307f96ecd482bb402ef831f99e7018a0f169b7b": "POOL_ADMIN"
+        },
+        "pickRoleMembers": "POOL_ADMIN"
+      },
+      "permissions": [
+        { "type": "interact", "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds." },
+        { "type": "interact", "description": "configure pool parameters on the legacy Aave V3 system." }
+      ]
+    },
+    "riskAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x8aa855a911518ecfbe5bc3088c8f3dda7badf130faaf8ace33fdc33828e18167": "RISK_ADMIN"
+        },
+        "pickRoleMembers": "RISK_ADMIN"
+      },
+      "permissions": [
+        { "type": "interact", "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds." },
+        { "type": "interact", "description": "configure risk parameters on the legacy Aave V3 system." }
+      ]
+    },
+    "emergencyAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x5c91514091af31f62f596a314af7d5be40146b2f2355969392f055e12e0982fb": "EMERGENCY_ADMIN"
+        },
+        "pickRoleMembers": "EMERGENCY_ADMIN"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "trigger emergency actions on the legacy Aave V3 system."
+        }
+      ]
+    }
+  }
 }

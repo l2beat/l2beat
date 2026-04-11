@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GhoAaveSteward",
+  "canActIndependently": false,
+  "description": "Aave V3 GhoAaveSteward. Automation contract that holds RISK_ADMIN to adjust GHO-specific parameters within hardcoded bounds: max 5% rate parameter change per update, 1-day cooldown. The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
+  "ignoreRelatives": [
+    "POOL",
+    "GHO",
+    "GHO_TOKEN",
+    "FIXED_RATE_STRATEGY_FACTORY",
+    "GHO_AAVE_STEWARD",
+    "GHO_BUCKET_STEWARD",
+    "GHO_CCIP_STEWARD",
+    "POOL_DATA_PROVIDER"
+  ],
+  "fields": {
+    "RISK_COUNCIL": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "description": "Can trigger GHO parameter changes (borrow rate max 5% change per update, 1-day cooldown) without a governance proposal.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "adjust GHO borrow rates (max 5% change per update) and bucket capacities, with a 1-day cooldown between updates."
+        }
+      ]
+    }
+  }
+}

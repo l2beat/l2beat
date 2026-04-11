@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AgentHub",
+  "description": "Aave V3 AgentHub. Manages automation agents (AaveDiscountRateAgent, AaveCapoAgent, AaveRatesAgent, AaveEModeAgent). Owned by the Aave Governance V3 Executor.",
+  "ignoreRelatives": [
+    "getAgentAddress",
+    "getAgentAdmin",
+    "getAllowedMarkets",
+    "getRiskOracle",
+    "$admin"
+  ]
+}
