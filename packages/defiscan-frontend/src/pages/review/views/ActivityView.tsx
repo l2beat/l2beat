@@ -206,50 +206,69 @@ function UpgradeRow({
     <div className="rounded-xl border border-border bg-white overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-4 px-4 py-3 text-left hover:bg-bg-muted/50 transition-colors"
+        className="w-full px-4 py-3 text-left hover:bg-bg-muted/50 transition-colors"
       >
-        {/* Date column */}
-        <div className="flex-shrink-0 w-24 text-right">
-          <div className="text-sm font-medium text-text-primary">
-            {formatDate(event.timestamp)}
+        {/* Top line: date + badges + (desktop) name + impl count + chevron */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {/* Date column */}
+          <div className="flex-shrink-0 sm:w-24 sm:text-right">
+            <div className="text-xs sm:text-sm font-medium text-text-muted sm:text-text-primary">
+              {formatDate(event.timestamp)}
+            </div>
+            <div className="text-xs text-text-muted hidden sm:block">
+              {formatTime(event.timestamp)}
+            </div>
           </div>
-          <div className="text-xs text-text-muted">
-            {formatTime(event.timestamp)}
+
+          {/* Type badge */}
+          <div className="flex-shrink-0 flex items-center gap-1.5">
+            <Badge variant="purple">Upgrade</Badge>
+            {event.isDependency && (
+              <Badge variant="dependency">Dependency</Badge>
+            )}
           </div>
+
+          {/* Contract name — desktop only (inline) */}
+          <div className="hidden sm:block flex-1 min-w-0">
+            <span className="text-sm font-medium text-text-primary truncate block">
+              {event.contractName}
+              {event.entity && (
+                <span className="text-text-muted font-normal"> ({event.entity})</span>
+              )}
+            </span>
+          </div>
+
+          {/* Implementation count — desktop only */}
+          <div className="hidden sm:block flex-shrink-0 text-xs text-text-muted">
+            {event.implementations.length} impl
+            {event.implementations.length !== 1 ? 's' : ''}
+          </div>
+
+          {/* Expand chevron */}
+          <svg
+            className={`w-4 h-4 text-text-muted transition-transform flex-shrink-0 ml-auto sm:ml-0 ${isExpanded ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
 
-        {/* Type badge */}
-        <div className="flex-shrink-0">
-          <Badge variant="purple">Upgrade</Badge>
-        </div>
-
-        {/* Contract name */}
-        <div className="flex-1 min-w-0">
-          <span className="text-sm font-medium text-text-primary truncate block">
+        {/* Contract name — mobile only (second line) */}
+        <div className="sm:hidden mt-1.5">
+          <span className="text-sm font-medium text-text-primary">
             {event.contractName}
+            {event.entity && (
+              <span className="text-text-muted font-normal"> ({event.entity})</span>
+            )}
           </span>
         </div>
-
-        {/* Implementation count */}
-        <div className="flex-shrink-0 text-xs text-text-muted">
-          {event.implementations.length} impl
-          {event.implementations.length !== 1 ? 's' : ''}
-        </div>
-
-        {/* Expand chevron */}
-        <svg
-          className={`w-4 h-4 text-text-muted transition-transform flex-shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
       </button>
 
       {isExpanded && (

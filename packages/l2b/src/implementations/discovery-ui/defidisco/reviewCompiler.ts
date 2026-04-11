@@ -216,6 +216,8 @@ export interface UpgradeEvent {
   contractName: string
   txHash: string
   implementations: string[]
+  isDependency?: boolean
+  entity?: string | null
 }
 
 export type ActivityEvent = UpgradeEvent
@@ -739,10 +741,8 @@ export class ReviewCompiler {
       const pastUpgrades = entry.values?.['$pastUpgrades']
       if (!Array.isArray(pastUpgrades)) continue
 
-      // Skip external contracts
       const addrNorm = normalizeChainAddress(entry.address)
       const tag = tagsByAddress.get(addrNorm)
-      if (tag?.isExternal) continue
 
       const name = contractNameMap.get(addrNorm) ?? entry.name ?? entry.address
 
@@ -762,6 +762,8 @@ export class ReviewCompiler {
           implementations: Array.isArray(implementations)
             ? implementations.map(String)
             : [],
+          isDependency: tag?.isExternal ?? false,
+          entity: tag?.entity ?? null,
         })
       }
     }

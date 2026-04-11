@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-11T08:01:54.336Z",
+  "compiledAt": "2026-04-11T15:04:31.219Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -193,25 +193,6 @@
       "bounty": 15500000
     }
   ],
-  "governance": {
-    "framework": "Compound Governor Bravo",
-    "voteExecution": "onchain",
-    "votingUnit": "UNI token",
-    "proposalRequirements": "2.5M UNI",
-    "votingProcess": "Need at least ≥ 40M UNI for the quorum to be reached and the proposal to be considered valid (in addition to having more votes in favor than against)",
-    "proposalPeriod": {
-      "kind": "fixed",
-      "value": "~7 days"
-    },
-    "executionDelay": {
-      "kind": "fieldRef",
-      "contractAddress": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-      "fieldName": "delay",
-      "contractName": "Timelock",
-      "resolved": true,
-      "seconds": 172800
-    }
-  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

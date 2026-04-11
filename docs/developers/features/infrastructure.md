@@ -306,9 +306,9 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
 **Contract upgrade timeline**: Third top-level view in defiscan-frontend (alongside Report and Explorer), showing a chronological history of protocol changes.
 
 - **Data Source**: `$pastUpgrades` field on proxy contracts in `discovered.json` — each tuple contains `[isoTimestamp, txHash, implementationAddresses[]]`
-- **Compilation**: `reviewCompiler.ts` extracts upgrade events during `buildCompiledReview()`, iterating `discovery.entries` for contracts with `$pastUpgrades`. External contracts (tagged `isExternal`) are skipped. Events sorted newest-first into `CompiledReview.activity?: ActivityEvent[]`
-- **Types**: `UpgradeEvent { type, timestamp, contractAddress, contractName, txHash, implementations }` — defined in both `reviewCompiler.ts` (backend) and `types.ts` (frontend). `ActivityEvent` is a union type (currently just `UpgradeEvent`, will expand with monitored change events)
-- **View Component**: `packages/defiscan-frontend/src/pages/review/views/ActivityView.tsx` — timeline grouped by year-month, expandable rows showing contract address, Etherscan tx link, and new implementation addresses
+- **Compilation**: `reviewCompiler.ts` extracts upgrade events during `buildCompiledReview()`, iterating `discovery.entries` for contracts with `$pastUpgrades`. All contracts are included (dependency contracts are tagged with `isDependency: true` and their `entity` name). Events sorted newest-first into `CompiledReview.activity?: ActivityEvent[]`
+- **Types**: `UpgradeEvent { type, timestamp, contractAddress, contractName, txHash, implementations, isDependency?, entity? }` — defined in both `reviewCompiler.ts` (backend) and `types.ts` (frontend). `isDependency` is true for external/dependency contracts (from `isExternal` contract tag), `entity` carries the entity name (e.g. "Circle"). `ActivityEvent` is a union type (currently just `UpgradeEvent`, will expand with monitored change events)
+- **View Component**: `packages/defiscan-frontend/src/pages/review/views/ActivityView.tsx` — timeline grouped by year-month, expandable rows showing contract address, Etherscan tx link, and new implementation addresses. Dependency upgrades show an orange "Dependency" badge (via `Badge variant="dependency"`) and the entity name in parentheses after the contract name
 - **View Registration**: `ViewModeToggle.tsx` has three modes (`report | explorer | activity`), `ReviewPage.tsx` lazy-loads `ActivityView`
 - **Future**: Monitored field-level changes from the PostgreSQL UpdateNotifier table will be added as a second event type (`MonitoredChangeEvent`)
 
@@ -359,7 +359,7 @@ Before compiling, checks for required data files. If missing, skips silently (lo
 - Joins V2 scoring data (contracts, functions, admins, dependencies, capital analysis) with descriptions from `review-config.json`
 - Template variables (`{{variableName}}`) resolved at compile time via `dataKeys` map
 - See `reviewCompiler.ts` in `packages/l2b/` for TypeScript interfaces: `CompiledReview`, `CompiledAdmin`, `CompiledDependency`, `CompiledFundHolder`, `CompiledFunction`, `CompiledContract`, `ActivityEvent`, `UpgradeEvent`
-- **Activity data**: `activity?: ActivityEvent[]` — upgrade events extracted from `$pastUpgrades` in `discovered.json` during compilation
+- **Activity data**: `activity?: ActivityEvent[]` — upgrade events extracted from `$pastUpgrades` in `discovered.json` during compilation. Each event carries `isDependency` and `entity` fields from contract tags
 
 ### Adding/Removing Projects
 

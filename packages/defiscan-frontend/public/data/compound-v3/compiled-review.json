@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-11T08:01:15.763Z",
+  "compiledAt": "2026-04-11T15:04:16.285Z",
   "project": "compound-v3",
   "metadata": {
     "protocolName": "Compound V3",
@@ -4035,29 +4035,6 @@
       ]
     }
   ],
-  "governance": {
-    "framework": "Compound Governor",
-    "voteExecution": "onchain",
-    "votingUnit": "COMP",
-    "proposalRequirements": "25k COMP",
-    "votingProcess": "Proposals execute arbitrary calls via Timelock. 400k COMP quorum; For votes must exceed Against and meet quorum to pass.",
-    "proposalPeriod": {
-      "kind": "fieldRef",
-      "contractAddress": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
-      "fieldName": "votingPeriod",
-      "contractName": "CompoundGovernor",
-      "resolved": true,
-      "seconds": 236520
-    },
-    "executionDelay": {
-      "kind": "fieldRef",
-      "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
-      "fieldName": "delay",
-      "contractName": "Timelock",
-      "resolved": true,
-      "seconds": 172800
-    }
-  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

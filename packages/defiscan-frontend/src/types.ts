@@ -249,6 +249,8 @@ export interface UpgradeEvent {
   contractName: string
   txHash: string
   implementations: string[]
+  isDependency?: boolean
+  entity?: string | null
 }
 
 export type ActivityEvent = UpgradeEvent

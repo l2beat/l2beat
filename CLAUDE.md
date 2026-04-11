@@ -122,7 +122,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - DeFiScan Frontend (static React app, Vercel deployment, shareable report view, TVS metric, mitigation badges in report cards)
   - Gallery Page (`/gallery` — card grid of all protocols with radar chart, filters, pagination, status badge)
   - Report Page redesign (outer frame sections for admins/deps/TVS/activity/governance, ShowMore opens modal with explorer tab content, empty states, hero with Active badge)
-- Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend)
+- Activity Feed (contract upgrade timeline from `$pastUpgrades`, third top-level view in defiscan-frontend; includes dependency contracts with orange "Dependency" badge + entity name via `isDependency`/`entity` fields on `UpgradeEvent`)
 - Continuous Monitoring Service (GitHub Actions cron, discovery + diff + funds + compile)
 - Discovery Agent (`/run-discovery` Claude Code skill — iterative contract discovery, external/governance/funds tagging, handler configuration, array overflow error fixing)
 - Watch Field Pruning Agent (`/prune-watch-fields` Claude Code skill — classifies discovered fields as safe-to-ignore vs security-critical, updates `ignoreInWatchMode` in config.jsonc, also available as optional step in `/run-discovery`)

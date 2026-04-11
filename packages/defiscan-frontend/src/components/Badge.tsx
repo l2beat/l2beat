@@ -3,7 +3,7 @@ import { adminTypeBgClass } from '../utils/colors'
 
 interface BadgeProps {
   children: React.ReactNode
-  variant?: 'default' | 'admin-type' | 'governance' | 'purple'
+  variant?: 'default' | 'admin-type' | 'governance' | 'purple' | 'dependency'
   adminType?: string
   className?: string
 }
@@ -23,7 +23,9 @@ export function Badge({
         ? 'bg-status-green/10 text-status-green'
         : variant === 'purple'
           ? 'bg-purple-100 text-purple-700'
-          : 'bg-gray-100 text-gray-600'
+          : variant === 'dependency'
+            ? 'bg-orange-100 text-orange-700'
+            : 'bg-gray-100 text-gray-600'
 
   return <span className={clsx(base, variantClass, className)}>{children}</span>
 }
