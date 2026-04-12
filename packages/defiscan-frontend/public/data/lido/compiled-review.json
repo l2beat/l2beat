@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-12T08:17:18.846Z",
+  "compiledAt": "2026-04-12T13:11:46.176Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -18,7 +18,8 @@
     "dependencyCount": 1,
     "totalCapitalAtRisk": 20372252605.50802,
     "totalTokenValueAtRisk": 20884803823.42716,
-    "totalTokenValue": 20884803823.42716
+    "totalTokenValue": 20884803823.42716,
+    "linesOfCode": 37060
   },
   "admins": [
     {
@@ -32930,9 +32931,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x905A211eD6830Cfc95643f0bE2ff64E7f3bf9b94"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -32942,9 +32941,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0xe0B234f99E413E27D9Bc31aBba9A49A3e570Da97"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -32954,9 +32951,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x6f09d2426c7405C5546413e6059F884D2D03f449"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -32966,9 +32961,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0xE9906E543274cebcd335d2C560094089e9547e8d"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -32978,9 +32971,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -32990,9 +32981,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33002,9 +32991,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33014,9 +33001,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x1eB6d4da13ca9566c17F526aE0715325d7a07665"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33026,9 +33011,7 @@
       "txHash": "0xfff774d519ec1afd4358d4858672578437e815dc1652245a2ffb7bde1bfff2ad",
       "implementations": [
         "eth:0x226f9265CBC37231882b7409658C18bB7738173A"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33038,9 +33021,7 @@
       "txHash": "0xaa82b3430ee68cccb797d319594d9d67cfc9aaca8e70e0079ca4e4df75d9f072",
       "implementations": [
         "eth:0xDa22fA1CEa40d05Fe4CD536967afdD839586D546"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33050,9 +33031,7 @@
       "txHash": "0xce2dc07d9ed8201b98d438819ba4c3ef2b1d236e017c949d6af9dbc8a509d9d0",
       "implementations": [
         "eth:0x3E5021424c9e13FC853e523Cd68ebBec848956a0"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33062,9 +33041,7 @@
       "txHash": "0xee0e9d3615ca2adf655423758cbee63d18002bd818c01363a9e1c470315c3730",
       "implementations": [
         "eth:0x8ff828860A67658C39d89809457a97D81AAd418b"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33074,9 +33051,7 @@
       "txHash": "0x34c17146c21269afdad518c3d057bcfe8e9fe674743598ac04943111c88c47fb",
       "implementations": [
         "eth:0x65D4D92Cd0EabAa05cD5A46269C24b71C21cfdc4"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33086,9 +33061,7 @@
       "txHash": "0xd40178939134c7e6eb244f0bb678e63459aa2c952a948ecd7789ffdbf37d7c43",
       "implementations": [
         "eth:0x25fdC3BE9977CD4da679dF72A64C8B6Bd5216A78"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33098,9 +33071,7 @@
       "txHash": "0x0078b3e0cecb3b50c78a22e0b1a985e6cde3bf431e9cb3b2ba4e50260122d542",
       "implementations": [
         "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33110,9 +33081,7 @@
       "txHash": "0x0078b3e0cecb3b50c78a22e0b1a985e6cde3bf431e9cb3b2ba4e50260122d542",
       "implementations": [
         "eth:0x3ABc4764f0237923d52056CFba7E9AEBf87113D3"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33122,9 +33091,7 @@
       "txHash": "0x0078b3e0cecb3b50c78a22e0b1a985e6cde3bf431e9cb3b2ba4e50260122d542",
       "implementations": [
         "eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33134,9 +33101,7 @@
       "txHash": "0xc7bc3019721ecf320698f2897b329d1930f64661100a5fa159181146088e03c2",
       "implementations": [
         "eth:0x39aFE23cE59e8Ef196b81F0DCb165E9aD38b9463"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33146,9 +33111,7 @@
       "txHash": "0xee7781fe84a8d09249d1d882c3e1f4dbb82f8dd743a15d4b27df35c4959e17b3",
       "implementations": [
         "eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33158,9 +33121,7 @@
       "txHash": "0x3dfff1bb9a5dd98d252ab44ae3ef8a002a4ab84ef6f35f5b7aeeae60f91ec32e",
       "implementations": [
         "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33170,9 +33131,7 @@
       "txHash": "0x94ce92b9b05768e1908e5eab2097dc80da33715a37de5ffb149fc6142fa2a93b",
       "implementations": [
         "eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33182,9 +33141,7 @@
       "txHash": "0xf5330dbcf09885ed145c4435e356b5d8a10054751bb8009d3a2605d476ac173f",
       "implementations": [
         "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33194,9 +33151,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33206,9 +33161,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0xF3c5E0A67f32CF1dc07a8817590efa102079a1aF"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33218,9 +33171,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33230,9 +33181,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33242,9 +33191,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0x1D920cc5bACf7eE506a271a5259f2417CaDeCE1d"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33254,9 +33201,7 @@
       "txHash": "0x592d68a259af899fb435da0ac08c2fd500cb423f37f1d8ce8e3120cb84186b21",
       "implementations": [
         "eth:0xD8784e748f59Ba711fB5643191Ec3fAdD50Fb6df"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33266,9 +33211,7 @@
       "txHash": "0x3b419bde1ce29392444d861c02f3846ce0ea65b0caa50dbd5136f1ff46cddf4f",
       "implementations": [
         "eth:0x1D920cc5bACf7eE506a271a5259f2417CaDeCE1d"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33278,9 +33221,7 @@
       "txHash": "0xef3eea1523d2161c2f36ba61e327e3520231614c055b8a88c7f5928d18e423ea",
       "implementations": [
         "eth:0x6F6541C2203196fEeDd14CD2C09550dA1CbEDa31"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33290,9 +33231,7 @@
       "txHash": "0x3def88f27741216b131de2861cf89af2ca2ac4242b384ee33dca8cc70c51c8dd",
       "implementations": [
         "eth:0x6F6541C2203196fEeDd14CD2C09550dA1CbEDa31"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33302,9 +33241,7 @@
       "txHash": "0xb8620f04a8db6bb52cfd0978c6677a5f16011e03d4622e5d660ea6ba34c2b122",
       "implementations": [
         "eth:0x6F6541C2203196fEeDd14CD2C09550dA1CbEDa31"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33314,9 +33251,7 @@
       "txHash": "0x98c2170be034f750f5006cb69ea0aeeaf0858b11f6324ee53d582fa4dd49bc1a",
       "implementations": [
         "eth:0x6F6541C2203196fEeDd14CD2C09550dA1CbEDa31"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33326,9 +33261,7 @@
       "txHash": "0x6105c893856a2528347ff1b2efd0838097b8c562670116f60bb76eb54cb80ce6",
       "implementations": [
         "eth:0xd4f6BEF8DdBc7306684b8D7c836269e0E6f8B6D0"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33338,9 +33271,7 @@
       "txHash": "0x20aab9de778f007c034b35a11206f7e17ec8b28f9c8beabc26a8551ecab8f9f6",
       "implementations": [
         "eth:0xc601E93D9F48D5E374820957CdA57516e2523d6C"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33350,9 +33281,7 @@
       "txHash": "0x299b401a2312fa081a6cb5012797a0f5a23b07394a96d505ebf7f4ab6420ff63",
       "implementations": [
         "eth:0x2faE8f0A4D8D11B6EC35d04d3Ea6a0d195EB6D3F"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -33362,9 +33291,7 @@
       "txHash": "0x3a2910624533935cc8c21837b1705bcb159a760796930097016186be705cc455",
       "implementations": [
         "eth:0xEC3B38EDc7878Ad3f18cFddcd341aa94Fc57d20B"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     }
   ],
   "governance": {

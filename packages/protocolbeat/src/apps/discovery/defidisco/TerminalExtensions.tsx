@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { compileReview } from '../../../api/api'
+import { compileReview, countLinesOfCode } from '../../../api/api'
 import { useTerminalStore } from '../panel-terminal/store'
 import { AIPermissionsScanDialog } from './AIPermissionsScanDialog'
 
@@ -13,6 +13,7 @@ export function TerminalExtensions({ project }: Props) {
   const { fetchFunds, generateCallGraph, command } = useTerminalStore()
   const [showScanDialog, setShowScanDialog] = useState(false)
   const [compiling, setCompiling] = useState(false)
+  const [countingLoc, setCountingLoc] = useState(false)
 
   return (
     <>
@@ -67,6 +68,32 @@ export function TerminalExtensions({ project }: Props) {
         className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
       >
         {compiling ? 'Compiling...' : 'Compile Review'}
+      </button>
+
+      <button
+        onClick={() => {
+          setCountingLoc(true)
+          countLinesOfCode(project)
+            .then((result) => {
+              alert(
+                `Lines of Code: ${result.count.toLocaleString()}\n\n` +
+                  `Contracts: ${result.details.uniqueContracts} unique ` +
+                  `(${result.details.externalSkipped} external skipped, ` +
+                  `${result.details.duplicateSkipped} duplicates skipped)\n` +
+                  `Declarations: ${result.details.uniqueDeclarations} unique ` +
+                  `(of ${result.details.declarationsFound} total)\n` +
+                  `Files processed: ${result.details.filesProcessed}`,
+              )
+            })
+            .catch((err) => {
+              alert(`Failed to count lines: ${err.message}`)
+            })
+            .finally(() => setCountingLoc(false))
+        }}
+        disabled={command.inFlight || countingLoc}
+        className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+      >
+        {countingLoc ? 'Counting...' : 'Count Lines of Code'}
       </button>
 
       {showScanDialog && (

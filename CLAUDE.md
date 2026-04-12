@@ -104,8 +104,9 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Scoring UI (inventory sections, shared `scoringShared.tsx` module, capital display, enhanced graph capital analysis)
 - Upgrade Function Capital (`isUpgrade` flag in data pipeline, UPGRADE badges in UI — upgrade functions seed BFS with all contract functions for full capital exposure)
 - Review Builder (`review-config.json`, entity descriptions, templates)
-- Resources (`resources.json` — wrapper object `{ resources, audits }` per project, auto-saves independently)
+- Resources (`resources.json` — wrapper object `{ resources, audits, linesOfCode? }` per project, auto-saves independently)
 - Audits (`audits` array in `resources.json` — `AuditEntry[]` with `url`, `author`, `date`, `scope?`, `bounty?`; `bounty` = max bug bounty USD amount; separate from `ResourceEntry[]`)
+- Lines of Code (`countLinesOfCode.ts` — declaration-level dedup of flattened Solidity files: parses `library`/`contract`/`abstract contract`/`interface` blocks with brace-depth tracking, dedupes by name across all `.flat/` files to handle inlined libraries. Skips external contracts, dedupes by `sourceHashes`. Auto-runs inside `reviewCompiler.compile()` and persisted to `resources.json.linesOfCode`; also exposed via "Count Lines of Code" button and `POST /api/projects/:project/count-lines-of-code`. Displayed in defiscan-frontend `CodeQualitySection` as "X,XXX LoC")
 - Resource Gathering Agent (`/gather-resources` Claude Code skill — web search + verify for official links, licenses, socials, security audits, and bug bounty programs; `--audits-only` flag skips resource gathering and only discovers/saves audits using existing resources as starting points)
 - Review Generation Agent (`/generate-review` Claude Code skill)
 - Governance (`governance.json` — separate per-project file storing `GovernanceConfig`: framework, vote execution, voting unit, proposal requirements, voting process, proposal period + execution delay as `fieldRef`/`fixed`/`none` durations. `fieldRef` carries an optional `unit` (`seconds`|`blocks`|`minutes`|`hours`|`days`, default `seconds`; `blocks` = 12s Ethereum block time) so the compiler can convert raw on-chain values — required for Compound/OZ Governor `votingPeriod` which is in blocks. Auto-saves via its own `/api/projects/:project/governance` CRUD endpoints. Survives `/generate-review` wipes. Legacy fallback reads from `review-config.json.governance` and migrates on next write. Compiled into `compiled-review.json.governance` via `governanceCompiler.ts` with field refs resolved against `discovered.json` and unit converted via local `unitToSecondsFactor`. Editor `ReviewGovernanceEditor.tsx` exposes the unit dropdown and mirrors the same factor in its live preview. Rendered in defiscan-frontend's `GovernanceSection`)
@@ -192,6 +193,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - **Permission Overrides**: Use `useQuery` with `getPermissionOverrides(project)` directly (no hook exists)
 - **Resources**: Use `useQuery` with `getResources(project)` — auto-saves on mutation via `updateResources()`, no panel Save button needed. Stored in `resources.json` (separate from review-config)
 - **Audits**: Use `useQuery` with `getAudits(project)` — auto-saves on mutation via `updateAudits(project, audits[])`. Stored in same `resources.json` under `audits[]`, separate array from resources. `bounty` field (optional number) on an entry = max bug bounty USD (shown in defiscan-frontend Bug Bounty stat)
+- **Lines of Code**: Stored as `linesOfCode?: number` in the same `resources.json` wrapper. No React Query hook — the value is produced automatically by `reviewCompiler.compile()` (inline step 4) and surfaced via `compiled-review.json.totals.linesOfCode`. Manual recount: `countLinesOfCode(project)` API function + "Count Lines of Code" button in TerminalExtensions. Backend helpers: `getLinesOfCode`/`updateLinesOfCode` in `resources.ts`. Never count raw flat file lines — always go through `countLinesOfCode.ts` so inlined-library duplication is removed.
 - **Governance**: Use `useQuery` with `getGovernance(project)` — auto-saves on mutation via `updateGovernance(project, governance | null)`. Stored in `governance.json` (separate from review-config, survives `/generate-review` wipes). Pass `null` to delete the file. Never add governance to `ReviewConfig` — it's intentionally not on that type.
 - **EOA Counting**: EOAs stored separately in `entry.eoas[]` array, not mixed with contracts
 
@@ -289,7 +291,8 @@ packages/
 │   ├── contractTags.ts
 │   ├── projectAnalysis.ts            # Central computation class (getAdmins, getDependencies, getSummary, getMitigationsForOwner)
 │   ├── reviewConfig.ts              # Review config CRUD
-│   ├── resources.ts                  # Resources & audits CRUD (resources.json wrapper format { resources, audits }, legacy bare-array fallback)
+│   ├── resources.ts                  # Resources, audits & linesOfCode CRUD (resources.json wrapper format { resources, audits, linesOfCode? }, legacy bare-array fallback)
+│   ├── countLinesOfCode.ts           
 │   ├── governance.ts                 # Governance CRUD (governance.json, legacy fallback to review-config.json.governance + migration)
 │   ├── governanceCompiler.ts         # Resolves GovernanceConfig → CompiledGovernance (field refs → seconds via discovered.json)
 │   ├── reviewCompiler.ts            # Compiled review builder (thin layer over ProjectAnalysis)
@@ -321,7 +324,7 @@ packages/
 │           └── frankencoinMintinghub.ts  # Frankencoin API (no key needed)
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
-    ├── resources.json                # Per-project resources + audits ({ resources: ResourceEntry[], audits: AuditEntry[] })
+    ├── resources.json                # Per-project resources, audits & LoC count ({ resources: ResourceEntry[], audits: AuditEntry[], linesOfCode?: number })
     ├── governance.json                # Per-project GovernanceConfig (separate from review-config so /generate-review doesn't wipe it)
     └── review-config.json            # Per-project review config
 ```

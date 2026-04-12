@@ -59,18 +59,21 @@ For implementation details, see [Infrastructure: External Contract Attributes](f
 The Review Builder stores review configuration across **three sibling files** per project, which split intentionally so the AI-regenerated content does not clobber hand-authored data:
 
 - **`review-config.json`** — protocol metadata (name, slug, chain, project type), entity descriptions for admins/dependencies/fund-holding contracts, and section content (e.g., Code & Audits). **Wiped and regenerated** by `/generate-review`.
-- **`resources.json`** — project resources (links to frontends, docs, GitHub, X, source code) and security audits. Shape: `{ resources: ResourceEntry[], audits: AuditEntry[] }` (with legacy bare-array fallback). Survives `/generate-review`.
+- **`resources.json`** — project resources (links to frontends, docs, GitHub, X, source code), security audits, and the deduplicated lines-of-code count. Shape: `{ resources: ResourceEntry[], audits: AuditEntry[], linesOfCode?: number }` (with legacy bare-array fallback). Survives `/generate-review`.
 - **`governance.json`** — governance config (framework, vote execution, voting unit, proposal requirements, voting process, proposal period, execution delay). Survives `/generate-review`.
 
 **Backend**: Three CRUD modules under `packages/l2b/src/implementations/discovery-ui/defidisco/`: `reviewConfig.ts`, `resources.ts`, `governance.ts`. Each module reads its own file with a **legacy-fallback read** from the old location inside `review-config.json`, and on write performs a one-time migration by stripping the legacy key. Endpoints registered in `main.ts`:
 
 - `GET`/`PUT /api/projects/:project/review-config` (+ `PUT .../review-config/entity` for partial entity updates)
 - `GET`/`PUT /api/projects/:project/resources`
+- `POST /api/projects/:project/count-lines-of-code` (manual LoC recount — also auto-triggered inside `compile-review`)
 - `GET`/`PUT /api/projects/:project/governance`
 
 **Frontend**: `ReviewBuilderPanel.tsx` hosts the tabbed editor UI. `ReviewDescriptionsEditor.tsx` edits entity descriptions (part of review-config). `ReviewResourcesEditor.tsx` and `ReviewGovernanceEditor.tsx` are **self-contained auto-saving editors** — they own their own `useQuery`/`useMutation` against the dedicated endpoints and do not go through `ReviewBuilderPanel`'s save button. `ReviewSectionEditor.tsx` handles section tabs with data source definitions in `reviewDataSources.ts`.
 
 **Resources**: `ResourceEntry = { url, type, label?, frontendSubtype? }` with types `frontend` (subtype: official/third-party/self-hosted), `docs`, `source-code`, `github`, `x`, `other`. `AuditEntry = { url, author, date, scope?, bounty? }` where `bounty` is the max bug bounty USD amount. Compiled as-is into `compiled-review.json`.
+
+**Lines of Code**: `linesOfCode?: number` is produced by `countLinesOfCode.ts` using declaration-level dedup — parses each `.flat/` Solidity file, extracts top-level `library`/`contract`/`abstract contract`/`interface` blocks with brace-depth tracking, and counts each unique declaration name once across all files. This removes the 2-3x overcount caused by flatteners inlining shared libraries (e.g., OpenZeppelin's `Address`) into every contract. `reviewCompiler.compile()` always runs the counter inline (step 4) so every `Compile Review` produces a fresh value and writes it into both `resources.json.linesOfCode` and `compiled-review.json.totals.linesOfCode`. Failure is non-fatal — a warning is logged and the field is left `undefined`, which the frontend renders as `—`. A manual recount is also exposed via `POST /api/projects/:project/count-lines-of-code` and the "Count Lines of Code" button in `TerminalExtensions.tsx`.
 
 **Governance**: `GovernanceConfig = { framework, voteExecution, votingUnit, proposalRequirements, votingProcess, proposalPeriod, executionDelay }`. Both period/delay are `GovernanceDuration` = `{ kind: 'fieldRef', ref: { contractAddress, fieldName, unit? } } | { kind: 'fixed', value: string } | { kind: 'none' }`. `unit` is one of `seconds | blocks | minutes | hours | days` (default `seconds`; `blocks` assumes 12s Ethereum block time). Field refs are resolved by `resolveGovernance()` in `governanceCompiler.ts` — it reads the raw numeric value from `discovered.json`, multiplies by `unitToSecondsFactor(unit)`, and writes the converted seconds to `compiled-review.json`. The unit is purely an input to conversion; it never appears on `CompiledGovernanceDuration` and downstream consumers only see the resolved seconds.
 
@@ -288,6 +291,19 @@ review-config.json funds addresses + descriptions
   → CompiledFundHolder[]
 ```
 Pass-through of raw funds data enriched with human descriptions. Aggregate-tagged contracts are included automatically even without a `review-config.json` funds entry.
+
+#### Lines of Code Pipeline
+```
+countLinesOfCode(paths, configReader, project)
+  discovered.json entries (type: Contract, not external)
+  dedup by sourceHashes
+  → per contract: .flat/ file paths via getCodePaths()
+  → extractDeclarations() (brace-depth parser, library/contract/interface)
+  dedup declarations by name across all files
+  → sum of unique declaration line counts
+  → compiled-review.json.totals.linesOfCode + resources.json.linesOfCode
+```
+Auto-run inside `compile()` (step 4). Non-fatal on error. See [Resources & Review Builder: Lines of Code](features/scoring-and-review.md#lines-of-code) for the full algorithm and rationale (declaration-level dedup is needed because flattened `.sol` files inline shared libraries like OpenZeppelin's `Address` into every contract, causing 2-3x naive-line-count overcounts).
 
 ### Stage 3: Index Aggregation
 

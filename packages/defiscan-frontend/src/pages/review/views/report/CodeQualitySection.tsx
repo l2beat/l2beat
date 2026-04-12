@@ -60,7 +60,9 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-[14px] text-text-muted">Lines of Code</span>
-              <span className="font-mono font-bold text-[14px] text-text-muted">—</span>
+              <span className={`font-mono font-bold text-[14px] ${totals.linesOfCode ? 'text-text-primary' : 'text-text-muted'}`}>
+                {totals.linesOfCode ? `${totals.linesOfCode.toLocaleString()} LoC` : '—'}
+              </span>
             </div>
             <div className="border-t border-border pt-4 flex flex-col gap-2">
               <div className="flex items-center justify-between">

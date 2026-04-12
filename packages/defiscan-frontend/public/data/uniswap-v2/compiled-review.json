@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-12T08:13:16.051Z",
+  "compiledAt": "2026-04-12T13:11:49.246Z",
   "project": "uniswap-v2",
   "metadata": {
     "protocolName": "Uniswap V2",
@@ -18,7 +18,8 @@
     "dependencyCount": 0,
     "totalCapitalAtRisk": 776770809.9873904,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 0
+    "totalTokenValue": 0,
+    "linesOfCode": 1979
   },
   "admins": [
     {

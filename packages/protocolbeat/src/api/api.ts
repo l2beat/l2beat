@@ -465,6 +465,18 @@ export async function compileReview(
   return await res.json()
 }
 
+export async function countLinesOfCode(
+  project: string,
+): Promise<{ count: number; details: Record<string, number> }> {
+  const res = await fetch(`/api/projects/${project}/count-lines-of-code`, {
+    method: 'POST',
+  })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return await res.json()
+}
+
 export async function compileAllReviews(): Promise<{
   results: Array<{
     project: string

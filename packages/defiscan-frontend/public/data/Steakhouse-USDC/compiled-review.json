@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-12T08:17:46.743Z",
+  "compiledAt": "2026-04-12T13:11:49.111Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -18,7 +18,8 @@
     "dependencyCount": 9,
     "totalCapitalAtRisk": 193394295.25578895,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 0
+    "totalTokenValue": 0,
+    "linesOfCode": 8842
   },
   "admins": [
     {
@@ -1394,9 +1395,7 @@
       "txHash": "0x9a1fe757efabdbf9014f2fbc43fcfbf8c5e37f3612c4732824994975fd7e727b",
       "implementations": [
         "eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -1406,9 +1405,7 @@
       "txHash": "0x111c19e080f269a8629dbdb70e92e1954970638ebe66e1c1997e653ba35143dc",
       "implementations": [
         "eth:0x0DfcC04AA52b758C7A3B7Ee0217e3d8B8f3d9329"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -1418,9 +1415,7 @@
       "txHash": "0x33445fbe4682a734b51f5edd18ae1aac47186bca55236a4e9f252b0097a7a1d7",
       "implementations": [
         "eth:0x814e110ae1abDde38548718152E00e4Aff6d1bcb"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     },
     {
       "type": "upgrade",
@@ -1430,9 +1425,7 @@
       "txHash": "0xb49d5ea6f6247cc4d7f3a1a98346a882872e28f3d769149a60ac84214c411df7",
       "implementations": [
         "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
-      ],
-      "isDependency": false,
-      "entity": null
+      ]
     }
   ],
   "governance": {

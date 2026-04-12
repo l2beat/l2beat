@@ -18,6 +18,7 @@ import type {
 import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
+import { countLinesOfCode } from './countLinesOfCode'
 import { getAudits, getResources } from './resources'
 import { getGovernance } from './governance'
 import {
@@ -66,6 +67,7 @@ export interface CompiledReview {
     totalCapitalAtRisk: number
     totalTokenValueAtRisk: number
     totalTokenValue: number
+    linesOfCode?: number
   }
 
   admins: CompiledAdmin[]
@@ -307,10 +309,19 @@ export class ReviewCompiler {
       // 3. Read funds data
       const fundsData = getFundsData(this.paths, project)
 
-      // 4. Read contract tags, resources, and audits
+      // 4. Read contract tags, resources, audits; compute linesOfCode fresh
       const contractTags = getContractTags(this.paths, project)
       const resources = getResources(this.paths, project)
       const audits = getAudits(this.paths, project)
+      let linesOfCode: number | undefined
+      try {
+        linesOfCode = countLinesOfCode(this.paths, configReader, project).count
+      } catch (error) {
+        this.log(
+          `Warning: failed to count lines of code: ${error instanceof Error ? error.message : String(error)}`,
+        )
+        linesOfCode = undefined
+      }
 
       // 5. Read functions data (for mitigations)
       const functionsData = getFunctions(this.paths, project)
@@ -376,6 +387,7 @@ export class ReviewCompiler {
         discovery,
         resources,
         audits,
+        linesOfCode,
       )
 
       // 11. Resolve template variables in all description fields
@@ -416,6 +428,7 @@ export class ReviewCompiler {
     discovery: DiscoveryOutput,
     resources: ResourceEntry[],
     audits: AuditEntry[],
+    linesOfCode: number | undefined,
   ): CompiledReview {
     const tagsByAddress = new Map<
       string,
@@ -803,6 +816,7 @@ export class ReviewCompiler {
           (sum, f) => sum + (f.tokenInfo?.tokenValue ?? 0),
           0,
         ),
+        linesOfCode,
       },
 
       admins,

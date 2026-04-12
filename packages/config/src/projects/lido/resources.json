@@ -327,5 +327,6 @@
       "url": "https://immunefi.com/bug-bounty/lido/",
       "bounty": 2000000
     }
-  ]
+  ],
+  "linesOfCode": 37060
 }

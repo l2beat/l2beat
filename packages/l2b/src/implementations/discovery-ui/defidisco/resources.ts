@@ -6,6 +6,7 @@ import type { AuditEntry, ResourceEntry, ReviewConfig } from './types'
 interface ResourcesFile {
   resources: ResourceEntry[]
   audits: AuditEntry[]
+  linesOfCode?: number
 }
 
 function readResourcesFile(resourcesPath: string): ResourcesFile {
@@ -20,6 +21,7 @@ function readResourcesFile(resourcesPath: string): ResourcesFile {
   return {
     resources: (parsed.resources ?? []) as ResourceEntry[],
     audits: (parsed.audits ?? []) as AuditEntry[],
+    linesOfCode: parsed.linesOfCode as number | undefined,
   }
 }
 
@@ -28,7 +30,14 @@ function writeResourcesFile(resourcesPath: string, file: ResourcesFile): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
-  fs.writeFileSync(resourcesPath, JSON.stringify(file, null, 2))
+  const out: Record<string, unknown> = {
+    resources: file.resources,
+    audits: file.audits,
+  }
+  if (file.linesOfCode !== undefined) {
+    out.linesOfCode = file.linesOfCode
+  }
+  fs.writeFileSync(resourcesPath, JSON.stringify(out, null, 2))
 }
 
 export function getResources(
@@ -93,17 +102,24 @@ export function updateResources(
 ): void {
   const resourcesPath = getResourcesPath(paths, project)
 
-  // Preserve existing audits when updating resources
+  // Preserve existing audits and linesOfCode when updating resources
   let existingAudits: AuditEntry[] = []
+  let existingLinesOfCode: number | undefined
   if (fs.existsSync(resourcesPath)) {
     try {
-      existingAudits = readResourcesFile(resourcesPath).audits
+      const existing = readResourcesFile(resourcesPath)
+      existingAudits = existing.audits
+      existingLinesOfCode = existing.linesOfCode
     } catch (_) {
       // ignore parse errors — start fresh
     }
   }
 
-  writeResourcesFile(resourcesPath, { resources, audits: existingAudits })
+  writeResourcesFile(resourcesPath, {
+    resources,
+    audits: existingAudits,
+    linesOfCode: existingLinesOfCode,
+  })
 
   // One-time migration: strip resources from review-config.json if present
   const reviewConfigPath = path.join(
@@ -132,11 +148,14 @@ export function updateAudits(
 ): void {
   const resourcesPath = getResourcesPath(paths, project)
 
-  // Preserve existing resources when updating audits
+  // Preserve existing resources and linesOfCode when updating audits
   let existingResources: ResourceEntry[] = []
+  let existingLinesOfCode: number | undefined
   if (fs.existsSync(resourcesPath)) {
     try {
-      existingResources = readResourcesFile(resourcesPath).resources
+      const existing = readResourcesFile(resourcesPath)
+      existingResources = existing.resources
+      existingLinesOfCode = existing.linesOfCode
     } catch (_) {
       // ignore parse errors — start fresh
     }
@@ -145,6 +164,50 @@ export function updateAudits(
   writeResourcesFile(resourcesPath, {
     resources: existingResources,
     audits,
+    linesOfCode: existingLinesOfCode,
+  })
+}
+
+export function getLinesOfCode(
+  paths: DiscoveryPaths,
+  project: string,
+): number | undefined {
+  const resourcesPath = getResourcesPath(paths, project)
+
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      return readResourcesFile(resourcesPath).linesOfCode
+    } catch (error) {
+      console.error('Error reading linesOfCode from resources file:', error)
+    }
+  }
+
+  return undefined
+}
+
+export function updateLinesOfCode(
+  paths: DiscoveryPaths,
+  project: string,
+  linesOfCode: number,
+): void {
+  const resourcesPath = getResourcesPath(paths, project)
+
+  let existingResources: ResourceEntry[] = []
+  let existingAudits: AuditEntry[] = []
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      const existing = readResourcesFile(resourcesPath)
+      existingResources = existing.resources
+      existingAudits = existing.audits
+    } catch (_) {
+      // ignore parse errors — start fresh
+    }
+  }
+
+  writeResourcesFile(resourcesPath, {
+    resources: existingResources,
+    audits: existingAudits,
+    linesOfCode,
   })
 }
 

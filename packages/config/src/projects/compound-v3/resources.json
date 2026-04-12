@@ -68,5 +68,6 @@
       "scope": "Bug Bounty Program",
       "bounty": 1000000
     }
-  ]
+  ],
+  "linesOfCode": 10053
 }

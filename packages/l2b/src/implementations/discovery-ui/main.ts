@@ -62,6 +62,7 @@ import {
 } from './defidisco/reviewConfig'
 import { getAudits, getResources, updateAudits, updateResources } from './defidisco/resources'
 import { getGovernance, updateGovernance } from './defidisco/governance'
+import { countLinesOfCode } from './defidisco/countLinesOfCode'
 import { ReviewCompiler } from './defidisco/reviewCompiler'
 import {
   attachTemplateRouter,
@@ -822,6 +823,28 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error compiling review:', error)
       res.status(500).json({ error: 'Failed to compile review' })
+    }
+  })
+
+  // Count Lines of Code endpoint
+  app.post('/api/projects/:project/count-lines-of-code', (req, res) => {
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const result = countLinesOfCode(paths, configReader, project)
+      res.json(result)
+    } catch (error) {
+      console.error('Error counting lines of code:', error)
+      res.status(500).json({ error: 'Failed to count lines of code' })
     }
   })
 

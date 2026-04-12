@@ -476,6 +476,10 @@ Once all analysis steps are complete (discovery, permissions, call graph, funds,
 
 In protocolbeat's Terminal panel, click **"Compile Review"**. This produces a `compiled-review.json` file in the project folder containing all review data in a single self-contained JSON.
 
+Compile Review automatically computes the **deduplicated lines-of-code count** for the protocol's contracts and writes it to both `resources.json` (as `linesOfCode`) and `compiled-review.json` (as `totals.linesOfCode`). The count parses each flattened `.sol` file and counts top-level Solidity declarations (`library`/`contract`/`abstract contract`/`interface`) once by name across all files — this removes the overcount from shared libraries (e.g., OpenZeppelin's `Address`) that flatteners inline into every contract. The resulting LoC value shows up in the "Source Code Verification" card of the defiscan-frontend report.
+
+If you want to recount LoC without running a full compile (e.g. after adjusting `contract-tags.json` external flags), use the **"Count Lines of Code"** button in the Terminal panel — it runs the same logic and shows the count + dedup stats in an alert.
+
 ### View in the DeFiScan Frontend
 
 To preview the compiled review in the standalone frontend:

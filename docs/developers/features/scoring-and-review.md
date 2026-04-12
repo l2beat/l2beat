@@ -230,14 +230,15 @@ Upgrade functions (`upgradeTo`, `upgradeToAndCall`, `proxy__upgradeTo`, `proxy__
 - `PUT /api/projects/:project/resources` — resources save (auto-save from UI)
 - `GET /api/projects/:project/audits` — audits array (`AuditEntry[]`)
 - `PUT /api/projects/:project/audits` — audits save (auto-save from UI)
+- `POST /api/projects/:project/count-lines-of-code` — recomputes LoC count and persists to `resources.json`; returns `{ count, details }` (see [Lines of Code](#lines-of-code) below)
 
 ### Resources
 
 Protocol links (frontends, docs, GitHub, X, source code, licenses, etc.) stored in `resources.json` per project, alongside the audits array.
 
 - **File**: `resources.json` per project in `packages/config/src/projects/{project}/`
-- **File format**: Wrapper object `{ resources: ResourceEntry[], audits: AuditEntry[] }`. Legacy bare `ResourceEntry[]` arrays are read transparently (audits default to `[]`) and migrated to wrapper format on first write.
-- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/resources.ts` — exports `getResources`, `updateResources`, `getAudits`, `updateAudits`
+- **File format**: Wrapper object `{ resources: ResourceEntry[], audits: AuditEntry[], linesOfCode?: number }`. Legacy bare `ResourceEntry[]` arrays are read transparently (audits default to `[]`, `linesOfCode` undefined) and migrated to wrapper format on first write.
+- **Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/resources.ts` — exports `getResources`, `updateResources`, `getAudits`, `updateAudits`, `getLinesOfCode`, `updateLinesOfCode`
 - **Resource types**: `frontend` (with subtype: official/third-party/self-hosted), `website`, `docs`, `source-code`, `github`, `x`, `license` (with `licenseScope`), `defiscan-v1`, `other`
 - **Compiler**: Resources passed through to `compiled-review.json` as `resources: CompiledResourceEntry[]`
 - **Auto-save**: Each add/edit/delete triggers an immediate save (not tied to review config Save button)
@@ -259,6 +260,40 @@ Security audit reports and bug bounty programs stored as a separate `AuditEntry[
 - **Frontend display**: `CodeQualitySection.tsx` (labeled "Source Code") in defiscan-frontend shows the audit count in the "Audits & Bug Bounties" card, the max bounty amount in the "Bug Bounty" stat (`$500K`, `$1M` format), and a scrollable carousel of audit cards with author, date, and scope.
 - **UI editor**: `ReviewResourcesEditor.tsx` renders a separate Audits section below the Resources list with the same add/edit/delete pattern (author, date, scope, bounty, URL fields).
 - **Gathering skill**: `/gather-resources <project> --audits-only` — skips resource discovery and only searches for audits + bug bounty programs, using the existing website/GitHub/docs URLs from `resources.json` as starting points.
+
+### Lines of Code
+
+Accurate LoC metric for the protocol's source code, computed via **declaration-level deduplication** of flattened Solidity files.
+
+- **File**: `packages/l2b/src/implementations/discovery-ui/defidisco/countLinesOfCode.ts`
+- **Persistence**: Stored as `linesOfCode?: number` inside `resources.json` (same wrapper object as resources + audits)
+- **Backend helpers**: `getLinesOfCode(paths, project)` and `updateLinesOfCode(paths, project, count)` in `resources.ts` — read-modify-write preserves the other fields
+- **API endpoint**: `POST /api/projects/:project/count-lines-of-code` (non-streaming JSON response, same pattern as `compile-review`) — returns `{ count, details: { totalContracts, externalSkipped, duplicateSkipped, uniqueContracts, filesProcessed, declarationsFound, uniqueDeclarations } }`
+- **Frontend API**: `countLinesOfCode(project)` in `api.ts`
+- **UI button**: "Count Lines of Code" in `TerminalExtensions.tsx` — manual trigger that shows an alert with the count + dedup stats. Useful for quick recounts without a full compile.
+- **Auto-trigger**: `reviewCompiler.compile()` always runs `countLinesOfCode()` inline (step 4) so every `Compile Review` produces a fresh count. Counting failure is non-fatal — the compiler logs a warning and emits `linesOfCode: undefined`, which the frontend renders as a muted `—`.
+
+#### Why declaration-level dedup
+
+Each discovered contract's source is stored as a flattened `.sol` file under `.flat/`. Flattening inlines all imported libraries, so the same `library Address { ... }` appears in dozens of files — naive line counting overcounts 2-3x (Lido: 109K raw lines vs ~40K unique; Liquity v2: 2.8x; EtherFi: 3.0x). Per-file dedup (by source hash) doesn't help either, because different contracts genuinely share inlined libraries. The fix is to extract each top-level Solidity declaration — `library`, `contract`, `abstract contract`, `interface` — and count each *named* declaration only once across all files.
+
+#### Algorithm
+
+1. Load `discovered.json` via `configReader.readDiscovery(project)`
+2. Build the external-address set from `getContractTags(paths, project)` — skip any contract marked `isExternal: true`
+3. Filter discovery entries to `type === 'Contract'` AND not external
+4. Deduplicate contracts by their `sourceHashes` tuple — entries sharing the same tuple (e.g., same implementation behind multiple proxies) count once
+5. Collect each unique contract's flat file paths via `getCodePaths(configReader, project, address)`
+6. For each `.sol` file, run `extractDeclarations()` — a brace-depth-tracking parser that strips `//`, `/* */` comments and string literals, then matches `/^(library|contract|abstract\s+contract|interface)\s+(\w+)/` at brace depth 0. Each declaration records its name and the line count of its `{ ... }` body.
+7. Deduplicate declarations across all files by name (`seenDeclarations: Set<string>`) — first occurrence wins
+8. Sum the line counts of unique declarations → `count`
+9. Persist via `updateLinesOfCode(paths, project, count)` and return `{ count, details }`
+
+#### Compiled review
+
+- `CompiledReview.totals.linesOfCode?: number` — added to the `totals` object in both backend (`reviewCompiler.ts`) and frontend (`defiscan-frontend/src/types.ts`)
+- Read by `CodeQualitySection.tsx` in defiscan-frontend — renders as `"{count.toLocaleString()} LoC"` under the "Source Code Verification" sub-card, with a muted `—` fallback when undefined
+- Confirmed on compound-v3: 22 discovered contracts → 6 external skipped → 4 source-hash duplicates → 12 unique → 17 flat files → 108 declarations found → 84 unique by name → **10,053 LoC**
 
 ### Design Decisions
 
@@ -376,6 +411,7 @@ type GovernanceDuration =
 - **Dependency type**: Each `CompiledDependency` has an optional `dependencyType?: 'callgraph' | 'write'` field indicating how it was detected. `'callgraph'` = found via code-level call graph traversal; `'write'` = external contract that owns/controls a permissioned function (detected from `ownerDefinitions`). See [Call Graph Analysis](call-graph-analysis.md#function-analysis-functionanalysists) for details.
 - **Mitigations in compiled review**: Each `CompiledAdminFunction` and `CompiledDependencyFunction` includes an optional `mitigations?: Mitigation[]` field. Mitigations are computed by `ProjectAnalysis.getMitigationsForOwner()` which merges direct mitigations (from `functions.json`, filtered per owner) with transitive mitigations (collected via forward BFS through the call graph — global and scoped mitigations from downstream functions). The compiler passes these through as-is (`f.mitigations`). Each mitigation with an `impactCap` has its `impactCapUsd` resolved during `getMitigationsForOwner()` (not in the compiler).
 - **Impact cap on reachable contracts**: Each `CompiledReachableContract` includes `effectiveCapUsd?: number`. Set during capital analysis BFS (for admins) and inline cap resolution (for dependencies) in `projectAnalysis.ts`. Frontend fund sums apply `Math.min(fundsUsd, effectiveCapUsd)` per reachable contract (`shared.tsx`, `dependencies.ts`, `narrative.ts`).
+- **Lines of code**: Step 4 of `compile()` always runs `countLinesOfCode()` inline — the count is written into `totals.linesOfCode`, and the same call also persists into `resources.json` via `updateLinesOfCode()`. Non-fatal on error (logs a warning, emits `undefined`). See [Lines of Code](#lines-of-code) above.
 - **Frontend subset**: `defiscan-frontend/scripts/compile-data.ts` uses a minimal subset of `CompiledReview` (not imported) for index aggregation — keep in sync when adding fields
 
 ### Mitigations Display (defiscan-frontend)

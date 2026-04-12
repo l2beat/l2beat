@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-12T08:18:07.978Z",
+  "compiledAt": "2026-04-12T13:11:42.768Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -18,7 +18,8 @@
     "dependencyCount": 12,
     "totalCapitalAtRisk": 83691102.60133988,
     "totalTokenValueAtRisk": 35572788.61180224,
-    "totalTokenValue": 35572788.61180224
+    "totalTokenValue": 35572788.61180224,
+    "linesOfCode": 1598
   },
   "admins": [
     {
@@ -4222,20 +4223,6 @@
       "author": "Decurity",
       "date": "2024-09",
       "scope": "V2 Smart Contracts"
-    }
-  ],
-  "activity": [
-    {
-      "type": "upgrade",
-      "timestamp": "2022-12-02T13:04:35.000Z",
-      "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-      "contractName": "VNXCToken",
-      "txHash": "0x88a6f8ad9b0ced4ea3acb1917987e887998858844bd3eef9dcb76feaee73c09e",
-      "implementations": [
-        "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6"
-      ],
-      "isDependency": true,
-      "entity": "VCHF"
     }
   ],
   "governance": {
