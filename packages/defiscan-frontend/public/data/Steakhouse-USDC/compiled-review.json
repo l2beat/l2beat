@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-11T15:04:30.968Z",
+  "compiledAt": "2026-04-12T08:17:46.743Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 14,
     "adminCount": 7,
     "dependencyCount": 9,
-    "totalCapitalAtRisk": 194276393.11344823,
+    "totalCapitalAtRisk": 193394295.25578895,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0
   },
@@ -148,7 +148,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -181,7 +181,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -260,9 +260,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 194276393.11344823,
+      "totalDirectCapital": 193394295.25578895,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 194276393.11344823,
+      "totalReachableCapital": 193394295.25578895,
       "totalReachableTokenValue": 0
     },
     {
@@ -277,7 +277,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -310,7 +310,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -371,9 +371,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 194276393.11344823,
+      "totalDirectCapital": 193394295.25578895,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 194276393.11344823,
+      "totalReachableCapital": 193394295.25578895,
       "totalReachableTokenValue": 0
     },
     {
@@ -587,7 +587,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 194276393.11344823,
+    "totalFundsAtRisk": 193394295.25578895,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -863,7 +863,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -872,7 +872,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -881,7 +881,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -899,7 +899,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -947,7 +947,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -976,12 +976,12 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 194276393.11344823,
+          "directFundsUsd": 193394295.25578895,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 194276393.11344823,
+      "totalFundsAtRisk": 193394295.25578895,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -994,12 +994,12 @@
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 194276393.11344823,
+      "totalFundsAtRisk": 193394295.25578895,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 194276393.11344823,
+    "totalFundsAtRisk": 193394295.25578895,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
@@ -1008,10 +1008,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006623646204935037
+        "totalUsdValue": 0.00662372614575456
       },
       "positions": {
-        "totalUsdValue": 194276393.10682458
+        "totalUsdValue": 193394295.24916524
       },
       "tokenInfo": null,
       "aggregate": null
@@ -1394,7 +1394,9 @@
       "txHash": "0x9a1fe757efabdbf9014f2fbc43fcfbf8c5e37f3612c4732824994975fd7e727b",
       "implementations": [
         "eth:0xb4c284A418a066D73bcadd50DCD8bcE63AA9913f"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -1404,7 +1406,9 @@
       "txHash": "0x111c19e080f269a8629dbdb70e92e1954970638ebe66e1c1997e653ba35143dc",
       "implementations": [
         "eth:0x0DfcC04AA52b758C7A3B7Ee0217e3d8B8f3d9329"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -1414,7 +1418,9 @@
       "txHash": "0x33445fbe4682a734b51f5edd18ae1aac47186bca55236a4e9f252b0097a7a1d7",
       "implementations": [
         "eth:0x814e110ae1abDde38548718152E00e4Aff6d1bcb"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -1424,9 +1430,26 @@
       "txHash": "0xb49d5ea6f6247cc4d7f3a1a98346a882872e28f3d769149a60ac84214c411df7",
       "implementations": [
         "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     }
   ],
+  "governance": {
+    "framework": "Aragon OSx",
+    "voteExecution": "onchain",
+    "votingUnit": "Vault shares",
+    "proposalRequirements": "Via DAO plugin",
+    "votingProcess": "An Aragon OSx DAO (v1.3.0) is the vault guardian and can veto the timelocked actions.",
+    "proposalPeriod": {
+      "kind": "fixed",
+      "value": "Unknown"
+    },
+    "executionDelay": {
+      "kind": "fixed",
+      "value": "Unknown"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

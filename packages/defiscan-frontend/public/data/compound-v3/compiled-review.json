@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-11T15:04:16.285Z",
+  "compiledAt": "2026-04-12T08:11:15.378Z",
   "project": "compound-v3",
   "metadata": {
     "protocolName": "Compound V3",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "lending",
     "tokenName": "COMP",
-    "description": "Compound V3 (Comet) is a lending protocol that operates isolated markets for individual base assets (USDC, USDT, WETH), each accepting a curated set of collateral tokens. Unlike Compound V2's shared-pool model, V3 isolates risk per market: suppliers lend a single base asset and borrowers post collateral against it. All three Ethereum markets are upgradeable EIP-1967 proxies controlled by a Compound governance Timelock with a 48-hour delay, with $811.29M in total capital at risk across all admin-controlled contracts. The protocol depends on Chainlink price feeds and a ConstantPriceFeed for USDT pricing."
+    "description": "Compound V3 (Comet) is a lending protocol that operates isolated markets for individual base assets (USDC, USDT, WETH), each accepting a curated set of collateral tokens. Unlike Compound V2's shared-pool model, V3 isolates risk per market: suppliers lend a single base asset and borrowers post collateral against it. All three Ethereum markets are upgradeable EIP-1967 proxies controlled by a Compound governance Timelock with a 48-hour delay, with $805.31M in total capital at risk across all admin-controlled contracts. The protocol depends on Chainlink price feeds and a ConstantPriceFeed for USDT pricing."
   },
   "totals": {
     "contractCount": 22,
@@ -16,15 +16,15 @@
     "scoredFunctionCount": 11,
     "adminCount": 5,
     "dependencyCount": 5,
-    "totalCapitalAtRisk": 811287864.4568818,
+    "totalCapitalAtRisk": 805312225.9880646,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 198099997.69397452
+    "totalTokenValue": 201399997.6555602
   },
   "admins": [
     {
       "address": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
       "name": "CometProxyAdmin",
-      "description": "Immutable proxy admin contract owned by the Governance Timelock. Can upgrade, deploy-and-upgrade, and change the admin of the three market proxy contracts (cUSDCv3, cUSDTv3, cWETHv3) via upgrade, upgradeAndCall, deployAndUpgradeTo, deployUpgradeToAndCall, and changeProxyAdmin. Controls $811.29M in direct capital across the three market contracts.",
+      "description": "Immutable proxy admin contract owned by the Governance Timelock. Can upgrade, deploy-and-upgrade, and change the admin of the three market proxy contracts (cUSDCv3, cUSDTv3, cWETHv3) via upgrade, upgradeAndCall, deployAndUpgradeTo, deployUpgradeToAndCall, and changeProxyAdmin. Controls $805.31M in direct capital across the three market contracts.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -34,7 +34,7 @@
           "functionName": "upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -91,7 +91,7 @@
           "contractName": "cUSDCv3",
           "functionName": "changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -112,7 +112,7 @@
           "functionName": "upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -231,7 +231,7 @@
           "contractName": "cUSDTv3",
           "functionName": "admin",
           "impact": "critical",
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -251,7 +251,7 @@
           "contractName": "cUSDTv3",
           "functionName": "implementation",
           "impact": "critical",
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -271,7 +271,7 @@
           "contractName": "cUSDTv3",
           "functionName": "changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -292,7 +292,7 @@
           "functionName": "upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -360,7 +360,7 @@
           "functionName": "upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -423,15 +423,15 @@
           ]
         }
       ],
-      "totalDirectCapital": 811287864.4568818,
+      "totalDirectCapital": 805312225.9880646,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 811287864.4568818,
+      "totalReachableCapital": 805312225.9880646,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "name": "Compound Governance Timelock (48h)",
-      "description": "Central admin of the protocol with a 48-hour execution delay. Controls 40 permissioned functions across 10 contracts, including all market parameter changes (interest rates, collateral factors, supply caps, reserve targets), asset listing via addAsset/updateAsset, price feed configuration, factory and extension delegate settings, governor transfer, and reserve withdrawals via withdrawReserves and approveThis. Also owns the CometProxyAdmin, giving it indirect upgrade authority over all three market proxies. Governed by CompoundGovernor, which routes COMP token holder votes through this timelock. Controls $811.29M in direct capital exposure.",
+      "description": "Central admin of the protocol with a 48-hour execution delay. Controls 40 permissioned functions across 10 contracts, including all market parameter changes (interest rates, collateral factors, supply caps, reserve targets), asset listing via addAsset/updateAsset, price feed configuration, factory and extension delegate settings, governor transfer, and reserve withdrawals via withdrawReserves and approveThis. Also owns the CometProxyAdmin, giving it indirect upgrade authority over all three market proxies. Governed by CompoundGovernor, which routes COMP token holder votes through this timelock. Controls $805.31M in direct capital exposure.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -514,7 +514,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -529,7 +529,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -638,7 +638,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -653,7 +653,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1271,7 +1271,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1299,7 +1299,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1344,7 +1344,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1372,7 +1372,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1418,7 +1418,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1446,7 +1446,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1505,7 +1505,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1520,7 +1520,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1580,7 +1580,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1595,7 +1595,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1702,9 +1702,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 811287864.4568818,
+      "totalDirectCapital": 805312225.9880646,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 811287864.4568818,
+      "totalReachableCapital": 805312225.9880646,
       "totalReachableTokenValue": 0
     },
     {
@@ -1793,7 +1793,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1808,7 +1808,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1841,7 +1841,7 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 811287864.4568818,
+      "totalReachableCapital": 805312225.9880646,
       "totalReachableTokenValue": 0
     },
     {
@@ -1948,7 +1948,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 140961054.97648042,
+              "fundsUsd": 141099716.69798338,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1963,7 +1963,7 @@
                 "changeAdmin",
                 "upgradeTo"
               ],
-              "fundsUsd": 670326809.4804013,
+              "fundsUsd": 664212509.2900813,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2007,13 +2007,13 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 811287864.4568818,
+      "totalReachableCapital": 805312225.9880646,
       "totalReachableTokenValue": 0
     },
     {
       "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
       "name": "Pause Guardian 5/8 Multisig",
-      "description": "A 5-of-8 Gnosis Safe multisig that serves as the pause guardian for the cUSDCv3 and cUSDTv3 markets. Can call pause to halt supply, transfer, withdraw, absorb, and buyCollateral operations without timelock delay. One of its 8 signers is itself a 2/7 multisig (0xeB5f...d627). Controls $811.29M in direct capital exposure. Cannot unpause markets or modify any other parameters.",
+      "description": "A 5-of-8 Gnosis Safe multisig that serves as the pause guardian for the cUSDCv3 and cUSDTv3 markets. Can call pause to halt supply, transfer, withdraw, absorb, and buyCollateral operations without timelock delay. One of its 8 signers is itself a 2/7 multisig (0xeB5f...d627). Controls $805.31M in direct capital exposure. Cannot unpause markets or modify any other parameters.",
       "adminType": "Multisig",
       "isGovernance": false,
       "functions": [
@@ -2036,14 +2036,14 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 811287864.4568818,
+      "totalDirectCapital": 805312225.9880646,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 811287864.4568818,
+      "totalReachableCapital": 805312225.9880646,
       "totalReachableTokenValue": 0
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 811287864.4568818,
+    "totalFundsAtRisk": 805312225.9880646,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -2063,7 +2063,7 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2083,7 +2083,7 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2103,7 +2103,7 @@
           "contractName": "cUSDTv3",
           "functionName": "absorb",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2112,7 +2112,7 @@
           "contractName": "cUSDTv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2121,7 +2121,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transfer",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2130,7 +2130,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferAsset",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2139,7 +2139,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferAssetFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2148,7 +2148,7 @@
           "contractName": "cUSDTv3",
           "functionName": "transferFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2157,7 +2157,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdraw",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2166,7 +2166,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2175,12 +2175,12 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": true,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 140961054.97648042,
+      "totalFundsAtRisk": 141099716.69798338,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -2202,7 +2202,7 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2222,7 +2222,7 @@
           "contractName": "cUSDTv3",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2242,7 +2242,7 @@
           "contractName": "cUSDTv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2251,7 +2251,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supply",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2260,7 +2260,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supplyFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2269,7 +2269,7 @@
           "contractName": "cUSDTv3",
           "functionName": "supplyTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2278,7 +2278,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2287,7 +2287,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2296,7 +2296,7 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawReserves",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2305,12 +2305,12 @@
           "contractName": "cUSDTv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 140961054.97648042,
+          "directFundsUsd": 141099716.69798338,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 140961054.97648042,
+      "totalFundsAtRisk": 141099716.69798338,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -2391,7 +2391,7 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2411,7 +2411,7 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2431,7 +2431,7 @@
           "contractName": "cUSDCv3",
           "functionName": "absorb",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2440,7 +2440,7 @@
           "contractName": "cUSDCv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2449,7 +2449,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transfer",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2458,7 +2458,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferAsset",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2467,7 +2467,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferAssetFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2476,7 +2476,7 @@
           "contractName": "cUSDCv3",
           "functionName": "transferFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2485,7 +2485,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdraw",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2494,7 +2494,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2503,12 +2503,12 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": true,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 670326809.4804013,
+      "totalFundsAtRisk": 664212509.2900813,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -2531,7 +2531,7 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2551,7 +2551,7 @@
           "contractName": "cUSDCv3",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -2571,7 +2571,7 @@
           "contractName": "cUSDCv3",
           "functionName": "approveThis",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2580,7 +2580,7 @@
           "contractName": "cUSDCv3",
           "functionName": "buyCollateral",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2589,7 +2589,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supply",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2598,7 +2598,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supplyFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2607,7 +2607,7 @@
           "contractName": "cUSDCv3",
           "functionName": "supplyTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2616,7 +2616,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2625,7 +2625,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawFrom",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2634,7 +2634,7 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawReserves",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -2643,12 +2643,12 @@
           "contractName": "cUSDCv3",
           "functionName": "withdrawTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 670326809.4804013,
+          "directFundsUsd": 664212509.2900813,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 670326809.4804013,
+      "totalFundsAtRisk": 664212509.2900813,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -2656,31 +2656,31 @@
   "dependencyEntityGroups": [
     {
       "entity": null,
-      "totalFundsAtRisk": 140961054.97648042,
+      "totalFundsAtRisk": 141099716.69798338,
       "totalTokenValueAtRisk": 0
     },
     {
       "entity": "Chainlink",
-      "totalFundsAtRisk": 670326809.4804013,
+      "totalFundsAtRisk": 664212509.2900813,
       "totalTokenValueAtRisk": 0
     },
     {
       "entity": "Circle USDC",
-      "totalFundsAtRisk": 670326809.4804013,
+      "totalFundsAtRisk": 664212509.2900813,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 811287864.4568818,
+    "totalFundsAtRisk": 805312225.9880646,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
     {
       "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
       "name": "cUSDCv3 Market",
-      "description": "The main Compound V3 USDC lending market. Holds $670.33M in deposited assets including USDC (base), WBTC, wstETH, WETH, LINK, UNI, COMP, cbBTC, weETH, tBTC, and rsETH collateral. This is the largest Compound V3 market by TVL.",
+      "description": "The main Compound V3 USDC lending market. Holds $664.21M in deposited assets including USDC (base), WBTC, wstETH, WETH, LINK, UNI, COMP, cbBTC, weETH, tBTC, and rsETH collateral. This is the largest Compound V3 market by TVL.",
       "balances": {
-        "totalUsdValue": 670326809.4804013
+        "totalUsdValue": 664212509.2900813
       },
       "positions": null,
       "tokenInfo": null,
@@ -2689,9 +2689,9 @@
     {
       "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
       "name": "cUSDTv3 Market",
-      "description": "The Compound V3 USDT lending market. Holds $140.96M in deposited assets including USDT (base), wstETH, ezETH, WETH, rsETH, weETH, tETH, and other ETH-derivative collateral tokens.",
+      "description": "The Compound V3 USDT lending market. Holds $141.10M in deposited assets including USDT (base), wstETH, ezETH, WETH, rsETH, weETH, tETH, and other ETH-derivative collateral tokens.",
       "balances": {
-        "totalUsdValue": 140961054.97648042
+        "totalUsdValue": 141099716.69798338
       },
       "positions": null,
       "tokenInfo": null,
@@ -2700,14 +2700,14 @@
     {
       "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "name": "COMP Governance Token",
-      "description": "The Compound governance token used for voting in CompoundGovernor proposals. Has a market capitalization of $198.10M.",
+      "description": "The Compound governance token used for voting in CompoundGovernor proposals. Has a market capitalization of $201.40M.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "COMP",
-        "price": 19.81,
+        "price": 20.14,
         "totalSupply": "9999999.883592859",
-        "tokenValue": 198099997.69397452
+        "tokenValue": 201399997.6555602
       },
       "aggregate": null
     }
@@ -3012,7 +3012,9 @@
       "txHash": "0x38bf1b111205cb9d590d6eb9293003224d6d22fc9b3bfb9288cdb86008529ef2",
       "implementations": [
         "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3022,7 +3024,9 @@
       "txHash": "0x2906ca0ed01b573c369048cb99b8bad6774b6230a35e5cca3d3b27e14df833ed",
       "implementations": [
         "eth:0xEb330B7c1622E0F8b18a7dD1decc27Cf3d980E61"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3032,7 +3036,9 @@
       "txHash": "0x18c82c2b7a8a92311649a6718f3513162dc691f76ea755e76006498cd6e92163",
       "implementations": [
         "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3042,7 +3048,9 @@
       "txHash": "0xc6b122a0355d3c71388083fe63e858fc6eded6422b4bf1167feb98db9cec79b0",
       "implementations": [
         "eth:0xC78846c98CC782e8F066Be1DC86a2b323d6d5E2e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3052,7 +3060,9 @@
       "txHash": "0x3d66c349b52768311d4a6ecd2e8e6c3ae0516f2ef406822a6162e2c22ad8b9e5",
       "implementations": [
         "eth:0xEEB860216B1ea7E3aB80fE5Fc1886dAEf6bDc440"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3062,7 +3072,9 @@
       "txHash": "0xa5a3b65cd02cb3ef981cf7a5b5be729cc74231c879f8d9a86de11f02ead0ab1e",
       "implementations": [
         "eth:0xC5fb5c72eda5C609db7EA23a50FFD47c046032B7"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3072,7 +3084,9 @@
       "txHash": "0xacd95981f12369778d6d022d967539bcd75f5c7443b29c0bec5a189c074fc611",
       "implementations": [
         "eth:0xdf2cD7552610E3b5Cddd410Ca89A172aC0aD444C"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3082,7 +3096,9 @@
       "txHash": "0xb694d5800bf1736049ad1f14e32075b086065d2afddbc162b4edb7cff009142e",
       "implementations": [
         "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3092,7 +3108,9 @@
       "txHash": "0x2cff3a7cff0f3de58dafcdcd98a36539482bb87e9996d04b44ddaf78a2b5b582",
       "implementations": [
         "eth:0x88C3e0DFf6554b64f9b7Eb2E88b9db85E1A0B0E1"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3102,7 +3120,9 @@
       "txHash": "0x8ad6309374a4260cd26cb2b164fcb5f504d878476cb460d2f55c31d4fd97a58f",
       "implementations": [
         "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3112,7 +3132,9 @@
       "txHash": "0x87d85f0b35bb0fcff821bc8028f5e5ff0c3a209c90df65e65f07dc28caa5981c",
       "implementations": [
         "eth:0x7ee36557197016d1421bE2BEdB07D91ca07e9b89"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3122,7 +3144,9 @@
       "txHash": "0x527e0ffe1f639c90fbddb07ff38a3ca0a1090108ea4a399ba4619b8aabfe9e67",
       "implementations": [
         "eth:0xBba238FE7Ce2aE594615c15bBBAB643f93b32735"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3132,7 +3156,9 @@
       "txHash": "0xf496dc9be6f76a1b1a5200dd880ff5a75a96fab1b99fb5b271e5267d948502a4",
       "implementations": [
         "eth:0x9a0b65b6e134E7d24A3788e33c7F2627261Bfbd2"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3142,7 +3168,9 @@
       "txHash": "0x0d5dff7d9313bc1826d6aa0778d0b03d22fee2f3c5b48fd5db4f42b57b802101",
       "implementations": [
         "eth:0x4e1334F2B09eadA3c816A6265322C8C45317D1D0"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3152,7 +3180,9 @@
       "txHash": "0x8391c4c95b29fe71cb5353963f896ba169e993ea555c1836d4fb44e9b1a8ca3e",
       "implementations": [
         "eth:0xec871C64B3F25Cab33772BEABe55F764926006d0"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3162,7 +3192,9 @@
       "txHash": "0xf6946a5dbd2e9b9a57e48a11486bba7907ca60275ccadfdf2032878137348521",
       "implementations": [
         "eth:0x0dbdEeA86e01ce4eEfF9357d161d6DBe0a360288"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3172,7 +3204,9 @@
       "txHash": "0xbe26d62d07cb0b94ff3cd6ce9775e57984689d524a5e3b42981667a7363d7216",
       "implementations": [
         "eth:0x63BaA2ebEc4F7ea0BBbb0cb0Ff75c088526400A8"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3182,7 +3216,9 @@
       "txHash": "0xe7a6e7b41c503ac3554bb12a4621f3a21197908050df8cc9612ff0b5757b74d6",
       "implementations": [
         "eth:0x64BAee72de7d32FBb32fF3833b5000c4236256CC"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3192,7 +3228,9 @@
       "txHash": "0x746f7f48bb54319b17af3c19dca6ef3b0a6a20bfd12e464f5e0a4836afdba64d",
       "implementations": [
         "eth:0xeb58C62cAC39b3F7b11fbeAF8494613E2a9Fc943"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3202,7 +3240,9 @@
       "txHash": "0x6ec55e444e10917e142c6507aa250d7d0eb67cf79389d03f6c954270474cb06c",
       "implementations": [
         "eth:0x40f6C8C12eB5009933449D6b22dE094024061821"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3212,7 +3252,9 @@
       "txHash": "0x8ff86370081101d6aafbd171e1ea1ad8b1865208e025cb78600f89a3de832790",
       "implementations": [
         "eth:0xa3A99801Fb237786e06FC650AD4eFbe6FAC006A4"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3222,7 +3264,9 @@
       "txHash": "0x9672e353d904dfbcd932bba100fb40effeba9ec2b92673407155cdbb73c5fc98",
       "implementations": [
         "eth:0xB6F802B52420F1098ad7B6799F208a97DF5016Ff"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3232,7 +3276,9 @@
       "txHash": "0x6856ca68ee3ef18a2d7fc949c2ef231ce44ee72362fc9efd356c3c2b08025cd9",
       "implementations": [
         "eth:0xe3ED6aA12FC86F478cd525AC8feA364f09c17118"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3242,7 +3288,9 @@
       "txHash": "0x832d79f084bdfc1e10df41c6378b3c82bfb851acca703dba7d81117ba116a800",
       "implementations": [
         "eth:0x1caD465416857b9feA5900f3366008f27e93605c"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3252,7 +3300,9 @@
       "txHash": "0xf9df4d7016a592d1135dee34cacae43030c27c3eb69a12281385faa6bd487f56",
       "implementations": [
         "eth:0xe8d4F611bcd3e6C4dA6dc204892eafaccD745291"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3262,7 +3312,9 @@
       "txHash": "0xf9df4d7016a592d1135dee34cacae43030c27c3eb69a12281385faa6bd487f56",
       "implementations": [
         "eth:0x2C045e9a1afB125898d6E736D1ff09Fa28788E9d"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3272,7 +3324,9 @@
       "txHash": "0x555333df232b5d31c19f50a51cfac15e9e0e62a5d49852da680560934c38f1aa",
       "implementations": [
         "eth:0x4e295eac3BF76A1537039A1461BDEA4B13272A62"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3282,7 +3336,9 @@
       "txHash": "0xbbb094e9407404485d60893ff66b26d28fbfc44e17625697abfee1a4bb0f16e6",
       "implementations": [
         "eth:0x18B1Fe840D2A2904DBE7DEcDB33d6F0Df380E047"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3292,7 +3348,9 @@
       "txHash": "0x71c00e7df9e025bb42e73a99f806239463e095370775289ac2f9d35a1d798200",
       "implementations": [
         "eth:0xaeC1954467B6d823A9042E9e9D6E4F40111069a9"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3302,7 +3360,9 @@
       "txHash": "0x6c94876f4a7bbd3e61a343a53eca81a4160e05d89bd2e3e23e88b3d4b2b46dce",
       "implementations": [
         "eth:0x940453f83aB4097714001355D0E696d0985546A2"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3312,7 +3372,9 @@
       "txHash": "0xd08f5e9f6885bb6aa7519a6f8e2270e549208ec159102560bc517fb8aac490e5",
       "implementations": [
         "eth:0x501Eb63A2120418C581B3bD31CF190b0a0616752"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3322,7 +3384,9 @@
       "txHash": "0x4268be136466fa067b04b53a9cedd260fdd933921facc7702351b5208d4eb396",
       "implementations": [
         "eth:0x1e27304547D82863103c6eb4230f60f9fa4b7f94"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3332,7 +3396,9 @@
       "txHash": "0x137caa14cd63fe698b96f0bd253c310aab9749b2a02fd593a1116b3a3cc01430",
       "implementations": [
         "eth:0xE8F4F1033d5B33cFe7ac684E81E2750B38fD749F"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3342,7 +3408,9 @@
       "txHash": "0x49c70b6a91b021dc7b94bfb3701254e5ffc6d436af84a012c418ae9d6ead848b",
       "implementations": [
         "eth:0x6D272bB5eD264114b796E0B078fA851b45553dDE"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3352,7 +3420,9 @@
       "txHash": "0xf9a6fa3df9eedf4aadd5bf339a0ad7a4f39e380b721a93f22a63a311e6220f3f",
       "implementations": [
         "eth:0x318b8615643bdae03B7ca63E69b3f06ff1af0bC7"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3362,7 +3432,9 @@
       "txHash": "0xf9a6fa3df9eedf4aadd5bf339a0ad7a4f39e380b721a93f22a63a311e6220f3f",
       "implementations": [
         "eth:0xbdc3e2517e17f887D7f6bBdE087A710Adafbc4D9"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3372,7 +3444,9 @@
       "txHash": "0x13cb76a1fd239b517458397e60bdb1937362aaa64783813df281d56b75e253da",
       "implementations": [
         "eth:0xa4Ac3f3c85019d932245737f62882fB372eBeF0c"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3382,7 +3456,9 @@
       "txHash": "0x3362c33075f73ccb7baee6b8f4b208a26689d3e20eb2f428b0b6c2a20a633256",
       "implementations": [
         "eth:0x3faF81E10705444A8a477c59BE930BE544c7C18D"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3392,7 +3468,9 @@
       "txHash": "0x799e42b22baaf6437a562b18dc3d5cc394a579911f4012ce1d831cbff4a518fa",
       "implementations": [
         "eth:0xc129eABaC0A5Ba7D584A6b0FcA96eC4a0D9aa331"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3402,7 +3480,9 @@
       "txHash": "0x470aa7c9ff3cf465af3a40169f581a379887088f90065a0e3b0c6c24d67fa6bf",
       "implementations": [
         "eth:0x9bAfa0a091d29dA4ce4b574F98D064bd26522aea"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3412,7 +3492,9 @@
       "txHash": "0xdc9608e973d14e3aa404149b1a45ab3b1211b3b6911a89a403ac9eaa2dbf900f",
       "implementations": [
         "eth:0x192b0314420E1c2C5A940E16f16b2b28286f71f1"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3422,7 +3504,9 @@
       "txHash": "0x9a045af7ee3fa42d3c3b22f426cae70fff3bb2a31274328732348f837503b2a3",
       "implementations": [
         "eth:0xA53d20d623393C2A1601a2D3Ad4b0b58fb47FD5E"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3432,7 +3516,9 @@
       "txHash": "0xd5aeae1c3ded466488aaad2cdc928059e2baf60c91b41195734c429a224bf493",
       "implementations": [
         "eth:0xbbC07b3e52E0a62e4B8e7F5780F68268Af907584"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3442,7 +3528,9 @@
       "txHash": "0xcbc157dbb667a43ec84afbc5d72c81b966633e9518329662a237bd3fa3251dc1",
       "implementations": [
         "eth:0x5524a141c27BD03e7c77b7b6D55FCDC5aa947337"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3452,7 +3540,9 @@
       "txHash": "0x388f739bf5e17c4749be0321f492d7d0c606929ea890e5aed907526d8ea80ab7",
       "implementations": [
         "eth:0x62D82ab2416D2FD7bE1BF01bCe6a33DBf3b6B733"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3462,7 +3552,9 @@
       "txHash": "0x86a1d1c29dff20da0061197c5804d8a4da0ba5032c26b3bef9a32b7adbad3430",
       "implementations": [
         "eth:0x958e296cfEa3e63C8E729293B38198cB44145448"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3472,7 +3564,9 @@
       "txHash": "0xca4bfe09e01af04a4f0574cbbbd19f5ec5088dd64df804289f1650493315ada8",
       "implementations": [
         "eth:0x2dc3c7642aCBa6Fc16Dfc52479e9dC11E7FFfc89"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3482,7 +3576,9 @@
       "txHash": "0xbb1c388b6c5d4689addc2eaa496f8479f4c2e43091c510766f084782b30db3d0",
       "implementations": [
         "eth:0x8B1fe29326Dc8b02E79566e84431A5cBC3c7c7dc"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3492,7 +3588,9 @@
       "txHash": "0x3f4e9444e5c3eb0cfe81a985668cea2d9655a8f1f82ab587c2291bdf1167ec89",
       "implementations": [
         "eth:0xAFb1Df7261B52Ba6273a3aD0ED7eD7B6b22Ff6Ef"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3502,7 +3600,9 @@
       "txHash": "0x9d6b91173e8091b7924249a9914f1b7462134083d2010c22b073ac041849a274",
       "implementations": [
         "eth:0xC0c24F22D80D0428F2B12d44e262b4CEa48D02C3"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3512,7 +3612,9 @@
       "txHash": "0x0e197f1f03b2ff211eae24d408060386e4f0eb03ccde9f8513cb28ca695f9a82",
       "implementations": [
         "eth:0xc1AD384ef8a9A87e3eA07DF2f40dB2D660dfA494"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3522,7 +3624,9 @@
       "txHash": "0x7ac9085297580d2908694dbba1a9849d24bade4c63a18bcbdae899014adf7bdd",
       "implementations": [
         "eth:0x9E4f37E296E84BA7a2363F83398B5f55eFE80Ade"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3532,7 +3636,9 @@
       "txHash": "0xee0c1da479377d64dbc009c37018b19694946f8bb82d420ea95a2b651c80de7a",
       "implementations": [
         "eth:0x35B5dE07F859E7b57104be206D314c111DA7428A"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3542,7 +3648,9 @@
       "txHash": "0x126125a92efc233526c9d18b28609438d59cd16467cf8644e89a0b6720b9de49",
       "implementations": [
         "eth:0x7fdc2018C009278325f7b2cbCaBCcbD1318f3723"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3552,7 +3660,9 @@
       "txHash": "0x153b2ff4149fb9697caaf695613d7195c61b85252bb1cb569b84361ebf5aee0a",
       "implementations": [
         "eth:0xDdB8eCE23f1e768C2f04c4DA384F81763cc64E49"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3562,7 +3672,9 @@
       "txHash": "0x153b2ff4149fb9697caaf695613d7195c61b85252bb1cb569b84361ebf5aee0a",
       "implementations": [
         "eth:0x8A807D39F1d642dD8C12Fe2E249fe97847f01BA0"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3572,7 +3684,9 @@
       "txHash": "0xc46db401b2651464f0bcd866d78a56be1097b429d1e1991920bd0e97f3916388",
       "implementations": [
         "eth:0x6f5e45e7748a318630571848C0130935504d07d1"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3582,7 +3696,9 @@
       "txHash": "0xc38f6ef72d46b10ddd19adf91a93da0ecbe419f383febe955a9468152f30624b",
       "implementations": [
         "eth:0x5440255A35d97FEFE1EfaE99233B3576D10890d9"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3592,7 +3708,9 @@
       "txHash": "0xe746f6fa0690ecf06f1735c895d4221e948c5c91f49a8fa28d694835cc9e3757",
       "implementations": [
         "eth:0x9e81d7972f34cf8EA57d2b6649135a35164d031b"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3602,7 +3720,9 @@
       "txHash": "0xdba7f46578630423d771a09f17001de7989912ca43566c10bfa0995915ef853e",
       "implementations": [
         "eth:0x7f8caF32c69636F5DcdCddc1Dc80F5477C5e1794"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3612,7 +3732,9 @@
       "txHash": "0x8cc06677a08181e93fcccc1915b63341046c11a5e8b59aecdb87073ef4a7e9cf",
       "implementations": [
         "eth:0x3a533F89571a62B01b94Fa0d5e8d9e6e577019b3"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3622,7 +3744,9 @@
       "txHash": "0x07bbdb6c02493a3a60ed03ebcf0c4b0c158e7f313d7bdb5f53f443edc8a1e8c7",
       "implementations": [
         "eth:0xe6759c5cC568D9E7ac15191CC38976Dd3D9E7765"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3632,7 +3756,9 @@
       "txHash": "0x3f1eb6070c30ade00d31cb1cbb0819f914ce8edbc9d71feb785d3a2ada2bc7fc",
       "implementations": [
         "eth:0xABebf06b97058Db052f2401ea00031A24072f133"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3642,7 +3768,9 @@
       "txHash": "0x9351892d952220f4644ffad9f465ffc0d2a0c79842ab0bdf39abb96558a7f92e",
       "implementations": [
         "eth:0xcc99Fa5152FDdf9fD0222eCDb3e32De7eAa38905"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3652,7 +3780,9 @@
       "txHash": "0xa8f24dc2e640a4763d39f829f3e07fb94dd9f9154c99ad0fc7d36ca13b61094f",
       "implementations": [
         "eth:0x231f33B7277bF1E714647959cc03f9c324543528"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3662,7 +3792,9 @@
       "txHash": "0x2aaa6bf2b59f8327c19373ff59de55b55784004538acbfddcfe4d6b3d4ab68df",
       "implementations": [
         "eth:0x95703215f25f954815fFb0027aE50D51A7Aa23C3"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3672,7 +3804,9 @@
       "txHash": "0xdd4dc2e86fc53adf4d04202bdd5683b5edb2bf608e029794c246601dc649ca2f",
       "implementations": [
         "eth:0x1e5793c022e34856BB3508927020c92E72826752"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3682,7 +3816,9 @@
       "txHash": "0xa920e0b9cbf8d4845038dc1808885b8ba6cb349a403c405ca6c1b48bfc2649fa",
       "implementations": [
         "eth:0x9AfC860A08F909ea174Dbe2d0690dEB252941E06"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3692,7 +3828,9 @@
       "txHash": "0x23e756af44baaea6dd690cf011d9db66a1f581ed3939d8084534ed8983b70391",
       "implementations": [
         "eth:0x211c853753723e32DB8FB0C72B6F81FD938999C6"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3702,7 +3840,9 @@
       "txHash": "0x0d2085c4c952cb97427ff0c68c9166de86abc302d02ef7484d5615294c5415e6",
       "implementations": [
         "eth:0xFB7049ed6C727Ac114623Fd8b09c7607187D37FF"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3712,7 +3852,9 @@
       "txHash": "0x2152e17bec67561f5568865deb1a2d6324a73a3a6839b995f056d1437234b245",
       "implementations": [
         "eth:0x9743591b23B83eD41E6AbCC84016a4C7702C706e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3722,7 +3864,9 @@
       "txHash": "0xe0dbb2cd75021d35e894607a7f390713df68979030bbc0ec3173068596d6a642",
       "implementations": [
         "eth:0x3C3c9bbC94Db3C8f48E1288f99458A98643EbB1C"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3732,7 +3876,9 @@
       "txHash": "0xd5eece06e92c0e167b77ca6d9af5863818443a745d13f483ebf52bb250bc61b1",
       "implementations": [
         "eth:0x61521B0c4FEC3A973daA65942074DcFCB2B9C641"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3742,7 +3888,9 @@
       "txHash": "0x38e1a59fe042c336f0ca114b7a7f3f32bc302848a64f95253961d16779bf76f3",
       "implementations": [
         "eth:0x05de6C9B5Af01a592c1Fa3d8A3Ea8Baf1c700f62"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3752,7 +3900,9 @@
       "txHash": "0xb1c460f54f61709a8d43c1ee930296be268c0b057cbd496c6d5138487598c541",
       "implementations": [
         "eth:0x6d3F182426ABB60927fe4663dA8638D12d6e2c7e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3762,7 +3912,9 @@
       "txHash": "0xcfc7e5d02a9461796a4d7ce92827c7413184d875df8430917d1f02b7668a7fd3",
       "implementations": [
         "eth:0x2eE87cA60a8829516b501E575D0a1665aDc4383e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3772,7 +3924,9 @@
       "txHash": "0x9991eae56d942aaebf9d0adc835510617414cb20f8630c7274f9fae2a6b2f6cf",
       "implementations": [
         "eth:0x9655ED692F3949288DC217b9795BD543bf88d74F"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3782,7 +3936,21 @@
       "txHash": "0x2d5419f29f161efd8aca02850629848750a7ddb12203b4cb3cc308f53f507fe5",
       "implementations": [
         "eth:0x9e4dDE024f7ea5cF13D5f09c51a1555305c99F0c"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2024-01-08T17:16:35.000Z",
+      "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "contractName": "USD Coin Token",
+      "txHash": "0xae3ad89e569f27d47a8a02999a6d937c12aaa6bc50e66650e7cbd3244bde9951",
+      "implementations": [
+        "eth:0x43506849D7C04F9138D1A2050bbF3A0c054402dd"
+      ],
+      "isDependency": true,
+      "entity": "Circle USDC"
     },
     {
       "type": "upgrade",
@@ -3792,7 +3960,9 @@
       "txHash": "0x28245da3f66eb6e4b201fbca82c05d2dbae04a19b87cce8c7f81bb931b69cd23",
       "implementations": [
         "eth:0x8940a7E30682fBdbD0fa3c3D8971b3Dd0B59543A"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3802,7 +3972,9 @@
       "txHash": "0x5b8c5c5a0471f25d0cc0d9421f363a295f0cb2db0cecfbacfcecd49aa89327fe",
       "implementations": [
         "eth:0x9C6ae0DAF3d68ee963Bf032824c295C286Ce9547"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3812,7 +3984,9 @@
       "txHash": "0x66c62c6844859c8475bc77904de2715ab02bb4048fc277b5396fc2a70e2e767e",
       "implementations": [
         "eth:0xccf0D874864DE86679F4F18505004D8C949B058B"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3822,7 +3996,9 @@
       "txHash": "0x4392fbbe681900446f0ee5a6474892bfdf6e5792170a4e8ecc048b4840835877",
       "implementations": [
         "eth:0xBFC4FeEc175996C08C8F3a0469793a7979526065"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3832,7 +4008,9 @@
       "txHash": "0xf73e5eee743d32947d3683b23861cfc0f5796c20098d8fee3372c2b2ecec9cae",
       "implementations": [
         "eth:0x7A1316220A46dCE22fd5c6D55A39513367E6c967"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3842,7 +4020,9 @@
       "txHash": "0xc4f99540accb5aa85b7a5c7d2c2f0c1d9ee27a59501f412046825922c145ca7d",
       "implementations": [
         "eth:0xD1be6F69464BBa0F1D51857f88D28Df19008453f"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3852,7 +4032,9 @@
       "txHash": "0xdba11bdfff0063b5629333783a02f525d2d9b79d7c1e610eba955622c061b355",
       "implementations": [
         "eth:0xea270CA1B5133e58f935A035F3BC5dA53975Fa9C"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3862,7 +4044,9 @@
       "txHash": "0x6c027d5d6b1ca59ebd3bfbc6128a090ed4bd2ed23453b8656daf2bbe9a6d8594",
       "implementations": [
         "eth:0x3bee6ce5369596Fa86eA044A00Ad1Cb4e54a6A01"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3872,7 +4056,9 @@
       "txHash": "0x36fccaf1118a8fd64e2de7e0a05dc74dd84d825e1718b999f7577fdfb11410f2",
       "implementations": [
         "eth:0xCb005d849F384b64838aAD885d5Ff150fc8B7904"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3882,7 +4068,9 @@
       "txHash": "0x6547179307e966c81eca2f6430453a9cc2da4fadd9fdfa14568c949192aec7e9",
       "implementations": [
         "eth:0x075e51FC759F38Cb4c52136048a86c3B3e9a1d02"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3892,7 +4080,9 @@
       "txHash": "0xd4ebbe233d785932959b3d4582f059c0aded370419eb6af74d97b56e4c9287d5",
       "implementations": [
         "eth:0x75602Ddb5315CB3be0AA86c58D88E9b78737a59F"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3902,7 +4092,9 @@
       "txHash": "0xf803c13b5eac09e15b2f9aed4409a7a099f70ef9fda754d8084be33a09cd13ea",
       "implementations": [
         "eth:0xBf1f8BE5405b184b0cC5EC0fb74839442C6Fa1a1"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3912,7 +4104,9 @@
       "txHash": "0xb96f2c61b10b63a8197fe5cd3333597b2ad0b5cf5202fd644c8ffb91ef07d56a",
       "implementations": [
         "eth:0x9c1213b63a587658Aa46647226068E68dFAE5E1e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3922,7 +4116,9 @@
       "txHash": "0xf626c068c89b0c32f7475a86a373e801bc2538fbe04250c8f8308ccb3cb4d475",
       "implementations": [
         "eth:0x77708e0fEE45CB9D177174b260A04bEDA47d0495"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3932,7 +4128,9 @@
       "txHash": "0x8ccef90ee3841b0a7729ecf6e53e2c9d37add6c8c84c712bc7d32afd86e00a4e",
       "implementations": [
         "eth:0x1a7E64b593a9B8796e88a7489a2CEb6d079C850d"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3942,7 +4140,9 @@
       "txHash": "0xfd5e08c8c8a524fcfa3f481b452067d41033644175bc5c3be6a8397847df27fa",
       "implementations": [
         "eth:0x50CB5e9a07F5C8dB997B236761622931364D634E"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3952,7 +4152,9 @@
       "txHash": "0x4d2fe9f4310741f2afc81a88b64ca06c91a6cabf0d030f35cac71373b6847b1b",
       "implementations": [
         "eth:0xC82F17FE345047739eE5a77687FF8700a0EcB37D"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3962,7 +4164,9 @@
       "txHash": "0x5c9dacfaa936f03f433272655a47d6288df233a09124513f25e21de645b6a8f9",
       "implementations": [
         "eth:0x9a759bC2D5248b1Da689c642Ad2Ca3383657361c"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3972,7 +4176,9 @@
       "txHash": "0x5452e8113f267ab3d6d90d3e27c7c60d90b0f8fb1139764d4826bac59fe9625a",
       "implementations": [
         "eth:0x528c57A87706C31765001779168b42f24c694E1b"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3982,7 +4188,9 @@
       "txHash": "0xc4c1eeb3e843cd67e2bdf0c7a4b48f6322cf14cbc17522a338ae80cd0f4606e0",
       "implementations": [
         "eth:0x1f0A35d2d0c877224fA7Cf02d29BfF703906B757"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -3992,7 +4200,9 @@
       "txHash": "0x51e32d2eb43b127e50b7b358cf7da3f94929f911863179dfcd2d957e63b80fba",
       "implementations": [
         "eth:0x2Db426600b566a47E37CB579e1fF46c992eae28e"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -4002,7 +4212,9 @@
       "txHash": "0x650fe00b758d9e8a3467bfbba7bed2035c03603080558d47973e6c0e6b80e45a",
       "implementations": [
         "eth:0xe07C4e685E1f760f944c676C21E736a7664f4D22"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -4012,7 +4224,9 @@
       "txHash": "0xdc9a1d363a70c5473fbfaf54bf85f53082366b9cd4ac608eb2fd1aed67886ec3",
       "implementations": [
         "eth:0x42F9505a376761b180e27a01bA0554244ED1DE7D"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -4022,7 +4236,9 @@
       "txHash": "0x3004e8a6d3121bad2a4812442dfc57a8561a355929f235905a76c560ff6d92aa",
       "implementations": [
         "eth:0xcFC1fA6b7ca982176529899D99af6473aD80DF4F"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
     },
     {
       "type": "upgrade",
@@ -4032,9 +4248,58 @@
       "txHash": "0xfe8e6819f1b43dedacf864d96beaf6b924b69796a28e8c4a5622f21b3cc83cc0",
       "implementations": [
         "eth:0x1C1853Bc7C6bFf0D276Da53972C0b1a066DB1AE7"
-      ]
+      ],
+      "isDependency": false,
+      "entity": null
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2021-04-26T19:14:51.000Z",
+      "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "contractName": "USD Coin Token",
+      "txHash": "0xe2e40640ffd5f76538cd23660cf56f00bfebd5fe925ebad6b8067c4cee18a2c3",
+      "implementations": [
+        "eth:0xa2327a938Febf5FEC13baCFb16Ae10EcBc4cbDCF"
+      ],
+      "isDependency": true,
+      "entity": "Circle USDC"
+    },
+    {
+      "type": "upgrade",
+      "timestamp": "2020-08-27T15:32:54.000Z",
+      "contractAddress": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "contractName": "USD Coin Token",
+      "txHash": "0xe6f0f754398d89583da8e4229c5d7aaa00739a3ae334ecfc2839ac396b4836e3",
+      "implementations": [
+        "eth:0xB7277a6e95992041568D9391D09d0122023778A2"
+      ],
+      "isDependency": true,
+      "entity": "Circle USDC"
     }
   ],
+  "governance": {
+    "framework": "Compound Governor",
+    "voteExecution": "onchain",
+    "votingUnit": "COMP",
+    "proposalRequirements": "25k COMP",
+    "votingProcess": "Proposals execute arbitrary calls via Timelock. 400k COMP quorum; For votes must exceed Against and meet quorum to pass.",
+    "proposalPeriod": {
+      "kind": "fieldRef",
+      "contractAddress": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
+      "fieldName": "votingPeriod",
+      "contractName": "CompoundGovernor",
+      "resolved": true,
+      "seconds": 236520
+    },
+    "executionDelay": {
+      "kind": "fieldRef",
+      "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+      "fieldName": "delay",
+      "contractName": "Timelock",
+      "resolved": true,
+      "seconds": 172800
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",

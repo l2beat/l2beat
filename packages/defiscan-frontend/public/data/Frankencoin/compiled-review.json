@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-11T15:04:20.446Z",
+  "compiledAt": "2026-04-12T08:18:07.978Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -8,7 +8,7 @@
     "chain": "Ethereum",
     "projectType": "stablecoin",
     "tokenName": "ZCHF",
-    "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding $14.81M, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token."
+    "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding $14.82M, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token."
   },
   "totals": {
     "contractCount": 24,
@@ -16,9 +16,9 @@
     "scoredFunctionCount": 18,
     "adminCount": 19,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 84110842.46045403,
-    "totalTokenValueAtRisk": 35565021.589757994,
-    "totalTokenValue": 35565021.589757994
+    "totalCapitalAtRisk": 83691102.60133988,
+    "totalTokenValueAtRisk": 35572788.61180224,
+    "totalTokenValue": 35572788.61180224
   },
   "admins": [
     {
@@ -34,7 +34,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -131,7 +131,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -209,7 +209,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -229,7 +229,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -245,9 +245,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -371,7 +371,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -517,9 +517,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
@@ -717,7 +717,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -756,9 +756,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
@@ -826,7 +826,7 @@
           "functionName": "mint",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -846,7 +846,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -992,14 +992,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current)",
-      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: $69.27M.",
+      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: $68.85M.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1009,7 +1009,7 @@
           "functionName": "registerPosition",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1106,7 +1106,7 @@
           "functionName": "burnWithoutReserve",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1184,7 +1184,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1204,7 +1204,7 @@
           "functionName": "collectProfits",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1399,9 +1399,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
@@ -1521,7 +1521,7 @@
           "functionName": "burnFrom",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1667,14 +1667,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "Immutable savings contract that allows ZCHF holders to deposit and earn interest. Can call coverLoss on the Frankencoin token to absorb losses from the savings pool. Holds $9.94M in deposited ZCHF.",
+      "description": "Immutable savings contract that allows ZCHF holders to deposit and earn interest. Can call coverLoss on the Frankencoin token to absorb losses from the savings pool. Holds $10.25M in deposited ZCHF.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1867,7 +1867,7 @@
           "functionName": "coverLoss",
           "impact": "critical",
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": [],
           "mitigations": [
             {
@@ -1906,9 +1906,9 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 35565021.589757994,
+      "totalDirectTokenValue": 35572788.61180224,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 35565021.589757994
+      "totalReachableTokenValue": 35572788.61180224
     },
     {
       "address": "eth:0x0000000000000000000000000000000000000000",
@@ -1944,7 +1944,7 @@
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Reserve Pool)",
-      "description": "Immutable reserve pool contract that holds the protocol's equity buffer. The kamikaze function allows burning FPS tokens to withdraw a proportional share of the reserve, with $14.81M in direct capital exposure. The restructureCapTable function can redistribute shares but is bounded by a value range constraint. This contract is the backstop for the protocol: losses from challenged positions are covered from the reserve.",
+      "description": "Immutable reserve pool contract that holds the protocol's equity buffer. The kamikaze function allows burning FPS tokens to withdraw a proportional share of the reserve, with $14.82M in direct capital exposure. The restructureCapTable function can redistribute shares but is bounded by a value range constraint. This contract is the backstop for the protocol: losses from challenged positions are covered from the reserve.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1953,7 +1953,7 @@
           "contractName": "Equity",
           "functionName": "kamikaze",
           "impact": "critical",
-          "directFundsUsd": 14836296.477055814,
+          "directFundsUsd": 14844364.250809383,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2024,9 +2024,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 14836296.477055814,
+      "totalDirectCapital": 14844364.250809383,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 14836296.477055814,
+      "totalReachableCapital": 14844364.250809383,
       "totalReachableTokenValue": 1000
     },
     {
@@ -2143,8 +2143,8 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 14836296.477055814,
-    "totalTokenValueAtRisk": 35565021.589757994
+    "totalFundsAtRisk": 14844364.250809383,
+    "totalTokenValueAtRisk": 35572788.61180224
   },
   "dependencies": [
     {
@@ -2204,7 +2204,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 414438.7958166436,
+          "directFundsUsd": 414438.7958163447,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2215,7 +2215,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1585561.2041833564,
+              "tokenValueUsd": 1585561.2041836556,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2269,7 +2269,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mintTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 414438.7958166436,
+          "directFundsUsd": 414438.7958163447,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2280,7 +2280,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1585561.2041833564,
+              "tokenValueUsd": 1585561.2041836556,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2456,8 +2456,8 @@
           ]
         }
       ],
-      "totalFundsAtRisk": 414438.7958166436,
-      "totalTokenValueAtRisk": 1585561.2041833564,
+      "totalFundsAtRisk": 414438.7958163447,
+      "totalTokenValueAtRisk": 1585561.2041836556,
       "dependencyType": "callgraph"
     },
     {
@@ -3510,7 +3510,7 @@
           "functionName": "mint",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": []
         },
         {
@@ -3568,7 +3568,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 35565021.589757994,
+      "totalTokenValueAtRisk": 35572788.61180224,
       "dependencyType": "write"
     },
     {
@@ -3726,7 +3726,7 @@
           "functionName": "coverLoss",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
-          "directTokenValueUsd": 35565021.589757994,
+          "directTokenValueUsd": 35572788.61180224,
           "reachableContracts": []
         },
         {
@@ -3808,7 +3808,7 @@
         }
       ],
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 35565021.589757994,
+      "totalTokenValueAtRisk": 35572788.61180224,
       "dependencyType": "write"
     },
     {
@@ -3870,13 +3870,13 @@
   "dependencyEntityGroups": [
     {
       "entity": "VCHF",
-      "totalFundsAtRisk": 414438.7958166436,
-      "totalTokenValueAtRisk": 1585561.2041833564
+      "totalFundsAtRisk": 414438.7958163447,
+      "totalTokenValueAtRisk": 1585561.2041836556
     },
     {
       "entity": "Chainlink",
       "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 35565021.589757994
+      "totalTokenValueAtRisk": 35572788.61180224
     },
     {
       "entity": "XCHF",
@@ -3885,19 +3885,19 @@
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 414438.7958166436,
-    "totalTokenValueAtRisk": 35565021.589757994
+    "totalFundsAtRisk": 414438.7958163447,
+    "totalTokenValueAtRisk": 35572788.61180224
   },
   "funds": [
     {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "name": "Equity (FPS Reserve Pool)",
-      "description": "Protocol reserve pool that backs the ZCHF stablecoin. Holds $14.81M primarily in ZCHF, serving as the loss-absorption buffer for challenged and liquidated positions. FPS token holders have a proportional claim on this reserve.",
+      "description": "Protocol reserve pool that backs the ZCHF stablecoin. Holds $14.82M primarily in ZCHF, serving as the loss-absorption buffer for challenged and liquidated positions. FPS token holders have a proportional claim on this reserve.",
       "balances": {
-        "totalUsdValue": 14808520.440555874
+        "totalUsdValue": 14816562.493736388
       },
       "positions": {
-        "totalUsdValue": 27776.03649994052
+        "totalUsdValue": 27801.75707299446
       },
       "tokenInfo": null,
       "aggregate": null
@@ -3905,12 +3905,12 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub V2 (Collateral Positions)",
-      "description": "Current MintingHub with $69.27M locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral.",
+      "description": "Current MintingHub with $68.85M locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 69274545.98339821,
+        "totalUsdValue": 68846738.35053049,
         "contractCount": 61,
         "handlerName": "frankencoin-mintinghub"
       }
@@ -3918,9 +3918,9 @@
     {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "name": "Savings (Current)",
-      "description": "Current savings contract holding $9.94M in deposited ZCHF from users earning interest on their stablecoin holdings.",
+      "description": "Current savings contract holding $10.25M in deposited ZCHF from users earning interest on their stablecoin holdings.",
       "balances": {
-        "totalUsdValue": 9935682.055885779
+        "totalUsdValue": 10250783.728359578
       },
       "positions": {
         "totalUsdValue": 0
@@ -3933,7 +3933,7 @@
       "name": "StablecoinBridge (VCHF)",
       "description": "Bridge contract holding $522.77K in VCHF tokens backing ZCHF minted through the 1:1 VCHF-to-ZCHF bridge.",
       "balances": {
-        "totalUsdValue": 522766.0650666593
+        "totalUsdValue": 522766.0650661836
       },
       "positions": null,
       "tokenInfo": null,
@@ -3974,8 +3974,8 @@
       "tokenInfo": {
         "symbol": "ZCHF",
         "price": 1.2695,
-        "totalSupply": "28014983.528757773",
-        "tokenValue": 35565021.589757994
+        "totalSupply": "28021101.70287691",
+        "tokenValue": 35572788.61180224
       },
       "aggregate": null
     }
@@ -4224,6 +4224,34 @@
       "scope": "V2 Smart Contracts"
     }
   ],
+  "activity": [
+    {
+      "type": "upgrade",
+      "timestamp": "2022-12-02T13:04:35.000Z",
+      "contractAddress": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "txHash": "0x88a6f8ad9b0ced4ea3acb1917987e887998858844bd3eef9dcb76feaee73c09e",
+      "implementations": [
+        "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6"
+      ],
+      "isDependency": true,
+      "entity": "VCHF"
+    }
+  ],
+  "governance": {
+    "framework": "Custom",
+    "voteExecution": "onchain",
+    "votingUnit": "FPS",
+    "proposalRequirements": "1000 ZCHF fee",
+    "votingProcess": "Anyone with > 2% of the voting power can veto a proposal. Proposals can change the savings rate, add new collaterals, or add minting modules.",
+    "proposalPeriod": {
+      "kind": "none"
+    },
+    "executionDelay": {
+      "kind": "fixed",
+      "value": "3-14 Days"
+    }
+  },
   "sections": {
     "codeAndAudits": {
       "title": "Code & Audits",
