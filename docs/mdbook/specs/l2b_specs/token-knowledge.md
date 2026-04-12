@@ -12,9 +12,14 @@
   - [Inference](#inference)
 - [Worked Example: Inferring Token Identity via Canonical Bridging](#worked-example-inferring-token-identity-via-canonical-bridging)
 - [Technology Choice](#technology-choice)
+- [Implementation Details](#implementation-details)
+  - [Fact Storage](#fact-storage)
+  - [Transfer Facts](#transfer-facts)
+  - [Importing Transfers into Facts](#importing-transfers-into-facts)
 - [User Interface](#user-interface)
 - [Relationship to Existing Packages](#relationship-to-existing-packages)
 - [Open Questions](#open-questions)
+- [Future Directions](#future-directions)
 - [Scope](#scope)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -40,6 +45,10 @@ The interop pipeline already captures cross-chain token transfers from 60+ bridg
 - specifics about the transfer, e.g. whether a transfer was canonical, meaning both sides represent the same abstract token.
 
 In practice, the TokenDB population workflow has converged to: the interop pipeline discovers a relationship, a human reviews the suggestion in the UI, and the human writes it into the database. The human has become a rubber stamp for knowledge that is already implicit in the data.
+
+Beyond the manual-curation overhead, the "Abstract Token" model itself has proven too simplistic. In TokenDB, abstract tokens are primarily distinguished by issuer: if a token is minted by a bridge rather than the original issuer, the bridge becomes the issuer, and the bridged token may be classified as a separate abstract token. While this heuristic works in many cases, it breaks down in others, particularly in the interop project, which consumes TokenDB data to classify transfers. There are scenarios where two tokens should be considered "the same" for interop purposes despite having different issuers, and the rigid issuer-based splitting cannot express this.
+
+Token Knowledge addresses both problems. Rather than baking in a fixed concept of abstract tokens, it operates purely on facts and rules. Groupings like "abstract token" can still be expressed as derived facts when needed, but the criteria for grouping can evolve freely—without restructuring the underlying data model.
 
 This suggests a different architecture. Instead of building up a persistent database through manual edits, we should **infer** the token catalog from a set of known facts and declarative rules. Manual input should only be needed for the small number of facts that cannot be derived automatically.
 
@@ -74,6 +83,8 @@ A fact is an atomic statement about the world. Facts come from two sources:
   "The token at 0xA0b8... on Ethereum has Coingecko ID 'usd-coin'."
 - `abstract_token(ethereum, 0xA0b8..., usdc)`
   "The token at 0xA0b8... on Ethereum belongs to abstract token USDC."
+
+**Persistence.** The interop pipeline retains transfer data for only 24 hours before discarding it. This means automatic facts cannot be re-derived on demand from the interop database - once the source transfers are purged, the opportunity to extract facts from them is lost. To address this, token-knowledge persists all facts (both automatic and manual) in its own database table. This provides two benefits: facts survive the interop retention window, and token-knowledge becomes independent of the interop pipeline's operational lifecycle, making it possible to decouple the two systems in the future.
 
 ### Rules
 
@@ -177,6 +188,45 @@ That said, the architecture does not depend on Clingo specifically. Other candid
 
 The prototype should use Clingo to validate the approach. The inference engine can be swapped later without changing the fact/rule model.
 
+## Implementation Details
+
+This section describes the concrete implementation approach for the prototype.
+
+### Fact Storage
+
+All facts are stored in a single database table `token-facts-input` with two columns:
+
+- **`name`** — the predicate name (e.g., `transferred`, `issuer`, `coingecko_id`).
+- **`arguments`** — a (B)JSON value containing the predicate's arguments.
+
+This deliberately minimal schema keeps the prototype simple. The inference engine reads all facts from this table, converts them to Clingo-syntax predicates, runs the solver, and returns the derived catalog.
+
+### Transfer Facts
+
+One of the first automatic fact types is the **transfer fact**, which records that a token at one address was bridged to a token at another address by a specific protocol. Its arguments are:
+
+| Argument   | Description |
+|------------|-------------|
+| `tokenA`   | Address (and chain) of the first/source token. |
+| `tokenB`   | Address (and chain) of the second/destination token. |
+| `protocol` | The bridge protocol that performed the transfer. |
+| `proof`    | A human-readable string documenting the evidence, typically referencing the deposit and withdrawal transaction hashes. |
+
+The `proof` field exists for auditability - it lets a human verify why the system believes this fact is true - but it plays no role in inference.
+
+Note that the interop pipeline may record thousands of individual transfers for the same token pair through the same bridge. Token-knowledge only needs **one fact** per unique combination of `(tokenA, tokenB, protocol)`. This is a key reason the facts table stays small even though the underlying transfer volume is large.
+
+### Importing Transfers into Facts
+
+The import process converts interop transfers into facts and works as follows:
+
+1. **Load existing facts.** Read all transfer facts from the database into an in-memory set keyed by `(tokenA, tokenB, protocol)`.
+2. **Poll for new transfers.** Fetch recent transfers from the interop database.
+3. **Deduplicate.** For each transfer, check whether a fact for that `(tokenA, tokenB, protocol)` tuple already exists in the in-memory set. If it does, skip it.
+4. **Create new facts.** If no matching fact exists, insert a new row into the facts table with `name` set to the transfer predicate and `arguments` containing `tokenA`, `tokenB`, `protocol`, and a `proof` string referencing the deposit and withdrawal transaction hashes. Add the tuple to the in-memory set so subsequent transfers in the same batch are also deduplicated.
+
+This ensures that the facts table grows only when genuinely new token relationships are discovered, regardless of how many individual transfers occur.
+
 ## User Interface
 
 Token Knowledge requires a UI for the following tasks:
@@ -203,23 +253,9 @@ The following design questions are not yet resolved and will be addressed as the
 - **Granularity of automatic facts.** The interop database contains rich transfer data. Deciding which fields to extract as facts (and at what granularity) will require iteration. Starting with canonical transfer relationships is the minimum viable set.
 - **Rule versioning.** As rules evolve, the derived catalog will change. Should the system support versioned rule sets or point-in-time snapshots of the catalog?
 
-## Scope
+## Future Directions
 
-This document describes a **prototype** that should validate the core idea: that a useful token catalog can be fully inferred from facts and rules, eliminating most manual curation.
+Ideas that are out of scope for the prototype but worth revisiting later:
 
-The prototype should:
-
-- define the fact schema for automatic facts (extracted from interop) and manual facts,
-- define an initial set of inference rules covering canonical bridging and metadata propagation,
-- integrate Clingo (or an equivalent engine) to produce the derived catalog,
-- provide a minimal UI for entering manual facts and viewing the output,
-- demonstrate end-to-end inference on real data from the existing interop database.
-
-The prototype should **not** attempt to:
-
-- fully replace TokenDB in production (that happens after validation),
-- handle all edge cases around incorrect facts or conflicts,
-- optimize for performance at scale,
-- build a polished rule-editing interface.
-
-If the prototype validates the approach, the next steps would be to formalize the fact extraction pipeline, expand the rule set, build the production UI, and plan the migration from TokenDB.
+- **Indexed fact columns.** The current single-table schema stores all arguments in a JSON blob, which makes querying for facts about a specific token expensive (requires scanning every row). A future optimization could add a small number of indexed columns (`index1`, `index2`, `index3`) alongside the JSON arguments - similar to how Ethereum event logs use indexed topics. Each fact type would declare which of its arguments map to which indexed column, enabling efficient lookups such as "all facts mentioning token address X" via a standard SQL `WHERE` clause. This pattern extends naturally to inferred facts as well.
+- **Persisted inferred facts.** The prototype keeps inferred facts in memory only. If the derived catalog grows large or API latency matters, inferred facts could also be written to a database table (potentially with the same indexed-column scheme), treated as a rebuildable cache.
