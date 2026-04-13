@@ -230,6 +230,70 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
   )
 
   describe(
+    AggregatedInteropTransferRepository.prototype.getGroupsWithStatsInTimeRange
+      .name,
+    () => {
+      it('returns distinct groups that have stats in the provided range', async () => {
+        const day1Early = UnixTime(UnixTime.DAY + 100)
+        const day1Late = UnixTime(UnixTime.DAY + 200)
+        const day2Late = UnixTime(2 * UnixTime.DAY + 200)
+        const day3Early = UnixTime(3 * UnixTime.DAY + 100)
+
+        await repository.insertMany([
+          record({
+            id: 'stargate',
+            timestamp: day1Early,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+          }),
+          record({
+            id: 'stargate',
+            timestamp: day1Late,
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+            bridgeType: 'nonMinting',
+          }),
+          record({
+            id: 'across',
+            timestamp: day2Late,
+            srcChain: 'ethereum',
+            dstChain: 'base',
+            bridgeType: 'lockAndMint',
+          }),
+          record({
+            id: 'outside',
+            timestamp: day3Early,
+            srcChain: 'arbitrum',
+            dstChain: 'optimism',
+            bridgeType: 'burnAndMint',
+          }),
+        ])
+
+        const result = await repository.getGroupsWithStatsInTimeRange(
+          UnixTime.toStartOf(day1Early, 'day'),
+          UnixTime.toStartOf(day3Early, 'day'),
+        )
+
+        expect(result).toEqualUnsorted([
+          {
+            id: 'stargate',
+            bridgeType: 'nonMinting',
+            srcChain: 'ethereum',
+            dstChain: 'arbitrum',
+          },
+          {
+            id: 'across',
+            bridgeType: 'lockAndMint',
+            srcChain: 'ethereum',
+            dstChain: 'base',
+          },
+        ])
+      })
+    },
+  )
+
+  describe(
     AggregatedInteropTransferRepository.prototype
       .getDailyStatsForGroupInTimeRange.name,
     () => {

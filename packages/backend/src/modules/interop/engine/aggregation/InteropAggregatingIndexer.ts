@@ -1,5 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type {
+  AggregatedInteropTransferRecord,
+  Database,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
@@ -8,7 +11,10 @@ import {
 } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
-import type { InteropAggregationAnalyzer } from './InteropAggregationAnalyzer'
+import type {
+  InteropAggregationAnalysis,
+  InteropAggregationAnalyzer,
+} from './InteropAggregationAnalyzer'
 import type { InteropAggregationService } from './InteropAggregationService'
 
 export interface InteropAggregatingIndexerDeps
@@ -45,10 +51,7 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
 
     const { aggregatedTransfers, aggregatedTokens, aggregatedTokensPairs } =
       this.$.aggregationService.aggregate(transfers, this.$.configs, to)
-    const analysis = await this.$.aggregationAnalyzer?.analyze(
-      to,
-      aggregatedTransfers,
-    )
+    const analysis = await this.runAggregateAnalysis(to, aggregatedTransfers)
 
     await this.$.db.transaction(async () => {
       await this.$.db.aggregatedInteropTransfer.deleteAllButEarliestPerDayBefore(
@@ -88,6 +91,28 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     })
 
     return to
+  }
+
+  private async runAggregateAnalysis(
+    timestamp: UnixTime,
+    aggregatedTransfers: AggregatedInteropTransferRecord[],
+  ): Promise<InteropAggregationAnalysis | undefined> {
+    if (!this.$.aggregationAnalyzer) {
+      return undefined
+    }
+
+    try {
+      return await this.$.aggregationAnalyzer.analyze(
+        timestamp,
+        aggregatedTransfers,
+      )
+    } catch (error) {
+      this.logger.error('Failed to analyze interop aggregates', {
+        timestamp,
+        error,
+      })
+      return undefined
+    }
   }
 
   isAggregationInProgress(): boolean {

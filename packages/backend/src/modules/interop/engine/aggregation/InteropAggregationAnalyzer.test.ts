@@ -84,6 +84,7 @@ describe(DefaultInteropAggregationAnalyzer.name, () => {
     const aggregatedInteropTransfer = mockObject<
       Database['aggregatedInteropTransfer']
     >({
+      getGroupsWithStatsInTimeRange: mockFn().resolvesTo([]),
       getDailyStatsForGroupInTimeRange: mockFn().resolvesTo(
         baselineHistory(candidateTimestamp),
       ),
@@ -125,6 +126,52 @@ describe(DefaultInteropAggregationAnalyzer.name, () => {
         'Dst volume z-score=',
       ),
     ).toEqual(true)
+    expect(
+      aggregatedInteropTransfer.getDailyStatsForGroupInTimeRange,
+    ).toHaveBeenCalledWith(
+      'stargate',
+      'nonMinting',
+      'ethereum',
+      'arbitrum',
+      candidateDay - 13 * UnixTime.DAY,
+      candidateDay,
+    )
+  })
+
+  it('analyzes historically active groups that are missing from the current snapshot', async () => {
+    const candidateTimestamp = UnixTime(20 * UnixTime.DAY + 12 * UnixTime.HOUR)
+    const candidateDay = UnixTime.toStartOf(candidateTimestamp, 'day')
+    const aggregatedInteropTransfer = mockObject<
+      Database['aggregatedInteropTransfer']
+    >({
+      getGroupsWithStatsInTimeRange: mockFn().resolvesTo([
+        {
+          id: 'stargate',
+          bridgeType: 'nonMinting',
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+        },
+      ]),
+      getDailyStatsForGroupInTimeRange: mockFn().resolvesTo(
+        baselineHistory(candidateTimestamp),
+      ),
+    })
+    const db = mockObject<Database>({
+      aggregatedInteropTransfer,
+    })
+    const analyzer = new DefaultInteropAggregationAnalyzer(db)
+
+    const result = await analyzer.analyze(candidateTimestamp, [])
+
+    expect(result.checkedGroups).toEqual(1)
+    expect(result.suspiciousGroups).toHaveLength(1)
+    expect(result.suspiciousGroups[0]?.id).toEqual('stargate')
+    expect(
+      hasReason(result.suspiciousGroups[0]?.reasons ?? [], 'Count z-score='),
+    ).toEqual(true)
+    expect(
+      aggregatedInteropTransfer.getGroupsWithStatsInTimeRange,
+    ).toHaveBeenCalledWith(candidateDay - 13 * UnixTime.DAY, candidateDay)
     expect(
       aggregatedInteropTransfer.getDailyStatsForGroupInTimeRange,
     ).toHaveBeenCalledWith(

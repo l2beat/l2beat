@@ -22,6 +22,14 @@ export interface SnapshotTotalsPoint extends SnapshotTotals {
   timestamp: UnixTime
 }
 
+interface GroupedTransferCandidate {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+  metrics: SnapshotTotals
+}
+
 export interface SuspiciousAggregationGroup {
   id: string
   bridgeType: InteropBridgeType
@@ -54,51 +62,57 @@ export class DefaultInteropAggregationAnalyzer
     const groupedTransfers = groupTransfers(candidateTransfers)
     const candidateDay = getDay(candidateTimestamp)
     const historyFrom = candidateDay - (Z_WINDOW_DAYS - 1) * UnixTime.DAY
-
-    const suspiciousGroups = (
-      await Promise.all(
-        [...groupedTransfers.values()].map(async (group) => {
-          const historicalStats =
-            await this.db.aggregatedInteropTransfer.getDailyStatsForGroupInTimeRange(
-              group.id,
-              group.bridgeType,
-              group.srcChain,
-              group.dstChain,
-              historyFrom,
-              candidateDay,
-            )
-
-          const history = historicalStats.map((record) => ({
-            timestamp: record.timestamp,
-            transferCount: record.transferCount,
-            identifiedCount: record.identifiedCount,
-            srcVolumeUsd: record.srcVolumeUsd,
-            dstVolumeUsd: record.dstVolumeUsd,
-          }))
-
-          const reasons = evaluateQualitySignals({
-            candidateTimestamp,
-            candidate: group.metrics,
-            history,
-          })
-
-          if (reasons.length === 0) {
-            return undefined
-          }
-
-          return {
-            id: group.id,
-            bridgeType: group.bridgeType,
-            srcChain: group.srcChain,
-            dstChain: group.dstChain,
-            reasons,
-          } satisfies SuspiciousAggregationGroup
-        }),
+    const historicalGroups =
+      await this.db.aggregatedInteropTransfer.getGroupsWithStatsInTimeRange(
+        historyFrom,
+        candidateDay,
       )
-    ).filter((group) => group !== undefined)
+    const candidateGroups = addMissingHistoricalGroups(
+      groupedTransfers,
+      historicalGroups,
+    )
+    const suspiciousGroups: SuspiciousAggregationGroup[] = []
+
+    for (const group of candidateGroups.values()) {
+      const historicalStats =
+        await this.db.aggregatedInteropTransfer.getDailyStatsForGroupInTimeRange(
+          group.id,
+          group.bridgeType,
+          group.srcChain,
+          group.dstChain,
+          historyFrom,
+          candidateDay,
+        )
+
+      const history = historicalStats.map((record) => ({
+        timestamp: record.timestamp,
+        transferCount: record.transferCount,
+        identifiedCount: record.identifiedCount,
+        srcVolumeUsd: record.srcVolumeUsd,
+        dstVolumeUsd: record.dstVolumeUsd,
+      }))
+
+      const reasons = evaluateQualitySignals({
+        candidateTimestamp,
+        candidate: group.metrics,
+        history,
+      })
+
+      if (reasons.length === 0) {
+        continue
+      }
+
+      suspiciousGroups.push({
+        id: group.id,
+        bridgeType: group.bridgeType,
+        srcChain: group.srcChain,
+        dstChain: group.dstChain,
+        reasons,
+      })
+    }
 
     return {
-      checkedGroups: groupedTransfers.size,
+      checkedGroups: candidateGroups.size,
       suspiciousGroups,
     }
   }
@@ -174,24 +188,10 @@ function materializeDailySeries(
 }
 
 function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {
-  const grouped = new Map<
-    string,
-    {
-      id: string
-      bridgeType: InteropBridgeType
-      srcChain: string
-      dstChain: string
-      metrics: SnapshotTotals
-    }
-  >()
+  const grouped = new Map<string, GroupedTransferCandidate>()
 
   for (const transfer of transfers) {
-    const key = [
-      transfer.id,
-      transfer.bridgeType,
-      transfer.srcChain,
-      transfer.dstChain,
-    ].join('::')
+    const key = toGroupKey(transfer)
     const current = grouped.get(key)
     if (!current) {
       grouped.set(key, {
@@ -218,6 +218,48 @@ function groupTransfers(transfers: AggregatedInteropTransferRecord[]) {
   }
 
   return grouped
+}
+
+function addMissingHistoricalGroups(
+  groupedTransfers: Map<string, GroupedTransferCandidate>,
+  historicalGroups: Array<{
+    id: string
+    bridgeType: InteropBridgeType
+    srcChain: string
+    dstChain: string
+  }>,
+) {
+  for (const group of historicalGroups) {
+    const key = toGroupKey(group)
+    if (groupedTransfers.has(key)) {
+      continue
+    }
+
+    groupedTransfers.set(key, {
+      ...group,
+      metrics: zeroSnapshotTotals(),
+    })
+  }
+
+  return groupedTransfers
+}
+
+function zeroSnapshotTotals(): SnapshotTotals {
+  return {
+    transferCount: 0,
+    identifiedCount: 0,
+    srcVolumeUsd: 0,
+    dstVolumeUsd: 0,
+  }
+}
+
+function toGroupKey(group: {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+}) {
+  return [group.id, group.bridgeType, group.srcChain, group.dstChain].join('::')
 }
 
 function safeDivide(a: number, b: number) {

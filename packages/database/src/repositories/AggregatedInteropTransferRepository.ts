@@ -55,6 +55,13 @@ export interface AggregatedInteropTransferGroupStatsRecord {
   dstVolumeUsd: number
 }
 
+export interface AggregatedInteropTransferGroupRecord {
+  id: string
+  bridgeType: InteropBridgeType
+  srcChain: string
+  dstChain: string
+}
+
 export function toRecord(
   row: Selectable<AggregatedInteropTransfer>,
 ): AggregatedInteropTransferRecord {
@@ -345,6 +352,36 @@ export class AggregatedInteropTransferRepository extends BaseRepository {
       srcVolumeUsd: Number(row.src_volume_usd ?? 0),
       dstVolumeUsd: Number(row.dst_volume_usd ?? 0),
     }))
+  }
+
+  async getGroupsWithStatsInTimeRange(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<AggregatedInteropTransferGroupRecord[]> {
+    const rows = await this.db
+      .selectFrom('AggregatedInteropTransfer')
+      .select(['id', 'bridgeType', 'srcChain', 'dstChain'])
+      .distinct()
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<', UnixTime.toDate(to))
+      .where('srcChain', 'is not', null)
+      .where('dstChain', 'is not', null)
+      .execute()
+
+    return rows.flatMap((row) => {
+      if (!row.srcChain || !row.dstChain) {
+        return []
+      }
+
+      return [
+        {
+          id: row.id,
+          bridgeType: row.bridgeType as InteropBridgeType,
+          srcChain: row.srcChain,
+          dstChain: row.dstChain,
+        },
+      ]
+    })
   }
 
   async getDailyStatsForGroupInTimeRange(
