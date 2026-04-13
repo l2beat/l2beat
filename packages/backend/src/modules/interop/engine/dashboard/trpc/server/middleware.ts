@@ -18,15 +18,19 @@ type Options = {
   prefix?: `/${string}`
 }
 
+export function getInteropTrpcRouterDeps(deps: Dependencies) {
+  return {
+    getExplorerUrl: deps.getExplorerUrl,
+    getChainsForPlugin: (pluginName: string) =>
+      deps.syncersManager.getChainsForPlugin(pluginName),
+    getPluginSyncStatuses: () => deps.syncersManager.getPluginSyncStatuses(),
+    getProcessorStatuses: deps.getProcessorStatuses,
+  }
+}
+
 export function createInteropTrpc(deps: Dependencies, options?: Options) {
   return createKoaMiddleware({
-    router: createInteropTrpcRouter({
-      getExplorerUrl: deps.getExplorerUrl,
-      getChainsForPlugin: (pluginName) =>
-        deps.syncersManager.getChainsForPlugin(pluginName),
-      getPluginSyncStatuses: deps.syncersManager.getPluginSyncStatuses,
-      getProcessorStatuses: deps.getProcessorStatuses,
-    }),
+    router: createInteropTrpcRouter(getInteropTrpcRouterDeps(deps)),
     prefix: options?.prefix,
     allowMethodOverride: true,
     createContext: ({ req }) =>
