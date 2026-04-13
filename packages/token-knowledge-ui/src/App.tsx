@@ -2,18 +2,29 @@ import { api, TRPCReactProvider } from './react-query/trpc'
 
 function ImportPanel() {
   const mutation = api.importFacts.useMutation()
+  const clearMutation = api.clearFacts.useMutation()
 
   return (
     <div className="mb-6">
       <h2 className="mb-2 font-semibold text-lg">Import Transfer Facts</h2>
-      <button
-        type="button"
-        onClick={() => mutation.mutate()}
-        disabled={mutation.isPending}
-        className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
-      >
-        {mutation.isPending ? 'Importing...' : 'Import Facts'}
-      </button>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => mutation.mutate()}
+          disabled={mutation.isPending}
+          className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
+        >
+          {mutation.isPending ? 'Importing...' : 'Import Facts'}
+        </button>
+        <button
+          type="button"
+          onClick={() => clearMutation.mutate()}
+          disabled={clearMutation.isPending}
+          className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:opacity-50"
+        >
+          {clearMutation.isPending ? 'Clearing...' : 'Clear Facts'}
+        </button>
+      </div>
 
       {mutation.error && (
         <p className="mt-2 text-red-600">Error: {mutation.error.message}</p>
@@ -23,6 +34,18 @@ function ImportPanel() {
         <p className="mt-2 text-gray-600 text-sm">
           Imported {mutation.data.imported} new facts, skipped{' '}
           {mutation.data.skipped} duplicates.
+        </p>
+      )}
+
+      {clearMutation.error && (
+        <p className="mt-2 text-red-600">
+          Error: {clearMutation.error.message}
+        </p>
+      )}
+
+      {clearMutation.data && (
+        <p className="mt-2 text-gray-600 text-sm">
+          Cleared {clearMutation.data.deleted} facts.
         </p>
       )}
     </div>

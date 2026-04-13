@@ -1,4 +1,8 @@
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type {
+  Database,
+  InteropTransferRecord,
+  TokenFactInputRecord,
+} from '@l2beat/database'
 
 const FACT_NAME = 'transfer'
 
@@ -18,6 +22,16 @@ function transferToArguments(t: InteropTransferRecord): string {
   const dstAddr = (t.dstTokenAddress as string).toLowerCase()
   const bridge = t.bridgeType ?? 'unknown'
   return `"${t.srcChain}","${srcAddr}","${t.dstChain}","${dstAddr}",${t.plugin},${bridge}`
+}
+
+function transferToContext(t: InteropTransferRecord): {
+  srcTxHash?: string
+  dstTxHash?: string
+} {
+  return {
+    srcTxHash: t.srcTxHash,
+    dstTxHash: t.dstTxHash,
+  }
 }
 
 export async function importTransferFacts(
@@ -40,7 +54,7 @@ export async function importTransferFacts(
   const transfers = await db.interopTransfer.getAll()
 
   // Step 3+4: Deduplicate and collect new facts
-  const newFacts: { name: string; arguments: string }[] = []
+  const newFacts: Omit<TokenFactInputRecord, 'id'>[] = []
   let skipped = 0
 
   for (const t of transfers) {
@@ -65,6 +79,7 @@ export async function importTransferFacts(
     newFacts.push({
       name: FACT_NAME,
       arguments: transferToArguments(t),
+      context: transferToContext(t),
     })
   }
 

@@ -51,16 +51,18 @@ function makeTransfer(
   }
 }
 
+type InsertedFact = Omit<TokenFactInputRecord, 'id'>
+
 function mockDb(
   existingFacts: TokenFactInputRecord[],
   transfers: InteropTransferRecord[],
 ) {
-  const inserted: { name: string; arguments: string }[] = []
+  const inserted: InsertedFact[] = []
   return {
     db: {
       tokenFactInput: {
         getByName: async () => existingFacts,
-        insertMany: async (records: { name: string; arguments: string }[]) => {
+        insertMany: async (records: InsertedFact[]) => {
           inserted.push(...records)
         },
       },
@@ -84,6 +86,8 @@ describe(importTransferFacts.name, () => {
           dstTokenAddress: ADDR_B,
           plugin: 'hop',
           bridgeType: 'lockAndMint',
+          srcTxHash: '0xsrctx',
+          dstTxHash: '0xdsttx',
         }),
       ],
     )
@@ -97,6 +101,61 @@ describe(importTransferFacts.name, () => {
     expect(inserted[0]!.arguments).toEqual(
       `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
     )
+    expect(inserted[0]!.context).toEqual({
+      srcTxHash: '0xsrctx',
+      dstTxHash: '0xdsttx',
+    })
+  })
+
+  it('omits tx hashes from context when missing', async () => {
+    const { db, inserted } = mockDb(
+      [],
+      [
+        makeTransfer({
+          srcChain: 'ethereum',
+          srcTokenAddress: ADDR_A,
+          dstChain: 'base',
+          dstTokenAddress: ADDR_B,
+          plugin: 'hop',
+          bridgeType: 'lockAndMint',
+          srcTxHash: undefined,
+          dstTxHash: undefined,
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(1)
+    expect(inserted[0]!.context).toEqual({
+      srcTxHash: undefined,
+      dstTxHash: undefined,
+    })
+  })
+
+  it('excludes tx hashes from the dedup key', async () => {
+    const base = makeTransfer({
+      srcChain: 'ethereum',
+      srcTokenAddress: ADDR_A,
+      dstChain: 'base',
+      dstTokenAddress: ADDR_B,
+      plugin: 'hop',
+      bridgeType: 'lockAndMint',
+    })
+
+    const { db, inserted } = mockDb(
+      [],
+      [
+        { ...base, transferId: 'tx1', srcTxHash: '0xaaa', dstTxHash: '0xbbb' },
+        { ...base, transferId: 'tx2', srcTxHash: '0xccc', dstTxHash: '0xddd' },
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(1)
+    expect(result.skipped).toEqual(1)
+    expect(inserted.length).toEqual(1)
   })
 
   it('lowercases addresses when building facts', async () => {
@@ -126,6 +185,7 @@ describe(importTransferFacts.name, () => {
       id: 1,
       name: 'transfer',
       arguments: `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
+      context: null,
     }
 
     const { db, inserted } = mockDb(
@@ -154,6 +214,7 @@ describe(importTransferFacts.name, () => {
       id: 1,
       name: 'transfer',
       arguments: `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
+      context: null,
     }
 
     const { db, inserted } = mockDb(

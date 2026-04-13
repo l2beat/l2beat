@@ -10,6 +10,11 @@ export const appRouter = router({
     return importTransferFacts(ctx.db)
   }),
 
+  clearFacts: publicProcedure.mutation(async ({ ctx }) => {
+    const deleted = await ctx.db.tokenFactInput.deleteAll()
+    return { deleted }
+  }),
+
   infer: publicProcedure.query(async ({ ctx }) => {
     const allFacts = await ctx.db.tokenFactInput.getAll()
     const factsProgram = allFacts

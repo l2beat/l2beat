@@ -6,6 +6,7 @@ export interface TokenFactInputRecord {
   id: number
   name: string
   arguments: string
+  context: unknown | null
 }
 
 function toRecord(row: Selectable<TokenFactInput>): TokenFactInputRecord {
@@ -13,6 +14,7 @@ function toRecord(row: Selectable<TokenFactInput>): TokenFactInputRecord {
     id: row.id,
     name: row.name,
     arguments: row.arguments,
+    context: row.context ?? null,
   }
 }
 
@@ -22,6 +24,7 @@ function toRow(
   return {
     name: record.name,
     arguments: record.arguments,
+    context: record.context === null ? null : JSON.stringify(record.context),
   }
 }
 
