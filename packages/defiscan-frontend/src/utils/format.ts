@@ -41,3 +41,8 @@ export function etherscanUrl(address: string): string {
   const raw = stripChainPrefix(address)
   return `https://etherscan.io/address/${raw}`
 }
+
+export function etherscanTxUrl(txHash: string): string {
+  const raw = stripChainPrefix(txHash)
+  return `https://etherscan.io/tx/${raw}`
+}

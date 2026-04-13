@@ -1,5 +1,6 @@
 import type { CompiledReview } from '../../../../types'
-import { truncateAddress, etherscanUrl, stripChainPrefix } from '../../../../utils/format'
+import { truncateAddress, etherscanUrl, etherscanTxUrl, stripChainPrefix } from '../../../../utils/format'
+import { describeActivityEvent } from '../activityDescription'
 import { SectionHeader, ShowMoreButton } from './_shared'
 
 interface ActivitySectionProps {
@@ -62,7 +63,9 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
       <div className="flex flex-col">
         {recent.map((event, i) => {
           const rawTx = stripChainPrefix(event.txHash)
-          const rawContract = stripChainPrefix(event.contractAddress)
+          const sentencePrefix = describeActivityEvent(event, {
+            omitName: true,
+          }).replace(/\.$/, '')
           const isLast = i === recent.length - 1
           return (
             <div
@@ -89,12 +92,31 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                       <span className="font-normal text-text-muted"> ({event.entity})</span>
                     )}
                   </p>
-                  <p className="font-mono text-[11px] text-text-muted truncate">
-                    {truncateAddress(rawContract)}
+                  <p className="text-[13px] text-text-primary truncate">
+                    {sentencePrefix}
+                    {event.implementations.length > 0 && (
+                      <>
+                        :{' '}
+                        {event.implementations.map((impl, idx) => (
+                          <span key={impl}>
+                            {idx > 0 && ', '}
+                            <a
+                              href={etherscanUrl(impl)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-mono text-accent hover:underline"
+                              title={stripChainPrefix(impl)}
+                            >
+                              {truncateAddress(impl)}
+                            </a>
+                          </span>
+                        ))}
+                      </>
+                    )}
                   </p>
                 </div>
                 <a
-                  href={etherscanUrl(event.txHash)}
+                  href={etherscanTxUrl(event.txHash)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-[11px] text-text-muted hover:text-accent transition-colors shrink-0 flex items-center gap-1"
@@ -127,12 +149,35 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                     <span className="font-normal text-text-muted"> ({event.entity})</span>
                   )}
                 </p>
-                {/* Row 3: date + tx link */}
+                {/* Row 3: descriptive sentence with implementation link(s) */}
+                <p className="text-[13px] text-text-primary">
+                  {sentencePrefix}
+                  {event.implementations.length > 0 && (
+                    <>
+                      :{' '}
+                      {event.implementations.map((impl, idx) => (
+                        <span key={impl}>
+                          {idx > 0 && ', '}
+                          <a
+                            href={etherscanUrl(impl)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono text-accent hover:underline"
+                            title={stripChainPrefix(impl)}
+                          >
+                            {truncateAddress(impl)}
+                          </a>
+                        </span>
+                      ))}
+                    </>
+                  )}
+                </p>
+                {/* Row 4: date + tx link */}
                 <div className="flex items-center gap-3">
                   <p className="font-mono font-normal text-[12px] text-text-muted">{formatDate(event.timestamp)}</p>
                   <span className="text-text-muted/40">|</span>
                   <a
-                    href={etherscanUrl(event.txHash)}
+                    href={etherscanTxUrl(event.txHash)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-mono text-[11px] text-text-muted hover:text-accent transition-colors flex items-center gap-1"

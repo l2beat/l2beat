@@ -85,7 +85,11 @@ export function ReviewPage() {
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-4 print:hidden">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <Link
-              to="/gallery"
+              to={
+                view === 'activity'
+                  ? `/protocol/${slug}?view=report`
+                  : '/gallery'
+              }
               className="inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
             >
               <svg
@@ -101,13 +105,15 @@ export function ReviewPage() {
                   d="M15 19l-7-7 7-7"
                 />
               </svg>
-              Back to gallery
+              {view === 'activity' ? 'Back to report' : 'Back to gallery'}
             </Link>
-            <div className="print:hidden">
-              <ViewModeToggle current={view} onChange={handleViewChange}>
-                <ShareButton review={review} onExportPdf={handleExportPdf} />
-              </ViewModeToggle>
-            </div>
+            {view !== 'activity' && (
+              <div className="print:hidden">
+                <ViewModeToggle current={view} onChange={handleViewChange}>
+                  <ShareButton review={review} onExportPdf={handleExportPdf} />
+                </ViewModeToggle>
+              </div>
+            )}
           </div>
         </div>
       )}
