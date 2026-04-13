@@ -1,9 +1,10 @@
-export interface ClingoResult {
-  Result: string
-  Call: { Witnesses: { Value: string[] }[] }[]
-}
+import type { ClingoError, ClingoResult } from 'clingo-wasm'
 
-export async function runClingo(program: string): Promise<ClingoResult> {
+export type { ClingoError, ClingoResult }
+
+export async function runClingo(
+  program: string,
+): Promise<ClingoResult | ClingoError> {
   const clingoModule = await import('clingo-wasm')
   // Handle both ESM and CommonJS module formats
   // @ts-ignore
@@ -11,7 +12,10 @@ export async function runClingo(program: string): Promise<ClingoResult> {
   return run(program, 0)
 }
 
-export function extractFacts(result: ClingoResult): string[] {
+export function extractFacts(result: ClingoResult | ClingoError): string[] {
+  if (result.Result === 'ERROR') {
+    throw new Error(`Clingo error: ${result.Error}`)
+  }
   if (result.Result !== 'SATISFIABLE') {
     throw new Error(`Clingo result: ${result.Result}`)
   }

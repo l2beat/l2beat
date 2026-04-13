@@ -1,5 +1,10 @@
 import { expect } from 'earl'
-import { extractFacts, runClingo } from './runClingo'
+import {
+  type ClingoError,
+  type ClingoResult,
+  extractFacts,
+  runClingo,
+} from './runClingo'
 
 describe(runClingo.name, () => {
   it('runs a simple program and returns SATISFIABLE', async () => {
@@ -16,8 +21,19 @@ describe(runClingo.name, () => {
 
 describe(extractFacts.name, () => {
   it('throws on non-satisfiable result', () => {
-    expect(() => extractFacts({ Result: 'UNSATISFIABLE', Call: [] })).toThrow(
-      'Clingo result: UNSATISFIABLE',
+    const result = { Result: 'UNSATISFIABLE', Call: [] } as unknown as
+      | ClingoResult
+      | ClingoError
+    expect(() => extractFacts(result)).toThrow('Clingo result: UNSATISFIABLE')
+  })
+
+  it('throws with error details on ERROR result', () => {
+    const result: ClingoError = {
+      Result: 'ERROR',
+      Error: 'parsing failed: syntax error',
+    }
+    expect(() => extractFacts(result)).toThrow(
+      'Clingo error: parsing failed: syntax error',
     )
   })
 })
