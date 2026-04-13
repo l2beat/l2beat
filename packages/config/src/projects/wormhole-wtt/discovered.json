@@ -1,6 +1,6 @@
 {
   "name": "wormhole-wtt",
-  "timestamp": 1772790508,
+  "timestamp": 1775637905,
   "configHash": "0xe463a6311ff10dbff473c08e55d67e1efbfcda1f3e0989e3daab4b2d51f8fed2",
   "entries": [
     {
@@ -195,11 +195,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -290,20 +285,17 @@
       "proxyType": "EOA"
     },
     {
-      "name": "DeliveryProviderImplementation",
+      "name": "",
       "address": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
       "type": "Contract",
-      "sourceHashes": [
-        "0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c",
-        "0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["getSupportedKeys"],
       "sinceTimestamp": 1686937559,
       "sinceBlock": 17493968,
       "values": {
         "$admin": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-        "$implementation": "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
+        "$implementation": "eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454",
         "$pastUpgrades": [
           [
             "2023-06-16T17:45:59.000Z",
@@ -319,21 +311,18 @@
             "2023-11-07T19:13:23.000Z",
             "0x3e54828f7538d9259f50addac33d3779a48a72f1ac3cedffa062cf89b1351e41",
             ["eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"]
+          ],
+          [
+            "2026-04-02T01:34:23.000Z",
+            "0x7231c796b404394aad777272879a82c3ac6f30b0370cb302458148fe72b3087b",
+            ["eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454"]
           ]
         ],
-        "$upgradeCount": 3,
-        "chainId": 2,
-        "coreRelayer": "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-        "getRewardAddress": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46",
-        "getSupportedKeys": 6,
-        "owner": "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "pricingWallet": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
-        "rewardAddress": "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+        "$upgradeCount": 4
       },
       "implementationNames": {
         "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": "DeliveryProviderProxy",
-        "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": "DeliveryProviderImplementation"
+        "eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454": ""
       }
     },
     {
@@ -490,11 +479,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "NFTImplementation",
       "address": "eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc",
       "type": "Contract",
@@ -531,82 +515,6 @@
     }
   ],
   "abis": {
-    "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [
-      "error AddressIsZero()",
-      "error CallerMustBeOwner()",
-      "error CallerMustBeOwnerOrPricingWallet()",
-      "error CallerMustBePendingOwner()",
-      "error CallerNotApproved(address msgSender)",
-      "error ChainIdIsZero()",
-      "error ExceedsMaximumBudget(uint16 targetChain, uint256 exceedingValue, uint256 maximumBudget)",
-      "error FailedToInitializeImplementation(string reason)",
-      "error GasPriceIsZero()",
-      "error ImplementationAlreadyInitialized()",
-      "error MaxRefundGreaterThanGasLimitCost(uint256 maxRefund, uint256 gasLimitCost)",
-      "error MaxRefundGreaterThanGasLimitCostOnSourceChain(uint256 maxRefund, uint256 gasLimitCost)",
-      "error NativeCurrencyPriceIsZero()",
-      "error Overflow(uint256 value, uint256 max)",
-      "error PriceIsZero(uint16 chain)",
-      "error UnexpectedExecutionParamsVersion(uint8 version, uint8 expectedVersion)",
-      "error UnsupportedExecutionParamsVersion(uint8 version)",
-      "error WrongChainId()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event AssetConversionBufferUpdated(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event ChainSupportUpdated(uint16 targetChain, bool isSupported)",
-      "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
-      "event DeliverGasOverheadUpdated(uint256 indexed oldGasOverhead, uint256 indexed newGasOverhead)",
-      "event OwnershipTransfered(address indexed oldOwner, address indexed newOwner)",
-      "event RewardAddressUpdated(address indexed newAddress)",
-      "event TargetChainAddressUpdated(uint16 indexed targetChain, bytes32 indexed newAddress)",
-      "event Upgraded(address indexed implementation)",
-      "event WormholeRelayerUpdated(address coreRelayer)",
-      "function assetConversionBuffer(uint16 targetChain) view returns (uint16 buffer, uint16 bufferDenominator)",
-      "function chainId() view returns (uint16)",
-      "function confirmOwnershipTransferRequest()",
-      "function coreRelayer() view returns (address)",
-      "function deliverGasOverhead(uint16 targetChain) view returns (uint256)",
-      "function gasPrice(uint16 targetChain) view returns (uint256)",
-      "function getRewardAddress() view returns (address)",
-      "function getSupportedKeys() view returns (uint256 bitmap)",
-      "function getTargetChainAddress(uint16 targetChain) view returns (bytes32 deliveryProviderAddress)",
-      "function initialize()",
-      "function isChainSupported(uint16 targetChain) view returns (bool supported)",
-      "function isInitialized(address impl) view returns (bool)",
-      "function isMessageKeyTypeSupported(uint8 keyType) view returns (bool supported)",
-      "function maximumBudget(uint16 targetChain) view returns (uint256)",
-      "function nativeCurrencyPrice(uint16 targetChain) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function pricingWallet() view returns (address)",
-      "function quoteAssetConversion(uint16 targetChain, uint256 currentChainAmount) view returns (uint256 targetChainAmount)",
-      "function quoteDeliveryOverhead(uint16 targetChain) view returns (uint256 nativePriceQuote)",
-      "function quoteDeliveryPrice(uint16 targetChain, uint256 receiverValue, bytes encodedExecutionParams) view returns (uint256 nativePriceQuote, bytes encodedExecutionInfo)",
-      "function quoteEvmDeliveryPrice(uint16 targetChain, uint256 gasLimit, uint256 receiverValue) view returns (uint256 nativePriceQuote, uint256 targetChainRefundPerUnitGasUnused)",
-      "function quoteGasCost(uint16 targetChain, uint256 gasAmount) view returns (uint256 totalCost)",
-      "function quoteGasPrice(uint16 targetChain) view returns (uint256 price)",
-      "function rewardAddress() view returns (address)",
-      "function submitOwnershipTransferRequest(uint16 thisRelayerChainId, address newOwner)",
-      "function targetChainAddress(uint16 targetChain) view returns (bytes32)",
-      "function updateAssetConversionBuffer(uint16 targetChain, uint16 buffer, uint16 bufferDenominator)",
-      "function updateAssetConversionBuffers(tuple(uint16 chainId, uint16 buffer, uint16 bufferDenominator)[] updates)",
-      "function updateConfig(tuple(bool updateAssetConversionBuffer, bool updateDeliverGasOverhead, bool updatePrice, bool updateTargetChainAddress, bool updateMaximumBudget, bool updateSupportedChain, bool isSupported, uint16 chainId, uint16 buffer, uint16 bufferDenominator, uint256 newGasOverhead, uint256 gasPrice, uint256 nativeCurrencyPrice, bytes32 targetChainAddress, uint256 maximumTotalBudget)[] updates, tuple(bool updateWormholeRelayer, bool updateRewardAddress, bool updateSupportedKeyTypes, address coreRelayer, address rewardAddress, uint256 supportedKeyTypesBitmap) coreConfig)",
-      "function updateDeliverGasOverhead(uint16 chainId, uint256 newGasOverhead)",
-      "function updateDeliverGasOverheads(tuple(uint16 chainId, uint256 newGasOverhead)[] overheadUpdates)",
-      "function updateMaximumBudget(uint16 targetChain, uint256 maximumTotalBudget)",
-      "function updateMaximumBudgets(tuple(uint16 chainId, uint256 maximumTotalBudget)[] updates)",
-      "function updatePrice(uint16 updateChainId, uint256 updateGasPrice, uint256 updateNativeCurrencyPrice)",
-      "function updatePrices(tuple(uint16 chainId, uint256 gasPrice, uint256 nativeCurrencyPrice)[] updates)",
-      "function updatePricingWallet(address newPricingWallet)",
-      "function updateRewardAddress(address newAddress)",
-      "function updateSupportedChain(uint16 targetChain, bool isSupported)",
-      "function updateSupportedChains(tuple(uint16 chainId, bool isSupported)[] updates)",
-      "function updateSupportedMessageKeyTypes(uint8 keyType, bool supported)",
-      "function updateTargetChainAddress(uint16 targetChain, bytes32 newAddress)",
-      "function updateTargetChainAddresses(tuple(uint16 chainId, bytes32 targetChainAddress)[] updates)",
-      "function updateWormholeRelayer(address newAddress)",
-      "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
-    ],
     "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
@@ -920,6 +828,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 24597622 },
-  "permissionsConfigHash": "0x38c5d04b70c36c8f3c8f18a3036ad91fdb93280f3db4f3958b8f5a8510e109ee"
+  "usedBlockNumbers": { "ethereum": 24833873 },
+  "permissionsConfigHash": "0x5026ca807240b628f0f67400e2f3fc06d51178b6ad2bb2c3a92af678e2564395"
 }

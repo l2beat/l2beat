@@ -280,9 +280,17 @@
       "type": "EOA",
       "project": "shared-sharp-verifier"
     },
+    "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE": {
+      "type": "EOA",
+      "project": "shared-sharp-verifier"
+    },
     "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": {
       "name": "CpuOods",
       "type": "Contract",
+      "project": "shared-sharp-verifier"
+    },
+    "eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426": {
+      "type": "EOA",
       "project": "shared-sharp-verifier"
     },
     "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec": {

@@ -1,3 +1,4 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import {
   getUnderReviewText,
   type UnderReviewStatus,
@@ -10,7 +11,7 @@ interface Project {
   underReviewStatus?: UnderReviewStatus
   header?: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
   }
 }
@@ -51,7 +52,7 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
       )}
       {project.header?.redWarning && (
         <Banner type="negative" centered asMarkdown>
-          {project.header.redWarning}
+          {project.header.redWarning.text}
         </Banner>
       )}
       {project.header?.emergencyWarning && (

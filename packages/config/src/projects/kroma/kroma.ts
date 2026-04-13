@@ -63,8 +63,9 @@ export const kroma: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    redWarning:
-      'Kroma shut down on June 30, 2025. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
+    redWarning: {
+      text: 'Kroma shut down on June 30, 2025. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
+    },
     name: 'Kroma',
     slug: 'kroma',
     description:

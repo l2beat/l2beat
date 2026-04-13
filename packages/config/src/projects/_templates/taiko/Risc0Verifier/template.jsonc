@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoRisc0Verifier",
+  "description": "Gating router contract to verify batches using RISC Zero.",
+  "category": "core",
+  "fields": {
+    "owner": {
+      "permissions": [
+        { "type": "interact", "description": "update the trusted image ids" }
+      ]
+    },
+    "trustedImages": {
+      "description": "Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "imageId",
+        "add": { "event": "ImageTrusted", "where": ["=", "#trusted", true] },
+        "remove": { "event": "ImageTrusted", "where": ["=", "#trusted", false] }
+      }
+    }
+  }
+}

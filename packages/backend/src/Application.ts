@@ -35,8 +35,6 @@ export class Application {
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
-      config.clock.hourlyCutoffDays,
-      config.clock.sixHourlyCutoffDays,
     )
     const providers = new Providers(config, logger)
     const deps: ModuleDependencies = {

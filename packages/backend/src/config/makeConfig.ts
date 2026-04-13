@@ -49,8 +49,6 @@ export async function makeConfig(
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
       safeTimeOffsetSeconds: 60 * 60,
-      hourlyCutoffDays: 7,
-      sixHourlyCutoffDays: 90,
     },
     database: isLocal
       ? {
@@ -159,6 +157,7 @@ export async function makeConfig(
       flags,
       chains,
       activeChains,
+      isLocal,
     ),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

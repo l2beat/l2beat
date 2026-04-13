@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getProposalHash", "proxiableUUID"],
+  "fields": {
+    "paused": { "severity": "HIGH" },
+    "getCurrentForcedInclusionFee": { "severity": "HIGH" },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the rollup system."
+        }
+      ]
+    }
+  },
+  "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
+  "category": "core",
+  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2."
+}

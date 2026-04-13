@@ -289,6 +289,43 @@
       "transfers": [{ "type": "ccip.Transfer" }]
     }
   },
+  "ccip-monad": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Monad → Base (v1.6 LockedOrBurned + ReleasedOrMinted, cbBTC)
+      {
+        "chain": "monad",
+        "tx": "0x17b872afb77a8c1cf6fda674ba67c1fe04badbd7002a0c03a83c4124bc70e879"
+      },
+      {
+        "chain": "base",
+        "tx": "0x739c080171a391b04c4152742f3f459fd48f7dc1f8b61fc233e28a0815ff41f9"
+      },
+      // Ethereum → Monad (v1.6 LockedOrBurned + ReleasedOrMinted, USD1)
+      {
+        "chain": "ethereum",
+        "tx": "0xb635b36c4f9f9bb676baae5fb29c31f1222a4ea92c68e0a9f3eec329dd01178b"
+      },
+      {
+        "chain": "monad",
+        "tx": "0x9981eea9a8f1ba5b4b516f9571e42c9f6eb875ed1bd82aae166204cdcc5dd6d2"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // Only the non-Monad side gets financials enrichment for now,
+        // so we only assert symbol/amount on that side.
+        {
+          "type": "ccip.Transfer",
+          "src": { "financials": { "symbol": "USD1", "amount": 1048115.7 } }
+        },
+        {
+          "type": "ccip.Transfer",
+          "dst": { "financials": { "symbol": "cbBTC", "amount": 16 } }
+        }
+      ]
+    }
+  },
   "ccip-batched": {
     "loadConfigs": ["ccip"],
     "txs": [

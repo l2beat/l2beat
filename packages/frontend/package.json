@@ -21,8 +21,7 @@
     "format:fix": "biome check --write .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "test-all-pages": "scripts/test-all-pages/test.sh",
-    "hot-cache": "tsx scripts/hot-cache/index.ts"
+    "test-all-pages": "scripts/test-all-pages/test.sh"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",

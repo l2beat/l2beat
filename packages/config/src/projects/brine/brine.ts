@@ -66,8 +66,10 @@ export const brine: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    redWarning:
-      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     architectureImage: 'starkex',
     name: 'tanX',
     slug: 'tanx',
