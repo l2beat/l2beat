@@ -21,7 +21,7 @@ function transferToArguments(t: InteropTransferRecord): string {
   const srcAddr = (t.srcTokenAddress as string).toLowerCase()
   const dstAddr = (t.dstTokenAddress as string).toLowerCase()
   const bridge = t.bridgeType ?? 'unknown'
-  return `"${t.srcChain}","${srcAddr}","${t.dstChain}","${dstAddr}",${t.plugin},${bridge}`
+  return `${t.srcChain},"${srcAddr}",${t.dstChain},"${dstAddr}",${t.plugin},${bridge}`
 }
 
 function transferToContext(t: InteropTransferRecord): {
@@ -41,7 +41,7 @@ export async function importTransferFacts(
   const existing = await db.tokenFactInput.getByName(FACT_NAME)
   const seen = new Set<string>()
   for (const fact of existing) {
-    // Format: "srcChain","srcAddr","dstChain","dstAddr",plugin,bridge
+    // Format: srcChain,"srcAddr",dstChain,"dstAddr",plugin,bridge
     const [srcChain, srcAddr, dstChain, dstAddr, plugin, bridge] =
       fact.arguments.split(',').map((s: string) => s.replace(/"/g, ''))
     if (!srcChain || !srcAddr || !dstChain || !dstAddr || !plugin || !bridge) {

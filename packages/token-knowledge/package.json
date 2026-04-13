@@ -9,7 +9,7 @@
     "build:dependencies": "cd ../.. && pnpm build:dependencies:token-knowledge",
     "start": "node build/server.js",
     "dev": "node -r esbuild-register src/server.ts",
-    "dev:watch": "node --watch -r esbuild-register src/server.ts",
+    "dev:watch": "node --watch --watch-path=src/rules.lp -r esbuild-register src/server.ts",
     "clean": "rm -rf build",
     "test": "mocha",
     "typecheck": "tsc --noEmit",

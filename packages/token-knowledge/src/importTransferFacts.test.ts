@@ -99,7 +99,7 @@ describe(importTransferFacts.name, () => {
     expect(inserted.length).toEqual(1)
     expect(inserted[0]!.name).toEqual('transfer')
     expect(inserted[0]!.arguments).toEqual(
-      `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
+      `ethereum,"${ADDR_A}",base,"${ADDR_B}",hop,lockAndMint`,
     )
     expect(inserted[0]!.context).toEqual({
       srcTxHash: '0xsrctx',
