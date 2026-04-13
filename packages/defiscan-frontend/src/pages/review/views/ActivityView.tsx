@@ -1,7 +1,27 @@
 import { useMemo, useState } from 'react'
-import type { CompiledReview } from '../../../types'
-import { etherscanTxUrl, stripChainPrefix } from '../../../utils/format'
+import type { ActivityEvent, CompiledReview } from '../../../types'
+import {
+  etherscanTxUrl,
+  etherscanUrl,
+  stripChainPrefix,
+  truncateAddress,
+} from '../../../utils/format'
+import { ProtocolLogo } from '../../../components/ProtocolLogo'
 import { describeActivityEvent } from './activityDescription'
+
+function eventContractAddress(event: ActivityEvent): string {
+  return event.type === 'upgrade' ? event.contractAddress : event.address
+}
+
+function eventContractName(event: ActivityEvent): string {
+  if (event.type === 'upgrade') return event.contractName
+  return event.contractName ?? truncateAddress(event.address)
+}
+
+function eventKey(event: ActivityEvent, index: number): string {
+  if (event.type === 'upgrade') return `${event.txHash}-${index}`
+  return event.id
+}
 
 interface ActivityViewProps {
   review: CompiledReview
@@ -75,8 +95,8 @@ export function ActivityView({ review }: ActivityViewProps) {
   const monitoredContracts = review.totals.contractCount
   const lastVerified = formatRelative(review.compiledAt)
   const protocolName = review.metadata.protocolName
+  const protocolSlug = review.metadata.protocolSlug
   const description = review.metadata.description
-  const initial = (protocolName?.[0] ?? '?').toUpperCase()
 
   return (
     <div className="flex flex-col gap-8 pt-2">
@@ -85,8 +105,11 @@ export function ActivityView({ review }: ActivityViewProps) {
         {/* Left: logo + name + description */}
         <div className="flex max-w-[480px] flex-col gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-[#dcfce7] font-bold text-[#15803d] text-lg">
-              {initial}
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-white p-[9px] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]">
+              <ProtocolLogo
+                slug={protocolSlug}
+                className="h-full w-full object-contain"
+              />
             </div>
             <h1 className="font-bold text-3xl text-text-primary tracking-[-0.6px]">
               {protocolName}
@@ -235,10 +258,11 @@ export function ActivityView({ review }: ActivityViewProps) {
               <tbody>
                 {visible.map((event, i) => {
                   const isDep = !!event.isDependency
-                  const rawTx = stripChainPrefix(event.txHash)
+                  const contractAddr = eventContractAddress(event)
+                  const contractLabel = eventContractName(event)
                   return (
                     <tr
-                      key={`${event.txHash}-${i}`}
+                      key={eventKey(event, i)}
                       className="border-border/30 border-b last:border-b-0"
                     >
                       <td className="px-6 py-4 align-middle">
@@ -247,7 +271,7 @@ export function ActivityView({ review }: ActivityViewProps) {
                         </span>
                       </td>
                       <td className="px-6 py-4 align-middle">
-                        <UpdateTypeBadge isDependency={isDep} />
+                        <UpdateTypeBadge event={event} />
                       </td>
                       <td className="px-6 py-4 align-middle">
                         <span className="text-[14px] text-text-primary">
@@ -255,28 +279,41 @@ export function ActivityView({ review }: ActivityViewProps) {
                         </span>
                       </td>
                       <td className="px-6 py-4 align-middle">
-                        <a
-                          href={etherscanTxUrl(event.txHash)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
-                          title={rawTx}
-                        >
-                          {truncateTx(event.txHash)}
-                          <svg
-                            className="size-[10px]"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth={2}
+                        <div className="flex flex-col gap-0.5">
+                          <a
+                            href={etherscanUrl(contractAddr)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
+                            title={stripChainPrefix(contractAddr)}
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                            />
-                          </svg>
-                        </a>
+                            {contractLabel}
+                            <svg
+                              className="size-[10px]"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                              />
+                            </svg>
+                          </a>
+                          {event.type === 'upgrade' && (
+                            <a
+                              href={etherscanTxUrl(event.txHash)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-mono text-[10px] text-text-muted hover:text-accent transition-colors"
+                              title={stripChainPrefix(event.txHash)}
+                            >
+                              tx: {truncateTx(event.txHash)}
+                            </a>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 text-right align-middle">
                         <SeverityBadge isDependency={isDep} />
@@ -291,10 +328,11 @@ export function ActivityView({ review }: ActivityViewProps) {
             <div className="flex flex-col sm:hidden">
               {visible.map((event, i) => {
                 const isDep = !!event.isDependency
-                const rawTx = stripChainPrefix(event.txHash)
+                const contractAddr = eventContractAddress(event)
+                const contractLabel = eventContractName(event)
                 return (
                   <div
-                    key={`${event.txHash}-${i}`}
+                    key={eventKey(event, i)}
                     className="flex flex-col gap-2 border-border/30 border-b px-5 py-4 last:border-b-0"
                   >
                     <div className="flex items-center justify-between gap-2">
@@ -303,18 +341,18 @@ export function ActivityView({ review }: ActivityViewProps) {
                       </span>
                       <SeverityBadge isDependency={isDep} />
                     </div>
-                    <UpdateTypeBadge isDependency={isDep} />
+                    <UpdateTypeBadge event={event} />
                     <p className="text-[14px] text-text-primary">
                       {describeActivityEvent(event)}
                     </p>
                     <a
-                      href={etherscanTxUrl(event.txHash)}
+                      href={etherscanUrl(contractAddr)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex w-fit items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
-                      title={rawTx}
+                      title={stripChainPrefix(contractAddr)}
                     >
-                      {truncateTx(event.txHash)}
+                      {contractLabel}
                       <svg
                         className="size-[10px]"
                         viewBox="0 0 24 24"
@@ -329,6 +367,17 @@ export function ActivityView({ review }: ActivityViewProps) {
                         />
                       </svg>
                     </a>
+                    {event.type === 'upgrade' && (
+                      <a
+                        href={etherscanTxUrl(event.txHash)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-[10px] text-text-muted hover:text-accent transition-colors w-fit"
+                        title={stripChainPrefix(event.txHash)}
+                      >
+                        tx: {truncateTx(event.txHash)}
+                      </a>
+                    )}
                   </div>
                 )
               })}
@@ -377,19 +426,59 @@ function StatCell({
   )
 }
 
-function UpdateTypeBadge({ isDependency }: { isDependency: boolean }) {
-  if (isDependency) {
-    return (
-      <span className="inline-flex items-center rounded-sm border border-[rgba(107,56,212,0.2)] bg-[rgba(107,56,212,0.05)] px-[9px] py-[3px] font-bold text-[#6b38d4] text-[10px] uppercase tracking-wide">
-        Dependency Upgrade
-      </span>
-    )
-  }
+function UpdateTypeBadge({ event }: { event: ActivityEvent }) {
+  const { label, className } = badgeMeta(event)
   return (
-    <span className="inline-flex items-center rounded-sm border border-[rgba(186,26,26,0.2)] bg-[rgba(186,26,26,0.05)] px-[9px] py-[3px] font-bold text-[#ba1a1a] text-[10px] uppercase tracking-wide">
-      Contract Upgrade
+    <span
+      className={`inline-flex items-center rounded-sm border px-[9px] py-[3px] font-bold text-[10px] uppercase tracking-wide ${className}`}
+    >
+      {label}
     </span>
   )
+}
+
+function badgeMeta(event: ActivityEvent): {
+  label: string
+  className: string
+} {
+  switch (event.type) {
+    case 'upgrade':
+      return event.isDependency
+        ? {
+            label: 'Dependency Upgrade',
+            className:
+              'border-[rgba(107,56,212,0.2)] bg-[rgba(107,56,212,0.05)] text-[#6b38d4]',
+          }
+        : {
+            label: 'Contract Upgrade',
+            className:
+              'border-[rgba(186,26,26,0.2)] bg-[rgba(186,26,26,0.05)] text-[#ba1a1a]',
+          }
+    case 'role-update':
+      return {
+        label: 'Role Update',
+        className:
+          'border-[rgba(217,119,6,0.25)] bg-[rgba(217,119,6,0.05)] text-[#b45309]',
+      }
+    case 'data-change':
+      return {
+        label: 'Data Change',
+        className:
+          'border-[rgba(100,116,139,0.25)] bg-[rgba(100,116,139,0.05)] text-[#475569]',
+      }
+    case 'contract-added':
+      return {
+        label: 'Contract Added',
+        className:
+          'border-[rgba(0,125,87,0.2)] bg-[rgba(0,125,87,0.05)] text-[#006243]',
+      }
+    case 'contract-removed':
+      return {
+        label: 'Contract Removed',
+        className:
+          'border-[rgba(100,116,139,0.25)] bg-[rgba(100,116,139,0.05)] text-[#475569]',
+      }
+  }
 }
 
 function SeverityBadge({ isDependency }: { isDependency: boolean }) {

@@ -1,8 +1,14 @@
 import type { CompiledReview, CompiledAdmin } from '../../../../types'
-import { formatUsdValue, etherscanUrl, stripChainPrefix } from '../../../../utils/format'
+import { etherscanUrl, stripChainPrefix } from '../../../../utils/format'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
 import { deduplicateMitigations } from '../explorer/shared'
-import { SectionHeader, ShowMoreButton, impactPct } from './_shared'
+import {
+  ImpactBarRow,
+  ImpactStatsSidebar,
+  SectionHeader,
+  ShowMoreButton,
+  impactPct,
+} from './_shared'
 
 interface AdminsSectionProps {
   review: CompiledReview
@@ -88,17 +94,16 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
             </svg>
             <p className="text-sm text-text-muted">No permissioned resources</p>
           </div>
-          <div className="sm:w-[312px] sm:shrink-0 flex flex-row sm:flex-col justify-between sm:justify-start gap-6 sm:gap-[24px] bg-bg-card rounded-lg p-6 sm:p-[33px]">
-            <div className="flex flex-col gap-1">
-              <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">Impacted TVS</p>
-              <p className="font-mono font-bold text-[36px] leading-[36px] text-text-primary">0%</p>
-              <p className="text-xs text-text-muted mt-1">Proportion of TVS subject to admin control.</p>
-            </div>
-            <div className="sm:border-t sm:border-border sm:pt-6 flex flex-col gap-1">
-              <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">Admins Detected</p>
-              <p className="font-mono font-bold text-[36px] leading-[36px] text-text-primary">0</p>
-            </div>
-          </div>
+          <ImpactStatsSidebar
+            stats={[
+              {
+                label: 'Impacted TVS',
+                value: '0%',
+                description: 'Proportion of TVS subject to admin control.',
+              },
+              { label: 'Admins Detected', value: '0' },
+            ]}
+          />
         </div>
       </div>
     )
@@ -142,7 +147,7 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
           }
           label="Top Admins"
         />
-        <div className="flex flex-col gap-[32px]">
+        <div className="flex flex-col gap-6">
           {displayedAdmins.map((admin) => {
             const barWidth = maxCapital > 0 ? (admin.totalReachableCapital / maxCapital) * 100 : 0
             const rawAddress = stripChainPrefix(admin.address)
@@ -150,11 +155,13 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
               admin.functions?.flatMap((f) => f.mitigations ?? []) ?? [],
             )
             return (
-              <div key={admin.address} className="flex flex-col gap-[16px]">
-                {/* Name + badges + capital */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-semibold text-sm text-text-primary">{admin.name}</span>
+              <ImpactBarRow
+                key={admin.address}
+                title={admin.name}
+                impactUsd={admin.totalReachableCapital}
+                barPercent={barWidth}
+                badges={
+                  <>
                     <a
                       href={etherscanUrl(admin.address)}
                       target="_blank"
@@ -175,49 +182,24 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
                     {mitigations.map((m, i) => (
                       <MitigationBadge key={i} mitigation={m} />
                     ))}
-                  </div>
-                  <span className="font-mono font-bold text-sm text-text-primary shrink-0 ml-2">
-                    {admin.totalReachableCapital > 0
-                      ? `${formatUsdValue(admin.totalReachableCapital)} Impact`
-                      : '—'}
-                  </span>
-                </div>
-                {/* Capital bar */}
-                <div className="h-[12px] bg-bg-card border border-border rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-accent rounded-full transition-all"
-                    style={{ width: `${Math.max(barWidth, barWidth > 0 ? 1 : 0)}%` }}
-                  />
-                </div>
-              </div>
+                  </>
+                }
+              />
             )
           })}
         </div>
       </div>
 
-      {/* Right sidebar — same bg as outer frame so it blends */}
-      <div className="sm:w-[312px] sm:shrink-0 flex flex-row sm:flex-col justify-between sm:justify-start gap-6 sm:gap-[24px] bg-bg-card rounded-lg p-6 sm:p-[33px]">
-        <div className="flex flex-col gap-1">
-          <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
-            Impacted TVS
-          </p>
-          <p className="font-mono font-bold text-[36px] leading-[36px] text-text-primary">
-            {impactedPct}%
-          </p>
-          <p className="text-xs text-text-muted mt-1">
-            Proportion of TVS subject to admin control.
-          </p>
-        </div>
-
-        <div className="sm:border-t sm:border-border sm:pt-6 flex flex-col gap-1">
-          <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
-            Admins Detected
-          </p>
-          <p className="font-mono font-bold text-[36px] leading-[36px] text-text-primary">
-            {activeAdmins.length}
-          </p>
-        </div>
-      </div>
+      <ImpactStatsSidebar
+        stats={[
+          {
+            label: 'Impacted TVS',
+            value: `${impactedPct}%`,
+            description: 'Proportion of TVS subject to admin control.',
+          },
+          { label: 'Admins Detected', value: activeAdmins.length },
+        ]}
+      />
       </div>
     </div>
   )

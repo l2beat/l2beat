@@ -1,8 +1,13 @@
 import type { CompiledReview, CompiledDependency } from '../../../../types'
-import { formatUsdValue } from '../../../../utils/format'
 import { MitigationBadge } from '../../../../components/MitigationBadge'
 import { deduplicateMitigations } from '../explorer/shared'
-import { SectionHeader, ShowMoreButton, impactPct } from './_shared'
+import {
+  ImpactBarRow,
+  ImpactStatsSidebar,
+  SectionHeader,
+  ShowMoreButton,
+  impactPct,
+} from './_shared'
 
 interface DependenciesSectionProps {
   review: CompiledReview
@@ -28,17 +33,16 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
           <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">Dependencies</span>
         </div>
         <div className="flex flex-col sm:flex-row gap-[30px] items-start">
-          <div className="sm:w-[312px] sm:shrink-0 flex flex-row sm:flex-col justify-between sm:justify-start gap-6 sm:gap-8 bg-bg-card rounded-lg p-6 sm:p-[33px]">
-            <div className="flex flex-col gap-1">
-              <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">Impacted TVS</p>
-              <p className="font-mono font-bold text-[30px] leading-[36px] text-text-primary">0%</p>
-              <p className="text-xs text-text-muted mt-1">Proportion of TVS exposed to external dependency risk.</p>
-            </div>
-            <div className="sm:border-t sm:border-border sm:pt-6 flex flex-col gap-2">
-              <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">Dependencies Detected</p>
-              <p className="font-mono font-bold text-[30px] leading-[36px] text-text-primary">0</p>
-            </div>
-          </div>
+          <ImpactStatsSidebar
+            stats={[
+              {
+                label: 'Impacted TVS',
+                value: '0%',
+                description: 'Proportion of TVS exposed to external dependency risk.',
+              },
+              { label: 'Dependencies Detected', value: '0' },
+            ]}
+          />
           <div className="flex-1 min-w-0 bg-white border border-border rounded-lg p-5 sm:p-[33px] flex flex-col items-center justify-center gap-4 min-h-[160px] sm:min-h-[220px]">
             <svg className="size-14 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
@@ -110,34 +114,21 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
         <ShowMoreButton onClick={onShowMore} />
       </div>
       <div className="flex flex-col sm:flex-row gap-[30px] items-start">
-      {/* Left sidebar — same bg as outer frame so it blends */}
-      <div className="sm:w-[312px] sm:shrink-0 flex flex-row sm:flex-col justify-between sm:justify-start gap-6 sm:gap-8 bg-bg-card rounded-lg p-6 sm:p-[33px]">
-        <div className="flex flex-col gap-1">
-          <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
-            Impacted TVS
-          </p>
-          <p className="font-mono font-bold text-[30px] leading-[36px] text-text-primary">
-            {atRiskPct}%
-          </p>
-          <p className="text-xs text-text-muted mt-1">
-            Proportion of TVS exposed to external dependency risk.
-          </p>
-        </div>
-
-        <div className="sm:border-t sm:border-border sm:pt-6 flex flex-col gap-2">
-          <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
-            Dependencies Detected
-          </p>
-          <p className="font-mono font-bold text-[30px] leading-[36px] text-text-primary">
-            {totals.dependencyCount}
-          </p>
-          {namedEntities.length > 0 && (
-            <p className="text-xs text-text-muted">
-              from {namedEntities.join(', ')}
-            </p>
-          )}
-        </div>
-      </div>
+      <ImpactStatsSidebar
+        stats={[
+          {
+            label: 'Impacted TVS',
+            value: `${atRiskPct}%`,
+            description: 'Proportion of TVS exposed to external dependency risk.',
+          },
+          {
+            label: 'Dependencies Detected',
+            value: totals.dependencyCount,
+            description:
+              namedEntities.length > 0 ? `from ${namedEntities.join(', ')}` : undefined,
+          },
+        ]}
+      />
 
       {/* Right: grouped dependency list card — contains header + rows */}
       <div className="flex-1 min-w-0 bg-white border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
@@ -161,28 +152,22 @@ export function DependenciesSection({ review, onShowMore }: DependenciesSectionP
             )
 
             return (
-              <div key={entity ?? '__ungrouped'} className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-semibold text-sm text-text-primary">{groupLabel}</span>
+              <ImpactBarRow
+                key={entity ?? '__ungrouped'}
+                title={groupLabel}
+                impactUsd={groupFunds}
+                barPercent={barWidth}
+                badges={
+                  <>
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold text-text-muted bg-border/60">
                       {deps.length} contract{deps.length !== 1 ? 's' : ''}
                     </span>
                     {mitigations.map((m, i) => (
                       <MitigationBadge key={i} mitigation={m} />
                     ))}
-                  </div>
-                  <span className="font-mono font-bold text-sm text-text-primary shrink-0 ml-2">
-                    {groupFunds > 0 ? `${formatUsdValue(groupFunds)} Impact` : '—'}
-                  </span>
-                </div>
-                <div className="h-[10px] bg-border rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-accent rounded-full transition-all"
-                    style={{ width: `${Math.max(barWidth, barWidth > 0 ? 1 : 0)}%` }}
-                  />
-                </div>
-              </div>
+                  </>
+                }
+              />
             )
           })}
         </div>

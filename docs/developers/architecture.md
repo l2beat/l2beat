@@ -93,9 +93,11 @@ The monitoring service is a standalone background process that continuously watc
 
 1. **Discovery** — runs the L2Beat discovery engine (`DiscoveryRunner`)
 2. **Diffing** — compares against the previous discovery snapshot stored in PostgreSQL
-3. **Notification** — sends Discord messages when contract changes are detected
-4. **Funds Refresh** — fetches live token balances, DeFi positions via DeBank API, and aggregate TVL via defiscan-endpoints (The Graph subgraphs). Warnings (e.g. failed aggregate fetches) are reported to Discord.
-5. **Review Compilation** — produces a self-contained `compiled-review.json` per project
+3. **Notification** — sends Discord messages when contract changes are detected; new diff is persisted to the `UpdateNotifier` table
+4. **Discovery Write-back** — writes the fresh `discovered.json` back to `packages/config/src/projects/<project>/` via `saveDiscoveredJson`. Committed by the GH Actions workflow so `$pastUpgrades` and the activity feed stay in sync between manual runs
+5. **Funds Refresh** — fetches live token balances, DeFi positions via DeBank API, and aggregate TVL via defiscan-endpoints (The Graph subgraphs). Warnings (e.g. failed aggregate fetches) are reported to Discord
+6. **Activity Reconcile** — `reconcileActivity(project)` reads `activity.json`, fetches new `UpdateNotifier` rows via `getNewerThanId(project, cursor)`, runs `classifyDiff()` against the just-written `discovered.json` + contract tags, appends new events deduped by deterministic id, advances the cursor, writes the file. First run with `cursor === 0` does a full historical backfill. Must run **before** compile so the compiler sees a consistent file
+7. **Review Compilation** — produces a self-contained `compiled-review.json` per project, merging upgrade events from `$pastUpgrades` with the classifier events from `activity.json`
 
 After all projects are processed, a cycle summary is posted to Discord with project count, duration, and change count.
 
@@ -106,7 +108,7 @@ After all projects are processed, a cycle summary is posted to Discord with proj
 1. Builds the Docker image (`Dockerfile.monitor`) with GHA layer caching
 2. Runs Prisma migrations (separate step for clear error reporting)
 3. Runs the monitor with `RUN_ONCE=true` — single cycle, then clean exit
-4. Commits any updated `compiled-review.json` and `funds-data.json` files back to the repository
+4. Commits any updated `discovered.json`, `activity.json`, `funds-data.json`, and `compiled-review.json` files back to the repository
 
 **Database**: PostgreSQL (Neon free tier) stores discovery cache (RPC response caching across ephemeral containers) and update monitor snapshots (for diffing against previous discoveries). The connection string is stored as a GitHub Actions secret.
 

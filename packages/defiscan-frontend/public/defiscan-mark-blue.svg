@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
   <defs>
-    <mask id="circle-cutout">
+    <mask id="magnifier-cutout">
       <rect width="800" height="800" fill="white"/>
       <circle cx="400.0" cy="400.0" r="280.0" fill="black"/>
+      <polygon points="530.11,597.99 790.32,858.21 858.21,790.32 597.99,530.11" fill="black"/>
     </mask>
   </defs>
-  <rect width="800" height="800" rx="64.0" ry="64.0" fill="#2563eb" mask="url(#circle-cutout)"/>
+  <rect width="800" height="800" rx="64.0" ry="64.0" fill="#2563eb" mask="url(#magnifier-cutout)"/>
 </svg>

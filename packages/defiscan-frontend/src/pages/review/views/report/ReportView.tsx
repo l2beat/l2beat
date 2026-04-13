@@ -44,7 +44,7 @@ export function ReportView({ review, onExportPdf }: ReportViewProps) {
       {/* Hero */}
       <section className="w-full">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
-          <HeroSection review={review} onExportPdf={onExportPdf} />
+          <HeroSection review={review} onExportPdf={onExportPdf} onSubscribe={goToActivity} />
         </div>
       </section>
 

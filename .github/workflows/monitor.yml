@@ -53,11 +53,13 @@ jobs:
             defidisco-monitor:latest \
             node packages/backend/build/src/defidisco-monitor.js
 
-      - name: Commit compiled reviews
+      - name: Commit monitor outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add packages/defiscan-frontend/public/data/
           git add packages/config/src/projects/*/funds-data.json
-          git diff --staged --quiet || git commit -m "Update compiled reviews and funds data [monitor]"
+          git add packages/config/src/projects/*/discovered.json
+          git add packages/config/src/projects/*/activity.json
+          git diff --staged --quiet || git commit -m "Update discovery, compiled reviews, funds and activity data [monitor]"
           git push

@@ -6,6 +6,7 @@ import {
   type DiscoveryOutput,
   diffDiscovery,
   generateStructureHash,
+  saveDiscoveredJson,
 } from '@l2beat/discovery'
 import { DiscordClient, HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -22,6 +23,12 @@ import { findUnknownEntries } from '../../update-monitor/utils/findUnknownEntrie
 import { FundsRefresher } from './FundsRefresher'
 import type { MonitorConfig } from './monitorConfig'
 import { ReviewCompiler } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/reviewCompiler'
+import {
+  readActivityFile,
+  writeActivityFile,
+} from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/activity'
+import { classifyDiff } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/activityClassifier'
+import { getContractTags } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/contractTags'
 
 /**
  * DeFiDisco Continuous Monitoring Service
@@ -263,9 +270,10 @@ export class DefidiscoMonitorApplication {
         await this.notifyChanges(project, discovery, diff, timestamp)
       }
 
-      // Step 3: Store discovery
+      // Step 3: Store discovery (DB snapshot + committed discovered.json)
       if (discovery) {
         await this.storeDiscovery(project, discovery, timestamp)
+        await this.writeDiscoveredJson(project, discovery)
       }
 
       // Step 4: Refresh funds
@@ -277,7 +285,10 @@ export class DefidiscoMonitorApplication {
         )
       }
 
-      // Step 5: Compile review
+      // Step 5: Reconcile activity.json against the UpdateNotifier table
+      await this.reconcileActivity(project)
+
+      // Step 6: Compile review
       await this.compileReview(project)
     } catch (error) {
       this.logger.error(
@@ -429,6 +440,132 @@ export class DefidiscoMonitorApplication {
       blockNumber: 0,
       discovery,
       configHash: generateStructureHash(projectConfig.structure),
+    })
+  }
+
+  /**
+   * Writes the freshly-discovered output back to the committed
+   * `discovered.json` file so that downstream consumers (frontend activity
+   * feed, `$pastUpgrades`, compiled review) see the updated state.
+   *
+   * The GitHub Actions workflow that drives the monitor picks these files up
+   * and commits them back to the repo, so any new on-chain changes observed
+   * between runs automatically flow into the frontend on the next cycle.
+   */
+  private async writeDiscoveredJson(
+    project: string,
+    discovery: DiscoveryOutput,
+  ): Promise<void> {
+    try {
+      const projectPath =
+        this.config.discovery.configReader.getProjectPath(project)
+      await saveDiscoveredJson(discovery, projectPath)
+      this.logger.info('discovered.json written', {
+        project,
+        path: projectPath,
+      })
+    } catch (error) {
+      // Never fail the whole project update over a write-back error — the
+      // snapshot is already safe in the database and a follow-up cycle (or a
+      // manual `l2b discover`) can re-attempt the write.
+      this.logger.error(
+        { project },
+        error instanceof Error
+          ? error
+          : new Error(`Failed to write discovered.json: ${String(error)}`),
+      )
+    }
+  }
+
+  // ==========================================================================
+  // Activity Reconciliation
+  // ==========================================================================
+
+  /**
+   * Keeps `<project>/activity.json` consistent with the `UpdateNotifier`
+   * Postgres table. DB is the source of truth; we never write live events
+   * from the current cycle — every diff has already been inserted into
+   * `UpdateNotifier` by `UpdateNotifier.handleUpdate()` before this runs.
+   *
+   * On first run (`lastConsumedUpdateNotifierId === 0`) this performs a full
+   * historical backfill. On subsequent runs it only appends rows with an
+   * `id` greater than the previously-stored cursor.
+   *
+   * Upgrade events (`$implementation`, `$pastUpgrades`, `$upgradeCount`) are
+   * intentionally skipped here — they come from `$pastUpgrades` on the
+   * proxy contract, which the review compiler already handles.
+   */
+  private async reconcileActivity(project: string): Promise<void> {
+    const { paths, configReader } = this.config.discovery
+
+    let discovery: DiscoveryOutput
+    try {
+      discovery = configReader.readDiscovery(project)
+    } catch (error) {
+      this.logger.warn('Cannot read discovered.json, skipping activity reconcile', {
+        project,
+        error: String(error),
+      })
+      return
+    }
+
+    const file = readActivityFile(paths, project)
+
+    let rows
+    try {
+      rows = await this.db.updateNotifier.getNewerThanId(
+        project,
+        file.lastConsumedUpdateNotifierId,
+      )
+    } catch (error) {
+      this.logger.error(
+        { project },
+        error instanceof Error
+          ? error
+          : new Error(`Failed to load UpdateNotifier rows: ${String(error)}`),
+      )
+      return
+    }
+
+    if (rows.length === 0) {
+      this.logger.info('No new activity rows to reconcile', { project })
+      return
+    }
+
+    const tags = getContractTags(paths, project).tags
+    const seenIds = new Set(file.events.map((e) => e.id))
+    let appended = 0
+    let maxId = file.lastConsumedUpdateNotifierId
+
+    for (const row of rows) {
+      if (row.id > maxId) maxId = row.id
+      const events = classifyDiff(
+        {
+          id: row.id,
+          projectId: row.projectId,
+          timestamp: row.timestamp,
+          diff: row.diff,
+        },
+        discovery,
+        tags,
+      )
+      for (const event of events) {
+        if (seenIds.has(event.id)) continue
+        file.events.push(event)
+        seenIds.add(event.id)
+        appended++
+      }
+    }
+
+    file.lastConsumedUpdateNotifierId = maxId
+    file.lastReconciledAt = Math.floor(Date.now() / 1000)
+    writeActivityFile(paths, project, file)
+
+    this.logger.info('Activity reconciled', {
+      project,
+      rows: rows.length,
+      appended,
+      cursor: maxId,
     })
   }
 

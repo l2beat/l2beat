@@ -254,7 +254,45 @@ export interface UpgradeEvent {
   entity?: string | null
 }
 
-export type ActivityEvent = UpgradeEvent
+interface BaseActivityFileEvent {
+  id: string
+  timestamp: string
+  updateNotifierId: number
+  address: string
+  contractName?: string
+  isDependency?: boolean
+  entity?: string | null
+}
+
+export interface DataChangeEvent extends BaseActivityFileEvent {
+  type: 'data-change'
+  field: string
+  before: unknown
+  after: unknown
+}
+
+export interface RoleUpdateEvent extends BaseActivityFileEvent {
+  type: 'role-update'
+  roleName: string
+  field: string
+  before: unknown
+  after: unknown
+}
+
+export interface ContractAddedEvent extends BaseActivityFileEvent {
+  type: 'contract-added'
+}
+
+export interface ContractRemovedEvent extends BaseActivityFileEvent {
+  type: 'contract-removed'
+}
+
+export type ActivityEvent =
+  | UpgradeEvent
+  | DataChangeEvent
+  | RoleUpdateEvent
+  | ContractAddedEvent
+  | ContractRemovedEvent
 
 // Index types — produced by compile-data.ts
 

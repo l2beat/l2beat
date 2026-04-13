@@ -21,6 +21,14 @@ import { getContractTags } from './contractTags'
 import { countLinesOfCode } from './countLinesOfCode'
 import { getAudits, getResources } from './resources'
 import { getGovernance } from './governance'
+import { getActivityEvents } from './activity'
+import type {
+  ActivityFileEvent,
+  ContractAddedEvent,
+  ContractRemovedEvent,
+  DataChangeEvent,
+  RoleUpdateEvent,
+} from './activityClassifier'
 import {
   type CompiledGovernance,
   resolveGovernance,
@@ -222,7 +230,15 @@ export interface UpgradeEvent {
   entity?: string | null
 }
 
-export type ActivityEvent = UpgradeEvent
+export type {
+  ActivityFileEvent,
+  DataChangeEvent,
+  RoleUpdateEvent,
+  ContractAddedEvent,
+  ContractRemovedEvent,
+}
+
+export type ActivityEvent = UpgradeEvent | ActivityFileEvent
 
 // ============================================================================
 // Compilation Result
@@ -748,7 +764,8 @@ export class ReviewCompiler {
       })
     }
 
-    // Build activity feed from $pastUpgrades in discovery entries
+    // Build activity feed from $pastUpgrades in discovery entries, then
+    // merge with classifier-produced events from activity.json.
     const activity: ActivityEvent[] = []
     for (const entry of discovery.entries) {
       const pastUpgrades = entry.values?.['$pastUpgrades']
@@ -779,6 +796,22 @@ export class ReviewCompiler {
           entity: tag?.entity ?? null,
         })
       }
+    }
+
+    // Merge in classifier events (role updates, data changes, add/remove).
+    // These were snapshotted at reconcile time; we only backfill a missing
+    // contractName from the current discovery, never overwrite what's
+    // already on the stored event.
+    const classifierEvents = getActivityEvents(this.paths, project)
+    for (const raw of classifierEvents) {
+      if (raw.contractName === undefined) {
+        const addrNorm = normalizeChainAddress(raw.address)
+        const resolved = contractNameMap.get(addrNorm)
+        if (resolved !== undefined) {
+          ;(raw as { contractName?: string }).contractName = resolved
+        }
+      }
+      activity.push(raw)
     }
 
     // Sort newest first

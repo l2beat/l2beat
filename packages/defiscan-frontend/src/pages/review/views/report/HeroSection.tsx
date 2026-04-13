@@ -7,17 +7,19 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import type { CompiledReview } from '../../../../types'
+import { MoreInfoButton } from '../../../../components/MoreInfoButton'
 import { ShareButton } from '../../../../components/ShareButton'
 import { deriveRadarData } from '../../../../utils/radar'
 
 interface HeroSectionProps {
   review: CompiledReview
   onExportPdf: () => void
+  onSubscribe: () => void
 }
 
 const RADAR_AXES = ['CONTROL', 'DEPENDENCIES', 'ACCESS', 'VERIFIABILITY', 'ABILITY TO EXIT']
 
-export function HeroSection({ review, onExportPdf }: HeroSectionProps) {
+export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionProps) {
   const { metadata, compiledAt } = review
   const radarData = deriveRadarData(review)
   const [descExpanded, setDescExpanded] = useState(false)
@@ -64,13 +66,14 @@ export function HeroSection({ review, onExportPdf }: HeroSectionProps) {
         <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
           <button
             className="flex items-center gap-2 bg-accent text-white px-4 sm:px-6 py-3 sm:py-[13px] rounded-sm font-semibold text-sm sm:text-base hover:bg-accent-dark transition-colors"
-            onClick={() => window.open(`https://defiscan.info/protocol/${metadata.protocolSlug}`, '_blank')}
+            onClick={onSubscribe}
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
             Subscribe
           </button>
+          <MoreInfoButton resources={review.resources ?? []} />
           <ShareButton review={review} onExportPdf={onExportPdf} />
         </div>
       </div>

@@ -80,43 +80,39 @@ export function ReviewPage() {
 
   return (
     <div className="w-full bg-white">
-      {/* Back nav + View toggle bar (hidden on report view) */}
-      {view !== 'report' && (
-        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-4 print:hidden">
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <Link
-              to={
-                view === 'activity'
-                  ? `/protocol/${slug}?view=report`
-                  : '/gallery'
-              }
-              className="inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
+      {/* Back nav + View toggle bar */}
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 py-4 print:hidden">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <Link
+            to={
+              view === 'activity' ? `/protocol/${slug}?view=report` : '/gallery'
+            }
+            className="inline-flex items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
             >
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              {view === 'activity' ? 'Back to report' : 'Back to gallery'}
-            </Link>
-            {view !== 'activity' && (
-              <div className="print:hidden">
-                <ViewModeToggle current={view} onChange={handleViewChange}>
-                  <ShareButton review={review} onExportPdf={handleExportPdf} />
-                </ViewModeToggle>
-              </div>
-            )}
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            {view === 'activity' ? 'Back to report' : 'Back to gallery'}
+          </Link>
+          {view === 'explorer' && (
+            <div className="print:hidden">
+              <ViewModeToggle current={view} onChange={handleViewChange}>
+                <ShareButton review={review} onExportPdf={handleExportPdf} />
+              </ViewModeToggle>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* View content */}
       <Suspense

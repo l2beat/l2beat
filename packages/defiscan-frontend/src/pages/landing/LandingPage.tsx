@@ -17,6 +17,7 @@ import {
   GlobeIcon,
   ShieldCheckIcon,
 } from '../../components/icons'
+import { ProtocolLogo } from '../../components/ProtocolLogo'
 
 const trustPostureData = [
   { axis: 'CONTROL', value: 85 },
@@ -359,11 +360,10 @@ export function LandingPage() {
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="size-10 rounded bg-accent-tint-light flex items-center justify-center">
-                          <img
-                            src="/defiscan-mark-blue.svg"
-                            alt=""
-                            className="h-5 w-5"
+                        <div className="size-10 rounded bg-accent-tint-light flex items-center justify-center overflow-hidden">
+                          <ProtocolLogo
+                            slug={p.slug}
+                            className="h-6 w-6 object-contain"
                           />
                         </div>
                         <h3 className="font-semibold text-text-primary group-hover:text-accent transition-colors">

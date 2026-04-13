@@ -305,21 +305,51 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
 
 ### Activity Feed
 
-**Contract upgrade timeline**: Third top-level view in defiscan-frontend (alongside Report and Explorer), showing a chronological history of protocol changes.
+**Full protocol change timeline**: Third top-level view in defiscan-frontend (alongside Report and Explorer), showing a chronological history of upgrades, role rotations, parameter changes, and discovery structure changes.
 
-- **Data Source**: `$pastUpgrades` field on proxy contracts in `discovered.json` — each tuple contains `[isoTimestamp, txHash, implementationAddresses[]]`
-- **Compilation**: `reviewCompiler.ts` extracts upgrade events during `buildCompiledReview()`, iterating `discovery.entries` for contracts with `$pastUpgrades`. All contracts are included (dependency contracts are tagged with `isDependency: true` and their `entity` name). Events sorted newest-first into `CompiledReview.activity?: ActivityEvent[]`
-- **Types**: `UpgradeEvent { type, timestamp, contractAddress, contractName, txHash, implementations, isDependency?, entity? }` — defined in both `reviewCompiler.ts` (backend) and `types.ts` (frontend). `isDependency` is true for external/dependency contracts (from `isExternal` contract tag), `entity` carries the entity name (e.g. "Circle"). `ActivityEvent` is a union type (currently just `UpgradeEvent`, will expand with monitored change events)
-- **Shared description helper**: `pages/review/views/activityDescription.ts` exports `describeActivityEvent(event, { omitName? })` — produces a narrative sentence like `"Compound Governor was upgraded to 2 new implementations."` (full form) or `"Upgraded to a new implementation."` (`omitName: true`, when the caller renders the contract name separately as a title). Used by both `ActivityView.tsx` and `report/ActivitySection.tsx` so the wording stays in sync.
-- **View Component** (`pages/review/views/ActivityView.tsx`): Figma-based design (`figma.com/design/Em7lwm76VJFXso4Rs372w1?node-id=1-993`). Top-to-bottom:
-  1. **Hero**: green logo square (protocol initial) + protocol name (h1) + clamped 3-line description on the left, stats grid card on the right with three cells — Total Updates (`events.length`), Monitored Contracts (`review.totals.contractCount`), Last Verified (relative time from `review.compiledAt`, e.g. `2m ago`).
-  2. **Notification Channels**: heading + subtitle, then a single Telegram card in a disabled state (`opacity-60`, `cursor-not-allowed`, "UPCOMING" subtitle, "SOON" pill on the right). Email and Webhook channels from the Figma are intentionally not shown — they're not real features yet.
-  3. **Protocol Activity table** inside a bordered card (`bg-white`, `border-border`, `rounded-xl`): columns `Date | Update Type | Description | Source | Severity`. Date is JetBrains Mono `YYYY-MM-DD HH:mm`. Update Type is a small pill — red "Contract Upgrade" for non-dependency events, purple "Dependency Upgrade" for `isDependency: true`. Description renders `describeActivityEvent(event)` (full form). Source is a tx-hash link via `etherscanTxUrl()` (not `etherscanUrl()` — that's for addresses). Severity is a rounded pill — red "High" (with triangle warning icon) for non-dependency, green "Info" (with info icon) for dependency. A `<sm` mobile fallback renders stacked cards instead of a table.
-  4. **Pagination**: client-side, 10 events per page, only shown when `sorted.length > 10`. Compact page list (first/last/current ± 1, ellipses), prev/next chevrons, "Showing X-Y of N updates" footer.
-  - **Empty state** (no upgrades): hero and notification channels still render; the table card body shows a centered clock icon + "No activity recorded yet." The sort-direction toggle is hidden when empty.
-- **Page chrome** (`ReviewPage.tsx`): On the activity view, the `ViewModeToggle` is hidden — activity is treated as a child of the report, not a sibling. The back link reads "Back to report" and routes to `/protocol/${slug}?view=report` instead of `/gallery`. Explorer view keeps the toggle and the "Back to gallery" link.
-- **View Registration**: `ViewModeToggle.tsx` has three modes (`report | explorer | activity`), `ReviewPage.tsx` lazy-loads `ActivityView`
-- **Future**: Monitored field-level changes from the PostgreSQL UpdateNotifier table will be added as a second event type (`MonitoredChangeEvent`)
+- **Two data sources** merged by `reviewCompiler.ts`:
+  1. **Upgrades** — `$pastUpgrades` field on proxy contracts in `discovered.json` (tuples of `[isoTimestamp, txHash, implementationAddresses[]]`).
+  2. **Everything else** — per-project `packages/config/src/projects/<project>/activity.json`, reconciled from the `UpdateNotifier` Postgres table by the monitor.
+- **Activity file schema** (`packages/l2b/src/implementations/discovery-ui/defidisco/activity.ts`):
+  ```ts
+  interface ActivityFile {
+    version: '1.0'
+    lastReconciledAt: number              // unix seconds
+    lastConsumedUpdateNotifierId: number  // monotonic DB row cursor — 0 = full backfill
+    events: ActivityFileEvent[]
+  }
+  ```
+  File helpers: `readActivityFile`, `writeActivityFile`, `getActivityEvents`. Written exclusively by the monitor — no HTTP endpoints.
+- **Classifier** (`activityClassifier.ts` `classifyDiff(notifier, discovery, contractTags)`):
+  - Skips `$implementation`, `$pastUpgrades`, `$upgradeCount` (covered by upgrade events).
+  - `$admin` → `RoleUpdateEvent` with `roleName: 'ProxyAdmin'`.
+  - `accessControl.<ROLE>.(members|adminRole)` and `values.accessControl.<ROLE>.…` → `role-update` with `roleName = <ROLE>`.
+  - `owner`, `pendingOwner`, Safe `$members`, `$threshold` → `role-update` with a descriptive role name.
+  - `DiscoveryDiff.type === 'created' | 'deleted'` → `contract-added` / `contract-removed`.
+  - Everything else → `data-change` with the raw diff key.
+  - Deterministic id `${updateNotifierId}:${address}:${key}` makes reconciliation idempotent across crash-between-read-and-write.
+  - `FieldDiff.before`/`after` are JSON-parsed with a string fallback; `diff.address` is coerced via `String(...)` because `ChainSpecificAddress` does not survive the DB round-trip.
+- **Monitor integration** (`DefidiscoMonitorApplication.reconcileActivity`): runs between funds refresh and compile review. Loads the current file, fetches `updateNotifier.getNewerThanId(projectId, cursor)` (new repository method, cursors on the monotonic `id`), classifies each row against the current `discovered.json` + `contract-tags.json`, appends new events (deduped via the deterministic id), advances the cursor, writes the file. First run with `cursor === 0` does a full historical backfill.
+- **Types** (`reviewCompiler.ts` + frontend `types.ts`): `ActivityEvent` is now a discriminated union:
+  ```ts
+  type ActivityEvent =
+    | UpgradeEvent
+    | DataChangeEvent
+    | RoleUpdateEvent
+    | ContractAddedEvent
+    | ContractRemovedEvent
+  ```
+  Non-upgrade events share `{ id, timestamp, updateNotifierId, address, contractName?, isDependency?, entity? }`. Upgrade events keep their existing shape (`contractAddress`, `txHash`, `implementations`).
+- **Merged compilation**: `reviewCompiler.ts` builds upgrade events from `$pastUpgrades`, then appends `getActivityEvents(paths, project)`, backfilling any missing `contractName` from the current discovery. Events sorted newest-first into `CompiledReview.activity?: ActivityEvent[]`.
+- **Shared description helper**: `pages/review/views/activityDescription.ts` `describeActivityEvent(event, { omitName? })` switches on `event.type` — upgrades, data changes, role updates, and contract add/remove each get their own sentence. Used by both `ActivityView.tsx` and `report/ActivitySection.tsx`.
+- **View Component** (`pages/review/views/ActivityView.tsx`): Figma-based design (`figma.com/design/Em7lwm76VJFXso4Rs372w1?node-id=1-993`).
+  1. **Hero**: logo + name + description + stats grid (Total Updates, Monitored Contracts, Last Verified).
+  2. **Notification Channels**: Telegram card in disabled "Upcoming" state.
+  3. **Protocol Activity table**: columns `Date | Update Type | Description | Source | Severity`. `UpdateTypeBadge` colors per `event.type` — red/purple for upgrades, amber for role updates, slate for data changes, emerald for contract added. The **Source** column links to the contract address via `etherscanUrl()`; for upgrade events a secondary `tx: 0x…` line below links to `etherscanTxUrl()`. Severity still keys off `isDependency`. Mobile fallback renders stacked cards.
+  4. **Pagination**: client-side, 10 events per page.
+  - **Empty state**: hero + notification channels + table body with "No activity recorded yet."
+- **Page chrome** (`ReviewPage.tsx`): On the activity view, the `ViewModeToggle` is hidden — activity is treated as a child of the report. Back link reads "Back to report" (`?view=report`).
+- **Report-preview** (`report/ActivitySection.tsx`): same badge + Source-column treatment as `ActivityView`, showing the 3 most recent events.
 
 ## Continuous Monitoring Service
 
@@ -339,10 +369,11 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
 1. **Discovery**: `runner.run()` — contract analysis via Etherscan V2 API
 2. **Diff**: `diffDiscovery(sanitize(prev), sanitize(curr))` — detect changes
 3. **Notify**: Discord message if changes detected (via `UpdateNotifier`)
-4. **Store**: Upsert discovery snapshot to PostgreSQL
+4. **Store**: Upsert discovery snapshot to PostgreSQL **and** write the fresh `discovered.json` back to `packages/config/src/projects/<project>/discovered.json` via `saveDiscoveredJson` (using `configReader.getProjectPath(project)`). The GH Actions workflow mounts that directory into the container and commits the updated files, so the on-disk snapshot, `$pastUpgrades`, and the frontend activity feed stay in sync with on-chain state between manual `l2b discover` runs. Write-back failures are logged but do not abort the project update — the DB snapshot is the source of truth for diffing on the next cycle
 5. **Funds Refresh**: `fetchAllFundsForProject()` via in-process defiscan-endpoints
-6. **Compile**: `ReviewCompiler.compile()` — writes `compiled-review.json` to `defiscan-frontend/public/data/<slug>/`
-7. **Cycle Summary**: Discord message after all projects (project count, duration, change count)
+6. **Activity Reconcile**: `reconcileActivity(project)` — loads `activity.json`, fetches new `UpdateNotifier` rows via `getNewerThanId(project, cursor)`, runs `classifyDiff()` against the just-written `discovered.json` + contract tags, appends new events deduped by deterministic id, advances the cursor, writes the file. First run does a full historical backfill (cursor = 0)
+7. **Compile**: `ReviewCompiler.compile()` — reads the just-refreshed `discovered.json` via `configReader` and merges `activity.json` events into `CompiledReview.activity`, writes `compiled-review.json` to `defiscan-frontend/public/data/<slug>/`
+8. **Cycle Summary**: Discord message after all projects (project count, duration, change count)
 
 ### Key Files
 

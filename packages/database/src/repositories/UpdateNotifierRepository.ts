@@ -95,6 +95,26 @@ export class UpdateNotifierRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /**
+   * Returns all rows for `projectId` with `id > afterId`, ordered by id ascending.
+   * Used by the DeFiDisco activity reconciler to walk history in a
+   * crash-safe way using the monotonic row id as the cursor.
+   * Pass `0` for `afterId` to read the full history.
+   */
+  async getNewerThanId(
+    projectId: string,
+    afterId: number,
+  ): Promise<UpdateNotifierRecord[]> {
+    const rows = await this.db
+      .selectFrom('UpdateNotifier')
+      .selectAll()
+      .where('projectId', '=', projectId)
+      .where('id', '>', afterId)
+      .orderBy('id', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('UpdateNotifier').executeTakeFirst()
     return Number(result.numDeletedRows)

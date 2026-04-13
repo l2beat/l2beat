@@ -11,6 +11,7 @@ import { useIndex, useAllReviews } from '../../data/hooks'
 import { deriveRadarData } from '../../utils/radar'
 import { formatUsdValue } from '../../utils/format'
 import { isHumanAdminType } from '../../utils/admins'
+import { ProtocolLogo } from '../../components/ProtocolLogo'
 import type { CompiledReview, ProtocolSummary, CompiledAdmin, CompiledDependency } from '../../types'
 
 const PAGE_SIZE = 12
@@ -170,7 +171,7 @@ function ProtocolCard({
       <div className="flex items-start justify-between p-6 pb-3">
         <div className="flex items-center gap-4 min-w-0">
           <div className="size-12 rounded bg-white border border-hover flex items-center justify-center shrink-0 shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] p-[9px]">
-            <img src="/defiscan-mark-blue.svg" alt="" className="h-full w-full" />
+            <ProtocolLogo slug={protocol.slug} className="h-full w-full object-contain" />
           </div>
           <div className="min-w-0">
             <h3 className="font-semibold text-sm text-text-primary truncate">
