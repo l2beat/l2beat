@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-13T09:24:18.112Z",
+  "compiledAt": "2026-04-13T17:34:03.237Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -16,7 +16,7 @@
     "scoredFunctionCount": 14,
     "adminCount": 7,
     "dependencyCount": 9,
-    "totalCapitalAtRisk": 194629298.3477858,
+    "totalCapitalAtRisk": 187789442.39414978,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
     "linesOfCode": 0
@@ -149,7 +149,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -182,7 +182,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -261,9 +261,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 194629298.3477858,
+      "totalDirectCapital": 187789442.39414978,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 194629298.3477858,
+      "totalReachableCapital": 187789442.39414978,
       "totalReachableTokenValue": 0
     },
     {
@@ -278,7 +278,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -311,7 +311,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -372,9 +372,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 194629298.3477858,
+      "totalDirectCapital": 187789442.39414978,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 194629298.3477858,
+      "totalReachableCapital": 187789442.39414978,
       "totalReachableTokenValue": 0
     },
     {
@@ -588,7 +588,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 194629298.3477858,
+    "totalFundsAtRisk": 187789442.39414978,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -864,7 +864,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -873,7 +873,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -882,7 +882,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -900,7 +900,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -948,7 +948,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -977,12 +977,12 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 194629298.3477858,
+          "directFundsUsd": 187789442.39414978,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 194629298.3477858,
+      "totalFundsAtRisk": 187789442.39414978,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -995,12 +995,12 @@
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 194629298.3477858,
+      "totalFundsAtRisk": 187789442.39414978,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 194629298.3477858,
+    "totalFundsAtRisk": 187789442.39414978,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
@@ -1009,10 +1009,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006640896988803456
+        "totalUsdValue": 0.006632815972758074
       },
       "positions": {
-        "totalUsdValue": 194629298.3411449
+        "totalUsdValue": 187789442.38751698
       },
       "tokenInfo": null,
       "aggregate": null
@@ -1387,6 +1387,1099 @@
   "resources": [],
   "audits": [],
   "activity": [
+    {
+      "timestamp": "2026-04-07T08:22:05.000Z",
+      "updateNotifierId": 94,
+      "address": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "94:eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD:values.$members.6",
+      "type": "data-change",
+      "field": "values.$members.6",
+      "before": "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+      "after": "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32"
+    },
+    {
+      "timestamp": "2026-04-07T08:22:05.000Z",
+      "updateNotifierId": 94,
+      "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "94:eth:0x255c7705e8BB334DfCae438197f7C4297988085a:values.$members.2",
+      "type": "data-change",
+      "field": "values.$members.2",
+      "before": "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+      "after": "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32"
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.supplyQueue.2",
+      "type": "data-change",
+      "field": "values.supplyQueue.2",
+      "before": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd"
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.supplyQueue.3",
+      "type": "data-change",
+      "field": "values.supplyQueue.3",
+      "after": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd"
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketParams.2",
+      "type": "data-change",
+      "field": "values.marketParams.2",
+      "before": {
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000",
+        "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+        "marketId": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      }
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketParams.3",
+      "type": "data-change",
+      "field": "values.marketParams.3",
+      "after": {
+        "marketId": "0x94b823e6bd8ea533b4e33fbc307faea0b307301bc48763acc4d4aa4def7636cd",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "oracle": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketOracles.2",
+      "type": "data-change",
+      "field": "values.marketOracles.2",
+      "before": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580"
+    },
+    {
+      "timestamp": "2026-03-25T07:59:21.000Z",
+      "updateNotifierId": 79,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "79:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketOracles.3",
+      "type": "data-change",
+      "field": "values.marketOracles.3",
+      "after": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580"
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "contractName": "GnosisSafe",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "78:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:values.$members.8",
+      "type": "data-change",
+      "field": "values.$members.8",
+      "before": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+      "after": "eth:0xD66336eA98cE0da67f25934E7cC230D4226292a0"
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.supplyQueue.2",
+      "type": "data-change",
+      "field": "values.supplyQueue.2",
+      "before": "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc"
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.supplyQueue.3",
+      "type": "data-change",
+      "field": "values.supplyQueue.3",
+      "after": "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc"
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketParams.2",
+      "type": "data-change",
+      "field": "values.marketParams.2",
+      "before": {
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000",
+        "oracle": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+        "marketId": "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      }
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketParams.3",
+      "type": "data-change",
+      "field": "values.marketParams.3",
+      "after": {
+        "marketId": "0xb323495f7e4148be5643a4ea4a8221eef163e4bccfdedc2a6f4696baacbc86cc",
+        "loanToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "collateralToken": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "oracle": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+        "irm": "eth:0x870aC11D48B15DB9a138Cf899d20F13F79Ba00BC",
+        "lltv": "860000000000000000"
+      }
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketOracles.2",
+      "type": "data-change",
+      "field": "values.marketOracles.2",
+      "before": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2"
+    },
+    {
+      "timestamp": "2026-03-24T07:59:20.000Z",
+      "updateNotifierId": 78,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "78:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.marketOracles.3",
+      "type": "data-change",
+      "field": "values.marketOracles.3",
+      "after": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 66,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "66:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.MAX_FEE",
+      "type": "data-change",
+      "field": "values.MAX_FEE",
+      "after": "500000000000000000"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 66,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "66:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.MAX_QUEUE_LENGTH",
+      "type": "data-change",
+      "field": "values.MAX_QUEUE_LENGTH",
+      "after": 30
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 66,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "66:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.MAX_TIMELOCK",
+      "type": "data-change",
+      "field": "values.MAX_TIMELOCK",
+      "after": 1209600
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 66,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "66:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.MIN_TIMELOCK",
+      "type": "data-change",
+      "field": "values.MIN_TIMELOCK",
+      "after": 86400
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 66,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "66:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:fieldMeta",
+      "type": "data-change",
+      "field": "fieldMeta",
+      "after": {
+        "MAX_TIMELOCK": {
+          "description": "Maximum timelock delay (2 weeks)"
+        },
+        "MIN_TIMELOCK": {
+          "description": "Minimum timelock delay (1 day)"
+        },
+        "MAX_QUEUE_LENGTH": {
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "description": "Maximum fee (50%, represented as 0.5e18)"
+        }
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "55:eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580:values.price",
+      "type": "data-change",
+      "field": "values.price",
+      "before": "1993762027970000000000000000"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
+      "contractName": "ChainlinkOracle",
+      "entity": null,
+      "id": "55:eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2:values.price",
+      "type": "data-change",
+      "field": "values.price",
+      "before": "2441606370253833898652869534",
+      "after": "2387847812996704221500027075"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
+      "contractName": "WstETHPriceFeed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 122741816,
+        "roundId": "36893488147419103928",
+        "startedAt": 1772479503,
+        "updatedAt": 1772479523,
+        "answeredInRound": "36893488147419103928"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "36893488147419103928"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": "999296311139123100"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": "999296311139123100",
+        "roundId": "36893488147419103928",
+        "startedAt": 1772479503,
+        "updatedAt": 1772479523,
+        "answeredInRound": "36893488147419103928"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772479523
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:values.aggregator",
+      "type": "data-change",
+      "field": "values.aggregator",
+      "after": "eth:0xC9c8Efa84eaB332d1950e5Ba0a913b090775825c"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "Steakhouse-USDC/EACAggregatorProxy"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "55340232221128655649"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 99995467
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 99995467,
+        "roundId": "55340232221128655649",
+        "startedAt": 1772521250,
+        "updatedAt": 1772521271,
+        "answeredInRound": "55340232221128655649"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772521271
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.aggregator",
+      "type": "data-change",
+      "field": "values.aggregator",
+      "after": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "Steakhouse-USDC/EACAggregatorProxy"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "92233720368547764159"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 502709271631035
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 502709271631035,
+        "roundId": "92233720368547764159",
+        "startedAt": 1772516958,
+        "updatedAt": 1772516987,
+        "answeredInRound": "92233720368547764159"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772516987
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
+      "contractName": "MorphoChainlinkOracleV2",
+      "entity": null,
+      "id": "55:eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a:values.price",
+      "type": "data-change",
+      "field": "values.price",
+      "before": "682201751678100000000000000000000000000"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+      "contractName": "MetaMorpho",
+      "isDependency": false,
+      "entity": null,
+      "id": "55:eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB:values.lastTotalAssets",
+      "type": "data-change",
+      "field": "values.lastTotalAssets",
+      "before": 239771689639120,
+      "after": 157747727312322
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "36893488147419113528"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 199376202797
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 199376202797,
+        "roundId": "36893488147419113528",
+        "startedAt": 1772520618,
+        "updatedAt": 1772520647,
+        "answeredInRound": "36893488147419113528"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772520647
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:values.aggregator",
+      "type": "data-change",
+      "field": "values.aggregator",
+      "after": "eth:0xad88fc1A810379Ef4EFbF2D97EdE57e306178e5a"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "Steakhouse-USDC/EACAggregatorProxy"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
+      "contractName": "ChainlinkOracle",
+      "entity": null,
+      "id": "55:eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83:values.price",
+      "type": "data-change",
+      "field": "values.price",
+      "before": "680506628611829381225850967824371478759",
+      "after": "667140045857233448095664873643994810803"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "129127208515966879518"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 6822017516781
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 6822017516781,
+        "roundId": "129127208515966879518",
+        "startedAt": 1772522164,
+        "updatedAt": 1772522183,
+        "answeredInRound": "129127208515966879518"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772522183
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:errors.getTimestamp",
+      "type": "data-change",
+      "field": "errors.getTimestamp",
+      "before": "Processing error occurred."
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:errors.proposedLatestRoundData",
+      "type": "data-change",
+      "field": "errors.proposedLatestRoundData",
+      "before": "Processing error occurred."
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "36893488147419103835"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 99747000
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "answer": 99747000,
+        "roundId": "36893488147419103835",
+        "startedAt": 1772479424,
+        "updatedAt": 1772479439,
+        "answeredInRound": "36893488147419103835"
+      }
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772479439
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.proposedAggregator",
+      "type": "data-change",
+      "field": "values.proposedAggregator",
+      "before": "eth:0x0000000000000000000000000000000000000000"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:values.aggregator",
+      "type": "data-change",
+      "field": "values.aggregator",
+      "after": "eth:0xA5e3A55cEa42B86560a5215094981c300899199D"
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 55,
+      "address": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
+      "contractName": "EACAggregatorProxy",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "55:eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "Steakhouse-USDC/EACAggregatorProxy"
+    },
     {
       "type": "upgrade",
       "timestamp": "2025-04-28T16:22:47.000Z",

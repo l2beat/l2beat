@@ -1,0 +1,453 @@
+{
+  "version": "1.0",
+  "lastReconciledAt": 1776101653,
+  "lastConsumedUpdateNotifierId": 67,
+  "events": [
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+      "contractName": "BorrowerOperations",
+      "entity": null,
+      "id": "64:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:values.getCompositeDebt",
+      "type": "data-change",
+      "field": "values.getCompositeDebt",
+      "before": [
+        "200000000000000000000",
+        "200000000000000000001",
+        "200000000000000000002",
+        "200000000000000000003",
+        "200000000000000000004"
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+      "contractName": "BorrowerOperations",
+      "entity": null,
+      "id": "64:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getCompositeDebt": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+      "contractName": "BorrowerOperations",
+      "entity": null,
+      "id": "64:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "liquity-v2/BorrowerOperations"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "contractName": "Chainlink LUSD/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:errors.getTimestamp",
+      "type": "data-change",
+      "field": "errors.getTimestamp",
+      "before": "Processing error occurred."
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "contractName": "Chainlink LUSD/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:errors.proposedLatestRoundData",
+      "type": "data-change",
+      "field": "errors.proposedLatestRoundData",
+      "before": "Processing error occurred."
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "contractName": "Chainlink LUSD/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "Steakhouse-USDC/EACAggregatorProxy"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
+      "contractName": "LQTYStaking",
+      "entity": null,
+      "id": "64:eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d:values.F_LUSD",
+      "type": "data-change",
+      "field": "values.F_LUSD",
+      "before": "601243131442849934862",
+      "after": "601243134600246048386"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
+      "contractName": "LQTYStaking",
+      "entity": null,
+      "id": "64:eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d:values.totalLQTYStaked",
+      "type": "data-change",
+      "field": "values.totalLQTYStaked",
+      "before": "58526676494000591906836418",
+      "after": "58534475879768726406445882"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.getAnswer",
+      "type": "data-change",
+      "field": "values.getAnswer",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.getTimestamp",
+      "type": "data-change",
+      "field": "values.getTimestamp",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestAnswer",
+      "type": "data-change",
+      "field": "values.latestAnswer",
+      "before": 195381863000
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRound",
+      "type": "data-change",
+      "field": "values.latestRound",
+      "before": "129127208515966887569"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData",
+      "type": "data-change",
+      "field": "values.latestRoundData",
+      "before": {
+        "roundId": "129127208515966887569",
+        "answer": 195381863000,
+        "startedAt": 1772451999,
+        "updatedAt": 1772452019,
+        "answeredInRound": "129127208515966887569"
+      }
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestTimestamp",
+      "type": "data-change",
+      "field": "values.latestTimestamp",
+      "before": 1772452019
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "contractName": "Chainlink ETH/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "64:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "getAnswer": "Processing error occurred.",
+        "getTimestamp": "Processing error occurred.",
+        "proposedLatestRoundData": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
+      "contractName": "SortedTroves",
+      "entity": null,
+      "id": "64:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.data",
+      "type": "data-change",
+      "field": "values.data",
+      "before": {
+        "head": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
+        "tail": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687",
+        "maxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "size": 105
+      }
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
+      "contractName": "SortedTroves",
+      "entity": null,
+      "id": "64:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "liquity-v2/SortedTroves_all"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.checkRecoveryMode",
+      "type": "data-change",
+      "field": "values.checkRecoveryMode",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getBorrowingFee",
+      "type": "data-change",
+      "field": "values.getBorrowingFee",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getBorrowingFeeWithDecay",
+      "type": "data-change",
+      "field": "values.getBorrowingFeeWithDecay",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getBorrowingRate",
+      "type": "data-change",
+      "field": "values.getBorrowingRate",
+      "before": 5003327826668194,
+      "after": 5000005294635042
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getBorrowingRateWithDecay",
+      "type": "data-change",
+      "field": "values.getBorrowingRateWithDecay",
+      "before": 5001540575279477,
+      "after": 5000001960467750
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getRedemptionFeeWithDecay",
+      "type": "data-change",
+      "field": "values.getRedemptionFeeWithDecay",
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getRedemptionRate",
+      "type": "data-change",
+      "field": "values.getRedemptionRate",
+      "before": 5003327826668194,
+      "after": 5000005294635042
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getRedemptionRateWithDecay",
+      "type": "data-change",
+      "field": "values.getRedemptionRateWithDecay",
+      "before": 5001540575279477,
+      "after": 5000001960467750
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getTCR",
+      "type": "data-change",
+      "field": "values.getTCR",
+      "before": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors",
+      "type": "data-change",
+      "field": "errors",
+      "before": {
+        "checkRecoveryMode": "Processing error occurred.",
+        "getBorrowingFee": "Processing error occurred.",
+        "getBorrowingFeeWithDecay": "Processing error occurred.",
+        "getTCR": "Processing error occurred."
+      }
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
+      "contractName": "TroveManager",
+      "entity": null,
+      "id": "64:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "liquity-v2/TroveManager_all"
+    },
+    {
+      "timestamp": "2026-03-07T07:39:26.000Z",
+      "updateNotifierId": 64,
+      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
+      "contractName": "CommunityIssuance",
+      "entity": null,
+      "id": "64:eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816:values.totalLQTYIssued",
+      "type": "data-change",
+      "field": "values.totalLQTYIssued",
+      "before": "30935488038157156128000000",
+      "after": "30944696540750327872000000"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 67,
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "contractName": "GnosisSafe",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "67:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:$deleted",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 67,
+      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
+      "contractName": "BorrowerOperations",
+      "entity": null,
+      "id": "67:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:values.stabilityPoolAddress",
+      "type": "data-change",
+      "field": "values.stabilityPoolAddress",
+      "after": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 67,
+      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
+      "contractName": "Chainlink LUSD/USD Price Feed",
+      "isDependency": true,
+      "entity": "Chainlink",
+      "id": "67:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:$deleted",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-03-11T07:53:00.000Z",
+      "updateNotifierId": 67,
+      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+      "contractName": "Tellor Tributes Token",
+      "isDependency": true,
+      "entity": null,
+      "id": "67:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:$deleted",
+      "type": "contract-removed"
+    }
+  ]
+}

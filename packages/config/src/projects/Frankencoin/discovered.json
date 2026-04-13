@@ -1,7 +1,7 @@
 {
   "name": "Frankencoin",
-  "timestamp": 1769681853,
-  "configHash": "0x39f3565ea7209dec18d2b1200e5b2a599d959433e5be6053eb5e7fde9f57cfb9",
+  "timestamp": 1776101265,
+  "configHash": "0x8ed871ba537b55e5ce0ab95a1042bc396d34a8e4254f97ba3f6ca1295dcebd44",
   "entries": [
     {
       "address": "eth:0x0100000000000000000000000000000000000000",
@@ -16,6 +16,7 @@
         "0x54c075b653abc550329cc9143f32b5af71855b07af46eb3560ed30963098c50f"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["price", "totalSupply", "totalVotes"],
       "sinceTimestamp": 1698530243,
       "sinceBlock": 18451518,
       "values": {
@@ -24,10 +25,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1222834302183385950095",
+        "price": "1470547244181609711476",
         "symbol": "FPS",
-        "totalSupply": "8767267269156074273181",
-        "totalVotes": "290143579997837420617144710874728931",
+        "totalSupply": "9282682548748945937767",
+        "totalVotes": "187131931556768190944153255800581589",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -48,16 +49,17 @@
         "0xe2233714fb0ac89f8b9adee4b1420088d35db4e10aab1a911ba1f3cf041a7719"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["currentTicks", "nextChange"],
       "sinceTimestamp": 1747891715,
       "sinceBlock": 22536327,
       "values": {
         "$immutable": true,
-        "currentRatePPM": 40000,
-        "currentTicks": 696648480000,
+        "currentRatePPM": 35000,
+        "currentTicks": 936345120000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
-        "nextChange": 1765382663,
-        "nextRatePPM": 40000,
+        "nextChange": 1774551239,
+        "nextRatePPM": 35000,
         "ticks": [],
         "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -120,6 +122,7 @@
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["minted"],
       "sinceTimestamp": 1744827131,
       "sinceBlock": 22283268,
       "values": {
@@ -127,7 +130,7 @@
         "chf": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
         "horizon": 1776276731,
         "limit": "2000000000000000000000000",
-        "minted": "351595564898889664482249",
+        "minted": "411626822407966829595145",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "implementationNames": {
@@ -142,16 +145,17 @@
         "0xa9b8c420c4ec4fbd1a45e9859d5a5d6ffc153513625e0562cce4d398f7bdd99f"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["currentTicks", "nextChange"],
       "sinceTimestamp": 1732727483,
       "sinceBlock": 21280492,
       "values": {
         "$immutable": true,
-        "currentRatePPM": 15000,
-        "currentTicks": 1110882180000,
+        "currentRatePPM": 10000,
+        "currentTicks": 1180328460000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
-        "nextChange": 1764252671,
-        "nextRatePPM": 15000,
+        "nextChange": 1770717611,
+        "nextRatePPM": 10000,
         "ticks": [],
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -304,22 +308,28 @@
       "type": "Contract",
       "sourceHashes": [
         "0x248558a8186569568cec173cb6595ed304b7e538f14d6646356cce5606f1f6a2",
-        "0xe3218f399c1cae521e0fd16a67b6c28a725030d51dff0ef8d4af795fbd10a4b9"
+        "0x6f77c5860e8992105fe40a51cb4768a4234b874dfb28035ab2d4e57c6232fedb"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1669986275,
       "sinceBlock": 16097303,
       "values": {
         "$admin": "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400",
-        "$implementation": "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
+        "$implementation": "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC",
         "$pastUpgrades": [
           [
             "2022-12-02T13:04:35.000Z",
             "0x88a6f8ad9b0ced4ea3acb1917987e887998858844bd3eef9dcb76feaee73c09e",
             ["eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6"]
+          ],
+          [
+            "2026-04-08T13:30:47.000Z",
+            "0xbb0976d9a4caced97d2254c04ca481c7422d03709dfb166e02502b6c304f4219",
+            ["eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "assetProtectionRoleId": 0,
         "currency": "CHF",
         "decimals": 18,
@@ -332,11 +342,12 @@
         "owner": "eth:0xCdB3867935247049e87c38eA270edD305D84c9AE",
         "paused": false,
         "symbol": "VCHF",
-        "totalSupply": "376226749070000000000000"
+        "totalSupply": "428222972930000000000000"
       },
+      "errors": { "eip712Domain": "Processing error occurred." },
       "implementationNames": {
         "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": "TransparentUpgradeableProxy",
-        "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6": "VNXCToken"
+        "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC": "VNXCToken"
       }
     },
     {
@@ -352,6 +363,7 @@
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["minted"],
       "sinceTimestamp": 1698530879,
       "sinceBlock": 18451571,
       "values": {
@@ -362,6 +374,7 @@
         "minted": "17000094858261410",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
+      "fieldMeta": { "limit": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": "StablecoinBridge"
       }
@@ -504,6 +517,13 @@
         "0x27adf34034866c4b0afca5218b8527dc3f768b5bec12b54ecdc0a240f581a3c2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "announcedMaturityDate",
+        "announcedTermEndDate",
+        "currentMaturityDate",
+        "currentTermEndDate",
+        "totalSupply"
+      ],
       "sinceTimestamp": 1540888325,
       "sinceBlock": 6610374,
       "values": {
@@ -546,6 +566,7 @@
         "0xb8012cec865e69d9312a22a2e9d8a676098ece69e9eec706598c8b954a94077d"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["equity", "minterReserve", "totalSupply"],
       "sinceTimestamp": 1698530243,
       "sinceBlock": 18451518,
       "values": {
@@ -564,14 +585,14 @@
         ],
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "3573638384377902616932789",
+        "equity": "4550207746891827798697910",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
-        "minterReserve": "4428655527018939574800367",
+        "minterReserve": "7101297305234180438273790",
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "20354991114916240227952988"
+        "totalSupply": "28030255595636265462786917"
       },
       "implementationNames": {
         "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
@@ -590,13 +611,6 @@
         "0xf936964831cae89cfea493a3a3b42408d0f893751008015da40da8bd6d4a7691"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1626462994,
       "sinceBlock": 12839705,
       "values": {
@@ -607,7 +621,14 @@
       },
       "implementationNames": {
         "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": "VNXProxyAdmin"
-      }
+      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "VNXManager",
@@ -712,6 +733,12 @@
             0,
             "eth:0x0000000000000000000000000000000000000000",
             0
+          ],
+          [
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0
           ]
         ],
         "EXPIRED_PRICE_FACTOR": 10,
@@ -720,6 +747,7 @@
         "roller": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
+      "errors": { "challenges": "Processing error occurred." },
       "implementationNames": {
         "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": "MintingHub"
       }
@@ -1346,6 +1374,69 @@
       "function transferContractOwnership(address targetContract, address newOwner) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
+    "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC": [
+      "event AddressFrozen(address indexed _account)",
+      "event AddressUnfrozen(address indexed _account)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event AssetProtectionRoleSet(uint8 indexed oldAssetProtectionRole, uint8 indexed newAssetProtectionRole)",
+      "event Burn(address indexed burner, uint256 amount)",
+      "event CurrencyNameUpdated(string indexed newCurrencyName)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event Mint(address indexed minter, address indexed to, uint256 amount)",
+      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
+      "event MinterRemoved(address indexed oldMinter)",
+      "event MinterRoleSet(uint8 indexed oldMinterRoleId, uint8 indexed newMinterRoleId)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RBACAddressUpdated(address indexed newRbacAddress)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TransferProviderChanged(address indexed oldProvider, address indexed newProvider)",
+      "event Unpaused(address account)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function assetProtectionRoleId() view returns (uint8)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 _amount)",
+      "function burnFrom(address _from, uint256 _amount)",
+      "function changeTransferProvider(address _newProvider)",
+      "function configureMinter(address minterAddress, uint256 minterAllowedAmount) returns (bool)",
+      "function currency() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function freeze(address _addr)",
+      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
+      "function initialize(string _tokenName, string _tokenSymbol, string _tokenCurrency, uint8 _assetProtectionRoleId, uint8 _minterRoleId, address _rbac, address _initTransferProvider, uint256 _minterAllowance)",
+      "function isAdmin() view returns (bool)",
+      "function isAssetProtector() view returns (bool)",
+      "function isFrozen(address _account) view returns (bool)",
+      "function isMinter() view returns (bool)",
+      "function mint(address _to, uint256 _amount) returns (bool)",
+      "function minterAllowance(address minter) view returns (uint256)",
+      "function minterRoleId() view returns (uint8)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function reclaimTokensFromFrozenAddress(address _addr)",
+      "function removeMinter(address minterAddress) returns (bool)",
+      "function renounceOwnership()",
+      "function setAssetProtectionRole(uint8 _newAssetProtectionRoleId)",
+      "function setMinterRole(uint8 _newMinterRoleId)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unFreeze(address _addr)",
+      "function unpause()",
+      "function updateCurrencyName(string _newCurrencyName)",
+      "function updateRBACAddress(address _newRbacAddress)"
+    ],
     "eth:0xd66a4bC77C3bF8f3Ab1827112F4ff70f0dc0472e": [
       "constructor(address _singleton)"
     ],
@@ -1469,61 +1560,6 @@
       "function uncurse(bytes16[] subjects)",
       "function verify(address offRampAddress, tuple(uint64 sourceChainSelector, bytes onRampAddress, uint64 minSeqNr, uint64 maxSeqNr, bytes32 merkleRoot)[] merkleRoots, tuple(bytes32 r, bytes32 s)[] signatures) view"
     ],
-    "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6": [
-      "event AddressFrozen(address indexed _account)",
-      "event AddressUnfrozen(address indexed _account)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AssetProtectionRoleSet(uint8 indexed oldAssetProtectionRole, uint8 indexed newAssetProtectionRole)",
-      "event Burn(address indexed burner, uint256 amount)",
-      "event Initialized(uint8 version)",
-      "event Mint(address indexed minter, address indexed to, uint256 amount)",
-      "event MinterConfigured(address indexed minter, uint256 minterAllowedAmount)",
-      "event MinterRemoved(address indexed oldMinter)",
-      "event MinterRoleSet(uint8 indexed oldMinterRoleId, uint8 indexed newMinterRoleId)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event TransferProviderChanged(address indexed oldProvider, address indexed newProvider)",
-      "event Unpaused(address account)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address _spender, uint256 _value) returns (bool)",
-      "function assetProtectionRoleId() view returns (uint8)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address _from, uint256 _amount)",
-      "function changeTransferProvider(address _newProvider)",
-      "function configureMinter(address minterAddress, uint256 minterAllowedAmount) returns (bool)",
-      "function currency() view returns (string)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 decrement) returns (bool)",
-      "function freeze(address _addr)",
-      "function increaseAllowance(address spender, uint256 increment) returns (bool)",
-      "function initialize(string _tokenName, string _tokenSymbol, string _tokenCurrency, uint8 _assetProtectionRoleId, uint8 _minterRoleId, address _newOwner, address _rbac, address _initTransferProvider, uint256 _minterAllowance)",
-      "function isAdmin() view returns (bool)",
-      "function isAssetProtector() view returns (bool)",
-      "function isFrozen(address _account) view returns (bool)",
-      "function isMinter() view returns (bool)",
-      "function mint(address _to, uint256 _amount) returns (bool)",
-      "function minterAllowance(address minter) view returns (uint256)",
-      "function minterRoleId() view returns (uint8)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function removeMinter(address minterAddress) returns (bool)",
-      "function renounceOwnership()",
-      "function setAssetProtectionRole(uint8 _newAssetProtectionRoleId)",
-      "function setMinterRole(uint8 _newMinterRoleId)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unFreeze(address _addr)",
-      "function unpause()"
-    ],
     "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": [
       "constructor(address token, address router, address link)",
       "error InfiniteAllowanceRequired(address owner, address spender)",
@@ -1551,6 +1587,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
-  "usedBlockNumbers": { "ethereum": 24339856 },
+  "usedBlockNumbers": { "ethereum": 24872341 },
   "permissionsConfigHash": "0xd8a9712e522a444081838b952adbfb037f369cbe1df66fa9049cae6bac372f6a"
 }

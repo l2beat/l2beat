@@ -1,7 +1,7 @@
 {
   "name": "Steakhouse-USDC",
-  "timestamp": 1772548726,
-  "configHash": "0x1f271bdfd66092ae7cd0ce1c24e1f4473f336aa1c2c072b4fb7b12def8177013",
+  "timestamp": 1776101265,
+  "configHash": "0xf93560ab5849bcadc1d2b6ca66dc9a6b4b6447d3c25478fef5d817f021bdfe12",
   "entries": [
     {
       "name": "Safe",
@@ -32,7 +32,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 6 (17%)",
-        "nonce": 494,
+        "nonce": 515,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -68,7 +68,7 @@
           "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f",
           "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
           "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
-          "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+          "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32",
           "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
         ],
         "$threshold": 5,
@@ -76,7 +76,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 106,
+        "nonce": 108,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -145,7 +145,7 @@
           "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
           "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
           "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
-          "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d"
+          "eth:0xD66336eA98cE0da67f25934E7cC230D4226292a0"
         ],
         "$threshold": 4,
         "domainSeparator": "0xd1762de5ed4ca058936e50abe6269afdebb65650fe4d14f406c321a5be38e3c8",
@@ -155,7 +155,7 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 2066,
+        "nonce": 2094,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -182,7 +182,7 @@
         "$members": [
           "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
           "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
-          "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
+          "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32",
           "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
         ],
         "$threshold": 2,
@@ -190,7 +190,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 174,
+        "nonce": 179,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -204,11 +204,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ConfirmedTransactionModule",
       "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
       "type": "Contract",
@@ -216,13 +211,6 @@
         "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "sinceTimestamp": 1603267019,
       "sinceBlock": 11098283,
       "values": {
@@ -233,7 +221,14 @@
       },
       "implementationNames": {
         "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": "ConfirmedTransactionModule"
-      }
+      },
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
     },
     {
       "address": "eth:0x30E7c016fC702cDe9A50720a469d418490b7b652",
@@ -242,11 +237,6 @@
     },
     {
       "address": "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -275,7 +265,7 @@
         "$immutable": true,
         "BASE_FEED_1": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
-        "price": "2413731176027408957308438190",
+        "price": "2750652221234103520370293172",
         "QUOTE_FEED_1": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "10000000000000000000000000000000000",
@@ -353,7 +343,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 124,
+        "nonce": 151,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -391,6 +381,11 @@
       "implementationNames": {
         "eth:0x86392dC19c0b719886221c78AB11eb8Cf5c52812": "EACAggregatorProxy"
       }
+    },
+    {
+      "address": "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8AE8EE5ad6EaE89836B0070Ebc47AF06E3D7422b",
@@ -634,7 +629,7 @@
         "fee": 0,
         "feeRecipient": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
         "guardian": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
-        "lastTotalAssets": 161941963364048,
+        "lastTotalAssets": 187864470306777,
         "marketOracles": [
           "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
           "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
@@ -684,6 +679,10 @@
             "lltv": 0
           }
         ],
+        "MAX_FEE": "500000000000000000",
+        "MAX_QUEUE_LENGTH": 30,
+        "MAX_TIMELOCK": 1209600,
+        "MIN_TIMELOCK": 86400,
         "MORPHO": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
         "name": "Steakhouse USDC",
         "owner": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
@@ -704,9 +703,20 @@
         "supplyQueueLength": 5,
         "symbol": "steakUSDC",
         "timelock": 604800,
-        "totalAssets": 161942133121214,
-        "totalSupply": "144695254734701483451935875",
+        "totalAssets": 187864507451127,
+        "totalSupply": "167343659701928083622970850",
         "withdrawQueueLength": 5
+      },
+      "fieldMeta": {
+        "MAX_TIMELOCK": { "description": "Maximum timelock delay (2 weeks)" },
+        "MIN_TIMELOCK": { "description": "Minimum timelock delay (1 day)" },
+        "MAX_QUEUE_LENGTH": {
+          "description": "Maximum number of markets in supply/withdraw queue"
+        },
+        "MAX_FEE": {
+          "description": "Maximum fee (50%, represented as 0.5e18)"
+        },
+        "fee": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB": "MetaMorpho"
@@ -799,6 +809,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xD66336eA98cE0da67f25934E7cC230D4226292a0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
       "type": "EOA",
       "proxyType": "EOA"
@@ -818,7 +833,7 @@
         "$immutable": true,
         "BASE_FEED_1": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
-        "price": "666955297248026184636739148353266582196",
+        "price": "722501856074992768481381090028906070274",
         "QUOTE_FEED_1": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "100000000000000000000000000",
@@ -1728,6 +1743,6 @@
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24577577 },
-  "permissionsConfigHash": "0xf061b25f0ca6647e53a04b25a630a6ce93fa9d02c1bb2dd3734453207e8f51df"
+  "usedBlockNumbers": { "ethereum": 24872341 },
+  "permissionsConfigHash": "0xe131ce9ddf18a08f397f83805d408bc58a67eea0e9c333bf45719507f843f3c1"
 }

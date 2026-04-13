@@ -1,0 +1,102 @@
+{
+  "version": "1.0",
+  "lastReconciledAt": 1776101674,
+  "lastConsumedUpdateNotifierId": 97,
+  "events": [
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:values.$pastUpgrades.1",
+      "type": "data-change",
+      "field": "values.$pastUpgrades.1",
+      "after": [
+        "2026-04-08T13:30:47.000Z",
+        "0xbb0976d9a4caced97d2254c04ca481c7422d03709dfb166e02502b6c304f4219",
+        [
+          "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC"
+        ]
+      ]
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:values.$upgradeCount",
+      "type": "data-change",
+      "field": "values.$upgradeCount",
+      "before": 1,
+      "after": 2
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:values.$implementation",
+      "type": "data-change",
+      "field": "values.$implementation",
+      "before": "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
+      "after": "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC"
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:sourceHashes.1",
+      "type": "data-change",
+      "field": "sourceHashes.1",
+      "before": "0xe3218f399c1cae521e0fd16a67b6c28a725030d51dff0ef8d4af795fbd10a4b9",
+      "after": "0x6f77c5860e8992105fe40a51cb4768a4234b874dfb28035ab2d4e57c6232fedb"
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:implementationNames.eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
+      "type": "data-change",
+      "field": "implementationNames.eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
+      "before": "VNXCToken"
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:implementationNames.eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC",
+      "type": "data-change",
+      "field": "implementationNames.eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC",
+      "after": "VNXCToken"
+    },
+    {
+      "timestamp": "2026-04-09T08:27:30.000Z",
+      "updateNotifierId": 97,
+      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+      "contractName": "VNXCToken",
+      "isDependency": true,
+      "entity": "VCHF",
+      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:errors",
+      "type": "data-change",
+      "field": "errors",
+      "after": {
+        "eip712Domain": "Processing error occurred."
+      }
+    }
+  ]
+}

@@ -1,0 +1,2139 @@
+{
+  "version": "1.0",
+  "lastReconciledAt": 1776101982,
+  "lastConsumedUpdateNotifierId": 80,
+  "events": [
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
+      "contractName": "AuctionManager",
+      "entity": null,
+      "id": "80:eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
+      "contractName": "AuctionManager",
+      "entity": null,
+      "id": "80:eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9",
+      "contractName": "AuctionManager",
+      "entity": null,
+      "id": "80:eth:0x00C452aFFee3a17d9Cecc1Bcd2B8d5C7635C4CB9:values.admins.2",
+      "type": "data-change",
+      "field": "values.admins.2",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46",
+      "contractName": "DummyTokenUpgradeable",
+      "entity": null,
+      "id": "80:eth:0x0295E0CE709723FB25A28b8f67C54a488BA5aE46:values.totalSupply",
+      "type": "data-change",
+      "field": "values.totalSupply",
+      "before": "149736438486903170223",
+      "after": "415128654402010280660"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+      "contractName": "EtherFiAdmin",
+      "entity": null,
+      "id": "80:eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705:values.blockForNextReportToProcess",
+      "type": "data-change",
+      "field": "values.blockForNextReportToProcess",
+      "before": 24725401,
+      "after": 24739430
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+      "contractName": "EtherFiAdmin",
+      "entity": null,
+      "id": "80:eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705:values.lastAdminExecutionBlock",
+      "type": "data-change",
+      "field": "values.lastAdminExecutionBlock",
+      "before": 24725925,
+      "after": 24739904
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+      "contractName": "EtherFiAdmin",
+      "entity": null,
+      "id": "80:eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705:values.lastHandledReportRefBlock",
+      "type": "data-change",
+      "field": "values.lastHandledReportRefBlock",
+      "before": 24725400,
+      "after": 24739429
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+      "contractName": "EtherFiAdmin",
+      "entity": null,
+      "id": "80:eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705:values.lastHandledReportRefSlot",
+      "type": "data-change",
+      "field": "values.lastHandledReportRefSlot",
+      "before": 13958943,
+      "after": 13973023
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+      "contractName": "EtherFiAdmin",
+      "entity": null,
+      "id": "80:eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705:values.slotForNextReportToProcess",
+      "type": "data-change",
+      "field": "values.slotForNextReportToProcess",
+      "before": 13958944,
+      "after": 13973024
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+      "contractName": "EtherFiRestaker",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+      "contractName": "EtherFiRestaker",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf:values.getTotalPooledEther",
+      "type": "data-change",
+      "field": "values.getTotalPooledEther",
+      "before": "709592167384520013601485",
+      "after": "590616686858669453121933"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+      "contractName": "EtherFiRestaker",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf:values.pendingWithdrawalRoots.0",
+      "type": "data-change",
+      "field": "values.pendingWithdrawalRoots.0",
+      "before": "0xfe0b28e7d89ef3c1d17c8451c9c37b28dfb06c5f45bf1af52fd331d1b6d09ac0"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+      "contractName": "LiquidityPool",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x308861A430be4cce5502d0A12724771Fc6DaF216:values.ethAmountLockedForWithdrawal",
+      "type": "data-change",
+      "field": "values.ethAmountLockedForWithdrawal",
+      "before": "8292086068067913964648",
+      "after": "15370727351567614138686"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+      "contractName": "LiquidityPool",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x308861A430be4cce5502d0A12724771Fc6DaF216:values.getTotalPooledEther",
+      "type": "data-change",
+      "field": "values.getTotalPooledEther",
+      "before": "3057670619420143181720403",
+      "after": "2938590744572072303948764"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+      "contractName": "LiquidityPool",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x308861A430be4cce5502d0A12724771Fc6DaF216:values.totalValueInLp",
+      "type": "data-change",
+      "field": "values.totalValueInLp",
+      "before": "21698212970193144677413",
+      "after": "20851166082427770724038"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+      "contractName": "LiquidityPool",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x308861A430be4cce5502d0A12724771Fc6DaF216:values.totalValueOutOfLp",
+      "type": "data-change",
+      "field": "values.totalValueOutOfLp",
+      "before": "3035972406449950037042990",
+      "after": "2917739578489644533224726"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA",
+      "contractName": "PriorityWithdrawalQueue",
+      "entity": null,
+      "id": "80:eth:0x35e7D6feF6f72aDd3c3e39dEc6d9CCc29e3345FA:values.getRemainderAmount",
+      "type": "data-change",
+      "field": "values.getRemainderAmount",
+      "before": 113473700478464,
+      "after": 113488236729631
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+      "contractName": "ether.fi ETH Token",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2:values.totalShares",
+      "type": "data-change",
+      "field": "values.totalShares",
+      "before": "2802601280456194522275889",
+      "after": "2693109994831650287676832"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+      "contractName": "ether.fi ETH Token",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2:values.totalSupply",
+      "type": "data-change",
+      "field": "values.totalSupply",
+      "before": "3057670619420143181720403",
+      "after": "2938590744572072303948764"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.admins.2",
+      "type": "data-change",
+      "field": "values.admins.2",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierData.0.0",
+      "type": "data-change",
+      "field": "values.tierData.0.0",
+      "before": "102092232945464311",
+      "after": "102205044889990335"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierData.1.0",
+      "type": "data-change",
+      "field": "values.tierData.1.0",
+      "before": "117684891452761559",
+      "after": "117808984591740188"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierData.2.0",
+      "type": "data-change",
+      "field": "values.tierData.2.0",
+      "before": "132895510501187413",
+      "after": "133030884834618645"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierData.3.0",
+      "type": "data-change",
+      "field": "values.tierData.3.0",
+      "before": "148556485737107213",
+      "after": "148703141264991049"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierDeposits.0.1",
+      "type": "data-change",
+      "field": "values.tierDeposits.0.1",
+      "before": "14895713818876153181",
+      "after": "14893805883978724071"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierDeposits.1.1",
+      "type": "data-change",
+      "field": "values.tierDeposits.1.1",
+      "before": "5244877678605362313",
+      "after": "5244205882323731471"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierDeposits.2.1",
+      "type": "data-change",
+      "field": "values.tierDeposits.2.1",
+      "before": "50806351142969872386",
+      "after": "50799843552159832033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierDeposits.3.1",
+      "type": "data-change",
+      "field": "values.tierDeposits.3.1",
+      "before": "101523473971289857221",
+      "after": "101510470218582645638"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.0.0",
+      "type": "data-change",
+      "field": "values.tierVaults.0.0",
+      "before": "50142843039722971899",
+      "after": "50141504476001725810"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.1.1",
+      "type": "data-change",
+      "field": "values.tierVaults.1.1",
+      "before": "35243453393083737855",
+      "after": "35145459911981314632"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.1.0",
+      "type": "data-change",
+      "field": "values.tierVaults.1.0",
+      "before": "36310076078648084231",
+      "after": "36208517298993728743"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.2.0",
+      "type": "data-change",
+      "field": "values.tierVaults.2.0",
+      "before": "104404883477008297143",
+      "after": "104404212918874918192"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.3.1",
+      "type": "data-change",
+      "field": "values.tierVaults.3.1",
+      "before": "671132232807253754013",
+      "after": "670534157521875028903"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000",
+      "contractName": "MembershipManager",
+      "entity": null,
+      "id": "80:eth:0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000:values.tierVaults.3.0",
+      "type": "data-change",
+      "field": "values.tierVaults.3.0",
+      "before": "703259700901006927904",
+      "after": "702635604748480492517"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.admins.2",
+      "type": "data-change",
+      "field": "values.admins.2",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.blockStampForNextReport.slotFrom",
+      "type": "data-change",
+      "field": "values.blockStampForNextReport.slotFrom",
+      "before": 13958944,
+      "after": 13973024
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.blockStampForNextReport.slotTo",
+      "type": "data-change",
+      "field": "values.blockStampForNextReport.slotTo",
+      "before": 13960223,
+      "after": 13973663
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.blockStampForNextReport.blockFrom",
+      "type": "data-change",
+      "field": "values.blockStampForNextReport.blockFrom",
+      "before": 24725401,
+      "after": 24739430
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.lastPublishedReportRefBlock",
+      "type": "data-change",
+      "field": "values.lastPublishedReportRefBlock",
+      "before": 24725400,
+      "after": 24739429
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.lastPublishedReportRefSlot",
+      "type": "data-change",
+      "field": "values.lastPublishedReportRefSlot",
+      "before": 13958943,
+      "after": 13973023
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41",
+      "contractName": "EtherFiOracle",
+      "entity": null,
+      "id": "80:eth:0x57AaF0004C716388B21795431CD7D5f9D3Bb6a41:values.slotForNextReport",
+      "type": "data-change",
+      "field": "values.slotForNextReport",
+      "before": 13960223,
+      "after": 13973663
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.balances.0",
+      "type": "data-change",
+      "field": "values.balances.0",
+      "before": "40463160717514606127",
+      "after": "38586483013159999761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.balances.1",
+      "type": "data-change",
+      "field": "values.balances.1",
+      "before": "31909828113254659361",
+      "after": "33577374741548027410"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.D",
+      "type": "data-change",
+      "field": "values.D",
+      "before": "76381422721752570796",
+      "after": "76380942982012525846"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.fee",
+      "type": "data-change",
+      "field": "values.fee",
+      "before": 3489841,
+      "after": 3015047
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.get_virtual_price",
+      "type": "data-change",
+      "field": "values.get_virtual_price",
+      "before": "1021471702980289804",
+      "after": "1021479862598704473"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.last_prices",
+      "type": "data-change",
+      "field": "values.last_prices",
+      "before": "1125636213624876000",
+      "after": "1125360468795580931"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.last_prices_timestamp",
+      "type": "data-change",
+      "field": "values.last_prices_timestamp",
+      "before": 1774300727,
+      "after": 1774486139
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.lp_price",
+      "type": "data-change",
+      "field": "values.lp_price",
+      "before": "2167481324587699852",
+      "after": "2167233138503743952"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.price_oracle",
+      "type": "data-change",
+      "field": "values.price_oracle",
+      "before": "1125636213624876000",
+      "after": "1125360468795580939"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.price_scale",
+      "type": "data-change",
+      "field": "values.price_scale",
+      "before": "1125625306909727423",
+      "after": "1125593184427680035"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.virtual_price",
+      "type": "data-change",
+      "field": "values.virtual_price",
+      "before": "1021471702980289804",
+      "after": "1021479862598704473"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A:values.xcp_profit",
+      "type": "data-change",
+      "field": "values.xcp_profit",
+      "before": "1042339126348069823",
+      "after": "1042347068562471270"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.LIQUIDITY_POOL_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.LIQUIDITY_POOL_ADMIN_ROLE",
+      "before": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_ORACLE_EXECUTOR_ADMIN_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.WITHDRAW_REQUEST_NFT_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.WITHDRAW_REQUEST_NFT_ADMIN_ROLE",
+      "before": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_REDEMPTION_MANAGER_ADMIN_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.PROTOCOL_UNPAUSER",
+      "type": "data-change",
+      "field": "values.roles.PROTOCOL_UNPAUSER",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.PROTOCOL_PAUSER",
+      "type": "data-change",
+      "field": "values.roles.PROTOCOL_PAUSER",
+      "before": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0x9AF1298993DC1f397973C62A5D47a284CF76844D",
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_ORACLE_EXECUTOR_TASK_MANAGER_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.IMPLICIT_FEE_CLAIMER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.IMPLICIT_FEE_CLAIMER_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.STAKING_MANAGER_NODE_CREATOR_ROLE",
+      "type": "data-change",
+      "field": "values.roles.STAKING_MANAGER_NODE_CREATOR_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_ADMIN_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_CALL_FORWARDER_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_EIGENLAYER_ADMIN_ROLE",
+      "before": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F",
+        "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.LIQUIDITY_POOL_VALIDATOR_APPROVER_ROLE",
+      "before": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.EETH_OPERATING_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.EETH_OPERATING_ADMIN_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_EL_TRIGGER_EXIT_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_EL_TRIGGER_EXIT_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_POD_PROVER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_POD_PROVER_ROLE",
+      "before": [
+        "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.STAKING_MANAGER_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.STAKING_MANAGER_ADMIN_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_RATE_LIMITER_ADMIN_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE",
+      "type": "data-change",
+      "field": "values.roles.LIQUIDITY_POOL_VALIDATOR_CREATOR_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.STAKING_MANAGER_VALIDATOR_INVALIDATOR_ROLE",
+      "type": "data-change",
+      "field": "values.roles.STAKING_MANAGER_VALIDATOR_INVALIDATOR_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_EL_CONSOLIDATION_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_EL_CONSOLIDATION_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.ETHERFI_NODES_MANAGER_LEGACY_LINKER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.ETHERFI_NODES_MANAGER_LEGACY_LINKER_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.PRIORITY_WITHDRAWAL_QUEUE_ADMIN_ROLE",
+      "type": "data-change",
+      "field": "values.roles.PRIORITY_WITHDRAWAL_QUEUE_ADMIN_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.PRIORITY_WITHDRAWAL_QUEUE_WHITELIST_MANAGER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.PRIORITY_WITHDRAWAL_QUEUE_WHITELIST_MANAGER_ROLE",
+      "before": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.PRIORITY_WITHDRAWAL_QUEUE_REQUEST_MANAGER_ROLE",
+      "type": "data-change",
+      "field": "values.roles.PRIORITY_WITHDRAWAL_QUEUE_REQUEST_MANAGER_ROLE",
+      "before": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x0e8d94121b3383f03d9ae60b39295aa793469d7230d51a3f62cbf47cd45481d9",
+      "type": "data-change",
+      "field": "values.roles.0x0e8d94121b3383f03d9ae60b39295aa793469d7230d51a3f62cbf47cd45481d9",
+      "after": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xf63b1ce674d2cec0dbfcdcc7e504ce31a335c457c363b9fafb6ca524addf1775",
+      "type": "data-change",
+      "field": "values.roles.0xf63b1ce674d2cec0dbfcdcc7e504ce31a335c457c363b9fafb6ca524addf1775",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xdf341d2a9af804fa0099198f83a0a0611aa273a03b36d576993f914e695dff2a",
+      "type": "data-change",
+      "field": "values.roles.0xdf341d2a9af804fa0099198f83a0a0611aa273a03b36d576993f914e695dff2a",
+      "after": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x1fa5f863eb8a62c868fa7eb98a4e47ded14913e6885050cfd9090d04516345b0",
+      "type": "data-change",
+      "field": "values.roles.0x1fa5f863eb8a62c868fa7eb98a4e47ded14913e6885050cfd9090d04516345b0",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xb72d40a29b0ca5ab6e0b32830618dfdcae56fae676396ff1f7c3fede659935c8",
+      "type": "data-change",
+      "field": "values.roles.0xb72d40a29b0ca5ab6e0b32830618dfdcae56fae676396ff1f7c3fede659935c8",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xe6ff4398839854a2087720a46165c7be195bc9de6f7a3c5a977d3b6917b76af2",
+      "type": "data-change",
+      "field": "values.roles.0xe6ff4398839854a2087720a46165c7be195bc9de6f7a3c5a977d3b6917b76af2",
+      "after": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
+        "eth:0x9AF1298993DC1f397973C62A5D47a284CF76844D",
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xe9d356a03911100a5418b1829f363128136c30112754cb3dbe73b1674abe2ac8",
+      "type": "data-change",
+      "field": "values.roles.0xe9d356a03911100a5418b1829f363128136c30112754cb3dbe73b1674abe2ac8",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x4fb62203ff7abbe51d8c53865ac09965620ebfa150bfb9e0d3c26869f5c43935",
+      "type": "data-change",
+      "field": "values.roles.0x4fb62203ff7abbe51d8c53865ac09965620ebfa150bfb9e0d3c26869f5c43935",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xa9e662c125cda0e0d367a277c57f51ca0b3a9ddb823ca7717301532d10b2b0f8",
+      "type": "data-change",
+      "field": "values.roles.0xa9e662c125cda0e0d367a277c57f51ca0b3a9ddb823ca7717301532d10b2b0f8",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xa2a38b453c00b96e25a6611741c0fa71b17f9f21f28c0d5e77c008a31c1949ba",
+      "type": "data-change",
+      "field": "values.roles.0xa2a38b453c00b96e25a6611741c0fa71b17f9f21f28c0d5e77c008a31c1949ba",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x25f713693dd3e84995d0d9964722b195ad1b60efe6253e8fa19b8e74f9a6602a",
+      "type": "data-change",
+      "field": "values.roles.0x25f713693dd3e84995d0d9964722b195ad1b60efe6253e8fa19b8e74f9a6602a",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x59182b0a43541702fc3e73f22a962f8f868277e76091a99c516d2982b9df2f90",
+      "type": "data-change",
+      "field": "values.roles.0x59182b0a43541702fc3e73f22a962f8f868277e76091a99c516d2982b9df2f90",
+      "after": [
+        "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F",
+        "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xc6ace799356a5a236ccaa6708c68b77b7de838b1700b6e0c40f48a1407a5eef0",
+      "type": "data-change",
+      "field": "values.roles.0xc6ace799356a5a236ccaa6708c68b77b7de838b1700b6e0c40f48a1407a5eef0",
+      "after": [
+        "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x06b452e947f709c0549c7a2e857f0d57f53a00c27bb826a3340a48774a76512f",
+      "type": "data-change",
+      "field": "values.roles.0x06b452e947f709c0549c7a2e857f0d57f53a00c27bb826a3340a48774a76512f",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x140ee46da08400488949dfb48bdfc7c0502610f6a6203d169743d6b9e776a0be",
+      "type": "data-change",
+      "field": "values.roles.0x140ee46da08400488949dfb48bdfc7c0502610f6a6203d169743d6b9e776a0be",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xf2c32172f8adc08057d18fb6422b871bd95592f20a6ab72ebf7963209047f50c",
+      "type": "data-change",
+      "field": "values.roles.0xf2c32172f8adc08057d18fb6422b871bd95592f20a6ab72ebf7963209047f50c",
+      "after": [
+        "eth:0x7835fB36A8143a014A2c381363cD1A4DeE586d2A"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xeb260b9ff913fc1877c5f4dad9a2de53d4add5c5bf95e630342a54ad228cdb5f",
+      "type": "data-change",
+      "field": "values.roles.0xeb260b9ff913fc1877c5f4dad9a2de53d4add5c5bf95e630342a54ad228cdb5f",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xb56db3e3aaf390cabc1ed5bc88c1fb620c033c618c569e3902254bcef71cf54c",
+      "type": "data-change",
+      "field": "values.roles.0xb56db3e3aaf390cabc1ed5bc88c1fb620c033c618c569e3902254bcef71cf54c",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x20e7d93f475a4a8dd621285797dd2d68da59e4450b89aea5ca9bf079e95c1db5",
+      "type": "data-change",
+      "field": "values.roles.0x20e7d93f475a4a8dd621285797dd2d68da59e4450b89aea5ca9bf079e95c1db5",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0xcae8f60415c61e4b3a46975038089b058a1a802ec6912db2cb8b95d5d09dcb74",
+      "type": "data-change",
+      "field": "values.roles.0xcae8f60415c61e4b3a46975038089b058a1a802ec6912db2cb8b95d5d09dcb74",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x623ac534141a3de3d1e20f924b4a3b115aa68dc5b00452321cda0323932459ab",
+      "type": "data-change",
+      "field": "values.roles.0x623ac534141a3de3d1e20f924b4a3b115aa68dc5b00452321cda0323932459ab",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x8c7b9778e52066fde8fbd3e25c5180a9726e067622ca2cb96db1c1225b4c827b",
+      "type": "data-change",
+      "field": "values.roles.0x8c7b9778e52066fde8fbd3e25c5180a9726e067622ca2cb96db1c1225b4c827b",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x756a7536f06e7e4456636342cf02e0825db97b9bbbcbe5142795cc76b4eeea14",
+      "type": "data-change",
+      "field": "values.roles.0x756a7536f06e7e4456636342cf02e0825db97b9bbbcbe5142795cc76b4eeea14",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x9fad9ee19c69fc6a5f3a9ebfef13b0ed2faeb808252a4bb01f970bb4012ffa15",
+      "type": "data-change",
+      "field": "values.roles.0x9fad9ee19c69fc6a5f3a9ebfef13b0ed2faeb808252a4bb01f970bb4012ffa15",
+      "after": [
+        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+      "contractName": "RoleRegistry",
+      "entity": null,
+      "id": "80:eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9:values.roles.0x39730a843a472e74e79db13c62de74d1602801e7cfce5acb9837f64a50ff5f4b",
+      "type": "data-change",
+      "field": "values.roles.0x39730a843a472e74e79db13c62de74d1602801e7cfce5acb9837f64a50ff5f4b",
+      "after": [
+        "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+      ]
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.currRewardsCalculationEndTimestamp",
+      "type": "data-change",
+      "field": "values.currRewardsCalculationEndTimestamp",
+      "before": 1773532800,
+      "after": 1774137600
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentClaimableDistributionRoot.root",
+      "type": "data-change",
+      "field": "values.getCurrentClaimableDistributionRoot.root",
+      "before": "0xf7b7b87814a6cd393f2d26fceaf8b6e7833d4ee9b83b39b4ab5d8a34f893f818",
+      "after": "0x59f815285950f5e5deb56f89208eeb7697619003d619d7f845eaea6029fb96d5"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentClaimableDistributionRoot.rewardsCalculationEndTimestamp",
+      "type": "data-change",
+      "field": "values.getCurrentClaimableDistributionRoot.rewardsCalculationEndTimestamp",
+      "before": 1772928000,
+      "after": 1773532800
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentClaimableDistributionRoot.activatedAt",
+      "type": "data-change",
+      "field": "values.getCurrentClaimableDistributionRoot.activatedAt",
+      "before": 1773770963,
+      "after": 1774375979
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentDistributionRoot.root",
+      "type": "data-change",
+      "field": "values.getCurrentDistributionRoot.root",
+      "before": "0x59f815285950f5e5deb56f89208eeb7697619003d619d7f845eaea6029fb96d5",
+      "after": "0x50040912e263ba491b905095009fcc612ddc70ed5641a4e8f9eabfe2a673e517"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentDistributionRoot.rewardsCalculationEndTimestamp",
+      "type": "data-change",
+      "field": "values.getCurrentDistributionRoot.rewardsCalculationEndTimestamp",
+      "before": 1773532800,
+      "after": 1774137600
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getCurrentDistributionRoot.activatedAt",
+      "type": "data-change",
+      "field": "values.getCurrentDistributionRoot.activatedAt",
+      "before": 1774375979,
+      "after": 1774982951
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "contractName": "RewardsCoordinator",
+      "isDependency": true,
+      "entity": "EigenLayer",
+      "id": "80:eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:values.getDistributionRootsLength",
+      "type": "data-change",
+      "field": "values.getDistributionRootsLength",
+      "before": 89,
+      "after": 90
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c",
+      "contractName": "WithdrawRequestNFT",
+      "entity": null,
+      "id": "80:eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c:values.getEEthRemainderAmount",
+      "type": "data-change",
+      "field": "values.getEEthRemainderAmount",
+      "before": "6205003253151626542",
+      "after": "6628954099224060345"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c",
+      "contractName": "WithdrawRequestNFT",
+      "entity": null,
+      "id": "80:eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c:values.lastFinalizedRequestId",
+      "type": "data-change",
+      "field": "values.lastFinalizedRequestId",
+      "before": 75858,
+      "after": 75927
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c",
+      "contractName": "WithdrawRequestNFT",
+      "entity": null,
+      "id": "80:eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c:values.nextRequestId",
+      "type": "data-change",
+      "field": "values.nextRequestId",
+      "before": 75933,
+      "after": 75981
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c",
+      "contractName": "WithdrawRequestNFT",
+      "entity": null,
+      "id": "80:eth:0x7d5706f6ef3F89B3951E23e557CDFBC3239D4E2c:values.totalRemainderEEthShares",
+      "type": "data-change",
+      "field": "values.totalRemainderEEthShares",
+      "before": "5687385015268737499",
+      "after": "6075191849316294977"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+      "contractName": "Liquifier",
+      "entity": null,
+      "id": "80:eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x12582A27E5e19492b4FcD194a60F8f5e1aa31B0F"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+      "contractName": "Liquifier",
+      "entity": null,
+      "id": "80:eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+      "contractName": "Liquifier",
+      "entity": null,
+      "id": "80:eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F:values.admins.2",
+      "type": "data-change",
+      "field": "values.admins.2",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+      "contractName": "Liquifier",
+      "entity": null,
+      "id": "80:eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F:values.getTotalPooledEther",
+      "type": "data-change",
+      "field": "values.getTotalPooledEther",
+      "before": "1128378614484366413215",
+      "after": "1543508268886376693875"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1:values.exchangeRate",
+      "type": "data-change",
+      "field": "values.exchangeRate",
+      "before": "1093608164698000000",
+      "after": "1093764042219000000"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
+      "contractName": "WrapTokenV3ETH",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1:values.totalSupply",
+      "type": "data-change",
+      "field": "values.totalSupply",
+      "before": "3174624764490473202176616",
+      "after": "3174628954709505226774800"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedLoyaltyPointsOf.2",
+      "type": "data-change",
+      "field": "values.accruedLoyaltyPointsOf.2",
+      "before": 80342,
+      "after": 80536
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedLoyaltyPointsOf.3",
+      "type": "data-change",
+      "field": "values.accruedLoyaltyPointsOf.3",
+      "before": 99780,
+      "after": 99969
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedLoyaltyPointsOf.4",
+      "type": "data-change",
+      "field": "values.accruedLoyaltyPointsOf.4",
+      "before": 99780,
+      "after": 99969
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedStakingRewardsOf.2",
+      "type": "data-change",
+      "field": "values.accruedStakingRewardsOf.2",
+      "before": "10209223294546431",
+      "after": "10220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedStakingRewardsOf.3",
+      "type": "data-change",
+      "field": "values.accruedStakingRewardsOf.3",
+      "before": "10209223294546431",
+      "after": "10220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedTierPointsOf.2",
+      "type": "data-change",
+      "field": "values.accruedTierPointsOf.2",
+      "before": 18780,
+      "after": 18826
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedTierPointsOf.3",
+      "type": "data-change",
+      "field": "values.accruedTierPointsOf.3",
+      "before": 23706,
+      "after": 23751
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.accruedTierPointsOf.4",
+      "type": "data-change",
+      "field": "values.accruedTierPointsOf.4",
+      "before": 23706,
+      "after": 23751
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.allTimeHighDepositOf.2",
+      "type": "data-change",
+      "field": "values.allTimeHighDepositOf.2",
+      "before": "112013997764819158",
+      "after": "112027627503468440"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.allTimeHighDepositOf.3",
+      "type": "data-change",
+      "field": "values.allTimeHighDepositOf.3",
+      "before": "110209223294546431",
+      "after": "110220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.allTimeHighDepositOf.4",
+      "type": "data-change",
+      "field": "values.allTimeHighDepositOf.4",
+      "before": "110209223294546431",
+      "after": "110220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.loyaltyPointsOf.2",
+      "type": "data-change",
+      "field": "values.loyaltyPointsOf.2",
+      "before": 100666,
+      "after": 100860
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.loyaltyPointsOf.3",
+      "type": "data-change",
+      "field": "values.loyaltyPointsOf.3",
+      "before": 99780,
+      "after": 99969
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.loyaltyPointsOf.4",
+      "type": "data-change",
+      "field": "values.loyaltyPointsOf.4",
+      "before": 99780,
+      "after": 99969
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.tierPointsOf.2",
+      "type": "data-change",
+      "field": "values.tierPointsOf.2",
+      "before": 23705,
+      "after": 23751
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.tierPointsOf.3",
+      "type": "data-change",
+      "field": "values.tierPointsOf.3",
+      "before": 23706,
+      "after": 23751
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.tierPointsOf.4",
+      "type": "data-change",
+      "field": "values.tierPointsOf.4",
+      "before": 23706,
+      "after": 23751
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.valueOf.2",
+      "type": "data-change",
+      "field": "values.valueOf.2",
+      "before": "112013997764819158",
+      "after": "112027627503468440"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.valueOf.3",
+      "type": "data-change",
+      "field": "values.valueOf.3",
+      "before": "110209223294546431",
+      "after": "110220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479",
+      "contractName": "MembershipNFT",
+      "entity": null,
+      "id": "80:eth:0xb49e4420eA6e35F98060Cd133842DbeA9c27e479:values.valueOf.4",
+      "type": "data-change",
+      "field": "values.valueOf.4",
+      "before": "110209223294546431",
+      "after": "110220504488999033"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "contractName": "Coinbase Wrapped Staked ETH Token",
+      "isDependency": true,
+      "entity": "Coinbase cbETH",
+      "id": "80:eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704:values.exchangeRate",
+      "type": "data-change",
+      "field": "values.exchangeRate",
+      "before": "1126057768273084167",
+      "after": "1126211478475931415"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.admin_balances.0",
+      "type": "data-change",
+      "field": "values.admin_balances.0",
+      "before": 0,
+      "after": 59346707283019
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.admin_balances.1",
+      "type": "data-change",
+      "field": "values.admin_balances.1",
+      "before": 0,
+      "after": 7212156146719
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.balances.0",
+      "type": "data-change",
+      "field": "values.balances.0",
+      "before": "1203688878226061994",
+      "after": "946308661426324877"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.balances.1",
+      "type": "data-change",
+      "field": "values.balances.1",
+      "before": "2495492534014989171",
+      "after": "2731572326547465602"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.ema_price",
+      "type": "data-change",
+      "field": "values.ema_price",
+      "before": "997611196828771731",
+      "after": "996150185406856707"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.get_p",
+      "type": "data-change",
+      "field": "values.get_p",
+      "before": "997859760167851488",
+      "after": "996139071468564969"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.get_virtual_price",
+      "type": "data-change",
+      "field": "values.get_virtual_price",
+      "before": "1122862525732263739",
+      "after": "1122997851955903575"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.last_price",
+      "type": "data-change",
+      "field": "values.last_price",
+      "before": "997860337196259796",
+      "after": "996139480955958014"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.ma_last_time",
+      "type": "data-change",
+      "field": "values.ma_last_time",
+      "before": 1774206107,
+      "after": 1774466147
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.price_oracle",
+      "type": "data-change",
+      "field": "values.price_oracle",
+      "before": "997860337196259796",
+      "after": "996139480955958014"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xBfAb6FA95E0091ed66058ad493189D2cB29385E6:values.stored_rates.1",
+      "type": "data-change",
+      "field": "values.stored_rates.1",
+      "before": "1093608164698000000",
+      "after": "1093764042219000000"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "contractName": "Wrapped eETH Token",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee:values.getRate",
+      "type": "data-change",
+      "field": "values.getRate",
+      "before": "1091011640058349522",
+      "after": "1091151401246708947"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "contractName": "Wrapped eETH Token",
+      "isDependency": false,
+      "entity": null,
+      "id": "80:eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee:values.totalSupply",
+      "type": "data-change",
+      "field": "values.totalSupply",
+      "before": "2642263835220778253183217",
+      "after": "2529307582813868913758090"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E",
+      "contractName": "NodeOperatorManager",
+      "entity": null,
+      "id": "80:eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E:values.admins.0",
+      "type": "data-change",
+      "field": "values.admins.0",
+      "before": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E",
+      "contractName": "NodeOperatorManager",
+      "entity": null,
+      "id": "80:eth:0xd5edf7730ABAd812247F6F54D7bd31a52554e35E:values.admins.1",
+      "type": "data-change",
+      "field": "values.admins.1",
+      "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
+      "contractName": "EtherfiL1SyncPoolETH",
+      "entity": null,
+      "id": "80:eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146:values.getTotalUnbackedTokens",
+      "type": "data-change",
+      "field": "values.getTotalUnbackedTokens",
+      "before": "42257881423729879387",
+      "after": "42301579113884500176"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022:values.admin_balances.0",
+      "type": "data-change",
+      "field": "values.admin_balances.0",
+      "before": 2173425003365373,
+      "after": 21626406820857
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022:values.admin_balances.1",
+      "type": "data-change",
+      "field": "values.admin_balances.1",
+      "before": 95309641133897,
+      "after": 840193042009
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022:values.balances.0",
+      "type": "data-change",
+      "field": "values.balances.0",
+      "before": "20324608161798058824899",
+      "after": "20432100087695901676597"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022:values.balances.1",
+      "type": "data-change",
+      "field": "values.balances.1",
+      "before": "22346269277747255638736",
+      "after": "22220478816733999210229"
+    },
+    {
+      "timestamp": "2026-03-26T08:10:03.000Z",
+      "updateNotifierId": 80,
+      "address": "eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022",
+      "contractName": "Vyper_contract",
+      "isDependency": true,
+      "entity": "Curve",
+      "id": "80:eth:0xDC24316b9AE028F1497c275EB9192a3Ea0f67022:values.get_virtual_price",
+      "type": "data-change",
+      "field": "values.get_virtual_price",
+      "before": "1134705664739459439",
+      "after": "1134786036015093931"
+    }
+  ]
+}

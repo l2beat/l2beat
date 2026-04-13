@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "lastReconciledAt": 1776101279,
+  "lastConsumedUpdateNotifierId": 58,
+  "events": [
+    {
+      "timestamp": "2026-03-02T13:49:30.000Z",
+      "updateNotifierId": 3,
+      "address": "eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077",
+      "contractName": "EthereumBundlerV2",
+      "entity": null,
+      "id": "3:eth:0x4095F064B8d3c3548A3bebfd0Bbfd04750E30077:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "morpho/EthereumBundlerV2"
+    },
+    {
+      "timestamp": "2026-03-02T13:49:30.000Z",
+      "updateNotifierId": 3,
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "contractName": "Wrapped Ether Token",
+      "entity": null,
+      "id": "3:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.totalSupply",
+      "type": "data-change",
+      "field": "values.totalSupply",
+      "before": "2787522463126466628993882",
+      "after": "2090457141282865313861309"
+    },
+    {
+      "timestamp": "2026-03-02T13:49:30.000Z",
+      "updateNotifierId": 3,
+      "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
+      "contractName": "GnosisSafe",
+      "entity": null,
+      "id": "3:eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9:values.$members.0",
+      "type": "data-change",
+      "field": "values.$members.0",
+      "before": "eth:0xE161c14651ec72b696ab461a5aE51043E680B3Ff",
+      "after": "eth:0xb0021F20235D6d26730240B7792E92364b623ad9"
+    },
+    {
+      "timestamp": "2026-03-04T07:46:54.000Z",
+      "updateNotifierId": 58,
+      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "contractName": "Wrapped Ether Token",
+      "entity": null,
+      "id": "58:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:template",
+      "type": "data-change",
+      "field": "template",
+      "after": "tokens"
+    }
+  ]
+}
