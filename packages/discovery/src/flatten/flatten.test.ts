@@ -80,6 +80,95 @@ describe('flatten', () => {
     )
   })
 
+  it('resolves aliased imports back to original names', () => {
+    const files: FileContent[] = [
+      {
+        path: 'Root.sol',
+        content: String.raw`
+import { Foo as Bar } from "Types.sol";
+contract Root is Bar {
+    function f(Bar.S memory x) public {}
+}`,
+      },
+      {
+        path: 'Types.sol',
+        content: 'contract Foo { struct S { uint256 x; } }',
+      },
+    ]
+
+    const flattened = flattenStartingFrom('Root', files, [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      String.raw`contract Foo { struct S { uint256 x; } }
+
+contract Root is Foo {
+    function f(Foo.S memory x) public {}
+}`,
+    )
+  })
+
+  it('resolves aliased imports inside generated interfaces', () => {
+    const files: FileContent[] = [
+      {
+        path: 'Root.sol',
+        content: String.raw`
+import { Dynamic as DynamicAlias } from "Dynamic.sol";
+import { Base as BaseRootAlias } from "Base.sol";
+contract Root {
+    function f(BaseRootAlias.S memory value) public pure returns (uint256) {
+        BaseRootAlias.S memory copy = value;
+        return DynamicAlias.Structure({ x: 1 }).x;
+    }
+}`,
+      },
+      {
+        path: 'Dynamic.sol',
+        content: String.raw`
+import { Base as BaseAlias } from "Base.sol";
+abstract contract Dynamic is BaseAlias {
+    struct Structure {
+        uint256 x;
+    }
+
+    event Pinged(BaseAlias.S value);
+
+    function ping() public virtual;
+}`,
+      },
+      {
+        path: 'Base.sol',
+        content: String.raw`contract Base { struct S { uint256 x; } }`,
+      },
+    ]
+
+    const flattened = flattenStartingFrom('Root', files, [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(
+      String.raw`contract Base { struct S { uint256 x; } }
+
+abstract contract Dynamic is Base {
+    struct Structure {
+        uint256 x;
+    }
+
+    event Pinged(Base.S value);
+
+    function ping() public virtual;
+}
+
+contract Root {
+    function f(Base.S memory value) public pure returns (uint256) {
+        Base.S memory copy = value;
+        return Dynamic.Structure({ x: 1 }).x;
+    }
+}`,
+    )
+  })
+
   it('picks correct contracts to be regenerated as interfaces, for minimized output', () => {
     const file: FileContent = {
       path: 'Root.sol',
@@ -263,6 +352,66 @@ contract R1 is Shared {
     expect(flattened).toInclude('abstract contract Shared')
     expect(flattened).toInclude('contract Dynamic is Shared')
     expect(flattened).not.toInclude('interface Dynamic is Shared')
+  })
+
+  it('ordering of using doesnt matter', () => {
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+import { VMStatus } from "Lib.sol";
+
+library VMStatuses {
+    VMStatus internal constant VALID = VMStatus.wrap(0);
+}
+
+contract R1 {
+    constructor() {
+        VMStatuses.VALID.raw(0);
+    }
+}
+`,
+    }
+    const libFile: FileContent = {
+      path: 'Lib.sol',
+      content: String.raw`
+using LibVMStatus for VMStatus global;
+
+type VMStatus is uint8;
+
+library LibVMStatus {
+    function raw(VMStatus _vmstatus) internal pure returns (uint8 vmstatus_) {
+        assembly {
+            vmstatus_ := _vmstatus
+        }
+    }
+}`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file, libFile], [], {
+      includeAll: true,
+    })
+
+    expect(flattened).toEqual(String.raw`library LibVMStatus {
+    function raw(VMStatus _vmstatus) internal pure returns (uint8 vmstatus_) {
+        assembly {
+            vmstatus_ := _vmstatus
+        }
+    }
+}
+
+using LibVMStatus for VMStatus global;
+
+type VMStatus is uint8;
+
+library VMStatuses {
+    VMStatus internal constant VALID = VMStatus.wrap(0);
+}
+
+contract R1 {
+    constructor() {
+        VMStatuses.VALID.raw(0);
+    }
+}`)
   })
 
   it('includes global using declarations for user-defined value types', () => {

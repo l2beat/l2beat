@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
+import { parse } from '@mradomski/fast-solidity-parser'
 import { createHash } from 'crypto'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
@@ -7,6 +8,7 @@ import {
   type ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
+import { renameIdentifier } from './renameIdentifier'
 import type { FlattenOptions } from './types'
 
 type EntryType = 'implementation' | 'signature'
@@ -38,9 +40,25 @@ export function flattenStartingFrom(
 
   let flatSource = ''
   for (const contract of order) {
-    const content = shouldBeInterface[getUniqueContractId(contract)]
-      ? generateInterfaceSourceFromContract(contract.declaration)
-      : contract.declaration.content
+    const { declaration, file } = contract
+
+    let content = shouldBeInterface[getUniqueContractId(contract)]
+      ? generateInterfaceSourceFromContract(declaration)
+      : declaration.content
+
+    for (const { importedName, originalName } of file.importDirectives) {
+      const resolved =
+        importedName !== originalName
+          ? parsedFileManager.tryFindDeclaration(importedName, file)
+          : undefined
+
+      const targetName = resolved?.declaration.name ?? importedName
+      if (importedName !== targetName) {
+        const ast = parse(content, { range: true }).children[0] ?? null
+        content = renameIdentifier(content, ast, importedName, targetName)
+      }
+    }
+
     flatSource += formatSource(content)
   }
 
@@ -91,9 +109,9 @@ function generatePurelyDynamicDictionary(
       entry.contractName,
       entry.file,
     )
-        if(foundContract === undefined) {
-            continue
-        }
+    if (foundContract === undefined) {
+      continue
+    }
 
     const uniqueContractId = getUniqueContractId(foundContract)
     const alreadyVisited = uniqueContractId in result

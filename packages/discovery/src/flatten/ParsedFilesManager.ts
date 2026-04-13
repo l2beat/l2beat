@@ -138,7 +138,7 @@ export class ParsedFilesManager {
         const { signatureReferences, implementationReferences, backwardLinks } =
           result.resolveReferences(file, declaration.ast)
 
-        declaration.signatureReferences = signatureReferences
+        declaration.signatureReferences.push(...signatureReferences)
         declaration.implementationReferences.push(...implementationReferences)
         for (const backwardLink of backwardLinks) {
           const decl = result.tryFindDeclaration(backwardLink, file)
