@@ -43,7 +43,7 @@ export function FlowsProtocolsSelector({
     <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
       <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
       <span className="font-bold text-lg leading-none">Protocols</span>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 max-md:hidden lg:max-xl:hidden">
         <div className="-space-x-2 md:-space-x-1 flex items-center">
           {selectedProtocolsWithDetails.slice(0, 5).map((protocol, i) => (
             <img
@@ -57,7 +57,7 @@ export function FlowsProtocolsSelector({
         </div>
         {selectedProtocolsWithDetails.length > 5 && (
           <span className="font-semibold text-xs leading-none">
-            +{selectedProtocolsWithDetails.length - 5} more
+            +{selectedProtocolsWithDetails.length - 5}
           </span>
         )}
       </div>

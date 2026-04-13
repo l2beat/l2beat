@@ -36,7 +36,7 @@ export function FlowsChainsSelector({
     <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
       <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedChains.length}/${allChains.length}`}</span>
       <span className="font-bold text-lg leading-none">Chains</span>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 max-md:hidden lg:max-xl:hidden">
         <div className="-space-x-2 md:-space-x-1 flex items-center">
           {selectedChainsWithDetails.slice(0, 5).map((chain, i) => (
             <img
@@ -50,7 +50,7 @@ export function FlowsChainsSelector({
         </div>
         {selectedChainsWithDetails.length > 5 && (
           <span className="font-semibold text-xs leading-none">
-            +{selectedChainsWithDetails.length - 5} more
+            +{selectedChainsWithDetails.length - 5}
           </span>
         )}
       </div>

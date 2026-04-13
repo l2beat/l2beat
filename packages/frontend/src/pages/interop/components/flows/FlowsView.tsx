@@ -34,13 +34,13 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
   return (
     <PrimaryCard
       className={cn(
-        'grid grid-cols-1',
+        'grid grid-cols-1 gap-4',
         hasGraphSelection
           ? 'lg:grid-cols-[240px_1fr_280px]'
           : 'lg:grid-cols-[240px_1fr]',
       )}
     >
-      <div className="h-full max-lg:order-2">
+      <div className="h-full max-lg:order-4">
         <FlowsGeneralStats />
       </div>
       <div className="mx-auto flex flex-col items-center gap-10">
