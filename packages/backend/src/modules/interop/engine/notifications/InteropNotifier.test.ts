@@ -123,7 +123,9 @@ describe(InteropNotifier.name, () => {
     const message = webhookClient.sendMessage.calls[0]?.args[0] as string
 
     expect(message.includes('Interop financials flagged')).toEqual(true)
-    expect(message.includes('See suspicious transfers dashboard for details')).toEqual(true)
+    expect(
+      message.includes('See suspicious transfers dashboard for details'),
+    ).toEqual(true)
     expect(
       message.includes('`msg-1` `stargate` `deposit` `ethereum -> arbitrum`'),
     ).toEqual(true)
