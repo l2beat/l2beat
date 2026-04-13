@@ -8,5 +8,11 @@
     "hash": "0x9a0f84345e9dc0b83470c088eba1df01ac6baf465d028aff97b004efb39f7054",
     "address": "eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24",
     "blockNumber": 23116694
+  },
+  "EspressoNitroTEEVerifier_v2.sol": {
+    "hash": "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e",
+    "address": "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89",
+    "chain": "arbitrum",
+    "blockNumber": 452045931
   }
 }

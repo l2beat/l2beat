@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x034e790e5f9ef1ea659ca5f12e4e9051c1de4b6c
+Generated with discovered.json: 0x79a1854b5ce92e40040bccb02b6a8656233c7b14
 
-# Diff at Mon, 13 Apr 2026 11:28:13 GMT:
+# Diff at Mon, 13 Apr 2026 13:01:32 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1771857555
-- current timestamp: 1776079584
+- current timestamp: 1776085185
 
 ## Description
 
@@ -20,6 +20,15 @@ Security implications: same TEE trust model (AWS Nitro), but adds trust in the Z
 EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
 
 ## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
 
 ```diff
 -   Status: DELETED
@@ -55,13 +64,13 @@ EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B
 ```diff
 +   Status: CREATED
     contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
-    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain. The owner controls the root certificate, supported ZK coprocessors, and the active verifier/aggregator program IDs.
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
-    +++ description: Verifies attestations of an AWS Nitro TEE by delegating cert chain validation to NitroEnclaveVerifier (which uses ZK proofs). Registers TEE-derived signers used by the sequencer. The owner can set enclave hashes and indirectly control which signers can be registered.
+    +++ description: Verifies attestations of an AWS Nitro TEE.
 ```
 
 ## Source code changes

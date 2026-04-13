@@ -10,34 +10,6 @@
   "overrides": {
     "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7": {
       "displayName": "QuoteVerifier"
-    },
-    "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89": {
-      "displayName": "EspressoNitroTEEVerifier",
-      "description": "Verifies attestations of an AWS Nitro TEE by delegating cert chain validation to NitroEnclaveVerifier (which uses ZK proofs). Registers TEE-derived signers used by the sequencer. The owner can set enclave hashes and indirectly control which signers can be registered.",
-      "fields": {
-        "owner": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
-            }
-          ]
-        }
-      }
-    },
-    "arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22": {
-      "displayName": "NitroEnclaveVerifier",
-      "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain. The owner controls the root certificate, supported ZK coprocessors, and the active verifier/aggregator program IDs.",
-      "fields": {
-        "owner": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "set the root certificate, add/remove ZK verifier routes, update verifier and aggregator program IDs, and change the ZK coprocessor configuration."
-            }
-          ]
-        }
-      }
     }
   }
 }

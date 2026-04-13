@@ -1,7 +1,7 @@
 {
   "name": "molten",
-  "timestamp": 1776079584,
-  "configHash": "0x66c658f301f4bc9f19be4ad5f0326194743d3dc48ee5d56ffba2781d37535d28",
+  "timestamp": 1776085185,
+  "configHash": "0xd34153da958bd57b3a9fb3757a8e1e5dab7d0d7a5019298aee8c36ddecc9286d",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
@@ -18,11 +18,12 @@
       "name": "NitroEnclaveVerifier",
       "address": "arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22",
       "type": "Contract",
+      "template": "espresso/Sequencing/NitroEnclaveVerifier",
       "sourceHashes": [
         "0x17b0e343334d9d6d39fead84d7cfc2adec7c0a43842d1ad09bd2674f4cd1c813"
       ],
       "proxyType": "immutable",
-      "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain. The owner controls the root certificate, supported ZK coprocessors, and the active verifier/aggregator program IDs.",
+      "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain.",
       "sinceTimestamp": 1774475672,
       "sinceBlock": 445637002,
       "values": {
@@ -31,6 +32,7 @@
         "owner": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
         "rootCert": "0x641a0321a3e244efe456463195d606317ed7cdcc3c1756e09893f3c68f79bb5b"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22": "NitroEnclaveVerifier"
       }
@@ -95,7 +97,7 @@
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
         "latestConfirmed": 2351,
-        "latestNodeCreated": 2352,
+        "latestNodeCreated": 2353,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
@@ -227,7 +229,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 104865,
+        "batchCount": 104866,
         "batchPosterManager": "arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -258,9 +260,9 @@
         "postsBlobs": false,
         "reader4844": "arb1:0x0000000000000000000000000000000000000000",
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
-        "sequencerVersion": "0x88",
+        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 71113,
+        "totalDelayedMessagesRead": 71114,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1397,6 +1399,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "arb1:0xC1AFa6E4F2F437F527C393C8972C449027a793db",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "arb1:0xc1Cd231FB7C8744548603038b06104Ce0f7cc9F2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1478,8 +1485,8 @@
         "outboxHistory": ["arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 104865,
-        "sequencerReportedSubMessageCount": 105289818
+        "sequencerMessageCount": 104866,
+        "sequencerReportedSubMessageCount": 105289819
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1664,18 +1671,29 @@
       "name": "EspressoNitroTEEVerifier",
       "address": "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89",
       "type": "Contract",
+      "template": "espresso/Sequencing/EspressoNitroTEEVerifier",
       "sourceHashes": [
         "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e"
       ],
       "proxyType": "immutable",
-      "description": "Verifies attestations of an AWS Nitro TEE by delegating cert chain validation to NitroEnclaveVerifier (which uses ZK proofs). Registers TEE-derived signers used by the sequencer. The owner can set enclave hashes and indirectly control which signers can be registered.",
+      "description": "Verifies attestations of an AWS Nitro TEE.",
       "sinceTimestamp": 1775499991,
       "sinceBlock": 449727951,
       "values": {
         "_nitroEnclaveVerifier": "arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22",
         "$immutable": true,
         "owner": "arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5",
-        "pendingOwner": "arb1:0x0000000000000000000000000000000000000000"
+        "pendingOwner": "arb1:0x0000000000000000000000000000000000000000",
+        "registeredSigners": [
+          "arb1:0xC1AFa6E4F2F437F527C393C8972C449027a793db"
+        ],
+        "validEnclaveHashes": [
+          "0x51764460b1d0696f3bce190ce497a23cf54ae5c5f3bcc965b414020549c1bf7f"
+        ]
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "validEnclaveHashes": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89": "EspressoNitroTEEVerifier"
@@ -2568,8 +2586,10 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
     "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
+    "espresso/Sequencing/NitroEnclaveVerifier": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -2590,6 +2610,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 452045931 },
-  "permissionsConfigHash": "0x8139a25210e6070983632621f872e989b5937402e64b7f75c107854944d30962"
+  "usedBlockNumbers": { "arbitrum": 452068269 },
+  "permissionsConfigHash": "0xf78fc5e186469034b2d773bb24c8e7534025a271e71c56d192abbf9537de32bb"
 }
