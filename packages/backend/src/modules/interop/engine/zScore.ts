@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 
-export const Z_CLASSIC_THRESHOLD = 7
+export const Z_CLASSIC_THRESHOLD = 15
 export const Z_ROBUST_THRESHOLD = {
   warn: 4,
   drop: -6,
