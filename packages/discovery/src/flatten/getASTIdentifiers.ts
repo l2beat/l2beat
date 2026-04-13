@@ -123,9 +123,7 @@ export function getASTIdentifiers(
       break
     }
     case 'FunctionDefinition': {
-      const params = node.parameters.flatMap((p) =>
-        getASTIdentifiers(p, visit),
-      )
+      const params = node.parameters.flatMap((p) => getASTIdentifiers(p, visit))
       const returnParams = (node.returnParameters ?? []).flatMap((p) =>
         getASTIdentifiers(p, visit),
       )
@@ -176,9 +174,7 @@ export function getASTIdentifiers(
       const baseContracts = node.baseContracts.flatMap((c) =>
         getASTIdentifiers(c, visit),
       )
-      const subNodes = node.subNodes.flatMap((n) =>
-        getASTIdentifiers(n, visit),
-      )
+      const subNodes = node.subNodes.flatMap((n) => getASTIdentifiers(n, visit))
       result = [name].concat(baseContracts).concat(subNodes)
       break
     }
@@ -325,10 +321,7 @@ function parseExpression(
   return result
 }
 
-function parseTypeName(
-  type: AST.TypeName | null,
-  visit?: VisitFn,
-): string[] {
+function parseTypeName(type: AST.TypeName | null, visit?: VisitFn): string[] {
   if (!type?.type) {
     return []
   }

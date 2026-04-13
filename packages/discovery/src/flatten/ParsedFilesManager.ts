@@ -1,6 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
+import { createHash } from 'crypto'
 import * as posix from 'path'
 import { findLeadingCommentStart } from './commentUtilities'
 import { getASTIdentifiers } from './getASTIdentifiers'
@@ -44,6 +45,7 @@ export interface TopLevelDeclaration {
 
   ast: AST.ASTNode
   content: string
+  id: string
 
   implementationReferences: string[]
   signatureReferences: string[]
@@ -217,6 +219,7 @@ export class ParsedFilesManager {
         implementationReferences,
         signatureReferences: [],
         content,
+        id: sha1(content),
       } satisfies TopLevelDeclaration
     })
 
@@ -534,6 +537,12 @@ export class ParsedFilesManager {
 
     return matchingFile
   }
+}
+
+function sha1(s: string): string {
+  const hasher = createHash('sha1')
+  hasher.update(s)
+  return `0x${hasher.digest('hex')}`
 }
 
 // Takes a user defined type name such as `MyLibrary.MyStructInLibrary` and

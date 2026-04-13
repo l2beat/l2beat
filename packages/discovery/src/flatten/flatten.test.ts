@@ -697,6 +697,94 @@ contract R1 {
     )
   })
 
+  describe('name clash disambiguation', () => {
+    it('resolves name clash from import alias reversal', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Root.sol',
+          content: String.raw`
+import { Name as NameDifferent } from "abc.sol";
+import { Name } from "cba.sol";
+contract R1 is Name { function r1(NameDifferent x) public {} }`,
+        },
+        {
+          path: 'abc.sol',
+          content: 'contract Name { function abc() public {} }',
+        },
+        {
+          path: 'cba.sol',
+          content: 'contract Name { function cba() public {} }',
+        },
+      ]
+
+      const flattened = flattenStartingFrom('R1', files, [], {
+        includeAll: true,
+      })
+
+      // Name(abc.sol) is only used as a type parameter, not inherited,
+      // so the flattener converts it to an interface. The key assertion is
+      // that the two declarations are disambiguated (Name vs Name_1).
+      expect(flattened).toEqual(
+        String.raw`contract Name { function cba() public {} }
+
+// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+interface Name_1 {
+    function abc() external;
+}
+
+contract R1 is Name { function r1(Name_1 x) public {} }`,
+      )
+    })
+
+    it('resolves diamond name clash with same-named bases from different files', () => {
+      const files: FileContent[] = [
+        {
+          path: 'Root.sol',
+          content: String.raw`
+import { A } from "A.sol";
+import { B } from "B.sol";
+contract Root is A, B { }`,
+        },
+        {
+          path: 'A.sol',
+          content: String.raw`
+import { Base } from "Base1.sol";
+contract A is Base { }`,
+        },
+        {
+          path: 'B.sol',
+          content: String.raw`
+import { Base } from "Base2.sol";
+contract B is Base { }`,
+        },
+        {
+          path: 'Base1.sol',
+          content: 'contract Base { function base1() public {} }',
+        },
+        {
+          path: 'Base2.sol',
+          content: 'contract Base { function base2() public {} }',
+        },
+      ]
+
+      const flattened = flattenStartingFrom('Root', files, [], {
+        includeAll: true,
+      })
+
+      expect(flattened).toEqual(
+        String.raw`contract Base { function base1() public {} }
+
+contract A is Base { }
+
+contract Base_1 { function base2() public {} }
+
+contract B is Base_1 { }
+
+contract Root is A, B { }`,
+      )
+    })
+  })
+
   describe('leading comments preservation', () => {
     it('does NOT include leading comments without includeAll (default)', () => {
       const file: FileContent = {

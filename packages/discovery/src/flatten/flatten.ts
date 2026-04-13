@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import { parse } from '@mradomski/fast-solidity-parser'
-import { createHash } from 'crypto'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   type DeclarationFilePair,
@@ -8,16 +7,8 @@ import {
   type ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
-import { renameIdentifier } from './renameIdentifier'
+import { renameIdentifiers } from './renameIdentifier'
 import type { FlattenOptions } from './types'
-
-type EntryType = 'implementation' | 'signature'
-
-interface ContractNameFilePair {
-  contractName: string
-  file: ParsedFile
-  type: EntryType
-}
 
 export function flattenStartingFrom(
   rootContractName: string,
@@ -32,100 +23,74 @@ export function flattenStartingFrom(
   )
   const rootContract = parsedFileManager.findRootDeclaration(rootContractName)
   const order = topologicalSort(parsedFileManager, rootContract)
-  const shouldBeInterface = generateShouldBeInterfaceDictionary(
+  const shouldBeInterface = computeShouldBeInterface(
     parsedFileManager,
     rootContract,
     order,
   )
 
-  let flatSource = ''
-  for (const contract of order) {
-    const { declaration, file } = contract
+  const renameMap = buildRenameMap(order)
 
-    let content = shouldBeInterface[getUniqueContractId(contract)]
+  let flatSource = ''
+  for (const { declaration, file } of order) {
+    let content = shouldBeInterface[declaration.id]
       ? generateInterfaceSourceFromContract(declaration)
       : declaration.content
 
-    for (const { importedName, originalName } of file.importDirectives) {
-      const resolved =
-        importedName !== originalName
-          ? parsedFileManager.tryFindDeclaration(importedName, file)
-          : undefined
+    const remapNames = getVisibleNames(file).flatMap((from) => {
+      const resolved = parsedFileManager.tryFindDeclaration(from, file)
+      const to = resolved ? renameMap.get(resolved.declaration.id) : undefined
+      return to !== undefined && from !== to ? [{ from, to }] : []
+    })
 
-      const targetName = resolved?.declaration.name ?? importedName
-      if (importedName !== targetName) {
-        const ast = parse(content, { range: true }).children[0] ?? null
-        content = renameIdentifier(content, ast, importedName, targetName)
-      }
-    }
+    const ast = parse(content, { range: true }).children[0] ?? null
+    content = renameIdentifiers(content, ast, remapNames)
 
-    flatSource += formatSource(content)
+    flatSource += content + '\n\n'
   }
 
-  return changeLineEndingsToUnix(flatSource.trimEnd())
+  return flatSource.trimEnd().replace(/\r\n/g, '\n')
 }
 
-function generateShouldBeInterfaceDictionary(
+function computeShouldBeInterface(
   parsedFileManager: ParsedFilesManager,
   rootContract: DeclarationFilePair,
   order: DeclarationFilePair[],
 ): Record<string, boolean> {
-  const purelyDynamic = generatePurelyDynamicDictionary(
-    parsedFileManager,
-    rootContract,
-  )
+  // A declaration is "purely dynamic" if it's only ever reached via signature
+  // references, never via implementation references.
+  const purelyDynamic: Record<string, boolean> = {}
+  for (const { declaration } of order) {
+    purelyDynamic[declaration.id] = true
+  }
+  purelyDynamic[rootContract.declaration.id] = false
+  for (const { declaration, file } of order) {
+    for (const name of declaration.implementationReferences) {
+      const target = parsedFileManager.tryFindDeclaration(name, file)
+      if (target) {
+        purelyDynamic[target.declaration.id] = false
+      }
+    }
+  }
+
+  // A contract should become an interface if it's purely dynamic, is a
+  // contract/abstract, and all its base contracts are also interfaces.
+  // Because order is topological, bases are already resolved when we get here.
   const result: Record<string, boolean> = {}
+  for (const entry of order) {
+    const { declaration, file } = entry
+    const id = declaration.id
 
-  for (const contract of order) {
-    const id = getUniqueContractId(contract)
-
-    if (!purelyDynamic[id] || !isContract(contract)) {
+    if (!purelyDynamic[id] || !isContract(entry)) {
       result[id] = false
       continue
     }
 
-    result[id] = contract.declaration.implementationReferences.every((name) => {
-      const base = parsedFileManager.tryFindDeclaration(name, contract.file)
+    result[id] = declaration.implementationReferences.every((name) => {
+      const base = parsedFileManager.tryFindDeclaration(name, file)
       assert(base, `Failed to find contract ${name}`)
-      return !isContract(base) || result[getUniqueContractId(base)]
+      return !isContract(base) || result[base.declaration.id]
     })
-  }
-
-  return result
-}
-
-function generatePurelyDynamicDictionary(
-  parsedFileManager: ParsedFilesManager,
-  rootContract: DeclarationFilePair,
-): Record<string, boolean> {
-  const result: Record<string, boolean> = {}
-  const stack: ContractNameFilePair[] = getStackEntries(rootContract).reverse()
-
-  while (stack.length > 0) {
-    const entry = stack.pop()
-    assert(entry !== undefined, 'Stack should not be empty')
-
-    const foundContract = parsedFileManager.tryFindDeclaration(
-      entry.contractName,
-      entry.file,
-    )
-    if (foundContract === undefined) {
-      continue
-    }
-
-    const uniqueContractId = getUniqueContractId(foundContract)
-    const alreadyVisited = uniqueContractId in result
-
-    result[uniqueContractId] ??= true
-    if (entry.type !== 'signature') {
-      result[uniqueContractId] = false
-    }
-
-    if (alreadyVisited) {
-      continue
-    }
-
-    stack.push(...getStackEntries(foundContract))
   }
 
   return result
@@ -139,15 +104,14 @@ function topologicalSort(
   const visited = new Set<string>()
 
   function visit(pair: DeclarationFilePair): void {
-    const id = getUniqueContractId(pair)
+    const id = pair.declaration.id
     if (visited.has(id)) return
     visited.add(id)
 
-    for (const { contractName, file } of getStackEntries(pair)) {
-      const pair = parsedFileManager.tryFindDeclaration(contractName, file)
-      if (pair !== undefined) {
-        visit(pair)
-      }
+    for (const name of allReferences(pair)) {
+      const dep = parsedFileManager.tryFindDeclaration(name, pair.file)
+      if (dep === undefined) continue
+      visit(dep)
     }
 
     order.push(pair)
@@ -158,6 +122,11 @@ function topologicalSort(
   return order
 }
 
+function allReferences(pair: DeclarationFilePair): string[] {
+  const { implementationReferences, signatureReferences } = pair.declaration
+  return unique([...implementationReferences, ...signatureReferences])
+}
+
 function isContract(entry: DeclarationFilePair): boolean {
   return (
     entry.declaration.type === 'contract' ||
@@ -165,35 +134,23 @@ function isContract(entry: DeclarationFilePair): boolean {
   )
 }
 
-function formatSource(source: string): string {
-  return source + '\n\n'
+function getVisibleNames(file: ParsedFile): string[] {
+  return unique([
+    ...file.topLevelDeclarations.map((d) => d.name),
+    ...file.importDirectives.map((i) => i.importedName),
+  ])
 }
 
-function changeLineEndingsToUnix(source: string): string {
-  return source.replace(/\r\n/g, '\n')
-}
+function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {
+  const renameMap = new Map<string, string>()
+  const usedNames = new Map<string, number>()
 
-function getUniqueContractId(entry: DeclarationFilePair): string {
-  const hasher = createHash('sha1')
-  hasher.update(entry.declaration.content)
-  return `0x${hasher.digest('hex')}`
-}
+  for (const { declaration } of order) {
+    const { name, id } = declaration
+    const count = usedNames.get(name) ?? 0
+    usedNames.set(name, count + 1)
+    renameMap.set(id, count === 0 ? name : `${name}_${count}`)
+  }
 
-function getStackEntries(pair: DeclarationFilePair): ContractNameFilePair[] {
-  const {
-    file,
-    declaration: { implementationReferences, signatureReferences },
-  } = pair
-  const seen = new Set(implementationReferences)
-
-  return [
-    ...implementationReferences.map((contractName) => ({
-      contractName,
-      file,
-      type: 'implementation',
-    })),
-    ...signatureReferences
-      .filter((name) => !seen.has(name))
-      .map((contractName) => ({ contractName, file, type: 'signature' })),
-  ] as ContractNameFilePair[]
+  return renameMap
 }
