@@ -6,10 +6,10 @@
   "votingProcess": "An Aragon OSx DAO (v1.3.0) is the vault guardian and can veto the timelocked actions.",
   "proposalPeriod": {
     "kind": "fixed",
-    "value": "Unknown"
+    "value": "1 Day"
   },
   "executionDelay": {
     "kind": "fixed",
-    "value": "Unknown"
+    "value": "None"
   }
 }
