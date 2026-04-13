@@ -39,7 +39,12 @@ export function FlowsGraph({
   const maxVolume = Math.max(...data.flows.map((f) => f.volume))
 
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      overflow="visible"
+    >
       <BackgroundRoads
         chainIds={selectedChains}
         layout={layout}
