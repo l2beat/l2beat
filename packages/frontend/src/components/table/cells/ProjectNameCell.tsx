@@ -18,6 +18,7 @@ import { ProjectBadge } from '~/components/projects/ProjectBadge'
 import { ClockIcon } from '~/icons/Clock'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
+import { QuantumResistanceIcon } from '~/icons/QuantumResistance'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -40,7 +41,11 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   purposes?: ProjectScalingPurpose[]
   capability?: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
+  quantumResistant?: boolean
 }
+
+const QUANTUM_RESISTANCE_TOOLTIP =
+  "The prover is plausibly quantum resistant. There is no publicly known quantum algorithm that efficiently breaks prover's cryptography."
 
 interface ProjectCellProps {
   project: ProjectCellProject
@@ -86,6 +91,9 @@ function DesktopStatusIcons({
     <div className="flex items-center gap-1.5">
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
+      {project.quantumResistant && (
+        <QuantumResistanceIcon className="size-4" />
+      )}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
@@ -125,6 +133,13 @@ function MobileStatusIcons({
           The project is officially part of the Superchain - it contributes
           revenue to the Optimism Collective and uses the SuperchainConfig to
           manage chain configuration values.
+        </MobileProjectIconTooltip>
+      )}
+      {project.quantumResistant && (
+        <MobileProjectIconTooltip
+          icon={<QuantumResistanceIcon className="size-4" />}
+        >
+          {QUANTUM_RESISTANCE_TOOLTIP}
         </MobileProjectIconTooltip>
       )}
       {project.statuses?.verificationWarnings &&
@@ -398,6 +413,15 @@ function getTooltipWarningSections(project: ProjectCellProject) {
       text: 'The project is officially part of the Superchain - it contributes revenue to the Optimism Collective and uses the SuperchainConfig to manage chain configuration values.',
       variant: 'muted',
       icon: <SuperchainIcon />,
+    })
+  }
+
+  if (project.quantumResistant) {
+    sections.push({
+      id: 'quantum-resistant',
+      text: QUANTUM_RESISTANCE_TOOLTIP,
+      variant: 'muted',
+      icon: <QuantumResistanceIcon className="size-4" />,
     })
   }
 
