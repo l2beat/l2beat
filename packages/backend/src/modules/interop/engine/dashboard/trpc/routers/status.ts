@@ -2,12 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { PluginSyncStatus } from '../../../sync/InteropSyncersManager'
 import { getMemoryUsage } from '../../impls/memory'
+import type { ProcessorStatus } from '../../impls/processors'
 import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 type Dependencies = {
   getChainsForPlugin: (pluginName: string) => string[]
   getPluginSyncStatuses: () => Promise<PluginSyncStatus[]>
+  getProcessorStatuses: () => ProcessorStatus[]
 }
 
 const ResyncRequest = v.object({
@@ -80,5 +82,8 @@ export function createStatusRouter(deps: Dependencies) {
 
         return { updatedChains: chains }
       }),
+    processors: protectedProcedure.query(() => {
+      return deps.getProcessorStatuses()
+    }),
   })
 }

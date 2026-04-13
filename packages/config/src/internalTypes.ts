@@ -25,6 +25,7 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectRedWarning,
   ProjectReviewStatus,
   ProjectRiskView,
   ProjectScalingCapability,
@@ -139,7 +140,7 @@ export interface ProjectScalingDisplay {
   /** A warning displayed above the description of the project */
   warning?: string
   /** Project row with red warning will turn red, and there will be a red warning icon with this message */
-  redWarning?: string
+  redWarning?: ProjectRedWarning
   /** Emergency warning for the project. If present project will be displayed as in emergency mode. */
   emergencyWarning?: string
   /** A few sentences describing the scaling project */

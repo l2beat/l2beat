@@ -233,7 +233,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
           {project.header.badges && project.header.badges.length > 0 && (
-            <BadgesSection badges={project.header.badges} />
+            <BadgesSection badges={project.header.badges} withDialog />
           )}
           {project.header.description && (
             <AboutSection description={project.header.description} />

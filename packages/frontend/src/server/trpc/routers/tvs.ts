@@ -1,4 +1,3 @@
-import { TvsBreakdownProjectFilter } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import {
   DetailedTvsChartDataParams,
   getDetailedTvsChart,
@@ -19,7 +18,10 @@ import {
   getTvsChartStats,
   TvsChartStatsParams,
 } from '~/server/features/scaling/tvs/getTvsChartStats'
-import { getTvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import {
+  getTvsTableData,
+  TvsBreakdownProjectParams,
+} from '~/server/features/scaling/tvs/getTvsTableData'
 import {
   getTokenTvsChart,
   TokenTvsChartParams,
@@ -46,6 +48,6 @@ export const tvsRouter = router({
     .input(TokenTvsChartParams)
     .query(({ input }) => getTokenTvsChart(input)),
   table: procedure
-    .input(TvsBreakdownProjectFilter)
+    .input(TvsBreakdownProjectParams)
     .query(({ input }) => getTvsTableData(input)),
 })

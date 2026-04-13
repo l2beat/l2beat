@@ -20,6 +20,7 @@ import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
 import { getInteropMessageStats } from './impls/messages'
+import { getProcessorsStatus } from './impls/processors'
 import {
   getInteropTransferDetails,
   getInteropTransferStats,
@@ -64,6 +65,7 @@ export function createInteropRouter(
         db,
         getExplorerUrl: config.dashboard.getExplorerUrl,
         syncersManager,
+        getProcessorStatuses: () => getProcessorsStatus(processors),
         dashboard: config.dashboard,
       },
       { prefix: '/interop/trpc' },
@@ -433,18 +435,4 @@ export function createInteropRouter(
   })
 
   return router
-}
-
-function getProcessorsStatus(processors: InteropBlockProcessor[]) {
-  return processors.flatMap((p) =>
-    p.lastProcessed
-      ? [
-          {
-            chain: p.chain,
-            block: p.lastProcessed.number,
-            timestamp: p.lastProcessed.timestamp,
-          },
-        ]
-      : [],
-  )
 }

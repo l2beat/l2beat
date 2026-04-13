@@ -5,26 +5,18 @@ import { createStatusRouter } from './status'
 
 describe(createStatusRouter.name, () => {
   it('returns plugin sync statuses and serializes toBlock', async () => {
-    const callerFactory = createCallerFactory(
-      createStatusRouter({
-        getChainsForPlugin: () => [],
-        getPluginSyncStatuses: async () => [
-          {
-            pluginName: 'plugin',
-            chain: 'ethereum',
-            syncMode: 'following-idle',
-            toBlock: 123n,
-            toTimestamp: 456,
-            lastError: 'boom',
-            resyncRequestedFrom: 111,
-          },
-        ],
-      }),
-    )
-    const caller = callerFactory({
-      headers: new Headers(),
-      db: mockObject<Database>({}),
-      session: { email: 'user@example.com' },
+    const caller = createCaller({
+      getPluginSyncStatuses: async () => [
+        {
+          pluginName: 'plugin',
+          chain: 'ethereum',
+          syncMode: 'following-idle',
+          toBlock: 123n,
+          toTimestamp: 456,
+          lastError: 'boom',
+          resyncRequestedFrom: 111,
+        },
+      ],
     })
 
     const result = await caller.pluginSyncStatuses()
@@ -44,22 +36,17 @@ describe(createStatusRouter.name, () => {
 
   it('applies wildcard resync values to unspecified chains', async () => {
     const setResyncRequestedFrom = mockFn().resolvesTo(undefined)
-    const callerFactory = createCallerFactory(
-      createStatusRouter({
+    const caller = createCaller(
+      {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
-        getPluginSyncStatuses: async () => [],
-      }),
-    )
-    const caller = callerFactory({
-      headers: new Headers(),
-      db: mockObject<Database>({
+      },
+      {
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           setResyncRequestedFrom,
         }),
         transaction: async (cb) => await cb(),
-      }),
-      session: { email: 'user@example.com' },
-    })
+      },
+    )
 
     const result = await caller.resync({
       pluginName: 'plugin',
@@ -85,22 +72,17 @@ describe(createStatusRouter.name, () => {
 
   it('marks all plugin chains for wipe on restart from now', async () => {
     const upsert = mockFn().resolvesTo(undefined)
-    const callerFactory = createCallerFactory(
-      createStatusRouter({
+    const caller = createCaller(
+      {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
-        getPluginSyncStatuses: async () => [],
-      }),
-    )
-    const caller = callerFactory({
-      headers: new Headers(),
-      db: mockObject<Database>({
+      },
+      {
         interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
           upsert,
         }),
         transaction: async (cb) => await cb(),
-      }),
-      session: { email: 'user@example.com' },
-    })
+      },
+    )
 
     const result = await caller.restartFromNow({
       pluginName: 'plugin',
@@ -123,4 +105,47 @@ describe(createStatusRouter.name, () => {
     })
     expect(result).toEqual({ updatedChains: ['ethereum', 'arbitrum'] })
   })
+
+  it('returns processor statuses', async () => {
+    const statuses = [
+      {
+        chain: 'ethereum',
+        block: 123,
+        timestamp: 1_700_000_000,
+      },
+      {
+        chain: 'arbitrum',
+        block: 456,
+        timestamp: 1_700_000_123,
+      },
+    ]
+
+    const caller = createCaller({
+      getProcessorStatuses: () => statuses,
+    })
+
+    const result = await caller.processors()
+
+    expect(result).toEqual(statuses)
+  })
 })
+
+function createCaller(
+  deps?: Partial<Parameters<typeof createStatusRouter>[0]>,
+  db?: Partial<Database>,
+) {
+  const callerFactory = createCallerFactory(
+    createStatusRouter({
+      getChainsForPlugin: () => [],
+      getPluginSyncStatuses: async () => [],
+      getProcessorStatuses: () => [],
+      ...deps,
+    }),
+  )
+
+  return callerFactory({
+    headers: new Headers(),
+    db: mockObject<Database>(db ?? {}),
+    session: { email: 'user@example.com' },
+  })
+}

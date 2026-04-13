@@ -9,6 +9,10 @@ import {
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { DeployedTokenId } from './DeployedTokenId'
+import {
+  getRemappedPrice,
+  INTEROP_PRICE_REMAPPING_RULES,
+} from './priceRemappingRules'
 
 export type TokenInfos = Map<
   string,
@@ -26,6 +30,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     private db: Database,
     private tokenDbClient: TokenDbClient,
     protected logger: Logger,
+    private priceRemappingRules = INTEROP_PRICE_REMAPPING_RULES,
     intervalMs = 10_000,
   ) {
     super({ intervalMs })
@@ -89,6 +94,7 @@ export class InteropFinancialsLoop extends TimeLoop {
             prices,
             t.srcId,
             t.transfer.srcRawAmount,
+            t.transfer.srcTime ?? t.transfer.timestamp,
             'src',
             update,
           )
@@ -99,6 +105,7 @@ export class InteropFinancialsLoop extends TimeLoop {
             prices,
             t.dstId,
             t.transfer.dstRawAmount,
+            t.transfer.dstTime ?? t.transfer.timestamp,
             'dst',
             update,
           )
@@ -125,6 +132,7 @@ export class InteropFinancialsLoop extends TimeLoop {
     prices: Map<string, number | undefined>,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
+    priceTimestamp: UnixTime,
     prefix: 'src' | 'dst',
     update: InteropTransferUpdate,
   ) {
@@ -133,6 +141,7 @@ export class InteropFinancialsLoop extends TimeLoop {
       prices,
       id,
       rawAmount,
+      priceTimestamp,
     )
     if (!tokenUpdate) return
 
@@ -156,15 +165,19 @@ export class InteropFinancialsLoop extends TimeLoop {
     prices: Map<string, number | undefined>,
     id: DeployedTokenId,
     rawAmount: bigint | undefined,
+    priceTimestamp: UnixTime,
   ) {
     const tokenInfo = tokenInfos.get(id)
     if (!tokenInfo) return
 
-    const price = prices.get(tokenInfo.coingeckoId)
+    const price =
+      getRemappedPrice(this.priceRemappingRules, tokenInfo, priceTimestamp) ??
+      prices.get(tokenInfo.coingeckoId)
     if (price === undefined) {
       this.logger.warn('Missing price data', {
         id,
         coingeckoId: tokenInfo.coingeckoId,
+        priceTimestamp,
       })
       return
     }

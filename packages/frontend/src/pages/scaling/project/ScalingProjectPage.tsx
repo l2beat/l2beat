@@ -83,6 +83,7 @@ export function ScalingProjectPage({
                     <BadgesSection
                       badges={projectEntry.header.badges}
                       className="mb-4 md:hidden"
+                      withDialog
                     />
                   )}
                   {projectEntry.header.description && (
