@@ -87,4 +87,47 @@ describe(InteropNotifier.name, () => {
     expect(message.includes('ethereum -> arbitrum')).toEqual(true)
     expect(message.includes('Count z-score=12.34')).toEqual(true)
   })
+
+  it('queues and sends suspicious transfer notifications', async () => {
+    const webhookClient = mockObject<DiscordClient>({
+      sendMessage: async () => '1',
+    })
+    const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
+
+    notifier.notifySuspiciousTransfers(UnixTime(2_000_000), [
+      {
+        plugin: 'stargate',
+        type: 'deposit',
+        transferId: 'msg-1',
+        timestamp: UnixTime(1_999_990),
+        srcChain: 'ethereum',
+        srcTxHash:
+          '0x1111111111111111111111111111111111111111111111111111111111111111',
+        srcTokenAddress: '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        srcSymbol: 'USDC',
+        srcValueUsd: 600,
+        dstChain: 'arbitrum',
+        dstTxHash:
+          '0x2222222222222222222222222222222222222222222222222222222222222222',
+        dstTokenAddress: '0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+        dstSymbol: 'USDC.e',
+        dstValueUsd: 100,
+        dominantSide: 'src',
+        valueDifferencePercent: 83.3333,
+        valueRatio: 6,
+      },
+    ])
+    await notifier._TEST_ONLY_waitTillEmpty()
+
+    expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
+    const message = webhookClient.sendMessage.calls[0]?.args[0] as string
+
+    expect(message.includes('Interop financials flagged')).toEqual(true)
+    expect(message.includes('See suspicious transfers dashboard for details')).toEqual(true)
+    expect(
+      message.includes('`msg-1` `stargate` `deposit` `ethereum -> arbitrum`'),
+    ).toEqual(true)
+    expect(message.includes('$600.00 vs $100.00')).toEqual(true)
+    expect(message.includes('6.00x src/dst')).toEqual(true)
+  })
 })

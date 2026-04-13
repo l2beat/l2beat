@@ -9,10 +9,36 @@ import {
   interopConfigDiffToMarkdown,
   removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
+import {
+  EXTREME_VALUE_RATIO_THRESHOLD,
+  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  VALUE_DIFF_THRESHOLD_PERCENT,
+} from '../InteropTransferAnalyzer'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
 const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
 const MAX_REASONS_PER_GROUP = 3
+const MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE = 6
+
+export interface InteropSuspiciousTransferNotification {
+  plugin: string
+  type: string
+  transferId: string
+  timestamp: UnixTime
+  srcChain: string
+  srcTxHash: string | undefined
+  srcTokenAddress: string | undefined
+  srcSymbol: string | undefined
+  srcValueUsd: number
+  dstChain: string
+  dstTxHash: string | undefined
+  dstTokenAddress: string | undefined
+  dstSymbol: string | undefined
+  dstValueUsd: number
+  dominantSide: 'src' | 'dst'
+  valueDifferencePercent: number
+  valueRatio: number
+}
 
 export class InteropNotifier {
   private readonly messageQueue: TaskQueue<string>
@@ -86,6 +112,39 @@ export class InteropNotifier {
     this.messageQueue.addToBack(message)
   }
 
+  notifySuspiciousTransfers(
+    timestamp: UnixTime,
+    transfers: InteropSuspiciousTransferNotification[],
+  ): void {
+    if (transfers.length === 0) {
+      return
+    }
+
+    const renderedTransfers = transfers
+      .slice(0, MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE)
+      .map((transfer) => {
+        const largerSide = transfer.dominantSide
+        const smallerSide = largerSide === 'src' ? 'dst' : 'src'
+
+        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcChain} -> ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)} diff)`
+      })
+
+    const remainingTransfers =
+      transfers.length - MAX_SUSPICIOUS_TRANSFERS_IN_MESSAGE
+    if (remainingTransfers > 0) {
+      renderedTransfers.push(`- ...and ${remainingTransfers} more transfers`)
+    }
+
+    const message = [
+      `🚨 Interop financials flagged \`${transfers.length}\` suspicious transfers at \`${formatTimestamp(timestamp)}\``,
+      `Threshold: both sides > \`${formatDollars(MINIMUM_SIDE_VALUE_USD_THRESHOLD)}\`, diff > \`${formatPercent(VALUE_DIFF_THRESHOLD_PERCENT)}\`, imbalance >= \`${formatRatio(EXTREME_VALUE_RATIO_THRESHOLD)}\`. See suspicious transfers dashboard for details.`,
+      '',
+      ...renderedTransfers,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
   private notifyConfigDiff(diff: InteropConfigDiff): void {
     const header = `⚙️ **${diff.key}** config change - (\`${diff.entries.length}\` diff entries)`
     const markdown = interopConfigDiffToMarkdown(diff, MAX_ENTRIES_IN_MESSAGE)
@@ -118,4 +177,22 @@ export class InteropNotifier {
 
 function formatTimestamp(timestamp: UnixTime): string {
   return UnixTime.toDate(timestamp).toISOString().replace('.000Z', 'Z')
+}
+
+const dollarsFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 2,
+})
+
+function formatDollars(value: number): string {
+  return dollarsFormatter.format(value)
+}
+
+function formatPercent(value: number): string {
+  return `${value.toFixed(2)}%`
+}
+
+function formatRatio(value: number): string {
+  return `${value.toFixed(2)}x`
 }

@@ -28,6 +28,7 @@ import { InteropMonitoringConfigStoreProxy } from './config/InteropMonitoringCon
 import { createInteropRouter } from './dashboard/InteropRouter'
 import { InteropFinancialsLoop } from './financials/InteropFinancialsLoop'
 import { InteropRecentPricesIndexer } from './financials/InteropRecentPricesIndexer'
+import { InteropTransferAnalyzer } from './InteropTransferAnalyzer'
 import { InteropMatchingLoop } from './match/InteropMatchingLoop'
 import { InteropNotifier } from './notifications/InteropNotifier'
 import { InteropSyncersManager } from './sync/InteropSyncersManager'
@@ -49,12 +50,14 @@ export function createInteropModule({
   let configStore = new InteropConfigStore(db)
 
   let notificationClient: InteropNotifier | undefined
+  let transferAnalyzer: InteropTransferAnalyzer | undefined
 
   if (config.notifications && config.notifications.interop) {
     const discordClient = new DiscordClient(
       config.notifications.interop.discordWebhookUrl,
     )
     notificationClient = new InteropNotifier(discordClient, logger)
+    transferAnalyzer = new InteropTransferAnalyzer(notificationClient)
     configStore = new InteropMonitoringConfigStoreProxy(
       configStore,
       notificationClient,
@@ -152,6 +155,7 @@ export function createInteropModule({
     db,
     tokenDbClient,
     logger,
+    { analyzer: transferAnalyzer },
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient())
