@@ -188,20 +188,20 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const firstMockToken = mockTokens[0]
   const topToken: InteropTopTokenData | undefined = firstMockToken
     ? {
-      symbol: firstMockToken.symbol,
-      iconUrl: firstMockToken.iconUrl,
-      volume: firstMockToken.volume ?? 0,
-      transferCount: firstMockToken.transferCount,
-      topProtocol: interopProjects[0]
-        ? {
-          name:
-            interopProjects[0].interopConfig.name ??
-            interopProjects[0].shortName ??
-            interopProjects[0].name,
-          iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
-        }
-        : undefined,
-    }
+        symbol: firstMockToken.symbol,
+        iconUrl: firstMockToken.iconUrl,
+        volume: firstMockToken.volume ?? 0,
+        transferCount: firstMockToken.transferCount,
+        topProtocol: interopProjects[0]
+          ? {
+              name:
+                interopProjects[0].interopConfig.name ??
+                interopProjects[0].shortName ??
+                interopProjects[0].name,
+              iconUrl: manifest.getUrl(`/icons/${interopProjects[0].slug}.png`),
+            }
+          : undefined,
+      }
     : undefined
 
   const transferSizeChartData: TransferSizeDataPoint[] = [

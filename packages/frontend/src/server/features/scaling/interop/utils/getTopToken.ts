@@ -6,7 +6,10 @@ import type {
   ProtocolDisplayable,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import { getTopProtocolDisplay, type ProtocolStats } from './getTopProtocolDisplay'
+import {
+  getTopProtocolDisplay,
+  type ProtocolStats,
+} from './getTopProtocolDisplay'
 
 export interface InteropTopTokenData {
   symbol: string
