@@ -34,7 +34,9 @@ interface Props extends AppLayoutProps {
   mode: InteropMode
   queryState: DehydratedState
   interopChains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
   initialSelection: InteropSelection
 }
 
@@ -75,7 +77,9 @@ function Content({
 }: {
   mode: InteropMode
   interopChains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
 }) {
   const { selectedChains } = useInteropSelectedChains()
 

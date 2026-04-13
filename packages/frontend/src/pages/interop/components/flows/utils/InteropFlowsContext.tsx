@@ -15,7 +15,7 @@ interface InteropFlowsContextType {
   selectedProtocols: string[]
   allChains: InteropChainWithIcon[]
   toggleChainSelection: (chainId: string) => void
-  toggleProtocolSelection: (protocolName: string) => void
+  toggleProtocolSelection: (protocolId: string) => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
 }
@@ -27,7 +27,9 @@ export const InteropFlowsContext = createContext<
 interface InteropFlowsProviderProps {
   children: ReactNode
   chains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
 }
 
 export function InteropFlowsProvider({
@@ -36,13 +38,13 @@ export function InteropFlowsProvider({
   protocols,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
-  const allProtocolNames = useMemo(
-    () => protocols.map((p) => p.name),
+  const allProtocols = useMemo(
+    () => protocols.map((protocol) => protocol.id),
     [protocols],
   )
   const [selectedChains, setSelectedChains] = useState<string[]>(allChainIds)
   const [selectedProtocols, setSelectedProtocols] =
-    useState<string[]>(allProtocolNames)
+    useState<string[]>(allProtocols)
   const [highlightedChains, setHighlightedChains] = useState<string[]>([])
 
   const toggleChainSelection = useCallback((chainId: string) => {
@@ -54,12 +56,12 @@ export function InteropFlowsProvider({
     })
   }, [])
 
-  const toggleProtocolSelection = useCallback((protocolName: string) => {
+  const toggleProtocolSelection = useCallback((protocolId: string) => {
     setSelectedProtocols((prev) => {
-      if (prev.includes(protocolName)) {
-        return prev.filter((name) => name !== protocolName)
+      if (prev.includes(protocolId)) {
+        return prev.filter((id) => id !== protocolId)
       }
-      return [...prev, protocolName]
+      return [...prev, protocolId]
     })
   }, [])
 

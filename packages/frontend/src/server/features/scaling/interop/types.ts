@@ -119,6 +119,7 @@ export const InteropProtocolTransfersParams = v.object({
 export type InteropFlowsParams = v.infer<typeof InteropFlowsParams>
 export const InteropFlowsParams = v.object({
   chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
 })
 
 export type InteropProtocolTransferDetailsItem = {

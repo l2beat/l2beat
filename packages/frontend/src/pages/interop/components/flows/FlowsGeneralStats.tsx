@@ -9,10 +9,11 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats() {
-  const { selectedChains, allChains } = useInteropFlows()
+  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
 
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
+    protocolIds: selectedProtocols,
   })
 
   const topRoute = data?.stats.topRoute

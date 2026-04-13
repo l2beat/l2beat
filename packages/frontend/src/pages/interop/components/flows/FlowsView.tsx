@@ -14,7 +14,9 @@ import {
 
 interface FlowsViewProps {
   interopChains: InteropChainWithIcon[]
-  protocols: ProtocolDisplayable[]
+  protocols: (ProtocolDisplayable & {
+    id: string
+  })[]
 }
 
 export function FlowsView({ interopChains, protocols }: FlowsViewProps) {

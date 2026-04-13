@@ -104,6 +104,7 @@ async function getCachedData(
   return {
     queryState: helpers.dehydrate(),
     protocols: protocols.map((protocol) => ({
+      id: protocol.id,
       name: protocol.interopConfig.name ?? protocol.name,
       iconUrl: manifest.getUrl(`/icons/${protocol.slug}.png`),
     })),

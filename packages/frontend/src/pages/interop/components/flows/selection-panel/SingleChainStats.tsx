@@ -18,8 +18,10 @@ export function SingleChainStats({
   chainId: string
   selectedChains: string[]
 }) {
+  const { selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
+    protocolIds: selectedProtocols,
   })
 
   if (!data || isLoading) {

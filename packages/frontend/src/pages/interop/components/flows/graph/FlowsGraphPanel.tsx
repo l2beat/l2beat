@@ -11,9 +11,10 @@ interface FlowsGraphPanelProps {
 }
 
 export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
-  const { selectedChains } = useInteropFlows()
+  const { selectedChains, selectedProtocols } = useInteropFlows()
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
+    protocolIds: selectedProtocols,
   })
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })

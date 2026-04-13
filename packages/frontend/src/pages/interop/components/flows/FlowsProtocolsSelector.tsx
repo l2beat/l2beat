@@ -22,14 +22,17 @@ import { useInteropFlows } from './utils/InteropFlowsContext'
 export function FlowsProtocolsSelector({
   allProtocols,
 }: {
-  allProtocols: ProtocolDisplayable[]
+  allProtocols: (ProtocolDisplayable & {
+    id: string
+  })[]
 }) {
   const { selectedProtocols, toggleProtocolSelection } = useInteropFlows()
 
-  const protocolsWithDetails = allProtocols.map(({ name, iconUrl }) => ({
+  const protocolsWithDetails = allProtocols.map(({ id, name, iconUrl }) => ({
+    id,
     name,
     iconUrl,
-    isSelected: selectedProtocols.includes(name),
+    isSelected: selectedProtocols.includes(id),
   }))
 
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
@@ -44,7 +47,7 @@ export function FlowsProtocolsSelector({
         <div className="-space-x-2 md:-space-x-1 flex items-center">
           {selectedProtocolsWithDetails.slice(0, 5).map((protocol, i) => (
             <img
-              key={protocol.name}
+              key={protocol.id}
               src={protocol.iconUrl}
               alt={protocol.name}
               className="size-5 rounded-full bg-white shadow"
@@ -81,11 +84,11 @@ export function FlowsProtocolsSelector({
           <ScrollWithGradient className="min-h-0">
             {protocolsWithDetails.map((protocol) => (
               <Checkbox
-                key={protocol.name}
+                key={protocol.id}
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                onCheckedChange={() => toggleProtocolSelection(protocol.name)}
+                onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
                   <img
@@ -117,11 +120,11 @@ export function FlowsProtocolsSelector({
           <ScrollWithGradient>
             {protocolsWithDetails.map((protocol) => (
               <Checkbox
-                key={protocol.name}
+                key={protocol.id}
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                onCheckedChange={() => toggleProtocolSelection(protocol.name)}
+                onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
                   <img
