@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xb1fa5321fb059ad65404e4ea0de2e7bb2c72f578
+
+# Diff at Thu, 09 Apr 2026 08:08:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1771857555
+- current timestamp: 1775721846
+
+## Description
+
+Espresso TEE infrastructure updated. EspressoNitroTEEVerifier replaced (old 0xf55BeB deleted, new 0xF99De7 created) with new NitroEnclaveVerifier (0x0d4cD6) contract added. Old CertManager deleted. EspressoTEEVerifier now points to the new NitroTEEVerifier. SafeL2 lost the interact permission on the old verifier.
+
+EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract CertManager (arb1:0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@1771857555/CertManager.sol => /dev/null  | 1966 ---------
+ .../EspressoNitroTEEVerifier.sol                   | 1861 +--------
+ .../projects/molten/.flat/NitroEnclaveVerifier.sol | 4283 ++++++++++++++++++++
+ 3 files changed, 4379 insertions(+), 3731 deletions(-)
+```
+
 Generated with discovered.json: 0xaa62aaa7a4d71203f47c0062acf904a9723614d3
 
 # Diff at Mon, 23 Feb 2026 14:42:18 GMT:
