@@ -1,7 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { ExpressionBuilder, Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
-import compact from 'lodash/compact'
 import { BaseRepository } from '../BaseRepository'
 import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
@@ -505,6 +504,12 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
+  /**
+   * Hot path — called on every TVS table/chart render.
+   * Typically receives only 2 ranges so UNION ALL is ideal.
+   * Each branch gets its own index range scan with minimal planning overhead.
+   * If range count ever grows significantly (50+), consider batching into separate queries.
+   */
   async getSummedByProjectForRanges(
     projectIds: string[],
     ranges: [UnixTime | null, UnixTime][],
@@ -537,64 +542,65 @@ export class TokenValueRepository extends BaseRepository {
 
     const valueField = 'valueForProject'
 
-    let query = this.db
-      .selectFrom('TokenValue')
-      .innerJoin('TokenMetadata', 'TokenValue.tokenId', 'TokenMetadata.tokenId')
-      .select((eb) => [
-        'TokenValue.projectId',
-        'TokenValue.timestamp',
-        eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
-        // Source breakdown
-        sumBySource(eb, valueField, 'canonical'),
-        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
-        sumBySource(eb, valueField, 'external'),
-        sumBySource(eb, valueField, 'native'),
-        // Category breakdown
-        sumByCategory(eb, valueField, 'ether'),
-        sumByCategory(eb, valueField, 'stablecoin'),
-        sumByCategory(eb, valueField, 'btc'),
-        sumByCategory(eb, valueField, 'rwaRestricted'),
-        sumByCategory(eb, valueField, 'rwaPublic'),
-        sumByCategory(eb, valueField, 'other'),
-        eb.fn
-          .sum(
-            eb
-              .case()
-              .when('TokenMetadata.isAssociated', '=', true)
-              .then(eb.ref(valueField))
-              .else(eb.cast(eb.val(0), 'double precision'))
-              .end(),
-          )
-          .as('associated'),
-      ])
-      .where('TokenValue.projectId', 'in', projectIds)
+    const rangeQueries = ranges.map(([from, to]) => {
+      let query = this.db
+        .selectFrom('TokenValue')
+        .innerJoin(
+          'TokenMetadata',
+          'TokenValue.tokenId',
+          'TokenMetadata.tokenId',
+        )
+        .select((eb) => [
+          'TokenValue.projectId',
+          'TokenValue.timestamp',
+          eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+          sumBySource(eb, valueField, 'canonical'),
+          sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+          sumBySource(eb, valueField, 'external'),
+          sumBySource(eb, valueField, 'native'),
+          sumByCategory(eb, valueField, 'ether'),
+          sumByCategory(eb, valueField, 'stablecoin'),
+          sumByCategory(eb, valueField, 'btc'),
+          sumByCategory(eb, valueField, 'rwaRestricted'),
+          sumByCategory(eb, valueField, 'rwaPublic'),
+          sumByCategory(eb, valueField, 'other'),
+          eb.fn
+            .sum(
+              eb
+                .case()
+                .when('TokenMetadata.isAssociated', '=', true)
+                .then(eb.ref(valueField))
+                .else(eb.cast(eb.val(0), 'double precision'))
+                .end(),
+            )
+            .as('associated'),
+        ])
+        .where('TokenValue.projectId', 'in', projectIds)
+        .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
 
-    query = query.where((eb) =>
-      eb.or(
-        ranges.map(([from, to]) => {
-          return eb.and(
-            compact([
-              from && eb('timestamp', '>=', UnixTime.toDate(from)),
-              eb('timestamp', '<=', UnixTime.toDate(to)),
-            ]),
-          )
-        }),
-      ),
-    )
+      if (from) {
+        query = query.where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
+      }
 
-    if (opts.excludeAssociatedTokens) {
-      query = query.where('TokenMetadata.isAssociated', '=', false)
+      if (opts.excludeAssociatedTokens) {
+        query = query.where('TokenMetadata.isAssociated', '=', false)
+      }
+
+      if (opts.excludeRwaRestrictedTokens) {
+        query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
+      }
+
+      return query.groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
+    })
+
+    const [first, ...rest] = rangeQueries
+    assert(first, 'rangeQueries is empty')
+    let combined = first
+    for (const query of rest) {
+      combined = combined.unionAll(query)
     }
 
-    if (opts.excludeRwaRestrictedTokens) {
-      query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
-    }
-
-    query = query
-      .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
-      .orderBy('TokenValue.timestamp')
-
-    const rows = await query.execute()
+    const rows = await combined.orderBy('timestamp').execute()
 
     return rows.map((row) => ({
       project: row.projectId,
