@@ -1,6 +1,10 @@
 import { expect } from 'earl'
 import { infer } from './infer'
 
+const ADDR_A = '0xabcdabcd12345678abcdabcd12345678abcdabcd'
+const ADDR_B = '0x33d66941465ac776c38096cb1bc496c673ae7390'
+const ADDR_C = '0xccccccccccccccccccccccccccccccccccccccc1'
+
 describe(infer.name, () => {
   it('returns empty knowledge base when given no facts', async () => {
     const kb = await infer('', '')
@@ -9,12 +13,12 @@ describe(infer.name, () => {
 
   it('runs rules on facts and returns inferred knowledge', async () => {
     const facts = [
-      'transfer("ethereum","0xA0b8","base","0x833","hop","lockAndMint").',
-      'transfer("base","0x833","zora","0xCcc","hop","lockAndMint").',
+      `transfer("ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint).`,
+      `transfer("base","${ADDR_B}","zora","${ADDR_C}",hop,lockAndMint).`,
     ].join('\n')
 
     const rules = [
-      'same_token(SC, ST, DC, DT) :- transfer(SC, ST, DC, DT, _, "lockAndMint").',
+      'same_token(SC, SA, DC, DA) :- transfer(SC, SA, DC, DA, _, lockAndMint).',
       'same_token(C1, T1, C3, T3) :- same_token(C1, T1, C2, T2), same_token(C2, T2, C3, T3).',
       'same_token(C2, T2, C1, T1) :- same_token(C1, T1, C2, T2).',
       '#show same_token/4.',
@@ -24,29 +28,28 @@ describe(infer.name, () => {
 
     // Direct: ethereum->base, base->zora
     expect(
-      kb.getFacts('same_token', ['ethereum', '0xA0b8', 'base', '0x833']).length,
+      kb.getFacts('same_token', ['ethereum', ADDR_A, 'base', ADDR_B]).length,
     ).toEqual(1)
     expect(
-      kb.getFacts('same_token', ['base', '0x833', 'zora', '0xCcc']).length,
+      kb.getFacts('same_token', ['base', ADDR_B, 'zora', ADDR_C]).length,
     ).toEqual(1)
 
     // Transitive: ethereum->zora (via base)
     expect(
-      kb.getFacts('same_token', ['ethereum', '0xA0b8', 'zora', '0xCcc']).length,
+      kb.getFacts('same_token', ['ethereum', ADDR_A, 'zora', ADDR_C]).length,
     ).toEqual(1)
 
     // Symmetric: base->ethereum
     expect(
-      kb.getFacts('same_token', ['base', '0x833', 'ethereum', '0xA0b8']).length,
+      kb.getFacts('same_token', ['base', ADDR_B, 'ethereum', ADDR_A]).length,
     ).toEqual(1)
   })
 
   it('does not infer same_token for non-canonical bridges', async () => {
-    const facts =
-      'transfer("ethereum","0xA0b8","base","0x833","hop","nonMinting").\n'
+    const facts = `transfer("ethereum","${ADDR_A}","base","${ADDR_B}",hop,nonMinting).\n`
 
     const rules = [
-      'same_token(SC, ST, DC, DT) :- transfer(SC, ST, DC, DT, _, "lockAndMint").',
+      'same_token(SC, SA, DC, DA) :- transfer(SC, SA, DC, DA, _, lockAndMint).',
       '#show same_token/4.',
     ].join('\n')
 

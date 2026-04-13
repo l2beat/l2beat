@@ -197,9 +197,9 @@ This section describes the concrete implementation approach for the prototype.
 All facts are stored in a single database table `token-facts-input` with two columns:
 
 - **`name`** — the predicate name (e.g., `transferred`, `issuer`, `coingecko_id`).
-- **`arguments`** — a (B)JSON value containing the predicate's arguments.
+- **`arguments`** — a string containing the predicate's arguments in Clingo syntax (e.g., `"ethereum","0xA0b8","base","0x833","hop","lockAndMint"`).
 
-This deliberately minimal schema keeps the prototype simple. The inference engine reads all facts from this table, converts them to Clingo-syntax predicates, runs the solver, and returns the derived catalog.
+This deliberately minimal schema keeps the prototype simple. The inference engine reads all facts from this table, concatenates `name(arguments).` for each row to produce a valid Clingo program, runs the solver, and returns the derived catalog.
 
 ### Transfer Facts
 

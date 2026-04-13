@@ -1,3 +1,2 @@
-- When working on `token-knowledge` or `token-konwledge-ui` projects/packages,
-  read `docs/mdbook/specs/l2b_specs/token-knowledge.md` document first for
-  context.
+- When working on `token-knowledge` or `token-knowledge-ui` projects/packages, read `docs/mdbook/specs/l2b_specs/token-knowledge.md` document first for context.
+- After making code changes, always run `pnpm typecheck` and the relevant tests before declaring work complete. 

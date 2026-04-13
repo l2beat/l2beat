@@ -2,6 +2,9 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { expect } from 'earl'
 import { transfersToFacts } from './transfersToFacts'
 
+const ADDR_A = '0xabcdabcd12345678abcdabcd12345678abcdabcd'
+const ADDR_B = '0x33d66941465ac776c38096cb1bc496c673ae7390'
+
 function makeTransfer(
   overrides: Partial<InteropTransferRecord>,
 ): InteropTransferRecord {
@@ -17,7 +20,7 @@ function makeTransfer(
     srcTxHash: undefined,
     srcLogIndex: undefined,
     srcEventId: undefined,
-    srcTokenAddress: '0xSRC',
+    srcTokenAddress: ADDR_A,
     srcRawAmount: undefined,
     srcWasBurned: undefined,
     srcAbstractTokenId: undefined,
@@ -30,7 +33,7 @@ function makeTransfer(
     dstTxHash: undefined,
     dstLogIndex: undefined,
     dstEventId: undefined,
-    dstTokenAddress: '0xDST',
+    dstTokenAddress: ADDR_B,
     dstRawAmount: undefined,
     dstWasMinted: undefined,
     dstAbstractTokenId: undefined,
@@ -48,9 +51,9 @@ describe(transfersToFacts.name, () => {
     const transfers = [
       makeTransfer({
         srcChain: 'ethereum',
-        srcTokenAddress: '0xA0b8',
+        srcTokenAddress: ADDR_A,
         dstChain: 'base',
-        dstTokenAddress: '0x833',
+        dstTokenAddress: ADDR_B,
         plugin: 'hop',
         bridgeType: 'lockAndMint',
       }),
@@ -58,8 +61,21 @@ describe(transfersToFacts.name, () => {
 
     const result = transfersToFacts(transfers)
     expect(result).toEqual(
-      'transfer("ethereum","0xA0b8","base","0x833","hop","lockAndMint").\n',
+      `transfer("ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint).\n`,
     )
+  })
+
+  it('lowercases addresses', () => {
+    const transfers = [
+      makeTransfer({
+        srcTokenAddress: '0xABCDABCD12345678ABCDABCD12345678ABCDABCD',
+        dstTokenAddress: '0x33D66941465AC776C38096CB1BC496C673AE7390',
+      }),
+    ]
+
+    const result = transfersToFacts(transfers)
+    expect(result).toInclude('0xabcdabcd12345678abcdabcd12345678abcdabcd')
+    expect(result).toInclude('0x33d66941465ac776c38096cb1bc496c673ae7390')
   })
 
   it('skips transfers missing token addresses', () => {
@@ -73,7 +89,7 @@ describe(transfersToFacts.name, () => {
     const transfers = [makeTransfer({ bridgeType: undefined })]
 
     const result = transfersToFacts(transfers)
-    expect(result).toInclude('"unknown"')
+    expect(result).toInclude(',unknown)')
   })
 
   it('handles multiple transfers', () => {

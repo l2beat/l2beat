@@ -1,25 +1,28 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { importTransferFacts } from '../importTransferFacts'
 import { infer } from '../infer'
-import { transfersToFacts } from '../transfersToFacts'
 import { publicProcedure, router } from './trpc'
 
-const TRANSFER_LIMIT = 10
-
 export const appRouter = router({
-  inferTokenCatalog: publicProcedure.query(async ({ ctx }) => {
-    const transfers = await ctx.db.interopTransfer.getAll()
-    const limited = transfers.slice(0, TRANSFER_LIMIT)
+  importFacts: publicProcedure.mutation(({ ctx }) => {
+    return importTransferFacts(ctx.db)
+  }),
 
-    const facts = transfersToFacts(limited)
+  infer: publicProcedure.query(async ({ ctx }) => {
+    const allFacts = await ctx.db.tokenFactInput.getAll()
+    const factsProgram = allFacts
+      .map((f) => `${f.name}(${f.arguments}).`)
+      .join('\n')
+
     const rulesPath = path.join(__dirname, '..', 'rules.lp')
     const rules = fs.readFileSync(rulesPath, 'utf-8')
 
-    const kb = await infer(facts, rules)
+    const kb = await infer(factsProgram, rules)
 
     return {
-      transferCount: limited.length,
+      inputFactCount: allFacts.length,
       facts: kb.facts,
     }
   }),

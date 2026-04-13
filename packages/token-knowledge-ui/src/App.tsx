@@ -1,18 +1,45 @@
-import { useState } from 'react'
 import { api, TRPCReactProvider } from './react-query/trpc'
 
+function ImportPanel() {
+  const mutation = api.importFacts.useMutation()
+
+  return (
+    <div className="mb-6">
+      <h2 className="mb-2 font-semibold text-lg">Import Transfer Facts</h2>
+      <button
+        type="button"
+        onClick={() => mutation.mutate()}
+        disabled={mutation.isPending}
+        className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
+      >
+        {mutation.isPending ? 'Importing...' : 'Import Facts'}
+      </button>
+
+      {mutation.error && (
+        <p className="mt-2 text-red-600">Error: {mutation.error.message}</p>
+      )}
+
+      {mutation.data && (
+        <p className="mt-2 text-gray-600 text-sm">
+          Imported {mutation.data.imported} new facts, skipped{' '}
+          {mutation.data.skipped} duplicates.
+        </p>
+      )}
+    </div>
+  )
+}
+
 function InferPanel() {
-  const [enabled, setEnabled] = useState(false)
-  const { data, isLoading, error } = api.inferTokenCatalog.useQuery(undefined, {
-    enabled,
+  const { data, isLoading, error, refetch } = api.infer.useQuery(undefined, {
+    enabled: false,
   })
 
   return (
-    <div className="mx-auto max-w-4xl p-6">
-      <h1 className="mb-4 font-bold text-2xl">Token Knowledge</h1>
+    <div>
+      <h2 className="mb-2 font-semibold text-lg">Run Inference</h2>
       <button
         type="button"
-        onClick={() => setEnabled(true)}
+        onClick={() => refetch()}
         disabled={isLoading}
         className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
       >
@@ -24,8 +51,8 @@ function InferPanel() {
       {data && (
         <div className="mt-6">
           <p className="mb-2 text-gray-500 text-sm">
-            Processed {data.transferCount} transfers — inferred{' '}
-            {data.facts.length} facts
+            {data.inputFactCount} input facts — inferred {data.facts.length}{' '}
+            facts
           </p>
           <table className="w-full border-collapse text-sm">
             <thead>
@@ -56,7 +83,11 @@ function InferPanel() {
 export function App() {
   return (
     <TRPCReactProvider>
-      <InferPanel />
+      <div className="mx-auto max-w-4xl p-6">
+        <h1 className="mb-4 font-bold text-2xl">Token Knowledge</h1>
+        <ImportPanel />
+        <InferPanel />
+      </div>
     </TRPCReactProvider>
   )
 }
