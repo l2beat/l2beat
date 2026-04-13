@@ -8,7 +8,7 @@ Generated with discovered.json: 0x845a974b7e99efaa571448fcf5e555a7c3f2e4d9
 
 ## Description
 
-MintManagerOwner on OP Mainnet (L2) changed from a 3-of-5 multisig to a 1-of-1 Safe with a single signer (0x3F3Cd7...). This concentrates OP token mint manager control to a single address. 4 previous members removed.
+MintManagerOwner on OP Mainnet (L2) restructured: the previous 3-of-5 multisig was replaced by a 1-of-1 Safe whose sole owner is a 6-of-9 SafeL2 multisig (0x3F3Cd7...). Net effect is that the OP token inflation policy now requires 6-of-9 signatures (nested through the 1-of-1 delegate) instead of 3-of-5, with the 9 new signers differing from the original 5. The 4 original EOA members were removed.
 
 ## Watched changes
 
