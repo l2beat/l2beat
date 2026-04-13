@@ -1,20 +1,39 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const TALLY_FORM_ID = 'Ek0oer'
 const TALLY_FORM_URL = `https://tally.so/r/${TALLY_FORM_ID}?transparentBackground=1`
 
 export function FeedbackButton() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isFooterVisible, setIsFooterVisible] = useState(false)
 
   const openFeedback = useCallback(() => setIsOpen(true), [])
   const closeFeedback = useCallback(() => setIsOpen(false), [])
+
+  useEffect(() => {
+    const footer = document.getElementById('site-footer')
+    if (!footer) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsFooterVisible(entry?.isIntersecting ?? false),
+      { threshold: 0 },
+    )
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <>
       <button
         onClick={openFeedback}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-accent-dark px-4 py-2.5 text-sm font-medium text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl active:scale-95"
+        className={`fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-full bg-accent-dark px-4 py-2.5 font-medium text-sm text-white shadow-lg transition-all hover:bg-blue-800 hover:shadow-xl active:scale-95 ${
+          isFooterVisible
+            ? 'pointer-events-none translate-y-4 opacity-0'
+            : 'translate-y-0 opacity-100'
+        }`}
         aria-label="Send feedback"
+        aria-hidden={isFooterVisible}
+        tabIndex={isFooterVisible ? -1 : 0}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +56,7 @@ export function FeedbackButton() {
           onClick={closeFeedback}
         >
           <div
-            className="relative w-[90vw] max-w-[600px] h-[85vh] max-h-[700px] rounded-xl bg-white shadow-2xl overflow-hidden"
+            className="relative h-[85vh] max-h-[700px] w-[90vw] max-w-[600px] overflow-hidden rounded-xl bg-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
