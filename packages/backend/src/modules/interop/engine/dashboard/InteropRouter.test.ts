@@ -14,7 +14,11 @@ function makeConfig(dangerousOperationsEnabled = false): InteropFeatureConfig {
     matching: false,
     cleaner: false,
     dangerousOperationsEnabled,
-    dashboard: { enabled: true, getExplorerUrl: () => undefined },
+    dashboard: {
+      enabled: true,
+      getExplorerUrl: () => undefined,
+      auth: false,
+    },
     compare: { enabled: false },
     financials: { enabled: false, tokenDbApiUrl: '' },
     config: {

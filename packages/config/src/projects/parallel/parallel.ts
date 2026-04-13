@@ -18,8 +18,10 @@ export const parallel: ScalingProject = orbitStackL2({
   display: {
     name: 'Parallel',
     slug: 'parallel',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     headerWarning:
       'Parallel is [deprecating their Orbit stack Layer 2](https://medium.com/@ParallelFi/the-withdrawal-on-parallel-l2-is-now-available-c3b4b572864e).',
     description:

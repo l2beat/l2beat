@@ -3,13 +3,20 @@ import type {
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  CoingeckoId,
+  Configuration,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { createRemoteJWKSet } from 'jose'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -85,8 +92,6 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
-  readonly hourlyCutoffDays: number
-  readonly sixHourlyCutoffDays: number
 }
 
 export interface TvsConfig {
@@ -95,6 +100,11 @@ export interface TvsConfig {
   readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
+  readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export type TvsCleanerConfig = {
+  name: CleanableRepoName
 }
 
 export interface TrackedTxProject {
@@ -232,6 +242,7 @@ export interface InteropFeatureConfig {
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
+    auth: InteropDashboardAuthConfig | false
   }
   compare: {
     enabled: boolean
@@ -248,6 +259,12 @@ export interface InteropFeatureConfig {
   }
   inMemoryEventCap: number
   oneSidedChains: string[]
+}
+
+export interface InteropDashboardAuthConfig {
+  JWKS: ReturnType<typeof createRemoteJWKSet>
+  aud: string
+  teamDomain: string
 }
 
 export interface DaBeatConfig {

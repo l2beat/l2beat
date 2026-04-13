@@ -4,7 +4,7 @@ import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from '../../anomalies/constants'
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 export interface SuspiciousTransferDto {
@@ -28,7 +28,7 @@ export interface SuspiciousTransferDto {
 
 export function createAnomaliesRouter() {
   return router({
-    suspiciousTransfers: publicProcedure.query(async ({ ctx }) => {
+    suspiciousTransfers: protectedProcedure.query(async ({ ctx }) => {
       const transfers = await ctx.db.interopTransfer.getValueMismatchTransfers(
         VALUE_DIFF_THRESHOLD_PERCENT,
         MINIMUM_SIDE_VALUE_USD_THRESHOLD,

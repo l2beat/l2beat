@@ -1,10 +1,10 @@
 import { getMemoryUsage } from '../../impls/memory'
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 export function createStatusRouter() {
   return router({
-    memory: publicProcedure.query(() => {
+    memory: protectedProcedure.query(() => {
       return getMemoryUsage()
     }),
   })

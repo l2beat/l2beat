@@ -15,6 +15,7 @@ import {
   MINIMUM_SIDE_VALUE_USD_THRESHOLD,
   VALUE_DIFF_THRESHOLD_PERCENT,
 } from './anomalies/constants'
+import { renderBlockStatsPage } from './BlockStatsPage'
 import { renderEventsPage } from './EventsPage'
 import { getInteropEventsByType } from './impls/events'
 import { getMemoryUsage } from './impls/memory'
@@ -62,6 +63,7 @@ export function createInteropRouter(
       {
         db,
         getExplorerUrl: config.dashboard.getExplorerUrl,
+        dashboard: config.dashboard,
       },
       { prefix: '/interop/trpc' },
     ),
@@ -271,6 +273,10 @@ export function createInteropRouter(
     ctx.body = getMemoryUsage()
   })
 
+  router.get('/interop/block-stats', (ctx) => {
+    ctx.body = renderBlockStatsPage(syncersManager.getBlockProcessingStats())
+  })
+
   router.get('/interop.json', async (ctx) => {
     const events = await db.interopEvent.getStats()
     const messages = await db.interopMessage.getStats()
@@ -384,12 +390,14 @@ export function createInteropRouter(
     const params = v.object({ type: v.string() }).validate(ctx.params)
     const query = v
       .object({
+        plugin: v.string().optional(),
         srcChain: v.string().optional(),
         dstChain: v.string().optional(),
       })
       .validate(ctx.query)
     const status = getProcessorsStatus(processors)
     const messages = await db.interopMessage.getByType(params.type, {
+      plugin: query.plugin,
       srcChain: query.srcChain,
       dstChain: query.dstChain,
     })

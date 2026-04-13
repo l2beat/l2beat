@@ -1,4 +1,5 @@
 import type { Database } from '@l2beat/database'
+import type { InteropFeatureConfig } from '../../../../../../config/Config'
 import { createInteropTrpcRouter } from '../router'
 import { createTRPCContext } from '../trpc'
 import { createKoaMiddleware } from './koa-middleware'
@@ -6,6 +7,7 @@ import { createKoaMiddleware } from './koa-middleware'
 type Dependencies = {
   db: Database
   getExplorerUrl: (chain: string) => string | undefined
+  dashboard: InteropFeatureConfig['dashboard']
 }
 
 type Options = {
@@ -23,6 +25,7 @@ export function createInteropTrpc(deps: Dependencies, options?: Options) {
       createTRPCContext({
         headers: new Headers(req.headers as Record<string, string>),
         db: deps.db,
+        dashboard: deps.dashboard,
       }),
   })
 }
