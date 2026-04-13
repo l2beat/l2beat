@@ -10,6 +10,8 @@ Generated with discovered.json: 0x82014727093a84a11e1570925ed58d2d755c1063
 
 New template variant `opstack/AnchorStateRegistry_post13_opsuccinct` created for Celo's AnchorStateRegistry. The standard `post13` template calls Cannon-specific functions (`vm()`, `oracle()`, `weth()`, `absolutePrestate()`, `challengePeriod()`) on the `anchorGame` contract, but Celo uses OPSuccinct (SP1) games which don't expose those functions, causing reverts. The variant omits those fields while keeping everything else.
 
+Celo's OPSuccinct game (anchorGame) vs a Cannon game on Celo for reference: [diff](https://disco.l2beat.com/diff/eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F/eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1)
+
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
