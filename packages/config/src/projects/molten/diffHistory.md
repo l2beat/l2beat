@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x79a1854b5ce92e40040bccb02b6a8656233c7b14
+
+# Diff at Mon, 13 Apr 2026 13:01:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1771857555
+- current timestamp: 1776085185
+
+## Description
+
+Espresso TEE verification architecture changed: AWS Nitro enclave attestations are now verified via ZK proofs (RiscZero or Succinct SP1) instead of on-chain X.509 certificate chain validation.
+
+- Old EspressoNitroTEEVerifier (0xf55BeB) + CertManager (0x1A484E) deleted. CertManager previously validated AWS Nitro cert chains in Solidity - expensive gas cost.
+- New EspressoNitroTEEVerifier (0xF99De7) delegates attestation verification to a new NitroEnclaveVerifier (0x0d4cD6) that accepts ZK proofs of off-chain attestation validation.
+- EspressoTEEVerifier (0x7A7E3B, unchanged) now points to the new NitroTEEVerifier.
+- SafeL2 lost the interact permission on the old verifier (no longer exists).
+
+Security implications: same TEE trust model (AWS Nitro), but adds trust in the ZK verifier (RiscZero/Succinct) and configured program IDs. Owner of EspressoNitroTEEVerifier can still register signers and set valid enclave hashes.
+
+EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CertManager (arb1:0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
+    contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      receivedPermissions.2.from:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../.flat@1771857555/CertManager.sol => /dev/null  | 1966 ---------
+ .../EspressoNitroTEEVerifier.sol                   | 1861 +--------
+ .../projects/molten/.flat/NitroEnclaveVerifier.sol | 4283 ++++++++++++++++++++
+ 3 files changed, 4379 insertions(+), 3731 deletions(-)
+```
+
 Generated with discovered.json: 0xaa62aaa7a4d71203f47c0062acf904a9723614d3
 
 # Diff at Mon, 23 Feb 2026 14:42:18 GMT:
