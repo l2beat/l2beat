@@ -9,17 +9,6 @@
       "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
       "contractName": "ValidatorsExitBusOracle",
       "entity": null,
-      "id": "4:eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e:values.getLastProcessingRefSlot",
-      "type": "data-change",
-      "field": "values.getLastProcessingRefSlot",
-      "before": 12746399
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
-      "contractName": "ValidatorsExitBusOracle",
-      "entity": null,
       "id": "4:eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e:template",
       "type": "data-change",
       "field": "template",
@@ -272,67 +261,10 @@
       "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
       "contractName": "CSFeeOracle",
       "entity": null,
-      "id": "4:eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB:values.getConsensusReport",
-      "type": "data-change",
-      "field": "values.getConsensusReport",
-      "before": {
-        "hash": "0x742312ede76447c95b1a1f9ddfdabc1c02a7fd0fcd2a332c1dcd8221d89cc16c",
-        "refSlot": 12672479,
-        "processingDeadlineTime": 1761312971,
-        "processingStarted": true
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-      "contractName": "CSFeeOracle",
-      "entity": null,
-      "id": "4:eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB:values.getLastProcessingRefSlot",
-      "type": "data-change",
-      "field": "values.getLastProcessingRefSlot",
-      "before": 12672479
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-      "contractName": "CSFeeOracle",
-      "entity": null,
       "id": "4:eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB:template",
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/CSFeeOracle"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
-      "contractName": "CSAccounting",
-      "entity": null,
-      "id": "4:eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da:values.getClaimableBondShares",
-      "type": "data-change",
-      "field": "values.getClaimableBondShares",
-      "before": [
-        "66178992839831405",
-        "762266248774283740",
-        "12730249351435661",
-        "42374328016759949",
-        "359848336885088086"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
-      "contractName": "CSAccounting",
-      "entity": null,
-      "id": "4:eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getClaimableBondShares": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -454,42 +386,6 @@
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "contractName": "AccountingOracle",
       "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getConsensusReport.hash",
-      "type": "data-change",
-      "field": "values.getConsensusReport.hash",
-      "before": "0x25ccd3ce83a5e260d306dac3005bea00502d8235bbae818d7d6f29ba7a3f0c41",
-      "after": "0x2f07ba98bc08e75967d3c06bd31ff101e154569d17c8bb35b6f40ce348dc8e7e"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getConsensusReport.refSlot",
-      "type": "data-change",
-      "field": "values.getConsensusReport.refSlot",
-      "before": 12743999,
-      "after": 13802399
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getConsensusReport.processingDeadlineTime",
-      "type": "data-change",
-      "field": "values.getConsensusReport.processingDeadlineTime",
-      "before": 1759838411,
-      "after": 1772539211
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
       "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getConsensusVersion",
       "type": "data-change",
       "field": "values.getConsensusVersion",
@@ -507,54 +403,6 @@
       "field": "values.getContractVersion",
       "before": 3,
       "after": 4
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getProcessingState.currentFrameRefSlot",
-      "type": "data-change",
-      "field": "values.getProcessingState.currentFrameRefSlot",
-      "before": 12743999,
-      "after": 13802399
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getProcessingState.processingDeadlineTime",
-      "type": "data-change",
-      "field": "values.getProcessingState.processingDeadlineTime",
-      "before": 1759838411,
-      "after": 1772539211
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getProcessingState.mainDataHash",
-      "type": "data-change",
-      "field": "values.getProcessingState.mainDataHash",
-      "before": "0x25ccd3ce83a5e260d306dac3005bea00502d8235bbae818d7d6f29ba7a3f0c41",
-      "after": "0x2f07ba98bc08e75967d3c06bd31ff101e154569d17c8bb35b6f40ce348dc8e7e"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getProcessingState.extraDataHash",
-      "type": "data-change",
-      "field": "values.getProcessingState.extraDataHash",
-      "before": "0x6bf2d0e95113227677ac020bca4121f2a337ef57a519c29fadad5ee6a83a4786",
-      "after": "0x6c44a9214099c75859b4ac817b2ff109af7cc64b7a4c31bb6d4b716e388e9513"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -589,17 +437,6 @@
       "field": "values.proxy__getImplementation",
       "before": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
       "after": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getLastProcessingRefSlot",
-      "type": "data-change",
-      "field": "values.getLastProcessingRefSlot",
-      "after": 13802399
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -959,30 +796,6 @@
       "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
       "contractName": "CSParametersRegistry",
       "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getAllowedExitDelay": "Processing error occurred.",
-        "getBadPerformancePenalty": "Processing error occurred.",
-        "getElRewardsStealingAdditionalFine": "Processing error occurred.",
-        "getExitDelayPenalty": "Processing error occurred.",
-        "getKeyRemovalCharge": "Processing error occurred.",
-        "getKeysLimit": "Processing error occurred.",
-        "getMaxWithdrawalRequestFee": "Processing error occurred.",
-        "getPerformanceCoefficients": "Processing error occurred.",
-        "getPerformanceLeewayData": "Processing error occurred.",
-        "getQueueConfig": "Processing error occurred.",
-        "getRewardShareData": "Processing error occurred.",
-        "getStrikesParams": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
       "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:template",
       "type": "data-change",
       "field": "template",
@@ -1062,58 +875,6 @@
       "contractName": "Liquid staked Ether 2.0 Token",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBeaconStat.depositedValidators",
-      "type": "data-change",
-      "field": "values.getBeaconStat.depositedValidators",
-      "before": 403105,
-      "after": 446218
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBeaconStat.beaconValidators",
-      "type": "data-change",
-      "field": "values.getBeaconStat.beaconValidators",
-      "before": 403105,
-      "after": 423208
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBeaconStat.beaconBalance",
-      "type": "data-change",
-      "field": "values.getBeaconStat.beaconBalance",
-      "before": "8524710758679869000000000",
-      "after": "8683193027679185000000000"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBufferedEther",
-      "type": "data-change",
-      "field": "values.getBufferedEther",
-      "before": "829036747660688197688",
-      "after": "299416870082549901399"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
       "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getContractVersion",
       "type": "data-change",
       "field": "values.getContractVersion",
@@ -1165,100 +926,11 @@
       "contractName": "Liquid staked Ether 2.0 Token",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.isStakingPaused",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.isStakingPaused",
-      "before": false
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeLimit",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeLimit",
-      "before": "149999985237000000000000",
-      "after": "149999914236179842614956"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "before": 23521397,
-      "after": 24570145
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.isStakingPaused_",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.isStakingPaused_",
-      "after": false
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalPooledEther",
-      "type": "data-change",
-      "field": "values.getTotalPooledEther",
-      "before": "8525539795427529688197688",
-      "after": "9420864079020578601278197"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalShares",
-      "type": "data-change",
-      "field": "values.getTotalShares",
-      "before": "7013313024786709256899957",
-      "after": "7669948964500442998250713"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
       "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.implementation",
       "type": "data-change",
       "field": "values.implementation",
       "before": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
       "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "8525539795427529688197688",
-      "after": "9420864079020578601278197"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1303,36 +975,6 @@
       "contractName": "Liquid staked Ether 2.0 Token",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getMaxMintableExternalShares",
-      "type": "data-change",
-      "field": "values.getMaxMintableExternalShares",
-      "after": "3285897866357850788369064"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getPooledEthByShares",
-      "type": "data-change",
-      "field": "values.getPooledEthByShares",
-      "after": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
       "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getPooledEthBySharesRoundUp",
       "type": "data-change",
       "field": "values.getPooledEthBySharesRoundUp",
@@ -1342,24 +984,6 @@
         3,
         4,
         5
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getSharesByPooledEth",
-      "type": "data-change",
-      "field": "values.getSharesByPooledEth",
-      "after": [
-        0,
-        0,
-        1,
-        2,
-        3
       ]
     },
     {
@@ -1397,22 +1021,6 @@
       "type": "data-change",
       "field": "implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600",
       "after": "Lido"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:errors",
-      "type": "data-change",
-      "field": "errors",
-      "after": {
-        "getPooledEthByShares": "Processing error occurred.",
-        "getPooledEthBySharesRoundUp": "Processing error occurred.",
-        "getSharesByPooledEth": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1870,20 +1478,6 @@
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "contractName": "CSFeeDistributor",
       "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "distributedShares": "Processing error occurred.",
-        "getHistoricalDistributionData": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
       "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:template",
       "type": "data-change",
       "field": "template",
@@ -2192,27 +1786,6 @@
       "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
       "contractName": "CSModule",
       "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "depositQueuePointers": "Processing error occurred.",
-        "exitDeadlineThreshold": "Processing error occurred.",
-        "getNodeOperator": "Processing error occurred.",
-        "getNodeOperatorIsActive": "Processing error occurred.",
-        "getNodeOperatorManagementProperties": "Processing error occurred.",
-        "getNodeOperatorNonWithdrawnKeys": "Processing error occurred.",
-        "getNodeOperatorOwner": "Processing error occurred.",
-        "getNodeOperatorSummary": "Processing error occurred.",
-        "getNodeOperatorTotalDepositedKeys": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
       "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:template",
       "type": "data-change",
       "field": "template",
@@ -2507,97 +2080,6 @@
     {
       "timestamp": "2026-03-02T15:44:09.000Z",
       "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "9420907825411912223328994",
-      "after": "9420910457727316876082803"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalShares",
-      "type": "data-change",
-      "field": "values.getTotalShares",
-      "before": "7669984580404259840981384",
-      "after": "7669986723490567297180055"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBufferedEther",
-      "type": "data-change",
-      "field": "values.getBufferedEther",
-      "before": "343163261416171952196",
-      "after": "345795576820824706005"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalPooledEther",
-      "type": "data-change",
-      "field": "values.getTotalPooledEther",
-      "before": "9420907825411912223328994",
-      "after": "9420910457727316876082803"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeLimit",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeLimit",
-      "before": "149999238195342218920497",
-      "after": "149999000000000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "before": 24570582,
-      "after": 24570729
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "32:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getMaxMintableExternalShares",
-      "type": "data-change",
-      "field": "values.getMaxMintableExternalShares",
-      "before": "3285913130316629435253637",
-      "after": "3285914048782189773624496"
-    },
-    {
-      "timestamp": "2026-03-02T15:44:09.000Z",
-      "updateNotifierId": 32,
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
@@ -2625,97 +2107,6 @@
     {
       "timestamp": "2026-03-02T19:44:18.000Z",
       "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "9420910457727316876082803",
-      "after": "9421107382892368856937875"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalShares",
-      "type": "data-change",
-      "field": "values.getTotalShares",
-      "before": "7669986723490567297180055",
-      "after": "7670147049120265963391760"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBufferedEther",
-      "type": "data-change",
-      "field": "values.getBufferedEther",
-      "before": "345795576820824706005",
-      "after": "542720741872805561077"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalPooledEther",
-      "type": "data-change",
-      "field": "values.getTotalPooledEther",
-      "before": "9420910457727316876082803",
-      "after": "9421107382892368856937875"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeLimit",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeLimit",
-      "before": "149999000000000000000000",
-      "after": "149999000100000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "before": 24570729,
-      "after": 24571798
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "41:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getMaxMintableExternalShares",
-      "type": "data-change",
-      "field": "values.getMaxMintableExternalShares",
-      "before": "3285914048782189773624496",
-      "after": "3285982759766346344858084"
-    },
-    {
-      "timestamp": "2026-03-02T19:44:18.000Z",
-      "updateNotifierId": 41,
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
@@ -2739,97 +2130,6 @@
       "entity": null,
       "id": "41:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "9421107382892368856937875",
-      "after": "9421450957699407493689997"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalShares",
-      "type": "data-change",
-      "field": "values.getTotalShares",
-      "before": "7670147049120265963391760",
-      "after": "7670426768816184598800704"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getBufferedEther",
-      "type": "data-change",
-      "field": "values.getBufferedEther",
-      "before": "542720741872805561077",
-      "after": "886295548911442313199"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalPooledEther",
-      "type": "data-change",
-      "field": "values.getTotalPooledEther",
-      "before": "9421107382892368856937875",
-      "after": "9421450957699407493689997"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeLimit",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeLimit",
-      "before": "149999000100000000000000",
-      "after": "149999821600000000000000"
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "type": "data-change",
-      "field": "values.getStakeLimitFullInfo.prevStakeBlockNumber",
-      "before": 24571798,
-      "after": 24575428
-    },
-    {
-      "timestamp": "2026-03-03T07:34:39.000Z",
-      "updateNotifierId": 47,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "47:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getMaxMintableExternalShares",
-      "type": "data-change",
-      "field": "values.getMaxMintableExternalShares",
-      "before": "3285982759766346344858084",
-      "after": "3286102639636025760033346"
     },
     {
       "timestamp": "2026-03-03T07:34:39.000Z",
@@ -2864,36 +2164,6 @@
       "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "calculateValidatorWithdrawalFee": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:values.calculateValidatorWithdrawalFee",
-      "type": "data-change",
-      "field": "values.calculateValidatorWithdrawalFee",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
-      "contractName": "StakingVault",
-      "entity": null,
       "id": "53:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:template",
       "type": "data-change",
       "field": "template",
@@ -2918,20 +2188,6 @@
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/VaultHub"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-      "contractName": "Dashboard",
-      "entity": null,
-      "id": "53:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "withdrawableValue": "Processing error occurred.",
-        "remainingMintingCapacityShares": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2985,36 +2241,6 @@
       "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "calculateValidatorWithdrawalFee": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:values.calculateValidatorWithdrawalFee",
-      "type": "data-change",
-      "field": "values.calculateValidatorWithdrawalFee",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
       "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:template",
       "type": "data-change",
       "field": "template",
@@ -3037,36 +2263,6 @@
       "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "calculateValidatorWithdrawalFee": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:values.calculateValidatorWithdrawalFee",
-      "type": "data-change",
-      "field": "values.calculateValidatorWithdrawalFee",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
       "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:template",
       "type": "data-change",
       "field": "template",
@@ -3080,17 +2276,6 @@
       "entity": null,
       "id": "53:eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "53:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getLastProcessingRefSlot",
-      "type": "data-change",
-      "field": "values.getLastProcessingRefSlot",
-      "before": 13802399
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3124,58 +2309,6 @@
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/AccountingOracle"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getPooledEthByShares": "Processing error occurred.",
-        "getSharesByPooledEth": "Processing error occurred.",
-        "getPooledEthBySharesRoundUp": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getPooledEthByShares",
-      "type": "data-change",
-      "field": "values.getPooledEthByShares",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getSharesByPooledEth",
-      "type": "data-change",
-      "field": "values.getSharesByPooledEth",
-      "before": [
-        0,
-        0,
-        1,
-        2,
-        3
-      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3218,20 +2351,6 @@
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/stETH"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-      "contractName": "OperatorGrid",
-      "entity": null,
-      "id": "53:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "tier": "Processing error occurred.",
-        "nodeOperatorAddress": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3329,20 +2448,6 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "canExecute": "Processing error occurred.",
-        "canSchedule": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-      "contractName": "EmergencyProtectedTimelock",
-      "entity": null,
       "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:values.canExecute",
       "type": "data-change",
       "field": "values.canExecute",
@@ -3377,83 +2482,10 @@
       "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "calculateValidatorWithdrawalFee": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:values.calculateValidatorWithdrawalFee",
-      "type": "data-change",
-      "field": "values.calculateValidatorWithdrawalFee",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
       "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:template",
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/StakingVault"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "53:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:errors",
-      "type": "data-change",
-      "field": "errors",
-      "after": {
-        "distributedShares": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "calculateValidatorWithdrawalFee": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:values.calculateValidatorWithdrawalFee",
-      "type": "data-change",
-      "field": "values.calculateValidatorWithdrawalFee",
-      "before": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3476,19 +2508,6 @@
       "type": "data-change",
       "field": "template",
       "after": "tokens/Lido/Burner"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
-      "contractName": "OracleReportSanityChecker",
-      "entity": null,
-      "id": "53:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "reportData": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",

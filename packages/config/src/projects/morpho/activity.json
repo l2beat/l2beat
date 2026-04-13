@@ -17,18 +17,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 3,
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "contractName": "Wrapped Ether Token",
-      "entity": null,
-      "id": "3:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "2787522463126466628993882",
-      "after": "2090457141282865313861309"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 3,
       "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
       "contractName": "GnosisSafe",
       "entity": null,

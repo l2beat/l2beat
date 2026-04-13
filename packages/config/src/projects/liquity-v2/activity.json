@@ -6,66 +6,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "15819037836432619065432019909407415740867073754834407017193922594371690360030",
-      "after": "89153408423356317498441219019190060814792756931025781950331537913435309054117"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getPrev.0",
-      "type": "data-change",
-      "field": "values.getPrev.0",
-      "before": "15819037836432619065432019909407415740867073754834407017193922594371690360030",
-      "after": "89153408423356317498441219019190060814792756931025781950331537913435309054117"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 26,
-      "after": 24
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.nodes.0.1",
-      "type": "data-change",
-      "field": "values.nodes.0.1",
-      "before": "15819037836432619065432019909407415740867073754834407017193922594371690360030",
-      "after": "89153408423356317498441219019190060814792756931025781950331537913435309054117"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.size",
-      "type": "data-change",
-      "field": "values.size",
-      "before": 26,
-      "after": 24
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
       "contractName": "Safe",
       "entity": null,
@@ -124,30 +64,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5548286765080221190186",
-      "after": "5957301966669596358390"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "9305276814578577947312259",
-      "after": "6438521875736766104658266"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
       "contractName": "PriceFeed",
       "entity": null,
@@ -200,50 +116,11 @@
       "contractName": "ActivePool",
       "isDependency": false,
       "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.aggBatchManagementFees",
-      "type": "data-change",
-      "field": "values.aggBatchManagementFees",
-      "before": "33914275101104076288",
-      "after": "158940431303364915436"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.aggRecordedDebt",
-      "type": "data-change",
-      "field": "values.aggRecordedDebt",
-      "before": "24781948030279115504551847",
-      "after": "18439023987748259285985336"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
       "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.aggWeightedBatchManagementFeeSum",
       "type": "data-change",
       "field": "values.aggWeightedBatchManagementFeeSum",
       "before": "23363193019159989040377678000000000000000",
       "after": "15224465054459121365746676000000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.aggWeightedDebtSum",
-      "type": "data-change",
-      "field": "values.aggWeightedDebtSum",
-      "before": "1234284343883093831558283856577765044211486",
-      "after": "280225291599888024642976449418847364452521"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -265,37 +142,11 @@
       "contractName": "ActivePool",
       "isDependency": false,
       "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.calcPendingAggInterest",
-      "type": "data-change",
-      "field": "values.calcPendingAggInterest",
-      "before": "124931368140374033180",
-      "after": "64298268962988005655"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
       "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.calcPendingSPYield",
       "type": "data-change",
       "field": "values.calcPendingSPYield",
       "before": "93698526105280524885",
       "after": "48223701722241004241"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.getBoldDebt",
-      "type": "data-change",
-      "field": "values.getBoldDebt",
-      "before": "24782173071635911269296930",
-      "after": "18439329141949237226416363"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -313,32 +164,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.lastAggBatchManagementFeesUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggBatchManagementFeesUpdateTime",
-      "before": 1768404527,
-      "after": 1772289683
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:values.lastAggUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggUpdateTime",
-      "before": 1768490687,
-      "after": 1772452127
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
       "contractName": "StabilityPool",
       "isDependency": false,
@@ -348,45 +173,6 @@
       "field": "values.getCollBalance",
       "before": "10846565926263626510",
       "after": "64236772726256188432"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5548286765080221190186",
-      "after": "5957301966669596358390"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "9305276814578577947312259",
-      "after": "6438521875736766104658266"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF:values.getTotalBoldDeposits",
-      "type": "data-change",
-      "field": "values.getTotalBoldDeposits",
-      "before": "7682322430852708660055686",
-      "after": "7142384888741406545638556"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -447,139 +233,10 @@
       "contractName": "EACAggregatorProxy",
       "isDependency": true,
       "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestAnswer",
-      "type": "data-change",
-      "field": "values.latestAnswer",
-      "before": 331000550000,
-      "after": 193175732472
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRound",
-      "type": "data-change",
-      "field": "values.latestRound",
-      "before": "129127208515966884791",
-      "after": "129127208515966887575"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData.roundId",
-      "type": "data-change",
-      "field": "values.latestRoundData.roundId",
-      "before": "129127208515966884791",
-      "after": "129127208515966887575"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData.answer",
-      "type": "data-change",
-      "field": "values.latestRoundData.answer",
-      "before": 331000550000,
-      "after": 193175732472
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData.startedAt",
-      "type": "data-change",
-      "field": "values.latestRoundData.startedAt",
-      "before": 1768493226,
-      "after": 1772458109
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData.updatedAt",
-      "type": "data-change",
-      "field": "values.latestRoundData.updatedAt",
-      "before": 1768493243,
-      "after": 1772458139
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData.answeredInRound",
-      "type": "data-change",
-      "field": "values.latestRoundData.answeredInRound",
-      "before": "129127208515966884791",
-      "after": "129127208515966887575"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestTimestamp",
-      "type": "data-change",
-      "field": "values.latestTimestamp",
-      "before": 1768493243,
-      "after": 1772458139
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
       "id": "5:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:template",
       "type": "data-change",
       "field": "template",
       "after": "Steakhouse-USDC/EACAggregatorProxy"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
-      "contractName": "LUSD Stablecoin Token",
-      "entity": null,
-      "id": "5:eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "34544154161539642862528277",
-      "after": "30769488242648096976632102"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-      "contractName": "BoldToken",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x6440f144b7e50D6a8439336510312d2F54beB01D:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "39350436766585040845192275",
-      "after": "30686518046618167727788867"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -652,42 +309,6 @@
       "field": "values.P",
       "before": "118551519569971686",
       "after": "117913546050033757"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5548286765080221190186",
-      "after": "5957301966669596358390"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "9305276814578577947312259",
-      "after": "6438521875736766104658266"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getTroveIdsCount",
-      "type": "data-change",
-      "field": "values.getTroveIdsCount",
-      "before": 101,
-      "after": 87
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -857,66 +478,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "48155643574682199246965747600986830151117553149983828519323299836183986087031",
-      "after": "84584793446274299276752993650601041604392276772434272513777653610156952793625"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getPrev.0",
-      "type": "data-change",
-      "field": "values.getPrev.0",
-      "before": "48155643574682199246965747600986830151117553149983828519323299836183986087031",
-      "after": "84584793446274299276752993650601041604392276772434272513777653610156952793625"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 61,
-      "after": 45
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.nodes.0.1",
-      "type": "data-change",
-      "field": "values.nodes.0.1",
-      "before": "48155643574682199246965747600986830151117553149983828519323299836183986087031",
-      "after": "84584793446274299276752993650601041604392276772434272513777653610156952793625"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.size",
-      "type": "data-change",
-      "field": "values.size",
-      "before": 61,
-      "after": 45
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
       "contractName": "Tellor Tributes Token",
       "entity": null,
@@ -953,92 +514,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "5:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "2822339597158415894910073",
-      "after": "2833732369531244969761964"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.data.tail",
-      "type": "data-change",
-      "field": "values.data.tail",
-      "before": "eth:0x3e4488729874be67Bf4826B543Bf083b8139817E",
-      "after": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.data.size",
-      "type": "data-change",
-      "field": "values.data.size",
-      "before": 115,
-      "after": 105
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "eth:0x3e4488729874be67Bf4826B543Bf083b8139817E",
-      "after": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 115,
-      "after": 105
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.aggBatchManagementFees",
-      "type": "data-change",
-      "field": "values.aggBatchManagementFees",
-      "before": "15442099982594411299",
-      "after": "13461858756882077038"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.aggRecordedDebt",
-      "type": "data-change",
-      "field": "values.aggRecordedDebt",
-      "before": "5263328919732550432228835",
-      "after": "5808989089486881387446075"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
       "contractName": "ActivePool",
       "isDependency": false,
@@ -1048,19 +523,6 @@
       "field": "values.aggWeightedBatchManagementFeeSum",
       "before": "12531727142111607084436137750000000000000",
       "after": "14589917957755623126496482000000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.aggWeightedDebtSum",
-      "type": "data-change",
-      "field": "values.aggWeightedDebtSum",
-      "before": "48152185884177249274444954665593849599492",
-      "after": "158520877114472415235081647089332110534157"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1082,37 +544,11 @@
       "contractName": "ActivePool",
       "isDependency": false,
       "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.calcPendingAggInterest",
-      "type": "data-change",
-      "field": "values.calcPendingAggInterest",
-      "before": "12642697207032839422",
-      "after": "36372940981745382948"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
       "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.calcPendingSPYield",
       "type": "data-change",
       "field": "values.calcPendingSPYield",
       "before": "9482022905274629566",
       "after": "27279705736309037211"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.getBoldDebt",
-      "type": "data-change",
-      "field": "values.getBoldDebt",
-      "before": "5263421861463096170578474",
-      "after": "5809117136906174376100356"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1130,32 +566,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.lastAggBatchManagementFeesUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggBatchManagementFeesUpdateTime",
-      "before": 1768330667,
-      "after": 1772290307
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:values.lastAggUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggUpdateTime",
-      "before": 1768485599,
-      "after": 1772452127
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
       "contractName": "StabilityPool",
       "isDependency": false,
@@ -1165,45 +575,6 @@
       "field": "values.getCollBalance",
       "before": "20743394629985611860",
       "after": "48191851423121521984"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25378183572677775054848",
-      "after": "25077006236812550322888"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "24782173071635911269296930",
-      "after": "18439329141949237226416363"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B:values.getTotalBoldDeposits",
-      "type": "data-change",
-      "field": "values.getTotalBoldDeposits",
-      "before": "19186843259928877633185862",
-      "after": "11205339962738830944691755"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1265,192 +636,6 @@
       "entity": null,
       "id": "5:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getFirst",
-      "type": "data-change",
-      "field": "values.getFirst",
-      "before": "492270872291668257851957123016844884821368762214878526512702964905114187127",
-      "after": "108739343595483817180979079147274021976853603606218751741468109444225802594314"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "78159833196847958977227438648061945847752731113647277737301785676172235902251",
-      "after": "102956212846628069938374125048301918588408265243502680445602522290411675190709"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getNext.0",
-      "type": "data-change",
-      "field": "values.getNext.0",
-      "before": "492270872291668257851957123016844884821368762214878526512702964905114187127",
-      "after": "108739343595483817180979079147274021976853603606218751741468109444225802594314"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getPrev.0",
-      "type": "data-change",
-      "field": "values.getPrev.0",
-      "before": "78159833196847958977227438648061945847752731113647277737301785676172235902251",
-      "after": "102956212846628069938374125048301918588408265243502680445602522290411675190709"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 91,
-      "after": 77
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.nodes.0.1",
-      "type": "data-change",
-      "field": "values.nodes.0.1",
-      "before": "78159833196847958977227438648061945847752731113647277737301785676172235902251",
-      "after": "102956212846628069938374125048301918588408265243502680445602522290411675190709"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.nodes.0.0",
-      "type": "data-change",
-      "field": "values.nodes.0.0",
-      "before": "492270872291668257851957123016844884821368762214878526512702964905114187127",
-      "after": "108739343595483817180979079147274021976853603606218751741468109444225802594314"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "5:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.size",
-      "type": "data-change",
-      "field": "values.size",
-      "before": 91,
-      "after": 77
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25378183572677775054848",
-      "after": "25077006236812550322888"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "24782173071635911269296930",
-      "after": "18439329141949237226416363"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveFromTroveIdsArray.0",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray.0",
-      "before": "98138812059725758564609263565551065956967041398216672951730221074607548507060",
-      "after": "52459007550953884262685743769742344846543233300030780523798450276886550979410"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveFromTroveIdsArray.1",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray.1",
-      "before": "11159957542815582420488026697672994934488227070340527458817474573810738877248",
-      "after": "3153168971978305609833590192352679801290655652341563847756631982187701498246"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveFromTroveIdsArray.4",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray.4",
-      "before": "64132792319957114575712214153971317118152919325790102544335049443954963054513",
-      "after": "74930170500193421103522817665774934748934258526916728446566719141121979843345"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveIdsCount",
-      "type": "data-change",
-      "field": "values.getTroveIdsCount",
-      "before": 69,
-      "after": 54
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.baseRate",
-      "type": "data-change",
-      "field": "values.baseRate",
-      "before": 8276483257307213,
-      "after": 3327826668194
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1554,18 +739,6 @@
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
       "contractName": "TroveManager",
       "entity": null,
-      "id": "5:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.lastFeeOperationTime",
-      "type": "data-change",
-      "field": "values.lastFeeOperationTime",
-      "before": 1768344071,
-      "after": 1772405579
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
       "id": "5:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.totalCollateralSnapshot",
       "type": "data-change",
       "field": "values.totalCollateralSnapshot",
@@ -1599,42 +772,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.TroveOwners.0",
-      "type": "data-change",
-      "field": "values.TroveOwners.0",
-      "before": "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984",
-      "after": "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25378183572677775054848",
-      "after": "25077006236812550322888"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "24782173071635911269296930",
-      "after": "18439329141949237226416363"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
       "contractName": "TellorCaller",
       "entity": null,
@@ -1659,57 +796,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "4352125544647987218794",
-      "after": "5954889160700130735188"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5263421861463096170578474",
-      "after": "5809117136906174376100356"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getTroveFromTroveIdsArray.0",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray.0",
-      "before": "106873998366981569039790505813951933126451796971830147810042067253718945086787",
-      "after": "6261342134823405427644485974246206141565675844141716280924678745316965434498"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "contractName": "Wrapped Ether Token",
-      "entity": null,
-      "id": "5:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "2489200993760154903361767",
-      "after": "2090457141282865313861309"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
       "contractName": "StabilityPool",
       "isDependency": false,
@@ -1719,45 +805,6 @@
       "field": "values.getCollBalance",
       "before": 0,
       "after": "3190945782731810634"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xd442E41019B7F5C4dD78F50dc03726C446148695:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "4352125544647987218794",
-      "after": "5954889160700130735188"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xd442E41019B7F5C4dD78F50dc03726C446148695:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5263421861463096170578474",
-      "after": "5809117136906174376100356"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xd442E41019B7F5C4dD78F50dc03726C446148695:values.getTotalBoldDeposits",
-      "type": "data-change",
-      "field": "values.getTotalBoldDeposits",
-      "before": "2093473238608036097315158",
-      "after": "3280386558506326440834244"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1850,56 +897,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0xe8119fC02953B27a1b48D2573855738485A17329:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "4352125544647987218794",
-      "after": "5954889160700130735188"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "5:eth:0xe8119fC02953B27a1b48D2573855738485A17329:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5263421861463096170578474",
-      "after": "5809117136906174376100356"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.aggBatchManagementFees",
-      "type": "data-change",
-      "field": "values.aggBatchManagementFees",
-      "before": "418585971156087998",
-      "after": "1761726294858860234"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.aggRecordedDebt",
-      "type": "data-change",
-      "field": "values.aggRecordedDebt",
-      "before": "9305159816573374908411593",
-      "after": "6438504969383027054357456"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
       "contractName": "ActivePool",
       "isDependency": false,
@@ -1909,19 +906,6 @@
       "field": "values.aggWeightedBatchManagementFeeSum",
       "before": "eth:0x9545014622235086093391841500000000000000",
       "after": "eth:0x4125440681145352685400364500000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.aggWeightedDebtSum",
-      "type": "data-change",
-      "field": "values.aggWeightedDebtSum",
-      "before": "337623197509823166007263300036818808267862",
-      "after": "241554071191293572209399900983524129948678"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1943,19 +927,6 @@
       "contractName": "ActivePool",
       "isDependency": false,
       "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.calcPendingAggInterest",
-      "type": "data-change",
-      "field": "values.calcPendingAggInterest",
-      "before": "88645360076780055002",
-      "after": "14890319456997548972"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
       "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.calcPendingSPYield",
       "type": "data-change",
       "field": "values.calcPendingSPYield",
@@ -1969,62 +940,11 @@
       "contractName": "ActivePool",
       "isDependency": false,
       "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.getBoldDebt",
-      "type": "data-change",
-      "field": "values.getBoldDebt",
-      "before": "9305276814578577947312259",
-      "after": "6438521875736766104658266"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
       "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.getCollBalance",
       "type": "data-change",
       "field": "values.getCollBalance",
       "before": "5548286765080221190186",
       "after": "5957301966669596358390"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.lastAggBatchManagementFeesUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggBatchManagementFeesUpdateTime",
-      "before": 1768401587,
-      "after": 1772457419
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:values.lastAggUpdateTime",
-      "type": "data-change",
-      "field": "values.lastAggUpdateTime",
-      "before": 1768485599,
-      "after": 1772457419
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
-      "contractName": "CollateralRegistry",
-      "entity": null,
-      "id": "5:eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684:values.baseRate",
-      "type": "data-change",
-      "field": "values.baseRate",
-      "before": 8922910960521244,
-      "after": 2041852123170433
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2113,18 +1033,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
-      "contractName": "CollateralRegistry",
-      "entity": null,
-      "id": "5:eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684:values.lastFeeOperationTime",
-      "type": "data-change",
-      "field": "values.lastFeeOperationTime",
-      "before": 1768342259,
-      "after": 1772403239
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b",
       "contractName": "ConfirmedTransactionModule",
       "isDependency": true,
@@ -2156,194 +1064,10 @@
       "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
       "contractName": "SortedTroves",
       "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:errors.nodes",
-      "type": "data-change",
-      "field": "errors.nodes",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:errors.getNext",
-      "type": "data-change",
-      "field": "errors.getNext",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:errors.getPrev",
-      "type": "data-change",
-      "field": "errors.getPrev",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:errors.contains",
-      "type": "data-change",
-      "field": "errors.contains",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.nodes",
-      "type": "data-change",
-      "field": "values.nodes",
-      "before": [
-        [
-          "65442879047640197239116255022690315588228715314739475407834266948492716039383",
-          "89153408423356317498441219019190060814792756931025781950331537913435309054117",
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "89153408423356317498441219019190060814792756931025781950331537913435309054117"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getNext",
-      "type": "data-change",
-      "field": "values.getNext",
-      "before": [
-        "65442879047640197239116255022690315588228715314739475407834266948492716039383",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getPrev",
-      "type": "data-change",
-      "field": "values.getPrev",
-      "before": [
-        "89153408423356317498441219019190060814792756931025781950331537913435309054117",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 23,
-      "after": 22
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.contains",
-      "type": "data-change",
-      "field": "values.contains",
-      "before": [
-        false,
-        false,
-        false,
-        false,
-        false
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:values.getFirst",
-      "type": "data-change",
-      "field": "values.getFirst",
-      "before": "65442879047640197239116255022690315588228715314739475407834266948492716039383"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386",
-      "contractName": "SortedTroves",
-      "entity": null,
       "id": "54:eth:0x14d8d8011dF2b396Ed2bbC4959bb73250324F386:template",
       "type": "data-change",
       "field": "template",
       "after": "liquity-v2/SortedTroves"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getCompositeDebt": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2412,39 +1136,6 @@
       "entity": null,
       "id": "54:eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:errors.getInterestIndividualDelegateOf",
-      "type": "data-change",
-      "field": "errors.getInterestIndividualDelegateOf",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "6006781966669596358390"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "6513074430627760101793497"
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2535,406 +1226,11 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getAnswer": "Processing error occurred.",
-        "getTimestamp": "Processing error occurred.",
-        "proposedLatestRoundData": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.getAnswer",
-      "type": "data-change",
-      "field": "values.getAnswer",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRound",
-      "type": "data-change",
-      "field": "values.latestRound",
-      "before": "129127208515966887634"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.getTimestamp",
-      "type": "data-change",
-      "field": "values.getTimestamp",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestAnswer",
-      "type": "data-change",
-      "field": "values.latestAnswer",
-      "before": 200299491547
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestRoundData",
-      "type": "data-change",
-      "field": "values.latestRoundData",
-      "before": {
-        "answer": 200299491547,
-        "roundId": "129127208515966887634",
-        "startedAt": 1772522169,
-        "updatedAt": 1772522195,
-        "answeredInRound": "129127208515966887634"
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-      "contractName": "EACAggregatorProxy",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "54:eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419:values.latestTimestamp",
-      "type": "data-change",
-      "field": "values.latestTimestamp",
-      "before": 1772522195
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-      "contractName": "BoldToken",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0x6440f144b7e50D6a8439336510312d2F54beB01D:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "30729150066460950149233357",
-      "after": "30729465642248092274621473"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-      "contractName": "StabilityPool",
-      "entity": null,
-      "id": "54:eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getEntireSystemColl": "Processing error occurred.",
-        "getEntireSystemDebt": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
       "address": "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552",
       "contractName": "BolderCashProxy",
       "entity": null,
       "id": "54:eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.Troves",
-      "type": "data-change",
-      "field": "errors.Troves",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.batchIds",
-      "type": "data-change",
-      "field": "errors.batchIds",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.getTroveStatus",
-      "type": "data-change",
-      "field": "errors.getTroveStatus",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.getLatestTroveData",
-      "type": "data-change",
-      "field": "errors.getLatestTroveData",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "errors.getTroveFromTroveIdsArray",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.Troves",
-      "type": "data-change",
-      "field": "values.Troves",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.batchIds",
-      "type": "data-change",
-      "field": "values.batchIds",
-      "before": [
-        "eth:0x00000000001991cEE928c561E37725816cBF73ba",
-        "eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2",
-        "eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df",
-        "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552",
-        "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getTroveStatus",
-      "type": "data-change",
-      "field": "values.getTroveStatus",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getLatestTroveData",
-      "type": "data-change",
-      "field": "values.getLatestTroveData",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "6513074430627760101793497",
-      "after": "6512622701504699541932070"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray",
-      "before": [
-        "55731833138114342268386280255155815271905312138367051625070818765050332620809",
-        "77612571269156022689161594097310745651225474039037620215296829419000244586697",
-        "59036207657186387247875037590648447738341785594429824639219033130191337765680",
-        "102247037494986730506041632222868001124387697185626929998095238518734059870154",
-        "74281559837511991545039363478026157965600536673409982010149646900490664937910"
-      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2953,225 +1249,10 @@
       "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
       "contractName": "SortedTroves",
       "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:errors.nodes",
-      "type": "data-change",
-      "field": "errors.nodes",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:errors.getNext",
-      "type": "data-change",
-      "field": "errors.getNext",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:errors.getPrev",
-      "type": "data-change",
-      "field": "errors.getPrev",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:errors.contains",
-      "type": "data-change",
-      "field": "errors.contains",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.nodes",
-      "type": "data-change",
-      "field": "values.nodes",
-      "before": [
-        [
-          "69406497372752790287095306925191155570756713621942550424621261184562556006609",
-          "84584793446274299276752993650601041604392276772434272513777653610156952793625",
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "84584793446274299276752993650601041604392276772434272513777653610156952793625"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getNext",
-      "type": "data-change",
-      "field": "values.getNext",
-      "before": [
-        "69406497372752790287095306925191155570756713621942550424621261184562556006609",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getPrev",
-      "type": "data-change",
-      "field": "values.getPrev",
-      "before": [
-        "84584793446274299276752993650601041604392276772434272513777653610156952793625",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getSize",
-      "type": "data-change",
-      "field": "values.getSize",
-      "before": 44,
-      "after": 45
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.contains",
-      "type": "data-change",
-      "field": "values.contains",
-      "before": [
-        false,
-        false,
-        false,
-        false,
-        false
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:values.getFirst",
-      "type": "data-change",
-      "field": "values.getFirst",
-      "before": "69406497372752790287095306925191155570756713621942550424621261184562556006609"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1",
-      "contractName": "SortedTroves",
-      "entity": null,
       "id": "54:eth:0x84eb85a8C25049255614F0536Bea8F31682e86F1:template",
       "type": "data-change",
       "field": "template",
       "after": "liquity-v2/SortedTroves"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "54:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:errors.disputesById",
-      "type": "data-change",
-      "field": "errors.disputesById",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "54:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:errors.newValueTimestamps",
-      "type": "data-change",
-      "field": "errors.newValueTimestamps",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "54:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:errors.getLastNewValueById",
-      "type": "data-change",
-      "field": "errors.getLastNewValueById",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "54:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:errors.getNewValueCountbyRequestId",
-      "type": "data-change",
-      "field": "errors.getNewValueCountbyRequestId",
-      "before": "Processing error occurred."
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3363,165 +1444,6 @@
       "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
       "contractName": "SortedTroves",
       "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:errors.nodes",
-      "type": "data-change",
-      "field": "errors.nodes",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:errors.getNext",
-      "type": "data-change",
-      "field": "errors.getNext",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:errors.getPrev",
-      "type": "data-change",
-      "field": "errors.getPrev",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:errors.contains",
-      "type": "data-change",
-      "field": "errors.contains",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.nodes",
-      "type": "data-change",
-      "field": "values.nodes",
-      "before": [
-        [
-          "108739343595483817180979079147274021976853603606218751741468109444225802594314",
-          "102956212846628069938374125048301918588408265243502680445602522290411675190709",
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ],
-        [
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          false
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "102956212846628069938374125048301918588408265243502680445602522290411675190709"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getNext",
-      "type": "data-change",
-      "field": "values.getNext",
-      "before": [
-        "108739343595483817180979079147274021976853603606218751741468109444225802594314",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getPrev",
-      "type": "data-change",
-      "field": "values.getPrev",
-      "before": [
-        "102956212846628069938374125048301918588408265243502680445602522290411675190709",
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.contains",
-      "type": "data-change",
-      "field": "values.contains",
-      "before": [
-        false,
-        false,
-        false,
-        false,
-        false
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:values.getFirst",
-      "type": "data-change",
-      "field": "values.getFirst",
-      "before": "108739343595483817180979079147274021976853603606218751741468109444225802594314"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4",
-      "contractName": "SortedTroves",
-      "entity": null,
       "id": "54:eth:0xA25269E41BD072513849F2E64Ad221e84f3063F4:template",
       "type": "data-change",
       "field": "template",
@@ -3534,346 +1456,10 @@
       "contractName": "TroveManager",
       "isDependency": false,
       "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.Troves",
-      "type": "data-change",
-      "field": "errors.Troves",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.batchIds",
-      "type": "data-change",
-      "field": "errors.batchIds",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.getTroveStatus",
-      "type": "data-change",
-      "field": "errors.getTroveStatus",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.getLatestTroveData",
-      "type": "data-change",
-      "field": "errors.getLatestTroveData",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "errors.getTroveFromTroveIdsArray",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.Troves",
-      "type": "data-change",
-      "field": "values.Troves",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.batchIds",
-      "type": "data-change",
-      "field": "values.batchIds",
-      "before": [
-        "eth:0x000000000017d2a7B863e9EBBe6F9ab7255EB7c5",
-        "eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2",
-        "eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df",
-        "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552",
-        "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveStatus",
-      "type": "data-change",
-      "field": "values.getTroveStatus",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getLatestTroveData",
-      "type": "data-change",
-      "field": "values.getLatestTroveData",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25058960887966770823495",
-      "after": "25082691400716991907741"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "18419918825025055805941754",
-      "after": "18445137546073794025720152"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray",
-      "before": [
-        "52459007550953884262685743769742344846543233300030780523798450276886550979410",
-        "3153168971978305609833590192352679801290655652341563847756631982187701498246",
-        "102570399347334904848277730749855536164897158539639787290331273088032008072627",
-        "85095847953002077866710073802039317139485368761476694904929322343692967211708",
-        "74930170500193421103522817665774934748934258526916728446566719141121979843345"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
       "id": "54:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:template",
       "type": "data-change",
       "field": "template",
       "after": "liquity-v2/TroveManager"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors.getTCR",
-      "type": "data-change",
-      "field": "errors.getTCR",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors.getBorrowingFee",
-      "type": "data-change",
-      "field": "errors.getBorrowingFee",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors.getBorrowingFeeWithDecay",
-      "type": "data-change",
-      "field": "errors.getBorrowingFeeWithDecay",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "54:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.getTCR",
-      "type": "data-change",
-      "field": "values.getTCR",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -3935,39 +1521,6 @@
       "type": "data-change",
       "field": "template",
       "after": "liquity-v2/TroveManager_all"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3:errors.getInterestIndividualDelegateOf",
-      "type": "data-change",
-      "field": "errors.getInterestIndividualDelegateOf",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25058960887966770823495"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xa741A32f9dcFe6aDBa088fD0f97e90742d7d5DA3:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "18419918825025055805941754"
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -4053,292 +1606,6 @@
       "contractName": "TroveManager",
       "isDependency": false,
       "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.Troves",
-      "type": "data-change",
-      "field": "errors.Troves",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.batchIds",
-      "type": "data-change",
-      "field": "errors.batchIds",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.getTroveStatus",
-      "type": "data-change",
-      "field": "errors.getTroveStatus",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.getLatestTroveData",
-      "type": "data-change",
-      "field": "errors.getLatestTroveData",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "errors.getTroveFromTroveIdsArray",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.Troves",
-      "type": "data-change",
-      "field": "values.Troves",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x0000000000000000000000000000000000000000",
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.batchIds",
-      "type": "data-change",
-      "field": "values.batchIds",
-      "before": [
-        "eth:0x0000000000704F94cE2Fe636dAB92677a9745dc3",
-        "eth:0x25BC01FD5a01B1864A7dBADDb05BfEd642340dA2",
-        "eth:0x50Bc019abdb9951602BC4fE92947d3c15d5e45Df",
-        "eth:0x75bC01bF1e21ed33915777c131b62BB13B5F2552",
-        "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getTroveStatus",
-      "type": "data-change",
-      "field": "values.getTroveStatus",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getLatestTroveData",
-      "type": "data-change",
-      "field": "values.getLatestTroveData",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5945688136045064762180",
-      "after": "5920547386131902027962"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5796626097307204026042860",
-      "after": "5772128522866424378374567"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getTroveFromTroveIdsArray",
-      "type": "data-change",
-      "field": "values.getTroveFromTroveIdsArray",
-      "before": [
-        "6261342134823405427644485974246206141565675844141716280924678745316965434498",
-        "101318353602513319362042961451262258831981010153947727694444000866271403819447",
-        "83845240547137395277226418449036602745406400480297056842384331352740810936932",
-        "20327589420428593697524321351157856858342940161367227164292209048850566785776",
-        "75612223830594747844811694143670180236762873742227582769905911215507573448955"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
       "id": "54:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:template",
       "type": "data-change",
       "field": "template",
@@ -4376,39 +1643,6 @@
       "entity": null,
       "id": "54:eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xe8119fC02953B27a1b48D2573855738485A17329:errors.getInterestIndividualDelegateOf",
-      "type": "data-change",
-      "field": "errors.getInterestIndividualDelegateOf",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xe8119fC02953B27a1b48D2573855738485A17329:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5945688136045064762180"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xe8119fC02953B27a1b48D2573855738485A17329",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "54:eth:0xe8119fC02953B27a1b48D2573855738485A17329:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5796626097307204026042860"
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -4518,31 +1752,6 @@
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
       "updateNotifierId": 59,
-      "address": "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D",
-      "contractName": "BoldToken",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0x6440f144b7e50D6a8439336510312d2F54beB01D:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "30729465642248092274621473",
-      "after": "30710398586330712574663335"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "6512622701504699541932070",
-      "after": "6512515776637196734712001"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
       "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
       "contractName": "Tellor Tributes Token",
       "entity": null,
@@ -4551,44 +1760,6 @@
       "field": "values.getNewCurrentVariables._c",
       "before": "0xcf7298fcb2960b7e01b27f4051fdef63f8cdbd502c95b4ac26b8978613dc7cc4",
       "after": "0xadaca005b2764aaecbe88ee0164307c4be95c3754999e00148a6d036c3eb66c2"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "59:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.data",
-      "type": "data-change",
-      "field": "values.data",
-      "before": {
-        "head": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
-        "size": 105,
-        "tail": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687",
-        "maxSize": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-      }
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "59:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.getLast",
-      "type": "data-change",
-      "field": "values.getLast",
-      "before": "eth:0xD98C3b7f0297f2eD1861893cFD80C4CfA24Fb687"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6",
-      "contractName": "SortedTroves",
-      "entity": null,
-      "id": "59:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:values.getFirst",
-      "type": "data-change",
-      "field": "values.getFirst",
-      "before": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c"
     },
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
@@ -4602,83 +1773,6 @@
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
       "updateNotifierId": 59,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "25082691400716991907741",
-      "after": "25082691916614538381768"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "18445137546073794025720152",
-      "after": "18430953499998043600660222"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors.TroveOwners",
-      "type": "data-change",
-      "field": "errors.TroveOwners",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:errors.getTroveFromTroveOwnersArray",
-      "type": "data-change",
-      "field": "errors.getTroveFromTroveOwnersArray",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.baseRate",
-      "type": "data-change",
-      "field": "values.baseRate",
-      "before": 3327826668194,
-      "after": 208390016717
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.TroveOwners",
-      "type": "data-change",
-      "field": "values.TroveOwners",
-      "before": [
-        "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE",
-        "eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE",
-        "eth:0x98d87F3BF35B8D5685e1eDfAeb8BA2F7d0a7fB11",
-        "eth:0xE1137eE95345037529eA444985F7634Bd05a3C8C",
-        "eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f"
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
       "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
       "contractName": "TroveManager",
       "entity": null,
@@ -4687,18 +1781,6 @@
       "field": "values.totalStakes",
       "before": "77459866898405683285253",
       "after": "77469966898405683285253"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:values.lastFeeOperationTime",
-      "type": "data-change",
-      "field": "values.lastFeeOperationTime",
-      "before": 1772405579,
-      "after": 1772578271
     },
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
@@ -4740,32 +1822,6 @@
       "field": "values.getTellorCurrentValue.0.1",
       "before": 1951295000,
       "after": 1983113839
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchColl",
-      "type": "data-change",
-      "field": "values.getEntireBranchColl",
-      "before": "5920547386131902027962",
-      "after": "5918346373805473016365"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getEntireBranchDebt",
-      "type": "data-change",
-      "field": "values.getEntireBranchDebt",
-      "before": "5772128522866424378374567",
-      "after": "5767386632150772347035913"
     },
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
@@ -4920,34 +1976,6 @@
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
       "updateNotifierId": 61,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "61:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:errors.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "errors.getTroveAnnualInterestRate",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "61:eth:0x7bcb64B2c9206a5B699eD43363f6F98D4776Cf5A:values.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "values.getTroveAnnualInterestRate",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
       "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
       "contractName": "Tellor Tributes Token",
       "entity": null,
@@ -4971,36 +1999,6 @@
       "entity": null,
       "id": "61:eth:0x8FdD3fbFEb32b28fb73555518f8b361bCeA741A6:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:errors.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "errors.getTroveAnnualInterestRate",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0xA2895d6A3bf110561Dfe4b71cA539d84e1928B22:values.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "values.getTroveAnnualInterestRate",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
     },
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
@@ -5030,36 +2028,6 @@
       "entity": null,
       "id": "61:eth:0xAd430500ECDa11E38C9bCB08a702274b94641112:$deleted",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:errors.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "errors.getTroveAnnualInterestRate",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e",
-      "contractName": "TroveManager",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e:values.getTroveAnnualInterestRate",
-      "type": "data-change",
-      "field": "values.getTroveAnnualInterestRate",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
-      ]
     },
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
@@ -5111,28 +2079,6 @@
       "field": "values.aggWeightedBatchManagementFeeSum",
       "before": "eth:0x4671404119147669602431827500000000000000",
       "after": "eth:0x6690436399211978736239586000000000000000"
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
-      "contractName": "CollateralRegistry",
-      "entity": null,
-      "id": "61:eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684:errors.getToken",
-      "type": "data-change",
-      "field": "errors.getToken",
-      "before": "Processing error occurred."
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
-      "contractName": "CollateralRegistry",
-      "entity": null,
-      "id": "61:eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684:errors.getEffectiveRedemptionFeeInBold",
-      "type": "data-change",
-      "field": "errors.getEffectiveRedemptionFeeInBold",
-      "before": "Processing error occurred."
     },
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
@@ -5260,19 +2206,6 @@
       "contractName": "RocketTokenRETH",
       "isDependency": true,
       "entity": "RocketPool",
-      "id": "62:eth:0xae78736Cd615f374D3085123A210448E74Fc6393:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "344333573182525053509647",
-      "after": "344314883197441586598611"
-    },
-    {
-      "timestamp": "2026-03-06T07:46:55.000Z",
-      "updateNotifierId": 62,
-      "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
-      "contractName": "RocketTokenRETH",
-      "isDependency": true,
-      "entity": "RocketPool",
       "id": "62:eth:0xae78736Cd615f374D3085123A210448E74Fc6393:values.getExchangeRate",
       "type": "data-change",
       "field": "values.getExchangeRate",
@@ -5329,21 +2262,6 @@
       "type": "data-change",
       "field": "description",
       "after": "rETH/ETH Chainlink Price Feed"
-    },
-    {
-      "timestamp": "2026-03-07T07:39:26.000Z",
-      "updateNotifierId": 63,
-      "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
-      "contractName": "RocketTokenRETH",
-      "isDependency": true,
-      "entity": "RocketPool",
-      "id": "63:eth:0xae78736Cd615f374D3085123A210448E74Fc6393:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getEthValue": "Processing error occurred.",
-        "getRethValue": "Processing error occurred."
-      }
     },
     {
       "timestamp": "2026-03-07T07:39:26.000Z",

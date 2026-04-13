@@ -83,20 +83,6 @@
       "type": "data-change",
       "field": "implementationNames.eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC",
       "after": "VNXCToken"
-    },
-    {
-      "timestamp": "2026-04-09T08:27:30.000Z",
-      "updateNotifierId": 97,
-      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-      "contractName": "VNXCToken",
-      "isDependency": true,
-      "entity": "VCHF",
-      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:errors",
-      "type": "data-change",
-      "field": "errors",
-      "after": {
-        "eip712Domain": "Processing error occurred."
-      }
     }
   ]
 }

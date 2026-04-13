@@ -9,90 +9,6 @@
       "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
       "contractName": "UniswapV2Pair",
       "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.getReserves._reserve0",
-      "type": "data-change",
-      "field": "values.getReserves._reserve0",
-      "before": "18500410857408479258970",
-      "after": "12062605504931405812818"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.getReserves._reserve1",
-      "type": "data-change",
-      "field": "values.getReserves._reserve1",
-      "before": "53138295511511835937",
-      "after": "51830995877865824337"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.getReserves._blockTimestampLast",
-      "type": "data-change",
-      "field": "values.getReserves._blockTimestampLast",
-      "before": 1758823799,
-      "after": 1772457167
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.kLast",
-      "type": "data-change",
-      "field": "values.kLast",
-      "before": 0,
-      "after": "623287171835732057805740571756691613909983"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.price0CumulativeLast",
-      "type": "data-change",
-      "field": "values.price0CumulativeLast",
-      "before": "eth:0x8396481631547325952473557086543898968445",
-      "after": "eth:0x8666126532422680216408634453927637069041"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.price1CumulativeLast",
-      "type": "data-change",
-      "field": "values.price1CumulativeLast",
-      "before": "341875816095943109053449126032799933714520756",
-      "after": "360676414930109854591197665672675711194685356"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "172448554035183112602",
-      "after": "129954525619150919400"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
       "id": "2:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.writeFunctionPermissions",
       "type": "data-change",
       "field": "values.writeFunctionPermissions",
@@ -444,19 +360,6 @@
       "contractName": "UniswapV2Factory",
       "isDependency": false,
       "entity": null,
-      "id": "2:eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f:values.allPairsLength",
-      "type": "data-change",
-      "field": "values.allPairsLength",
-      "before": 458754,
-      "after": 489223
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-      "contractName": "UniswapV2Factory",
-      "isDependency": false,
-      "entity": null,
       "id": "2:eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f:values.feeTo",
       "type": "data-change",
       "field": "values.feeTo",
@@ -652,18 +555,6 @@
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "contractName": "Wrapped Ether Token",
       "entity": null,
-      "id": "2:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.totalSupply",
-      "type": "data-change",
-      "field": "values.totalSupply",
-      "before": "2414204512946196726391247",
-      "after": "2090457141282865313861309"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 2,
-      "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "contractName": "Wrapped Ether Token",
-      "entity": null,
       "id": "2:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.writeFunctionPermissions",
       "type": "data-change",
       "field": "values.writeFunctionPermissions",
@@ -801,85 +692,6 @@
       "entity": null,
       "id": "2:eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85:$created",
       "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 57,
-      "address": "eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A",
-      "contractName": "UniswapV2Pair",
-      "entity": null,
-      "id": "57:eth:0x0C722a487876989Af8a05FFfB6e32e45cc23FB3A:values.kLast",
-      "type": "data-change",
-      "field": "values.kLast",
-      "before": "623287171835732057805740571756691613909983",
-      "after": "627053292234406472220269143814196983256990"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 57,
-      "address": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-      "contractName": "Firepit",
-      "entity": null,
-      "id": "57:eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721:values.nonce",
-      "type": "data-change",
-      "field": "values.nonce",
-      "before": 372,
-      "after": 378
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 57,
-      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
-      "contractName": "GovernorBravoDelegate",
-      "entity": null,
-      "id": "57:eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026:errors",
-      "type": "data-change",
-      "field": "errors",
-      "before": {
-        "getActions": "Processing error occurred."
-      }
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 57,
-      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
-      "contractName": "GovernorBravoDelegate",
-      "entity": null,
-      "id": "57:eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026:values.getActions",
-      "type": "data-change",
-      "field": "values.getActions",
-      "before": [
-        [
-          [],
-          [],
-          [],
-          []
-        ],
-        [
-          [],
-          [],
-          [],
-          []
-        ],
-        [
-          [],
-          [],
-          [],
-          []
-        ],
-        [
-          [],
-          [],
-          [],
-          []
-        ],
-        [
-          [],
-          [],
-          [],
-          []
-        ]
-      ]
     },
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
