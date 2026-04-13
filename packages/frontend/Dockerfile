@@ -25,9 +25,9 @@ RUN pnpm install --frozen-lockfile
 COPY --from=pruner /src/.discovery.json .
 COPY --from=pruner /src/out/full/ ./
 RUN pnpm build:frontend
+RUN pnpm deploy --filter @l2beat/frontend --prod /src/deployed
 
 FROM node:22.22.0-slim AS release
-
 # Install curl for healthcheck and create non-root user
 RUN apt update && \
   apt install -y curl && \
@@ -36,9 +36,7 @@ RUN apt update && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/
-COPY --from=builder --chown=appuser:appgroup /src/ .
-WORKDIR /app/packages/frontend/
+COPY --from=builder --chown=appuser:appgroup /src/deployed/ .
 
 USER appuser
-
 CMD node ./dist/server/index.js
