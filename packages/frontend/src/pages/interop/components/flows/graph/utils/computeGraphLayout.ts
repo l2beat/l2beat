@@ -7,6 +7,7 @@ export type FlowsGraphLayout = Map<string, ChainNodeLayout>
 
 const MIN_BUBBLE_RADIUS = 8
 const MAX_BUBBLE_RADIUS = 50
+const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
 
 /**
  * Places chains evenly around a circle and sizes each bubble
@@ -20,6 +21,7 @@ export function computeGraphLayout(
   chainVolumes: { chainId: string; totalVolume: number }[],
   width: number,
   height: number,
+  isSmallScreen: boolean,
 ): FlowsGraphLayout {
   const layout: FlowsGraphLayout = new Map()
   if (chainIds.length === 0 || width === 0 || height === 0) return layout
@@ -28,6 +30,9 @@ export function computeGraphLayout(
     chainVolumes.map((cv) => [cv.chainId, cv.totalVolume]),
   )
   const maxVolume = Math.max(...chainVolumes.map((cv) => cv.totalVolume))
+  const maxBubbleRadius = isSmallScreen
+    ? SMALL_SCREEN_MAX_BUBBLE_RADIUS
+    : MAX_BUBBLE_RADIUS
 
   const spreadIds = spreadByVolume(chainIds, volumeMap)
 
@@ -45,7 +50,7 @@ export function computeGraphLayout(
     const ratio = (volumeMap.get(chainId) ?? 0) / maxVolume
     const radius =
       MIN_BUBBLE_RADIUS +
-      (MAX_BUBBLE_RADIUS - MIN_BUBBLE_RADIUS) * Math.sqrt(ratio)
+      (maxBubbleRadius - MIN_BUBBLE_RADIUS) * Math.sqrt(ratio)
 
     layout.set(chainId, {
       x: centerX + circleRadius * Math.cos(angle),

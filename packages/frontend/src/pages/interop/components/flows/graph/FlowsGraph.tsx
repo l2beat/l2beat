@@ -12,6 +12,7 @@ interface FlowsGraphProps {
   data: InteropFlowsData
   width: number
   height: number
+  isSmallScreen: boolean
 }
 
 export function FlowsGraph({
@@ -19,12 +20,20 @@ export function FlowsGraph({
   data,
   width,
   height,
+  isSmallScreen,
 }: FlowsGraphProps) {
   const { selectedChains } = useInteropFlows()
 
   const layout = useMemo(
-    () => computeGraphLayout(selectedChains, data.chainData, width, height),
-    [selectedChains, data.chainData, width, height],
+    () =>
+      computeGraphLayout(
+        selectedChains,
+        data.chainData,
+        width,
+        height,
+        isSmallScreen,
+      ),
+    [selectedChains, data.chainData, width, height, isSmallScreen],
   )
 
   const maxVolume = Math.max(...data.flows.map((f) => f.volume))
