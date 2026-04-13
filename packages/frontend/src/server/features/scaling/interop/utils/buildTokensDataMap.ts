@@ -4,9 +4,11 @@ import type {
   TokenFlowData,
 } from '../types'
 import { accumulateTokens, INITIAL_COMMON_INTEROP_DATA } from './accumulate'
+import type { ProtocolStats } from './getTopProtocolDisplay'
 
 export type TokenInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
+  protocols: Map<string, ProtocolStats>
 }
 
 export function buildTokensDataMap(
@@ -18,11 +20,13 @@ export function buildTokensDataMap(
       const current = tokenDataMap.get(token.abstractTokenId) ?? {
         ...INITIAL_COMMON_INTEROP_DATA,
         flows: new Map<string, TokenFlowData>(),
+        protocols: new Map<string, ProtocolStats>(),
       }
 
       tokenDataMap.set(
         token.abstractTokenId,
         accumulateTokens(current, token, {
+          protocolId: record.id,
           srcChain: record.srcChain,
           dstChain: record.dstChain,
         }),

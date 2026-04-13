@@ -16,15 +16,21 @@ export type TokensQueryInput = {
 export function TokensTable({
   queryInput,
   showNetMintedValueColumn,
+  showTopProtocolColumn,
 }: {
   queryInput: TokensQueryInput
   showNetMintedValueColumn?: boolean
+  showTopProtocolColumn?: boolean
 }) {
   const { data, isLoading } = api.interop.tokens.useQuery(queryInput)
 
   const columns = useMemo(
-    () => getTopTokensColumns(showNetMintedValueColumn),
-    [showNetMintedValueColumn],
+    () =>
+      getTopTokensColumns({
+        showNetMintedValueColumn,
+        showTopProtocolColumn,
+      }),
+    [showNetMintedValueColumn, showTopProtocolColumn],
   )
 
   const table = useTable<TokenRow>({

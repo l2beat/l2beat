@@ -6,6 +6,7 @@ import type {
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TokenInteropData } from './buildTokensDataMap'
+import type { ProtocolStats } from './getTopProtocolDisplay'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
@@ -276,10 +277,12 @@ function mergeTokensData(
     const current = result.get(token.abstractTokenId) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
+      protocols: new Map<string, ProtocolStats>(),
     }
     result.set(
       token.abstractTokenId,
       accumulateTokens(current, token, {
+        protocolId: record.id,
         srcChain: record.srcChain,
         dstChain: record.dstChain,
       }),

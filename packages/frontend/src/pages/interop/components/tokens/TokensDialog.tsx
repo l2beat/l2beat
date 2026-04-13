@@ -53,6 +53,7 @@ export function TokensDialog({
 
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
+  const showTopProtocolColumn = id === undefined
 
   const tabsList = (
     <>
@@ -83,12 +84,14 @@ export function TokensDialog({
         <TokensTable
           queryInput={queryInput}
           showNetMintedValueColumn={showNetMintedValueColumn}
+          showTopProtocolColumn={showTopProtocolColumn}
         />
       </TabsContent>
       <TabsContent value="pairs">
         <TokensPairsTable
           queryInput={queryInput}
           hideSameToken={hideSameToken}
+          showTopProtocolColumn={showTopProtocolColumn}
         />
       </TabsContent>
     </>

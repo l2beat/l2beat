@@ -13,6 +13,7 @@ import { EM_DASH } from '~/consts/characters'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import type {
   AverageDuration,
+  ProtocolDisplayable,
   TokenData,
   TokenFlowData,
   TokensPairData,
@@ -25,6 +26,7 @@ export type TokenRow = TokenData & BasicTableRow
 export type TokensPairRow = TokensPairData & BasicTableRow
 
 type CommonRow = {
+  topProtocol?: ProtocolDisplayable
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -34,8 +36,35 @@ type CommonRow = {
   flows: TokenFlowData[]
 }
 
-function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
-  return [
+function getCommonColumns<T extends CommonRow>(
+  columnHelper: ColumnHelper<T>,
+  showTopProtocolColumn?: boolean,
+) {
+  return compact([
+    showTopProtocolColumn &&
+      columnHelper.accessor((row) => row.topProtocol?.name, {
+        id: 'topProtocol',
+        header: 'Top\nprotocol',
+        cell: (ctx) => {
+          const topProtocol = ctx.row.original.topProtocol
+          if (!topProtocol) return EM_DASH
+
+          return (
+            <div className="flex items-center gap-1.5">
+              <img
+                className="size-4 rounded-full bg-white shadow"
+                src={topProtocol.iconUrl}
+                width={16}
+                height={16}
+                alt={`${topProtocol.name} icon`}
+              />
+              <span className="font-medium text-label-value-15">
+                {topProtocol.name}
+              </span>
+            </div>
+          )
+        },
+      }),
     columnHelper.accessor((row) => row.volume, {
       id: 'volume',
       header: 'Last 24h\nVolume',
@@ -157,11 +186,17 @@ function getCommonColumns<T extends CommonRow>(columnHelper: ColumnHelper<T>) {
         },
       },
     ),
-  ]
+  ])
 }
 
 const tokenColumnHelper = createColumnHelper<TokenRow>()
-export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
+export const getTopTokensColumns = ({
+  showNetMintedValueColumn,
+  showTopProtocolColumn,
+}: {
+  showNetMintedValueColumn?: boolean
+  showTopProtocolColumn?: boolean
+} = {}) =>
   compact([
     tokenColumnHelper.display({
       id: 'icon',
@@ -200,7 +235,7 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
         cellClassName: 'pl-0!',
       },
     }),
-    ...getCommonColumns(tokenColumnHelper),
+    ...getCommonColumns(tokenColumnHelper, showTopProtocolColumn),
     showNetMintedValueColumn &&
       tokenColumnHelper.accessor('netMintedValue', {
         header: 'Last 24h net\nminted value',
@@ -220,7 +255,7 @@ export const getTopTokensColumns = (showNetMintedValueColumn?: boolean) =>
   ])
 
 const tokensPairColumnHelper = createColumnHelper<TokensPairRow>()
-export const topTokensPairsColumns = [
+export const getTopTokensPairsColumns = (showTopProtocolColumn?: boolean) => [
   tokensPairColumnHelper.accessor(
     (row) =>
       row.id === 'unknown'
@@ -262,5 +297,5 @@ export const topTokensPairsColumns = [
       },
     },
   ),
-  ...getCommonColumns(tokensPairColumnHelper),
+  ...getCommonColumns(tokensPairColumnHelper, showTopProtocolColumn),
 ]

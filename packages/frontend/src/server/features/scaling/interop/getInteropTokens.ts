@@ -17,9 +17,12 @@ export async function getInteropTokens({
   to,
   type,
 }: InteropTopItemsParams): Promise<TokenData[]> {
-  const interopProject = id
-    ? await ps.getProject({ id, select: ['interopConfig'] })
-    : undefined
+  const [interopProject, interopProjects] = await Promise.all([
+    id
+      ? ps.getProject({ id, select: ['interopConfig'] })
+      : Promise.resolve(undefined),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
   if (id && !interopProject) {
     return []
   }
@@ -60,6 +63,7 @@ export async function getInteropTokens({
   return getTokensData({
     tokens: tokenDataMap,
     tokensDetailsMap,
+    interopProjects,
     unknownTransfersCount: counts.transferCount - counts.identifiedCount,
     logger,
     durationSplit,
