@@ -9,6 +9,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { TopTokens } from './TopTokens'
 
 export function SingleChainStats({
   chainId,
@@ -25,10 +26,13 @@ export function SingleChainStats({
     return null
   }
 
+  const chainData = data.chainData.find((cv) => cv.chainId === chainId)
+
   return (
     <>
       <Stats data={data} isLoading={isLoading} chainId={chainId} />
       <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
+      {chainData && <TopTokens tokens={chainData.topTokens} />}
     </>
   )
 }
@@ -54,7 +58,7 @@ function Stats({
   const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
 
   return (
-    <div className="mt-3 rounded-lg border border-divider bg-surface-primary p-4">
+    <div className="mt-3 rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
       <div className="space-y-1.5">
         <StatRow
@@ -123,7 +127,7 @@ function TopRoutes({
   }
 
   return (
-    <div className="mt-2 rounded-lg border border-divider bg-surface-primary p-4">
+    <div className="mt-2 rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">TOP ROUTES</div>
       <div className="space-y-1">
         {flows.map((flow) => {

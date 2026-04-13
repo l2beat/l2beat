@@ -8,6 +8,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { TopTokens } from './TopTokens'
 
 export function MultipleChainsStats({
   chainIdA,
@@ -26,6 +27,12 @@ export function MultipleChainsStats({
     return null
   }
 
+  const pairData = data.chainPairData.find(
+    (p) =>
+      (p.chains[0] === chainIdA && p.chains[1] === chainIdB) ||
+      (p.chains[0] === chainIdB && p.chains[1] === chainIdA),
+  )
+
   return (
     <>
       <Stats
@@ -40,6 +47,7 @@ export function MultipleChainsStats({
         chainIdA={chainIdA}
         chainIdB={chainIdB}
       />
+      {pairData && <TopTokens tokens={pairData.topTokens} />}
     </>
   )
 }
@@ -84,7 +92,7 @@ function Stats({
   const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
 
   return (
-    <div className="mt-3 rounded-lg border border-divider bg-surface-primary p-4">
+    <div className="mt-3 rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
       <div className="space-y-1.5">
         <StatRow
@@ -150,7 +158,7 @@ function Routes({
   }
 
   return (
-    <div className="mt-2 rounded-lg border border-divider bg-surface-primary p-4">
+    <div className="mt-2 rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">ROUTES</div>
       <div className="space-y-2">
         {flows.map((flow) => {
