@@ -8,7 +8,7 @@ Generated with discovered.json: 0x82014727093a84a11e1570925ed58d2d755c1063
 
 ## Description
 
-AnchorStateRegistry returning processing errors for several game-related fields (absolutePrestateFromGame, challengePeriodFromOracle, oracleFromVm, vmFromGame, wethFromGame). No contract upgrades.
+New template variant `opstack/AnchorStateRegistry_post13_opsuccinct` created for Celo's AnchorStateRegistry. The standard `post13` template calls Cannon-specific functions (`vm()`, `oracle()`, `weth()`, `absolutePrestate()`, `challengePeriod()`) on the `anchorGame` contract, but Celo uses OPSuccinct (SP1) games which don't expose those functions, causing reverts. The variant omits those fields while keeping everything else.
 
 ## Config/verification related changes
 

@@ -8,7 +8,14 @@ Generated with discovered.json: 0xb1fa5321fb059ad65404e4ea0de2e7bb2c72f578
 
 ## Description
 
-Espresso TEE infrastructure updated. EspressoNitroTEEVerifier replaced (old 0xf55BeB deleted, new 0xF99De7 created) with new NitroEnclaveVerifier (0x0d4cD6) contract added. Old CertManager deleted. EspressoTEEVerifier now points to the new NitroTEEVerifier. SafeL2 lost the interact permission on the old verifier.
+Espresso TEE verification architecture changed: AWS Nitro enclave attestations are now verified via ZK proofs (RiscZero or Succinct SP1) instead of on-chain X.509 certificate chain validation.
+
+- Old EspressoNitroTEEVerifier (0xf55BeB) + CertManager (0x1A484E) deleted. CertManager previously validated AWS Nitro cert chains in Solidity - expensive gas cost.
+- New EspressoNitroTEEVerifier (0xF99De7) delegates attestation verification to a new NitroEnclaveVerifier (0x0d4cD6) that accepts ZK proofs of off-chain attestation validation.
+- EspressoTEEVerifier (0x7A7E3B, unchanged) now points to the new NitroTEEVerifier.
+- SafeL2 lost the interact permission on the old verifier (no longer exists).
+
+Security implications: same TEE trust model (AWS Nitro), but adds trust in the ZK verifier (RiscZero/Succinct) and configured program IDs. Owner of EspressoNitroTEEVerifier can still register signers and set valid enclave hashes.
 
 EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5/arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
 
