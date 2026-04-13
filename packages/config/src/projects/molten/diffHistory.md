@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb1fa5321fb059ad65404e4ea0de2e7bb2c72f578
+Generated with discovered.json: 0x034e790e5f9ef1ea659ca5f12e4e9051c1de4b6c
 
-# Diff at Thu, 09 Apr 2026 08:08:08 GMT:
+# Diff at Mon, 13 Apr 2026 11:28:13 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1771857555
-- current timestamp: 1775721846
+- current timestamp: 1776079584
 
 ## Description
 
@@ -30,8 +30,9 @@ EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B
 ```diff
     contract SafeL2 (arb1:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
     +++ description: None
-      receivedPermissions.2:
--        {"permission":"interact","from":"arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+      receivedPermissions.2.from:
+-        "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5"
++        "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89"
     }
 ```
 
@@ -54,13 +55,13 @@ EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B
 ```diff
 +   Status: CREATED
     contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
-    +++ description: None
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain. The owner controls the root certificate, supported ZK coprocessors, and the active verifier/aggregator program IDs.
 ```
 
 ```diff
 +   Status: CREATED
     contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
-    +++ description: None
+    +++ description: Verifies attestations of an AWS Nitro TEE by delegating cert chain validation to NitroEnclaveVerifier (which uses ZK proofs). Registers TEE-derived signers used by the sequencer. The owner can set enclave hashes and indirectly control which signers can be registered.
 ```
 
 ## Source code changes

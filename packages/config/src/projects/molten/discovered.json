@@ -1,7 +1,7 @@
 {
   "name": "molten",
-  "timestamp": 1775721846,
-  "configHash": "0xd34153da958bd57b3a9fb3757a8e1e5dab7d0d7a5019298aee8c36ddecc9286d",
+  "timestamp": 1776079584,
+  "configHash": "0x66c658f301f4bc9f19be4ad5f0326194743d3dc48ee5d56ffba2781d37535d28",
   "sharedModules": ["shared-sp1", "blobstream"],
   "entries": [
     {
@@ -22,6 +22,7 @@
         "0x17b0e343334d9d6d39fead84d7cfc2adec7c0a43842d1ad09bd2674f4cd1c813"
       ],
       "proxyType": "immutable",
+      "description": "ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain. The owner controls the root certificate, supported ZK coprocessors, and the active verifier/aggregator program IDs.",
       "sinceTimestamp": 1774475672,
       "sinceBlock": 445637002,
       "values": {
@@ -88,12 +89,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2347,
+        "firstUnresolvedNode": 2352,
         "inbox": "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 2346,
+        "latestConfirmed": 2351,
         "latestNodeCreated": 2352,
         "loserStakeEscrow": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
@@ -716,6 +717,12 @@
         {
           "permission": "interact",
           "from": "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89",
           "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
           "role": ".owner"
         }
@@ -1461,7 +1468,7 @@
         "allowedOutboxList": [
           "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
         ],
-        "delayedMessageCount": 71113,
+        "delayedMessageCount": 71114,
         "inboxHistory": [
           "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79",
           "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1633,7 +1640,15 @@
     {
       "address": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22",
+          "description": "set the root certificate, add/remove ZK verifier routes, update verifier and aggregator program IDs, and change the ZK coprocessor configuration.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "arb1:0xF458E48e5698CCE56eea9b5e72b55f482830644d",
@@ -1653,6 +1668,7 @@
         "0x2962b9a9d9e69990175a96ba7720ca7314ad014f804211ba3f1f588c406a349e"
       ],
       "proxyType": "immutable",
+      "description": "Verifies attestations of an AWS Nitro TEE by delegating cert chain validation to NitroEnclaveVerifier (which uses ZK proofs). Registers TEE-derived signers used by the sequencer. The owner can set enclave hashes and indirectly control which signers can be registered.",
       "sinceTimestamp": 1775499991,
       "sinceBlock": 449727951,
       "values": {
@@ -2574,6 +2590,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 450616429 },
-  "permissionsConfigHash": "0x389c81b267c84e939b8e7f95d3133bd0e7e88301dccb59521b1c515ea1a37225"
+  "usedBlockNumbers": { "arbitrum": 452045931 },
+  "permissionsConfigHash": "0x8139a25210e6070983632621f872e989b5937402e64b7f75c107854944d30962"
 }
