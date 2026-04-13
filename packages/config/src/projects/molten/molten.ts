@@ -42,7 +42,6 @@ export const molten: ScalingProject = orbitStackL3({
     },
   },
   isNodeAvailable: true,
-  nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
   celestiaDa: {
     sinceBlock: 5305699,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
