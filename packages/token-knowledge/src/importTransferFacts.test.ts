@@ -9,6 +9,8 @@ import { importTransferFacts } from './importTransferFacts'
 // Lowercase hex addresses for test use
 const ADDR_A = '0xabcdabcd12345678abcdabcd12345678abcdabcd'
 const ADDR_B = '0x33d66941465ac776c38096cb1bc496c673ae7390'
+const PADDED_ADDR_A = `0x${'0'.repeat(24)}${ADDR_A.slice(2)}`
+const PADDED_ADDR_B = `0x${'0'.repeat(24)}${ADDR_B.slice(2)}`
 
 function makeTransfer(
   overrides: Partial<InteropTransferRecord>,
@@ -180,6 +182,25 @@ describe(importTransferFacts.name, () => {
     )
   })
 
+  it('crops zero-padded EVM addresses when building facts', async () => {
+    const { db, inserted } = mockDb(
+      [],
+      [
+        makeTransfer({
+          srcTokenAddress: PADDED_ADDR_A,
+          dstTokenAddress: PADDED_ADDR_B.toUpperCase(),
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(1)
+    expect(inserted[0]!.arguments).toEqual(
+      `ethereum,"${ADDR_A}",base,"${ADDR_B}",testPlugin,unknown`,
+    )
+  })
+
   it('skips transfers that already exist as facts', async () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
@@ -195,6 +216,33 @@ describe(importTransferFacts.name, () => {
           srcChain: 'ethereum',
           srcTokenAddress: ADDR_A,
           dstChain: 'base',
+          dstTokenAddress: ADDR_B,
+          plugin: 'hop',
+          bridgeType: 'lockAndMint',
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(0)
+    expect(result.skipped).toEqual(1)
+    expect(inserted.length).toEqual(0)
+  })
+
+  it('treats padded and unpadded addresses as the same fact', async () => {
+    const existingFact: TokenFactInputRecord = {
+      id: 1,
+      name: 'transfer',
+      arguments: `"ethereum","${PADDED_ADDR_A}","base","${PADDED_ADDR_B}",hop,lockAndMint`,
+      context: null,
+    }
+
+    const { db, inserted } = mockDb(
+      [existingFact],
+      [
+        makeTransfer({
+          srcTokenAddress: ADDR_A,
           dstTokenAddress: ADDR_B,
           plugin: 'hop',
           bridgeType: 'lockAndMint',
@@ -311,5 +359,40 @@ describe(importTransferFacts.name, () => {
 
     expect(result.imported).toEqual(1)
     expect(inserted[0]!.arguments).toInclude('unknown')
+  })
+
+  it('preserves native token addresses', async () => {
+    const { db, inserted } = mockDb(
+      [],
+      [
+        makeTransfer({
+          srcTokenAddress: 'native',
+          dstTokenAddress: PADDED_ADDR_B,
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(1)
+    expect(inserted[0]!.arguments).toEqual(
+      `ethereum,"native",base,"${ADDR_B}",testPlugin,unknown`,
+    )
+  })
+
+  it('throws when cropping would remove non-zero bytes', async () => {
+    const invalidPaddedAddress = `0x${'1'.repeat(24)}${ADDR_A.slice(2)}`
+    const { db } = mockDb(
+      [],
+      [
+        makeTransfer({
+          srcTokenAddress: invalidPaddedAddress,
+        }),
+      ],
+    )
+
+    await expect(importTransferFacts(db)).toBeRejectedWith(
+      'Cannot safely crop non-zero padded token address',
+    )
   })
 })

@@ -5,6 +5,8 @@ import type {
 } from '@l2beat/database'
 
 const FACT_NAME = 'transfer'
+const PADDED_EVM_ADDRESS_REGEX = /^0x([0-9a-f]{24})([0-9a-f]{40})$/i
+const EVM_ADDRESS_REGEX = /^0x[0-9a-f]{40}$/i
 
 function transferKey(
   srcChain: string,
@@ -17,9 +19,38 @@ function transferKey(
   return `${srcChain}|${srcAddr}|${dstChain}|${dstAddr}|${plugin}|${bridge}`
 }
 
+function normalizeTokenAddress(address: string): string {
+  if (address === 'native') {
+    return address
+  }
+
+  if (EVM_ADDRESS_REGEX.test(address)) {
+    return address.toLowerCase()
+  }
+
+  const match = PADDED_EVM_ADDRESS_REGEX.exec(address)
+  if (!match) {
+    throw new Error(`Unsupported token address format: ${address}`)
+  }
+
+  const prefix = match[1]
+  const evmAddress = match[2]
+  if (!prefix || !evmAddress) {
+    throw new Error(`Invalid padded token address: ${address}`)
+  }
+
+  if (prefix !== '0'.repeat(prefix.length)) {
+    throw new Error(
+      `Cannot safely crop non-zero padded token address: ${address}`,
+    )
+  }
+
+  return `0x${evmAddress.toLowerCase()}`
+}
+
 function transferToArguments(t: InteropTransferRecord): string {
-  const srcAddr = (t.srcTokenAddress as string).toLowerCase()
-  const dstAddr = (t.dstTokenAddress as string).toLowerCase()
+  const srcAddr = normalizeTokenAddress(t.srcTokenAddress as string)
+  const dstAddr = normalizeTokenAddress(t.dstTokenAddress as string)
   const bridge = t.bridgeType ?? 'unknown'
   return `${t.srcChain},"${srcAddr}",${t.dstChain},"${dstAddr}",${t.plugin},${bridge}`
 }
@@ -47,7 +78,16 @@ export async function importTransferFacts(
     if (!srcChain || !srcAddr || !dstChain || !dstAddr || !plugin || !bridge) {
       throw new Error(`Invalid transfer fact arguments: ${fact.arguments}`)
     }
-    seen.add(transferKey(srcChain, srcAddr, dstChain, dstAddr, plugin, bridge))
+    seen.add(
+      transferKey(
+        srcChain,
+        normalizeTokenAddress(srcAddr),
+        dstChain,
+        normalizeTokenAddress(dstAddr),
+        plugin,
+        bridge,
+      ),
+    )
   }
 
   // Step 2: Fetch transfers from interop
@@ -60,12 +100,14 @@ export async function importTransferFacts(
   for (const t of transfers) {
     if (!t.srcTokenAddress || !t.dstTokenAddress) continue
 
+    const srcAddr = normalizeTokenAddress(t.srcTokenAddress)
+    const dstAddr = normalizeTokenAddress(t.dstTokenAddress)
     const bridge = t.bridgeType ?? 'unknown'
     const key = transferKey(
       t.srcChain,
-      t.srcTokenAddress.toLowerCase(),
+      srcAddr,
       t.dstChain,
-      t.dstTokenAddress.toLowerCase(),
+      dstAddr,
       t.plugin,
       bridge,
     )

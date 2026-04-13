@@ -17,7 +17,7 @@
  sameAbstract(C2, T2, C1, T1) :- sameAbstract(C1, T1, C2, T2).
 
 
-cgId(base, "0x000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913", "usd-coin").
+cgId(base, "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", "usd-coin").
 
 cgId(C, A, CoingeckoId) :- cgId(C2, A2, CoingeckoId), sameAbstract(C, A, C2, A2).
 
