@@ -6,11 +6,13 @@
   "types": "build/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:token-knowledge",
     "start": "node build/server.js",
     "dev": "node -r esbuild-register src/server.ts",
     "clean": "rm -rf build",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
+    "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-knowledge",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint": "biome check --formatter-enabled=false .",
