@@ -43,7 +43,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       <div className="h-full max-lg:order-4">
         <FlowsGeneralStats />
       </div>
-      <div className="mx-auto flex flex-col items-center gap-10">
+      <div className="flex w-full min-w-0 flex-col items-center gap-10">
         <div className="flex gap-2 max-lg:order-1">
           <FlowsChainsSelector allChains={interopChains} />
           <FlowsProtocolsSelector allProtocols={protocols} />
@@ -51,7 +51,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         <FlowsGraphPanel interopChains={interopChains} />
       </div>
       {hasGraphSelection && (
-        <div className="h-full max-lg:order-3">
+        <div className="h-full min-w-0 max-lg:order-3">
           <FlowsSelectedPathPanel />
         </div>
       )}
