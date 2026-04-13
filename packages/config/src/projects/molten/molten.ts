@@ -16,8 +16,10 @@ export const molten: ScalingProject = orbitStackL3({
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     name: 'Molten Network',
     shortName: 'Molten',
     slug: 'molten',
