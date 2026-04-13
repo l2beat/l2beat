@@ -91,9 +91,7 @@ function DesktopStatusIcons({
     <div className="flex items-center gap-1.5">
       {project.isLayer3 && <Layer3Icon className="size-4" />}
       {project.ecosystemInfo?.isPartOfSuperchain && <SuperchainIcon />}
-      {project.quantumResistant && (
-        <QuantumResistanceIcon className="size-4" />
-      )}
+      {project.quantumResistant && <QuantumResistanceIcon className="size-4" />}
       {project.statuses?.verificationWarnings &&
         Object.values(project.statuses.verificationWarnings).some(
           (value) => value !== undefined,
