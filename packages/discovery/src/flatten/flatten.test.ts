@@ -265,6 +265,51 @@ contract R1 is Shared {
     expect(flattened).not.toInclude('interface Dynamic is Shared')
   })
 
+  it('includes global using declarations for user-defined value types', () => {
+    const source = String.raw`type Position is uint128;
+
+using LibPosition for Position global;
+
+contract Root {
+    function f() public pure returns (Position) {
+        Position position = Position.wrap(0);
+        return position.update();
+    }
+}
+
+library LibPosition {
+    function update(Position self) internal pure returns (Position) {
+        return self;
+    }
+}`
+
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: source,
+    }
+
+    const flattened = flattenStartingFrom('Root', [file], [])
+
+    expect(flattened).toEqual(
+      String.raw`library LibPosition {
+    function update(Position self) internal pure returns (Position) {
+        return self;
+    }
+}
+
+using LibPosition for Position global;
+
+type Position is uint128;
+
+contract Root {
+    function f() public pure returns (Position) {
+        Position position = Position.wrap(0);
+        return position.update();
+    }
+}`,
+    )
+  })
+
   it('inheritance namespacing', () => {
     const rootFile: FileContent = {
       path: 'Root.sol',

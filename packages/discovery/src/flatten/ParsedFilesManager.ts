@@ -25,6 +25,7 @@ type DeclarationType =
   | 'constant'
   | 'event'
   | 'error'
+  | 'using'
 
 type TopLevelDeclarationNode =
   | AST.StructDefinition
@@ -35,6 +36,7 @@ type TopLevelDeclarationNode =
   | AST.FileLevelConstant
   | AST.EventDefinition
   | AST.CustomErrorDefinition
+  | AST.UsingForDeclaration
 
 export interface TopLevelDeclaration {
   name: string
@@ -133,11 +135,15 @@ export class ParsedFilesManager {
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        const { signatureReferences, implementationReferences } =
-          result.resolveSignatureReferences(file, declaration.ast)
+        const { signatureReferences, implementationReferences, backwardLinks } =
+          result.resolveReferences(file, declaration.ast)
 
         declaration.signatureReferences = signatureReferences
         declaration.implementationReferences.push(...implementationReferences)
+        for (const backwardLink of backwardLinks) {
+          const decl = result.tryFindDeclaration(backwardLink, file)
+          decl?.declaration.signatureReferences.push(declaration.name)
+        }
       }
     }
 
@@ -154,7 +160,8 @@ export class ParsedFilesManager {
         n.type === 'EnumDefinition' ||
         n.type === 'FileLevelConstant' ||
         n.type === 'EventDefinition' ||
-        n.type === 'CustomErrorDefinition',
+        n.type === 'CustomErrorDefinition' ||
+        n.type === 'UsingForDeclaration',
     )
 
     const getDeclarationType = (
@@ -177,9 +184,12 @@ export class ParsedFilesManager {
           return 'event'
         case 'CustomErrorDefinition':
           return 'error'
+        case 'UsingForDeclaration':
+          return 'using'
       }
     }
 
+    let unnamedIndex = 0
     const declarations = declarationNodes.map((d) => {
       assert(d.range !== undefined, 'Invalid contract definition')
 
@@ -199,13 +209,14 @@ export class ParsedFilesManager {
           ? findLeadingCommentStart(file.content, d.range[0])
           : d.range[0]
 
+      const content = file.content.slice(adjustedStart, d.range[1] + 1)
       return {
         ast: d,
-        name: d.name ?? '',
+        name: 'name' in d ? (d.name ?? '') : `$${unnamedIndex++}`,
         type: getDeclarationType(d),
         implementationReferences,
         signatureReferences: [],
-        content: file.content.slice(adjustedStart, d.range[1] + 1),
+        content,
       } satisfies TopLevelDeclaration
     })
 
@@ -321,11 +332,16 @@ export class ParsedFilesManager {
     })
   }
 
-  private resolveSignatureReferences(
+  private resolveReferences(
     file: ParsedFile,
     c: AST.ASTNode,
-  ): { signatureReferences: string[]; implementationReferences: string[] } {
+  ): {
+    signatureReferences: string[]
+    implementationReferences: string[]
+    backwardLinks: string[]
+  } {
     let subNodes: AST.BaseASTNode[] = []
+    let backwardLinks: string[] = []
     if (c.type === 'ContractDefinition') {
       subNodes = c.subNodes
     } else if (c.type === 'StructDefinition') {
@@ -342,6 +358,12 @@ export class ParsedFilesManager {
       subNodes = c.parameters ?? []
     } else if (c.type === 'CustomErrorDefinition') {
       subNodes = c.parameters ?? []
+    } else if (c.type === 'UsingForDeclaration') {
+      subNodes = [c]
+      const [typeName, ...rest] = getASTIdentifiers(c.typeName)
+      if (typeName !== undefined && rest.length === 0) {
+        backwardLinks = [typeName]
+      }
     } else {
       throw new Error('Invalid node type')
     }
@@ -381,14 +403,14 @@ export class ParsedFilesManager {
         isError ||
         isConstant
 
-      if (isExtendedDeclaration && this.options.includeAll !== true) {
+      if (isExtendedDeclaration && !this.options.includeAll) {
         continue
       }
 
       signatureReferences.push(identifier)
     }
 
-    return { signatureReferences, implementationReferences }
+    return { signatureReferences, implementationReferences, backwardLinks }
   }
 
   tryFindDeclaration(
