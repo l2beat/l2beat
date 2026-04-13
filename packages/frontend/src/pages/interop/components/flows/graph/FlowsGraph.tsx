@@ -58,6 +58,7 @@ export function FlowsGraph({
         interopChains={interopChains}
         layout={layout}
         chainData={data.chainData}
+        isSmallScreen={isSmallScreen}
       />
     </svg>
   )

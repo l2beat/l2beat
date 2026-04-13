@@ -13,12 +13,14 @@ interface ChainBubblesLayerProps {
   interopChains: InteropChainWithIcon[]
   layout: FlowsGraphLayout
   chainData: ChainData[]
+  isSmallScreen: boolean
 }
 
 export function ChainBubblesLayer({
   interopChains,
   layout,
   chainData,
+  isSmallScreen,
 }: ChainBubblesLayerProps) {
   const { highlightedChains, toggleHighlightedChain } = useInteropFlows()
 
@@ -36,6 +38,7 @@ export function ChainBubblesLayer({
         highlighted={highlightedChains.includes(chain.id)}
         color={getChainColor(interopChains, chain.id)}
         netFlow={netFlow}
+        isSmallScreen={isSmallScreen}
         onClick={() => toggleHighlightedChain(chain.id)}
       />
     )
@@ -48,6 +51,7 @@ interface ChainBubbleProps {
   highlighted: boolean
   color: string
   netFlow: number
+  isSmallScreen: boolean
   onClick: () => void
 }
 
@@ -57,10 +61,15 @@ function ChainBubble({
   highlighted,
   color,
   netFlow,
+  isSmallScreen,
   onClick,
 }: ChainBubbleProps) {
   const { x, y, radius } = layout
   const iconSize = radius * 1.1
+  const nameLines = getChainNameLines(chain.name, isSmallScreen)
+  const nameLineHeight = isSmallScreen ? 11 : 12
+  const nameY = y + radius + 16
+  const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
 
   return (
     <g className="cursor-pointer" onClick={onClick}>
@@ -83,15 +92,22 @@ function ChainBubble({
       />
       <text
         x={x}
-        y={y + radius + 16}
+        y={nameY}
         textAnchor="middle"
-        className="font-medium text-label-value-14"
+        className={cn(
+          'font-medium',
+          isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
+        )}
       >
-        {chain.name}
+        {nameLines.map((line, index) => (
+          <tspan key={line} x={x} dy={index === 0 ? 0 : nameLineHeight}>
+            {line}
+          </tspan>
+        ))}
       </text>
       <text
         x={x}
-        y={y + radius + 30}
+        y={netFlowY}
         textAnchor="middle"
         className={cn(
           'font-medium text-label-value-12',
@@ -102,4 +118,30 @@ function ChainBubble({
       </text>
     </g>
   )
+}
+
+const MOBILE_LABEL_MAX_LINE_LENGTH = 13
+
+function getChainNameLines(name: string, isSmallScreen: boolean): string[] {
+  if (!isSmallScreen) return [name]
+
+  const words = name.trim().split(/\s+/)
+  if (words.length <= 1) return [name]
+
+  const lines: string[] = []
+  let currentLine = words[0] ?? ''
+
+  for (const word of words.slice(1)) {
+    const nextLine = `${currentLine} ${word}`
+    if (nextLine.length <= MOBILE_LABEL_MAX_LINE_LENGTH || lines.length === 1) {
+      currentLine = nextLine
+      continue
+    }
+
+    lines.push(currentLine)
+    currentLine = word
+  }
+
+  lines.push(currentLine)
+  return lines
 }
