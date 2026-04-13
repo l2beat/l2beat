@@ -95,7 +95,7 @@ export function ParticleLayer({
           const t = BASE_DURATION_S / cycleDuration
           return (
             <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-              <circle r="2" fill={color}>
+              <circle r="2" fill={color} opacity={0}>
                 <animateMotion
                   path={path}
                   dur={`${cycleDuration}s`}
@@ -120,16 +120,28 @@ export function ParticleLayer({
         const count = Math.round(exact)
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-            {Array.from({ length: count }, (_, i) => (
-              <circle key={i} r="2" fill={color} opacity={0.8}>
-                <animateMotion
-                  path={path}
-                  dur={`${BASE_DURATION_S}s`}
-                  begin={`${(i / count) * BASE_DURATION_S}s`}
-                  repeatCount="indefinite"
-                />
-              </circle>
-            ))}
+            {Array.from({ length: count }, (_, i) => {
+              const begin = `${(i / count) * BASE_DURATION_S}s`
+
+              return (
+                <circle key={i} r="2" fill={color} opacity={0}>
+                  <animateMotion
+                    path={path}
+                    dur={`${BASE_DURATION_S}s`}
+                    begin={begin}
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    dur={`${BASE_DURATION_S}s`}
+                    begin={begin}
+                    values="0;0.8;0.8;0"
+                    keyTimes="0;0.001;0.999;1"
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )
+            })}
           </g>
         )
       })}
