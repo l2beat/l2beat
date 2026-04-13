@@ -32,21 +32,23 @@ export function FlowsGeneralStats() {
         For past 24h between the selected chains and protocols
       </div>
       <div className="mt-1.5 space-y-2">
-        <Card
-          title="Volume"
-          value={formatCurrency(data?.stats.totalVolume ?? 0, 'usd')}
-          isLoading={isLoading}
-        />
-        <Card
-          title="Active routes"
-          value={formatInteger(data?.stats.activeFlows ?? 0)}
-          isLoading={isLoading}
-        />
-        <Card
-          title="Transfers"
-          value={formatInteger(data?.stats.totalTransferCount ?? 0)}
-          isLoading={isLoading}
-        />
+        <div className="grid grid-cols-1 gap-2 md:max-lg:grid-cols-3">
+          <Card
+            title="Volume"
+            value={formatCurrency(data?.stats.totalVolume ?? 0, 'usd')}
+            isLoading={isLoading}
+          />
+          <Card
+            title="Active routes"
+            value={formatInteger(data?.stats.activeFlows ?? 0)}
+            isLoading={isLoading}
+          />
+          <Card
+            title="Transfers"
+            value={formatInteger(data?.stats.totalTransferCount ?? 0)}
+            isLoading={isLoading}
+          />
+        </div>
         <HorizontalSeparator className="my-4" />
         <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-divider bg-surface-primary p-4">
           <Card

@@ -60,7 +60,7 @@ function Stats({
   const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
 
   return (
-    <div className="mt-3 rounded-lg border border-divider bg-surface-primary px-4 py-3">
+    <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
       <div className="space-y-1.5">
         <StatRow
@@ -129,7 +129,7 @@ function TopRoutes({
   }
 
   return (
-    <div className="mt-2 rounded-lg border border-divider bg-surface-primary px-4 py-3">
+    <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">TOP ROUTES</div>
       <div className="space-y-1">
         {flows.map((flow) => {

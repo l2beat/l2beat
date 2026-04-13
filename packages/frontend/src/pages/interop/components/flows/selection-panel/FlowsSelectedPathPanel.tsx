@@ -27,25 +27,30 @@ export function FlowsSelectedPathPanel() {
       <div className="mt-1 font-medium text-label-value-14 text-secondary">
         {title}
       </div>
-      {highlightedChains.length === 1 && (
-        <SingleChainStats chainId={chainA.id} selectedChains={selectedChains} />
-      )}
-      {highlightedChains.length === 2 && chainB && (
-        <>
+      <div className="mt-3 grid grid-cols-1 gap-2 md:max-lg:grid-cols-2">
+        {highlightedChains.length === 1 && (
+          <SingleChainStats
+            chainId={chainA.id}
+            selectedChains={selectedChains}
+          />
+        )}
+        {highlightedChains.length === 2 && chainB && (
           <MultipleChainsStats
             chainIdA={chainA.id}
             chainIdB={chainB.id}
             selectedChains={selectedChains}
           />
-          <div className="mt-auto pt-4">
-            <a
-              href={detailsUrl}
-              className="block w-full rounded-lg bg-brand py-2.5 text-center font-bold text-label-value-14 text-primary-invert transition-colors hover:bg-brand/90"
-            >
-              View path details
-            </a>
-          </div>
-        </>
+        )}
+      </div>
+      {highlightedChains.length === 2 && chainB && (
+        <div className="mt-auto pt-4">
+          <a
+            href={detailsUrl}
+            className="block w-full rounded-lg bg-brand py-2.5 text-center font-bold text-label-value-14 text-primary-invert transition-colors hover:bg-brand/90"
+          >
+            View path details
+          </a>
+        </div>
       )}
     </div>
   )

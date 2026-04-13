@@ -7,7 +7,7 @@ export function TopTokens({ tokens }: { tokens: FlowToken[] }) {
   }
 
   return (
-    <div className="mt-2 rounded-lg border border-divider bg-surface-primary px-4 py-3">
+    <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">TOP TOKENS</div>
       <div className="space-y-1">
         {tokens.map((token) => (
