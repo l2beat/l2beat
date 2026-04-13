@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
-import { Retries } from '@l2beat/shared-pure'
+import { Retries, UnixTime } from '@l2beat/shared-pure'
 import { TaskQueue } from '../../../../tools/queue/TaskQueue'
+import type { InteropAggregationAnalysis } from '../aggregation/InteropAggregationAnalyzer'
 import {
   diffInteropConfig,
   type InteropConfigDiff,
@@ -10,6 +11,8 @@ import {
 } from '../config/InteropConfigDiff'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
+const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
+const MAX_REASONS_PER_GROUP = 3
 
 export class InteropNotifier {
   private readonly messageQueue: TaskQueue<string>
@@ -49,6 +52,40 @@ export class InteropNotifier {
     this.notifyConfigDiff(filteredDiff)
   }
 
+  notifySuspiciousAggregates(
+    timestamp: UnixTime,
+    analysis: InteropAggregationAnalysis,
+  ): void {
+    if (analysis.suspiciousGroups.length === 0) {
+      return
+    }
+
+    const renderedGroups = analysis.suspiciousGroups
+      .slice(0, MAX_SUSPICIOUS_GROUPS_IN_MESSAGE)
+      .map((group) => {
+        const reasons = group.reasons.slice(0, MAX_REASONS_PER_GROUP).join('; ')
+        const remainingReasons = group.reasons.length - MAX_REASONS_PER_GROUP
+        const remainingSuffix =
+          remainingReasons > 0 ? `; +${remainingReasons} more` : ''
+
+        return `- \`${group.id}\` \`${group.bridgeType}\` \`${group.srcChain} -> ${group.dstChain}\`: ${reasons}${remainingSuffix}`
+      })
+
+    const remainingGroups =
+      analysis.suspiciousGroups.length - MAX_SUSPICIOUS_GROUPS_IN_MESSAGE
+    if (remainingGroups > 0) {
+      renderedGroups.push(`- ...and ${remainingGroups} more groups`)
+    }
+
+    const message = [
+      `🚨 Interop aggregate analysis flagged \`${analysis.suspiciousGroups.length}\` suspicious groups at \`${formatTimestamp(timestamp)}\``,
+      '',
+      ...renderedGroups,
+    ].join('\n')
+
+    this.messageQueue.addToBack(message)
+  }
+
   private notifyConfigDiff(diff: InteropConfigDiff): void {
     const header = `⚙️ **${diff.key}** config change - (\`${diff.entries.length}\` diff entries)`
     const markdown = interopConfigDiffToMarkdown(diff, MAX_ENTRIES_IN_MESSAGE)
@@ -77,4 +114,8 @@ export class InteropNotifier {
   _TEST_ONLY_waitTillEmpty(): Promise<void> {
     return this.messageQueue.waitTillEmpty()
   }
+}
+
+function formatTimestamp(timestamp: UnixTime): string {
+  return UnixTime.toDate(timestamp).toISOString().replace('.000Z', 'Z')
 }
