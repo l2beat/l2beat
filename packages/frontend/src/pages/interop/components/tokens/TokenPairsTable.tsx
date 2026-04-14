@@ -1,7 +1,7 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
-import { BasicTable } from '~/components/table/BasicTable'
+import { type RefObject, useMemo } from 'react'
+import { VirtualizedBasicTable } from '~/components/table/VirtualizedBasicTable'
 import { useTable } from '~/hooks/useTable'
 import { api } from '~/trpc/React'
 import { type TokensPairRow, topTokensPairsColumns } from './columns'
@@ -16,9 +16,11 @@ export type TokensPairsQueryInput = {
 export function TokensPairsTable({
   queryInput,
   hideSameToken,
+  scrollContainerRef,
 }: {
   queryInput: TokensPairsQueryInput
   hideSameToken?: boolean
+  scrollContainerRef?: RefObject<HTMLDivElement | null>
 }) {
   const { data, isLoading } = api.interop.tokensPairs.useQuery(queryInput)
 
@@ -40,11 +42,14 @@ export function TokensPairsTable({
   })
 
   return (
-    <BasicTable
+    <VirtualizedBasicTable
       skeletonCount={6}
       table={table}
       tableWrapperClassName="pb-0"
       isLoading={isLoading}
+      estimateSize={56}
+      maxHeight={undefined}
+      scrollContainerRef={scrollContainerRef}
     />
   )
 }

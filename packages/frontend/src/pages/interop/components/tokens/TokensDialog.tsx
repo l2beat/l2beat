@@ -1,5 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode, useRef, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
@@ -50,6 +50,7 @@ export function TokensDialog({
   const { selectionForApi } = useInteropSelectedChains()
   const [activeTab, setActiveTab] = useState<ActiveTab>('tokens')
   const [hideSameToken, setHideSameToken] = useState(false)
+  const tokensPairsScrollAreaRef = useRef<HTMLDivElement>(null)
 
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
@@ -89,6 +90,9 @@ export function TokensDialog({
         <TokensPairsTable
           queryInput={queryInput}
           hideSameToken={hideSameToken}
+          scrollContainerRef={
+            activeTab === 'pairs' ? tokensPairsScrollAreaRef : undefined
+          }
         />
       </TabsContent>
     </>
@@ -103,13 +107,17 @@ export function TokensDialog({
             value={activeTab}
             onValueChange={(v) => setActiveTab(v as ActiveTab)}
             variant="highlighted"
+            className="flex min-h-0 flex-col"
           >
             <DrawerHeader className="mb-2">
               <DrawerTitle className="mb-0 text-xl">{title}</DrawerTitle>
               <BetweenChainsInfo />
               {tabsList}
             </DrawerHeader>
-            <div className="max-h-[60vh] overflow-y-auto overflow-x-hidden">
+            <div
+              ref={tokensPairsScrollAreaRef}
+              className="max-h-[60vh] min-h-0 w-full min-w-0 overflow-y-auto overflow-x-hidden"
+            >
               {tabsContent}
             </div>
           </Tabs>
@@ -134,8 +142,11 @@ export function TokensDialog({
             <BetweenChainsInfo className="mt-1" />
             {tabsList}
           </DialogHeader>
-          <div className="-mt-4 flex-1 overflow-x-auto overflow-y-auto pt-4">
-            <div className="mx-6 pb-3">{tabsContent}</div>
+          <div
+            ref={tokensPairsScrollAreaRef}
+            className="-mt-4 min-h-0 w-full min-w-0 flex-1 overflow-x-auto overflow-y-auto pt-4"
+          >
+            <div className="mx-6 min-w-0 pb-3">{tabsContent}</div>
           </div>
         </Tabs>
       </DialogContent>

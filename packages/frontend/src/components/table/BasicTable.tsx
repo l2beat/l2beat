@@ -64,6 +64,14 @@ export interface BasicTableProps<T extends BasicTableRow> {
   tableWrapperClassName?: string
 }
 
+export interface BasicTableFrameProps<T extends BasicTableRow> {
+  table: TanstackTable<T>
+  tableWrapperClassName?: string
+  tableWrapperRef?: React.Ref<HTMLDivElement>
+  tableWrapperStyle?: React.CSSProperties
+  children: React.ReactNode
+}
+
 type BasicTableCellData = {
   isLastInGroup: boolean
   props: React.ComponentProps<typeof TableCell>
@@ -84,17 +92,51 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
     return <TableEmptyState />
   }
 
-  const { groupedHeader, actualHeader } = getBasicTableHeaderSections(
-    props.table.getHeaderGroups(),
-  )
-
   const rows = applyBasicTableRowSorting(
     props.table.getRowModel().rows,
     props.rowSortingFn,
   )
 
   return (
-    <Table tableWrapperClassName={props.tableWrapperClassName}>
+    <BasicTableFrame
+      table={props.table}
+      tableWrapperClassName={props.tableWrapperClassName}
+    >
+      {rows.map((row) => (
+        <BasicTableRow row={row} key={row.id} {...props} />
+      ))}
+      {rows.length === 0 &&
+        props.isLoading &&
+        range(props.skeletonCount ?? 10).map((i) => {
+          return (
+            <TableRow highlightId={undefined} key={i}>
+              <TableCell colSpan={100}>
+                <Skeleton className="h-6 w-full md:h-8" />
+              </TableCell>
+            </TableRow>
+          )
+        })}
+    </BasicTableFrame>
+  )
+}
+
+export function BasicTableFrame<T extends BasicTableRow>({
+  table,
+  tableWrapperClassName,
+  tableWrapperRef,
+  tableWrapperStyle,
+  children,
+}: BasicTableFrameProps<T>) {
+  const { groupedHeader, actualHeader } = getBasicTableHeaderSections(
+    table.getHeaderGroups(),
+  )
+
+  return (
+    <Table
+      tableWrapperClassName={tableWrapperClassName}
+      tableWrapperRef={tableWrapperRef}
+      tableWrapperStyle={tableWrapperStyle}
+    >
       {groupedHeader && <ColGroup headers={groupedHeader.headers} />}
       <TableHeader>
         {groupedHeader && (
@@ -104,20 +146,7 @@ export function BasicTable<T extends BasicTableRow>(props: BasicTableProps<T>) {
         <BasicTableHeaderDividerRow />
       </TableHeader>
       <TableBody>
-        {rows.map((row) => (
-          <BasicTableRow row={row} key={row.id} {...props} />
-        ))}
-        {rows.length === 0 &&
-          props.isLoading &&
-          range(props.skeletonCount ?? 10).map((i) => {
-            return (
-              <TableRow highlightId={undefined} key={i}>
-                <TableCell colSpan={100}>
-                  <Skeleton className="h-6 w-full md:h-8" />
-                </TableCell>
-              </TableRow>
-            )
-          })}
+        {children}
         {groupedHeader && <RowFiller headers={groupedHeader.headers} />}
       </TableBody>
     </Table>

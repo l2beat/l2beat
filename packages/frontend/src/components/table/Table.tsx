@@ -1,4 +1,4 @@
-import type * as React from 'react'
+import * as React from 'react'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,
@@ -14,13 +14,21 @@ import {
 const Table = ({
   className,
   tableWrapperClassName,
+  tableWrapperRef,
+  tableWrapperStyle,
   ...props
 }: React.HTMLAttributes<HTMLTableElement> & {
   tableWrapperClassName?: string
+  tableWrapperRef?: React.Ref<HTMLDivElement>
+  tableWrapperStyle?: React.CSSProperties
 }) => {
   return (
     <div className={getTableOuterWrapperClassName()}>
-      <div className={getTableScrollWrapperClassName(tableWrapperClassName)}>
+      <div
+        ref={tableWrapperRef}
+        style={tableWrapperStyle}
+        className={getTableScrollWrapperClassName(tableWrapperClassName)}
+      >
         <HighlightedTableRowProvider>
           <table
             className={getTableElementClassName(className)}
@@ -65,15 +73,15 @@ const TableHeaderRow = ({
 )
 TableHeaderRow.displayName = 'TableHeaderRow'
 
-const TableRow = ({
-  className,
-  highlightId,
-  ...props
-}: React.HTMLAttributes<HTMLTableRowElement> & {
-  highlightId: string | undefined
-}) => {
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement> & {
+    highlightId: string | undefined
+  }
+>(({ className, highlightId, ...props }, forwardedRef) => {
   const { highlightedId } = useHighlightedTableRowContext()
   const isSelected = highlightedId && highlightedId === highlightId
+
   return (
     <tr
       className={cn(
@@ -82,6 +90,12 @@ const TableRow = ({
         className,
       )}
       ref={(node) => {
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node)
+        } else if (forwardedRef) {
+          forwardedRef.current = node
+        }
+
         if (node && isSelected) {
           node.scrollIntoView({ block: 'center' })
         }
@@ -89,7 +103,7 @@ const TableRow = ({
       {...props}
     />
   )
-}
+})
 TableRow.displayName = 'TableRow'
 
 const TableHead = ({
