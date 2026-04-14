@@ -22,6 +22,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
 
   return (
     <div
+      id="flows-graph"
       className="aspect-square w-full max-w-[600px] max-lg:order-2 max-lg:py-6"
       ref={containerRef}
     >

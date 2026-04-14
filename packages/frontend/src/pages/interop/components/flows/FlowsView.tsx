@@ -44,7 +44,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       <div className="h-full max-lg:order-3">
         <FlowsGeneralStats />
       </div>
-      <div className="flex w-full min-w-0 flex-col items-center gap-10">
+      <div className="group/flows flex w-full min-w-0 flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-3 max-lg:order-1">
           <div className="flex gap-2">
             <FlowsChainsSelector allChains={interopChains} />
@@ -78,7 +78,13 @@ function SelectInfo({
       ? 'Select second chain to view detailed data'
       : 'Select chain or pair of chains to view detailed data'
   return (
-    <div className="flex items-center gap-0.5">
+    <div
+      className={cn(
+        'flex items-center gap-0.5 transition-transform duration-200',
+        highlightedChainsNumber === 0 &&
+          'group-has-[#flows-graph:hover]/flows:scale-[1.15]',
+      )}
+    >
       <CursorClickIcon className="size-3 fill-brand" />
       <p className="font-medium text-brand text-label-value-12 italic leading-none">
         {text}
