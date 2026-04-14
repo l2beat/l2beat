@@ -31,6 +31,7 @@ export const stone: BaseProject = {
   },
   zkCatalogInfo: {
     creator: 'Starkware',
+    quantumResistant: true,
     techStack: {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stone,
