@@ -38,7 +38,7 @@ export function getLogger(): Logger {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
       indexPrefix: env.ES_INDEX_PREFIX,
-      bufferMaxBytes: env.ES_BUFFER_MAX_BYTES,
+      bufferAlertBytes: env.ES_BUFFER_ALERT_BYTES,
       flushInterval: env.ES_FLUSH_INTERVAL,
     }
 

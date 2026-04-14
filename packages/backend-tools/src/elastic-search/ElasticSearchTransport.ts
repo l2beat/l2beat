@@ -8,19 +8,19 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
-  /** Alert threshold (UTF-8 bytes): emit CRITICAL when buffered data exceeds this; nothing is trimmed. */
-  bufferMaxBytes?: number
+  /** UTF-8 byte threshold for CRITICAL alert when buffered size exceeds it; nothing is trimmed. */
+  bufferAlertBytes?: number
   flushInterval?: number
   indexPrefix?: string
 }
 
 export type UuidProvider = () => string
 
-export const DEFAULT_BUFFER_MAX_BYTES = 128 * 1024 * 1024 // 128 MiB
+export const DEFAULT_BUFFER_ALERT_BYTES = 128 * 1024 * 1024 // 128 MiB
 
 export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
-  private readonly bufferMaxBytes: number
+  private readonly bufferAlertBytes: number
 
   constructor(
     private readonly options: ElasticSearchTransportOptions,
@@ -30,7 +30,8 @@ export class ElasticSearchTransport implements LoggerTransport {
     private readonly uuidProvider: UuidProvider = uuidv4,
   ) {
     this.buffer = []
-    this.bufferMaxBytes = options.bufferMaxBytes ?? DEFAULT_BUFFER_MAX_BYTES
+    this.bufferAlertBytes =
+      options.bufferAlertBytes ?? DEFAULT_BUFFER_ALERT_BYTES
     this.start()
   }
 
@@ -66,7 +67,7 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
 
     const bufferedBytes = sumBufferUtf8Bytes(this.buffer)
-    if (bufferedBytes > this.bufferMaxBytes) {
+    if (bufferedBytes > this.bufferAlertBytes) {
       await this.reportBufferOverflow(bufferedBytes, this.buffer.length)
     }
 
@@ -156,7 +157,7 @@ export class ElasticSearchTransport implements LoggerTransport {
                 parameters: {
                   bufferedBytes,
                   bufferItemCount,
-                  bufferMaxBytes: this.bufferMaxBytes,
+                  bufferAlertBytes: this.bufferAlertBytes,
                 },
               }),
             ),

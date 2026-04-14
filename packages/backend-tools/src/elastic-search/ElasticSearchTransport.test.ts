@@ -98,9 +98,9 @@ describe(ElasticSearchTransport.name, () => {
 
   it('sends CRITICAL when buffer UTF-8 size exceeds budget but still ships all buffered items', async () => {
     const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
-    const bufferMaxBytes = itemBytes * 2
+    const bufferAlertBytes = itemBytes * 2
     const clientMock = createClientMockWithTrackedIndex()
-    const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
+    const transportMock = createTransportMock(clientMock, { bufferAlertBytes })
 
     transportMock.push(ecsSerializedLog(0))
     transportMock.push(ecsSerializedLog(1))
@@ -123,7 +123,7 @@ describe(ElasticSearchTransport.name, () => {
           parameters: {
             bufferedBytes: itemBytes * 3,
             bufferItemCount: 3,
-            bufferMaxBytes,
+            bufferAlertBytes,
           },
         }),
       ],
@@ -144,9 +144,9 @@ describe(ElasticSearchTransport.name, () => {
   it('awaits CRITICAL overflow report then sends full bulk (no trimming)', async () => {
     const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
     const maxItems = 20_000
-    const bufferMaxBytes = maxItems * itemBytes
+    const bufferAlertBytes = maxItems * itemBytes
     const clientMock = createClientMockWithTrackedIndex()
-    const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
+    const transportMock = createTransportMock(clientMock, { bufferAlertBytes })
 
     for (let i = 0; i <= maxItems; i++) {
       transportMock.push(ecsSerializedLog(i))
@@ -168,7 +168,7 @@ describe(ElasticSearchTransport.name, () => {
           parameters: {
             bufferedBytes: itemBytes * (maxItems + 1),
             bufferItemCount: maxItems + 1,
-            bufferMaxBytes,
+            bufferAlertBytes,
           },
         }),
       ],
@@ -189,7 +189,7 @@ describe(ElasticSearchTransport.name, () => {
     const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
     const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock, {
-      bufferMaxBytes: itemBytes * 10,
+      bufferAlertBytes: itemBytes * 10,
     })
 
     transportMock.push(
