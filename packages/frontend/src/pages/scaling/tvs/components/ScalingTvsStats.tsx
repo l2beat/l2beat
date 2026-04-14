@@ -107,12 +107,10 @@ function Stat({
         {change !== undefined ? (
           <Tooltip>
             <TooltipTrigger>
-              <span className="inline-flex cursor-default">
-                <PercentChange
-                  textClassName="md:text-heading-20 w-full text-heading-16"
-                  value={change}
-                />
-              </span>
+              <PercentChange
+                textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
+                value={change}
+              />
             </TooltipTrigger>
             <TooltipContent>
               Percentage change compared to 7D ago.
