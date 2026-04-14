@@ -157,7 +157,7 @@ export const megaeth: ScalingProject = opStackL2({
         ),
         to: EthereumAddress('0x00656C604FC470e6a566A695B74455e18a6D75D3'),
         sinceTimestamp: UnixTime(1762797011),
-        untilTimestamp: UnixTime(1770612479), // 2026-02-09T04:47:59Z batch inbox changed to BunnyInbox
+        // no until because the inbox was changed back to this one later
       },
     },
     {
@@ -176,23 +176,6 @@ export const megaeth: ScalingProject = opStackL2({
         to: EthereumAddress('0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2'), // BunnyInbox
         sinceTimestamp: UnixTime(1770612479), // 2026-02-09T04:47:59Z
         untilTimestamp: UnixTime(1776134387), // end of bunnyInbox
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'transfer',
-        from: ChainSpecificAddress.address(
-          discovery.getContractValue<ChainSpecificAddress>(
-            'SystemConfig',
-            'batcherHash',
-          ),
-        ),
-        to: EthereumAddress('0x00656C604FC470e6a566A695B74455e18a6D75D3'),
-        sinceTimestamp: UnixTime(1776134387), // end of bunnyinbox
       },
     },
     {
