@@ -5,6 +5,7 @@ import { manifest } from '~/utils/Manifest'
 import type { InteropFlowsParams } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
+import type { TopEntry } from './utils/getInteropFlowAggregates'
 import { getInteropFlowAggregates } from './utils/getInteropFlowAggregates'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 
@@ -102,11 +103,11 @@ export async function getInteropFlows(
 
   const {
     flows,
-    chainTopTokenEntries,
-    chainPairTopTokenEntries,
-    chainTopProtocolEntries,
-    chainPairTopProtocolEntries,
-    topTokenEntry,
+    chainTopTokens,
+    chainPairTopTokens,
+    chainTopProtocols,
+    chainPairTopProtocols,
+    topToken: topTokenEntry,
     tokenIds,
   } = getInteropFlowAggregates(records, subgroupProjects)
 
@@ -124,10 +125,9 @@ export async function getInteropFlows(
       ]),
   )
 
-  const toFlowToken = (entry: { id: string; volume: number }) => {
+  const resolveToken = (entry: TopEntry): FlowToken | undefined => {
     const details = detailsMap.get(entry.id)
     if (!details) return undefined
-
     return {
       symbol: details.symbol,
       iconUrl: details.iconUrl,
@@ -135,10 +135,9 @@ export async function getInteropFlows(
     }
   }
 
-  const toFlowProtocol = (entry: { id: string; volume: number }) => {
+  const resolveProtocol = (entry: TopEntry): FlowProtocol | undefined => {
     const details = protocolDetailsMap.get(entry.id)
     if (!details) return undefined
-
     return {
       id: entry.id,
       name: details.name,
@@ -148,32 +147,28 @@ export async function getInteropFlows(
   }
 
   const chainPairData: ChainPairData[] = []
-  for (const [pairKey, entries] of chainPairTopTokenEntries.entries()) {
+  for (const [pairKey, entries] of chainPairTopTokens) {
     const [chainA, chainB] = pairKey.split('::')
-    const protocolEntries = chainPairTopProtocolEntries.get(pairKey) ?? []
+    const protocolEntries = chainPairTopProtocols.get(pairKey) ?? []
     if (chainA && chainB) {
       chainPairData.push({
         chains: [chainA, chainB],
-        topTokens: entries.map(toFlowToken).filter(notUndefined),
-        topProtocols: protocolEntries.map(toFlowProtocol).filter(notUndefined),
+        topTokens: entries.map(resolveToken).filter(notUndefined),
+        topProtocols: protocolEntries.map(resolveProtocol).filter(notUndefined),
       })
     }
   }
 
-  const { totalVolume, totalTransferCount } = flows.reduce(
-    (sum, f) => {
-      sum.totalVolume += f.volume
-      sum.totalTransferCount += f.transferCount
-      return sum
-    },
-    { totalVolume: 0, totalTransferCount: 0 },
-  )
-  const topFlow = flows.reduce<Flow | undefined>(
-    (max, f) => (!max || f.volume > max.volume ? f : max),
-    undefined,
-  )
+  let totalVolume = 0
+  let totalTransferCount = 0
+  let topFlow: Flow | undefined
+  for (const f of flows) {
+    totalVolume += f.volume
+    totalTransferCount += f.transferCount
+    if (!topFlow || f.volume > topFlow.volume) topFlow = f
+  }
 
-  const topToken = topTokenEntry ? toFlowToken(topTokenEntry) : undefined
+  const topToken = topTokenEntry ? resolveToken(topTokenEntry) : undefined
 
   return {
     flows,
@@ -181,14 +176,12 @@ export async function getInteropFlows(
       flows,
       params.chains,
       (chainId) =>
-        chainTopTokenEntries
-          .get(chainId)
-          ?.map(toFlowToken)
-          .filter(notUndefined) ?? [],
+        chainTopTokens.get(chainId)?.map(resolveToken).filter(notUndefined) ??
+        [],
       (chainId) =>
-        chainTopProtocolEntries
+        chainTopProtocols
           .get(chainId)
-          ?.map(toFlowProtocol)
+          ?.map(resolveProtocol)
           .filter(notUndefined) ?? [],
     ),
     chainPairData,
@@ -214,48 +207,57 @@ function computeChainsData(
   getChainTopTokens: (chainId: string) => FlowToken[],
   getChainTopProtocols: (chainId: string) => FlowProtocol[],
 ): ChainData[] {
-  const inflows = new Map<string, number>()
-  const outflows = new Map<string, number>()
-  const transfersIn = new Map<string, number>()
-  const transfersOut = new Map<string, number>()
+  const chains = new Map<
+    string,
+    {
+      inflow: number
+      outflow: number
+      transfersIn: number
+      transfersOut: number
+      connected: Set<string>
+    }
+  >()
 
-  for (const flow of flows) {
-    outflows.set(
-      flow.srcChain,
-      (outflows.get(flow.srcChain) ?? 0) + flow.volume,
-    )
-    inflows.set(flow.dstChain, (inflows.get(flow.dstChain) ?? 0) + flow.volume)
-    transfersOut.set(
-      flow.srcChain,
-      (transfersOut.get(flow.srcChain) ?? 0) + flow.transferCount,
-    )
-    transfersIn.set(
-      flow.dstChain,
-      (transfersIn.get(flow.dstChain) ?? 0) + flow.transferCount,
-    )
+  const getOrCreate = (chainId: string) => {
+    let data = chains.get(chainId)
+    if (!data) {
+      data = {
+        inflow: 0,
+        outflow: 0,
+        transfersIn: 0,
+        transfersOut: 0,
+        connected: new Set(),
+      }
+      chains.set(chainId, data)
+    }
+    return data
   }
 
-  // Count connected chains
-  const connected = new Map<string, Set<string>>()
   for (const flow of flows) {
-    if (!connected.has(flow.srcChain)) connected.set(flow.srcChain, new Set())
-    if (!connected.has(flow.dstChain)) connected.set(flow.dstChain, new Set())
-    connected.get(flow.srcChain)?.add(flow.dstChain)
-    connected.get(flow.dstChain)?.add(flow.srcChain)
+    const src = getOrCreate(flow.srcChain)
+    src.outflow += flow.volume
+    src.transfersOut += flow.transferCount
+    src.connected.add(flow.dstChain)
+
+    const dst = getOrCreate(flow.dstChain)
+    dst.inflow += flow.volume
+    dst.transfersIn += flow.transferCount
+    dst.connected.add(flow.srcChain)
   }
 
   return chainIds.map((chainId) => {
-    const inflow = inflows.get(chainId) ?? 0
-    const outflow = outflows.get(chainId) ?? 0
+    const data = chains.get(chainId)
+    const inflow = data?.inflow ?? 0
+    const outflow = data?.outflow ?? 0
     return {
       chainId,
       totalVolume: inflow + outflow,
       netFlow: inflow - outflow,
-      inflow: inflows.get(chainId) ?? 0,
+      inflow,
       outflow,
-      transfersIn: transfersIn.get(chainId) ?? 0,
-      transfersOut: transfersOut.get(chainId) ?? 0,
-      connectedChains: connected.get(chainId)?.size ?? 0,
+      transfersIn: data?.transfersIn ?? 0,
+      transfersOut: data?.transfersOut ?? 0,
+      connectedChains: data?.connected.size ?? 0,
       topTokens: getChainTopTokens(chainId),
       topProtocols: getChainTopProtocols(chainId),
     }

@@ -59,22 +59,22 @@ describe(getInteropFlowAggregates.name, () => {
       },
     ])
 
-    expect(result.chainTopTokenEntries.get('chain-a')).toEqual([
+    expect(result.chainTopTokens.get('chain-a')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainTopTokenEntries.get('chain-b')).toEqual([
+    expect(result.chainTopTokens.get('chain-b')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.chainPairTopTokenEntries.get('chain-a::chain-b')).toEqual([
+    expect(result.chainPairTopTokens.get('chain-a::chain-b')).toEqual([
       { id: 'eth', volume: 30 },
       { id: 'usdt', volume: 30 },
       { id: 'usdc', volume: 5 },
     ])
-    expect(result.topTokenEntry).toEqual({ id: 'eth', volume: 30 })
+    expect(result.topToken).toEqual({ id: 'eth', volume: 30 })
     expect(result.tokenIds.toSorted()).toEqual(['eth', 'usdc', 'usdt'])
   })
 })
