@@ -8,18 +8,19 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
-  bufferLimit?: number
+  /** Max total UTF-8 byte size of buffered strings before oldest items are dropped at flush. */
+  bufferMaxBytes?: number
   flushInterval?: number
   indexPrefix?: string
 }
 
 export type UuidProvider = () => string
 
-const DEFAULT_BUFFER_LIMIT = 20_000
+export const DEFAULT_BUFFER_MAX_BYTES = 128 * 1024 * 1024 // 128 MiB
 
 export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
-  private readonly bufferLimit: number
+  private readonly bufferMaxBytes: number
 
   constructor(
     private readonly options: ElasticSearchTransportOptions,
@@ -29,7 +30,7 @@ export class ElasticSearchTransport implements LoggerTransport {
     private readonly uuidProvider: UuidProvider = uuidv4,
   ) {
     this.buffer = []
-    this.bufferLimit = options.bufferLimit ?? DEFAULT_BUFFER_LIMIT
+    this.bufferMaxBytes = options.bufferMaxBytes ?? DEFAULT_BUFFER_MAX_BYTES
     this.start()
   }
 
@@ -64,13 +65,12 @@ export class ElasticSearchTransport implements LoggerTransport {
       return
     }
 
-    const overflow = this.buffer.length - this.bufferLimit
-    if (overflow > 0) {
-      void this.reportBufferOverflow(overflow)
-      this.buffer.splice(0, overflow)
+    const { droppedItems, droppedBytes } = this.trimOverflow()
+    if (droppedItems > 0) {
+      void this.reportBufferOverflow(droppedItems, droppedBytes)
     }
 
-    /** In scope for `catch` so we can correlate flush failures with batched log lines. */
+    /** In scope for `catch` so we can correlate flush failures with batched log strings. */
     let batch: string[] = []
 
     try {
@@ -127,30 +127,6 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
   }
 
-  private async reportBufferOverflow(droppedCount: number): Promise<void> {
-    try {
-      await this.client.bulk(
-        [
-          {
-            id: this.uuidProvider(),
-            ...JSON.parse(
-              formatEcsLog({
-                time: new Date(),
-                level: 'CRITICAL',
-                message: 'Elastic Search transport buffer overflowed',
-                parameters: {
-                  droppedCount,
-                  bufferLimit: this.bufferLimit,
-                },
-              }),
-            ),
-          },
-        ],
-        await this.createIndex(),
-      )
-    } catch {}
-  }
-
   private async createIndex(): Promise<string> {
     const indexName = `${this.options.indexPrefix ?? 'logs'}-${formatDate(
       new Date(),
@@ -162,6 +138,70 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
     return indexName
   }
+
+  /**
+   * Drops whole items from the front of the buffer until total UTF-8 byte size
+   * is at most `bufferMaxBytes`.
+   */
+  private trimOverflow(): {
+    droppedItems: number
+    droppedBytes: number
+  } {
+    let totalBytes = sumBufferUtf8Bytes(this.buffer)
+    if (totalBytes <= this.bufferMaxBytes) {
+      return { droppedItems: 0, droppedBytes: 0 }
+    }
+
+    let droppedItems = 0
+    let droppedBytes = 0
+    while (totalBytes > this.bufferMaxBytes && this.buffer.length > 0) {
+      const item = this.buffer.shift()
+      if (item === undefined) {
+        break
+      }
+      const itemBytes = Buffer.byteLength(item, 'utf8')
+      droppedBytes += itemBytes
+      droppedItems += 1
+      totalBytes -= itemBytes
+    }
+    return { droppedItems, droppedBytes }
+  }
+
+  private async reportBufferOverflow(
+    droppedItems: number,
+    droppedBytes: number,
+  ): Promise<void> {
+    try {
+      await this.client.bulk(
+        [
+          {
+            id: this.uuidProvider(),
+            ...JSON.parse(
+              formatEcsLog({
+                time: new Date(),
+                level: 'CRITICAL',
+                message: 'Elastic Search transport buffer overflowed',
+                parameters: {
+                  droppedItems,
+                  droppedBytes,
+                  bufferMaxBytes: this.bufferMaxBytes,
+                },
+              }),
+            ),
+          },
+        ],
+        await this.createIndex(),
+      )
+    } catch {}
+  }
+}
+
+function sumBufferUtf8Bytes(buffer: string[]): number {
+  let sum = 0
+  for (const item of buffer) {
+    sum += Buffer.byteLength(item, 'utf8')
+  }
+  return sum
 }
 
 export function formatDate(date: Date): string {

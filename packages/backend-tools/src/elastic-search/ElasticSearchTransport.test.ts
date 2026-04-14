@@ -24,6 +24,14 @@ const log = {
   message: 'Update started',
 }
 
+/** Equal UTF-8 size per serialized log so byte overflow math is predictable. */
+function ecsSerializedLog(i: number): string {
+  return JSON.stringify({
+    ...log,
+    message: String(i).padStart(10, '0'),
+  })
+}
+
 describe(ElasticSearchTransport.name, () => {
   let clock: FakeTimers.InstalledClock
   let savedConsoleLog: typeof console.log
@@ -60,6 +68,20 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).not.toHaveBeenCalled()
   })
 
+  it('flush() sends buffered logs without advancing the flush interval timer', async () => {
+    const clientMock = createClientMock(false)
+    const transportMock = createTransportMock(clientMock)
+
+    transportMock.push(JSON.stringify(log))
+
+    await transportMock.flush()
+
+    expect(clientMock.bulk).toHaveBeenOnlyCalledWith(
+      [{ id, ...log }],
+      expectedIndexName,
+    )
+  })
+
   it('pushes logs to ES if there is something in the buffer', async () => {
     const clientMock = createClientMock(false)
     const transportMock = createTransportMock(clientMock)
@@ -74,28 +96,15 @@ describe(ElasticSearchTransport.name, () => {
     )
   })
 
-  it('keeps only the newest logs when buffer limit is exceeded', async () => {
+  it('keeps only the newest logs when buffer UTF-8 byte size is exceeded at flush time', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
+    const bufferMaxBytes = itemBytes * 2
     const clientMock = createClientMock(false)
-    const transportMock = createTransportMock(clientMock, { bufferLimit: 2 })
+    const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
 
-    transportMock.push(
-      JSON.stringify({
-        ...log,
-        message: 'first',
-      }),
-    )
-    transportMock.push(
-      JSON.stringify({
-        ...log,
-        message: 'second',
-      }),
-    )
-    transportMock.push(
-      JSON.stringify({
-        ...log,
-        message: 'third',
-      }),
-    )
+    transportMock.push(ecsSerializedLog(0))
+    transportMock.push(ecsSerializedLog(1))
+    transportMock.push(ecsSerializedLog(2))
 
     await clock.tickAsync(flushInterval + 1)
 
@@ -107,7 +116,11 @@ describe(ElasticSearchTransport.name, () => {
         expect.subset({
           id,
           log: { level: 'CRITICAL' },
-          parameters: { droppedCount: 1, bufferLimit: 2 },
+          parameters: {
+            droppedItems: 1,
+            droppedBytes: itemBytes,
+            bufferMaxBytes,
+          },
         }),
       ],
       expectedIndexName,
@@ -116,24 +129,22 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).toHaveBeenNthCalledWith(
       2,
       [
-        { id, ...log, message: 'second' },
-        { id, ...log, message: 'third' },
+        { id, ...log, message: '0000000001' },
+        { id, ...log, message: '0000000002' },
       ],
       expectedIndexName,
     )
   })
 
-  it('uses the default buffer limit when explicit limit is not provided', async () => {
+  it('drops oldest buffer items until total UTF-8 size is within bufferMaxBytes (trim at flush)', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
+    const maxItems = 20_000
+    const bufferMaxBytes = maxItems * itemBytes
     const clientMock = createClientMock(false)
-    const transportMock = createTransportMock(clientMock)
+    const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
 
-    for (let i = 0; i < 20_001; i++) {
-      transportMock.push(
-        JSON.stringify({
-          ...log,
-          message: `log-${i}`,
-        }),
-      )
+    for (let i = 0; i <= maxItems; i++) {
+      transportMock.push(ecsSerializedLog(i))
     }
 
     await clock.tickAsync(flushInterval + 1)
@@ -147,8 +158,9 @@ describe(ElasticSearchTransport.name, () => {
           id,
           log: { level: 'CRITICAL' },
           parameters: {
-            droppedCount: 1,
-            bufferLimit: 20_000,
+            droppedItems: 1,
+            droppedBytes: itemBytes,
+            bufferMaxBytes,
           },
         }),
       ],
@@ -156,14 +168,21 @@ describe(ElasticSearchTransport.name, () => {
     )
 
     const [documents] = clientMock.bulk.calls[1]!.args
-    expect(documents).toHaveLength(20_000)
-    expect(documents[0]).toEqual({ id, ...log, message: 'log-1' })
-    expect(documents[19_999]).toEqual({ id, ...log, message: 'log-20000' })
+    expect(documents).toHaveLength(maxItems)
+    expect(documents[0]).toEqual({ id, ...log, message: '0000000001' })
+    expect(documents[maxItems - 1]).toEqual({
+      id,
+      ...log,
+      message: '0000020000',
+    })
   })
 
-  it('does not trim logs when buffer stays within the configured limit', async () => {
+  it('does not trim logs when buffer stays within the configured byte budget', async () => {
+    const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
     const clientMock = createClientMock(false)
-    const transportMock = createTransportMock(clientMock, { bufferLimit: 3 })
+    const transportMock = createTransportMock(clientMock, {
+      bufferMaxBytes: itemBytes * 10,
+    })
 
     transportMock.push(
       JSON.stringify({
@@ -227,7 +246,7 @@ describe(ElasticSearchTransport.name, () => {
     )
   })
 
-  it('runs recovery bulk when buffer line is not valid JSON', async () => {
+  it('runs recovery bulk when a buffer item is not valid JSON', async () => {
     const clientMock = createClientMock(false, [{ isSuccess: true as const }])
     const transportMock = createTransportMock(clientMock)
 
