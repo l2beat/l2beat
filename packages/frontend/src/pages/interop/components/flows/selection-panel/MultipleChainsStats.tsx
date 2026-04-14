@@ -5,8 +5,6 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { formatNumber } from '~/utils/number-format/formatNumber'
-import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { TopItemsList } from './TopItemsList'
 
@@ -108,7 +106,6 @@ function Stats({
   const netFlowChain = allChains.find((c) => c.id === netFlowChainId)
 
   const volumePerSecond = totalVolume / UnixTime.DAY
-  const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
@@ -135,8 +132,8 @@ function Stats({
           isLoading={isLoading}
         />
         <StatRow
-          label="Particles"
-          value={`${formatNumber(particlesPerSecond, 1)}/s (${formatCurrency(volumePerSecond, 'usd')}/s)`}
+          label="Avg. value per second"
+          value={`${formatCurrency(volumePerSecond, 'usd')}/s`}
           isLoading={isLoading}
         />
       </div>
