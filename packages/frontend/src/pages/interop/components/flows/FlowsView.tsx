@@ -41,7 +41,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
           : 'lg:grid-cols-[240px_1fr_0px]',
       )}
     >
-      <div className="h-full max-lg:order-2">
+      <div className="h-full max-lg:order-3">
         <FlowsGeneralStats />
       </div>
       <div className="flex w-full min-w-0 flex-col items-center gap-10">
@@ -56,7 +56,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       </div>
       <div
         className={cn(
-          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-3 lg:translate-x-3 lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out',
+          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-2 lg:translate-x-3 lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out',
           hasGraphSelection && 'lg:translate-x-0 lg:opacity-100',
         )}
       >
