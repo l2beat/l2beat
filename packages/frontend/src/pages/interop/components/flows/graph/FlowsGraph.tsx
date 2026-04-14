@@ -4,6 +4,7 @@ import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubblesLayer } from './ChainBubblesLayer'
+import { FlowsLogo } from './FlowsLogo'
 import { ParticleLayer } from './ParticleLayer'
 import { computeGraphLayout } from './utils/computeGraphLayout'
 
@@ -50,6 +51,11 @@ export function FlowsGraph({
         layout={layout}
         centerX={width / 2}
         centerY={height / 2}
+      />
+      <FlowsLogo
+        centerX={width / 2}
+        centerY={height / 2}
+        isSmallScreen={isSmallScreen}
       />
       <ParticleLayer
         flows={data.flows}
