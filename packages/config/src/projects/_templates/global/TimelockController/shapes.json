@@ -19,5 +19,11 @@
     "address": "eth:0x5F0CAaf0d3b8dd8eA9f80CDbb0021930d3c17353",
     "chain": "ethereum",
     "blockNumber": 24570419
+  },
+  "OpsTimelock.sol": {
+    "hash": "0x4a9800f2ac03b7f5b2603826eaf3ef1bc41bd1d62eb5470a2b60eba4a9575e8f",
+    "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+    "chain": "ethereum",
+    "blockNumber": 24878444
   }
 }

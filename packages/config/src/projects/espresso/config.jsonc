@@ -6,15 +6,10 @@
   "names": {
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "HotShotLightClient",
     "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "EspressoMultisig",
-    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
+    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock",
+    "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB": "EspressoOpsMultisig"
   },
   "overrides": {
-    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": {
-      "description": "OpenZeppelin TimelockController. Now holds the admin/owner role on HotShotLightClient (replacing the previous EspressoMultisig), enforcing a 48-hour delay on upgrades and privileged calls.",
-      "fields": {
-        "accessControl": { "handler": { "type": "accessControl" } }
-      }
-    },
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": {
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "discoverLibraries": true,

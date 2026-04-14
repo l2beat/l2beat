@@ -1,7 +1,7 @@
 {
   "name": "espresso",
-  "timestamp": 1776174682,
-  "configHash": "0x4911ab7d4816c712e3262c2cd321e225830e528a6a1b8398ea8939abed4b740c",
+  "timestamp": 1776179280,
+  "configHash": "0xf2ae7808c1822342d3f165d68b1fdb46d92a6c735482b1350edc2512208f0db4",
   "entries": [
     {
       "name": "PlonkVerifierV3",
@@ -48,6 +48,20 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1727935367,
       "sinceBlock": 20883069,
@@ -98,7 +112,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "EspressoOpsMultisig",
       "address": "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -107,6 +121,75 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "delay": 172800,
+          "role": ".Executor"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1769188523,
       "sinceBlock": 24298911,
@@ -137,12 +220,19 @@
       "name": "OpsTimelock",
       "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
       "type": "Contract",
+      "template": "global/TimelockController",
       "sourceHashes": [
         "0x4a9800f2ac03b7f5b2603826eaf3ef1bc41bd1d62eb5470a2b60eba4a9575e8f"
       ],
       "proxyType": "immutable",
-      "description": "OpenZeppelin TimelockController. Now holds the admin/owner role on HotShotLightClient (replacing the previous EspressoMultisig), enforcing a 48-hour delay on upgrades and privileged calls.",
-      "receivedPermissions": [
+      "description": "A timelock with access control. The current minimum delay is 2d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
         {
           "permission": "interact",
           "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
@@ -186,10 +276,24 @@
             "members": ["eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"]
           }
         },
+        "Canceller": [
+          "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
+        "Executor": ["eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 172800,
+        "getMinDelayFormatted": "2d",
+        "Proposer": [
+          "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "implementationNames": {
@@ -264,7 +368,7 @@
         "$upgradeCount": 4,
         "authRoot": "105536170668224554493646379345496710910560640138524839020275376698968168012830",
         "blocksPerEpoch": 40000,
-        "currentBlockNumber": 24878444,
+        "currentBlockNumber": 24878828,
         "currentEpoch": 331,
         "epochStartBlock": 10960201,
         "finalizedState": {
@@ -562,8 +666,9 @@
     ]
   },
   "usedTemplates": {
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24878444 },
-  "permissionsConfigHash": "0x79ca9e01f5da30ec5614c39c346fe048e8105686de2ab7c8078738109a3a9b7f"
+  "usedBlockNumbers": { "ethereum": 24878828 },
+  "permissionsConfigHash": "0x78c5515414cb9b51a4b709b6dbffac48622e753a304306ed85173b95aa917429"
 }
