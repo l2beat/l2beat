@@ -240,7 +240,7 @@ Verify:
     ...OP_SUCCINCT_FDP_AGG_EIGENDA('v2.0.0'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/aggregation',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
 
@@ -259,7 +259,7 @@ Verify:
     ...OP_SUCCINCT_FDP_RANGE_EIGENDA('v2.0.0'),
     programUrl:
       'https://github.com/celo-org/op-succinct/tree/celo/v2.0.0/programs/range/eigenda',
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
 
