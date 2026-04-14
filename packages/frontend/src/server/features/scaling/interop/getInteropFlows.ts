@@ -146,15 +146,25 @@ export async function getInteropFlows(
     }
   }
 
+  const resolvedChainTokens = resolveEntries(chainTopTokens, resolveToken)
+  const resolvedChainProtocols = resolveEntries(
+    chainTopProtocols,
+    resolveProtocol,
+  )
+  const resolvedPairTokens = resolveEntries(chainPairTopTokens, resolveToken)
+  const resolvedPairProtocols = resolveEntries(
+    chainPairTopProtocols,
+    resolveProtocol,
+  )
+
   const chainPairData: ChainPairData[] = []
-  for (const [pairKey, entries] of chainPairTopTokens) {
+  for (const [pairKey, topTokens] of resolvedPairTokens) {
     const [chainA, chainB] = pairKey.split('::')
-    const protocolEntries = chainPairTopProtocols.get(pairKey) ?? []
     if (chainA && chainB) {
       chainPairData.push({
         chains: [chainA, chainB],
-        topTokens: entries.map(resolveToken).filter(notUndefined),
-        topProtocols: protocolEntries.map(resolveProtocol).filter(notUndefined),
+        topTokens,
+        topProtocols: resolvedPairProtocols.get(pairKey) ?? [],
       })
     }
   }
@@ -175,14 +185,8 @@ export async function getInteropFlows(
     chainData: computeChainsData(
       flows,
       params.chains,
-      (chainId) =>
-        chainTopTokens.get(chainId)?.map(resolveToken).filter(notUndefined) ??
-        [],
-      (chainId) =>
-        chainTopProtocols
-          .get(chainId)
-          ?.map(resolveProtocol)
-          .filter(notUndefined) ?? [],
+      resolvedChainTokens,
+      resolvedChainProtocols,
     ),
     chainPairData,
     stats: {
@@ -201,11 +205,22 @@ function chainPairKey(chainA: string, chainB: string) {
   return chainA < chainB ? `${chainA}::${chainB}` : `${chainB}::${chainA}`
 }
 
+function resolveEntries<T>(
+  map: Map<string, TopEntry[]>,
+  resolve: (entry: TopEntry) => T | undefined,
+): Map<string, T[]> {
+  const result = new Map<string, T[]>()
+  for (const [key, entries] of map) {
+    result.set(key, entries.map(resolve).filter(notUndefined))
+  }
+  return result
+}
+
 function computeChainsData(
   flows: Flow[],
   chainIds: string[],
-  getChainTopTokens: (chainId: string) => FlowToken[],
-  getChainTopProtocols: (chainId: string) => FlowProtocol[],
+  chainTopTokens: Map<string, FlowToken[]>,
+  chainTopProtocols: Map<string, FlowProtocol[]>,
 ): ChainData[] {
   const chains = new Map<
     string,
@@ -258,8 +273,8 @@ function computeChainsData(
       transfersIn: data?.transfersIn ?? 0,
       transfersOut: data?.transfersOut ?? 0,
       connectedChains: data?.connected.size ?? 0,
-      topTokens: getChainTopTokens(chainId),
-      topProtocols: getChainTopProtocols(chainId),
+      topTokens: chainTopTokens.get(chainId) ?? [],
+      topProtocols: chainTopProtocols.get(chainId) ?? [],
     }
   })
 }
@@ -325,13 +340,18 @@ function getMockInteropFlows(): InteropFlowsData {
     chainData: computeChainsData(
       flows,
       chainIds,
-      (chainId) => {
-        const chainVolume = flows
-          .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
-          .reduce((sum, f) => sum + f.volume, 0)
-        return buildMockTopTokens(chainVolume, chainIds.indexOf(chainId))
-      },
-      () => [],
+      new Map(
+        chainIds.map((chainId) => {
+          const chainVolume = flows
+            .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
+            .reduce((sum, f) => sum + f.volume, 0)
+          return [
+            chainId,
+            buildMockTopTokens(chainVolume, chainIds.indexOf(chainId)),
+          ]
+        }),
+      ),
+      new Map(),
     ),
     chainPairData,
     stats: {
