@@ -16,7 +16,7 @@ Role graph on the timelock:
 - EXECUTOR: EspressoOpsMultisig only (sole executor)
 - DEFAULT_ADMIN (manages all roles): timelock itself + EspressoOpsMultisig
 
-Net effect: upgrades require either multisig to propose, a 48-hour wait, and then EspressoOpsMultisig to execute. EspressoOpsMultisig is the single point of execution and can also grant/revoke roles unilaterally via DEFAULT_ADMIN_ROLE.
+Net effect: upgrades require either multisig to propose, a 48-hour wait, and then EspressoOpsMultisig to execute. EspressoOpsMultisig is the single point of execution and can also grant/revoke roles directly (not timelock-gated) via DEFAULT_ADMIN_ROLE.
 
 ## Watched changes
 
