@@ -64,6 +64,7 @@ export function FlowsGraph({
         centerX={width / 2}
         centerY={height / 2}
         maxVolume={maxVolume}
+        isSmallScreen={isSmallScreen}
       />
       <ChainBubblesLayer
         interopChains={interopChains}

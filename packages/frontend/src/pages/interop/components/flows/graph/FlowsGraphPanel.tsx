@@ -18,7 +18,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   })
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
-  const isSmallScreen = width ? width <= 400 : false
+  const isSmallScreen = width ? width <= 500 : false
 
   return (
     <div

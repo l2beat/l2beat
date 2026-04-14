@@ -16,6 +16,7 @@ interface Props {
   centerX: number
   centerY: number
   maxVolume: number
+  isSmallScreen: boolean
 }
 
 // Each particle represents 50 USD of volume
@@ -48,8 +49,10 @@ export function ParticleLayer({
   centerX,
   centerY,
   maxVolume,
+  isSmallScreen,
 }: Props) {
   const { highlightedChains } = useInteropFlows()
+  const particleRadius = isSmallScreen ? 1.5 : 2
   const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
   const visibleFlows = flows.filter((f) => f.volume >= threshold)
 
@@ -104,7 +107,7 @@ export function ParticleLayer({
           const t = BASE_DURATION_S / cycleDuration
           return (
             <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-              <circle r="2" fill={color} opacity={0}>
+              <circle r={particleRadius} fill={color} opacity={0}>
                 <animateMotion
                   path={path}
                   dur={`${cycleDuration}s`}
@@ -133,7 +136,7 @@ export function ParticleLayer({
               const begin = `${(i / count) * BASE_DURATION_S}s`
 
               return (
-                <circle key={i} r="2" fill={color} opacity={0}>
+                <circle key={i} r={particleRadius} fill={color} opacity={0}>
                   <animateMotion
                     path={path}
                     dur={`${BASE_DURATION_S}s`}
