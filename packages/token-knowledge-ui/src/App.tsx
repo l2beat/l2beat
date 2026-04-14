@@ -1,4 +1,4 @@
-import { Brain, Coins, Download } from 'lucide-react'
+import { Brain, Database, Download } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import {
   BrowserRouter,
@@ -10,12 +10,12 @@ import {
 import { RulesEditor } from '~/components/RulesEditor'
 import { LogProvider } from '~/hooks/useLog'
 import { cn } from '~/utils/cn'
+import { FactsPage } from './pages/FactsPage'
 import { ImportPage } from './pages/ImportPage'
-import { TokensPage } from './pages/TokensPage'
 import { TRPCReactProvider } from './react-query/trpc'
 
 const navItems = [
-  { to: '/', label: 'Tokens', icon: Coins },
+  { to: '/', label: 'Facts', icon: Database },
   { to: '/import', label: 'Import', icon: Download },
 ]
 
@@ -73,7 +73,7 @@ function Layout() {
       <div className="flex min-h-0 flex-1">
         <main className="min-w-0 flex-1 overflow-auto p-5">
           <Routes>
-            <Route path="/" element={<TokensPage />} />
+            <Route path="/" element={<FactsPage />} />
             <Route path="/import" element={<ImportPage />} />
           </Routes>
         </main>

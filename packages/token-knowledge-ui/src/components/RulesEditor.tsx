@@ -6,6 +6,7 @@ import { Button } from './Button'
 export function RulesEditor() {
   const { logs, addLog } = useLog()
   const logsEndRef = useRef<HTMLDivElement>(null)
+  const utils = api.useUtils()
 
   const rules = api.getRules.useQuery()
   const saveMutation = api.saveRules.useMutation({
@@ -15,7 +16,7 @@ export function RulesEditor() {
     },
     onError: (e) => addLog(`Save error: ${e.message}`),
   })
-  const inferQuery = api.infer.useQuery(undefined, { enabled: false })
+  const inferMutation = api.infer.useMutation()
 
   const [content, setContent] = useState('')
   const [dirty, setDirty] = useState(false)
@@ -34,13 +35,14 @@ export function RulesEditor() {
 
   const runInfer = async () => {
     addLog('Running inference...')
-    const result = await inferQuery.refetch()
-    if (result.error) {
-      addLog(`Inference error: ${result.error.message}`)
-    } else if (result.data) {
+    try {
+      const result = await inferMutation.mutateAsync()
       addLog(
-        `Inferred ${result.data.facts.length} facts from ${result.data.inputFactCount} inputs.`,
+        `Inferred ${result.inferredFactCount} facts from ${result.inputFactCount} inputs.`,
       )
+      await utils.searchFacts.invalidate()
+    } catch (e) {
+      addLog(`Inference error: ${e instanceof Error ? e.message : String(e)}`)
     }
   }
 
@@ -60,9 +62,9 @@ export function RulesEditor() {
             size="sm"
             variant="secondary"
             onClick={runInfer}
-            disabled={inferQuery.isFetching}
+            disabled={inferMutation.isPending}
           >
-            {inferQuery.isFetching ? 'Running...' : 'Run'}
+            {inferMutation.isPending ? 'Running...' : 'Run'}
           </Button>
         </div>
       </div>

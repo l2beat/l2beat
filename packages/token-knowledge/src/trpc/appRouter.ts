@@ -2,11 +2,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { v } from '@l2beat/validate'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import type { ClingoFact } from '../clingo/parseClingoFact'
 import { importTransferFacts } from '../importTransferFacts'
 import { infer } from '../infer'
+import { searchFacts } from '../searchFacts'
 import { publicProcedure, router } from './trpc'
 
 const rulesPath = path.join(__dirname, '..', 'rules.lp')
+
+let inferredFacts: ClingoFact[] = []
 
 export const appRouter = router({
   importFacts: publicProcedure.mutation(({ ctx }) => {
@@ -18,7 +22,7 @@ export const appRouter = router({
     return { deleted }
   }),
 
-  infer: publicProcedure.query(async ({ ctx }) => {
+  infer: publicProcedure.mutation(async ({ ctx }) => {
     const allFacts = await ctx.db.tokenFactInput.getAll()
     const factsProgram = allFacts
       .map((f) => `${f.name}(${f.arguments}).`)
@@ -27,9 +31,11 @@ export const appRouter = router({
     const rules = fs.readFileSync(rulesPath, 'utf-8')
     const kb = await infer(factsProgram, rules)
 
+    inferredFacts = kb.facts
+
     return {
       inputFactCount: allFacts.length,
-      facts: kb.facts,
+      inferredFactCount: kb.facts.length,
     }
   }),
 
@@ -44,10 +50,10 @@ export const appRouter = router({
       return { ok: true }
     }),
 
-  searchTokens: publicProcedure
+  searchFacts: publicProcedure
     .input(v.object({ query: v.string() }))
-    .query(() => {
-      return { results: [] as { fact: string; params: string[] }[] }
+    .query(({ input }) => {
+      return { results: searchFacts(inferredFacts, input.query) }
     }),
 })
 
