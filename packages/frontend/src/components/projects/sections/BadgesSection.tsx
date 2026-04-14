@@ -1,4 +1,3 @@
-import { keepPreviousData } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -22,14 +21,6 @@ export function BadgesSection({
 }: BadgesSectionProps) {
   const [selectedBadgeId, setSelectedBadgeId] = useState<string>()
   const utils = api.useUtils()
-
-  const { data, isLoading } = api.projects.badgesDialog.useQuery(
-    { badgeId: selectedBadgeId ?? '' },
-    {
-      enabled: !!selectedBadgeId,
-      placeholderData: keepPreviousData,
-    },
-  )
 
   return (
     <>
@@ -67,14 +58,12 @@ export function BadgesSection({
       </div>
       {withDialog && selectedBadgeId && (
         <BadgesDialog
+          initialBadgeId={selectedBadgeId}
           onOpenChange={(open) => {
             if (!open) {
               setSelectedBadgeId(undefined)
             }
           }}
-          data={data}
-          isLoading={isLoading}
-          onBadgeSelect={setSelectedBadgeId}
         />
       )}
     </>

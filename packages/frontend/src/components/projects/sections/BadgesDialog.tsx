@@ -1,4 +1,6 @@
+import { keepPreviousData } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
+import { useState } from 'react'
 import { Badge } from '~/components/badge/Badge'
 import {
   Dialog,
@@ -20,24 +22,32 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useDevice } from '~/hooks/useDevice'
 import type { RouterOutputs } from '~/trpc/React'
+import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 
 type BadgeDialogData = NonNullable<RouterOutputs['projects']['badgesDialog']>
 
 interface BadgesDialogProps {
+  initialBadgeId: string
   onOpenChange: (open: boolean) => void
-  data: BadgeDialogData | undefined
-  isLoading: boolean
-  onBadgeSelect: (badgeId: string) => void
 }
 
 export function BadgesDialog({
+  initialBadgeId,
   onOpenChange,
-  data,
-  isLoading,
-  onBadgeSelect,
 }: BadgesDialogProps) {
   const { isMobile } = useDevice()
+  const [selectedBadgeId, setSelectedBadgeId] = useState(initialBadgeId)
+
+  const { data, isLoading, isFetching, isPlaceholderData } =
+    api.projects.badgesDialog.useQuery(
+      { badgeId: selectedBadgeId },
+      {
+        placeholderData: keepPreviousData,
+      },
+    )
+
+  const isSwitchingBadges = isFetching && isPlaceholderData
 
   if (isMobile) {
     return (
@@ -54,7 +64,8 @@ export function BadgesDialog({
             <BadgesDialogBody
               data={data}
               isLoading={isLoading}
-              onBadgeSelect={onBadgeSelect}
+              isSwitchingBadges={isSwitchingBadges}
+              onBadgeSelect={setSelectedBadgeId}
               mobile
             />
           </div>
@@ -75,7 +86,8 @@ export function BadgesDialog({
           <BadgesDialogBody
             data={data}
             isLoading={isLoading}
-            onBadgeSelect={onBadgeSelect}
+            isSwitchingBadges={isSwitchingBadges}
+            onBadgeSelect={setSelectedBadgeId}
           />
         </div>
       </DialogContent>
@@ -86,11 +98,13 @@ export function BadgesDialog({
 function BadgesDialogBody({
   data,
   isLoading,
+  isSwitchingBadges,
   onBadgeSelect,
   mobile,
 }: {
   data: BadgeDialogData | undefined
   isLoading: boolean
+  isSwitchingBadges: boolean
   onBadgeSelect: (badgeId: string) => void
   mobile?: boolean
 }) {
@@ -107,7 +121,13 @@ function BadgesDialogBody({
   }
 
   return (
-    <div className="bg-surface-primary">
+    <div className="relative bg-surface-primary" aria-busy={isSwitchingBadges}>
+      {isSwitchingBadges && (
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-0.5 overflow-hidden bg-surface-secondary/60">
+          <div className="h-full w-2/5 animate-badge-dialog-loading rounded-full bg-brand" />
+        </div>
+      )}
+
       <div className="overflow-hidden bg-radial-[at_50%_200%] from-brand-red/30 via-brand-black/10 to-transparent px-4 py-6 md:px-6 md:py-7">
         <div
           className={cn(
