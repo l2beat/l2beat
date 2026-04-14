@@ -1,9 +1,20 @@
 import { Button } from '~/components/Button'
+import { useLog } from '~/hooks/useLog'
 import { api } from '~/react-query/trpc'
 
 export function ImportPage() {
-  const importMutation = api.importFacts.useMutation()
-  const clearMutation = api.clearFacts.useMutation()
+  const { addLog } = useLog()
+  const importMutation = api.importFacts.useMutation({
+    onSuccess: (data) =>
+      addLog(
+        `Imported ${data.imported} new facts, skipped ${data.skipped} duplicates.`,
+      ),
+    onError: (e) => addLog(`Import error: ${e.message}`),
+  })
+  const clearMutation = api.clearFacts.useMutation({
+    onSuccess: (data) => addLog(`Cleared ${data.deleted} facts.`),
+    onError: (e) => addLog(`Clear error: ${e.message}`),
+  })
 
   return (
     <div className="flex flex-col gap-4">
@@ -25,29 +36,6 @@ export function ImportPage() {
           {clearMutation.isPending ? 'Clearing...' : 'Clear Facts'}
         </Button>
       </div>
-
-      {importMutation.error && (
-        <p className="text-destructive text-sm">
-          Error: {importMutation.error.message}
-        </p>
-      )}
-      {importMutation.data && (
-        <p className="text-muted-foreground text-sm">
-          Imported {importMutation.data.imported} new facts, skipped{' '}
-          {importMutation.data.skipped} duplicates.
-        </p>
-      )}
-
-      {clearMutation.error && (
-        <p className="text-destructive text-sm">
-          Error: {clearMutation.error.message}
-        </p>
-      )}
-      {clearMutation.data && (
-        <p className="text-muted-foreground text-sm">
-          Cleared {clearMutation.data.deleted} facts.
-        </p>
-      )}
     </div>
   )
 }

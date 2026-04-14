@@ -8,6 +8,7 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { RulesEditor } from '~/components/RulesEditor'
+import { LogProvider } from '~/hooks/useLog'
 import { cn } from '~/utils/cn'
 import { ImportPage } from './pages/ImportPage'
 import { TokensPage } from './pages/TokensPage'
@@ -94,9 +95,11 @@ function Layout() {
 export function App() {
   return (
     <TRPCReactProvider>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
+      <LogProvider>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
+      </LogProvider>
     </TRPCReactProvider>
   )
 }
