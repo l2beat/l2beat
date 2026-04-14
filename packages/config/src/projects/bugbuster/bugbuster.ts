@@ -41,8 +41,10 @@ export const bugbuster: ScalingProject = {
       'Bug Buster is an open source bug bounty platform for web3, powered by Cartesi.',
     purposes: ['Bug bounty'],
     stacks: ['Cartesi Rollups'],
-    redWarning:
-      'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     links: {
       documentation: [
         'https://github.com/crypto-bug-hunters/bug-buster/blob/main/README.md',

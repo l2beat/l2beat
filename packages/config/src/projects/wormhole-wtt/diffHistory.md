@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xf82487c058caf69d01a259ff19dfa9e5609f02fe
+
+# Diff at Wed, 08 Apr 2026 08:46:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@26766919b8396e7d9a1ed837e31d9b0fa1ad9549 block: 1772790508
+- current timestamp: 1775637905
+
+## Description
+
+Contract upgraded to unverified implementation. Doesn't affect wormhole wtt plugin.
+
+## Watched changes
+
+```diff
+    contract  (eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      name:
+-        "DeliveryProviderImplementation"
++        ""
+      sourceHashes:
+-        ["0xa69df53f9d2492a90cb9aeda1ddfd617ce00c5c63dfc2d2baa0413a87ffaf34c","0x8c018dd994ea0c4acd43c9628405cfd46ff5a65f234b1ea8c7e765983f49c6b3"]
+      values.$implementation:
+-        "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"
++        "eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454"
+      values.$pastUpgrades.3:
++        ["2026-04-02T01:34:23.000Z","0x7231c796b404394aad777272879a82c3ac6f30b0370cb302458148fe72b3087b",["eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.chainId:
+-        2
+      values.coreRelayer:
+-        "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
+      values.getRewardAddress:
+-        "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      values.owner:
+-        "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
+      values.pendingOwner:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.pricingWallet:
+-        "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
+      values.rewardAddress:
+-        "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      implementationNames.eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2:
+-        "DeliveryProviderImplementation"
+      implementationNames.eth:0x9dB2f72B8E5AAfA88F62852a0658f0b9249f6454:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1437 --------------------
+ .../DeliveryProviderProxy.p.sol                    |    0
+ 2 files changed, 1437 deletions(-)
+```
+
 Generated with discovered.json: 0x90a3deea76a94725de3ce5d0299140d1011e9162
 
 # Diff at Fri, 06 Mar 2026 09:49:37 GMT:

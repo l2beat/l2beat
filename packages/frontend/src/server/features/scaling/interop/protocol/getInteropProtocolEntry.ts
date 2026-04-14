@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -19,7 +19,7 @@ export interface InteropProtocolEntry {
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     description?: string
     badges?: BadgeWithParams[]

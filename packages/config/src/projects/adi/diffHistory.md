@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xe2160e92e1c3342c09b63c7e8a1a757ce706fea4
+
+# Diff at Fri, 10 Apr 2026 08:26:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1774022071
+- current timestamp: 1775809516
+
+## Description
+
+Upgraded executor facet on ADI Diamond to a new version, then upgraded back. Upgrade params stay the same, the only diff in the contracts is `MAINNET_COMMIT_TIMESTAMP_NOT_OLDER` change from 3 days to 10 days: 
+https://disco.l2beat.com/diff/eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81/eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c.
+
+Probably they did that to post old batches (>3 days) from when the chain was down.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.5:
++        ["2026-04-08T18:36:47.000Z","0x4428eb3c0a1be76b850c3a1cd744087320aa49dfa2304311ed0579c10ec1e568",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c"]]
+      values.$pastUpgrades.6:
++        ["2026-04-09T13:05:35.000Z","0x08471063fd03e8dacd215a9c030f4c54a0f002c778a9a8283bc5161efae20e39",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"]]
+      values.$upgradeCount:
+-        5
++        7
+    }
+```
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        8
++        10
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        8
++        10
+    }
+```
+
 Generated with discovered.json: 0xe046aa4210694b96ecaa1e32858ca44579e0333d
 
 # Diff at Tue, 24 Mar 2026 10:43:29 GMT:

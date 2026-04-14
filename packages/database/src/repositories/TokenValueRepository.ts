@@ -1,9 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { ExpressionBuilder, Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
+import compact from 'lodash/compact'
 import { BaseRepository } from '../BaseRepository'
 import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
+import {
+  type CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
@@ -216,6 +222,14 @@ export class TokenValueRepository extends BaseRepository {
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
+  }
+
+  async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteHourlyUntil(this.db, 'TokenValue', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteSixHourlyUntil(this.db, 'TokenValue', dateRange)
   }
 
   async getAll(): Promise<TokenValueRecord[]> {
@@ -491,9 +505,9 @@ export class TokenValueRepository extends BaseRepository {
     }))
   }
 
-  async getSummedByProjectForRange(
+  async getSummedByProjectForRanges(
     projectIds: string[],
-    range: [UnixTime | null, UnixTime],
+    ranges: [UnixTime | null, UnixTime][],
     opts: {
       excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
@@ -517,11 +531,10 @@ export class TokenValueRepository extends BaseRepository {
       associated: number
     }[]
   > {
-    if (projectIds.length === 0) {
+    if (projectIds.length === 0 || ranges.length === 0) {
       return []
     }
 
-    const [from, to] = range
     const valueField = 'valueForProject'
 
     let query = this.db
@@ -554,12 +567,20 @@ export class TokenValueRepository extends BaseRepository {
           )
           .as('associated'),
       ])
-      .where('timestamp', '<=', UnixTime.toDate(to))
       .where('TokenValue.projectId', 'in', projectIds)
 
-    if (from) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(from))
-    }
+    query = query.where((eb) =>
+      eb.or(
+        ranges.map(([from, to]) => {
+          return eb.and(
+            compact([
+              from && eb('timestamp', '>=', UnixTime.toDate(from)),
+              eb('timestamp', '<=', UnixTime.toDate(to)),
+            ]),
+          )
+        }),
+      ),
+    )
 
     if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)

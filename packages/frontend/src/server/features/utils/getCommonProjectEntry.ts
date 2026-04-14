@@ -1,3 +1,4 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { RowBackgroundColor } from '~/components/table/utils/rowType'
@@ -14,7 +15,7 @@ export interface CommonProjectEntry {
   statuses:
     | {
         yellowWarning?: string
-        redWarning?: string
+        redWarning?: ProjectRedWarning
         verificationWarnings?: {
           contracts: string | undefined
           programHashes: string | undefined

@@ -10,6 +10,7 @@ import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
 import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import { OnchainAmountIndexer } from './indexers/OnchainAmountIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
+import { TvsCleaner } from './indexers/TvsCleaner'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
@@ -36,6 +37,7 @@ export function initTvsModule({
     prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
     chains: config.tvs.chains.length,
+    tvsCleaner: config.tvs.cleaner,
     maxSources: config.tvs.projects.reduce(
       (prev, curr) =>
         prev < curr.amountSources.length ? curr.amountSources.length : prev,
@@ -210,6 +212,20 @@ export function initTvsModule({
     valueIndexers.push(tokenValueIndexer)
   }
 
+  let cleaner: TvsCleaner | undefined
+  if (config.tvs.cleaner) {
+    cleaner = new TvsCleaner(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        db,
+        syncOptimizer,
+        configurations: config.tvs.cleaner,
+      },
+      logger,
+    )
+  }
+
   const tvsProjects = config.tvs.projects
   const start = async () => {
     await updateTokenMetadata(tvsProjects, db, logger)
@@ -226,6 +242,10 @@ export function initTvsModule({
 
     for (const indexer of valueIndexers) {
       await indexer.start()
+    }
+
+    if (cleaner) {
+      await cleaner.start()
     }
   }
 

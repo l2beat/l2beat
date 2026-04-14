@@ -13,6 +13,7 @@ export const ethernity: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1718182472), // 2024-06-12T08:54:32Z
+  archivedAt: UnixTime(1775805866), // 2026-04-10T09:24:26
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,

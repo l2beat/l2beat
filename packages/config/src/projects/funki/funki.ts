@@ -61,8 +61,10 @@ export const funki: ScalingProject = opStackL2({
     architectureImage: 'opstack-rollup-superchain-opfp',
     description:
       'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     stacks: ['OP Stack'],
     links: {
       websites: ['https://funkichain.com'],

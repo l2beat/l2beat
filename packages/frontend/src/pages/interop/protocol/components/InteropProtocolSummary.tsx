@@ -73,7 +73,7 @@ export function InteropProtocolSummary({
           value={
             <div className="flex flex-wrap items-start gap-0.5">
               {data?.entry?.bridgeTypes.map((t) => (
-                <BridgeTypeBadge key={t} bridgeType={t} />
+                <BridgeTypeBadge size="extraSmall" key={t} bridgeType={t} />
               ))}
             </div>
           }

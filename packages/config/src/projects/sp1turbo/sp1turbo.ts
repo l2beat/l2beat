@@ -253,6 +253,12 @@ export const sp1turbo: BaseProject = {
               '0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x059adC0Db833f7cCb12dC41BE0017626337AfA63',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

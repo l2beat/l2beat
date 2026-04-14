@@ -40,11 +40,6 @@ export function ProofSystemCell({
         {proofSystem?.name && !hideType && (
           <TwoRowCell.Second>{proofSystem?.name}</TwoRowCell.Second>
         )}
-        {hideType && proofSystem?.challengeProtocol && (
-          <TwoRowCell.Second>
-            {proofSystem?.challengeProtocol}
-          </TwoRowCell.Second>
-        )}
       </TwoRowCell>
     </TableLink>
   )

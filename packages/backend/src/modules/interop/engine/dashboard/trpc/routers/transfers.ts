@@ -3,7 +3,7 @@ import {
   getInteropTransferDetails,
   getInteropTransferStats,
 } from '../../impls/transfers'
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 const InteropTransferDetailsRequest = v.object({
@@ -15,10 +15,10 @@ const InteropTransferDetailsRequest = v.object({
 
 export function createTransfersRouter() {
   return router({
-    stats: publicProcedure.query(({ ctx }) => {
+    stats: protectedProcedure.query(({ ctx }) => {
       return getInteropTransferStats(ctx.db)
     }),
-    details: publicProcedure
+    details: protectedProcedure
       .input(InteropTransferDetailsRequest)
       .query(({ ctx, input }) => {
         return getInteropTransferDetails(ctx.db, input.type, {

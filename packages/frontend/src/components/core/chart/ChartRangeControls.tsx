@@ -18,9 +18,10 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import {
   type ChartRange,
+  optionToDays,
   optionToRange,
-  rangeToOption,
 } from '~/utils/range/range'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
@@ -280,4 +281,23 @@ function CalendarComponent({
       className={cn('rounded-lg pb-3', className)}
     />
   )
+}
+
+function rangeToOption(
+  [from, to]: ChartRange,
+  options: { value: ChartRangeOptionValue }[],
+  offset: UnixTime,
+): ChartRangeOptionValue | 'custom' {
+  if (
+    UnixTime.toStartOf(to, 'day') !==
+    UnixTime.toStartOf(UnixTime.now() + offset, 'day')
+  ) {
+    return 'custom'
+  }
+  if (from === null) return 'max'
+  const days = rangeToDays([from, to])
+  const option = options.find((option) => optionToDays(option.value) === days)
+  if (option) return option.value
+
+  return 'custom'
 }
