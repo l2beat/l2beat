@@ -1,4 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../chain-selector/types'
@@ -44,9 +45,12 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         <FlowsGeneralStats />
       </div>
       <div className="flex w-full min-w-0 flex-col items-center gap-10">
-        <div className="flex gap-2 max-lg:order-1">
-          <FlowsChainsSelector allChains={interopChains} />
-          <FlowsProtocolsSelector allProtocols={protocols} />
+        <div className="flex flex-col items-center gap-3 max-lg:order-1">
+          <div className="flex gap-2">
+            <FlowsChainsSelector allChains={interopChains} />
+            <FlowsProtocolsSelector allProtocols={protocols} />
+          </div>
+          <SelectInfo highlightedChainsNumber={highlightedChains.length} />
         </div>
         <FlowsGraphPanel interopChains={interopChains} />
       </div>
@@ -56,5 +60,24 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         </div>
       )}
     </PrimaryCard>
+  )
+}
+
+function SelectInfo({
+  highlightedChainsNumber,
+}: {
+  highlightedChainsNumber: number
+}) {
+  const text =
+    highlightedChainsNumber === 1
+      ? 'Select second chain to view detailed data'
+      : 'Select chain or pair of chains to view detailed data'
+  return (
+    <div className="flex items-center gap-0.5">
+      <CursorClickIcon className="size-3 fill-brand" />
+      <p className="font-semibold text-brand text-label-value-12 italic leading-none">
+        {text}
+      </p>
+    </div>
   )
 }
