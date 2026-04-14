@@ -3,6 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import type { AppModule } from '../createRouter'
 import { ConfigHealthReportPage } from './ConfigHealthReportPage'
 import { NotificationsRoot } from './components/Notifications'
+import { MonitorAdminPage } from './defidisco/monitorAdmin/MonitorAdminPage'
 import { HomePage } from './HomePage'
 import { ConfigModelsProvider } from './hooks/useConfigModels'
 import { NewProjectPage } from './NewProjectPage'
@@ -45,6 +46,10 @@ export const DiscoveryAppModule: AppModule = {
         {
           path: 'reports/config-health',
           element: <ConfigHealthReportPage />,
+        },
+        {
+          path: 'monitor-admin',
+          element: <MonitorAdminPage />,
         },
       ],
     },

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ActivityEvent, CompiledReview } from '../../../../types'
 import {
   truncateAddress,
@@ -6,7 +7,15 @@ import {
   stripChainPrefix,
 } from '../../../../utils/format'
 import { describeActivityEvent } from '../activityDescription'
+import { FieldChangesPanel } from '../FieldChangesPanel'
 import { SectionHeader, ShowMoreButton } from './_shared'
+
+/** Events whose `changes[]` array can be expanded to show field-level diffs. */
+function isExpandable(
+  event: ActivityEvent,
+): event is Extract<ActivityEvent, { type: 'data-change' | 'role-update' }> {
+  return event.type === 'data-change' || event.type === 'role-update'
+}
 
 interface ActivitySectionProps {
   review: CompiledReview
@@ -57,6 +66,10 @@ function badgeMeta(event: ActivityEvent): {
 
 export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
   const { activity } = review
+  const [expandedKey, setExpandedKey] = useState<string | null>(null)
+  function toggleExpand(key: string) {
+    setExpandedKey((cur) => (cur === key ? null : key))
+  }
   if (!activity || activity.length === 0) {
     return (
       <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
@@ -148,10 +161,18 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
             omitName: true,
           }).replace(/\.$/, '')
           const isLast = i === recent.length - 1
+          const key = event.type === 'upgrade' ? `upgrade-${i}` : event.id
+          const expandable = isExpandable(event)
+          const isExpanded = expandable && expandedKey === key
           return (
             <div
-              key={event.type === 'upgrade' ? `upgrade-${i}` : event.id}
-              className={`pb-[25px] ${!isLast ? 'border-b border-border/60 mb-[25px]' : ''}`}
+              key={key}
+              className={`pb-[25px] ${!isLast ? 'border-b border-border/60 mb-[25px]' : ''} ${
+                expandable ? 'cursor-pointer' : ''
+              }`}
+              onClick={
+                expandable ? () => toggleExpand(key) : undefined
+              }
             >
               {/* Desktop: single row */}
               <div className="hidden sm:flex items-center gap-[32px]">
@@ -193,6 +214,7 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                                 href={etherscanUrl(impl)}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
                                 className="font-mono text-accent hover:underline"
                                 title={stripChainPrefix(impl)}
                               >
@@ -209,6 +231,7 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                     href={etherscanUrl(contractAddr)}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="font-mono text-[11px] text-text-muted hover:text-accent transition-colors flex items-center gap-1"
                     title={rawContract}
                   >
@@ -232,6 +255,7 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                       href={etherscanTxUrl(event.txHash)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="font-mono text-[10px] text-text-muted/80 hover:text-accent transition-colors"
                       title={stripChainPrefix(event.txHash)}
                     >
@@ -239,6 +263,24 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                     </a>
                   )}
                 </div>
+                {expandable && (
+                  <svg
+                    className={`size-3 shrink-0 text-text-muted transition-transform ${
+                      isExpanded ? 'rotate-90' : ''
+                    }`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                )}
               </div>
 
               {/* Mobile: stacked rows */}
@@ -300,6 +342,7 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                     href={etherscanUrl(contractAddr)}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="font-mono text-[11px] text-text-muted hover:text-accent transition-colors flex items-center gap-1"
                     title={rawContract}
                   >
@@ -325,6 +368,7 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                         href={etherscanTxUrl(event.txHash)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="font-mono text-[11px] text-text-muted hover:text-accent transition-colors"
                         title={stripChainPrefix(event.txHash)}
                       >
@@ -332,8 +376,39 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
                       </a>
                     </>
                   )}
+                  {expandable && (
+                    <svg
+                      className={`size-3 text-text-muted transition-transform ${
+                        isExpanded ? 'rotate-90' : ''
+                      }`}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  )}
                 </div>
               </div>
+
+              {isExpanded && expandable && (
+                <div className="mt-3">
+                  <FieldChangesPanel
+                    changes={event.changes}
+                    roleName={
+                      event.type === 'role-update'
+                        ? event.roleName
+                        : undefined
+                    }
+                  />
+                </div>
+              )}
             </div>
           )
         })}

@@ -10,6 +10,8 @@ The tool is enhanced at multiple levels to add and automate the analysis for DeF
 
 The frontend is used to help researchers visualize the result of an analysis and complete the manual actions required during the review process. The frontend queries the backend through an API, a simple Express.js server defined in `packages/l2b/src/implementations/discovery-ui/main.ts`. Following the minimum integration principle we [defined](developers/contributing.md), all endpoints added for *DeFiScan V2* are `in packages/l2b/src/implementations/discovery-ui/defidisco/` and are simply imported and registered in the `main.ts`. The frontend makes those API calls from `packages/protocolbeat/src/api/api.ts`.
 
+`main.ts` calls `dotenv.config()` at module entry so `l2b ui` invoked from `packages/config/` automatically picks up the project's `.env` file. This is what makes `DATABASE_URL` (used by the Monitor Admin Dashboard) and AI API keys (used by `/scan-permissions`, `/analyze-impact`, etc.) discoverable without forcing the user to export them shell-side. Existing `process.env` values still take precedence.
+
 ## Backend
 
 The backend is primarily its API endpoints mentioned above. Through these endpoints it can also perform some of the analysis routines such as *discovery*, *fetching funds data*, *creating the call graph*, or *detecting permissions*. It also performs the manual changes made by reviewers/researchers such as *tagging contracts* or changing *function characteristics*.
@@ -96,7 +98,7 @@ The monitoring service is a standalone background process that continuously watc
 3. **Notification** — sends Discord messages when contract changes are detected; new diff is persisted to the `UpdateNotifier` table
 4. **Discovery Write-back** — writes the fresh `discovered.json` back to `packages/config/src/projects/<project>/` via `saveDiscoveredJson`. Committed by the GH Actions workflow so `$pastUpgrades` and the activity feed stay in sync between manual runs
 5. **Funds Refresh** — fetches live token balances, DeFi positions via DeBank API, and aggregate TVL via defiscan-endpoints (The Graph subgraphs). Warnings (e.g. failed aggregate fetches) are reported to Discord
-6. **Activity Reconcile** — `reconcileActivity(project)` reads `activity.json`, fetches new `UpdateNotifier` rows via `getNewerThanId(project, cursor)`, runs `classifyDiff()` against the just-written `discovered.json` + contract tags, appends new events deduped by deterministic id, advances the cursor, writes the file. First run with `cursor === 0` does a full historical backfill. Must run **before** compile so the compiler sees a consistent file
+6. **Activity Reconcile** — `reconcileActivity(project)` reads `activity.json`, fetches new `UpdateNotifier` rows via `getNewerThanId(project, cursor)`, runs `classifyDiff()` against the just-written `discovered.json` + contract tags, appends new events deduped by deterministic id, advances the cursor, writes the file. First run with `cursor === 0` does a full historical backfill. **Schema v1.1 (events grouped per contract per cycle)**: if the on-disk file's version doesn't match `'1.1'`, `readActivityFile` logs a single reset line and returns an empty file (`lastConsumedUpdateNotifierId: 0`), forcing a full re-reconcile from the DB on this same step. Must run **before** compile so the compiler sees a consistent file
 7. **Review Compilation** — produces a self-contained `compiled-review.json` per project, merging upgrade events from `$pastUpgrades` with the classifier events from `activity.json`
 
 After all projects are processed, a cycle summary is posted to Discord with project count, duration, and change count.
@@ -113,6 +115,24 @@ After all projects are processed, a cycle summary is posted to Discord with proj
 **Database**: PostgreSQL (Neon free tier) stores discovery cache (RPC response caching across ephemeral containers) and update monitor snapshots (for diffing against previous discoveries). The connection string is stored as a GitHub Actions secret.
 
 **ReviewCompiler location**: The `ReviewCompiler` class lives in `packages/l2b/src/implementations/discovery-ui/defidisco/reviewCompiler.ts` and is shared between the l2b API (interactive compile endpoint) and the monitor (automated compilation). The monitor imports it via `@l2beat/l2b/dist/...`.
+
+### Monitor Admin Dashboard
+
+The Monitor Admin Dashboard (`/ui/monitor-admin`) is a researcher-facing cleanup UI for the `UpdateNotifier` Postgres table populated by the Continuous Monitoring Service. It exists because monitor cycles inevitably catch noisy ticking values that snuck past `ignoreInWatchMode`, and the only previous remedy was hand-editing both the DB and `activity.json`.
+
+**Backend**: `packages/l2b/src/implementations/discovery-ui/defidisco/monitorAdmin.ts` exposes list/get/strip/delete operations on `UpdateNotifier` rows. Each mutation cascades into `activity.json` (so the live activity feed stays consistent) and recompiles the project's review (so `compiled-review.json` reflects the cleanup immediately). Optionally promotes the stripped fields into `overrides[address].ignoreInWatchMode` in `config.jsonc` via `jsonc-parser` (comment-preserving) so the same field never alerts again.
+
+**Database methods**: Two new methods on `UpdateNotifierRepository` (one of the few unavoidable upstream-file edits): `deleteById(id)` and `updateDiff(id, diff)`.
+
+**Endpoints**: All under `/api/defidisco/monitor/*`, **gated on `process.env.DATABASE_URL`**. When the env var is unset, the endpoints return `503` and the frontend renders an "unavailable" notice. Mutations also respect the `--readonly` flag on `l2b ui` (return `403`).
+
+**Strip vs delete cascade**:
+- **Strip selected fields** mutates the row's `diffJsonBlob` to remove the chosen `(address, key)` pairs (deleting the row entirely if all fields are stripped). In `activity.json`, walks the matching grouped event's `changes[]` array and prunes only the requested entries — drops the event when its `changes[]` becomes empty.
+- **Delete whole row** drops the row outright. In `activity.json`, drops every event tagged with that `updateNotifierId`.
+
+Both report a unified field-change count (units match across actions). The cascade fully relies on the activity v1.1 grouped schema — the strip path mutates `changes[]` arrays directly rather than filtering events.
+
+For implementation details, see [Infrastructure: Monitor Admin Dashboard](features/infrastructure.md#monitor-admin-dashboard).
 
 ### DeFiScan Frontend
 

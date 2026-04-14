@@ -49,27 +49,66 @@ function describeDataChange(
   event: Extract<ActivityEvent, { type: 'data-change' }>,
   options: DescribeOptions,
 ): string {
-  const field = humanizeFieldName(event.field)
-  const before = formatValue(event.before)
-  const after = formatValue(event.after)
+  const count = event.changes.length
+  if (count === 1) {
+    const c = event.changes[0]!
+    const field = humanizeFieldName(c.field)
+    const before = formatValue(c.before)
+    const after = formatValue(c.after)
+    if (options.omitName) {
+      return `${field} changed from ${before} to ${after}.`
+    }
+    const contract = event.contractName ?? shortenAddress(event.address)
+    return `${contract}: ${field} changed from ${before} to ${after}.`
+  }
+  const summary = summarizeFieldList(event.changes)
   if (options.omitName) {
-    return `${field} changed from ${before} to ${after}.`
+    return `${count} fields changed (${summary}).`
   }
   const contract = event.contractName ?? shortenAddress(event.address)
-  return `${contract}: ${field} changed from ${before} to ${after}.`
+  return `${contract}: ${count} fields changed (${summary}).`
 }
 
 function describeRoleUpdate(
   event: Extract<ActivityEvent, { type: 'role-update' }>,
   options: DescribeOptions,
 ): string {
-  const before = formatValue(event.before)
-  const after = formatValue(event.after)
+  const count = event.changes.length
+  if (count === 1) {
+    const c = event.changes[0]!
+    const before = formatValue(c.before)
+    const after = formatValue(c.after)
+    // Append the specific sub-field (e.g. "members", "adminRole", "3" for an
+    // indexed Safe owner slot) so the description disambiguates which part of
+    // the role changed — otherwise "ADMIN changed from X to Y" is identical
+    // whether members[] or adminRole was touched.
+    const sub = roleSubField(c.field, event.roleName)
+    const label = sub ? `${event.roleName} ${sub}` : event.roleName
+    if (options.omitName) {
+      return `${label} changed from ${before} to ${after}.`
+    }
+    const contract = event.contractName ?? shortenAddress(event.address)
+    return `${contract}: ${label} changed from ${before} to ${after}.`
+  }
+  const summary = summarizeFieldList(event.changes)
   if (options.omitName) {
-    return `${event.roleName} changed from ${before} to ${after}.`
+    return `${event.roleName}: ${count} fields changed (${summary}).`
   }
   const contract = event.contractName ?? shortenAddress(event.address)
-  return `${contract}: ${event.roleName} changed from ${before} to ${after}.`
+  return `${contract}: ${event.roleName} — ${count} fields changed (${summary}).`
+}
+
+/**
+ * Build a short "field-a, field-b, field-c and N more" summary of changed
+ * field keys, used in the table description for grouped events.
+ */
+function summarizeFieldList(
+  changes: { field: string }[],
+  preview = 3,
+): string {
+  const names = changes.slice(0, preview).map((c) => humanizeFieldName(c.field))
+  const more = changes.length - preview
+  return more > 0 ? `${names.join(', ')} and ${more} more` : names.join(', ')
 }
 
 function describeContractAdded(
@@ -90,13 +129,38 @@ function describeContractRemoved(
   return `${contract} removed from discovery.`
 }
 
-function humanizeFieldName(key: string): string {
+/**
+ * Extracts the sub-field of a role-update diff key so descriptions can say
+ * "ADMIN members" or "Safe.owners slot 3" instead of just "ADMIN".
+ * Returns `undefined` when the key doesn't carry a meaningful sub-field.
+ */
+function roleSubField(
+  fieldKey: string,
+  roleName: string,
+): string | undefined {
+  // accessControl.<ROLE>.(members|adminRole) — possibly prefixed with values.
+  const ac = fieldKey.match(
+    /^(?:values\.)?accessControl\.([^.]+)\.(members|adminRole)$/,
+  )
+  if (ac) return ac[2]
+
+  // Safe owner indexed slot: values.$members.3 / $members.3
+  const idx = fieldKey.match(/^(?:values\.)?\$members\.(\d+)$/)
+  if (idx) return `slot ${idx[1]}`
+
+  // Whole-array Safe members / Safe threshold / owner / pendingOwner — the
+  // roleName itself already describes the change, nothing to append.
+  if (roleName === 'Safe.owners' || roleName === 'Safe.threshold') return
+  return
+}
+
+export function humanizeFieldName(key: string): string {
   // Strip known prefixes, then return the last segment as-is.
   const stripped = key.replace(/^values\./, '').replace(/^\$/, '')
   return stripped
 }
 
-function formatValue(value: unknown): string {
+export function formatValue(value: unknown): string {
   if (value === undefined || value === null) return '∅'
   if (typeof value === 'string') {
     const trimmed = value.startsWith('eth:')

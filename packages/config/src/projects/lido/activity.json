@@ -9,10 +9,14 @@
       "address": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
       "contractName": "ValidatorsExitBusOracle",
       "entity": null,
-      "id": "4:eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e:template",
+      "id": "4:eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/ValidatorsExitBusOracle"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/ValidatorsExitBusOracle"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -20,7 +24,7 @@
       "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
       "contractName": "Escrow",
       "entity": null,
-      "id": "4:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:$deleted",
+      "id": "4:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -29,7 +33,7 @@
       "address": "eth:0x16Dbd4B85a448bE564f1742d5c8cCdD2bB3185D0",
       "contractName": "GateSeal",
       "entity": null,
-      "id": "4:eth:0x16Dbd4B85a448bE564f1742d5c8cCdD2bB3185D0:$deleted",
+      "id": "4:eth:0x16Dbd4B85a448bE564f1742d5c8cCdD2bB3185D0:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -38,7 +42,7 @@
       "address": "eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0",
       "contractName": "TiebreakerCoreCommittee",
       "entity": null,
-      "id": "4:eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0:$deleted",
+      "id": "4:eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -47,7 +51,7 @@
       "address": "eth:0x23E0B465633FF5178808F4A75186E2F2F9537021",
       "contractName": "Executor",
       "entity": null,
-      "id": "4:eth:0x23E0B465633FF5178808F4A75186E2F2F9537021:$deleted",
+      "id": "4:eth:0x23E0B465633FF5178808F4A75186E2F2F9537021:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -56,7 +60,7 @@
       "address": "eth:0x2a30F5aC03187674553024296bed35Aa49749DDa",
       "contractName": "TimeConstraints",
       "entity": null,
-      "id": "4:eth:0x2a30F5aC03187674553024296bed35Aa49749DDa:$deleted",
+      "id": "4:eth:0x2a30F5aC03187674553024296bed35Aa49749DDa:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -65,7 +69,7 @@
       "address": "eth:0x31534e3aFE219B609da3715a00a1479D2A2d7981",
       "contractName": "DGRolesValidatorMainnet",
       "entity": null,
-      "id": "4:eth:0x31534e3aFE219B609da3715a00a1479D2A2d7981:$deleted",
+      "id": "4:eth:0x31534e3aFE219B609da3715a00a1479D2A2d7981:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -75,158 +79,90 @@
       "contractName": "Lido Dao Agent",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.2",
+      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:data-change",
       "type": "data-change",
-      "field": "receivedPermissions.2",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.3",
-      "type": "data-change",
-      "field": "receivedPermissions.3",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.4",
-      "type": "data-change",
-      "field": "receivedPermissions.4",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.7",
-      "type": "data-change",
-      "field": "receivedPermissions.7",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.8",
-      "type": "data-change",
-      "field": "receivedPermissions.8",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.16",
-      "type": "data-change",
-      "field": "receivedPermissions.16",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.17",
-      "type": "data-change",
-      "field": "receivedPermissions.17",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.20",
-      "type": "data-change",
-      "field": "receivedPermissions.20",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.21",
-      "type": "data-change",
-      "field": "receivedPermissions.21",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
-        "role": "admin"
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-      "contractName": "Lido Dao Agent",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c:receivedPermissions.22",
-      "type": "data-change",
-      "field": "receivedPermissions.22",
-      "after": {
-        "permission": "upgrade",
-        "from": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
-        "role": "admin"
-      }
+      "changes": [
+        {
+          "field": "receivedPermissions.2",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.3",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.4",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.7",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.8",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.16",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.17",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.20",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.21",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
+            "role": "admin"
+          }
+        },
+        {
+          "field": "receivedPermissions.22",
+          "after": {
+            "permission": "upgrade",
+            "from": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
+            "role": "admin"
+          }
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -234,7 +170,7 @@
       "address": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
       "contractName": "LegacyOracle",
       "entity": null,
-      "id": "4:eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb:$deleted",
+      "id": "4:eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -243,7 +179,7 @@
       "address": "eth:0x487b764a2085ffd595D9141BAec0A766B7904786",
       "contractName": "DGUpgradeStateVerifierMainnet",
       "entity": null,
-      "id": "4:eth:0x487b764a2085ffd595D9141BAec0A766B7904786:$deleted",
+      "id": "4:eth:0x487b764a2085ffd595D9141BAec0A766B7904786:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -252,7 +188,7 @@
       "address": "eth:0x4AC40c34f8992bb1e5E856A448792158022551ca",
       "contractName": "AllowedTokensRegistry",
       "entity": null,
-      "id": "4:eth:0x4AC40c34f8992bb1e5E856A448792158022551ca:$deleted",
+      "id": "4:eth:0x4AC40c34f8992bb1e5E856A448792158022551ca:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -261,10 +197,14 @@
       "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
       "contractName": "CSFeeOracle",
       "entity": null,
-      "id": "4:eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB:template",
+      "id": "4:eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/CSFeeOracle"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/CSFeeOracle"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -272,7 +212,7 @@
       "address": "eth:0x553337946F2FAb8911774b20025fa776B76a7CcE",
       "contractName": "TimelockedGovernance",
       "entity": null,
-      "id": "4:eth:0x553337946F2FAb8911774b20025fa776B76a7CcE:$deleted",
+      "id": "4:eth:0x553337946F2FAb8911774b20025fa776B76a7CcE:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -282,7 +222,7 @@
       "contractName": "OracleReportSanityChecker",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0x6232397ebac4f5772e53285B26c47914E9461E75:$deleted",
+      "id": "4:eth:0x6232397ebac4f5772e53285B26c47914E9461E75:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -291,7 +231,7 @@
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
       "contractName": "HashConsensus",
       "entity": null,
-      "id": "4:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:$deleted",
+      "id": "4:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -300,165 +240,85 @@
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "contractName": "AccountingOracle",
       "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:template",
+      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:data-change",
       "type": "data-change",
-      "field": "template",
-      "before": "tokens/Lido/AccountingOracle"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:sourceHashes.1",
-      "type": "data-change",
-      "field": "sourceHashes.1",
-      "before": "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b",
-      "after": "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
-      "after": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.$pastUpgrades.4",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.4",
-      "after": [
-        "2025-12-24T14:35:47.000Z",
-        "0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",
-        [
-          "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 4,
-      "after": 5
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.accessControl",
-      "type": "data-change",
-      "field": "values.accessControl",
-      "before": {
-        "DEFAULT_ADMIN_ROLE": {
-          "adminRole": "DEFAULT_ADMIN_ROLE",
-          "members": [
-            "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      "changes": [
+        {
+          "field": "template",
+          "before": "tokens/Lido/AccountingOracle"
+        },
+        {
+          "field": "sourceHashes.1",
+          "before": "0x90b97d1cb45e9893fa400657a6d60368adbd83c194db38ea948219e3cab9fb7b",
+          "after": "0xf330a3f485b5e535d79bf6d47f0acb1a8c8d4df1b8f410979ddd1d7c88751869"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
+          "after": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
+        },
+        {
+          "field": "values.$pastUpgrades.4",
+          "after": [
+            "2025-12-24T14:35:47.000Z",
+            "0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",
+            [
+              "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
+            ]
           ]
         },
-        "MANAGE_CONSENSUS_VERSION_ROLE": {
-          "adminRole": "DEFAULT_ADMIN_ROLE",
-          "members": []
+        {
+          "field": "values.$upgradeCount",
+          "before": 4,
+          "after": 5
+        },
+        {
+          "field": "values.accessControl",
+          "before": {
+            "DEFAULT_ADMIN_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              ]
+            },
+            "MANAGE_CONSENSUS_VERSION_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            }
+          }
+        },
+        {
+          "field": "values.getConsensusVersion",
+          "before": 4,
+          "after": 5
+        },
+        {
+          "field": "values.getContractVersion",
+          "before": 3,
+          "after": 4
+        },
+        {
+          "field": "values.LEGACY_ORACLE",
+          "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+        },
+        {
+          "field": "values.LIDO",
+          "before": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+        },
+        {
+          "field": "values.proxy__getImplementation",
+          "before": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
+          "after": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
+        },
+        {
+          "field": "implementationNames.eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
+          "before": "AccountingOracle"
+        },
+        {
+          "field": "implementationNames.eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c",
+          "after": "AccountingOracle"
         }
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getConsensusVersion",
-      "type": "data-change",
-      "field": "values.getConsensusVersion",
-      "before": 4,
-      "after": 5
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.getContractVersion",
-      "type": "data-change",
-      "field": "values.getContractVersion",
-      "before": 3,
-      "after": 4
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.LEGACY_ORACLE",
-      "type": "data-change",
-      "field": "values.LEGACY_ORACLE",
-      "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.LIDO",
-      "type": "data-change",
-      "field": "values.LIDO",
-      "before": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.proxy__getImplementation",
-      "type": "data-change",
-      "field": "values.proxy__getImplementation",
-      "before": "eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
-      "after": "eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:implementationNames.eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xE9906E543274cebcd335d2C560094089e9547e8d",
-      "before": "AccountingOracle"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "4:eth:0x852deD011285fe67063a08005c71a85690503Cee:implementationNames.eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x1455B96780A93e08abFE41243Db92E2fCbb0141c",
-      "after": "AccountingOracle"
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -466,7 +326,7 @@
       "address": "eth:0x8B3f33234ABD88493c0Cd28De33D583B70beDe35",
       "contractName": "InsuranceFund",
       "entity": null,
-      "id": "4:eth:0x8B3f33234ABD88493c0Cd28De33D583B70beDe35:$deleted",
+      "id": "4:eth:0x8B3f33234ABD88493c0Cd28De33D583B70beDe35:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -475,7 +335,7 @@
       "address": "eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45:$deleted",
+      "id": "4:eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -484,322 +344,242 @@
       "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
       "contractName": "CSParametersRegistry",
       "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getAllowedExitDelay",
+      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:data-change",
       "type": "data-change",
-      "field": "values.getAllowedExitDelay",
-      "before": [
-        345600,
-        345600,
-        432000,
-        345600,
-        345600
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getBadPerformancePenalty",
-      "type": "data-change",
-      "field": "values.getBadPerformancePenalty",
-      "before": [
-        "258000000000000000",
-        "258000000000000000",
-        "172000000000000000",
-        "258000000000000000",
-        "258000000000000000"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getElRewardsStealingAdditionalFine",
-      "type": "data-change",
-      "field": "values.getElRewardsStealingAdditionalFine",
-      "before": [
-        "100000000000000000",
-        "100000000000000000",
-        "50000000000000000",
-        "100000000000000000",
-        "100000000000000000"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getExitDelayPenalty",
-      "type": "data-change",
-      "field": "values.getExitDelayPenalty",
-      "before": [
-        "100000000000000000",
-        "100000000000000000",
-        "50000000000000000",
-        "100000000000000000",
-        "100000000000000000"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getKeyRemovalCharge",
-      "type": "data-change",
-      "field": "values.getKeyRemovalCharge",
-      "before": [
-        "20000000000000000",
-        "20000000000000000",
-        "10000000000000000",
-        "20000000000000000",
-        "20000000000000000"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getKeysLimit",
-      "type": "data-change",
-      "field": "values.getKeysLimit",
-      "before": [
-        "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "452312848583266388373324160190187140051835877600158453279131187530910662655",
-        "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getMaxWithdrawalRequestFee",
-      "type": "data-change",
-      "field": "values.getMaxWithdrawalRequestFee",
-      "before": [
-        "100000000000000000",
-        "100000000000000000",
-        "100000000000000000",
-        "100000000000000000",
-        "100000000000000000"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getPerformanceCoefficients",
-      "type": "data-change",
-      "field": "values.getPerformanceCoefficients",
-      "before": [
-        [
-          54,
-          8,
-          2
-        ],
-        [
-          54,
-          8,
-          2
-        ],
-        [
-          54,
-          4,
-          2
-        ],
-        [
-          54,
-          8,
-          2
-        ],
-        [
-          54,
-          8,
-          2
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getPerformanceLeewayData",
-      "type": "data-change",
-      "field": "values.getPerformanceLeewayData",
-      "before": [
-        [
-          [
-            1,
-            300
+      "changes": [
+        {
+          "field": "values.getAllowedExitDelay",
+          "before": [
+            345600,
+            345600,
+            432000,
+            345600,
+            345600
           ]
-        ],
-        [
-          [
-            1,
-            300
+        },
+        {
+          "field": "values.getBadPerformancePenalty",
+          "before": [
+            "258000000000000000",
+            "258000000000000000",
+            "172000000000000000",
+            "258000000000000000",
+            "258000000000000000"
           ]
-        ],
-        [
-          [
-            1,
-            500
-          ],
-          [
-            151,
-            300
+        },
+        {
+          "field": "values.getElRewardsStealingAdditionalFine",
+          "before": [
+            "100000000000000000",
+            "100000000000000000",
+            "50000000000000000",
+            "100000000000000000",
+            "100000000000000000"
           ]
-        ],
-        [
-          [
-            1,
-            300
+        },
+        {
+          "field": "values.getExitDelayPenalty",
+          "before": [
+            "100000000000000000",
+            "100000000000000000",
+            "50000000000000000",
+            "100000000000000000",
+            "100000000000000000"
           ]
-        ],
-        [
-          [
-            1,
-            300
+        },
+        {
+          "field": "values.getKeyRemovalCharge",
+          "before": [
+            "20000000000000000",
+            "20000000000000000",
+            "10000000000000000",
+            "20000000000000000",
+            "20000000000000000"
           ]
-        ]
+        },
+        {
+          "field": "values.getKeysLimit",
+          "before": [
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+            "452312848583266388373324160190187140051835877600158453279131187530910662655",
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+          ]
+        },
+        {
+          "field": "values.getMaxWithdrawalRequestFee",
+          "before": [
+            "100000000000000000",
+            "100000000000000000",
+            "100000000000000000",
+            "100000000000000000",
+            "100000000000000000"
+          ]
+        },
+        {
+          "field": "values.getPerformanceCoefficients",
+          "before": [
+            [
+              54,
+              8,
+              2
+            ],
+            [
+              54,
+              8,
+              2
+            ],
+            [
+              54,
+              4,
+              2
+            ],
+            [
+              54,
+              8,
+              2
+            ],
+            [
+              54,
+              8,
+              2
+            ]
+          ]
+        },
+        {
+          "field": "values.getPerformanceLeewayData",
+          "before": [
+            [
+              [
+                1,
+                300
+              ]
+            ],
+            [
+              [
+                1,
+                300
+              ]
+            ],
+            [
+              [
+                1,
+                500
+              ],
+              [
+                151,
+                300
+              ]
+            ],
+            [
+              [
+                1,
+                300
+              ]
+            ],
+            [
+              [
+                1,
+                300
+              ]
+            ]
+          ]
+        },
+        {
+          "field": "values.getQueueConfig",
+          "before": [
+            [
+              5,
+              4294967295
+            ],
+            [
+              5,
+              4294967295
+            ],
+            [
+              0,
+              10
+            ],
+            [
+              5,
+              4294967295
+            ],
+            [
+              5,
+              4294967295
+            ]
+          ]
+        },
+        {
+          "field": "values.getRewardShareData",
+          "before": [
+            [
+              [
+                1,
+                5834
+              ]
+            ],
+            [
+              [
+                1,
+                5834
+              ]
+            ],
+            [
+              [
+                1,
+                10000
+              ],
+              [
+                17,
+                5834
+              ]
+            ],
+            [
+              [
+                1,
+                5834
+              ]
+            ],
+            [
+              [
+                1,
+                5834
+              ]
+            ]
+          ]
+        },
+        {
+          "field": "values.getStrikesParams",
+          "before": [
+            [
+              6,
+              3
+            ],
+            [
+              6,
+              3
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              6,
+              3
+            ],
+            [
+              6,
+              3
+            ]
+          ]
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/CSParametersRegistry"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getQueueConfig",
-      "type": "data-change",
-      "field": "values.getQueueConfig",
-      "before": [
-        [
-          5,
-          4294967295
-        ],
-        [
-          5,
-          4294967295
-        ],
-        [
-          0,
-          10
-        ],
-        [
-          5,
-          4294967295
-        ],
-        [
-          5,
-          4294967295
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getRewardShareData",
-      "type": "data-change",
-      "field": "values.getRewardShareData",
-      "before": [
-        [
-          [
-            1,
-            5834
-          ]
-        ],
-        [
-          [
-            1,
-            5834
-          ]
-        ],
-        [
-          [
-            1,
-            10000
-          ],
-          [
-            17,
-            5834
-          ]
-        ],
-        [
-          [
-            1,
-            5834
-          ]
-        ],
-        [
-          [
-            1,
-            5834
-          ]
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:values.getStrikesParams",
-      "type": "data-change",
-      "field": "values.getStrikesParams",
-      "before": [
-        [
-          6,
-          3
-        ],
-        [
-          6,
-          3
-        ],
-        [
-          6,
-          4
-        ],
-        [
-          6,
-          3
-        ],
-        [
-          6,
-          3
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428",
-      "contractName": "CSParametersRegistry",
-      "entity": null,
-      "id": "4:eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/CSParametersRegistry"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -807,7 +587,7 @@
       "address": "eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF",
       "contractName": "ImmutableDualGovernanceConfigProvider",
       "entity": null,
-      "id": "4:eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF:$deleted",
+      "id": "4:eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -816,7 +596,7 @@
       "address": "eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8",
       "contractName": "Escrow",
       "entity": null,
-      "id": "4:eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8:$deleted",
+      "id": "4:eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -825,165 +605,13 @@
       "address": "eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f",
       "contractName": "CSStrikes",
       "entity": null,
-      "id": "4:eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f:template",
+      "id": "4:eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/CSStrikes"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:template",
-      "type": "data-change",
-      "field": "template",
-      "before": "tokens/Lido/stETH"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:sourceHashes.1",
-      "type": "data-change",
-      "field": "sourceHashes.1",
-      "before": "0xdc88f413a8e8c93a3ee2d7f0ca94090b4b1feb8393663061d7bccedc81812975",
-      "after": "0x9edb5ea402771070d36f4e553ed8055f5114e26d2b0511b5f3688f8dfd8e1ef5"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
-      "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getContractVersion",
-      "type": "data-change",
-      "field": "values.getContractVersion",
-      "before": 2,
-      "after": 3
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getFeeDistribution.treasuryFeeBasisPoints",
-      "type": "data-change",
-      "field": "values.getFeeDistribution.treasuryFeeBasisPoints",
-      "before": 5155,
-      "after": 3813
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getFeeDistribution.operatorsFeeBasisPoints",
-      "type": "data-change",
-      "field": "values.getFeeDistribution.operatorsFeeBasisPoints",
-      "before": 4844,
-      "after": 6186
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getOracle",
-      "type": "data-change",
-      "field": "values.getOracle",
-      "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.implementation",
-      "type": "data-change",
-      "field": "values.implementation",
-      "before": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
-      "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getExternalEther",
-      "type": "data-change",
-      "field": "values.getExternalEther",
-      "after": "1051634471311051376798"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getExternalShares",
-      "type": "data-change",
-      "field": "values.getExternalShares",
-      "after": "856182899637347616869"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getMaxExternalRatioBP",
-      "type": "data-change",
-      "field": "values.getMaxExternalRatioBP",
-      "after": 3000
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getPooledEthBySharesRoundUp",
-      "type": "data-change",
-      "field": "values.getPooledEthBySharesRoundUp",
-      "after": [
-        0,
-        2,
-        3,
-        4,
-        5
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/CSStrikes"
+        }
       ]
     },
     {
@@ -993,34 +621,82 @@
       "contractName": "Liquid staked Ether 2.0 Token",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalELRewardsCollected",
+      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:data-change",
       "type": "data-change",
-      "field": "values.getTotalELRewardsCollected",
-      "after": "230679408390854994510067"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:implementationNames.eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
-      "before": "Lido"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "4:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600",
-      "after": "Lido"
+      "changes": [
+        {
+          "field": "template",
+          "before": "tokens/Lido/stETH"
+        },
+        {
+          "field": "sourceHashes.1",
+          "before": "0xdc88f413a8e8c93a3ee2d7f0ca94090b4b1feb8393663061d7bccedc81812975",
+          "after": "0x9edb5ea402771070d36f4e553ed8055f5114e26d2b0511b5f3688f8dfd8e1ef5"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
+          "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
+        },
+        {
+          "field": "values.getContractVersion",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "field": "values.getFeeDistribution.treasuryFeeBasisPoints",
+          "before": 5155,
+          "after": 3813
+        },
+        {
+          "field": "values.getFeeDistribution.operatorsFeeBasisPoints",
+          "before": 4844,
+          "after": 6186
+        },
+        {
+          "field": "values.getOracle",
+          "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+        },
+        {
+          "field": "values.implementation",
+          "before": "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
+          "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
+        },
+        {
+          "field": "values.getExternalEther",
+          "after": "1051634471311051376798"
+        },
+        {
+          "field": "values.getExternalShares",
+          "after": "856182899637347616869"
+        },
+        {
+          "field": "values.getMaxExternalRatioBP",
+          "after": 3000
+        },
+        {
+          "field": "values.getPooledEthBySharesRoundUp",
+          "after": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "field": "values.getTotalELRewardsCollected",
+          "after": "230679408390854994510067"
+        },
+        {
+          "field": "implementationNames.eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
+          "before": "Lido"
+        },
+        {
+          "field": "implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600",
+          "after": "Lido"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1028,23 +704,20 @@
       "address": "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0",
       "contractName": "VettedGate",
       "entity": null,
-      "id": "4:eth:0xB314D4A76C457c93150d308787939063F4Cc67E0:values.treeCid",
+      "id": "4:eth:0xB314D4A76C457c93150d308787939063F4Cc67E0:data-change",
       "type": "data-change",
-      "field": "values.treeCid",
-      "before": "bafkreido7ieacbe6nlhdivxfp2gd5kxovofngf6qdmahih4laihm675e2a",
-      "after": "bafkreiekobdx27a42ub7m4gcn4d5iu3i3u2iq2cdnceviuznhpotsgpvwa"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0",
-      "contractName": "VettedGate",
-      "entity": null,
-      "id": "4:eth:0xB314D4A76C457c93150d308787939063F4Cc67E0:values.treeRoot",
-      "type": "data-change",
-      "field": "values.treeRoot",
-      "before": "0x91545c42adde0f5d82e4c228f81449eab20349c1d31a8538e0468466f93495c5",
-      "after": "0x4bbc2bb2b8db0e6e284de2c5ddc57ffc8deb5f3397f6462646456afeebdf8630"
+      "changes": [
+        {
+          "field": "values.treeCid",
+          "before": "bafkreido7ieacbe6nlhdivxfp2gd5kxovofngf6qdmahih4laihm675e2a",
+          "after": "bafkreiekobdx27a42ub7m4gcn4d5iu3i3u2iq2cdnceviuznhpotsgpvwa"
+        },
+        {
+          "field": "values.treeRoot",
+          "before": "0x91545c42adde0f5d82e4c228f81449eab20349c1d31a8538e0468466f93495c5",
+          "after": "0x4bbc2bb2b8db0e6e284de2c5ddc57ffc8deb5f3397f6462646456afeebdf8630"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1052,7 +725,7 @@
       "address": "eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86",
       "contractName": "Finance",
       "entity": null,
-      "id": "4:eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86:$deleted",
+      "id": "4:eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1061,260 +734,124 @@
       "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
       "contractName": "LidoLocator",
       "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:sourceHashes.1",
+      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:data-change",
       "type": "data-change",
-      "field": "sourceHashes.1",
-      "before": "0xd9bec8b380e332257d788916e194c7e66df309019cb2e5a19afa74e31d6a1890",
-      "after": "0x6c381d08f81d8ee374fd642f9db4a93a697a4e8d8feb28b1a269e11b3329190c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
-      "after": "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.$pastUpgrades.9",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.9",
-      "after": [
-        "2025-12-24T14:35:47.000Z",
-        "0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",
-        [
-          "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
-        ]
+      "changes": [
+        {
+          "field": "sourceHashes.1",
+          "before": "0xd9bec8b380e332257d788916e194c7e66df309019cb2e5a19afa74e31d6a1890",
+          "after": "0x6c381d08f81d8ee374fd642f9db4a93a697a4e8d8feb28b1a269e11b3329190c"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
+          "after": "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
+        },
+        {
+          "field": "values.$pastUpgrades.9",
+          "after": [
+            "2025-12-24T14:35:47.000Z",
+            "0xf143303a719ee2e0c494efce07f889f7c4cd432d9ed993b410c20ad1c904d38f",
+            [
+              "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 9,
+          "after": 10
+        },
+        {
+          "field": "values.burner",
+          "before": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
+          "after": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a"
+        },
+        {
+          "field": "values.coreComponents.1",
+          "before": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
+          "after": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
+        },
+        {
+          "field": "values.legacyOracle",
+          "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
+        },
+        {
+          "field": "values.oracleReportComponentsForLido",
+          "before": [
+            "eth:0x852deD011285fe67063a08005c71a85690503Cee",
+            "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
+            "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
+            "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
+            "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+            "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
+            "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823"
+          ]
+        },
+        {
+          "field": "values.oracleReportSanityChecker",
+          "before": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
+          "after": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
+        },
+        {
+          "field": "values.postTokenRebaseReceiver",
+          "before": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
+          "after": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9"
+        },
+        {
+          "field": "values.proxy__getImplementation",
+          "before": "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
+          "after": "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
+        },
+        {
+          "field": "values.accounting",
+          "after": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf"
+        },
+        {
+          "field": "values.lazyOracle",
+          "after": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c"
+        },
+        {
+          "field": "values.operatorGrid",
+          "after": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d"
+        },
+        {
+          "field": "values.oracleReportComponents",
+          "after": [
+            "eth:0x852deD011285fe67063a08005c71a85690503Cee",
+            "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
+            "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
+            "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+            "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
+            "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+            "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"
+          ]
+        },
+        {
+          "field": "values.predepositGuarantee",
+          "after": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3"
+        },
+        {
+          "field": "values.vaultFactory",
+          "after": "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A"
+        },
+        {
+          "field": "values.vaultHub",
+          "after": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"
+        },
+        {
+          "field": "values.wstETH",
+          "after": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+        },
+        {
+          "field": "implementationNames.eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
+          "before": "LidoLocator"
+        },
+        {
+          "field": "implementationNames.eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d",
+          "after": "LidoLocator"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 9,
-      "after": 10
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.burner",
-      "type": "data-change",
-      "field": "values.burner",
-      "before": "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-      "after": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.coreComponents.1",
-      "type": "data-change",
-      "field": "values.coreComponents.1",
-      "before": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
-      "after": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.legacyOracle",
-      "type": "data-change",
-      "field": "values.legacyOracle",
-      "before": "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.oracleReportComponentsForLido",
-      "type": "data-change",
-      "field": "values.oracleReportComponentsForLido",
-      "before": [
-        "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-        "eth:0x388C818CA8B9251b393131C08a736A67ccB19297",
-        "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
-        "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3",
-        "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-        "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
-        "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.oracleReportSanityChecker",
-      "type": "data-change",
-      "field": "values.oracleReportSanityChecker",
-      "before": "eth:0x6232397ebac4f5772e53285B26c47914E9461E75",
-      "after": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.postTokenRebaseReceiver",
-      "type": "data-change",
-      "field": "values.postTokenRebaseReceiver",
-      "before": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
-      "after": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.proxy__getImplementation",
-      "type": "data-change",
-      "field": "values.proxy__getImplementation",
-      "before": "eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
-      "after": "eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.accounting",
-      "type": "data-change",
-      "field": "values.accounting",
-      "after": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.lazyOracle",
-      "type": "data-change",
-      "field": "values.lazyOracle",
-      "after": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.operatorGrid",
-      "type": "data-change",
-      "field": "values.operatorGrid",
-      "after": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.oracleReportComponents",
-      "type": "data-change",
-      "field": "values.oracleReportComponents",
-      "after": [
-        "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-        "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
-        "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
-        "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-        "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
-        "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
-        "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.predepositGuarantee",
-      "type": "data-change",
-      "field": "values.predepositGuarantee",
-      "after": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.vaultFactory",
-      "type": "data-change",
-      "field": "values.vaultFactory",
-      "after": "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.vaultHub",
-      "type": "data-change",
-      "field": "values.vaultHub",
-      "after": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:values.wstETH",
-      "type": "data-change",
-      "field": "values.wstETH",
-      "after": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:implementationNames.eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x2C298963FB763f74765829722a1ebe0784f4F5Cf",
-      "before": "LidoLocator"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
-      "contractName": "LidoLocator",
-      "entity": null,
-      "id": "4:eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb:implementationNames.eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x2f8779042EFaEd4c53db2Ce293eB6B3f7096C72d",
-      "after": "LidoLocator"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1322,7 +859,7 @@
       "address": "eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E",
       "contractName": "DualGovernance",
       "entity": null,
-      "id": "4:eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E:$deleted",
+      "id": "4:eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1331,7 +868,7 @@
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
-      "id": "4:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:$deleted",
+      "id": "4:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1340,7 +877,7 @@
       "address": "eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF:$deleted",
+      "id": "4:eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1349,7 +886,7 @@
       "address": "eth:0xc934E90E76449F09f2369BB85DCEa056567A327a",
       "contractName": "ImmutableDualGovernanceConfigProvider",
       "entity": null,
-      "id": "4:eth:0xc934E90E76449F09f2369BB85DCEa056567A327a:$deleted",
+      "id": "4:eth:0xc934E90E76449F09f2369BB85DCEa056567A327a:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1359,7 +896,7 @@
       "contractName": "DualGovernance",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db:$deleted",
+      "id": "4:eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1368,7 +905,7 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "4:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:$deleted",
+      "id": "4:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1378,7 +915,7 @@
       "contractName": "Burner",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3:$deleted",
+      "id": "4:eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1387,117 +924,76 @@
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "contractName": "CSFeeDistributor",
       "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.distributedShares",
+      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:data-change",
       "type": "data-change",
-      "field": "values.distributedShares",
-      "before": [
-        "196458706200864250",
-        "505224116619211946",
-        0,
-        "25599846018515934",
-        0
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.getHistoricalDistributionData",
-      "type": "data-change",
-      "field": "values.getHistoricalDistributionData",
-      "before": [
-        [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "",
-          "",
-          0,
-          0
-        ],
-        [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "",
-          "",
-          0,
-          0
-        ],
-        [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "",
-          "",
-          0,
-          0
-        ],
-        [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "",
-          "",
-          0,
-          0
-        ],
-        [
-          0,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "",
-          "",
-          0,
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.logCid",
-      "type": "data-change",
-      "field": "values.logCid",
-      "before": "QmPPFkydgtnwMBDF6nZZaU5nnqy3csbKts3UfRRgWXreEu"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.treeCid",
-      "type": "data-change",
-      "field": "values.treeCid",
-      "before": "QmQMPFA42KXn115k1c2qC9AyXKV45JKcaB1svMGQ7ZvCqz"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "4:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/CSFeeDistributor"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.exitDeadlineThreshold",
-      "type": "data-change",
-      "field": "values.exitDeadlineThreshold",
-      "before": [
-        432000,
-        432000,
-        432000,
-        345600,
-        345600
+      "changes": [
+        {
+          "field": "values.distributedShares",
+          "before": [
+            "196458706200864250",
+            "505224116619211946",
+            0,
+            "25599846018515934",
+            0
+          ]
+        },
+        {
+          "field": "values.getHistoricalDistributionData",
+          "before": [
+            [
+              0,
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "",
+              "",
+              0,
+              0
+            ],
+            [
+              0,
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "",
+              "",
+              0,
+              0
+            ],
+            [
+              0,
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "",
+              "",
+              0,
+              0
+            ],
+            [
+              0,
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "",
+              "",
+              0,
+              0
+            ],
+            [
+              0,
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "",
+              "",
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "field": "values.logCid",
+          "before": "QmPPFkydgtnwMBDF6nZZaU5nnqy3csbKts3UfRRgWXreEu"
+        },
+        {
+          "field": "values.treeCid",
+          "before": "QmQMPFA42KXn115k1c2qC9AyXKV45JKcaB1svMGQ7ZvCqz"
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/CSFeeDistributor"
+        }
       ]
     },
     {
@@ -1506,290 +1002,248 @@
       "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
       "contractName": "CSModule",
       "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperator",
+      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:data-change",
       "type": "data-change",
-      "field": "values.getNodeOperator",
-      "before": [
-        [
-          10,
-          0,
-          6,
-          10,
-          0,
-          4,
-          0,
-          0,
-          0,
-          8,
-          "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-          "eth:0x0000000000000000000000000000000000000000",
-          false,
-          true
-        ],
-        [
-          19,
-          0,
-          19,
-          19,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-          "eth:0x0000000000000000000000000000000000000000",
-          false,
-          false
-        ],
-        [
-          6,
-          0,
-          5,
-          6,
-          0,
-          1,
-          0,
-          0,
-          0,
-          2,
-          "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-          "eth:0x0000000000000000000000000000000000000000",
-          false,
-          true
-        ],
-        [
-          2,
-          0,
-          2,
-          2,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-          "eth:0x0000000000000000000000000000000000000000",
-          false,
-          false
-        ],
-        [
-          12,
-          0,
-          12,
-          12,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-          "eth:0x0000000000000000000000000000000000000000",
-          "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-          "eth:0x0000000000000000000000000000000000000000",
-          false,
-          false
-        ]
+      "changes": [
+        {
+          "field": "values.exitDeadlineThreshold",
+          "before": [
+            432000,
+            432000,
+            432000,
+            345600,
+            345600
+          ]
+        },
+        {
+          "field": "values.getNodeOperator",
+          "before": [
+            [
+              10,
+              0,
+              6,
+              10,
+              0,
+              4,
+              0,
+              0,
+              0,
+              8,
+              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
+              "eth:0x0000000000000000000000000000000000000000",
+              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
+              "eth:0x0000000000000000000000000000000000000000",
+              false,
+              true
+            ],
+            [
+              19,
+              0,
+              19,
+              19,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
+              "eth:0x0000000000000000000000000000000000000000",
+              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
+              "eth:0x0000000000000000000000000000000000000000",
+              false,
+              false
+            ],
+            [
+              6,
+              0,
+              5,
+              6,
+              0,
+              1,
+              0,
+              0,
+              0,
+              2,
+              "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
+              "eth:0x0000000000000000000000000000000000000000",
+              "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
+              "eth:0x0000000000000000000000000000000000000000",
+              false,
+              true
+            ],
+            [
+              2,
+              0,
+              2,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
+              "eth:0x0000000000000000000000000000000000000000",
+              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
+              "eth:0x0000000000000000000000000000000000000000",
+              false,
+              false
+            ],
+            [
+              12,
+              0,
+              12,
+              12,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
+              "eth:0x0000000000000000000000000000000000000000",
+              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
+              "eth:0x0000000000000000000000000000000000000000",
+              false,
+              false
+            ]
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorIsActive",
+          "before": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorManagementProperties",
+          "before": [
+            [
+              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
+              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
+              false
+            ],
+            [
+              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
+              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
+              false
+            ],
+            [
+              "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
+              "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
+              false
+            ],
+            [
+              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
+              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
+              false
+            ],
+            [
+              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
+              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
+              false
+            ]
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorNonWithdrawnKeys",
+          "before": [
+            10,
+            19,
+            6,
+            2,
+            12
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorOwner",
+          "before": [
+            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
+            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
+            "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
+            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
+            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorSummary",
+          "before": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              6,
+              4
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              19,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              12,
+              0
+            ]
+          ]
+        },
+        {
+          "field": "values.getNodeOperatorTotalDepositedKeys",
+          "before": [
+            6,
+            19,
+            5,
+            2,
+            12
+          ]
+        },
+        {
+          "field": "values.getNonce",
+          "before": 1583
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/CSModule"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorIsActive",
-      "type": "data-change",
-      "field": "values.getNodeOperatorIsActive",
-      "before": [
-        true,
-        true,
-        true,
-        true,
-        true
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorManagementProperties",
-      "type": "data-change",
-      "field": "values.getNodeOperatorManagementProperties",
-      "before": [
-        [
-          "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-          "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-          false
-        ],
-        [
-          "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-          "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-          false
-        ],
-        [
-          "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-          "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-          false
-        ],
-        [
-          "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-          "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-          false
-        ],
-        [
-          "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-          "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-          false
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorNonWithdrawnKeys",
-      "type": "data-change",
-      "field": "values.getNodeOperatorNonWithdrawnKeys",
-      "before": [
-        10,
-        19,
-        6,
-        2,
-        12
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorOwner",
-      "type": "data-change",
-      "field": "values.getNodeOperatorOwner",
-      "before": [
-        "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-        "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-        "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-        "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-        "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorSummary",
-      "type": "data-change",
-      "field": "values.getNodeOperatorSummary",
-      "before": [
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          6,
-          4
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          19,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          5,
-          1
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          2,
-          0
-        ],
-        [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          12,
-          0
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNodeOperatorTotalDepositedKeys",
-      "type": "data-change",
-      "field": "values.getNodeOperatorTotalDepositedKeys",
-      "before": [
-        6,
-        19,
-        5,
-        2,
-        12
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:values.getNonce",
-      "type": "data-change",
-      "field": "values.getNonce",
-      "before": 1583
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
-      "contractName": "CSModule",
-      "entity": null,
-      "id": "4:eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/CSModule"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1797,10 +1251,14 @@
       "address": "eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B",
       "contractName": "TriggerableWithdrawalsGateway",
       "entity": null,
-      "id": "4:eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B:template",
+      "id": "4:eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/TriggerableWithdrawalsGateway"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/TriggerableWithdrawalsGateway"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1808,7 +1266,7 @@
       "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
       "contractName": "CSVerifier",
       "entity": null,
-      "id": "4:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:$deleted",
+      "id": "4:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1817,7 +1275,7 @@
       "address": "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823",
       "contractName": "TokenRateNotifier",
       "entity": null,
-      "id": "4:eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823:$deleted",
+      "id": "4:eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1827,7 +1285,7 @@
       "contractName": "TiebreakerCoreCommittee",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5:$deleted",
+      "id": "4:eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1836,7 +1294,7 @@
       "address": "eth:0xf9C9fDB4A5D2AA1D836D5370AB9b28BC1847e178",
       "contractName": "GateSeal",
       "entity": null,
-      "id": "4:eth:0xf9C9fDB4A5D2AA1D836D5370AB9b28BC1847e178:$deleted",
+      "id": "4:eth:0xf9C9fDB4A5D2AA1D836D5370AB9b28BC1847e178:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1846,11 +1304,15 @@
       "contractName": "StakingRouter",
       "isDependency": false,
       "entity": null,
-      "id": "4:eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999:values.accessControl.REPORT_REWARDS_MINTED_ROLE.members.0",
+      "id": "4:eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999:data-change",
       "type": "data-change",
-      "field": "values.accessControl.REPORT_REWARDS_MINTED_ROLE.members.0",
-      "before": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "after": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf"
+      "changes": [
+        {
+          "field": "values.accessControl.REPORT_REWARDS_MINTED_ROLE.members.0",
+          "before": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+          "after": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1858,7 +1320,7 @@
       "address": "eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977",
       "contractName": "EVMScriptExecutor",
       "entity": null,
-      "id": "4:eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977:$deleted",
+      "id": "4:eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1867,7 +1329,7 @@
       "address": "eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081:$deleted",
+      "id": "4:eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1876,7 +1338,7 @@
       "address": "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A",
       "contractName": "VaultFactory",
       "entity": null,
-      "id": "4:eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A:$created",
+      "id": "4:eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A:contract-added",
       "type": "contract-added"
     },
     {
@@ -1885,7 +1347,7 @@
       "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "4:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:$created",
+      "id": "4:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:contract-added",
       "type": "contract-added"
     },
     {
@@ -1894,7 +1356,7 @@
       "address": "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0:$created",
+      "id": "4:eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0:contract-added",
       "type": "contract-added"
     },
     {
@@ -1903,7 +1365,7 @@
       "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
       "contractName": "VaultHub",
       "entity": null,
-      "id": "4:eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709:$created",
+      "id": "4:eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709:contract-added",
       "type": "contract-added"
     },
     {
@@ -1912,7 +1374,7 @@
       "address": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf",
       "contractName": "Accounting",
       "entity": null,
-      "id": "4:eth:0x23ED611be0e1a820978875C0122F92260804cdDf:$created",
+      "id": "4:eth:0x23ED611be0e1a820978875C0122F92260804cdDf:contract-added",
       "type": "contract-added"
     },
     {
@@ -1921,7 +1383,7 @@
       "address": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
       "contractName": "TokenRateNotifier",
       "entity": null,
-      "id": "4:eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9:$created",
+      "id": "4:eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9:contract-added",
       "type": "contract-added"
     },
     {
@@ -1930,7 +1392,7 @@
       "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
       "contractName": "Dashboard",
       "entity": null,
-      "id": "4:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:$created",
+      "id": "4:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:contract-added",
       "type": "contract-added"
     },
     {
@@ -1939,7 +1401,7 @@
       "address": "eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353",
       "contractName": "GnosisSafe",
       "entity": null,
-      "id": "4:eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353:$created",
+      "id": "4:eth:0x35921FB43cB92F5Bfef7cBA1e97Eb5A21Fc2d353:contract-added",
       "type": "contract-added"
     },
     {
@@ -1948,7 +1410,7 @@
       "address": "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311:$created",
+      "id": "4:eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311:contract-added",
       "type": "contract-added"
     },
     {
@@ -1957,7 +1419,7 @@
       "address": "eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942:$created",
+      "id": "4:eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942:contract-added",
       "type": "contract-added"
     },
     {
@@ -1966,7 +1428,7 @@
       "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "4:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:$created",
+      "id": "4:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:contract-added",
       "type": "contract-added"
     },
     {
@@ -1975,7 +1437,7 @@
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
-      "id": "4:eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c:$created",
+      "id": "4:eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c:contract-added",
       "type": "contract-added"
     },
     {
@@ -1984,7 +1446,7 @@
       "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
       "contractName": "UpgradeableBeacon",
       "entity": null,
-      "id": "4:eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789:$created",
+      "id": "4:eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789:contract-added",
       "type": "contract-added"
     },
     {
@@ -1993,7 +1455,7 @@
       "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "4:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:$created",
+      "id": "4:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:contract-added",
       "type": "contract-added"
     },
     {
@@ -2002,7 +1464,7 @@
       "address": "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566:$created",
+      "id": "4:eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566:contract-added",
       "type": "contract-added"
     },
     {
@@ -2011,7 +1473,7 @@
       "address": "eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6:$created",
+      "id": "4:eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6:contract-added",
       "type": "contract-added"
     },
     {
@@ -2020,7 +1482,7 @@
       "address": "eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1",
       "contractName": "Safe",
       "entity": null,
-      "id": "4:eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1:$created",
+      "id": "4:eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1:contract-added",
       "type": "contract-added"
     },
     {
@@ -2029,7 +1491,7 @@
       "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
       "contractName": "OperatorGrid",
       "entity": null,
-      "id": "4:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:$created",
+      "id": "4:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:contract-added",
       "type": "contract-added"
     },
     {
@@ -2038,7 +1500,7 @@
       "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "4:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:$created",
+      "id": "4:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:contract-added",
       "type": "contract-added"
     },
     {
@@ -2047,7 +1509,7 @@
       "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "4:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:$created",
+      "id": "4:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:contract-added",
       "type": "contract-added"
     },
     {
@@ -2056,7 +1518,7 @@
       "address": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
       "contractName": "Burner",
       "entity": null,
-      "id": "4:eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a:$created",
+      "id": "4:eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a:contract-added",
       "type": "contract-added"
     },
     {
@@ -2065,7 +1527,7 @@
       "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
       "contractName": "OracleReportSanityChecker",
       "entity": null,
-      "id": "4:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:$created",
+      "id": "4:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:contract-added",
       "type": "contract-added"
     },
     {
@@ -2074,7 +1536,7 @@
       "address": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
       "contractName": "PredepositGuarantee",
       "entity": null,
-      "id": "4:eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3:$created",
+      "id": "4:eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3:contract-added",
       "type": "contract-added"
     },
     {
@@ -2083,7 +1545,7 @@
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
-      "id": "32:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:$created",
+      "id": "32:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:contract-added",
       "type": "contract-added"
     },
     {
@@ -2092,7 +1554,7 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "32:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:$created",
+      "id": "32:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:contract-added",
       "type": "contract-added"
     },
     {
@@ -2101,7 +1563,7 @@
       "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
       "contractName": "CSVerifier",
       "entity": null,
-      "id": "32:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:$created",
+      "id": "32:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:contract-added",
       "type": "contract-added"
     },
     {
@@ -2110,7 +1572,7 @@
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
-      "id": "41:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:$deleted",
+      "id": "41:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2119,7 +1581,7 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "41:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:$deleted",
+      "id": "41:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2128,7 +1590,7 @@
       "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
       "contractName": "CSVerifier",
       "entity": null,
-      "id": "41:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:$deleted",
+      "id": "41:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2137,7 +1599,7 @@
       "address": "eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C",
       "contractName": "CSEjector",
       "entity": null,
-      "id": "47:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:$created",
+      "id": "47:eth:0xc72b58aa02E0e98cF8A4a0E9Dce75e763800802C:contract-added",
       "type": "contract-added"
     },
     {
@@ -2146,7 +1608,7 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "47:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:$created",
+      "id": "47:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:contract-added",
       "type": "contract-added"
     },
     {
@@ -2155,7 +1617,7 @@
       "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
       "contractName": "CSVerifier",
       "entity": null,
-      "id": "47:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:$created",
+      "id": "47:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:contract-added",
       "type": "contract-added"
     },
     {
@@ -2164,10 +1626,14 @@
       "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:template",
+      "id": "53:eth:0x06A56487494aa080deC7Bf69128EdA9225784553:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/StakingVault"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/StakingVault"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2175,7 +1641,7 @@
       "address": "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
       "contractName": "Safe",
       "entity": null,
-      "id": "53:eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0:$deleted",
+      "id": "53:eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2184,26 +1650,13 @@
       "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
       "contractName": "VaultHub",
       "entity": null,
-      "id": "53:eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709:template",
+      "id": "53:eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/VaultHub"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-      "contractName": "Dashboard",
-      "entity": null,
-      "id": "53:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:values.remainingMintingCapacityShares",
-      "type": "data-change",
-      "field": "values.remainingMintingCapacityShares",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/VaultHub"
+        }
       ]
     },
     {
@@ -2212,10 +1665,24 @@
       "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
       "contractName": "Dashboard",
       "entity": null,
-      "id": "53:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:template",
+      "id": "53:eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/Dashboard"
+      "changes": [
+        {
+          "field": "values.remainingMintingCapacityShares",
+          "before": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/Dashboard"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2223,7 +1690,7 @@
       "address": "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
       "contractName": "Safe",
       "entity": null,
-      "id": "53:eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311:$deleted",
+      "id": "53:eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2232,7 +1699,7 @@
       "address": "eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942",
       "contractName": "Safe",
       "entity": null,
-      "id": "53:eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942:$deleted",
+      "id": "53:eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2241,10 +1708,14 @@
       "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:template",
+      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/StakingVault"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/StakingVault"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2252,10 +1723,14 @@
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
-      "id": "53:eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c:template",
+      "id": "53:eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/LazyOracle"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/LazyOracle"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2263,10 +1738,14 @@
       "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:template",
+      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/StakingVault"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/StakingVault"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2274,7 +1753,7 @@
       "address": "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
       "contractName": "Safe",
       "entity": null,
-      "id": "53:eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566:$deleted",
+      "id": "53:eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2283,135 +1762,58 @@
       "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
       "contractName": "AccountingOracle",
       "entity": null,
-      "id": "53:eth:0x852deD011285fe67063a08005c71a85690503Cee:values.accessControl",
+      "id": "53:eth:0x852deD011285fe67063a08005c71a85690503Cee:data-change",
       "type": "data-change",
-      "field": "values.accessControl",
-      "after": {
-        "DEFAULT_ADMIN_ROLE": {
-          "adminRole": "DEFAULT_ADMIN_ROLE",
-          "members": [
-            "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      "changes": [
+        {
+          "field": "values.accessControl",
+          "after": {
+            "DEFAULT_ADMIN_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": [
+                "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              ]
+            },
+            "MANAGE_CONSENSUS_VERSION_ROLE": {
+              "adminRole": "DEFAULT_ADMIN_ROLE",
+              "members": []
+            }
+          }
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/AccountingOracle"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-03T13:51:02.000Z",
+      "updateNotifierId": 53,
+      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+      "contractName": "Liquid staked Ether 2.0 Token",
+      "isDependency": false,
+      "entity": null,
+      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getTotalELRewardsCollected",
+          "before": "230679408390854994510067"
+        },
+        {
+          "field": "values.getPooledEthBySharesRoundUp",
+          "before": [
+            0,
+            2,
+            3,
+            4,
+            5
           ]
         },
-        "MANAGE_CONSENSUS_VERSION_ROLE": {
-          "adminRole": "DEFAULT_ADMIN_ROLE",
-          "members": []
+        {
+          "field": "template",
+          "after": "tokens/Lido/stETH"
         }
-      }
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
-      "contractName": "AccountingOracle",
-      "entity": null,
-      "id": "53:eth:0x852deD011285fe67063a08005c71a85690503Cee:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/AccountingOracle"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getTotalELRewardsCollected",
-      "type": "data-change",
-      "field": "values.getTotalELRewardsCollected",
-      "before": "230679408390854994510067"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:values.getPooledEthBySharesRoundUp",
-      "type": "data-change",
-      "field": "values.getPooledEthBySharesRoundUp",
-      "before": [
-        0,
-        2,
-        3,
-        4,
-        5
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "contractName": "Liquid staked Ether 2.0 Token",
-      "isDependency": false,
-      "entity": null,
-      "id": "53:eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/stETH"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-      "contractName": "OperatorGrid",
-      "entity": null,
-      "id": "53:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:values.tier",
-      "type": "data-change",
-      "field": "values.tier",
-      "before": [
-        [
-          "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
-          "4071000000000000000000",
-          0,
-          5000,
-          4975,
-          100,
-          650,
-          0
-        ],
-        [
-          "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
-          "1000000000000000000",
-          0,
-          1400,
-          1375,
-          100,
-          650,
-          0
-        ],
-        [
-          "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
-          "2000000000000000000",
-          0,
-          2000,
-          1975,
-          100,
-          650,
-          0
-        ],
-        [
-          "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
-          "38849000000000000000000",
-          0,
-          500,
-          475,
-          100,
-          650,
-          0
-        ],
-        [
-          "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
-          "38849000000000000000000",
-          0,
-          500,
-          475,
-          100,
-          650,
-          0
-        ]
       ]
     },
     {
@@ -2420,43 +1822,78 @@
       "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
       "contractName": "OperatorGrid",
       "entity": null,
-      "id": "53:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:values.nodeOperatorAddress",
+      "id": "53:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:data-change",
       "type": "data-change",
-      "field": "values.nodeOperatorAddress",
-      "before": [
-        "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
-        "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
-        "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
-        "eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942",
-        "eth:0x6aa0757bc4ffdC9f0DEB5E9fA08173c07EF2afCc"
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-      "contractName": "OperatorGrid",
-      "entity": null,
-      "id": "53:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/OperatorGrid"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-      "contractName": "EmergencyProtectedTimelock",
-      "entity": null,
-      "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:values.canExecute",
-      "type": "data-change",
-      "field": "values.canExecute",
-      "before": [
-        false,
-        false,
-        false,
-        false,
-        false
+      "changes": [
+        {
+          "field": "values.tier",
+          "before": [
+            [
+              "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+              "4071000000000000000000",
+              0,
+              5000,
+              4975,
+              100,
+              650,
+              0
+            ],
+            [
+              "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
+              "1000000000000000000",
+              0,
+              1400,
+              1375,
+              100,
+              650,
+              0
+            ],
+            [
+              "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
+              "2000000000000000000",
+              0,
+              2000,
+              1975,
+              100,
+              650,
+              0
+            ],
+            [
+              "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
+              "38849000000000000000000",
+              0,
+              500,
+              475,
+              100,
+              650,
+              0
+            ],
+            [
+              "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
+              "38849000000000000000000",
+              0,
+              500,
+              475,
+              100,
+              650,
+              0
+            ]
+          ]
+        },
+        {
+          "field": "values.nodeOperatorAddress",
+          "before": [
+            "eth:0x762Ca64AD43991bF6D3CF844af05f48BDE7AE566",
+            "eth:0x10eE0Af996dA1e206d96402B4F16fA00818083E0",
+            "eth:0x3831dc257b7b0b507c8aEBfBf94B8E82E5092311",
+            "eth:0x3ED6d85Fc06becE41A9EDB13658F50180eC9F942",
+            "eth:0x6aa0757bc4ffdC9f0DEB5E9fA08173c07EF2afCc"
+          ]
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/OperatorGrid"
+        }
       ]
     },
     {
@@ -2465,15 +1902,29 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:values.canSchedule",
+      "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:data-change",
       "type": "data-change",
-      "field": "values.canSchedule",
-      "before": [
-        false,
-        false,
-        false,
-        false,
-        false
+      "changes": [
+        {
+          "field": "values.canExecute",
+          "before": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "field": "values.canSchedule",
+          "before": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
       ]
     },
     {
@@ -2482,10 +1933,14 @@
       "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:template",
+      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/StakingVault"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/StakingVault"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2493,10 +1948,14 @@
       "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
       "contractName": "StakingVault",
       "entity": null,
-      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:template",
+      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/StakingVault"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/StakingVault"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2504,46 +1963,13 @@
       "address": "eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a",
       "contractName": "Burner",
       "entity": null,
-      "id": "53:eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a:template",
+      "id": "53:eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/Burner"
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
-      "contractName": "OracleReportSanityChecker",
-      "entity": null,
-      "id": "53:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:values.reportData",
-      "type": "data-change",
-      "field": "values.reportData",
-      "before": [
-        [
-          1766664011,
-          139333,
-          0
-        ],
-        [
-          1766750411,
-          139335,
-          0
-        ],
-        [
-          1766836811,
-          139344,
-          0
-        ],
-        [
-          1766923211,
-          139346,
-          0
-        ],
-        [
-          1767009611,
-          139351,
-          0
-        ]
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens/Lido/Burner"
+        }
       ]
     },
     {
@@ -2552,21 +1978,48 @@
       "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
       "contractName": "OracleReportSanityChecker",
       "entity": null,
-      "id": "53:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:values.getReportDataCount",
+      "id": "53:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:data-change",
       "type": "data-change",
-      "field": "values.getReportDataCount",
-      "before": 68
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129",
-      "contractName": "OracleReportSanityChecker",
-      "entity": null,
-      "id": "53:eth:0xf1647c86E6D7959f638DD9CE1d90e2F3C9503129:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "tokens/Lido/OracleReportSanityChecker"
+      "changes": [
+        {
+          "field": "values.reportData",
+          "before": [
+            [
+              1766664011,
+              139333,
+              0
+            ],
+            [
+              1766750411,
+              139335,
+              0
+            ],
+            [
+              1766836811,
+              139344,
+              0
+            ],
+            [
+              1766923211,
+              139346,
+              0
+            ],
+            [
+              1767009611,
+              139351,
+              0
+            ]
+          ]
+        },
+        {
+          "field": "values.getReportDataCount",
+          "before": 68
+        },
+        {
+          "field": "template",
+          "after": "tokens/Lido/OracleReportSanityChecker"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -2574,7 +2027,7 @@
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
       "contractName": "HashConsensus",
       "entity": null,
-      "id": "53:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:$created",
+      "id": "53:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:contract-added",
       "type": "contract-added"
     },
     {
@@ -2583,10 +2036,14 @@
       "address": "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
       "contractName": "HashConsensus",
       "entity": null,
-      "id": "70:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:values.accessControl.MANAGE_FRAME_CONFIG_ROLE.members.0",
+      "id": "70:eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4:data-change",
       "type": "data-change",
-      "field": "values.accessControl.MANAGE_FRAME_CONFIG_ROLE.members.0",
-      "before": "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"
+      "changes": [
+        {
+          "field": "values.accessControl.MANAGE_FRAME_CONFIG_ROLE.members.0",
+          "before": "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-17T08:05:07.000Z",
@@ -2594,11 +2051,15 @@
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "contractName": "CSFeeDistributor",
       "entity": null,
-      "id": "70:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.treeRoot",
+      "id": "70:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:data-change",
       "type": "data-change",
-      "field": "values.treeRoot",
-      "before": "0x3fd20be128730df25ae110227ad2f1c4c277583c641870ebfdbb7289424afee5",
-      "after": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9"
+      "changes": [
+        {
+          "field": "values.treeRoot",
+          "before": "0x3fd20be128730df25ae110227ad2f1c4c277583c641870ebfdbb7289424afee5",
+          "after": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9"
+        }
+      ]
     },
     {
       "timestamp": "2026-04-13T17:27:45.000Z",
@@ -2606,11 +2067,15 @@
       "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
       "contractName": "EmergencyProtectedTimelock",
       "entity": null,
-      "id": "103:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:values.getProposalsCount",
+      "id": "103:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:data-change",
       "type": "data-change",
-      "field": "values.getProposalsCount",
-      "before": 8,
-      "after": 9
+      "changes": [
+        {
+          "field": "values.getProposalsCount",
+          "before": 8,
+          "after": 9
+        }
+      ]
     },
     {
       "timestamp": "2026-04-13T17:27:45.000Z",
@@ -2618,11 +2083,15 @@
       "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
       "contractName": "CSFeeDistributor",
       "entity": null,
-      "id": "103:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:values.treeRoot",
+      "id": "103:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:data-change",
       "type": "data-change",
-      "field": "values.treeRoot",
-      "before": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9",
-      "after": "0xb3de2f624121f0ccee9945c7db9f649966c7132e8de501fadb3b849d2a177d8c"
+      "changes": [
+        {
+          "field": "values.treeRoot",
+          "before": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9",
+          "after": "0xb3de2f624121f0ccee9945c7db9f649966c7132e8de501fadb3b849d2a177d8c"
+        }
+      ]
     }
   ]
 }

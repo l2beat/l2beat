@@ -36,7 +36,7 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @l2beat/l2b... build
+      - run: pnpm turbo run build --filter='@l2beat/l2b...'
 
   build-monitor:
     name: Build Monitor

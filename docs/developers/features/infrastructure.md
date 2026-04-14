@@ -313,22 +313,28 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
 - **Activity file schema** (`packages/l2b/src/implementations/discovery-ui/defidisco/activity.ts`):
   ```ts
   interface ActivityFile {
-    version: '1.0'
+    version: '1.1'
     lastReconciledAt: number              // unix seconds
     lastConsumedUpdateNotifierId: number  // monotonic DB row cursor — 0 = full backfill
     events: ActivityFileEvent[]
   }
   ```
-  File helpers: `readActivityFile`, `writeActivityFile`, `getActivityEvents`. Written exclusively by the monitor — no HTTP endpoints.
+  File helpers: `readActivityFile`, `writeActivityFile`, `getActivityEvents`. Written exclusively by the monitor (and by the Monitor Admin Dashboard cascade — see below) — no HTTP endpoints.
+- **Schema version 1.1 — events grouped per contract per cycle** (bumped from `1.0`): `DataChangeEvent` and `RoleUpdateEvent` now carry a `changes: FieldChange[]` array (`FieldChange = { field, before, after }`) instead of one event per individual field. The classifier buckets every field diff from a single `(updateNotifierId, address)` pair into one `data-change` event plus one `role-update` event per distinct `roleName` — so a contract with 50 ticking fields produces 1 row instead of 50. Event id format becomes `${updateNotifierId}:${address}:${type}` (or `…:role:${roleName}` for role updates) — still deterministic for idempotent dedup. **Migration is forced re-reconciliation, not in-place transformation**: `readActivityFile()` checks `version`, and on mismatch logs a single `Activity file ${project} version mismatch (got ${v}, expected 1.1) — resetting and forcing re-reconcile` line and returns an empty file with `lastConsumedUpdateNotifierId: 0`. The next reconcile then walks `UpdateNotifier` from id 0 and rebuilds the file in the new shape. The DB is the source of truth — re-reading it is cheap (~36 rows total) and avoids carrying a legacy read path forever. Projects whose DB rows were aged out lose any orphaned events from the file (acceptable: the only legitimate way the DB can be "behind" the file is if the Monitor Admin Dashboard deleted rows, in which case dropping the events is desired).
 - **Classifier** (`activityClassifier.ts` `classifyDiff(notifier, discovery, contractTags)`):
   - Skips `$implementation`, `$pastUpgrades`, `$upgradeCount` (covered by upgrade events).
   - `$admin` → `RoleUpdateEvent` with `roleName: 'ProxyAdmin'`.
   - `accessControl.<ROLE>.(members|adminRole)` and `values.accessControl.<ROLE>.…` → `role-update` with `roleName = <ROLE>`.
   - `owner`, `pendingOwner`, Safe `$members`, `$threshold` → `role-update` with a descriptive role name.
-  - `DiscoveryDiff.type === 'created' | 'deleted'` → `contract-added` / `contract-removed`.
-  - Everything else → `data-change` with the raw diff key.
-  - Deterministic id `${updateNotifierId}:${address}:${key}` makes reconciliation idempotent across crash-between-read-and-write.
+  - `DiscoveryDiff.type === 'created' | 'deleted'` → `contract-added` / `contract-removed` (one event per occurrence — no field-level grouping).
+  - Everything else → `data-change` aggregated under one event per contract per cycle.
+  - **Bucketing**: for each `contractDiff`, walks `contractDiff.diff` once and accumulates `FieldChange` entries into a `Map<bucketKey, FieldChange[]>` where `bucketKey` is `'data'` for plain field changes or `'role:${roleName}'` for role updates. Each bucket emits one event with the accumulated `changes[]`.
   - `FieldDiff.before`/`after` are JSON-parsed with a string fallback; `diff.address` is coerced via `String(...)` because `ChainSpecificAddress` does not survive the DB round-trip.
+- **Frontend rendering**:
+  - `pages/review/views/activityDescription.ts` `describeActivityEvent` switches on `event.type` and on `changes.length`. Count=1 keeps the existing "X changed from Y to Z" wording. Count>1 produces a "{count} fields changed (a, b, c and N more)" summary using `summarizeFieldList()` (and "{N} role members updated (…)" for role updates). The `omitName` mode is preserved — used by `ActivitySection.tsx` which renders the contract name on its own line.
+  - `pages/review/views/FieldChangesPanel.tsx` is a shared component used by both `ActivityView.tsx` and report-page `ActivitySection.tsx`. Renders the grouped `changes[]` as a `Field | Before | After` table. For role updates it strips the `accessControl.<ROLE>.` prefix from each field key so the table reads `members[0]` instead of `accessControl.OPERATOR.members[0]`.
+  - `ActivityView.tsx` and `ActivitySection.tsx` make `data-change` and `role-update` rows **click-to-expand**: clicking the row toggles an inline `FieldChangesPanel` underneath. Single-open semantics (only one row expanded at a time per view). Inner anchors (Etherscan/tx links) call `e.stopPropagation()` so they still work without toggling. `upgrade`, `contract-added`, `contract-removed` rows are non-expandable (no chevron, no click handler) — they don't carry a `changes[]` array.
+  - The total-rows / pagination counter on `ActivityView.tsx` now reflects the **grouped** event count, which is the intent: the table no longer drowns in noise from one chunky monitor cycle.
 - **Monitor integration** (`DefidiscoMonitorApplication.reconcileActivity`): runs between funds refresh and compile review. Loads the current file, fetches `updateNotifier.getNewerThanId(projectId, cursor)` (new repository method, cursors on the monotonic `id`), classifies each row against the current `discovered.json` + `contract-tags.json`, appends new events (deduped via the deterministic id), advances the cursor, writes the file. First run with `cursor === 0` does a full historical backfill.
 - **Types** (`reviewCompiler.ts` + frontend `types.ts`): `ActivityEvent` is now a discriminated union:
   ```ts
@@ -349,7 +355,76 @@ The Report view (`ReportView.tsx`) includes sharing and export capabilities:
   4. **Pagination**: client-side, 10 events per page.
   - **Empty state**: hero + notification channels + table body with "No activity recorded yet."
 - **Page chrome** (`ReviewPage.tsx`): On the activity view, the `ViewModeToggle` is hidden — activity is treated as a child of the report. Back link reads "Back to report" (`?view=report`).
-- **Report-preview** (`report/ActivitySection.tsx`): same badge + Source-column treatment as `ActivityView`, showing the 3 most recent events.
+- **Report-preview** (`report/ActivitySection.tsx`): same badge + Source-column treatment as `ActivityView`, showing the 3 most recent events. Click-to-expand also works here for parity.
+
+## Monitor Admin Dashboard
+
+**Researcher cleanup UI for the `UpdateNotifier` Postgres table** — surfaces every persisted monitor cycle row, lets researchers browse what changed, and supports surgical cleanup (strip individual fields or delete entire rows) when the monitor catches noisy ticking values that snuck past `ignoreInWatchMode`.
+
+- **Route**: `/ui/monitor-admin` (registered in `DiscoveryApp.tsx`; entry button on `HomePage.tsx` next to "Compile All")
+- **Why**: Without this UI, the only way to scrub noisy `UpdateNotifier` rows was to manually `DELETE` from Postgres + hand-edit `activity.json` + re-run discovery. The dashboard wraps all three steps and adds optional `ignoreInWatchMode` promotion so the same field never alerts again.
+
+### Backend module
+
+`packages/l2b/src/implementations/discovery-ui/defidisco/monitorAdmin.ts` — single self-contained module exposing:
+
+- `createMonitorAdminClient({ connectionString, ssl })` — instantiates a `Database` (kysely) for `UpdateNotifier` reads/writes
+- `listMonitorRows(db)` — returns `MonitorRowSummary[]` (id, projectId, timestamp, contractCount, fieldCount, top 3 contracts by field count). Sorted by `(projectId, id desc)` so the most recent row per project is first
+- `getMonitorRow(db, id)` — returns `MonitorRowDetail` with the full per-contract field tuples (`{ key, before, after }`) for inline rendering
+- `deleteMonitorRow(paths, configReader, configWriter, db, id, { addToIgnoreWatchMode })` — drops the DB row, drops every `activity.json` event tagged with that `updateNotifierId`, optionally promotes the field names to `ignoreInWatchMode`, recompiles the project's review
+- `stripMonitorFields(paths, configReader, configWriter, db, id, fields, { addToIgnoreWatchMode })` — mutates the row's `diffJsonBlob` to drop the requested `(address, key)` pairs (deleting the row entirely if all fields are stripped), updates the matching `activity.json` event's `changes[]` array (dropping the event when `changes.length` reaches 0), optionally promotes the field names to `ignoreInWatchMode`, recompiles
+- `addFieldsToIgnoreWatchMode(configReader, configWriter, project, fields)` — uses `jsonc-parser` (`parse`/`modify`/`applyEdits`) to merge bare field names into `overrides[address].ignoreInWatchMode` in `config.jsonc` while preserving comments. Skips structural keys that aren't valid `ignoreInWatchMode` entries: anything not under `values.*`, the `accessControl.*` subtree, and proxy escapes (`$admin`, `$implementation`, …)
+
+Both mutations report `MutationResult` with a unified field-change count (`activityDropped`) — `removeActivityEventsForRow` sums `e.changes.length` for grouped events plus `+1` for each contract-added/removed, so the unit matches `removeActivityEventsForFields` and the success toast can speak in field-changes uniformly. The recompile result is wrapped in `safeCompile()` so a compile failure is reported in the response without aborting the mutation.
+
+### Database methods
+
+`packages/database/src/repositories/UpdateNotifierRepository.ts` (this is one of the unavoidable upstream files we touch):
+
+- `deleteById(id: number): Promise<number>` — surgical row delete by id
+- `updateDiff(id: number, diff: DiscoveryDiff[]): Promise<number>` — replaces `diffJsonBlob` for one row, used by strip
+
+### HTTP endpoints
+
+All registered in `packages/l2b/src/implementations/discovery-ui/main.ts` and **gated on `process.env.DATABASE_URL`**. When the env var is unset, `createMonitorAdminClient` is not called and every endpoint returns `503 { error: 'Monitor admin unavailable (DATABASE_URL not set)' }`. Mutations also respect the `--readonly` flag on `l2b ui` and return `403`.
+
+| Method | Path | Handler | Notes |
+|--------|------|---------|-------|
+| `GET` | `/api/defidisco/monitor/health` | inline | Returns `{ available, readonly }` — frontend uses this to decide whether to show the dashboard or the "unavailable" notice |
+| `GET` | `/api/defidisco/monitor/rows` | `listMonitorRows` | 503 if unavailable |
+| `GET` | `/api/defidisco/monitor/rows/:id` | `getMonitorRow` | 404 if id not found |
+| `POST` | `/api/defidisco/monitor/rows/:id/delete` | `deleteMonitorRow` | Body: `{ addToIgnoreWatchMode?: boolean }`. 403 in readonly |
+| `POST` | `/api/defidisco/monitor/rows/:id/strip` | `stripMonitorFields` | Body: `{ fields: [{address, key}], addToIgnoreWatchMode?: boolean }`. 400 if `fields[]` is empty or malformed. 403 in readonly |
+
+### dotenv loading
+
+`main.ts` calls `dotenv.config()` at module entry (before any other imports that read `process.env`). This is what makes `DATABASE_URL` discoverable when `l2b ui` is invoked from `packages/config/` — the user's project `.env` file is loaded automatically. Existing `process.env` values still take precedence so callers can still override per-invocation. This same call also benefits other DeFiDisco features that read keys from `.env` (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `RESEARCHER_GITHUB`, …).
+
+### Frontend
+
+- **Page**: `packages/protocolbeat/src/apps/discovery/defidisco/monitorAdmin/MonitorAdminPage.tsx`
+  - Health check via `useQuery(['monitor', 'health'])` — controls whether the rows query is enabled
+  - Rows query via `useQuery(['monitor', 'rows'])` — grouped by project for display
+  - Totals bar at the top: total rows / total fields / project count
+  - Each row is inline-expandable via `RowDetailPanel`
+  - Renders an "unavailable" card when `health.available === false`, and a yellow readonly banner when `health.readonly === true`
+- **Detail panel**: `packages/protocolbeat/src/apps/discovery/defidisco/monitorAdmin/RowDetailPanel.tsx`
+  - Loads the full row via `useQuery(['monitor', 'row', rowId])`
+  - Renders contracts as collapsible groups with checkbox selection (per-field + per-contract + select-all/clear)
+  - **Strip N fields** button → `stripMutation` → on success invalidates `['monitor', 'rows']` + `['monitor', 'row', rowId]`
+  - **Delete whole row** button (with `window.confirm` guard) → `deleteMutation` → on success invalidates `['monitor', 'rows']` and closes the panel
+  - "Also add to `ignoreInWatchMode`" toggle is forwarded to both mutations
+  - Success toast wording: `"Dropped {N} activity field change{s}. Added {M} fields to ignoreInWatchMode across {K} contracts. Recompile: {status}"`
+- **API client**: added to `packages/protocolbeat/src/api/api.ts` — `getMonitorHealth`, `listMonitorRows`, `getMonitorRow`, `deleteMonitorRow`, `stripMonitorFields` plus the `MonitorRowSummary`/`MonitorRowDetail`/`MonitorMutationResult`/`MonitorHealthResponse` types
+
+### Cascade semantics (strip vs delete)
+
+| Action | DB effect | `activity.json` effect | `config.jsonc` effect (if toggle on) |
+|--------|-----------|------------------------|--------------------------------------|
+| Strip selected fields | `updateDiff` removes the chosen `(address, key)` pairs; if a contract's diff becomes empty it's dropped from the row's `diff[]`; if the entire diff becomes empty the row is `deleteById`'d | `removeActivityEventsForFields`: walks each grouped event whose `(updateNotifierId, address)` matches and prunes the requested fields from `changes[]`. Drops events whose `changes[]` becomes empty. Reports the field-change count | `addFieldsToIgnoreWatchMode` merges only the chosen fields per contract |
+| Delete whole row | `deleteById` drops the row | `removeActivityEventsForRow`: drops every event tagged with that `updateNotifierId`. Reports the total field-change count | `addFieldsToIgnoreWatchMode` merges every field that was on the row |
+
+After both actions, `safeCompile()` recompiles the project's review so `compiled-review.json` reflects the cleanup immediately. A compile error is returned in the `MutationResult.recompile` field rather than rolling back the mutation — the cleanup itself succeeded, the compile is best-effort.
 
 ## Continuous Monitoring Service
 

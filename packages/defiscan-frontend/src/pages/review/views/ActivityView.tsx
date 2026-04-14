@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import type { ActivityEvent, CompiledReview } from '../../../types'
 import {
   etherscanTxUrl,
@@ -8,6 +8,14 @@ import {
 } from '../../../utils/format'
 import { ProtocolLogo } from '../../../components/ProtocolLogo'
 import { describeActivityEvent } from './activityDescription'
+import { FieldChangesPanel } from './FieldChangesPanel'
+
+/** Events whose `changes[]` array can be expanded to show field-level diffs. */
+function isExpandable(
+  event: ActivityEvent,
+): event is Extract<ActivityEvent, { type: 'data-change' | 'role-update' }> {
+  return event.type === 'data-change' || event.type === 'role-update'
+}
 
 function eventContractAddress(event: ActivityEvent): string {
   return event.type === 'upgrade' ? event.contractAddress : event.address
@@ -18,8 +26,15 @@ function eventContractName(event: ActivityEvent): string {
   return event.contractName ?? truncateAddress(event.address)
 }
 
-function eventKey(event: ActivityEvent, index: number): string {
-  if (event.type === 'upgrade') return `${event.txHash}-${index}`
+function eventKey(event: ActivityEvent): string {
+  // Stable keys matter because sorting toggles reorder `visible`. Using the
+  // array index would force React to remount every row on each re-sort.
+  // Non-upgrade events carry a deterministic `id` built from
+  // (updateNotifierId, address, bucket) — use it directly. Upgrades don't
+  // have that id but a (txHash, contractAddress) pair is unique per upgrade.
+  if (event.type === 'upgrade') {
+    return `upgrade:${event.txHash}:${event.contractAddress}`
+  }
   return event.id
 }
 
@@ -69,6 +84,11 @@ export function ActivityView({ review }: ActivityViewProps) {
   const events = review.activity ?? []
   const [sortDir, setSortDir] = useState<SortDir>('desc')
   const [page, setPage] = useState(1)
+  const [expandedKey, setExpandedKey] = useState<string | null>(null)
+
+  function toggleExpand(key: string) {
+    setExpandedKey((cur) => (cur === key ? null : key))
+  }
 
   const sorted = useMemo(() => {
     const copy = [...events]
@@ -229,7 +249,7 @@ export function ActivityView({ review }: ActivityViewProps) {
               No activity recorded yet
             </h3>
             <p className="text-sm text-text-muted">
-              Contract upgrades will appear here.
+              Protocol activity will appear here once monitoring begins.
             </p>
           </div>
         ) : (
@@ -238,6 +258,7 @@ export function ActivityView({ review }: ActivityViewProps) {
             <table className="hidden w-full sm:table">
               <thead className="border-border border-b bg-bg-card">
                 <tr>
+                  <th className="w-[32px] px-2 py-4" />
                   <th className="w-[210px] px-6 py-4 text-left font-bold text-[11px] text-text-muted uppercase tracking-[0.1em]">
                     Date
                   </th>
@@ -256,69 +277,115 @@ export function ActivityView({ review }: ActivityViewProps) {
                 </tr>
               </thead>
               <tbody>
-                {visible.map((event, i) => {
-                  const isDep = !!event.isDependency
+                {visible.map((event) => {
                   const contractAddr = eventContractAddress(event)
                   const contractLabel = eventContractName(event)
+                  const key = eventKey(event)
+                  const expandable = isExpandable(event)
+                  const isExpanded = expandable && expandedKey === key
                   return (
-                    <tr
-                      key={eventKey(event, i)}
-                      className="border-border/30 border-b last:border-b-0"
-                    >
-                      <td className="px-6 py-4 align-middle">
-                        <span className="font-mono text-[12px] text-text-primary">
-                          {formatTimestamp(event.timestamp)}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 align-middle">
-                        <UpdateTypeBadge event={event} />
-                      </td>
-                      <td className="px-6 py-4 align-middle">
-                        <span className="text-[14px] text-text-primary">
-                          {describeActivityEvent(event)}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 align-middle">
-                        <div className="flex flex-col gap-0.5">
-                          <a
-                            href={etherscanUrl(contractAddr)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
-                            title={stripChainPrefix(contractAddr)}
-                          >
-                            {contractLabel}
+                    <Fragment key={key}>
+                      <tr
+                        className={`border-border/30 border-b last:border-b-0 ${
+                          expandable
+                            ? 'cursor-pointer hover:bg-bg-card/40'
+                            : ''
+                        } ${isExpanded ? 'bg-bg-card/40' : ''}`}
+                        onClick={
+                          expandable ? () => toggleExpand(key) : undefined
+                        }
+                      >
+                        <td className="px-2 py-4 align-middle text-center">
+                          {expandable && (
                             <svg
-                              className="size-[10px]"
+                              className={`inline size-3 text-text-muted transition-transform ${
+                                isExpanded ? 'rotate-90' : ''
+                              }`}
                               viewBox="0 0 24 24"
                               fill="none"
                               stroke="currentColor"
-                              strokeWidth={2}
+                              strokeWidth={2.5}
+                              aria-hidden="true"
                             >
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                                d="M9 5l7 7-7 7"
                               />
                             </svg>
-                          </a>
-                          {event.type === 'upgrade' && (
+                          )}
+                        </td>
+                        <td className="px-6 py-4 align-middle">
+                          <span className="font-mono text-[12px] text-text-primary">
+                            {formatTimestamp(event.timestamp)}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 align-middle">
+                          <UpdateTypeBadge event={event} />
+                        </td>
+                        <td className="px-6 py-4 align-middle">
+                          <span className="text-[14px] text-text-primary">
+                            {describeActivityEvent(event)}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 align-middle">
+                          <div className="flex flex-col gap-0.5">
                             <a
-                              href={etherscanTxUrl(event.txHash)}
+                              href={etherscanUrl(contractAddr)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-mono text-[10px] text-text-muted hover:text-accent transition-colors"
-                              title={stripChainPrefix(event.txHash)}
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
+                              title={stripChainPrefix(contractAddr)}
                             >
-                              tx: {truncateTx(event.txHash)}
+                              {contractLabel}
+                              <svg
+                                className="size-[10px]"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                                />
+                              </svg>
                             </a>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-right align-middle">
-                        <SeverityBadge isDependency={isDep} />
-                      </td>
-                    </tr>
+                            {event.type === 'upgrade' && (
+                              <a
+                                href={etherscanTxUrl(event.txHash)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="font-mono text-[10px] text-text-muted hover:text-accent transition-colors"
+                                title={stripChainPrefix(event.txHash)}
+                              >
+                                tx: {truncateTx(event.txHash)}
+                              </a>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-right align-middle">
+                          <SeverityBadge event={event} />
+                        </td>
+                      </tr>
+                      {isExpanded && expandable && (
+                        <tr className="border-border/30 border-b last:border-b-0 bg-bg-card/40">
+                          <td colSpan={6} className="px-6 pb-4">
+                            <FieldChangesPanel
+                              changes={event.changes}
+                              roleName={
+                                event.type === 'role-update'
+                                  ? event.roleName
+                                  : undefined
+                              }
+                            />
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
                   )
                 })}
               </tbody>
@@ -326,22 +393,49 @@ export function ActivityView({ review }: ActivityViewProps) {
 
             {/* Mobile stacked rows */}
             <div className="flex flex-col sm:hidden">
-              {visible.map((event, i) => {
-                const isDep = !!event.isDependency
+              {visible.map((event) => {
                 const contractAddr = eventContractAddress(event)
                 const contractLabel = eventContractName(event)
+                const key = eventKey(event)
+                const expandable = isExpandable(event)
+                const isExpanded = expandable && expandedKey === key
                 return (
                   <div
-                    key={eventKey(event, i)}
-                    className="flex flex-col gap-2 border-border/30 border-b px-5 py-4 last:border-b-0"
+                    key={key}
+                    className={`flex flex-col gap-2 border-border/30 border-b px-5 py-4 last:border-b-0 ${
+                      isExpanded ? 'bg-bg-card/40' : ''
+                    }`}
+                    onClick={
+                      expandable ? () => toggleExpand(key) : undefined
+                    }
                   >
                     <div className="flex items-center justify-between gap-2">
                       <span className="font-mono text-[11px] text-text-muted">
                         {formatTimestamp(event.timestamp)}
                       </span>
-                      <SeverityBadge isDependency={isDep} />
+                      <SeverityBadge event={event} />
                     </div>
-                    <UpdateTypeBadge event={event} />
+                    <div className="flex items-center gap-2">
+                      <UpdateTypeBadge event={event} />
+                      {expandable && (
+                        <svg
+                          className={`size-3 text-text-muted transition-transform ${
+                            isExpanded ? 'rotate-90' : ''
+                          }`}
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      )}
+                    </div>
                     <p className="text-[14px] text-text-primary">
                       {describeActivityEvent(event)}
                     </p>
@@ -349,6 +443,7 @@ export function ActivityView({ review }: ActivityViewProps) {
                       href={etherscanUrl(contractAddr)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="inline-flex w-fit items-center gap-1.5 font-mono text-[11px] text-accent hover:underline"
                       title={stripChainPrefix(contractAddr)}
                     >
@@ -372,11 +467,24 @@ export function ActivityView({ review }: ActivityViewProps) {
                         href={etherscanTxUrl(event.txHash)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="font-mono text-[10px] text-text-muted hover:text-accent transition-colors w-fit"
                         title={stripChainPrefix(event.txHash)}
                       >
                         tx: {truncateTx(event.txHash)}
                       </a>
+                    )}
+                    {isExpanded && expandable && (
+                      <div className="mt-2">
+                        <FieldChangesPanel
+                          changes={event.changes}
+                          roleName={
+                            event.type === 'role-update'
+                              ? event.roleName
+                              : undefined
+                          }
+                        />
+                      </div>
                     )}
                   </div>
                 )
@@ -481,29 +589,49 @@ function badgeMeta(event: ActivityEvent): {
   }
 }
 
-function SeverityBadge({ isDependency }: { isDependency: boolean }) {
-  if (isDependency) {
-    return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-[rgba(0,125,87,0.1)] px-2.5 py-0.5 font-bold text-[#006243] text-[10px]">
-        <svg
-          className="size-[10px]"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-          />
-        </svg>
-        Info
-      </span>
-    )
+type Severity = 'High' | 'Medium' | 'Low' | 'Info'
+
+/**
+ * Severity rubric:
+ *   - Dependency changes are always "Info" (external to the protocol).
+ *   - Upgrades and role updates = High (code/permission control flow).
+ *   - Contract add/remove = Medium (surface-area change, not a control shift).
+ *   - Data changes = Low (parameter tweaks, interest rates, counters).
+ * This replaces the previous binary "dependency → Info, everything else → High"
+ * rule which over-alarmed on benign parameter changes.
+ */
+function severityFor(event: ActivityEvent): Severity {
+  if (event.isDependency) return 'Info'
+  switch (event.type) {
+    case 'upgrade':
+    case 'role-update':
+      return 'High'
+    case 'contract-added':
+    case 'contract-removed':
+      return 'Medium'
+    case 'data-change':
+      return 'Low'
   }
+}
+
+function SeverityBadge({ event }: { event: ActivityEvent }) {
+  const severity = severityFor(event)
+  const className =
+    severity === 'High'
+      ? 'bg-[rgba(255,218,214,0.4)] text-[#ba1a1a]'
+      : severity === 'Medium'
+        ? 'bg-[rgba(255,184,0,0.15)] text-[#a06200]'
+        : severity === 'Low'
+          ? 'bg-[rgba(0,90,200,0.1)] text-[#1a3d8f]'
+          : 'bg-[rgba(0,125,87,0.1)] text-[#006243]'
+  const iconPath =
+    severity === 'Info'
+      ? 'M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z'
+      : 'M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z'
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[rgba(255,218,214,0.4)] px-2.5 py-0.5 font-bold text-[#ba1a1a] text-[10px]">
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-bold text-[10px] ${className}`}
+    >
       <svg
         className="size-[10px]"
         viewBox="0 0 24 24"
@@ -514,10 +642,10 @@ function SeverityBadge({ isDependency }: { isDependency: boolean }) {
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+          d={iconPath}
         />
       </svg>
-      High
+      {severity}
     </span>
   )
 }

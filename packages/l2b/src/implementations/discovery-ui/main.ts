@@ -9,9 +9,16 @@ import {
 } from '@l2beat/discovery'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
+import dotenv from 'dotenv'
 import express from 'express'
 import type { Server } from 'http'
 import path, { join } from 'path'
+
+// Load .env from the current working directory (typically packages/config when
+// `l2b ui` is invoked there). Existing process.env values take precedence so
+// callers can still override per-invocation. Used by DeFiDisco to pick up
+// DATABASE_URL, OPENAI_API_KEY, ANTHROPIC_API_KEY, RESEARCHER_GITHUB, etc.
+dotenv.config()
 import { attachConfigRouter } from './configs/router'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
@@ -64,6 +71,13 @@ import { getAudits, getResources, updateAudits, updateResources } from './defidi
 import { getGovernance, updateGovernance } from './defidisco/governance'
 import { countLinesOfCode } from './defidisco/countLinesOfCode'
 import { ReviewCompiler } from './defidisco/reviewCompiler'
+import {
+  createMonitorAdminClient,
+  deleteMonitorRow,
+  getMonitorRow,
+  listMonitorRows,
+  stripMonitorFields,
+} from './defidisco/monitorAdmin'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -1068,6 +1082,154 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (error) {
       console.error('Error computing function analysis:', error)
       res.status(500).json({ error: 'Failed to compute function analysis' })
+    }
+  })
+
+  // ==========================================================================
+  // DeFiDisco: Monitor Admin Dashboard
+  // Gated by DATABASE_URL — when unset, the routes return 503 so the frontend
+  // can show "unavailable". Mutations also respect the readonly flag.
+  // ==========================================================================
+  // SSL is auto-enabled unless the connection string points at localhost
+  // (matches the convention in packages/backend/src/config/makeConfig.ts).
+  // Local Postgres instances typically don't accept SSL, so hardcoding it on
+  // would break them.
+  const monitorAdminDb = process.env.DATABASE_URL
+    ? createMonitorAdminClient({
+        connectionString: process.env.DATABASE_URL,
+        ssl: !process.env.DATABASE_URL.includes('localhost'),
+      })
+    : null
+
+  if (!monitorAdminDb) {
+    console.log('Monitor admin disabled — set DATABASE_URL to enable')
+  }
+
+  app.get('/api/defidisco/monitor/health', (_req, res) => {
+    res.json({ available: monitorAdminDb !== null, readonly })
+  })
+
+  app.get('/api/defidisco/monitor/rows', async (_req, res) => {
+    if (!monitorAdminDb) {
+      res.status(503).json({ error: 'Monitor admin unavailable (DATABASE_URL not set)' })
+      return
+    }
+    try {
+      const rows = await listMonitorRows(monitorAdminDb)
+      res.json({ rows })
+    } catch (error) {
+      console.error('Error listing monitor rows:', error)
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to list rows',
+      })
+    }
+  })
+
+  app.get('/api/defidisco/monitor/rows/:id', async (req, res) => {
+    if (!monitorAdminDb) {
+      res.status(503).json({ error: 'Monitor admin unavailable (DATABASE_URL not set)' })
+      return
+    }
+    const id = Number(req.params.id)
+    if (!Number.isFinite(id) || id <= 0) {
+      res.status(400).json({ error: 'Invalid id' })
+      return
+    }
+    try {
+      const row = await getMonitorRow(monitorAdminDb, id)
+      if (!row) {
+        res.status(404).json({ error: 'Row not found' })
+        return
+      }
+      res.json(row)
+    } catch (error) {
+      console.error('Error loading monitor row:', error)
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to load row',
+      })
+    }
+  })
+
+  app.post('/api/defidisco/monitor/rows/:id/delete', async (req, res) => {
+    if (!monitorAdminDb) {
+      res.status(503).json({ error: 'Monitor admin unavailable (DATABASE_URL not set)' })
+      return
+    }
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+    const id = Number(req.params.id)
+    if (!Number.isFinite(id) || id <= 0) {
+      res.status(400).json({ error: 'Invalid id' })
+      return
+    }
+    const addToIgnoreWatchMode = Boolean(req.body?.addToIgnoreWatchMode)
+    try {
+      const result = await deleteMonitorRow(
+        paths,
+        configReader,
+        configWriter,
+        monitorAdminDb,
+        id,
+        { addToIgnoreWatchMode },
+      )
+      res.json(result)
+    } catch (error) {
+      console.error('Error deleting monitor row:', error)
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to delete row',
+      })
+    }
+  })
+
+  app.post('/api/defidisco/monitor/rows/:id/strip', async (req, res) => {
+    if (!monitorAdminDb) {
+      res.status(503).json({ error: 'Monitor admin unavailable (DATABASE_URL not set)' })
+      return
+    }
+    if (readonly) {
+      res.status(403).json({ error: 'Server is in readonly mode' })
+      return
+    }
+    const id = Number(req.params.id)
+    if (!Number.isFinite(id) || id <= 0) {
+      res.status(400).json({ error: 'Invalid id' })
+      return
+    }
+    const fields = Array.isArray(req.body?.fields) ? req.body.fields : []
+    if (fields.length === 0) {
+      res.status(400).json({ error: 'fields[] must be non-empty' })
+      return
+    }
+    const validFields = fields.every(
+      (f: unknown) =>
+        typeof f === 'object' &&
+        f !== null &&
+        typeof (f as { address: unknown }).address === 'string' &&
+        typeof (f as { key: unknown }).key === 'string',
+    )
+    if (!validFields) {
+      res.status(400).json({ error: 'Each field must have {address, key}' })
+      return
+    }
+    const addToIgnoreWatchMode = Boolean(req.body?.addToIgnoreWatchMode)
+    try {
+      const result = await stripMonitorFields(
+        paths,
+        configReader,
+        configWriter,
+        monitorAdminDb,
+        id,
+        fields,
+        { addToIgnoreWatchMode },
+      )
+      res.json(result)
+    } catch (error) {
+      console.error('Error stripping monitor fields:', error)
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to strip fields',
+      })
     }
   })
 

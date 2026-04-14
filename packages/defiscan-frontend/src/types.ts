@@ -264,19 +264,26 @@ interface BaseActivityFileEvent {
   entity?: string | null
 }
 
-export interface DataChangeEvent extends BaseActivityFileEvent {
-  type: 'data-change'
+/** A single field diff inside a grouped activity event. */
+export interface FieldChange {
+  /** Original diff key, e.g. "values.totalSupply" or "accessControl.ADMIN.members". */
   field: string
   before: unknown
   after: unknown
 }
 
+export interface DataChangeEvent extends BaseActivityFileEvent {
+  type: 'data-change'
+  /** All non-role fields that changed on this contract during one monitor cycle. Length >= 1. */
+  changes: FieldChange[]
+}
+
 export interface RoleUpdateEvent extends BaseActivityFileEvent {
   type: 'role-update'
+  /** Single role per event — multi-role updates produce multiple events. */
   roleName: string
-  field: string
-  before: unknown
-  after: unknown
+  /** All sub-fields of this role that changed. Length >= 1. */
+  changes: FieldChange[]
 }
 
 export interface ContractAddedEvent extends BaseActivityFileEvent {

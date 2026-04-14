@@ -55,6 +55,14 @@ export function HomePage() {
                 </button>
               </Link>
               <CompileAllButton />
+              <Link to="/ui/monitor-admin" className="flex self-stretch">
+                <button
+                  className="flex items-center justify-center border border-coffee-600 px-4 text-coffee-400 text-xs transition-colors duration-100 hover:cursor-pointer hover:bg-coffee-600"
+                  title="Monitor admin: clean up UpdateNotifier rows"
+                >
+                  Monitor
+                </button>
+              </Link>
             </>
           )}
         </div>

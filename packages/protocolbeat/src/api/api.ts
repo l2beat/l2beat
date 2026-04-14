@@ -723,3 +723,107 @@ export async function getFunctionAnalysis(project: string): Promise<ApiFunctionA
   const data = await res.json()
   return data as ApiFunctionAnalysisResponse
 }
+
+// ============================================================================
+// DeFiDisco Monitor Admin
+// ============================================================================
+
+export interface MonitorRowSummary {
+  id: number
+  projectId: string
+  timestamp: string
+  contractCount: number
+  fieldCount: number
+  topContracts: { name: string; address: string; fieldCount: number }[]
+}
+
+export interface MonitorRowDetail {
+  id: number
+  projectId: string
+  timestamp: string
+  contracts: {
+    name?: string
+    address: string
+    type?: 'created' | 'deleted'
+    fields: {
+      key: string
+      before?: string
+      after?: string
+    }[]
+  }[]
+}
+
+export interface MonitorMutationResult {
+  rowDeleted: boolean
+  rowUpdated: boolean
+  activityDropped: number
+  configContractsUpdated: number
+  ignoreFieldsAdded: number
+  recompile:
+    | { status: 'success'; path: string }
+    | { status: 'skipped'; reason: string }
+    | { status: 'error'; error: string }
+    | null
+}
+
+export interface MonitorHealthResponse {
+  available: boolean
+  readonly: boolean
+}
+
+export async function getMonitorHealth(): Promise<MonitorHealthResponse> {
+  const res = await fetch('/api/defidisco/monitor/health')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function listMonitorRows(): Promise<{ rows: MonitorRowSummary[] }> {
+  const res = await fetch('/api/defidisco/monitor/rows')
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function getMonitorRow(id: number): Promise<MonitorRowDetail> {
+  const res = await fetch(`/api/defidisco/monitor/rows/${id}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  return res.json()
+}
+
+export async function deleteMonitorRow(
+  id: number,
+  opts: { addToIgnoreWatchMode: boolean },
+): Promise<MonitorMutationResult> {
+  const res = await fetch(`/api/defidisco/monitor/rows/${id}/delete`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(opts),
+  })
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(body || res.statusText)
+  }
+  return res.json()
+}
+
+export async function stripMonitorFields(
+  id: number,
+  fields: { address: string; key: string }[],
+  opts: { addToIgnoreWatchMode: boolean },
+): Promise<MonitorMutationResult> {
+  const res = await fetch(`/api/defidisco/monitor/rows/${id}/strip`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fields, ...opts }),
+  })
+  if (!res.ok) {
+    const body = await res.text()
+    throw new Error(body || res.statusText)
+  }
+  return res.json()
+}

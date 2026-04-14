@@ -9,14 +9,18 @@
       "address": "eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3",
       "contractName": "CometExtAssetList",
       "entity": null,
-      "id": "1:eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3:values.writeFunctionPermissions",
+      "id": "1:eth:0x16F3532e6AF45A2C51B6C77b1267cEF34A9cf3B3:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 7
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 7
+            }
+          ]
         }
       ]
     },
@@ -26,14 +30,18 @@
       "address": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
       "contractName": "CometProxyAdmin",
       "entity": null,
-      "id": "1:eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779:values.writeFunctionPermissions",
+      "id": "1:eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 12
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 12
+            }
+          ]
         }
       ]
     },
@@ -44,27 +52,23 @@
       "contractName": "GnosisSafe",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:values.$members.1",
+      "id": "1:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:data-change",
       "type": "data-change",
-      "field": "values.$members.1",
-      "before": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
-      "after": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-      "contractName": "GnosisSafe",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 16
+          "field": "values.$members.1",
+          "before": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+          "after": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781"
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 16
+            }
+          ]
         }
       ]
     },
@@ -74,14 +78,18 @@
       "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
       "contractName": "GatewayMinter",
       "entity": null,
-      "id": "1:eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205:values.writeFunctionPermissions",
+      "id": "1:eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 16
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 16
+            }
+          ]
         }
       ]
     },
@@ -91,26 +99,23 @@
       "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
       "contractName": "TokenMessengerV2",
       "entity": null,
-      "id": "1:eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d:values.feeRecipient",
+      "id": "1:eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d:data-change",
       "type": "data-change",
-      "field": "values.feeRecipient",
-      "before": "eth:0x9E2665d09297d2D6E803D3D66E12d43DfBc8B112",
-      "after": "eth:0x6efA3205A385420cF1cfD6B725B48F96117a7Bee"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-      "contractName": "TokenMessengerV2",
-      "entity": null,
-      "id": "1:eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 20
+          "field": "values.feeRecipient",
+          "before": "eth:0x9E2665d09297d2D6E803D3D66E12d43DfBc8B112",
+          "after": "eth:0x6efA3205A385420cF1cfD6B725B48F96117a7Bee"
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 20
+            }
+          ]
         }
       ]
     },
@@ -121,62 +126,66 @@
       "contractName": "ConfirmedTransactionModule",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b:values.writeFunctionPermissions",
+      "id": "1:eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "changeMasterCopy",
-          "signature": "function changeMasterCopy(address _masterCopy)",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "none",
-          "category": "administrative",
-          "requireStatementCount": 1
-        },
-        {
-          "function": "confirmTransaction",
-          "signature": "function confirmTransaction(bytes32 transactionHash)",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 4
-        },
-        {
-          "function": "executeTransaction",
-          "signature": "function executeTransaction(\r\n        address to,\r\n        uint256 value,\r\n        bytes memory data,\r\n        Enum.Operation operation,\r\n        bytes32 witness\r\n    )",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "revokeTransaction",
-          "signature": "function revokeTransaction(bytes32 transactionHash)",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
-        },
-        {
-          "function": "setExecutor",
-          "signature": "function setExecutor(address executor, bool allowed)",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "msgSender",
-          "category": "administrative",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
-        },
-        {
-          "function": "setup",
-          "signature": "function setup()",
-          "file": "ConfirmedTransactionModule.sol",
-          "permissionType": "msgSender",
-          "category": "administrative",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "changeMasterCopy",
+              "signature": "function changeMasterCopy(address _masterCopy)",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "none",
+              "category": "administrative",
+              "requireStatementCount": 1
+            },
+            {
+              "function": "confirmTransaction",
+              "signature": "function confirmTransaction(bytes32 transactionHash)",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 4
+            },
+            {
+              "function": "executeTransaction",
+              "signature": "function executeTransaction(\r\n        address to,\r\n        uint256 value,\r\n        bytes memory data,\r\n        Enum.Operation operation,\r\n        bytes32 witness\r\n    )",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "revokeTransaction",
+              "signature": "function revokeTransaction(bytes32 transactionHash)",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            },
+            {
+              "function": "setExecutor",
+              "signature": "function setExecutor(address executor, bool allowed)",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "msgSender",
+              "category": "administrative",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            },
+            {
+              "function": "setup",
+              "signature": "function setup()",
+              "file": "ConfirmedTransactionModule.sol",
+              "permissionType": "msgSender",
+              "category": "administrative",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            }
+          ]
         }
       ]
     },
@@ -187,14 +196,18 @@
       "contractName": "CompoundGovernor",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0:values.writeFunctionPermissions",
+      "id": "1:eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 29
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 29
+            }
+          ]
         }
       ]
     },
@@ -205,14 +218,18 @@
       "contractName": "cWETHv3",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3:values.writeFunctionPermissions",
+      "id": "1:eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 35
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 35
+            }
+          ]
         }
       ]
     },
@@ -223,7 +240,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF:$deleted",
+      "id": "1:eth:0x35a06994a99B335b700bB3c875408489a9F8BbeF:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -233,7 +250,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624:$deleted",
+      "id": "1:eth:0x3Dc0D7C8f6925422AF7CFEafaF1588c185C05624:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -242,14 +259,18 @@
       "address": "eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E",
       "contractName": "AssetListFactory",
       "entity": null,
-      "id": "1:eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E:values.writeFunctionPermissions",
+      "id": "1:eth:0x3fF744cF6078714bB9d3c4fE5Ab37fA6d05dEC4E:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 9
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 9
+            }
+          ]
         }
       ]
     },
@@ -260,7 +281,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93:$deleted",
+      "id": "1:eth:0x42Afc2F6aE88678296EcB2eBA34cCfbd1Adc5F93:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -270,7 +291,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085:$deleted",
+      "id": "1:eth:0x4b4df3c44FA13f9D12277458e2069EcBbeE1b085:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -280,41 +301,45 @@
       "contractName": "ChainLink Token",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x514910771AF9Ca656af840dff83E8264EcF986CA:values.writeFunctionPermissions",
+      "id": "1:eth:0x514910771AF9Ca656af840dff83E8264EcF986CA:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "approve",
-          "signature": "function approve(address spender, uint256 value)",
-          "file": "LinkToken.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true
-        },
-        {
-          "function": "transfer",
-          "signature": "function transfer(address to, uint256 value)",
-          "file": "LinkToken.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true
-        },
-        {
-          "function": "transferAndCall",
-          "signature": "function transferAndCall(address to, uint value, bytes data)",
-          "file": "LinkToken.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true
-        },
-        {
-          "function": "transferFrom",
-          "signature": "function transferFrom(address from, address to, uint256 value)",
-          "file": "LinkToken.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "approve",
+              "signature": "function approve(address spender, uint256 value)",
+              "file": "LinkToken.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true
+            },
+            {
+              "function": "transfer",
+              "signature": "function transfer(address to, uint256 value)",
+              "file": "LinkToken.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true
+            },
+            {
+              "function": "transferAndCall",
+              "signature": "function transferAndCall(address to, uint value, bytes data)",
+              "file": "LinkToken.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true
+            },
+            {
+              "function": "transferFrom",
+              "signature": "function transferFrom(address from, address to, uint256 value)",
+              "file": "LinkToken.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true
+            }
+          ]
         }
       ]
     },
@@ -325,7 +350,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca:$deleted",
+      "id": "1:eth:0x585B3e95EEdd03AF221F724557D03384864Da3ca:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -335,7 +360,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d:$deleted",
+      "id": "1:eth:0x5C026B7107f1F92a9768CF64f8B2a22252B0788d:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -345,7 +370,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77:$deleted",
+      "id": "1:eth:0x5Dc428646BF9a29A4d623E0CDB57384E811f6F77:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -355,7 +380,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988:$deleted",
+      "id": "1:eth:0x5eA7eAe0EBC1f4256806C8bf234F672d410Fc988:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -365,81 +390,85 @@
       "contractName": "SimpleWriteAccessController",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6:values.writeFunctionPermissions",
+      "id": "1:eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "acceptOwnership",
-          "signature": "function acceptOwnership()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "addAccess",
-          "signature": "function addAccess(address _user)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "disableAccessCheck",
-          "signature": "function disableAccessCheck()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "enableAccessCheck",
-          "signature": "function enableAccessCheck()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "removeAccess",
-          "signature": "function removeAccess(address _user)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "transferOwnership",
-          "signature": "function transferOwnership(address _to)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "financial",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "acceptOwnership",
+              "signature": "function acceptOwnership()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "addAccess",
+              "signature": "function addAccess(address _user)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "disableAccessCheck",
+              "signature": "function disableAccessCheck()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "enableAccessCheck",
+              "signature": "function enableAccessCheck()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "removeAccess",
+              "signature": "function removeAccess(address _user)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "transferOwnership",
+              "signature": "function transferOwnership(address _to)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "financial",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            }
+          ]
         }
       ]
     },
@@ -450,7 +479,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A:$deleted",
+      "id": "1:eth:0x6aEeF00A3A55b2a11C96e59b48bdb3f30DD8125A:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -460,7 +489,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5:$deleted",
+      "id": "1:eth:0x6D53d5E35F5226a1613877e071b81217387aC6B5:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -469,63 +498,67 @@
       "address": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
       "contractName": "Timelock",
       "entity": null,
-      "id": "1:eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925:values.writeFunctionPermissions",
+      "id": "1:eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "acceptAdmin",
-          "signature": "function acceptAdmin()",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 8
-        },
-        {
-          "function": "cancelTransaction",
-          "signature": "function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 6
-        },
-        {
-          "function": "executeTransaction",
-          "signature": "function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 5
-        },
-        {
-          "function": "queueTransaction",
-          "signature": "function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 7
-        },
-        {
-          "function": "setDelay",
-          "signature": "function setDelay(uint delay_)",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "administrative",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 8
-        },
-        {
-          "function": "setPendingAdmin",
-          "signature": "function setPendingAdmin(address pendingAdmin_)",
-          "file": "Timelock.sol",
-          "permissionType": "msgSender",
-          "category": "administrative",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 8
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "acceptAdmin",
+              "signature": "function acceptAdmin()",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 8
+            },
+            {
+              "function": "cancelTransaction",
+              "signature": "function cancelTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 6
+            },
+            {
+              "function": "executeTransaction",
+              "signature": "function executeTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 5
+            },
+            {
+              "function": "queueTransaction",
+              "signature": "function queueTransaction(address target, uint value, string memory signature, bytes memory data, uint eta)",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 7
+            },
+            {
+              "function": "setDelay",
+              "signature": "function setDelay(uint delay_)",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "administrative",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 8
+            },
+            {
+              "function": "setPendingAdmin",
+              "signature": "function setPendingAdmin(address pendingAdmin_)",
+              "file": "Timelock.sol",
+              "permissionType": "msgSender",
+              "category": "administrative",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 8
+            }
+          ]
         }
       ]
     },
@@ -535,14 +568,18 @@
       "address": "eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A",
       "contractName": "ProxyAdmin",
       "entity": null,
-      "id": "1:eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A:values.writeFunctionPermissions",
+      "id": "1:eth:0x725ED7F44F0888aeC1b7630AB1ACdced91E0591A:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 12
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 12
+            }
+          ]
         }
       ]
     },
@@ -553,37 +590,125 @@
       "contractName": "",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:name",
+      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:data-change",
       "type": "data-change",
-      "field": "name",
-      "before": "GatewayWallet",
-      "after": ""
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:template",
-      "type": "data-change",
-      "field": "template",
-      "before": "tokens/circle/GatewayWallet"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:sourceHashes",
-      "type": "data-change",
-      "field": "sourceHashes",
-      "before": [
-        "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b",
-        "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e"
+      "changes": [
+        {
+          "field": "name",
+          "before": "GatewayWallet",
+          "after": ""
+        },
+        {
+          "field": "template",
+          "before": "tokens/circle/GatewayWallet"
+        },
+        {
+          "field": "sourceHashes",
+          "before": [
+            "0xf65031b6016e2f8ceefeebfc98dfb3c259cfa4326be072dd1de90d143026753b",
+            "0x3c7ddc87aeb7595467ac7d4919823954068ac25a492948abebba618e2a522c0e"
+          ]
+        },
+        {
+          "field": "description",
+          "before": "Exit point or burner of USDC on this chain for the Gateway protocol."
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
+          "after": "eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294"
+        },
+        {
+          "field": "values.$pastUpgrades.2",
+          "after": [
+            "2025-10-17T19:46:35.000Z",
+            "0xdc67731c86a1e54bc1ed01654a64dc1518211aa20df0733ed96d6fa0f6e63cc0",
+            [
+              "eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "field": "values.attestationSigners",
+          "before": [
+            "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe"
+          ]
+        },
+        {
+          "field": "values.denylister",
+          "before": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94"
+        },
+        {
+          "field": "values.domain",
+          "before": 0
+        },
+        {
+          "field": "values.domainSeparator",
+          "before": "0x23a37920eca61226c76d13c4462857a362147e4b18da665dba894fa297ae4f34"
+        },
+        {
+          "field": "values.EIP712_DOMAIN_TYPE_HASH",
+          "before": "0xb03948446334eb9b2196d5eb166f69b9d49403eb4a12f36de8d3f9f3cb8e15c3"
+        },
+        {
+          "field": "values.eip712Domain",
+          "before": {
+            "fields": "0x03",
+            "name": "GatewayWallet",
+            "version": "1",
+            "chainId": 0,
+            "verifyingContract": "eth:0x0000000000000000000000000000000000000000",
+            "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "extensions": []
+          }
+        },
+        {
+          "field": "values.feeRecipient",
+          "before": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c"
+        },
+        {
+          "field": "values.paused",
+          "before": false
+        },
+        {
+          "field": "values.pauser",
+          "before": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19"
+        },
+        {
+          "field": "values.UPGRADE_INTERFACE_VERSION",
+          "before": "5.0.0"
+        },
+        {
+          "field": "values.withdrawalDelay",
+          "before": 50400
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 27
+            }
+          ]
+        },
+        {
+          "field": "implementationNames.eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
+          "before": "GatewayWallet"
+        },
+        {
+          "field": "implementationNames.eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294",
+          "after": ""
+        },
+        {
+          "field": "unverified",
+          "after": true
+        }
       ]
     },
     {
@@ -593,238 +718,13 @@
       "contractName": "",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:description",
-      "type": "data-change",
-      "field": "description",
-      "before": "Exit point or burner of USDC on this chain for the Gateway protocol."
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
-      "after": "eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.$pastUpgrades.2",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.2",
-      "after": [
-        "2025-10-17T19:46:35.000Z",
-        "0xdc67731c86a1e54bc1ed01654a64dc1518211aa20df0733ed96d6fa0f6e63cc0",
-        [
-          "eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 2,
-      "after": 3
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.attestationSigners",
-      "type": "data-change",
-      "field": "values.attestationSigners",
-      "before": [
-        "eth:0xB72F2Bb8AD7aDB4e40e3ACD8F34160B4991e7ADe"
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.denylister",
-      "type": "data-change",
-      "field": "values.denylister",
-      "before": "eth:0x7359fD9aA258992eb4B6d9572c6f6c74Cf719a94"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.domain",
-      "type": "data-change",
-      "field": "values.domain",
-      "before": 0
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.domainSeparator",
-      "type": "data-change",
-      "field": "values.domainSeparator",
-      "before": "0x23a37920eca61226c76d13c4462857a362147e4b18da665dba894fa297ae4f34"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.EIP712_DOMAIN_TYPE_HASH",
-      "type": "data-change",
-      "field": "values.EIP712_DOMAIN_TYPE_HASH",
-      "before": "0xb03948446334eb9b2196d5eb166f69b9d49403eb4a12f36de8d3f9f3cb8e15c3"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.eip712Domain",
-      "type": "data-change",
-      "field": "values.eip712Domain",
-      "before": {
-        "fields": "0x03",
-        "name": "GatewayWallet",
-        "version": "1",
-        "chainId": 0,
-        "verifyingContract": "eth:0x0000000000000000000000000000000000000000",
-        "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "extensions": []
-      }
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.feeRecipient",
-      "type": "data-change",
-      "field": "values.feeRecipient",
-      "before": "eth:0xFbAF3A19B1c02b8Bef52a7E9Fa855c86c69aB95c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.owner",
+      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:role:owner",
       "type": "role-update",
       "roleName": "owner",
-      "field": "values.owner",
-      "before": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.paused",
-      "type": "data-change",
-      "field": "values.paused",
-      "before": false
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.pauser",
-      "type": "data-change",
-      "field": "values.pauser",
-      "before": "eth:0x9812d5F0a0832d9A0a78a1ba728fACd87bC35b19"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.pendingOwner",
-      "type": "role-update",
-      "roleName": "pendingOwner",
-      "field": "values.pendingOwner",
-      "before": "eth:0x0000000000000000000000000000000000000000"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.UPGRADE_INTERFACE_VERSION",
-      "type": "data-change",
-      "field": "values.UPGRADE_INTERFACE_VERSION",
-      "before": "5.0.0"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.withdrawalDelay",
-      "type": "data-change",
-      "field": "values.withdrawalDelay",
-      "before": 50400
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 27
+          "field": "values.owner",
+          "before": "eth:0x2A6A86466F181721ec8ff946967b56f1AA4758c5"
         }
       ]
     },
@@ -835,34 +735,15 @@
       "contractName": "",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:implementationNames.eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x899a4f5f5422cC5E8183280182e7096Fb923C762",
-      "before": "GatewayWallet"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:implementationNames.eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xdE4d0329Db2c046b8bA35180822aEECCf63D3294",
-      "after": ""
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-      "contractName": "",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:unverified",
-      "type": "data-change",
-      "field": "unverified",
-      "after": true
+      "id": "1:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:role:pendingOwner",
+      "type": "role-update",
+      "roleName": "pendingOwner",
+      "changes": [
+        {
+          "field": "values.pendingOwner",
+          "before": "eth:0x0000000000000000000000000000000000000000"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -871,7 +752,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B:$deleted",
+      "id": "1:eth:0x7A13cD97D442856FF5387d55a7b3F09bf680102B:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -881,7 +762,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8:$deleted",
+      "id": "1:eth:0x7B740d24396B09F992B655A590139D7Fbb5C73c8:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -891,7 +772,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E:$deleted",
+      "id": "1:eth:0x8AaDF849561DcCeC75DA44d1147E736E0cc0134E:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -901,65 +782,69 @@
       "contractName": "EACAggregatorProxy",
       "isDependency": true,
       "entity": "Chainlink",
-      "id": "1:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:values.writeFunctionPermissions",
+      "id": "1:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "acceptOwnership",
-          "signature": "function acceptOwnership()",
-          "file": "EACAggregatorProxy.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "confirmAggregator",
-          "signature": "function confirmAggregator(address _aggregator)",
-          "file": "EACAggregatorProxy.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "requireStatementCount": 2
-        },
-        {
-          "function": "proposeAggregator",
-          "signature": "function proposeAggregator(address _aggregator)",
-          "file": "EACAggregatorProxy.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "requireStatementCount": 2
-        },
-        {
-          "function": "setController",
-          "signature": "function setController(address _accessController)",
-          "file": "EACAggregatorProxy.sol",
-          "permissionType": "modifier",
-          "category": "administrative",
-          "modifiers": [
-            "onlyOwner"
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "acceptOwnership",
+              "signature": "function acceptOwnership()",
+              "file": "EACAggregatorProxy.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "confirmAggregator",
+              "signature": "function confirmAggregator(address _aggregator)",
+              "file": "EACAggregatorProxy.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "requireStatementCount": 2
+            },
+            {
+              "function": "proposeAggregator",
+              "signature": "function proposeAggregator(address _aggregator)",
+              "file": "EACAggregatorProxy.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "requireStatementCount": 2
+            },
+            {
+              "function": "setController",
+              "signature": "function setController(address _accessController)",
+              "file": "EACAggregatorProxy.sol",
+              "permissionType": "modifier",
+              "category": "administrative",
+              "modifiers": [
+                "onlyOwner"
+              ]
+            },
+            {
+              "function": "transferOwnership",
+              "signature": "function transferOwnership(address _to)",
+              "file": "EACAggregatorProxy.sol",
+              "permissionType": "modifier",
+              "category": "financial",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            }
           ]
-        },
-        {
-          "function": "transferOwnership",
-          "signature": "function transferOwnership(address _to)",
-          "file": "EACAggregatorProxy.sol",
-          "permissionType": "modifier",
-          "category": "financial",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
         }
       ]
     },
@@ -969,7 +854,7 @@
       "address": "eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c",
       "contractName": "AssetList",
       "entity": null,
-      "id": "1:eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c:$deleted",
+      "id": "1:eth:0x981c82Df8d8a1db7B23E18FE3270489e188Cb08c:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -979,7 +864,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D:$deleted",
+      "id": "1:eth:0x990cfBBDc5aeB794B657b4309017F84479e8Eb7D:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -989,81 +874,85 @@
       "contractName": "SimpleWriteAccessController",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:values.writeFunctionPermissions",
+      "id": "1:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "acceptOwnership",
-          "signature": "function acceptOwnership()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "addAccess",
-          "signature": "function addAccess(address _user)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "disableAccessCheck",
-          "signature": "function disableAccessCheck()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "enableAccessCheck",
-          "signature": "function enableAccessCheck()",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "removeAccess",
-          "signature": "function removeAccess(address _user)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 1
-        },
-        {
-          "function": "transferOwnership",
-          "signature": "function transferOwnership(address _to)",
-          "file": "SimpleWriteAccessController.sol",
-          "permissionType": "modifier",
-          "category": "financial",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "acceptOwnership",
+              "signature": "function acceptOwnership()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "addAccess",
+              "signature": "function addAccess(address _user)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "disableAccessCheck",
+              "signature": "function disableAccessCheck()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "enableAccessCheck",
+              "signature": "function enableAccessCheck()",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "removeAccess",
+              "signature": "function removeAccess(address _user)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 1
+            },
+            {
+              "function": "transferOwnership",
+              "signature": "function transferOwnership(address _to)",
+              "file": "SimpleWriteAccessController.sol",
+              "permissionType": "modifier",
+              "category": "financial",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            }
+          ]
         }
       ]
     },
@@ -1074,14 +963,18 @@
       "contractName": "USD Coin Token",
       "isDependency": true,
       "entity": "Circle USDC",
-      "id": "1:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.writeFunctionPermissions",
+      "id": "1:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 34
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 34
+            }
+          ]
         }
       ]
     },
@@ -1092,114 +985,62 @@
       "contractName": "cUSDTv3",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$implementation",
+      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
       "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
-      "after": "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$pastUpgrades.45",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.45",
-      "after": [
-        "2025-11-26T02:39:11.000Z",
-        "0xc6b122a0355d3c71388083fe63e858fc6eded6422b4bf1167feb98db9cec79b0",
-        [
-          "eth:0xC78846c98CC782e8F066Be1DC86a2b323d6d5E2e"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$pastUpgrades.46",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.46",
-      "after": [
-        "2025-12-03T08:59:23.000Z",
-        "0x18c82c2b7a8a92311649a6718f3513162dc691f76ea755e76006498cd6e92163",
-        [
-          "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 45,
-      "after": 47
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 22
+          "field": "values.$implementation",
+          "before": "eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
+          "after": "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
+        },
+        {
+          "field": "values.$pastUpgrades.45",
+          "after": [
+            "2025-11-26T02:39:11.000Z",
+            "0xc6b122a0355d3c71388083fe63e858fc6eded6422b4bf1167feb98db9cec79b0",
+            [
+              "eth:0xC78846c98CC782e8F066Be1DC86a2b323d6d5E2e"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.46",
+          "after": [
+            "2025-12-03T08:59:23.000Z",
+            "0x18c82c2b7a8a92311649a6718f3513162dc691f76ea755e76006498cd6e92163",
+            [
+              "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 45,
+          "after": 47
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 22
+            }
+          ]
+        },
+        {
+          "field": "implementationNames.eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
+          "after": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "template",
+          "after": "compound-v3/cUSDCv3"
         }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x2D0DfE7F9C2B7600EB145747DD3CDCc543356A6d",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
-      "after": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "compound-v3/cUSDCv3"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1207,14 +1048,18 @@
       "address": "eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC",
       "contractName": "CometExtAssetList",
       "entity": null,
-      "id": "1:eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC:values.writeFunctionPermissions",
+      "id": "1:eth:0xA70a0227028aD005F4Fc9376a82cd1462e3AAedC:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 7
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 7
+            }
+          ]
         }
       ]
     },
@@ -1224,7 +1069,7 @@
       "address": "eth:0xB7859b967374566bdeA8d23C6d248e6619BC0f88",
       "contractName": "AssetList",
       "entity": null,
-      "id": "1:eth:0xB7859b967374566bdeA8d23C6d248e6619BC0f88:$deleted",
+      "id": "1:eth:0xB7859b967374566bdeA8d23C6d248e6619BC0f88:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1234,77 +1079,41 @@
       "contractName": "GnosisSafe",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.$members.3",
+      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:data-change",
       "type": "data-change",
-      "field": "values.$members.3",
-      "before": "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-      "contractName": "GnosisSafe",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.$members.5",
-      "type": "data-change",
-      "field": "values.$members.5",
-      "before": "eth:0xC3AaE58Ab81663872dd36d73613eb295b167F546",
-      "after": "eth:0x46B360011A84C5759680852ed90E6Db44E18F08c"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-      "contractName": "GnosisSafe",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.$members.6",
-      "type": "data-change",
-      "field": "values.$members.6",
-      "before": "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
-      "after": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-      "contractName": "GnosisSafe",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.$members.9",
-      "type": "data-change",
-      "field": "values.$members.9",
-      "before": "eth:0x54A37d93E57c5DA659F508069Cf65A381b61E189"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-      "contractName": "GnosisSafe",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.multisigThreshold",
-      "type": "data-change",
-      "field": "values.multisigThreshold",
-      "before": "5 of 10 (50%)",
-      "after": "5 of 8 (63%)"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
-      "contractName": "GnosisSafe",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 16
+          "field": "values.$members.3",
+          "before": "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2"
+        },
+        {
+          "field": "values.$members.5",
+          "before": "eth:0xC3AaE58Ab81663872dd36d73613eb295b167F546",
+          "after": "eth:0x46B360011A84C5759680852ed90E6Db44E18F08c"
+        },
+        {
+          "field": "values.$members.6",
+          "before": "eth:0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
+          "after": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627"
+        },
+        {
+          "field": "values.$members.9",
+          "before": "eth:0x54A37d93E57c5DA659F508069Cf65A381b61E189"
+        },
+        {
+          "field": "values.multisigThreshold",
+          "before": "5 of 10 (50%)",
+          "after": "5 of 8 (63%)"
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 16
+            }
+          ]
         }
       ]
     },
@@ -1314,14 +1123,18 @@
       "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
       "contractName": "TokenMessenger",
       "entity": null,
-      "id": "1:eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155:values.writeFunctionPermissions",
+      "id": "1:eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 12
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 12
+            }
+          ]
         }
       ]
     },
@@ -1332,51 +1145,55 @@
       "contractName": "Compound Token",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0xc00e94Cb662C3520282E6f5717214004A7f26888:values.writeFunctionPermissions",
+      "id": "1:eth:0xc00e94Cb662C3520282E6f5717214004A7f26888:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "approve",
-          "signature": "function approve(address spender, uint rawAmount)",
-          "file": "Comp.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true
-        },
-        {
-          "function": "delegate",
-          "signature": "function delegate(address delegatee)",
-          "file": "Comp.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
-        },
-        {
-          "function": "delegateBySig",
-          "signature": "function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s)",
-          "file": "Comp.sol",
-          "permissionType": "none",
-          "category": "other",
-          "requireStatementCount": 4
-        },
-        {
-          "function": "transfer",
-          "signature": "function transfer(address dst, uint rawAmount)",
-          "file": "Comp.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true
-        },
-        {
-          "function": "transferFrom",
-          "signature": "function transferFrom(address src, address dst, uint rawAmount)",
-          "file": "Comp.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "approve",
+              "signature": "function approve(address spender, uint rawAmount)",
+              "file": "Comp.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true
+            },
+            {
+              "function": "delegate",
+              "signature": "function delegate(address delegatee)",
+              "file": "Comp.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            },
+            {
+              "function": "delegateBySig",
+              "signature": "function delegateBySig(address delegatee, uint nonce, uint expiry, uint8 v, bytes32 r, bytes32 s)",
+              "file": "Comp.sol",
+              "permissionType": "none",
+              "category": "other",
+              "requireStatementCount": 4
+            },
+            {
+              "function": "transfer",
+              "signature": "function transfer(address dst, uint rawAmount)",
+              "file": "Comp.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true
+            },
+            {
+              "function": "transferFrom",
+              "signature": "function transferFrom(address src, address dst, uint rawAmount)",
+              "file": "Comp.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            }
+          ]
         }
       ]
     },
@@ -1387,54 +1204,58 @@
       "contractName": "Wrapped Ether Token",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:values.writeFunctionPermissions",
+      "id": "1:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "approve",
-          "signature": "function approve(address guy, uint wad)",
-          "file": "WETH9.sol",
-          "permissionType": "msgSender",
-          "category": "other",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "deposit",
-          "signature": "function deposit()",
-          "file": "WETH9.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
-        },
-        {
-          "function": "transfer",
-          "signature": "function transfer(address dst, uint wad)",
-          "file": "WETH9.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "transferFrom",
-          "signature": "function transferFrom(address src, address dst, uint wad)",
-          "file": "WETH9.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "withdraw",
-          "signature": "function withdraw(uint wad)",
-          "file": "WETH9.sol",
-          "permissionType": "msgSender",
-          "category": "financial",
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 3
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "approve",
+              "signature": "function approve(address guy, uint wad)",
+              "file": "WETH9.sol",
+              "permissionType": "msgSender",
+              "category": "other",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "deposit",
+              "signature": "function deposit()",
+              "file": "WETH9.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            },
+            {
+              "function": "transfer",
+              "signature": "function transfer(address dst, uint wad)",
+              "file": "WETH9.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "transferFrom",
+              "signature": "function transferFrom(address src, address dst, uint wad)",
+              "file": "WETH9.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "withdraw",
+              "signature": "function withdraw(uint wad)",
+              "file": "WETH9.sol",
+              "permissionType": "msgSender",
+              "category": "financial",
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 3
+            }
+          ]
         }
       ]
     },
@@ -1445,168 +1266,92 @@
       "contractName": "cUSDCv3",
       "isDependency": false,
       "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$implementation",
+      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:data-change",
       "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "after": "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.49",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.49",
-      "after": [
-        "2025-10-23T08:25:59.000Z",
-        "0xacd95981f12369778d6d022d967539bcd75f5c7443b29c0bec5a189c074fc611",
-        [
-          "eth:0xdf2cD7552610E3b5Cddd410Ca89A172aC0aD444C"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.50",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.50",
-      "after": [
-        "2025-11-06T18:53:11.000Z",
-        "0xa5a3b65cd02cb3ef981cf7a5b5be729cc74231c879f8d9a86de11f02ead0ab1e",
-        [
-          "eth:0xC5fb5c72eda5C609db7EA23a50FFD47c046032B7"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.51",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.51",
-      "after": [
-        "2025-11-15T21:06:23.000Z",
-        "0x3d66c349b52768311d4a6ecd2e8e6c3ae0516f2ef406822a6162e2c22ad8b9e5",
-        [
-          "eth:0xEEB860216B1ea7E3aB80fE5Fc1886dAEf6bDc440"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.52",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.52",
-      "after": [
-        "2025-12-31T09:36:47.000Z",
-        "0x2906ca0ed01b573c369048cb99b8bad6774b6230a35e5cca3d3b27e14df833ed",
-        [
-          "eth:0xEb330B7c1622E0F8b18a7dD1decc27Cf3d980E61"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.53",
-      "type": "data-change",
-      "field": "values.$pastUpgrades.53",
-      "after": [
-        "2026-02-26T06:39:23.000Z",
-        "0x38bf1b111205cb9d590d6eb9293003224d6d22fc9b3bfb9288cdb86008529ef2",
-        [
-          "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
-        ]
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 49,
-      "after": 54
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.writeFunctionPermissions",
-      "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 22
+          "field": "values.$implementation",
+          "before": "eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+          "after": "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
+        },
+        {
+          "field": "values.$pastUpgrades.49",
+          "after": [
+            "2025-10-23T08:25:59.000Z",
+            "0xacd95981f12369778d6d022d967539bcd75f5c7443b29c0bec5a189c074fc611",
+            [
+              "eth:0xdf2cD7552610E3b5Cddd410Ca89A172aC0aD444C"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.50",
+          "after": [
+            "2025-11-06T18:53:11.000Z",
+            "0xa5a3b65cd02cb3ef981cf7a5b5be729cc74231c879f8d9a86de11f02ead0ab1e",
+            [
+              "eth:0xC5fb5c72eda5C609db7EA23a50FFD47c046032B7"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.51",
+          "after": [
+            "2025-11-15T21:06:23.000Z",
+            "0x3d66c349b52768311d4a6ecd2e8e6c3ae0516f2ef406822a6162e2c22ad8b9e5",
+            [
+              "eth:0xEEB860216B1ea7E3aB80fE5Fc1886dAEf6bDc440"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.52",
+          "after": [
+            "2025-12-31T09:36:47.000Z",
+            "0x2906ca0ed01b573c369048cb99b8bad6774b6230a35e5cca3d3b27e14df833ed",
+            [
+              "eth:0xEb330B7c1622E0F8b18a7dD1decc27Cf3d980E61"
+            ]
+          ]
+        },
+        {
+          "field": "values.$pastUpgrades.53",
+          "after": [
+            "2026-02-26T06:39:23.000Z",
+            "0x38bf1b111205cb9d590d6eb9293003224d6d22fc9b3bfb9288cdb86008529ef2",
+            [
+              "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 49,
+          "after": 54
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 22
+            }
+          ]
+        },
+        {
+          "field": "implementationNames.eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
+          "after": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "template",
+          "after": "compound-v3/cUSDCv3"
         }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xB5dCf2711Cf76bBE9D99f687c59A5421cA2Ce13b",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
-      "after": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "1:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "compound-v3/cUSDCv3"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1614,14 +1359,18 @@
       "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
       "contractName": "TokenMinter",
       "entity": null,
-      "id": "1:eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907:values.writeFunctionPermissions",
+      "id": "1:eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 15
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 15
+            }
+          ]
         }
       ]
     },
@@ -1632,28 +1381,24 @@
       "contractName": "AccessControlledOCR2Aggregator",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7:values.writeFunctionPermissions",
+      "id": "1:eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 19
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 19
+            }
+          ]
+        },
+        {
+          "field": "template",
+          "after": "Steakhouse-USDC/AccessControlledOCR2Aggregator"
         }
       ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 1,
-      "address": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
-      "contractName": "AccessControlledOCR2Aggregator",
-      "isDependency": true,
-      "entity": null,
-      "id": "1:eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7:template",
-      "type": "data-change",
-      "field": "template",
-      "after": "Steakhouse-USDC/AccessControlledOCR2Aggregator"
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1661,7 +1406,7 @@
       "address": "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2",
       "contractName": "Safe",
       "entity": null,
-      "id": "1:eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2:$deleted",
+      "id": "1:eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1671,93 +1416,97 @@
       "contractName": "MasterMinter",
       "isDependency": true,
       "entity": "Circle USDC",
-      "id": "1:eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17:values.writeFunctionPermissions",
+      "id": "1:eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "function": "configureController",
-          "signature": "function configureController(\r\n        address _controller,\r\n        address _worker\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "administrative",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "requireStatementCount": 4
-        },
-        {
-          "function": "configureMinter",
-          "signature": "function configureMinter(\r\n        address _minter,\r\n        uint256 _minterAllowedAmount\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "none",
-          "category": "administrative"
-        },
-        {
-          "function": "decrementMinterAllowance",
-          "signature": "function decrementMinterAllowance(\r\n        uint256 _allowanceDecrement\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyController"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "incrementMinterAllowance",
-          "signature": "function incrementMinterAllowance(\r\n        uint256 _allowanceIncrement\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyController"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 4
-        },
-        {
-          "function": "removeController",
-          "signature": "function removeController(\r\n        address _controller\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "other",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "requireStatementCount": 2
-        },
-        {
-          "function": "removeMinter",
-          "signature": "function removeMinter(address _minter)",
-          "file": "MasterMinter.sol",
-          "permissionType": "none",
-          "category": "other"
-        },
-        {
-          "function": "setMinterManager",
-          "signature": "function setMinterManager(\r\n        address _newMinterManager\r\n    )",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "administrative",
-          "modifiers": [
-            "onlyOwner",
-            "onlyController"
-          ],
-          "hasMsgSenderCheck": true,
-          "requireStatementCount": 2
-        },
-        {
-          "function": "transferOwnership",
-          "signature": "function transferOwnership(address newOwner)",
-          "file": "MasterMinter.sol",
-          "permissionType": "modifier",
-          "category": "financial",
-          "modifiers": [
-            "onlyOwner"
-          ],
-          "requireStatementCount": 1
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "function": "configureController",
+              "signature": "function configureController(\r\n        address _controller,\r\n        address _worker\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "administrative",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "requireStatementCount": 4
+            },
+            {
+              "function": "configureMinter",
+              "signature": "function configureMinter(\r\n        address _minter,\r\n        uint256 _minterAllowedAmount\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "none",
+              "category": "administrative"
+            },
+            {
+              "function": "decrementMinterAllowance",
+              "signature": "function decrementMinterAllowance(\r\n        uint256 _allowanceDecrement\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyController"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "incrementMinterAllowance",
+              "signature": "function incrementMinterAllowance(\r\n        uint256 _allowanceIncrement\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyController"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 4
+            },
+            {
+              "function": "removeController",
+              "signature": "function removeController(\r\n        address _controller\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "other",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "requireStatementCount": 2
+            },
+            {
+              "function": "removeMinter",
+              "signature": "function removeMinter(address _minter)",
+              "file": "MasterMinter.sol",
+              "permissionType": "none",
+              "category": "other"
+            },
+            {
+              "function": "setMinterManager",
+              "signature": "function setMinterManager(\r\n        address _newMinterManager\r\n    )",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "administrative",
+              "modifiers": [
+                "onlyOwner",
+                "onlyController"
+              ],
+              "hasMsgSenderCheck": true,
+              "requireStatementCount": 2
+            },
+            {
+              "function": "transferOwnership",
+              "signature": "function transferOwnership(address newOwner)",
+              "file": "MasterMinter.sol",
+              "permissionType": "modifier",
+              "category": "financial",
+              "modifiers": [
+                "onlyOwner"
+              ],
+              "requireStatementCount": 1
+            }
+          ]
         }
       ]
     },
@@ -1768,7 +1517,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1:$deleted",
+      "id": "1:eth:0xE9DcbaCc91dB0e37562a8455c80d0734D7CF3bd1:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1777,14 +1526,18 @@
       "address": "eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2",
       "contractName": "AssetListFactory",
       "entity": null,
-      "id": "1:eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2:values.writeFunctionPermissions",
+      "id": "1:eth:0xEA2a6E7B41505d62d404F927F991Edc9E45883c2:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManySourceFiles",
-          "fileCount": 9
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManySourceFiles",
+              "fileCount": 9
+            }
+          ]
         }
       ]
     },
@@ -1795,7 +1548,7 @@
       "contractName": "AuthorizedForwarder",
       "isDependency": true,
       "entity": null,
-      "id": "1:eth:0xF38326579519377178725A741C35999E8051e907:$deleted",
+      "id": "1:eth:0xF38326579519377178725A741C35999E8051e907:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1804,14 +1557,18 @@
       "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
       "contractName": "TokenMinterV2",
       "entity": null,
-      "id": "1:eth:0xfd78EE919681417d192449715b2594ab58f5D002:values.writeFunctionPermissions",
+      "id": "1:eth:0xfd78EE919681417d192449715b2594ab58f5D002:data-change",
       "type": "data-change",
-      "field": "values.writeFunctionPermissions",
-      "before": [
+      "changes": [
         {
-          "skipped": true,
-          "reason": "tooManyWriteFunctions",
-          "count": 16
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 16
+            }
+          ]
         }
       ]
     },
@@ -1821,7 +1578,7 @@
       "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
       "contractName": "MessageTransmitter",
       "entity": null,
-      "id": "1:eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81:$created",
+      "id": "1:eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81:contract-added",
       "type": "contract-added"
     },
     {
@@ -1830,7 +1587,7 @@
       "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
       "contractName": "AssetList",
       "entity": null,
-      "id": "1:eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614:$created",
+      "id": "1:eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614:contract-added",
       "type": "contract-added"
     },
     {
@@ -1839,7 +1596,7 @@
       "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
       "contractName": "MessageTransmitterV2",
       "entity": null,
-      "id": "1:eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64:$created",
+      "id": "1:eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64:contract-added",
       "type": "contract-added"
     },
     {
@@ -1848,7 +1605,7 @@
       "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
       "contractName": "AssetList",
       "entity": null,
-      "id": "1:eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae:$created",
+      "id": "1:eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae:contract-added",
       "type": "contract-added"
     },
     {
@@ -1857,7 +1614,7 @@
       "address": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627",
       "contractName": "Safe",
       "entity": null,
-      "id": "1:eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627:$created",
+      "id": "1:eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627:contract-added",
       "type": "contract-added"
     },
     {
@@ -1867,7 +1624,7 @@
       "contractName": "ChainLink Token",
       "isDependency": true,
       "entity": null,
-      "id": "50:eth:0x514910771AF9Ca656af840dff83E8264EcF986CA:$deleted",
+      "id": "50:eth:0x514910771AF9Ca656af840dff83E8264EcF986CA:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1877,7 +1634,7 @@
       "contractName": "SimpleWriteAccessController",
       "isDependency": true,
       "entity": null,
-      "id": "50:eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6:$deleted",
+      "id": "50:eth:0x641B698aD1C6E503470520B0EeCb472c0589dfE6:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1887,10 +1644,14 @@
       "contractName": "EACAggregatorProxy",
       "isDependency": true,
       "entity": "Chainlink",
-      "id": "50:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:template",
+      "id": "50:eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "Steakhouse-USDC/EACAggregatorProxy"
+      "changes": [
+        {
+          "field": "template",
+          "after": "Steakhouse-USDC/EACAggregatorProxy"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -1899,7 +1660,7 @@
       "contractName": "SimpleWriteAccessController",
       "isDependency": true,
       "entity": null,
-      "id": "50:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:$deleted",
+      "id": "50:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1909,7 +1670,7 @@
       "contractName": "AccessControlledOCR2Aggregator",
       "isDependency": true,
       "entity": null,
-      "id": "50:eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7:$deleted",
+      "id": "50:eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -1919,15 +1680,19 @@
       "contractName": "CompoundGovernor",
       "isDependency": false,
       "entity": null,
-      "id": "56:eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0:values.proposalDeadline",
+      "id": "56:eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0:data-change",
       "type": "data-change",
-      "field": "values.proposalDeadline",
-      "before": [
-        0,
-        0,
-        0,
-        0,
-        0
+      "changes": [
+        {
+          "field": "values.proposalDeadline",
+          "before": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
       ]
     },
     {
@@ -1937,10 +1702,14 @@
       "contractName": "Wrapped Ether Token",
       "isDependency": true,
       "entity": null,
-      "id": "56:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:template",
+      "id": "56:eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:data-change",
       "type": "data-change",
-      "field": "template",
-      "after": "tokens"
+      "changes": [
+        {
+          "field": "template",
+          "after": "tokens"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-12T07:56:09.000Z",
@@ -1949,46 +1718,26 @@
       "contractName": "USD Coin Token",
       "isDependency": true,
       "entity": "Circle USDC",
-      "id": "68:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.minters.15",
+      "id": "68:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:data-change",
       "type": "data-change",
-      "field": "values.minters.15",
-      "after": "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7"
-    },
-    {
-      "timestamp": "2026-03-12T07:56:09.000Z",
-      "updateNotifierId": 68,
-      "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "contractName": "USD Coin Token",
-      "isDependency": true,
-      "entity": "Circle USDC",
-      "id": "68:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.minters.16",
-      "type": "data-change",
-      "field": "values.minters.16",
-      "after": "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1"
-    },
-    {
-      "timestamp": "2026-03-12T07:56:09.000Z",
-      "updateNotifierId": 68,
-      "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "contractName": "USD Coin Token",
-      "isDependency": true,
-      "entity": "Circle USDC",
-      "id": "68:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.minters.17",
-      "type": "data-change",
-      "field": "values.minters.17",
-      "after": "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202"
-    },
-    {
-      "timestamp": "2026-03-12T07:56:09.000Z",
-      "updateNotifierId": 68,
-      "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "contractName": "USD Coin Token",
-      "isDependency": true,
-      "entity": "Circle USDC",
-      "id": "68:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.minters.18",
-      "type": "data-change",
-      "field": "values.minters.18",
-      "after": "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90"
+      "changes": [
+        {
+          "field": "values.minters.15",
+          "after": "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7"
+        },
+        {
+          "field": "values.minters.16",
+          "after": "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1"
+        },
+        {
+          "field": "values.minters.17",
+          "after": "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202"
+        },
+        {
+          "field": "values.minters.18",
+          "after": "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-18T08:03:14.000Z",
@@ -1996,7 +1745,7 @@
       "address": "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
       "contractName": "MessageTransmitter",
       "entity": null,
-      "id": "72:eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81:$deleted",
+      "id": "72:eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2005,7 +1754,7 @@
       "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
       "contractName": "AssetList",
       "entity": null,
-      "id": "72:eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614:$deleted",
+      "id": "72:eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2014,7 +1763,7 @@
       "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
       "contractName": "GatewayMinter",
       "entity": null,
-      "id": "72:eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205:$deleted",
+      "id": "72:eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2023,7 +1772,7 @@
       "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
       "contractName": "TokenMessengerV2",
       "entity": null,
-      "id": "72:eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d:$deleted",
+      "id": "72:eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2033,7 +1782,7 @@
       "contractName": "",
       "isDependency": true,
       "entity": null,
-      "id": "72:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:$deleted",
+      "id": "72:eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2042,7 +1791,7 @@
       "address": "eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64",
       "contractName": "MessageTransmitterV2",
       "entity": null,
-      "id": "72:eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64:$deleted",
+      "id": "72:eth:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2052,42 +1801,38 @@
       "contractName": "USD Coin Token",
       "isDependency": true,
       "entity": "Circle USDC",
-      "id": "72:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.minters",
+      "id": "72:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:data-change",
       "type": "data-change",
-      "field": "values.minters",
-      "before": [
-        "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
-        "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8",
-        "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
-        "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
-        "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
-        "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
-        "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
-        "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
-        "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
-        "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
-        "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
-        "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
-        "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
-        "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-        "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
-        "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7",
-        "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1",
-        "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202",
-        "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90"
+      "changes": [
+        {
+          "field": "values.minters",
+          "before": [
+            "eth:0x5B6122C109B78C6755486966148C1D70a50A47D7",
+            "eth:0x19a932fC5A8320939c3575302a8705147a7f27D8",
+            "eth:0x24BDd8771b08C2EA6FE0e898126e65BD49021BE3",
+            "eth:0x55FE002aefF02F77364de339a1292923A15844B8",
+            "eth:0x895F07957B863f4AB6086035a6990d8366Bc3266",
+            "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
+            "eth:0x8967a7cE20043F876e42F8aD696b06bb632f0ca7",
+            "eth:0x3005A4C0EFE7E66F3f60eF8704983247A5c6ca61",
+            "eth:0xE400d09e98a5806bF501E93ED8E7623B78b4646F",
+            "eth:0x2322E81DB282F22849c2Eb0b749C688Ea3611946",
+            "eth:0x2b52e60C844d7946b6d910D3296940dC889CC785",
+            "eth:0x911cb2323c6fB580e39F92a6f58D1cb019E940Cd",
+            "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
+            "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
+            "eth:0x77777777Dcc4d5A8B6E418Fd04D8997ef11000eE",
+            "eth:0xA5827F373Aa4D1a8d3cfb92d29963Ee97133d5c7",
+            "eth:0x1375c5FF3785850314f5A612A7837CC295075eF1",
+            "eth:0x46544d6A546EF97d43a6Aaa783DB8CEFcDd6C202",
+            "eth:0x119cc12CB823EB6Ee1d2Da2b5E5De645AF8F3E90"
+          ]
+        },
+        {
+          "field": "values.masterMinter",
+          "before": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-03-18T08:03:14.000Z",
-      "updateNotifierId": 72,
-      "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      "contractName": "USD Coin Token",
-      "isDependency": true,
-      "entity": "Circle USDC",
-      "id": "72:eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:values.masterMinter",
-      "type": "data-change",
-      "field": "values.masterMinter",
-      "before": "eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17"
     },
     {
       "timestamp": "2026-03-18T08:03:14.000Z",
@@ -2095,7 +1840,7 @@
       "address": "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
       "contractName": "TokenMessenger",
       "entity": null,
-      "id": "72:eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155:$deleted",
+      "id": "72:eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2105,66 +1850,38 @@
       "contractName": "cUSDCv3",
       "isDependency": false,
       "entity": null,
-      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.54",
+      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:data-change",
       "type": "data-change",
-      "field": "values.$pastUpgrades.54",
-      "after": [
-        "2026-03-17T12:24:59.000Z",
-        "0x3d992318823da5d43a4ba796f0093e33199270e70237ee39317d716c318c2821",
-        [
-          "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95"
-        ]
+      "changes": [
+        {
+          "field": "values.$pastUpgrades.54",
+          "after": [
+            "2026-03-17T12:24:59.000Z",
+            "0x3d992318823da5d43a4ba796f0093e33199270e70237ee39317d716c318c2821",
+            [
+              "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 54,
+          "after": 55
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
+          "after": "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95"
+        },
+        {
+          "field": "implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
+          "after": "CometWithExtendedAssetList"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-03-18T08:03:14.000Z",
-      "updateNotifierId": 72,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 54,
-      "after": 55
-    },
-    {
-      "timestamp": "2026-03-18T08:03:14.000Z",
-      "updateNotifierId": 72,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
-      "after": "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95"
-    },
-    {
-      "timestamp": "2026-03-18T08:03:14.000Z",
-      "updateNotifierId": 72,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xA0332AaFD9E9164A95b1fA521f8a479125573451",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-03-18T08:03:14.000Z",
-      "updateNotifierId": 72,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "72:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
-      "after": "CometWithExtendedAssetList"
     },
     {
       "timestamp": "2026-03-18T08:03:14.000Z",
@@ -2172,7 +1889,7 @@
       "address": "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907",
       "contractName": "TokenMinter",
       "entity": null,
-      "id": "72:eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907:$deleted",
+      "id": "72:eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2182,7 +1899,7 @@
       "contractName": "MasterMinter",
       "isDependency": true,
       "entity": "Circle USDC",
-      "id": "72:eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17:$deleted",
+      "id": "72:eth:0xE982615d461DD5cD06575BbeA87624fda4e3de17:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2191,7 +1908,7 @@
       "address": "eth:0xfd78EE919681417d192449715b2594ab58f5D002",
       "contractName": "TokenMinterV2",
       "entity": null,
-      "id": "72:eth:0xfd78EE919681417d192449715b2594ab58f5D002:$deleted",
+      "id": "72:eth:0xfd78EE919681417d192449715b2594ab58f5D002:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2200,7 +1917,7 @@
       "address": "eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268",
       "contractName": "AssetList",
       "entity": null,
-      "id": "72:eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268:$created",
+      "id": "72:eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268:contract-added",
       "type": "contract-added"
     },
     {
@@ -2210,11 +1927,15 @@
       "contractName": "GnosisSafe",
       "isDependency": true,
       "entity": null,
-      "id": "76:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:values.$members.8",
+      "id": "76:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:data-change",
       "type": "data-change",
-      "field": "values.$members.8",
-      "before": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
-      "after": "eth:0xD66336eA98cE0da67f25934E7cC230D4226292a0"
+      "changes": [
+        {
+          "field": "values.$members.8",
+          "before": "eth:0x3F7b49F03375Aa588B828A5FfbAac5727fb8202d",
+          "after": "eth:0xD66336eA98cE0da67f25934E7cC230D4226292a0"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-31T08:17:19.000Z",
@@ -2223,11 +1944,15 @@
       "contractName": "GnosisSafe",
       "isDependency": false,
       "entity": null,
-      "id": "85:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:values.$members.5",
+      "id": "85:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:data-change",
       "type": "data-change",
-      "field": "values.$members.5",
-      "before": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627",
-      "after": "eth:0xFC63ef192E26E428f349057544a8786453C94f84"
+      "changes": [
+        {
+          "field": "values.$members.5",
+          "before": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627",
+          "after": "eth:0xFC63ef192E26E428f349057544a8786453C94f84"
+        }
+      ]
     },
     {
       "timestamp": "2026-03-31T08:17:19.000Z",
@@ -2235,7 +1960,7 @@
       "address": "eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627",
       "contractName": "Safe",
       "entity": null,
-      "id": "85:eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627:$deleted",
+      "id": "85:eth:0xeB5f68394c0C9dCcD99BFfbAC1B5f90002D43627:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2245,66 +1970,38 @@
       "contractName": "cUSDTv3",
       "isDependency": false,
       "entity": null,
-      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$pastUpgrades.47",
+      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
       "type": "data-change",
-      "field": "values.$pastUpgrades.47",
-      "after": [
-        "2026-04-04T02:50:47.000Z",
-        "0x7b2b47ccf3cae39dd39440bf6d8607fdd22b91d97949f60f6b749d8dd7a76f7c",
-        [
-          "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846"
-        ]
+      "changes": [
+        {
+          "field": "values.$pastUpgrades.47",
+          "after": [
+            "2026-04-04T02:50:47.000Z",
+            "0x7b2b47ccf3cae39dd39440bf6d8607fdd22b91d97949f60f6b749d8dd7a76f7c",
+            [
+              "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 47,
+          "after": 48
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
+          "after": "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846"
+        },
+        {
+          "field": "implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
+          "after": "CometWithExtendedAssetList"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 47,
-      "after": 48
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
-      "after": "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846"
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x2BEa101d992b58DA3F52C4c2aaeb49d33f7DCE14",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
-      "after": "CometWithExtendedAssetList"
     },
     {
       "timestamp": "2026-04-04T07:52:49.000Z",
@@ -2312,7 +2009,7 @@
       "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
       "contractName": "AssetList",
       "entity": null,
-      "id": "90:eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae:$deleted",
+      "id": "90:eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2322,66 +2019,38 @@
       "contractName": "cUSDCv3",
       "isDependency": false,
       "entity": null,
-      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$pastUpgrades.55",
+      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:data-change",
       "type": "data-change",
-      "field": "values.$pastUpgrades.55",
-      "after": [
-        "2026-04-04T02:45:35.000Z",
-        "0x07882cd8027ec1747045f84f8fe409c63dbf29cfb88edb29840a189cb66277c3",
-        [
-          "eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC"
-        ]
+      "changes": [
+        {
+          "field": "values.$pastUpgrades.55",
+          "after": [
+            "2026-04-04T02:45:35.000Z",
+            "0x07882cd8027ec1747045f84f8fe409c63dbf29cfb88edb29840a189cb66277c3",
+            [
+              "eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
+          "after": "eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC"
+        },
+        {
+          "field": "implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC",
+          "after": "CometWithExtendedAssetList"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 55,
-      "after": 56
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
-      "after": "eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC"
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xd5Bc47E1315F0F4F12D6C4e491174488c9C9Dd95",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-04-04T07:52:49.000Z",
-      "updateNotifierId": 90,
-      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-      "contractName": "cUSDCv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "90:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:implementationNames.eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC",
-      "type": "data-change",
-      "field": "implementationNames.eth:0xf1c4f39EdBdfECF8628a822dC15d1aA882118DAC",
-      "after": "CometWithExtendedAssetList"
     },
     {
       "timestamp": "2026-04-04T07:52:49.000Z",
@@ -2389,7 +2058,7 @@
       "address": "eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268",
       "contractName": "AssetList",
       "entity": null,
-      "id": "90:eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268:$deleted",
+      "id": "90:eth:0xfC4b957C2512DfC62B0eab58a306e018f293B268:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2398,7 +2067,7 @@
       "address": "eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2",
       "contractName": "AssetList",
       "entity": null,
-      "id": "90:eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2:$created",
+      "id": "90:eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2:contract-added",
       "type": "contract-added"
     },
     {
@@ -2407,7 +2076,7 @@
       "address": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
       "contractName": "AssetList",
       "entity": null,
-      "id": "90:eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016:$created",
+      "id": "90:eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016:contract-added",
       "type": "contract-added"
     },
     {
@@ -2416,7 +2085,7 @@
       "address": "eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2",
       "contractName": "AssetList",
       "entity": null,
-      "id": "101:eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2:$deleted",
+      "id": "101:eth:0x7c6fA85d7112644c8fa26B9A9541FA8414A6fFF2:contract-removed",
       "type": "contract-removed"
     },
     {
@@ -2426,66 +2095,38 @@
       "contractName": "cUSDTv3",
       "isDependency": false,
       "entity": null,
-      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$pastUpgrades.48",
+      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
       "type": "data-change",
-      "field": "values.$pastUpgrades.48",
-      "after": [
-        "2026-04-10T09:22:59.000Z",
-        "0xa58fd62c2de52ba87dd65bb9df7943fd46eccce29b27e605c8f1aa23c6220d9e",
-        [
-          "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E"
-        ]
+      "changes": [
+        {
+          "field": "values.$pastUpgrades.48",
+          "after": [
+            "2026-04-10T09:22:59.000Z",
+            "0xa58fd62c2de52ba87dd65bb9df7943fd46eccce29b27e605c8f1aa23c6220d9e",
+            [
+              "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E"
+            ]
+          ]
+        },
+        {
+          "field": "values.$upgradeCount",
+          "before": 48,
+          "after": 49
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
+          "after": "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E"
+        },
+        {
+          "field": "implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
+          "before": "CometWithExtendedAssetList"
+        },
+        {
+          "field": "implementationNames.eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E",
+          "after": "CometWithExtendedAssetList"
+        }
       ]
-    },
-    {
-      "timestamp": "2026-04-11T07:59:13.000Z",
-      "updateNotifierId": 101,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$upgradeCount",
-      "type": "data-change",
-      "field": "values.$upgradeCount",
-      "before": 48,
-      "after": 49
-    },
-    {
-      "timestamp": "2026-04-11T07:59:13.000Z",
-      "updateNotifierId": 101,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:values.$implementation",
-      "type": "data-change",
-      "field": "values.$implementation",
-      "before": "eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
-      "after": "eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E"
-    },
-    {
-      "timestamp": "2026-04-11T07:59:13.000Z",
-      "updateNotifierId": 101,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x5cF3bE8F5aFB6e3957A2D56cCE4FaA3135D27846",
-      "before": "CometWithExtendedAssetList"
-    },
-    {
-      "timestamp": "2026-04-11T07:59:13.000Z",
-      "updateNotifierId": 101,
-      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-      "contractName": "cUSDTv3",
-      "isDependency": false,
-      "entity": null,
-      "id": "101:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:implementationNames.eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E",
-      "type": "data-change",
-      "field": "implementationNames.eth:0x42bF1E67039Aed53fd7A63628dfDE468381cCb8E",
-      "after": "CometWithExtendedAssetList"
     },
     {
       "timestamp": "2026-04-11T07:59:13.000Z",
@@ -2493,7 +2134,7 @@
       "address": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
       "contractName": "AssetList",
       "entity": null,
-      "id": "101:eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40:$created",
+      "id": "101:eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40:contract-added",
       "type": "contract-added"
     }
   ]

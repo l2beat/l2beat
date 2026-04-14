@@ -3,8 +3,21 @@ import * as fs from 'fs'
 import * as path from 'path'
 import type { ActivityFileEvent } from './activityClassifier'
 
+/**
+ * Bump this whenever the on-disk shape of activity events changes.
+ *
+ * History:
+ * - `1.0`: per-field events (one event per changed field per row)
+ * - `1.1`: grouped events (one event per (contract, type[, role]) per row,
+ *   with a `changes[]` array of FieldChange)
+ *
+ * Files at an older version are dropped on read and re-reconciled from the
+ * `UpdateNotifier` table on the next monitor cycle.
+ */
+export const ACTIVITY_FILE_VERSION = '1.1'
+
 export interface ActivityFile {
-  version: '1.0'
+  version: typeof ACTIVITY_FILE_VERSION
   /** Unix seconds — informational, updated each reconciliation pass. */
   lastReconciledAt: number
   /**
@@ -17,7 +30,7 @@ export interface ActivityFile {
 
 function emptyFile(): ActivityFile {
   return {
-    version: '1.0',
+    version: ACTIVITY_FILE_VERSION,
     lastReconciledAt: 0,
     lastConsumedUpdateNotifierId: 0,
     events: [],
@@ -41,8 +54,18 @@ export function readActivityFile(
   }
   try {
     const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+    if (parsed.version !== ACTIVITY_FILE_VERSION) {
+      // Schema migration: drop the file, force full re-reconciliation from
+      // the UpdateNotifier table on the next monitor pass. The DB is the
+      // source of truth — re-reading it is cheap and avoids carrying a
+      // legacy-shape transformation step around forever.
+      console.log(
+        `[activity] ${project}: activity.json version ${String(parsed.version)} != ${ACTIVITY_FILE_VERSION}, resetting cursor for full backfill`,
+      )
+      return emptyFile()
+    }
     return {
-      version: '1.0',
+      version: ACTIVITY_FILE_VERSION,
       lastReconciledAt: Number(parsed.lastReconciledAt ?? 0),
       lastConsumedUpdateNotifierId: Number(
         parsed.lastConsumedUpdateNotifierId ?? 0,

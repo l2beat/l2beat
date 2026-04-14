@@ -20,7 +20,17 @@ export interface ActivityNotifierRow {
 // ============================================================================
 
 export interface BaseActivityFileEvent {
-  /** Deterministic `${updateNotifierId}:${address}:${key}` — dedupe key. */
+  /**
+   * Deterministic id used as the dedupe key. Format depends on event type:
+   * - data-change:      `${updateNotifierId}:${address}:data-change`
+   * - role-update:      `${updateNotifierId}:${address}:role:${roleName}`
+   * - contract-added:   `${updateNotifierId}:${address}:contract-added`
+   * - contract-removed: `${updateNotifierId}:${address}:contract-removed`
+   *
+   * NOTE: the per-field key is intentionally NOT in the id — events group all
+   * field changes for one (contract, type[, role]) bucket per UpdateNotifier
+   * row, so the id is one-per-bucket, not one-per-field.
+   */
   id: string
   /** ISO 8601 timestamp for compatibility with the existing UpgradeEvent shape. */
   timestamp: string
@@ -31,19 +41,26 @@ export interface BaseActivityFileEvent {
   entity?: string | null
 }
 
-export interface DataChangeEvent extends BaseActivityFileEvent {
-  type: 'data-change'
+/** A single field diff inside a grouped activity event. */
+export interface FieldChange {
+  /** Original diff key, e.g. "values.totalSupply" or "accessControl.ADMIN.members". */
   field: string
   before: unknown
   after: unknown
 }
 
+export interface DataChangeEvent extends BaseActivityFileEvent {
+  type: 'data-change'
+  /** All non-role fields that changed on this contract during one monitor cycle. Length >= 1. */
+  changes: FieldChange[]
+}
+
 export interface RoleUpdateEvent extends BaseActivityFileEvent {
   type: 'role-update'
+  /** Single role per event — multi-role updates produce multiple events. */
   roleName: string
-  field: string
-  before: unknown
-  after: unknown
+  /** All sub-fields of this role that changed (e.g. members, adminRole). Length >= 1. */
+  changes: FieldChange[]
 }
 
 export interface ContractAddedEvent extends BaseActivityFileEvent {
@@ -121,7 +138,7 @@ export function classifyDiff(
     if (contractDiff.type === 'created') {
       events.push({
         ...base,
-        id: makeId(notifier.id, address, '$created'),
+        id: makeContractEventId(notifier.id, address, 'contract-added'),
         type: 'contract-added',
       })
       continue
@@ -130,41 +147,57 @@ export function classifyDiff(
     if (contractDiff.type === 'deleted') {
       events.push({
         ...base,
-        id: makeId(notifier.id, address, '$deleted'),
+        id: makeContractEventId(notifier.id, address, 'contract-removed'),
         type: 'contract-removed',
       })
       continue
     }
 
+    // Bucket field changes by (data | role:<roleName>) so each bucket becomes
+    // one grouped event. Insertion order is preserved by the diff walk.
+    const dataChanges: FieldChange[] = []
+    const roleBuckets = new Map<string, FieldChange[]>()
+
     for (const field of contractDiff.diff ?? []) {
       const key = field.key
       if (SKIP_FIELDS.has(key)) continue
 
-      const before = parseDiffValue(field.before)
-      const after = parseDiffValue(field.after)
-      const id = makeId(notifier.id, address, key)
+      const change: FieldChange = {
+        field: key,
+        before: parseDiffValue(field.before),
+        after: parseDiffValue(field.after),
+      }
 
       const role = classifyAsRole(key)
       if (role !== undefined) {
-        events.push({
-          ...base,
-          id,
-          type: 'role-update',
-          roleName: role,
-          field: key,
-          before,
-          after,
-        })
+        let bucket = roleBuckets.get(role)
+        if (!bucket) {
+          bucket = []
+          roleBuckets.set(role, bucket)
+        }
+        bucket.push(change)
         continue
       }
 
+      dataChanges.push(change)
+    }
+
+    if (dataChanges.length > 0) {
       events.push({
         ...base,
-        id,
+        id: makeDataChangeId(notifier.id, address),
         type: 'data-change',
-        field: key,
-        before,
-        after,
+        changes: dataChanges,
+      })
+    }
+
+    for (const [roleName, changes] of roleBuckets) {
+      events.push({
+        ...base,
+        id: makeRoleUpdateId(notifier.id, address, roleName),
+        type: 'role-update',
+        roleName,
+        changes,
       })
     }
   }
@@ -186,7 +219,18 @@ function classifyAsRole(key: string): string | undefined {
   if (key === 'pendingOwner' || key === 'values.pendingOwner') {
     return 'pendingOwner'
   }
-  if (key === '$members' || key === 'values.$members') return 'Safe.owners'
+  // Safe owners: diffs land as either the whole array (`$members` /
+  // `values.$members`) when the list length changes, or as per-slot indexed
+  // keys (`values.$members.3`) when an individual seat is swapped. Both are
+  // role updates, not data changes.
+  if (
+    key === '$members' ||
+    key === 'values.$members' ||
+    /^\$members\.\d+$/.test(key) ||
+    /^values\.\$members\.\d+$/.test(key)
+  ) {
+    return 'Safe.owners'
+  }
   if (key === '$threshold' || key === 'values.$threshold') {
     return 'Safe.threshold'
   }
@@ -211,12 +255,24 @@ function parseDiffValue(raw: string | undefined): unknown {
   }
 }
 
-function makeId(
+function makeDataChangeId(updateNotifierId: number, address: string): string {
+  return `${updateNotifierId}:${address}:data-change`
+}
+
+function makeRoleUpdateId(
   updateNotifierId: number,
   address: string,
-  key: string,
+  roleName: string,
 ): string {
-  return `${updateNotifierId}:${address}:${key}`
+  return `${updateNotifierId}:${address}:role:${roleName}`
+}
+
+function makeContractEventId(
+  updateNotifierId: number,
+  address: string,
+  kind: 'contract-added' | 'contract-removed',
+): string {
+  return `${updateNotifierId}:${address}:${kind}`
 }
 
 function safeNormalize(address: string): string {
