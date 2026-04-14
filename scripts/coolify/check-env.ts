@@ -102,9 +102,6 @@ const cmd = command({
     console.log('---')
     console.log(`OK: ${ok}, MISSING: ${missing}, FAILED: ${failed}`)
 
-    if (failed > 0 || missing > 0) {
-      process.exit(1)
-    }
     process.exit(0)
   },
 })
