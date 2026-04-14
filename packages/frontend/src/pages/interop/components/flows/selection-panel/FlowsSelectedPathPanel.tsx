@@ -1,3 +1,4 @@
+import { Button } from '~/components/core/Button'
 import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
@@ -49,14 +50,11 @@ export function FlowsSelectedPathPanel() {
         )}
       </div>
       {highlightedChains.length === 2 && chainB && (
-        <div className="mt-auto pt-4">
-          <a
-            href={detailsUrl}
-            className="block w-full rounded-lg bg-brand py-2.5 text-center font-bold text-label-value-14 text-primary-invert transition-colors hover:bg-brand/90"
-          >
+        <a href={detailsUrl}>
+          <Button variant="fill" className="mt-5 w-full">
             View path details
-          </a>
-        </div>
+          </Button>
+        </a>
       )}
     </div>
   )
