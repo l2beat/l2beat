@@ -39,11 +39,6 @@ export class ElasticSearchTransport implements LoggerTransport {
 
   push(log: string) {
     this.buffer.push(log)
-    const overflow = this.buffer.length - this.bufferLimit
-    if (overflow > 0) {
-      void this.reportBufferOverflow(overflow)
-      this.buffer.splice(0, overflow)
-    }
   }
 
   private start(): void {
@@ -67,6 +62,12 @@ export class ElasticSearchTransport implements LoggerTransport {
   private async flushLogs(): Promise<void> {
     if (!this.buffer.length) {
       return
+    }
+
+    const overflow = this.buffer.length - this.bufferLimit
+    if (overflow > 0) {
+      void this.reportBufferOverflow(overflow)
+      this.buffer.splice(0, overflow)
     }
 
     /** In scope for `catch` so we can correlate flush failures with batched log lines. */
