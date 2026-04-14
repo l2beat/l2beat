@@ -1,3 +1,4 @@
+import { BidirectionalArrowIcon } from '~/icons/BidirectionalArrow'
 import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { MultipleChainsStats } from './MultipleChainsStats'
@@ -15,11 +16,6 @@ export function FlowsSelectedPathPanel() {
     return null
   }
 
-  const title =
-    highlightedChains.length === 1
-      ? `${chainA.name} <> All supported chains`
-      : `${chainA.name} <> ${chainB?.name}`
-
   const detailsUrl = buildInteropUrl(
     '/interop/summary',
     {
@@ -32,8 +28,10 @@ export function FlowsSelectedPathPanel() {
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
       <div className="font-bold text-heading-20">Selected path</div>
-      <div className="mt-1 font-medium text-label-value-14 text-secondary">
-        {title}
+      <div className="mt-1 flex items-center gap-1 font-medium text-label-value-14 text-secondary">
+        <span>{chainA.name}</span>
+        <BidirectionalArrowIcon className="size-3.5 fill-secondary" />
+        <span>{chainB?.name ?? 'All supported chains'}</span>
       </div>
       <div className="mt-3 grid grid-cols-1 gap-2 md:max-lg:grid-cols-2">
         {highlightedChains.length === 1 && (
