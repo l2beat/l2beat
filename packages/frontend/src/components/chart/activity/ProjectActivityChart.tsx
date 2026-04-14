@@ -1,4 +1,5 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
@@ -56,8 +57,10 @@ export function ProjectActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects: projectMetric !== null ? projectMetric / 86400 : null,
-            ethereum: ethereumMetric !== null ? ethereumMetric / 86400 : null,
+            projects:
+              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
+            ethereum:
+              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
           }
         },
       ),
