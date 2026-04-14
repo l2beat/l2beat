@@ -4,7 +4,10 @@ import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
-import { getConnectionPath } from './utils/getConnectionPath'
+import {
+  BIDIRECTIONAL_OFFSET,
+  getConnectionPath,
+} from './utils/getConnectionPath'
 
 interface Props {
   flows: Flow[]
@@ -74,7 +77,13 @@ export function ParticleLayer({
         const dst = layout.get(flow.dstChain)
         if (!src || !dst) return null
 
-        const path = getConnectionPath(src, dst, centerX, centerY)
+        const path = getConnectionPath(
+          src,
+          dst,
+          centerX,
+          centerY,
+          BIDIRECTIONAL_OFFSET,
+        )
         const color = getChainColor(interopChains, flow.srcChain)
 
         const highlighted =

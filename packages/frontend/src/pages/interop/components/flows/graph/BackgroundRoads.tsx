@@ -1,6 +1,9 @@
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
-import { getConnectionPath } from './utils/getConnectionPath'
+import {
+  BIDIRECTIONAL_OFFSET,
+  getConnectionPath,
+} from './utils/getConnectionPath'
 
 interface Props {
   chainIds: string[]
@@ -10,7 +13,7 @@ interface Props {
 }
 
 /**
- * Renders a faint curved line for every unique chain pair,
+ * Renders two faint curved lines for every unique chain pair,
  * so the "roads" between nodes are always visible in the background.
  */
 export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
@@ -36,15 +39,39 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
           highlightedChains.length === 0 ||
           highlightedChains.every((chain) => chain === a || chain === b)
 
+        const strokeWidth =
+          highlighted && highlightedChains.length > 0 ? 1.5 : 1
+        const opacity = highlighted ? 0.4 : 0.08
+
         return (
-          <path
-            key={`road-${a}-${b}`}
-            d={getConnectionPath(srcLayout, dstLayout, centerX, centerY)}
-            fill="none"
-            className="stroke-divider"
-            strokeWidth={highlighted && highlightedChains.length > 0 ? 1.5 : 1}
-            opacity={highlighted ? 0.4 : 0.08}
-          />
+          <g key={`road-${a}-${b}`}>
+            <path
+              d={getConnectionPath(
+                srcLayout,
+                dstLayout,
+                centerX,
+                centerY,
+                BIDIRECTIONAL_OFFSET,
+              )}
+              fill="none"
+              className="stroke-divider"
+              strokeWidth={strokeWidth}
+              opacity={opacity}
+            />
+            <path
+              d={getConnectionPath(
+                srcLayout,
+                dstLayout,
+                centerX,
+                centerY,
+                -BIDIRECTIONAL_OFFSET,
+              )}
+              fill="none"
+              className="stroke-divider"
+              strokeWidth={strokeWidth}
+              opacity={opacity}
+            />
+          </g>
         )
       })}
     </g>
