@@ -12,9 +12,9 @@ export function generateInterfaceSourceFromContract(
   const ast = contract.ast as AST.ContractDefinition
 
   let result =
-    '// NOTE(l2beat): This is a virtual interface, generated from the contract source code.\n'
+    '// NOTE(l2beat): This is an abstract contract, generated from the contract source code.\n'
 
-  result += `interface ${contract.name}`
+  result += `abstract contract ${contract.name}`
   if (ast.baseContracts.length > 0) {
     const baseNames = []
     for (const base of ast.baseContracts) {
@@ -38,6 +38,9 @@ export function generateInterfaceSourceFromContract(
     switch (child.type) {
       case 'FunctionDefinition': {
         if (child.isConstructor) {
+          continue
+        }
+        if (child.visibility === 'private' || child.visibility === 'internal') {
           continue
         }
 
@@ -66,12 +69,28 @@ export function generateInterfaceSourceFromContract(
         ])
         break
       }
+      case 'TypeDefinition': {
+        elements.push([child.type, padding + formatTypeDefinition(child)])
+        break
+      }
       case 'UsingForDeclaration': {
         // NOTE(radomski): Using for declaration is not supported in interfaces
         break
       }
       case 'StateVariableDeclaration': {
-        // NOTE(radomski): State variables are not supported in interfaces
+        for (const variable of child.variables) {
+          if (variable.visibility === 'public') {
+            const type =
+              variable.isDeclaredConst || variable.isImmutable
+                ? 'FunctionDefinition'
+                : 'StateVariableDeclaration'
+            const element =
+              variable.isDeclaredConst || variable.isImmutable
+                ? formatPublicVariableGetter(variable)
+                : formatVariable(variable)
+            elements.push([type, padding + element])
+          }
+        }
         break
       }
       case 'ModifierDefinition': {
@@ -136,6 +155,10 @@ function formatStructDefinition(
   return result
 }
 
+function formatTypeDefinition(typeDef: AST.TypeDefinition): string {
+  return `type ${typeDef.name} is ${formatTypeName(typeDef.definition)};`
+}
+
 function formatErrorDefinition(error: AST.CustomErrorDefinition): string {
   let result = `error ${error.name}(`
 
@@ -179,10 +202,12 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   }
   declaration += ')'
 
-  const addons = ['external']
+  const addons: string[] = []
+  addons.push(getFunctionVisibility(fn))
   if (fn.stateMutability !== null) {
     addons.push(fn.stateMutability)
   }
+  addons.push('virtual')
   if (fn.override !== null) {
     let value = 'override'
     const args = fn.override.map((x) => x.namePath)
@@ -207,6 +232,32 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   return declaration
 }
 
+function getFunctionVisibility(
+  fn: AST.FunctionDefinition,
+): 'external' | 'public' {
+  if (fn.isReceiveEther || fn.isFallback || fn.visibility === 'external') {
+    return 'external'
+  }
+  return 'public'
+}
+
+function formatVariable(
+  variable: AST.StateVariableDeclarationVariable,
+): string {
+  assert(variable.typeName !== null, 'Variable must have a type')
+  let result = formatTypeName(variable.typeName)
+  result += ` ${variable.visibility} ${variable.name};`
+  return result
+}
+
+function formatPublicVariableGetter(
+  variable: AST.StateVariableDeclarationVariable,
+): string {
+  assert(variable.typeName !== null, 'Variable must have a type')
+  const returnType = formatTypeNameForReturn(variable.typeName)
+  return `function ${variable.name}() external view virtual returns (${returnType});`
+}
+
 function formatParameter(param: AST.VariableDeclaration): string {
   assert(param.typeName !== null, 'Parameter must have a type')
   let result = `${formatTypeName(param.typeName)}`
@@ -223,7 +274,11 @@ function formatParameter(param: AST.VariableDeclaration): string {
 function formatTypeName(typeName: AST.TypeName): string {
   switch (typeName.type) {
     case 'ElementaryTypeName': {
-      return typeName.name
+      let result = typeName.name
+      if (typeName.stateMutability !== null) {
+        result += ` ${typeName.stateMutability}`
+      }
+      return result
     }
     case 'UserDefinedTypeName': {
       return typeName.namePath
@@ -266,6 +321,16 @@ function formatTypeName(typeName: AST.TypeName): string {
       return declaration
     }
   }
+}
+
+function formatTypeNameForReturn(typeName: AST.TypeName): string {
+  const name = formatTypeName(typeName)
+  if (typeName.type === 'ElementaryTypeName') {
+    return typeName.name === 'bytes' || typeName.name === 'string'
+      ? `${name} memory`
+      : name
+  }
+  return name
 }
 
 function formatExpression(expression: AST.Expression): string {

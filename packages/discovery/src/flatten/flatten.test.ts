@@ -654,13 +654,13 @@ library UsesNewing {
     }
 }
 
-// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
-interface DynamicContract {
+// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
+abstract contract DynamicContract {
     struct Structure {
         uint256 field;
     }
 
-    function usingLibrary() external;
+    function usingLibrary() public virtual;
 }
 
 contract R1 {
@@ -697,6 +697,102 @@ contract R1 {
     )
   })
 
+  it('regression - signature contract with public variable stays a public variable', () => {
+    const files: FileContent[] = [
+      {
+        path: 'Whitelist.sol',
+        content: String.raw`
+abstract contract WhitelistConsumer {
+    address public whitelist;
+
+    modifier onlyWhitelisted() {
+        if (whitelist != address(0)) {
+            require(Whitelist(whitelist).isAllowed(msg.sender), "NOT_WHITELISTED");
+        }
+        _;
+    }
+}
+
+contract Whitelist {
+    mapping(address => bool) public isAllowed;
+
+    function setWhitelist(address[] memory user, bool[] memory val) external {
+        require(user.length == val.length, "INVALID_INPUT");
+
+        for (uint256 i = 0; i < user.length; i++) {
+            isAllowed[user[i]] = val[i];
+        }
+    }
+}
+`,
+      },
+      {
+        path: 'Root.sol',
+        content: String.raw`
+import { WhitelistConsumer } from 'Whitelist.sol';
+
+contract R is WhitelistConsumer { }
+`,
+      },
+    ]
+
+    const flattened = flattenStartingFrom('R', files, [], { includeAll: true })
+    expect(flattened).toEqual(
+      String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
+abstract contract Whitelist {
+    mapping(address => bool) public isAllowed;
+
+    function setWhitelist(address[] memory user, bool[] memory val) external virtual;
+}
+
+abstract contract WhitelistConsumer {
+    address public whitelist;
+
+    modifier onlyWhitelisted() {
+        if (whitelist != address(0)) {
+            require(Whitelist(whitelist).isAllowed(msg.sender), "NOT_WHITELISTED");
+        }
+        _;
+    }
+}
+
+contract R is WhitelistConsumer { }`,
+    )
+  })
+
+  it('regression - function name clash', () => {
+    const file: FileContent = {
+      path: 'root.sol',
+      content: String.raw`
+interface Iface {
+	function foo(address payable to) external;
+}
+
+contract ContractUsingIface is Iface {
+	function foo(address payable to) external { }
+}
+
+contract R {
+	ContractUsingIface variable;
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R', [file], [], { includeAll: true })
+    expect(flattened).toEqual(String.raw`interface Iface {
+	function foo(address payable to) external;
+}
+
+// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
+abstract contract ContractUsingIface is Iface {
+    function foo(address payable to) external virtual;
+}
+
+contract R {
+	ContractUsingIface variable;
+}`)
+  })
+
   describe('name clash disambiguation', () => {
     it('resolves name clash from import alias reversal', () => {
       const files: FileContent[] = [
@@ -722,14 +818,14 @@ contract R1 is Name { function r1(NameDifferent x) public {} }`,
       })
 
       // Name(abc.sol) is only used as a type parameter, not inherited,
-      // so the flattener converts it to an interface. The key assertion is
+      // so the flattener converts it to an abstract contract. The key assertion is
       // that the two declarations are disambiguated (Name vs Name_1).
       expect(flattened).toEqual(
         String.raw`contract Name { function cba() public {} }
 
-// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
-interface Name_1 {
-    function abc() external;
+// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
+abstract contract Name_1 {
+    function abc() public virtual;
 }
 
 contract R1 is Name { function r1(Name_1 x) public {} }`,
