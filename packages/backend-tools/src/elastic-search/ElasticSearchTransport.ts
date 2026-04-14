@@ -8,7 +8,7 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
-  /** Max total UTF-8 byte size of buffered strings before oldest items are dropped at flush. */
+  /** Alert threshold (UTF-8 bytes): emit CRITICAL when buffered data exceeds this; nothing is trimmed. */
   bufferMaxBytes?: number
   flushInterval?: number
   indexPrefix?: string
@@ -65,9 +65,9 @@ export class ElasticSearchTransport implements LoggerTransport {
       return
     }
 
-    const { droppedItems, droppedBytes } = this.trimOverflow()
-    if (droppedItems > 0) {
-      void this.reportBufferOverflow(droppedItems, droppedBytes)
+    const bufferedBytes = sumBufferUtf8Bytes(this.buffer)
+    if (bufferedBytes > this.bufferMaxBytes) {
+      await this.reportBufferOverflow(bufferedBytes, this.buffer.length)
     }
 
     /** In scope for `catch` so we can correlate flush failures with batched log strings. */
@@ -139,37 +139,9 @@ export class ElasticSearchTransport implements LoggerTransport {
     return indexName
   }
 
-  /**
-   * Drops whole items from the front of the buffer until total UTF-8 byte size
-   * is at most `bufferMaxBytes`.
-   */
-  private trimOverflow(): {
-    droppedItems: number
-    droppedBytes: number
-  } {
-    let totalBytes = sumBufferUtf8Bytes(this.buffer)
-    if (totalBytes <= this.bufferMaxBytes) {
-      return { droppedItems: 0, droppedBytes: 0 }
-    }
-
-    let droppedItems = 0
-    let droppedBytes = 0
-    while (totalBytes > this.bufferMaxBytes && this.buffer.length > 0) {
-      const item = this.buffer.shift()
-      if (item === undefined) {
-        break
-      }
-      const itemBytes = Buffer.byteLength(item, 'utf8')
-      droppedBytes += itemBytes
-      droppedItems += 1
-      totalBytes -= itemBytes
-    }
-    return { droppedItems, droppedBytes }
-  }
-
   private async reportBufferOverflow(
-    droppedItems: number,
-    droppedBytes: number,
+    bufferedBytes: number,
+    bufferItemCount: number,
   ): Promise<void> {
     try {
       await this.client.bulk(
@@ -180,10 +152,10 @@ export class ElasticSearchTransport implements LoggerTransport {
               formatEcsLog({
                 time: new Date(),
                 level: 'CRITICAL',
-                message: 'Elastic Search transport buffer overflowed',
+                message: 'Elastic Search transport buffer exceeds byte budget',
                 parameters: {
-                  droppedItems,
-                  droppedBytes,
+                  bufferedBytes,
+                  bufferItemCount,
                   bufferMaxBytes: this.bufferMaxBytes,
                 },
               }),

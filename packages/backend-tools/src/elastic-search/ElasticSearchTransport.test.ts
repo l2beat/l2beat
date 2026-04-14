@@ -96,10 +96,10 @@ describe(ElasticSearchTransport.name, () => {
     )
   })
 
-  it('keeps only the newest logs when buffer UTF-8 byte size is exceeded at flush time', async () => {
+  it('sends CRITICAL when buffer UTF-8 size exceeds budget but still ships all buffered items', async () => {
     const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
     const bufferMaxBytes = itemBytes * 2
-    const clientMock = createClientMock(false)
+    const clientMock = createClientMockWithTrackedIndex()
     const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
 
     transportMock.push(ecsSerializedLog(0))
@@ -109,6 +109,9 @@ describe(ElasticSearchTransport.name, () => {
     await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    // `await reportBufferOverflow` runs `createIndex` before the main try block.
+    expect(clientMock.indexExist).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexCreate).toHaveBeenCalledTimes(1)
 
     expect(clientMock.bulk).toHaveBeenNthCalledWith(
       1,
@@ -116,9 +119,10 @@ describe(ElasticSearchTransport.name, () => {
         expect.subset({
           id,
           log: { level: 'CRITICAL' },
+          message: 'Elastic Search transport buffer exceeds byte budget',
           parameters: {
-            droppedItems: 1,
-            droppedBytes: itemBytes,
+            bufferedBytes: itemBytes * 3,
+            bufferItemCount: 3,
             bufferMaxBytes,
           },
         }),
@@ -129,6 +133,7 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).toHaveBeenNthCalledWith(
       2,
       [
+        { id, ...log, message: '0000000000' },
         { id, ...log, message: '0000000001' },
         { id, ...log, message: '0000000002' },
       ],
@@ -136,11 +141,11 @@ describe(ElasticSearchTransport.name, () => {
     )
   })
 
-  it('drops oldest buffer items until total UTF-8 size is within bufferMaxBytes (trim at flush)', async () => {
+  it('awaits CRITICAL overflow report then sends full bulk (no trimming)', async () => {
     const itemBytes = Buffer.byteLength(ecsSerializedLog(0), 'utf8')
     const maxItems = 20_000
     const bufferMaxBytes = maxItems * itemBytes
-    const clientMock = createClientMock(false)
+    const clientMock = createClientMockWithTrackedIndex()
     const transportMock = createTransportMock(clientMock, { bufferMaxBytes })
 
     for (let i = 0; i <= maxItems; i++) {
@@ -150,6 +155,8 @@ describe(ElasticSearchTransport.name, () => {
     await clock.tickAsync(flushInterval + 1)
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexExist).toHaveBeenCalledTimes(2)
+    expect(clientMock.indexCreate).toHaveBeenCalledTimes(1)
 
     expect(clientMock.bulk).toHaveBeenNthCalledWith(
       1,
@@ -157,9 +164,10 @@ describe(ElasticSearchTransport.name, () => {
         expect.subset({
           id,
           log: { level: 'CRITICAL' },
+          message: 'Elastic Search transport buffer exceeds byte budget',
           parameters: {
-            droppedItems: 1,
-            droppedBytes: itemBytes,
+            bufferedBytes: itemBytes * (maxItems + 1),
+            bufferItemCount: maxItems + 1,
             bufferMaxBytes,
           },
         }),
@@ -168,9 +176,9 @@ describe(ElasticSearchTransport.name, () => {
     )
 
     const [documents] = clientMock.bulk.calls[1]!.args
-    expect(documents).toHaveLength(maxItems)
-    expect(documents[0]).toEqual({ id, ...log, message: '0000000001' })
-    expect(documents[maxItems - 1]).toEqual({
+    expect(documents).toHaveLength(maxItems + 1)
+    expect(documents[0]).toEqual({ id, ...log, message: '0000000000' })
+    expect(documents[maxItems]).toEqual({
       id,
       ...log,
       message: '0000020000',
@@ -292,6 +300,37 @@ describe(ElasticSearchTransport.name, () => {
     expect(clientMock.bulk).toHaveBeenCalledTimes(2)
   })
 })
+
+/**
+ * Index missing until first `indexCreate`, then exists — matches real ES behavior when
+ * `createIndex` runs twice in one flush (`await` CRITICAL bulk, then main bulk).
+ */
+function createClientMockWithTrackedIndex(
+  bulkResponses?: Array<
+    | { isSuccess: true }
+    | { isSuccess: false; failedDocuments: Record<string, unknown>[] }
+  >,
+) {
+  let indexExists = false
+  const queue =
+    bulkResponses !== undefined
+      ? [...bulkResponses]
+      : [{ isSuccess: true as const }]
+
+  return mockObject<ElasticSearchClient>({
+    indexExist: mockFn(async (_: string): Promise<boolean> => indexExists),
+    indexCreate: mockFn(async (_: string): Promise<void> => {
+      indexExists = true
+    }),
+    bulk: mockFn(async () => {
+      const next = queue.shift()
+      if (next === undefined) {
+        return { isSuccess: true as const }
+      }
+      return next
+    }),
+  })
+}
 
 function createClientMock(
   indexExist = true,
