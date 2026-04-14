@@ -121,7 +121,7 @@ export class InteropNotifier {
         const largerSide = transfer.dominantSide
         const smallerSide = largerSide === 'src' ? 'dst' : 'src'
 
-        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcChain} -> ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)} diff)`
+        return `- \`${transfer.transferId}\` \`${transfer.plugin}\` \`${transfer.type}\` \`${transfer.srcSymbol} on ${transfer.srcChain} -> ${transfer.dstSymbol} on ${transfer.dstChain}\` ${formatDollars(transfer.srcValueUsd)} vs ${formatDollars(transfer.dstValueUsd)} (${formatRatio(transfer.valueRatio)} ${largerSide}/${smallerSide}, ${formatPercent(transfer.valueDifferencePercent)})`
       })
 
     const remainingTransfers =
