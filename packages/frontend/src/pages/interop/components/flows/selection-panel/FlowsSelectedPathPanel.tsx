@@ -1,3 +1,4 @@
+import { buildInteropUrl } from '../../../utils/buildInteropUrl'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { MultipleChainsStats } from './MultipleChainsStats'
 import { SingleChainStats } from './SingleChainStats'
@@ -19,7 +20,14 @@ export function FlowsSelectedPathPanel() {
       ? `${chainA.name} <> All supported chains`
       : `${chainA.name} <> ${chainB?.name}`
 
-  const detailsUrl = buildDetailsUrl(highlightedChains)
+  const detailsUrl = buildInteropUrl(
+    '/interop/summary',
+    {
+      from: [chainA.id],
+      to: chainB ? [chainB.id] : [],
+    },
+    'public',
+  )
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
@@ -54,12 +62,4 @@ export function FlowsSelectedPathPanel() {
       )}
     </div>
   )
-}
-
-function buildDetailsUrl(graphSelectedChains: string[]): string {
-  const params = new URLSearchParams()
-  if (graphSelectedChains.length > 0) {
-    params.set('selectedChains', graphSelectedChains.join(','))
-  }
-  return `/interop/summary?${params.toString()}`
 }
