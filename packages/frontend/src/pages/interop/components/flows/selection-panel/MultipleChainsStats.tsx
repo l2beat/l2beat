@@ -176,12 +176,15 @@ function Routes({
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
       <div className="mb-1.5 font-bold text-label-value-12">ROUTES</div>
-      <div className="space-y-2">
+      <div className="space-y-1">
         {flows.map((flow) => {
           const srcChain = allChains.find((c) => c.id === flow.srcChain)
           const dstChain = allChains.find((c) => c.id === flow.dstChain)
           return (
-            <div key={`${flow.srcChain}-${flow.dstChain}`}>
+            <div
+              key={`${flow.srcChain}-${flow.dstChain}`}
+              className="flex w-full items-center justify-between gap-2"
+            >
               <div className="flex items-center gap-1">
                 {srcChain && (
                   <img
@@ -202,7 +205,7 @@ function Routes({
               {isLoading ? (
                 <Skeleton className="mt-0.5 h-4 w-full" />
               ) : (
-                <div className="mt-0.5 flex items-center gap-2 font-semibold text-[13px]">
+                <div className="mt-0.5 flex items-center gap-2 font-semibold text-[13px] leading-none">
                   <span>{formatCurrency(flow.volume, 'usd')}</span>
                   <span className="text-secondary">
                     {formatInteger(flow.transferCount)} txs
