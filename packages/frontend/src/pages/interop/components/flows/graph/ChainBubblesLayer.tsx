@@ -35,7 +35,7 @@ export function ChainBubblesLayer({
         key={chain.id}
         chain={chain}
         layout={nodeLayout}
-        highlighted={highlightedChains.includes(chain.id)}
+        highlightedChains={highlightedChains}
         color={getChainColor(interopChains, chain.id)}
         netFlow={netFlow}
         isSmallScreen={isSmallScreen}
@@ -48,7 +48,7 @@ export function ChainBubblesLayer({
 interface ChainBubbleProps {
   chain: InteropChainWithIcon
   layout: ChainNodeLayout
-  highlighted: boolean
+  highlightedChains: string[]
   color: string
   netFlow: number
   isSmallScreen: boolean
@@ -58,7 +58,7 @@ interface ChainBubbleProps {
 function ChainBubble({
   chain,
   layout,
-  highlighted,
+  highlightedChains,
   color,
   netFlow,
   isSmallScreen,
@@ -71,6 +71,13 @@ function ChainBubble({
   const nameY = y + radius + 16
   const netFlowY = nameY + (nameLines.length - 1) * nameLineHeight + 14
 
+  const highlighted = highlightedChains.includes(chain.id)
+
+  const { fillOpacity, strokeWidth, strokeOpacity } = getBubbleStyle(
+    highlighted,
+    highlightedChains.length,
+  )
+
   return (
     <g className="cursor-pointer" onClick={onClick}>
       <circle
@@ -79,9 +86,9 @@ function ChainBubble({
         r={radius}
         fill={color}
         stroke={color}
-        fillOpacity={highlighted ? 0.25 : 0.15}
-        strokeWidth={highlighted ? 2.5 : 1.5}
-        strokeOpacity={highlighted ? 1 : 0.5}
+        fillOpacity={fillOpacity}
+        strokeWidth={strokeWidth}
+        strokeOpacity={strokeOpacity}
       />
       <image
         href={chain.iconUrl}
@@ -118,6 +125,16 @@ function ChainBubble({
       </text>
     </g>
   )
+}
+
+function getBubbleStyle(highlighted: boolean, highlightedCount: number) {
+  if (highlighted) {
+    return { fillOpacity: 0.3, strokeWidth: 4, strokeOpacity: 1 }
+  }
+  if (highlightedCount === 2) {
+    return { fillOpacity: 0.075, strokeWidth: 0, strokeOpacity: 0 }
+  }
+  return { fillOpacity: 0.15, strokeWidth: 1.5, strokeOpacity: 0.5 }
 }
 
 const MOBILE_LABEL_MAX_LINE_LENGTH = 13
