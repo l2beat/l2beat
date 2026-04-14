@@ -55,12 +55,16 @@
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
     "heroku-postbuild": "pnpm build:backend && pnpm install --production",
-    "checkout": "pnpm clean && pnpm && pnpm build"
+    "checkout": "pnpm clean && pnpm && pnpm build",
+    "coolify:check-env": "node -r esbuild-register scripts/coolify/check-env.ts"
   },
   "devDependencies": {
+    "@l2beat/validate": "workspace:*",
     "@biomejs/biome": "2.3.8",
     "@changesets/cli": "^2.26.2",
     "@sinonjs/fake-timers": "^10.0.2",
+    "cmd-ts": "^0.13.0",
+    "dotenv": "^16.4.5",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.16",
     "@types/sinonjs__fake-timers": "^8.1.2",
