@@ -50,7 +50,7 @@ export function BadgesSection({
               withDialog ? (
                 <button
                   key={key}
-                  className="cursor-pointer"
+                  className="shrink-0 cursor-pointer"
                   onMouseEnter={() =>
                     utils.projects.badgesDialog.prefetch({ badgeId: badge.id })
                   }
