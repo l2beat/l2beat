@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { createHash } from 'crypto'
@@ -89,6 +89,15 @@ export interface DeclarationFilePair {
   file: ParsedFile
 }
 
+const extendedDeclaration = new Set([
+  'contract',
+  'abstract',
+  'interface',
+  'event',
+  'error',
+  'constant',
+])
+
 export class ParsedFilesManager {
   private files: ParsedFile[] = []
   private options: FlattenOptions = {}
@@ -121,8 +130,8 @@ export class ParsedFilesManager {
 
     // Pass 2: Resolve all imports
     for (const file of result.files) {
-      const alreadyImportedObjects = new Map<string, string[]>()
-      alreadyImportedObjects.set(
+      const alreadyImportedMap = new Map<string, string[]>()
+      alreadyImportedMap.set(
         file.normalizedPath,
         file.topLevelDeclarations.map((c) => c.name),
       )
@@ -130,7 +139,7 @@ export class ParsedFilesManager {
       file.importDirectives = result.resolveFileImports(
         file,
         remappings,
-        alreadyImportedObjects,
+        alreadyImportedMap,
       )
     }
 
@@ -229,7 +238,7 @@ export class ParsedFilesManager {
   private resolveFileImports(
     file: ParsedFile,
     remappings: Remapping[],
-    alreadyImportedObjects: Map<string, string[]>,
+    alreadyImportedMap: Map<string, string[]>,
   ): ImportDirective[] {
     const importDirectives = file.rootASTNode.children.filter(
       (n) => n.type === 'ImportDirective',
@@ -240,98 +249,44 @@ export class ParsedFilesManager {
         i.type === 'ImportDirective' && i.range !== undefined,
         'Invalid import directive',
       )
+      const { path, symbolAliases } = i
 
-      const resolvedPath = this.resolveImportPath(i.path, file, remappings)
+      const resolvedPath = this.resolveImportPath(path, file, remappings)
       const importedFile = this.resolveImport(file, resolvedPath)
+      const { topLevelDeclarations, normalizedPath } = importedFile
 
-      let alreadyImported = alreadyImportedObjects.get(
-        importedFile.normalizedPath,
-      )
-      if (alreadyImported !== undefined) {
-        let gotEverything = true
-        for (const declaration of importedFile.topLevelDeclarations) {
-          gotEverything &&= alreadyImported.includes(declaration.name)
-        }
+      const alreadyImported = alreadyImportedMap.get(normalizedPath) ?? []
 
-        if (gotEverything) {
-          return []
-        }
-      }
-      alreadyImported ??= []
+      const gotEverything =
+        alreadyImported.length > 0 &&
+        topLevelDeclarations.every(({ name }) => alreadyImported.includes(name))
 
-      const result = []
-      const importEverything = i.symbolAliases === null
-      if (importEverything) {
-        for (const declaration of importedFile.topLevelDeclarations) {
-          const object = {
-            absolutePath: importedFile.normalizedPath,
-            originalName: declaration.name,
-            importedName: declaration.name,
-          }
-
-          if (!alreadyImported.includes(object.originalName)) {
-            result.push(object)
-          }
-        }
-
-        alreadyImportedObjects.set(
-          importedFile.normalizedPath,
-          importedFile.topLevelDeclarations.map((c) => c.name),
-        )
-
-        const recursiveResult = this.resolveFileImports(
-          importedFile,
-          remappings,
-          alreadyImportedObjects,
-        )
-
-        const filteredRecursiveResult = recursiveResult.filter(
-          (r) => alreadyImported?.includes(r.originalName) === false,
-        )
-        return result.concat(filteredRecursiveResult)
+      if (gotEverything) {
+        return []
       }
 
-      assert(i.symbolAliases !== null, 'Invalid import directive')
-      for (const alias of i.symbolAliases) {
-        const object = {
-          absolutePath: importedFile.normalizedPath,
-          originalName: alias[0],
-          importedName: alias[1] ?? alias[0],
-        }
+      const importEverything = symbolAliases === null
+      const topLevelImports = (
+        importEverything
+          ? topLevelDeclarations.map((e) => ({
+              absolutePath: normalizedPath,
+              originalName: e.name,
+              importedName: e.name,
+            }))
+          : symbolAliases.map(([name, as]) => ({
+              absolutePath: normalizedPath,
+              originalName: name,
+              importedName: as ?? name,
+            }))
+      ).filter(({ originalName }) => !alreadyImported.includes(originalName))
 
-        const isAlreadyImported = alreadyImported.includes(object.originalName)
-        if (isAlreadyImported) {
-          continue
-        }
+      alreadyImported.push(...topLevelImports.map((e) => e.originalName))
+      alreadyImportedMap.set(importedFile.normalizedPath, alreadyImported)
 
-        const isDeclared = importedFile.topLevelDeclarations.some(
-          (c) => c.name === object.originalName,
-        )
-        let isImported = false
-        if (!isDeclared) {
-          const copiedAlreadyImportedMap = structuredClone(
-            alreadyImportedObjects,
-          )
-          const recursiveResult = this.resolveFileImports(
-            importedFile,
-            remappings,
-            copiedAlreadyImportedMap,
-          )
-
-          isImported = recursiveResult.some(
-            (id) => id.originalName === object.originalName,
-          )
-        }
-
-        if (isDeclared || isImported) {
-          alreadyImported.push(object.originalName)
-          result.push(object)
-        }
-      }
-
-      alreadyImportedObjects.set(importedFile.normalizedPath, alreadyImported)
-
-      return result
+      const transitive = importEverything
+        ? this.resolveFileImports(importedFile, remappings, alreadyImportedMap)
+        : []
+      return [...transitive, ...topLevelImports]
     })
   }
 
@@ -372,46 +327,28 @@ export class ParsedFilesManager {
     }
 
     const implementationReferences: string[] = []
-    const identifiers = new Set(
-      subNodes
-        .flatMap((n) =>
-          getASTIdentifiers(n, (n, i) => {
-            if (n.type === 'NewExpression') {
-              implementationReferences.push(...i)
-            }
-          }),
-        )
-        .map(extractNamespace),
+    const allIdentifiers: string[] = []
+
+    for (const node of subNodes) {
+      const ids = getASTIdentifiers(node, (n, i) => {
+        if (n.type === 'NewExpression') {
+          implementationReferences.push(...i)
+        }
+      })
+      allIdentifiers.push(...ids)
+    }
+
+    const identifiers = unique(
+      allIdentifiers.map((i) => i.split('.')[0] as string),
     )
 
-    const signatureReferences = []
-    for (const identifier of identifiers) {
-      const result = this.tryFindDeclaration(identifier, file)
-      if (result === undefined) {
-        continue
-      }
-
-      const isContract = result.declaration.type === 'contract'
-      const isAbstract = result.declaration.type === 'abstract'
-      const isInterface = result.declaration.type === 'interface'
-      const isEvent = result.declaration.type === 'event'
-      const isError = result.declaration.type === 'error'
-      const isConstant = result.declaration.type === 'constant'
-
-      const isExtendedDeclaration =
-        isContract ||
-        isAbstract ||
-        isInterface ||
-        isEvent ||
-        isError ||
-        isConstant
-
-      if (isExtendedDeclaration && !this.options.includeAll) {
-        continue
-      }
-
-      signatureReferences.push(identifier)
-    }
+    const signatureReferences = identifiers.filter((identifier) => {
+      const type = this.tryFindDeclaration(identifier, file)?.declaration.type
+      return (
+        type !== undefined &&
+        (this.options.includeAll || !extendedDeclaration.has(type))
+      )
+    })
 
     return { signatureReferences, implementationReferences, backwardLinks }
   }
@@ -543,16 +480,6 @@ function sha1(s: string): string {
   const hasher = createHash('sha1')
   hasher.update(s)
   return `0x${hasher.digest('hex')}`
-}
-
-// Takes a user defined type name such as `MyLibrary.MyStructInLibrary` and
-// returns only the namespace - the part before the dot.
-function extractNamespace(identifier: string): string {
-  const dotIndex = identifier.indexOf('.')
-  if (dotIndex === -1) {
-    return identifier
-  }
-  return identifier.substring(0, dotIndex)
 }
 
 function decodeRemappings(remappingStrings: string[]): Remapping[] {
