@@ -22,6 +22,11 @@ export interface FlowProtocol {
   volume: number
 }
 
+export interface FlowChain {
+  chainId: string
+  totalVolume: number
+}
+
 export interface Flow {
   srcChain: string
   dstChain: string
@@ -53,6 +58,7 @@ interface FlowsStats {
   totalTransferCount: number
   activeFlows: number
   topRoute: { srcChain: string; dstChain: string } | undefined
+  topChain: FlowChain | undefined
   topToken: FlowToken | undefined
 }
 
@@ -88,6 +94,7 @@ export async function getInteropFlows(
         totalTransferCount: 0,
         activeFlows: 0,
         topRoute: undefined,
+        topChain: undefined,
         topToken: undefined,
       },
     }
@@ -179,15 +186,20 @@ export async function getInteropFlows(
   }
 
   const topToken = topTokenEntry ? resolveToken(topTokenEntry) : undefined
+  const chainData = computeChainsData(
+    flows,
+    params.chains,
+    resolvedChainTokens,
+    resolvedChainProtocols,
+  )
+
+  const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
+    return !max || chain.totalVolume > max.totalVolume ? chain : max
+  }, undefined)
 
   return {
     flows,
-    chainData: computeChainsData(
-      flows,
-      params.chains,
-      resolvedChainTokens,
-      resolvedChainProtocols,
-    ),
+    chainData,
     chainPairData,
     stats: {
       totalVolume,
@@ -195,6 +207,12 @@ export async function getInteropFlows(
       activeFlows: flows.length,
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+        : undefined,
+      topChain: topChain
+        ? {
+            chainId: topChain.chainId,
+            totalVolume: topChain.totalVolume,
+          }
         : undefined,
       topToken,
     },
@@ -314,6 +332,22 @@ function getMockInteropFlows(): InteropFlowsData {
     (max, f) => (!max || f.volume > max.volume ? f : max),
     undefined,
   )
+  const chainData = computeChainsData(
+    flows,
+    chainIds,
+    new Map(
+      chainIds.map((chainId) => {
+        const chainVolume = flows
+          .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
+          .reduce((sum, f) => sum + f.volume, 0)
+        return [
+          chainId,
+          buildMockTopTokens(chainVolume, chainIds.indexOf(chainId)),
+        ]
+      }),
+    ),
+    new Map(),
+  )
 
   const chainPairData: ChainPairData[] = []
   const seenPairs = new Set<string>()
@@ -335,24 +369,13 @@ function getMockInteropFlows(): InteropFlowsData {
     })
   }
 
+  const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
+    return !max || chain.totalVolume > max.totalVolume ? chain : max
+  }, undefined)
+
   return {
     flows,
-    chainData: computeChainsData(
-      flows,
-      chainIds,
-      new Map(
-        chainIds.map((chainId) => {
-          const chainVolume = flows
-            .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
-            .reduce((sum, f) => sum + f.volume, 0)
-          return [
-            chainId,
-            buildMockTopTokens(chainVolume, chainIds.indexOf(chainId)),
-          ]
-        }),
-      ),
-      new Map(),
-    ),
+    chainData,
     chainPairData,
     stats: {
       totalVolume,
@@ -360,6 +383,12 @@ function getMockInteropFlows(): InteropFlowsData {
       activeFlows: flows.length,
       topRoute: topFlow
         ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+        : undefined,
+      topChain: topChain
+        ? {
+            chainId: topChain.chainId,
+            totalVolume: topChain.totalVolume,
+          }
         : undefined,
       topToken: {
         symbol: 'ETH',

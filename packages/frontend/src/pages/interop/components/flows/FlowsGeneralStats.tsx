@@ -24,6 +24,10 @@ export function FlowsGeneralStats() {
   const dstChain = topRoute
     ? allChains.find((c) => c.id === topRoute.dstChain)
     : undefined
+  const topChain = data?.stats.topChain
+  const topChainData = topChain
+    ? allChains.find((c) => c.id === topChain.chainId)
+    : undefined
   const topToken = data?.stats.topToken
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
@@ -71,6 +75,24 @@ export function FlowsGeneralStats() {
                     alt={dstChain.id}
                     className="size-5"
                   />
+                </div>
+              ) : (
+                '-'
+              )
+            }
+          />
+          <HorizontalSeparator />
+          <Card
+            title="Top chain"
+            isLoading={isLoading}
+            className="border-0 p-0!"
+            value={
+              topChain && topChainData ? (
+                <div className="flex flex-col items-center gap-0.5 text-heading-18">
+                  <span className="text-brand">{topChainData.name}</span>
+                  <span className="font-medium text-secondary">
+                    {formatCurrency(topChain.totalVolume, 'usd')}
+                  </span>
                 </div>
               ) : (
                 '-'
