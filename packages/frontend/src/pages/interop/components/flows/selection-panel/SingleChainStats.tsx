@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -66,7 +66,9 @@ function Stats({
   chainId: string
 }) {
   const chainData = data?.chainData.find((cv) => cv.chainId === chainId)
-  assert(chainData, 'Chain data not found')
+  if (!chainData) {
+    return null
+  }
 
   const totalTransfers = chainData.transfersIn + chainData.transfersOut
   const avgTransferValue =

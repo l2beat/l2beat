@@ -50,6 +50,7 @@ export function InteropFlowsProvider({
   const toggleChainSelection = useCallback((chainId: string) => {
     setSelectedChains((prev) => {
       if (prev.includes(chainId)) {
+        setHighlightedChains((h) => h.filter((id) => id !== chainId))
         return prev.filter((id) => id !== chainId)
       }
       return [...prev, chainId]
