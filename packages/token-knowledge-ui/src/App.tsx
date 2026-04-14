@@ -1,4 +1,5 @@
 import { Brain, Coins, Download } from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
 import {
   BrowserRouter,
   Link,
@@ -47,17 +48,42 @@ function Navbar() {
 }
 
 function Layout() {
+  const [asideWidth, setAsideWidth] = useState(680)
+  const dragging = useRef(false)
+
+  const onMouseDown = useCallback(() => {
+    dragging.current = true
+    const onMouseMove = (e: MouseEvent) => {
+      if (!dragging.current) return
+      setAsideWidth(Math.max(200, window.innerWidth - e.clientX))
+    }
+    const onMouseUp = () => {
+      dragging.current = false
+      document.removeEventListener('mousemove', onMouseMove)
+      document.removeEventListener('mouseup', onMouseUp)
+    }
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+  }, [])
+
   return (
     <div className="flex h-screen flex-col">
       <Navbar />
       <div className="flex min-h-0 flex-1">
-        <main className="flex-1 overflow-auto border-r p-5">
+        <main className="min-w-0 flex-1 overflow-auto p-5">
           <Routes>
             <Route path="/" element={<TokensPage />} />
             <Route path="/import" element={<ImportPage />} />
           </Routes>
         </main>
-        <aside className="flex w-[340px] shrink-0 flex-col overflow-hidden p-4">
+        <div
+          onMouseDown={onMouseDown}
+          className="w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-ring"
+        />
+        <aside
+          className="flex shrink-0 flex-col overflow-hidden p-4"
+          style={{ width: asideWidth }}
+        >
           <RulesEditor />
         </aside>
       </div>
