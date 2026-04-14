@@ -283,7 +283,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xb20De28D78b63bc0c94eef89Db53F6338af17825#code#F1#L54',
+            url: 'https://etherscan.io/address/0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',
