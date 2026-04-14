@@ -9,11 +9,6 @@ import {
   interopConfigDiffToMarkdown,
   removeMutedInteropConfigDiffEntries,
 } from '../config/InteropConfigDiff'
-import {
-  EXTREME_VALUE_RATIO_THRESHOLD,
-  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
-  VALUE_DIFF_THRESHOLD_PERCENT,
-} from '../InteropTransferAnalyzer'
 
 const MAX_ENTRIES_IN_MESSAGE = 200
 const MAX_SUSPICIOUS_GROUPS_IN_MESSAGE = 20
@@ -136,8 +131,7 @@ export class InteropNotifier {
     }
 
     const message = [
-      `🚨 Interop financials flagged \`${transfers.length}\` suspicious transfers at \`${formatTimestamp(timestamp)}\``,
-      `Threshold: both sides > \`${formatDollars(MINIMUM_SIDE_VALUE_USD_THRESHOLD)}\`, diff > \`${formatPercent(VALUE_DIFF_THRESHOLD_PERCENT)}\`, imbalance >= \`${formatRatio(EXTREME_VALUE_RATIO_THRESHOLD)}\`. See suspicious transfers dashboard for details.`,
+      `🕵🏻‍♂️ Interop financials flagged \`${transfers.length}\` suspicious transfers at \`${formatTimestamp(timestamp)}\``,
       '',
       ...renderedTransfers,
     ].join('\n')
