@@ -1,6 +1,7 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import type { InteropFlowsParams } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
@@ -9,6 +10,13 @@ import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestA
 
 export interface FlowToken {
   symbol: string
+  iconUrl: string
+  volume: number
+}
+
+export interface FlowProtocol {
+  id: string
+  name: string
   iconUrl: string
   volume: number
 }
@@ -30,11 +38,13 @@ export interface ChainData {
   transfersOut: number
   connectedChains: number
   topTokens: FlowToken[]
+  topProtocols: FlowProtocol[]
 }
 
 export interface ChainPairData {
   chains: [string, string]
   topTokens: FlowToken[]
+  topProtocols: FlowProtocol[]
 }
 
 interface FlowsStats {
@@ -94,11 +104,25 @@ export async function getInteropFlows(
     flows,
     chainTopTokenEntries,
     chainPairTopTokenEntries,
+    chainTopProtocolEntries,
+    chainPairTopProtocolEntries,
     topTokenEntry,
     tokenIds,
   } = getInteropFlowAggregates(records, subgroupProjects)
 
   const detailsMap = await buildTokensDetailsMap(tokenIds)
+
+  const protocolDetailsMap = new Map<string, { name: string; iconUrl: string }>(
+    interopProjects
+      .filter((p) => !subgroupProjects.has(p.id))
+      .map((p) => [
+        p.id,
+        {
+          name: p.interopConfig.name ?? p.name,
+          iconUrl: manifest.getUrl(`/icons/${p.slug}.png`),
+        },
+      ]),
+  )
 
   const toFlowToken = (entry: { id: string; volume: number }) => {
     const details = detailsMap.get(entry.id)
@@ -111,13 +135,27 @@ export async function getInteropFlows(
     }
   }
 
+  const toFlowProtocol = (entry: { id: string; volume: number }) => {
+    const details = protocolDetailsMap.get(entry.id)
+    if (!details) return undefined
+
+    return {
+      id: entry.id,
+      name: details.name,
+      iconUrl: details.iconUrl,
+      volume: entry.volume,
+    }
+  }
+
   const chainPairData: ChainPairData[] = []
   for (const [pairKey, entries] of chainPairTopTokenEntries.entries()) {
     const [chainA, chainB] = pairKey.split('::')
+    const protocolEntries = chainPairTopProtocolEntries.get(pairKey) ?? []
     if (chainA && chainB) {
       chainPairData.push({
         chains: [chainA, chainB],
         topTokens: entries.map(toFlowToken).filter(notUndefined),
+        topProtocols: protocolEntries.map(toFlowProtocol).filter(notUndefined),
       })
     }
   }
@@ -147,6 +185,11 @@ export async function getInteropFlows(
           .get(chainId)
           ?.map(toFlowToken)
           .filter(notUndefined) ?? [],
+      (chainId) =>
+        chainTopProtocolEntries
+          .get(chainId)
+          ?.map(toFlowProtocol)
+          .filter(notUndefined) ?? [],
     ),
     chainPairData,
     stats: {
@@ -169,6 +212,7 @@ function computeChainsData(
   flows: Flow[],
   chainIds: string[],
   getChainTopTokens: (chainId: string) => FlowToken[],
+  getChainTopProtocols: (chainId: string) => FlowProtocol[],
 ): ChainData[] {
   const inflows = new Map<string, number>()
   const outflows = new Map<string, number>()
@@ -213,6 +257,7 @@ function computeChainsData(
       transfersOut: transfersOut.get(chainId) ?? 0,
       connectedChains: connected.get(chainId)?.size ?? 0,
       topTokens: getChainTopTokens(chainId),
+      topProtocols: getChainTopProtocols(chainId),
     }
   })
 }
@@ -269,17 +314,23 @@ function getMockInteropFlows(): InteropFlowsData {
         pairVolume,
         chainIds.indexOf(chainA) + chainIds.indexOf(chainB),
       ),
+      topProtocols: [],
     })
   }
 
   return {
     flows,
-    chainData: computeChainsData(flows, chainIds, (chainId) => {
-      const chainVolume = flows
-        .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
-        .reduce((sum, f) => sum + f.volume, 0)
-      return buildMockTopTokens(chainVolume, chainIds.indexOf(chainId))
-    }),
+    chainData: computeChainsData(
+      flows,
+      chainIds,
+      (chainId) => {
+        const chainVolume = flows
+          .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
+          .reduce((sum, f) => sum + f.volume, 0)
+        return buildMockTopTokens(chainVolume, chainIds.indexOf(chainId))
+      },
+      () => [],
+    ),
     chainPairData,
     stats: {
       totalVolume,

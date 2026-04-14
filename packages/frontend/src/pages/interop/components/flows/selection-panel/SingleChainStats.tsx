@@ -9,6 +9,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { TopBridges } from './TopBridges'
 import { TopTokens } from './TopTokens'
 
 export function SingleChainStats({
@@ -35,6 +36,7 @@ export function SingleChainStats({
       <Stats data={data} isLoading={isLoading} chainId={chainId} />
       <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
       {chainData && <TopTokens tokens={chainData.topTokens} />}
+      {chainData && <TopBridges protocols={chainData.topProtocols} />}
     </>
   )
 }

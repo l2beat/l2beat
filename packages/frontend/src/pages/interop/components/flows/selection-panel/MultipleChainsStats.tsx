@@ -8,6 +8,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { TopBridges } from './TopBridges'
 import { TopTokens } from './TopTokens'
 
 export function MultipleChainsStats({
@@ -50,6 +51,7 @@ export function MultipleChainsStats({
         chainIdB={chainIdB}
       />
       {pairData && <TopTokens tokens={pairData.topTokens} />}
+      {pairData && <TopBridges protocols={pairData.topProtocols} />}
     </>
   )
 }

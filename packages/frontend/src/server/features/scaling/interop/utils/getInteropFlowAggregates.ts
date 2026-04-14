@@ -18,10 +18,17 @@ export interface InteropFlowAggregate {
   transferCount: number
 }
 
+export interface TopProtocolEntry {
+  id: string
+  volume: number
+}
+
 export interface InteropFlowAggregates {
   flows: InteropFlowAggregate[]
   chainTopTokenEntries: Map<string, TopTokenEntry[]>
   chainPairTopTokenEntries: Map<string, TopTokenEntry[]>
+  chainTopProtocolEntries: Map<string, TopProtocolEntry[]>
+  chainPairTopProtocolEntries: Map<string, TopProtocolEntry[]>
   topTokenEntry: TopTokenEntry | undefined
   tokenIds: string[]
 }
@@ -34,9 +41,13 @@ export function getInteropFlowAggregates(
   const chainTokenVolumeMap = new Map<string, Map<string, number>>()
   const chainPairTokenVolumeMap = new Map<string, Map<string, number>>()
   const tokenVolumeMap = new Map<string, number>()
+  const chainProtocolVolumeMap = new Map<string, Map<string, number>>()
+  const chainPairProtocolVolumeMap = new Map<string, Map<string, number>>()
 
   for (const record of records) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
+
+    const volume = getInteropTransferValue(record) ?? 0
 
     accumulateFlowData(flowDataMap, record)
     accumulateTokenVolumesForKey(
@@ -61,16 +72,41 @@ export function getInteropFlowAggregates(
         (tokenVolumeMap.get(token.abstractTokenId) ?? 0) + token.volume,
       )
     }
+
+    accumulateVolumeForKey(
+      chainProtocolVolumeMap,
+      record.srcChain,
+      record.id,
+      volume,
+    )
+    accumulateVolumeForKey(
+      chainProtocolVolumeMap,
+      record.dstChain,
+      record.id,
+      volume,
+    )
+    accumulateVolumeForKey(
+      chainPairProtocolVolumeMap,
+      chainPairKey(record.srcChain, record.dstChain),
+      record.id,
+      volume,
+    )
   }
 
   const chainTopTokenEntries = pickTopTokensByKey(chainTokenVolumeMap)
   const chainPairTopTokenEntries = pickTopTokensByKey(chainPairTokenVolumeMap)
-  const topTokenEntry = pickTopTokens(tokenVolumeMap)[0]
+  const chainTopProtocolEntries = pickTopEntriesByKey(chainProtocolVolumeMap)
+  const chainPairTopProtocolEntries = pickTopEntriesByKey(
+    chainPairProtocolVolumeMap,
+  )
+  const topTokenEntry = pickTopEntries(tokenVolumeMap)[0]
 
   return {
     flows: toFlows(flowDataMap),
     chainTopTokenEntries,
     chainPairTopTokenEntries,
+    chainTopProtocolEntries,
+    chainPairTopProtocolEntries,
     topTokenEntry,
     tokenIds: collectTopTokenIds(
       chainTopTokenEntries,
@@ -112,7 +148,28 @@ function pickTopTokensByKey(tokenVolumeMaps: Map<string, Map<string, number>>) {
   const result = new Map<string, TopTokenEntry[]>()
 
   for (const [key, volumeMap] of tokenVolumeMaps.entries()) {
-    result.set(key, pickTopTokens(volumeMap))
+    result.set(key, pickTopEntries(volumeMap))
+  }
+
+  return result
+}
+
+function accumulateVolumeForKey(
+  groupedVolumeMap: Map<string, Map<string, number>>,
+  key: string,
+  entryId: string,
+  volume: number,
+) {
+  const volumeMap = groupedVolumeMap.get(key) ?? new Map()
+  volumeMap.set(entryId, (volumeMap.get(entryId) ?? 0) + volume)
+  groupedVolumeMap.set(key, volumeMap)
+}
+
+function pickTopEntriesByKey(volumeMaps: Map<string, Map<string, number>>) {
+  const result = new Map<string, TopProtocolEntry[]>()
+
+  for (const [key, volumeMap] of volumeMaps.entries()) {
+    result.set(key, pickTopEntries(volumeMap))
   }
 
   return result
@@ -163,7 +220,7 @@ function chainPairKey(chainA: string, chainB: string) {
   return chainA < chainB ? `${chainA}::${chainB}` : `${chainB}::${chainA}`
 }
 
-function pickTopTokens(volumeMap: Map<string, number>) {
+function pickTopEntries(volumeMap: Map<string, number>) {
   return Array.from(volumeMap.entries())
     .toSorted((a, b) => b[1] - a[1])
     .slice(0, 3)
