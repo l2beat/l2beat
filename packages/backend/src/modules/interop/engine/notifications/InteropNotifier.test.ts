@@ -124,10 +124,9 @@ describe(InteropNotifier.name, () => {
 
     expect(message.includes('Interop financials flagged')).toEqual(true)
     expect(
-      message.includes('See suspicious transfers dashboard for details'),
-    ).toEqual(true)
-    expect(
-      message.includes('`msg-1` `stargate` `deposit` `ethereum -> arbitrum`'),
+      message.includes(
+        '`msg-1` `stargate` `deposit` `USDC on ethereum -> USDC.e on arbitrum`',
+      ),
     ).toEqual(true)
     expect(message.includes('$600.00 vs $100.00')).toEqual(true)
     expect(message.includes('6.00x src/dst')).toEqual(true)
