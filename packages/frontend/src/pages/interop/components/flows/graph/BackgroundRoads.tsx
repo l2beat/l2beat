@@ -40,7 +40,7 @@ export function BackgroundRoads({ chainIds, layout, centerX, centerY }: Props) {
           highlightedChains.every((chain) => chain === a || chain === b)
 
         const strokeWidth =
-          highlighted && highlightedChains.length > 0 ? 1.5 : 1
+          highlighted && highlightedChains.length > 0 ? 1.5 : 0.5
         const opacity = highlighted ? 0.4 : 0.08
 
         return (
