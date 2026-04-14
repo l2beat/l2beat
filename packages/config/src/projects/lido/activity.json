@@ -1,7 +1,7 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101440,
-  "lastConsumedUpdateNotifierId": 103,
+  "version": "1.1",
+  "lastReconciledAt": 1776179299,
+  "lastConsumedUpdateNotifierId": 70,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -663,30 +663,8 @@
           "after": "eth:0x6ca84080381E43938476814be61B779A8bB6a600"
         },
         {
-          "field": "values.getExternalEther",
-          "after": "1051634471311051376798"
-        },
-        {
-          "field": "values.getExternalShares",
-          "after": "856182899637347616869"
-        },
-        {
           "field": "values.getMaxExternalRatioBP",
           "after": 3000
-        },
-        {
-          "field": "values.getPooledEthBySharesRoundUp",
-          "after": [
-            0,
-            2,
-            3,
-            4,
-            5
-          ]
-        },
-        {
-          "field": "values.getTotalELRewardsCollected",
-          "after": "230679408390854994510067"
         },
         {
           "field": "implementationNames.eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb",
@@ -695,27 +673,6 @@
         {
           "field": "implementationNames.eth:0x6ca84080381E43938476814be61B779A8bB6a600",
           "after": "Lido"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xB314D4A76C457c93150d308787939063F4Cc67E0",
-      "contractName": "VettedGate",
-      "entity": null,
-      "id": "4:eth:0xB314D4A76C457c93150d308787939063F4Cc67E0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.treeCid",
-          "before": "bafkreido7ieacbe6nlhdivxfp2gd5kxovofngf6qdmahih4laihm675e2a",
-          "after": "bafkreiekobdx27a42ub7m4gcn4d5iu3i3u2iq2cdnceviuznhpotsgpvwa"
-        },
-        {
-          "field": "values.treeRoot",
-          "before": "0x91545c42adde0f5d82e4c228f81449eab20349c1d31a8538e0468466f93495c5",
-          "after": "0x4bbc2bb2b8db0e6e284de2c5ddc57ffc8deb5f3397f6462646456afeebdf8630"
         }
       ]
     },
@@ -928,69 +885,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.distributedShares",
-          "before": [
-            "196458706200864250",
-            "505224116619211946",
-            0,
-            "25599846018515934",
-            0
-          ]
-        },
-        {
-          "field": "values.getHistoricalDistributionData",
-          "before": [
-            [
-              0,
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "",
-              "",
-              0,
-              0
-            ],
-            [
-              0,
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "",
-              "",
-              0,
-              0
-            ],
-            [
-              0,
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "",
-              "",
-              0,
-              0
-            ],
-            [
-              0,
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "",
-              "",
-              0,
-              0
-            ],
-            [
-              0,
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "",
-              "",
-              0,
-              0
-            ]
-          ]
-        },
-        {
-          "field": "values.logCid",
-          "before": "QmPPFkydgtnwMBDF6nZZaU5nnqy3csbKts3UfRRgWXreEu"
-        },
-        {
-          "field": "values.treeCid",
-          "before": "QmQMPFA42KXn115k1c2qC9AyXKV45JKcaB1svMGQ7ZvCqz"
-        },
-        {
           "field": "template",
           "after": "tokens/Lido/CSFeeDistributor"
         }
@@ -1014,230 +908,6 @@
             345600,
             345600
           ]
-        },
-        {
-          "field": "values.getNodeOperator",
-          "before": [
-            [
-              10,
-              0,
-              6,
-              10,
-              0,
-              4,
-              0,
-              0,
-              0,
-              8,
-              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-              "eth:0x0000000000000000000000000000000000000000",
-              false,
-              true
-            ],
-            [
-              19,
-              0,
-              19,
-              19,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-              "eth:0x0000000000000000000000000000000000000000",
-              false,
-              false
-            ],
-            [
-              6,
-              0,
-              5,
-              6,
-              0,
-              1,
-              0,
-              0,
-              0,
-              2,
-              "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-              "eth:0x0000000000000000000000000000000000000000",
-              false,
-              true
-            ],
-            [
-              2,
-              0,
-              2,
-              2,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-              "eth:0x0000000000000000000000000000000000000000",
-              false,
-              false
-            ],
-            [
-              12,
-              0,
-              12,
-              12,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-              "eth:0x0000000000000000000000000000000000000000",
-              false,
-              false
-            ]
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorIsActive",
-          "before": [
-            true,
-            true,
-            true,
-            true,
-            true
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorManagementProperties",
-          "before": [
-            [
-              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-              "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-              false
-            ],
-            [
-              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-              "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-              false
-            ],
-            [
-              "eth:0x4021caAb9a5621D0ccA630AD4583375590300F4B",
-              "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-              false
-            ],
-            [
-              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-              "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-              false
-            ],
-            [
-              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-              "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B",
-              false
-            ]
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorNonWithdrawnKeys",
-          "before": [
-            10,
-            19,
-            6,
-            2,
-            12
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorOwner",
-          "before": [
-            "eth:0x50B06A4037A167073A45ab3cC895c52378B08BA8",
-            "eth:0x556fedf2213A31c7Ab9F8bc8Db5B2254261A5B0b",
-            "eth:0x88792bee0d8A4c46acB7a2D8bfBef7e3A678639e",
-            "eth:0x22bA5CaFB5E26E6Fe51f330294209034013A5A4c",
-            "eth:0x4126e59439524C6aa971347E5d6501d33b5eE22B"
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorSummary",
-          "before": [
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              6,
-              4
-            ],
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              19,
-              0
-            ],
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              5,
-              1
-            ],
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              2,
-              0
-            ],
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              12,
-              0
-            ]
-          ]
-        },
-        {
-          "field": "values.getNodeOperatorTotalDepositedKeys",
-          "before": [
-            6,
-            19,
-            5,
-            2,
-            12
-          ]
-        },
-        {
-          "field": "values.getNonce",
-          "before": 1583
         },
         {
           "field": "template",
@@ -1669,16 +1339,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.remainingMintingCapacityShares",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
           "field": "template",
           "after": "tokens/Lido/Dashboard"
         }
@@ -1797,20 +1457,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getTotalELRewardsCollected",
-          "before": "230679408390854994510067"
-        },
-        {
-          "field": "values.getPooledEthBySharesRoundUp",
-          "before": [
-            0,
-            2,
-            3,
-            4,
-            5
-          ]
-        },
-        {
           "field": "template",
           "after": "tokens/Lido/stETH"
         }
@@ -1899,37 +1545,6 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 53,
-      "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-      "contractName": "EmergencyProtectedTimelock",
-      "entity": null,
-      "id": "53:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.canExecute",
-          "before": [
-            false,
-            false,
-            false,
-            false,
-            false
-          ]
-        },
-        {
-          "field": "values.canSchedule",
-          "before": [
-            false,
-            false,
-            false,
-            false,
-            false
-          ]
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
       "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
       "contractName": "StakingVault",
       "entity": null,
@@ -1982,40 +1597,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.reportData",
-          "before": [
-            [
-              1766664011,
-              139333,
-              0
-            ],
-            [
-              1766750411,
-              139335,
-              0
-            ],
-            [
-              1766836811,
-              139344,
-              0
-            ],
-            [
-              1766923211,
-              139346,
-              0
-            ],
-            [
-              1767009611,
-              139351,
-              0
-            ]
-          ]
-        },
-        {
-          "field": "values.getReportDataCount",
-          "before": 68
-        },
-        {
           "field": "template",
           "after": "tokens/Lido/OracleReportSanityChecker"
         }
@@ -2042,54 +1623,6 @@
         {
           "field": "values.accessControl.MANAGE_FRAME_CONFIG_ROLE.members.0",
           "before": "eth:0xb2B4DB1491cbe949ae85EfF01E0d3ee239f110C1"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-17T08:05:07.000Z",
-      "updateNotifierId": 70,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "70:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.treeRoot",
-          "before": "0x3fd20be128730df25ae110227ad2f1c4c277583c641870ebfdbb7289424afee5",
-          "after": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-13T17:27:45.000Z",
-      "updateNotifierId": 103,
-      "address": "eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316",
-      "contractName": "EmergencyProtectedTimelock",
-      "entity": null,
-      "id": "103:eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getProposalsCount",
-          "before": 8,
-          "after": 9
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-13T17:27:45.000Z",
-      "updateNotifierId": 103,
-      "address": "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
-      "contractName": "CSFeeDistributor",
-      "entity": null,
-      "id": "103:eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.treeRoot",
-          "before": "0x3b1b30252eba327c7f902932556e10db954427dab35e4ee29ece11332ea92fd9",
-          "after": "0xb3de2f624121f0ccee9945c7db9f649966c7132e8de501fadb3b849d2a177d8c"
         }
       ]
     }

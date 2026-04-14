@@ -1,15 +1,15 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-14T08:54:12.673Z",
+  "lastModified": "2026-04-14T15:07:23.303Z",
   "contracts": {
     "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": {
-      "lastFetched": "2026-04-14T08:54:12.567Z",
+      "lastFetched": "2026-04-14T15:07:23.031Z",
       "aggregate": {
-        "totalUsdValue": 830616424.0532249,
-        "contractCount": 494295,
+        "totalUsdValue": 819697661.514328,
+        "contractCount": 494317,
         "handlerName": "uniswap-v2-factory",
         "breakdown": [],
-        "timestamp": "2026-04-14T08:54:12.673Z",
+        "timestamp": "2026-04-14T15:07:23.303Z",
         "source": "thegraph-uniswap-v2"
       }
     }

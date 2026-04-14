@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101279,
+  "version": "1.1",
+  "lastReconciledAt": 1776179253,
   "lastConsumedUpdateNotifierId": 58,
   "events": [
     {
@@ -24,8 +24,9 @@
       "address": "eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9",
       "contractName": "GnosisSafe",
       "entity": null,
-      "id": "3:eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9:data-change",
-      "type": "data-change",
+      "id": "3:eth:0xF057afeEc22E220f47AD4220871364e9E828b2e9:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.0",

@@ -1,39 +1,8 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101642,
+  "version": "1.1",
+  "lastReconciledAt": 1776179316,
   "lastConsumedUpdateNotifierId": 94,
   "events": [
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 55,
-      "address": "eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580",
-      "contractName": "MorphoChainlinkOracleV2",
-      "entity": null,
-      "id": "55:eth:0x0F948CBa8231Db7898ef36A4212581Ad7b1B4580:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.price",
-          "before": "1993762027970000000000000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 55,
-      "address": "eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2",
-      "contractName": "ChainlinkOracle",
-      "entity": null,
-      "id": "55:eth:0x48F7E36EB6B826B2dF4B2E630B62Cd25e89E40e2:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.price",
-          "before": "2441606370253833898652869534",
-          "after": "2387847812996704221500027075"
-        }
-      ]
-    },
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 55,
@@ -77,21 +46,6 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 55,
-      "address": "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
-      "contractName": "MorphoChainlinkOracleV2",
-      "entity": null,
-      "id": "55:eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.price",
-          "before": "682201751678100000000000000000000000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 55,
       "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
       "contractName": "EACAggregatorProxy",
       "isDependency": true,
@@ -106,22 +60,6 @@
         {
           "field": "template",
           "after": "Steakhouse-USDC/EACAggregatorProxy"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 55,
-      "address": "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
-      "contractName": "ChainlinkOracle",
-      "entity": null,
-      "id": "55:eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.price",
-          "before": "680506628611829381225850967824371478759",
-          "after": "667140045857233448095664873643994810803"
         }
       ]
     },
@@ -184,8 +122,9 @@
       "contractName": "GnosisSafe",
       "isDependency": true,
       "entity": "Chainlink",
-      "id": "78:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:data-change",
-      "type": "data-change",
+      "id": "78:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.8",
@@ -300,8 +239,9 @@
       "address": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
       "contractName": "Safe",
       "entity": null,
-      "id": "94:eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD:data-change",
-      "type": "data-change",
+      "id": "94:eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.6",
@@ -316,8 +256,9 @@
       "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
       "contractName": "GnosisSafe",
       "entity": null,
-      "id": "94:eth:0x255c7705e8BB334DfCae438197f7C4297988085a:data-change",
-      "type": "data-change",
+      "id": "94:eth:0x255c7705e8BB334DfCae438197f7C4297988085a:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.2",

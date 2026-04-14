@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101273,
+  "version": "1.1",
+  "lastReconciledAt": 1776179236,
   "lastConsumedUpdateNotifierId": 101,
   "events": [
     {
@@ -56,11 +56,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.$members.1",
-          "before": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
-          "after": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781"
-        },
-        {
           "field": "values.writeFunctionPermissions",
           "before": [
             {
@@ -69,6 +64,24 @@
               "count": 16
             }
           ]
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-02T13:49:30.000Z",
+      "updateNotifierId": 1,
+      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+      "contractName": "GnosisSafe",
+      "isDependency": true,
+      "entity": null,
+      "id": "1:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.1",
+          "before": "eth:0xaD8A3E228d1f1ffff22AB1720fE6fF7f92DdA252",
+          "after": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781"
         }
       ]
     },
@@ -1083,6 +1096,34 @@
       "type": "data-change",
       "changes": [
         {
+          "field": "values.multisigThreshold",
+          "before": "5 of 10 (50%)",
+          "after": "5 of 8 (63%)"
+        },
+        {
+          "field": "values.writeFunctionPermissions",
+          "before": [
+            {
+              "skipped": true,
+              "reason": "tooManyWriteFunctions",
+              "count": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-03-02T13:49:30.000Z",
+      "updateNotifierId": 1,
+      "address": "eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c",
+      "contractName": "GnosisSafe",
+      "isDependency": false,
+      "entity": null,
+      "id": "1:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
           "field": "values.$members.3",
           "before": "eth:0xd17B14ff80d3bF8e95D719e177d247Be02d553d2"
         },
@@ -1099,21 +1140,6 @@
         {
           "field": "values.$members.9",
           "before": "eth:0x54A37d93E57c5DA659F508069Cf65A381b61E189"
-        },
-        {
-          "field": "values.multisigThreshold",
-          "before": "5 of 10 (50%)",
-          "after": "5 of 8 (63%)"
-        },
-        {
-          "field": "values.writeFunctionPermissions",
-          "before": [
-            {
-              "skipped": true,
-              "reason": "tooManyWriteFunctions",
-              "count": 16
-            }
-          ]
         }
       ]
     },
@@ -1676,28 +1702,6 @@
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
       "updateNotifierId": 56,
-      "address": "eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0",
-      "contractName": "CompoundGovernor",
-      "isDependency": false,
-      "entity": null,
-      "id": "56:eth:0x309a862bbC1A00e45506cB8A802D1ff10004c8C0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.proposalDeadline",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 56,
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "contractName": "Wrapped Ether Token",
       "isDependency": true,
@@ -1927,8 +1931,9 @@
       "contractName": "GnosisSafe",
       "isDependency": true,
       "entity": null,
-      "id": "76:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:data-change",
-      "type": "data-change",
+      "id": "76:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.8",
@@ -1944,8 +1949,9 @@
       "contractName": "GnosisSafe",
       "isDependency": false,
       "entity": null,
-      "id": "85:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:data-change",
-      "type": "data-change",
+      "id": "85:eth:0xbbf3f1421D886E9b2c5D716B5192aC998af2012c:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.5",

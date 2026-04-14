@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101593,
+  "version": "1.1",
+  "lastReconciledAt": 1776179312,
   "lastConsumedUpdateNotifierId": 77,
   "events": [
     {
@@ -13,14 +13,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.$members.1",
-          "before": "eth:0x2458aA42720A32fd6986f963774bCf3471F59660"
-        },
-        {
-          "field": "values.$members.2",
-          "before": "eth:0x711cd20bF6b436ced327A8C65A14491aA04c2ca1"
-        },
-        {
           "field": "values.multisigThreshold",
           "before": "1 of 3 (33%)",
           "after": "1 of 1 (100%)"
@@ -30,132 +22,20 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-      "contractName": "BorrowerOperations",
+      "address": "eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c",
+      "contractName": "Safe",
       "entity": null,
-      "id": "5:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:data-change",
-      "type": "data-change",
+      "id": "5:eth:0x2291F52bddc937b5B840d15E551e1DA8C80c2B3c:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
-          "field": "values.getEntireSystemColl",
-          "before": "77898061772842602270572",
-          "after": "77488366898405683285253"
+          "field": "values.$members.1",
+          "before": "eth:0x2458aA42720A32fd6986f963774bCf3471F59660"
         },
         {
-          "field": "values.getEntireSystemDebt",
-          "before": "34544154161539642862528277",
-          "after": "30769488242648096976632102"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De",
-      "contractName": "PriceFeed",
-      "entity": null,
-      "id": "5:eth:0x4c517D4e2C851CA76d7eC94B805269Df0f2201De:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.lastGoodPrice",
-          "before": "3310005500000000000000",
-          "after": "1953818630000000000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-      "contractName": "LQTYStaking",
-      "entity": null,
-      "id": "5:eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.F_ETH",
-          "before": 185349653961372,
-          "after": 185473878166139
-        },
-        {
-          "field": "values.F_LUSD",
-          "before": "601243080399395067374",
-          "after": "601243131442849934862"
-        },
-        {
-          "field": "values.totalLQTYStaked",
-          "before": "53185362622915502591451660",
-          "after": "58526676494000591906836418"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "23363193019159989040377678000000000000000",
-          "after": "15224465054459121365746676000000000000000"
-        },
-        {
-          "field": "values.calcPendingAggBatchManagementFee",
-          "before": "66195713554286635615",
-          "after": "81915500711587509936"
-        },
-        {
-          "field": "values.calcPendingSPYield",
-          "before": "93698526105280524885",
-          "after": "48223701722241004241"
-        },
-        {
-          "field": "values.getCollBalance",
-          "before": "25378183572677775054848",
-          "after": "25077006236812550322888"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getCollBalance",
-          "before": "10846565926263626510",
-          "after": "64236772726256188432"
-        },
-        {
-          "field": "values.getYieldGainsOwed",
-          "before": "26590937596338200134116",
-          "after": "13583581609079665098151"
-        },
-        {
-          "field": "values.P",
-          "before": "945353552399776581280115228303108507",
-          "after": "797277739269332065542711283372696637"
-        },
-        {
-          "field": "values.scaleToB.0",
-          "before": "88699825028214515803444464134974985",
-          "after": "93471700745860145657914532370929509"
-        },
-        {
-          "field": "values.scaleToS.0",
-          "before": "16392861312881131483759987969575",
-          "after": "91973646659030210071285211989882"
+          "field": "values.$members.2",
+          "before": "eth:0x711cd20bF6b436ced327A8C65A14491aA04c2ca1"
         }
       ]
     },
@@ -178,47 +58,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-      "contractName": "StabilityPool",
-      "entity": null,
-      "id": "5:eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getETH",
-          "before": "636551818011984239433",
-          "after": "649286643596609113134"
-        },
-        {
-          "field": "values.getTotalLUSDDeposits",
-          "before": "15051508213900676696467501",
-          "after": "12512130631268126317112892"
-        },
-        {
-          "field": "values.lastETHError_Offset",
-          "before": "9314849123567685276614336",
-          "after": "14452840112584956861931264"
-        },
-        {
-          "field": "values.lastLQTYError",
-          "before": "12184979471027362524701532",
-          "after": "2421568125471481098369294"
-        },
-        {
-          "field": "values.lastLUSDLossError_Offset",
-          "before": "5900472414984220370247446",
-          "after": "10296099677808650302564214"
-        },
-        {
-          "field": "values.P",
-          "before": "118551519569971686",
-          "after": "117913546050033757"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
       "contractName": "AccessControlledOCR2Aggregator",
       "entity": null,
@@ -228,421 +67,11 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 5,
-      "address": "eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1",
-      "contractName": "Governance",
-      "entity": null,
-      "id": "5:eth:0x807DEf5E7d057DF05C796F4bc75C3Fe82Bd6EeE1:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.boldAccrued",
-          "before": "12317154317885534266655",
-          "after": "10073616005787689554315"
-        },
-        {
-          "field": "values.epoch",
-          "before": 37,
-          "after": 43
-        },
-        {
-          "field": "values.epochStart",
-          "before": 1768435200,
-          "after": 1772064000
-        },
-        {
-          "field": "values.getLatestVotingThreshold",
-          "before": "14044006243447413731809652574280",
-          "after": "16708123830712930280513486364216"
-        },
-        {
-          "field": "values.getTotalVotesAndState.snapshot.votes",
-          "before": "702200312172370686590482628714049",
-          "after": "835406191535646514025674318210826"
-        },
-        {
-          "field": "values.getTotalVotesAndState.snapshot.forEpoch",
-          "before": 36,
-          "after": 42
-        },
-        {
-          "field": "values.getTotalVotesAndState.state.countedVoteLQTY",
-          "before": "35790820543972942742082576",
-          "after": "41896487367378866170658864"
-        },
-        {
-          "field": "values.getTotalVotesAndState.state.countedVoteOffset",
-          "before": "62591523551679955046034141284761510",
-          "after": "73407850182685304040933407912211752"
-        },
-        {
-          "field": "values.globalState.countedVoteLQTY",
-          "before": "35790820543972942742082576",
-          "after": "41896487367378866170658864"
-        },
-        {
-          "field": "values.globalState.countedVoteOffset",
-          "before": "62591523551679955046034141284761510",
-          "after": "73407850182685304040933407912211752"
-        },
-        {
-          "field": "values.secondsWithinEpoch",
-          "before": 58679,
-          "after": 395363
-        },
-        {
-          "field": "values.votesSnapshot.votes",
-          "before": "702200312172370686590482628714049",
-          "after": "835406191535646514025674318210826"
-        },
-        {
-          "field": "values.votesSnapshot.forEpoch",
-          "before": 36,
-          "after": 42
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "5:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getLastNewValueById.1.0",
-          "before": 3321153749,
-          "after": 1935450000
-        },
-        {
-          "field": "values.getNewCurrentVariables._c",
-          "before": "0x78f55b957fe44a588f0d9a939e201e07c32b47da9e39363311fd9bd129500281",
-          "after": "0x0edd5fc7b065fcac4ca3289d329b73cb3b97c944b2603243b2e389d394032cc1"
-        },
-        {
-          "field": "values.getNewValueCountbyRequestId.1",
-          "before": 229213,
-          "after": 255467
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "12531727142111607084436137750000000000000",
-          "after": "14589917957755623126496482000000000000000"
-        },
-        {
-          "field": "values.calcPendingAggBatchManagementFee",
-          "before": "64856933356111098918",
-          "after": "78212619554361194295"
-        },
-        {
-          "field": "values.calcPendingSPYield",
-          "before": "9482022905274629566",
-          "after": "27279705736309037211"
-        },
-        {
-          "field": "values.getCollBalance",
-          "before": "4352125544647987218794",
-          "after": "5954889160700130735188"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getCollBalance",
-          "before": "20743394629985611860",
-          "after": "48191851423121521984"
-        },
-        {
-          "field": "values.getYieldGainsOwed",
-          "before": "46590901900975392481993",
-          "after": "36800165773662170975669"
-        },
-        {
-          "field": "values.P",
-          "before": "855053183990427800165091635782229532",
-          "after": "825372379128265763576740294356575633"
-        },
-        {
-          "field": "values.scaleToB.0",
-          "before": "50449908319442691503210540527599956",
-          "after": "56638573237446829894112572652719147"
-        },
-        {
-          "field": "values.scaleToS.0",
-          "before": "35438697625952148296012064478588",
-          "after": "49484103944342211213589019074888"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
       "address": "eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9",
       "contractName": "SimpleWriteAccessController",
       "entity": null,
       "id": "5:eth:0x9db83CEf9f68b63989E4E82D65D549e7fF2aCda9:contract-removed",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "5:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getBorrowingRate",
-          "before": "13276483257307213",
-          "after": 5003327826668194
-        },
-        {
-          "field": "values.getBorrowingRateWithDecay",
-          "before": 5748643725779965,
-          "after": 5001404577127616
-        },
-        {
-          "field": "values.getEntireSystemColl",
-          "before": "77898061772842602270572",
-          "after": "77488366898405683285253"
-        },
-        {
-          "field": "values.getEntireSystemDebt",
-          "before": "34544154161539642862528277",
-          "after": "30769488242648096976632102"
-        },
-        {
-          "field": "values.getRedemptionRate",
-          "before": "13276483257307213",
-          "after": 5003327826668194
-        },
-        {
-          "field": "values.getRedemptionRateWithDecay",
-          "before": 5748643725779965,
-          "after": 5001404577127616
-        },
-        {
-          "field": "values.getTroveFromTroveOwnersArray.0",
-          "before": "eth:0xa850535D3628CD4dFEB528dC85cfA93051Ff2984",
-          "after": "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE"
-        },
-        {
-          "field": "values.getTroveOwnersCount",
-          "before": 115,
-          "after": 105
-        },
-        {
-          "field": "values.totalCollateralSnapshot",
-          "before": "80381242490914790439503",
-          "after": "77898061772842602270572"
-        },
-        {
-          "field": "values.totalStakes",
-          "before": "77898061772842602270572",
-          "after": "77488366898405683285253"
-        },
-        {
-          "field": "values.totalStakesSnapshot",
-          "before": "80381242490914790439503",
-          "after": "77898061772842602270572"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
-      "contractName": "TellorCaller",
-      "entity": null,
-      "id": "5:eth:0xAd430500ECDa11E38C9bCB08a702274b94641112:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getTellorCurrentValue.0.2",
-          "before": 1768492955,
-          "after": 1772458367
-        },
-        {
-          "field": "values.getTellorCurrentValue.0.1",
-          "before": 3321153749,
-          "after": 1935450000
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695",
-      "contractName": "StabilityPool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xd442E41019B7F5C4dD78F50dc03726C446148695:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getCollBalance",
-          "before": 0,
-          "after": "3190945782731810634"
-        },
-        {
-          "field": "values.getYieldGainsOwed",
-          "before": "5059055226337995700193",
-          "after": "5364046174818696007610"
-        },
-        {
-          "field": "values.P",
-          "before": "1000000000000000000000000000000000000",
-          "after": "971080316784722665849149198907917106"
-        },
-        {
-          "field": "values.scaleToB.0",
-          "before": "38568920687875652309101892390047373",
-          "after": "49777413183355221214768858086857111"
-        },
-        {
-          "field": "values.scaleToS.0",
-          "before": 0,
-          "after": "12516419898161033555263713090285"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-      "contractName": "CommunityIssuance",
-      "entity": null,
-      "id": "5:eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalLQTYIssued",
-          "before": "30838809219285572256000000",
-          "after": "30935488038157156128000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F",
-      "contractName": "ActivePool",
-      "entity": null,
-      "id": "5:eth:0xDf9Eb223bAFBE5c5271415C75aeCD68C21fE3D7F:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getETH",
-          "before": "77898061772842602270572",
-          "after": "77488366898405683285253"
-        },
-        {
-          "field": "values.getLUSDDebt",
-          "before": "34544154161539642862528277",
-          "after": "30769488242648096976632102"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "5:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "eth:0x9545014622235086093391841500000000000000",
-          "after": "eth:0x4125440681145352685400364500000000000000"
-        },
-        {
-          "field": "values.calcPendingAggBatchManagementFee",
-          "before": "27934059155102757666",
-          "after": "254307987193891604"
-        },
-        {
-          "field": "values.calcPendingSPYield",
-          "before": "66484020057585041251",
-          "after": "11167739592748161729"
-        },
-        {
-          "field": "values.getCollBalance",
-          "before": "5548286765080221190186",
-          "after": "5957301966669596358390"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 5,
-      "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
-      "contractName": "CollateralRegistry",
-      "entity": null,
-      "id": "5:eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getRedemptionRate",
-          "before": "13922910960521244",
-          "after": 7041852123170433
-        },
-        {
-          "field": "values.getRedemptionRateForRedeemedAmount.0",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        },
-        {
-          "field": "values.getRedemptionRateForRedeemedAmount.1",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        },
-        {
-          "field": "values.getRedemptionRateForRedeemedAmount.2",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        },
-        {
-          "field": "values.getRedemptionRateForRedeemedAmount.3",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        },
-        {
-          "field": "values.getRedemptionRateForRedeemedAmount.4",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        },
-        {
-          "field": "values.getRedemptionRateWithDecay",
-          "before": 5068777000049254,
-          "after": 5337429067494545
-        }
-      ]
     },
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -697,24 +126,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getCompositeDebt",
-          "before": [
-            "200000000000000000000",
-            "200000000000000000001",
-            "200000000000000000002",
-            "200000000000000000003",
-            "200000000000000000004"
-          ]
-        },
-        {
-          "field": "values.getEntireSystemColl",
-          "before": "77459866898405683285253"
-        },
-        {
-          "field": "values.getEntireSystemDebt",
-          "before": "30749572878952724070962338"
-        },
-        {
           "field": "template",
           "after": "liquity-v2/BorrowerOperations"
         }
@@ -747,41 +158,6 @@
       "id": "54:eth:0x372ABD1810eAF23Cb9D941BbE7596DFb2c46BC65:data-change",
       "type": "data-change",
       "changes": [
-        {
-          "field": "values.getInterestIndividualDelegateOf",
-          "before": [
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ]
-          ]
-        },
         {
           "field": "template",
           "after": "liquity-v2/BorrowerOperations_branch"
@@ -865,122 +241,6 @@
         {
           "field": "template",
           "after": "liquity-v2/SortedTroves"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "54:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.disputesById",
-          "before": [
-            [
-              "0x0000000000000000000000000000000000000000000000000000000000000000",
-              0,
-              false,
-              false,
-              false,
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000",
-              "eth:0x0000000000000000000000000000000000000000"
-            ],
-            [
-              "0xcefd7c5b8e9e7401f0aa17d25979f52b885b690dae9372240d25d045df1c3952",
-              "-78981907738017321593073",
-              true,
-              false,
-              false,
-              "eth:0x260260c3B1AFF1ED9E45e355Ff4D05BEEdD5efeb",
-              "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-              "eth:0x0000000000000000000000000000000000000000"
-            ],
-            [
-              "0xedcb1355296870fb613b2d82f80268a7d1c720bd3a05095fe8883588019ae199",
-              "78981907738017321593073",
-              true,
-              true,
-              false,
-              "eth:0x13cE2ABB82D2484F7aC55a02dd0f5c5e4dd6B5Fa",
-              "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-              "eth:0x0000000000000000000000000000000000000000"
-            ],
-            [
-              "0xe605304535a755840e17560f3fb8f2d8dc2bd22664b792bbdccadbba7abf125b",
-              "78983199404683988259739",
-              true,
-              true,
-              false,
-              "eth:0x90cdBBb44143b87883287589c29Eb869FC906E91",
-              "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-              "eth:0x0000000000000000000000000000000000000000"
-            ],
-            [
-              "0x28cd3cec79a427f834edcc3466bdc28f654475265491df388580dc5d1e32f301",
-              "-78983199404683988259739",
-              true,
-              false,
-              false,
-              "eth:0x7034E17f11b382545FFd618620Ca72e271AEa5F6",
-              "eth:0xDA3A3a86f42Da43B786D79C32D3Bb895a595B22E",
-              "eth:0x0000000000000000000000000000000000000000"
-            ]
-          ]
-        },
-        {
-          "field": "values.newValueTimestamps",
-          "before": [
-            1614021064,
-            1614031551,
-            1614098551,
-            1614118070,
-            1614119565
-          ]
-        },
-        {
-          "field": "values.getLastNewValueById",
-          "before": [
-            [
-              0,
-              false
-            ],
-            [
-              2000647200,
-              true
-            ],
-            [
-              0,
-              false
-            ],
-            [
-              0,
-              false
-            ],
-            [
-              0,
-              false
-            ]
-          ]
-        },
-        {
-          "field": "values.getNewCurrentVariables._c",
-          "before": "0xb011b4b789b2eb9e5f1071aed5b116cc8480c50c9bcd7b5021025cb90e15c10e",
-          "after": "0xcf7298fcb2960b7e01b27f4051fdef63f8cdbd502c95b4ac26b8978613dc7cc4"
-        },
-        {
-          "field": "values.getNewValueCountbyRequestId",
-          "before": [
-            0,
-            255881,
-            0,
-            0,
-            0
-          ]
         }
       ]
     },
@@ -1081,35 +341,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getBorrowingFee",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "field": "values.getBorrowingFeeWithDecay",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "field": "values.getRedemptionFeeWithDecay",
-          "before": [
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
           "field": "template",
           "after": "liquity-v2/TroveManager_all"
         }
@@ -1125,64 +356,8 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getInterestIndividualDelegateOf",
-          "before": [
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ]
-          ]
-        },
-        {
           "field": "template",
           "after": "liquity-v2/BorrowerOperations_branch"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
-      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
-      "contractName": "TellorCaller",
-      "entity": null,
-      "id": "54:eth:0xAd430500ECDa11E38C9bCB08a702274b94641112:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getTellorCurrentValue.0.2",
-          "before": 1772522219,
-          "after": 1772544791
-        },
-        {
-          "field": "values.getTellorCurrentValue.0.1",
-          "before": 2000647200,
-          "after": 1951295000
         }
       ]
     },
@@ -1221,22 +396,6 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 54,
-      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-      "contractName": "CommunityIssuance",
-      "entity": null,
-      "id": "54:eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalLQTYIssued",
-          "before": "30937261026195358912000000",
-          "after": "30937715018971541952000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 54,
       "address": "eth:0xe707784292289be3Aa0Fb6f9D33d420291f98695",
       "contractName": "BatchManagerProxy",
       "entity": null,
@@ -1253,41 +412,6 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getInterestIndividualDelegateOf",
-          "before": [
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ],
-            [
-              "eth:0x0000000000000000000000000000000000000000",
-              0,
-              0,
-              0
-            ]
-          ]
-        },
-        {
           "field": "template",
           "after": "liquity-v2/BorrowerOperations_branch"
         }
@@ -1303,11 +427,6 @@
       "id": "54:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:data-change",
       "type": "data-change",
       "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "eth:0x4125483164348134580229964500000000000000",
-          "after": "eth:0x4123855519570108964282467500000000000000"
-        },
         {
           "field": "template",
           "after": "liquity-v2/ActivePool"
@@ -1344,74 +463,11 @@
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
       "updateNotifierId": 59,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "entity": null,
-      "id": "59:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getNewCurrentVariables._c",
-          "before": "0xcf7298fcb2960b7e01b27f4051fdef63f8cdbd502c95b4ac26b8978613dc7cc4",
-          "after": "0xadaca005b2764aaecbe88ee0164307c4be95c3754999e00148a6d036c3eb66c2"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
       "address": "eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f",
       "contractName": "DSProxy",
       "entity": null,
       "id": "59:eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f:contract-removed",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2",
-      "contractName": "TroveManager",
-      "entity": null,
-      "id": "59:eth:0xA39739EF8b0231DbFA0DcdA07d7e29faAbCf4bb2:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalStakes",
-          "before": "77459866898405683285253",
-          "after": "77469966898405683285253"
-        },
-        {
-          "field": "values.getTroveFromTroveOwnersArray",
-          "before": [
-            "eth:0xf10Fbb1a91C1FF6b2Db05cDa0fAf5c23902f1bbE",
-            "eth:0xf309Ac4c07Be9c93d7a14b5B74e94F7aC29E8eCE",
-            "eth:0x98d87F3BF35B8D5685e1eDfAeb8BA2F7d0a7fB11",
-            "eth:0xE1137eE95345037529eA444985F7634Bd05a3C8C",
-            "eth:0xA1CbA1fCEf2CD7379f74fEec9a7d8B17d430cc6f"
-          ]
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
-      "contractName": "TellorCaller",
-      "entity": null,
-      "id": "59:eth:0xAd430500ECDa11E38C9bCB08a702274b94641112:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getTellorCurrentValue.0.2",
-          "before": 1772544791,
-          "after": 1772609411
-        },
-        {
-          "field": "values.getTellorCurrentValue.0.1",
-          "before": 1951295000,
-          "after": 1983113839
-        }
-      ]
     },
     {
       "timestamp": "2026-03-04T07:46:54.000Z",
@@ -1425,39 +481,6 @@
         {
           "field": "template",
           "after": "tokens"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-      "contractName": "CommunityIssuance",
-      "entity": null,
-      "id": "59:eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalLQTYIssued",
-          "before": "30937715018971541952000000",
-          "after": "30939176565718434976000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-04T07:46:54.000Z",
-      "updateNotifierId": 59,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "59:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "eth:0x4123855519570108964282467500000000000000",
-          "after": "eth:0x4671404119147669602431827500000000000000"
         }
       ]
     },
@@ -1529,23 +552,6 @@
       "entity": null,
       "id": "61:eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d:contract-removed",
       "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "15224465054459121365746676000000000000000",
-          "after": "25979138363541721693153504000000000000000"
-        }
-      ]
     },
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
@@ -1688,23 +694,6 @@
     {
       "timestamp": "2026-03-05T07:51:01.000Z",
       "updateNotifierId": 61,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "61:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "eth:0x4671404119147669602431827500000000000000",
-          "after": "eth:0x6690436399211978736239586000000000000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-05T07:51:01.000Z",
-      "updateNotifierId": 61,
       "address": "eth:0xf949982B91C8c61e952B3bA942cbbfaef5386684",
       "contractName": "CollateralRegistry",
       "entity": null,
@@ -1718,16 +707,6 @@
         {
           "field": "values.getToken.4",
           "before": "eth:0x0000000000000000000000000000000000000000"
-        },
-        {
-          "field": "values.getEffectiveRedemptionFeeInBold",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
         }
       ]
     },
@@ -1797,67 +776,6 @@
       "entity": null,
       "id": "61:eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E:contract-added",
       "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-06T07:46:55.000Z",
-      "updateNotifierId": 62,
-      "address": "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "62:eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "25979138363541721693153504000000000000000",
-          "after": "26069934540966459620744293000000000000000"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-06T07:46:55.000Z",
-      "updateNotifierId": 62,
-      "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
-      "contractName": "RocketTokenRETH",
-      "isDependency": true,
-      "entity": "RocketPool",
-      "id": "62:eth:0xae78736Cd615f374D3085123A210448E74Fc6393:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.getExchangeRate",
-          "before": "1158803578305921080",
-          "after": "1158872140378225549"
-        },
-        {
-          "field": "values.getCollateralRate",
-          "before": "9699603322146207",
-          "after": "9969426283644773"
-        },
-        {
-          "field": "values.getTotalCollateral",
-          "before": "3870286993922703245148",
-          "after": "3977969826245065225735"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-06T07:46:55.000Z",
-      "updateNotifierId": 62,
-      "address": "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE",
-      "contractName": "ActivePool",
-      "isDependency": false,
-      "entity": null,
-      "id": "62:eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.aggWeightedBatchManagementFeeSum",
-          "before": "eth:0x6690436399211978736239586000000000000000",
-          "after": "eth:0x6048896546837818165748415000000000000000"
-        }
-      ]
     },
     {
       "timestamp": "2026-03-07T07:39:26.000Z",
@@ -1930,8 +848,9 @@
       "contractName": "GnosisSafe",
       "isDependency": true,
       "entity": null,
-      "id": "77:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:data-change",
-      "type": "data-change",
+      "id": "77:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
       "changes": [
         {
           "field": "values.$members.8",

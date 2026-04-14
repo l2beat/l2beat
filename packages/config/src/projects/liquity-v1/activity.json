@@ -1,6 +1,6 @@
 {
-  "version": "1.0",
-  "lastReconciledAt": 1776101653,
+  "version": "1.1",
+  "lastReconciledAt": 1776179323,
   "lastConsumedUpdateNotifierId": 67,
   "events": [
     {
@@ -12,16 +12,6 @@
       "id": "64:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:data-change",
       "type": "data-change",
       "changes": [
-        {
-          "field": "values.getCompositeDebt",
-          "before": [
-            "200000000000000000000",
-            "200000000000000000001",
-            "200000000000000000002",
-            "200000000000000000003",
-            "200000000000000000004"
-          ]
-        },
         {
           "field": "template",
           "after": "liquity-v2/BorrowerOperations"
@@ -41,27 +31,6 @@
         {
           "field": "template",
           "after": "Steakhouse-USDC/EACAggregatorProxy"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-07T07:39:26.000Z",
-      "updateNotifierId": 64,
-      "address": "eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d",
-      "contractName": "LQTYStaking",
-      "entity": null,
-      "id": "64:eth:0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.F_LUSD",
-          "before": "601243131442849934862",
-          "after": "601243134600246048386"
-        },
-        {
-          "field": "values.totalLQTYStaked",
-          "before": "58526676494000591906836418",
-          "after": "58534475879768726406445882"
         }
       ]
     },
@@ -90,73 +59,8 @@
       "type": "data-change",
       "changes": [
         {
-          "field": "values.getBorrowingFee",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "field": "values.getBorrowingFeeWithDecay",
-          "before": [
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "field": "values.getBorrowingRate",
-          "before": 5003327826668194,
-          "after": 5000005294635042
-        },
-        {
-          "field": "values.getBorrowingRateWithDecay",
-          "before": 5001540575279477,
-          "after": 5000001960467750
-        },
-        {
-          "field": "values.getRedemptionFeeWithDecay",
-          "before": [
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "field": "values.getRedemptionRate",
-          "before": 5003327826668194,
-          "after": 5000005294635042
-        },
-        {
-          "field": "values.getRedemptionRateWithDecay",
-          "before": 5001540575279477,
-          "after": 5000001960467750
-        },
-        {
           "field": "template",
           "after": "liquity-v2/TroveManager_all"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-07T07:39:26.000Z",
-      "updateNotifierId": 64,
-      "address": "eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816",
-      "contractName": "CommunityIssuance",
-      "entity": null,
-      "id": "64:eth:0xD8c9D9071123a059C6E0A945cF0e0c82b508d816:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.totalLQTYIssued",
-          "before": "30935488038157156128000000",
-          "after": "30944696540750327872000000"
         }
       ]
     },
