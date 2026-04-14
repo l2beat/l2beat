@@ -9,8 +9,7 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import { DOLLARS_PER_PARTICLE } from '../graph/ParticleLayer'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
-import { TopBridges } from './TopBridges'
-import { TopTokens } from './TopTokens'
+import { TopItemsList } from './TopItemsList'
 
 export function SingleChainStats({
   chainId,
@@ -35,8 +34,24 @@ export function SingleChainStats({
     <>
       <Stats data={data} isLoading={isLoading} chainId={chainId} />
       <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
-      {chainData && <TopTokens tokens={chainData.topTokens} />}
-      {chainData && <TopBridges protocols={chainData.topProtocols} />}
+      {chainData && (
+        <TopItemsList
+          label="TOP TOKENS"
+          items={chainData.topTokens.map((t) => ({
+            ...t,
+            title: t.symbol,
+          }))}
+        />
+      )}
+      {chainData && (
+        <TopItemsList
+          label="TOP BRIDGES"
+          items={chainData.topProtocols.map((p) => ({
+            ...p,
+            title: p.name,
+          }))}
+        />
+      )}
     </>
   )
 }
