@@ -10,6 +10,8 @@ You can visit the site yourself at https://www.l2beat.com/.
 
 [`scripts/coolify/check-env.ts`](scripts/coolify/check-env.ts) lists every application on your [Coolify](https://coolify.io/) instance (via the HTTP API) and checks whether each one defines a given environment variable **by key** (exact match). Output uses `project/environment/application` labels when project and environment metadata are available.
 
+It is especially handy when you are changing, rotating, or cleaning up a variable and you are not sure which application still uses it—before you had to click through Coolify apps by hand; this script checks all of them in one run.
+
 From the repository root:
 
 ```bash
