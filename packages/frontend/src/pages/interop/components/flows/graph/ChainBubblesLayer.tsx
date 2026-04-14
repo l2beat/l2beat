@@ -95,7 +95,7 @@ function ChainBubble({
         y={nameY}
         textAnchor="middle"
         className={cn(
-          'font-medium',
+          'fill-primary font-medium',
           isSmallScreen ? 'text-label-value-13' : 'text-label-value-14',
         )}
       >
