@@ -1,104 +1,66 @@
-import { api, TRPCReactProvider } from './react-query/trpc'
+import { Brain, Coins, Download } from 'lucide-react'
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom'
+import { RulesEditor } from '~/components/RulesEditor'
+import { cn } from '~/utils/cn'
+import { ImportPage } from './pages/ImportPage'
+import { TokensPage } from './pages/TokensPage'
+import { TRPCReactProvider } from './react-query/trpc'
 
-function ImportPanel() {
-  const mutation = api.importFacts.useMutation()
-  const clearMutation = api.clearFacts.useMutation()
+const navItems = [
+  { to: '/', label: 'Tokens', icon: Coins },
+  { to: '/import', label: 'Import', icon: Download },
+]
 
+function Navbar() {
+  const { pathname } = useLocation()
   return (
-    <div className="mb-6">
-      <h2 className="mb-2 font-semibold text-lg">Import Transfer Facts</h2>
-      <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={() => mutation.mutate()}
-          disabled={mutation.isPending}
-          className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-50"
-        >
-          {mutation.isPending ? 'Importing...' : 'Import Facts'}
-        </button>
-        <button
-          type="button"
-          onClick={() => clearMutation.mutate()}
-          disabled={clearMutation.isPending}
-          className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700 disabled:opacity-50"
-        >
-          {clearMutation.isPending ? 'Clearing...' : 'Clear Facts'}
-        </button>
+    <nav className="flex h-12 shrink-0 items-center justify-between bg-navbar px-4 text-navbar-foreground">
+      <div className="flex items-center gap-2">
+        <Brain className="size-5" />
+        <span className="font-semibold text-sm">token-knowledge</span>
       </div>
-
-      {mutation.error && (
-        <p className="mt-2 text-red-600">Error: {mutation.error.message}</p>
-      )}
-
-      {mutation.data && (
-        <p className="mt-2 text-gray-600 text-sm">
-          Imported {mutation.data.imported} new facts, skipped{' '}
-          {mutation.data.skipped} duplicates.
-        </p>
-      )}
-
-      {clearMutation.error && (
-        <p className="mt-2 text-red-600">
-          Error: {clearMutation.error.message}
-        </p>
-      )}
-
-      {clearMutation.data && (
-        <p className="mt-2 text-gray-600 text-sm">
-          Cleared {clearMutation.data.deleted} facts.
-        </p>
-      )}
-    </div>
+      <div className="flex items-center gap-1">
+        {navItems.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={cn(
+              'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm transition-colors',
+              pathname === item.to
+                ? 'bg-white/15 text-white'
+                : 'text-navbar-foreground/70 hover:bg-white/10 hover:text-white',
+            )}
+          >
+            <item.icon className="size-4" />
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </nav>
   )
 }
 
-function InferPanel() {
-  const { data, isLoading, error, refetch } = api.infer.useQuery(undefined, {
-    enabled: false,
-  })
-
+function Layout() {
   return (
-    <div>
-      <h2 className="mb-2 font-semibold text-lg">Run Inference</h2>
-      <button
-        type="button"
-        onClick={() => refetch()}
-        disabled={isLoading}
-        className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-      >
-        {isLoading ? 'Inferring...' : 'Infer Token Catalog'}
-      </button>
-
-      {error && <p className="mt-4 text-red-600">Error: {error.message}</p>}
-
-      {data && (
-        <div className="mt-6">
-          <p className="mb-2 text-gray-500 text-sm">
-            {data.inputFactCount} input facts — inferred {data.facts.length}{' '}
-            facts
-          </p>
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="p-2 text-left">Fact</th>
-                <th className="p-2 text-left">Parameters</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.facts.map(
-                (fact: { atom: string; params: unknown[] }, i: number) => (
-                  <tr key={i} className="border-b hover:bg-gray-50">
-                    <td className="p-2 font-mono">{fact.atom}</td>
-                    <td className="p-2 font-mono">
-                      {fact.params.map(String).join(', ')}
-                    </td>
-                  </tr>
-                ),
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+    <div className="flex h-screen flex-col">
+      <Navbar />
+      <div className="flex min-h-0 flex-1">
+        <main className="flex-1 overflow-auto border-r p-5">
+          <Routes>
+            <Route path="/" element={<TokensPage />} />
+            <Route path="/import" element={<ImportPage />} />
+          </Routes>
+        </main>
+        <aside className="flex w-[340px] shrink-0 flex-col overflow-hidden p-4">
+          <RulesEditor />
+        </aside>
+      </div>
     </div>
   )
 }
@@ -106,11 +68,9 @@ function InferPanel() {
 export function App() {
   return (
     <TRPCReactProvider>
-      <div className="mx-auto max-w-4xl p-6">
-        <h1 className="mb-4 font-bold text-2xl">Token Knowledge</h1>
-        <ImportPanel />
-        <InferPanel />
-      </div>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
     </TRPCReactProvider>
   )
 }
