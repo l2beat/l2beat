@@ -35,13 +35,13 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
   return (
     <PrimaryCard
       className={cn(
-        'grid grid-cols-1 gap-4',
+        'grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out motion-reduce:transition-none',
         hasGraphSelection
           ? 'lg:grid-cols-[240px_1fr_280px]'
-          : 'lg:grid-cols-[240px_1fr]',
+          : 'lg:grid-cols-[240px_1fr_0px]',
       )}
     >
-      <div className="h-full max-lg:order-4">
+      <div className="h-full max-lg:order-2">
         <FlowsGeneralStats />
       </div>
       <div className="flex w-full min-w-0 flex-col items-center gap-10">
@@ -54,11 +54,16 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
         </div>
         <FlowsGraphPanel interopChains={interopChains} />
       </div>
-      {hasGraphSelection && (
-        <div className="h-full min-w-0 max-lg:order-3">
+      <div
+        className={cn(
+          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-3 lg:translate-x-3 lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out',
+          hasGraphSelection && 'lg:translate-x-0 lg:opacity-100',
+        )}
+      >
+        <div className="h-full lg:w-[280px]">
           <FlowsSelectedPathPanel />
         </div>
-      )}
+      </div>
     </PrimaryCard>
   )
 }
