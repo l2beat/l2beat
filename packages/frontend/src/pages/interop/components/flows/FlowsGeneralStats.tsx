@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -24,6 +25,7 @@ export function FlowsGeneralStats() {
     ? allChains.find((c) => c.id === topRoute.dstChain)
     : undefined
   const topToken = data?.stats.topToken
+  const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
@@ -101,6 +103,18 @@ export function FlowsGeneralStats() {
             }
           />
         </div>
+      </div>
+      <div className="mt-auto pt-4 text-center font-medium text-label-value-14 text-secondary">
+        {isLoading ? (
+          <Skeleton className="mx-auto h-5 w-40" />
+        ) : (
+          <>
+            Avg value per second ≈{' '}
+            <span className="font-bold text-brand">
+              {formatCurrency(avgValuePerSecond, 'usd')}
+            </span>
+          </>
+        )}
       </div>
     </div>
   )
