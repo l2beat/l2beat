@@ -75,7 +75,7 @@ function SelectInfo({
   return (
     <div className="flex items-center gap-0.5">
       <CursorClickIcon className="size-3 fill-brand" />
-      <p className="font-semibold text-brand text-label-value-12 italic leading-none">
+      <p className="font-medium text-brand text-label-value-12 italic leading-none">
         {text}
       </p>
     </div>
