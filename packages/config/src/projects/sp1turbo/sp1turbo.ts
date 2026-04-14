@@ -308,6 +308,12 @@ The script will generate Plonk verifier smart contract with verification keys an
               '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D',
+            ),
+          },
           // {
           //   address: EthereumAddress(
           //     '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x79a1854b5ce92e40040bccb02b6a8656233c7b14
+Generated with discovered.json: 0x50ccae477e3687629d42c61439f5fb88155a2806
 
-# Diff at Mon, 13 Apr 2026 13:01:32 GMT:
+# Diff at Tue, 14 Apr 2026 10:18:02 GMT:
 
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1771857555
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1771857555
 - current timestamp: 1776085185
 
 ## Description
@@ -58,19 +58,27 @@ EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B
 ```diff
 -   Status: DELETED
     contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
-    +++ description: Verifies attestations of an AWS Nitro TEE.
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
 ```
 
 ```diff
 +   Status: CREATED
     contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22)
-    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero or Succinct SP1) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
 ```
 
 ```diff
 +   Status: CREATED
     contract EspressoNitroTEEVerifier (arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89)
-    +++ description: Verifies attestations of an AWS Nitro TEE.
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
 ```
 
 ## Source code changes
@@ -79,7 +87,24 @@ EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/arb1:0xf55BeB891B
 .../.flat@1771857555/CertManager.sol => /dev/null  | 1966 ---------
  .../EspressoNitroTEEVerifier.sol                   | 1861 +--------
  .../projects/molten/.flat/NitroEnclaveVerifier.sol | 4283 ++++++++++++++++++++
- 3 files changed, 4379 insertions(+), 3731 deletions(-)
+ .../src/projects/molten/.flat/SP1Verifier.sol      |  602 +++
+ 4 files changed, 4981 insertions(+), 3731 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857555 (main branch discovery), not current.
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      description:
+-        "Verifies attestations of an AWS Nitro TEE."
++        "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used."
+    }
 ```
 
 Generated with discovered.json: 0xaa62aaa7a4d71203f47c0062acf904a9723614d3
