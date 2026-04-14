@@ -22,7 +22,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
 
   return (
     <div
-      className="aspect-square w-full max-w-[600px] max-lg:order-2"
+      className="aspect-square w-full max-w-[600px] max-lg:order-2 max-lg:py-6"
       ref={containerRef}
     >
       {isLoading || !data || !width || !height ? (
