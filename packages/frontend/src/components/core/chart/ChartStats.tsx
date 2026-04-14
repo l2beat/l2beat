@@ -98,9 +98,9 @@ export function ChartStatsItem({
         <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
       ) : children ? (
         <SyncStatusWrapper isSynced={isSynced}>
-          <span className="font-medium text-primary text-sm xs:text-lg md:font-bold">
+          <div className="font-medium text-primary text-sm xs:text-lg md:font-bold">
             {children}
-          </span>
+          </div>
         </SyncStatusWrapper>
       ) : (
         <NoDataBadge />

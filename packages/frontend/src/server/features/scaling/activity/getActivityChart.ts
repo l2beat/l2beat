@@ -1,7 +1,8 @@
-import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
@@ -35,6 +36,7 @@ interface ActivityTotalCount {
 
 interface ActivityMetricStats {
   pastDayCount: number | null
+  pastDayChange: number
   pastDaySum: number | null
   maxCount: {
     value: number
@@ -142,7 +144,13 @@ export async function getActivityChart({
   })
 
   const stats = projectId
-    ? getActivityChartStats(projects, data, maxCounts, totalCounts?.[projectId])
+    ? getActivityChartStats(
+        projects,
+        data,
+        syncedUntil,
+        maxCounts,
+        totalCounts?.[projectId],
+      )
     : undefined
 
   return {
@@ -156,6 +164,7 @@ export async function getActivityChart({
 function getActivityChartStats(
   projects: ProjectId[],
   data: ActivityChartDataPoint[],
+  syncedUntil: UnixTime,
   maxCounts: Record<
     ProjectId,
     {
@@ -167,8 +176,15 @@ function getActivityChartStats(
   >,
   totalCount: ActivityTotalCount | undefined,
 ): ActivityChartStats | undefined {
-  const pastDaySumTps = data.at(-1)?.[1] ?? null
-  const pastDaySumUops = data.at(-1)?.[3] ?? pastDaySumTps
+  const currentData = data.find(([timestamp]) => timestamp === syncedUntil)
+  const sevenDaysAgoData = data.find(
+    ([timestamp]) => timestamp === syncedUntil - 7 * UnixTime.DAY,
+  )
+
+  const pastDaySumTps = currentData?.[1] ?? null
+  const pastDaySumUops = currentData?.[3] ?? pastDaySumTps
+  const sevenDaysAgoTps = sevenDaysAgoData?.[1] ?? 0
+  const sevenDaysAgoUops = sevenDaysAgoData?.[3] ?? sevenDaysAgoTps
 
   const [projectId] = projects.filter((p) => p !== ProjectId.ETHEREUM)
   const maxCount = projectId ? maxCounts[projectId] : undefined
@@ -180,6 +196,10 @@ function getActivityChartStats(
       pastDaySum: pastDaySumUops,
       pastDayCount:
         pastDaySumUops !== null ? countPerSecond(pastDaySumUops) : null,
+      pastDayChange:
+        pastDaySumUops !== null
+          ? calculatePercentageChange(pastDaySumUops, sevenDaysAgoUops)
+          : 0,
       maxCount: {
         value: countPerSecond(maxCount.uopsCount),
         timestamp: maxCount.uopsTimestamp,
@@ -189,6 +209,10 @@ function getActivityChartStats(
       pastDaySum: pastDaySumTps,
       pastDayCount:
         pastDaySumTps !== null ? countPerSecond(pastDaySumTps) : null,
+      pastDayChange:
+        pastDaySumTps !== null
+          ? calculatePercentageChange(pastDaySumTps, sevenDaysAgoTps)
+          : 0,
       maxCount: {
         value: countPerSecond(maxCount.count),
         timestamp: maxCount.countTimestamp,

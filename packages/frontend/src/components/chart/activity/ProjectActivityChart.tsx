@@ -1,9 +1,9 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
@@ -56,10 +56,8 @@ export function ProjectActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects:
-              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
-            ethereum:
-              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
+            projects: projectMetric !== null ? projectMetric / 86400 : null,
+            ethereum: ethereumMetric !== null ? ethereumMetric / 86400 : null,
           }
         },
       ),
@@ -126,13 +124,21 @@ export function ProjectActivityChart({
         <ChartStatsItem
           label={`Past Day ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
           className="max-md:h-7"
-          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`}
+          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
           isLoading={isLoading}
         >
           {chart?.stats?.[metric].pastDayCount !== undefined &&
-          chart?.stats?.[metric].pastDayCount !== null
-            ? formatActivityCount(chart?.stats?.[metric].pastDayCount)
-            : 'No data'}
+          chart?.stats?.[metric].pastDayCount !== null ? (
+            <ValueWithPercentageChange
+              change={chart.stats[metric].pastDayChange}
+              className="text-sm xs:text-lg md:text-lg"
+              changeClassName="text-xs"
+            >
+              {formatActivityCount(chart?.stats?.[metric].pastDayCount)}
+            </ValueWithPercentageChange>
+          ) : (
+            'No data'
+          )}
         </ChartStatsItem>
         <ChartStatsItem
           label={`Past Day ${metric === 'tps' ? 'Txs' : 'Ops'} count`}
