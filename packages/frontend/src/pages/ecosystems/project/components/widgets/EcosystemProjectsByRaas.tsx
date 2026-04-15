@@ -6,6 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import { ProjectTooltipContent } from '~/components/projects/ProjectTooltipContent'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { ProjectByRaas } from '~/server/features/ecosystems/getProjectsByRaas'
 import { cn } from '~/utils/cn'
@@ -112,12 +113,15 @@ function ProjectLinkWithTooltip({
 }) {
   return (
     <Tooltip>
-      <a href={`/scaling/projects/${project.slug}`} className="size-6">
+      <a href={project.url} className="size-6">
         <TooltipTrigger>{children}</TooltipTrigger>
       </a>
-      <TooltipContent>
-        <p className="font-bold">{project.name}</p>
-        <p className="text-secondary text-xs">Click to view project page</p>
+      <TooltipContent className="flex max-w-xs flex-col gap-2">
+        <ProjectTooltipContent
+          projectName={project.name}
+          description={project.description}
+          quantumResistant={project.quantumResistant}
+        />
       </TooltipContent>
     </Tooltip>
   )

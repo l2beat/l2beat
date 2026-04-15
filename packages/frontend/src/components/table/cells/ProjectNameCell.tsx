@@ -3,7 +3,6 @@ import type {
   ProjectScalingCapability,
   ProjectScalingPurpose,
 } from '@l2beat/config'
-import { cva } from 'class-variance-authority'
 import type React from 'react'
 import {
   Tooltip,
@@ -14,7 +13,11 @@ import {
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { CustomLink } from '~/components/link/CustomLink'
 import { Markdown } from '~/components/markdown/Markdown'
-import { ProjectBadge } from '~/components/projects/ProjectBadge'
+import {
+  ProjectTooltipContent,
+  type ProjectTooltipSectionData,
+  QUANTUM_RESISTANCE_TOOLTIP,
+} from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
 import { Layer3Icon } from '~/icons/Layer3'
 import { SuperchainIcon } from '~/icons/providers/SuperchainIcon'
@@ -26,16 +29,6 @@ import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjec
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
-const tooltipSectionVariants = cva('rounded-lg px-3 py-2', {
-  variants: {
-    variant: {
-      negative: 'bg-negative/20 text-black dark:text-white',
-      warning: 'bg-warning/20 text-black dark:text-white',
-      muted: 'bg-surface-secondary text-black dark:text-white',
-    },
-  },
-})
-
 export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   isLayer3?: boolean
   purposes?: ProjectScalingPurpose[]
@@ -43,9 +36,6 @@ export type ProjectCellProject = Omit<CommonProjectEntry, 'href' | 'id'> & {
   ecosystemInfo?: ProjectEcosystemInfo
   quantumResistant?: boolean
 }
-
-const QUANTUM_RESISTANCE_TOOLTIP =
-  "The prover is plausibly quantum resistant. There is no publicly known quantum algorithm that efficiently breaks prover's cryptography."
 
 interface ProjectCellProps {
   project: ProjectCellProject
@@ -317,6 +307,7 @@ function DesktopInfoTooltip({
   const warningSections = getTooltipWarningSections(project)
   const hasTooltipContent =
     !!project.description ||
+    !!project.quantumResistant ||
     (project.badges?.length ?? 0) > 0 ||
     warningSections.length > 0
 
@@ -331,79 +322,21 @@ function DesktopInfoTooltip({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">
-          <span className="text-heading-18">What is {projectName}?</span>
-          {warningSections.map((section) => (
-            <TooltipSection
-              key={section.id}
-              href={section.href}
-              variant={section.variant}
-              icon={section.icon}
-            >
-              {section.text}
-            </TooltipSection>
-          ))}
-          {project.description && <p>{project.description}</p>}
-          {project.badges && project.badges.length > 0 && (
-            <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
-              {project.badges.map((badge) => (
-                <ProjectBadge
-                  key={badge.id}
-                  badge={badge}
-                  className="h-16!"
-                  disableTooltip
-                />
-              ))}
-            </div>
-          )}
+          <ProjectTooltipContent
+            projectName={projectName}
+            description={project.description}
+            quantumResistant={project.quantumResistant}
+            sections={warningSections}
+            badges={project.badges}
+          />
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
   )
 }
 
-interface TooltipSectionProps {
-  href?: string
-  variant: 'negative' | 'warning' | 'muted'
-  icon: React.ReactNode
-  children: string
-}
-
-function TooltipSection({
-  href,
-  variant,
-  icon,
-  children,
-}: TooltipSectionProps) {
-  return (
-    <div className={tooltipSectionVariants({ variant })}>
-      <div className="flex items-start gap-2">
-        <div className="shrink-0">{icon}</div>
-        <div className="min-w-0">
-          <Markdown inline ignoreGlossary>
-            {children}
-          </Markdown>
-          {href && (
-            <CustomLink
-              href={href}
-              className="mt-1 inline-block text-label-value-13"
-            >
-              View details
-            </CustomLink>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function getTooltipWarningSections(project: ProjectCellProject) {
-  const sections: Array<{
-    id: string
-    text: string
-    href?: string
-    variant: 'negative' | 'warning' | 'muted'
-    icon: React.ReactNode
-  }> = []
+  const sections: ProjectTooltipSectionData[] = []
 
   if (project.ecosystemInfo?.isPartOfSuperchain) {
     sections.push({
@@ -411,15 +344,6 @@ function getTooltipWarningSections(project: ProjectCellProject) {
       text: 'The project is officially part of the Superchain - it contributes revenue to the Optimism Collective and uses the SuperchainConfig to manage chain configuration values.',
       variant: 'muted',
       icon: <SuperchainIcon />,
-    })
-  }
-
-  if (project.quantumResistant) {
-    sections.push({
-      id: 'quantum-resistant',
-      text: QUANTUM_RESISTANCE_TOOLTIP,
-      variant: 'muted',
-      icon: <QuantumResistanceIcon className="size-4" />,
     })
   }
 

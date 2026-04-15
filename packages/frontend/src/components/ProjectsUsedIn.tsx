@@ -5,6 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectTooltipContent } from '~/components/projects/ProjectTooltipContent'
 import { useRouter } from '~/hooks/useRouter'
 import { cn } from '~/utils/cn'
 import {
@@ -20,6 +21,8 @@ import {
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
   url: string
+  description?: string
+  quantumResistant?: boolean
 }
 interface Props {
   usedIn: UsedInProjectWithIcon[]
@@ -89,11 +92,12 @@ export function ProjectsUsedIn({
                   </a>
                 </TooltipTrigger>
               )}
-              <TooltipContent>
-                <p className="font-bold">{project.name}</p>
-                <p className="text-secondary text-xs">
-                  Click to view project page
-                </p>
+              <TooltipContent className="flex max-w-xs flex-col gap-2">
+                <ProjectTooltipContent
+                  projectName={project.name}
+                  description={project.description}
+                  quantumResistant={project.quantumResistant}
+                />
               </TooltipContent>
             </Tooltip>
           )

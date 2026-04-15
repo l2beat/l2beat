@@ -44,6 +44,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
         select: ['zkCatalogInfo', 'display', 'statuses'],
       }),
       ps.getProjects({
+        select: ['display'],
         optional: ['daBridge', 'isScaling', 'isDaLayer'],
       }),
       get7dTvsBreakdown({ type: 'all' }),
@@ -59,7 +60,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
   tvs: SevenDayTvsBreakdown,
   contractUtils: ContractUtils,
 ): ZkCatalogEntry {
@@ -81,6 +82,7 @@ function getZkCatalogEntry(
     backgroundColor: undefined,
     statuses: project.statuses,
     name: project.name,
+    description: project.display.description,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     creator: project.zkCatalogInfo.creator,
     quantumResistant: project.zkCatalogInfo.quantumResistant,

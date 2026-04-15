@@ -7,7 +7,9 @@ export type ProjectByRaas = Record<
   { projects: UsedInProjectWithIcon[]; icon: string }
 >
 
-export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
+export function getProjectsByRaas(
+  ecosystemProjects: Project<'scalingInfo' | 'display'>[],
+) {
   const unsorted = ecosystemProjects.reduce((acc, curr) => {
     const raas = curr.scalingInfo.raas
     if (!raas) return acc
@@ -23,6 +25,7 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
       icon: manifest.getUrl(`/icons/${curr.slug}.png`),
       name: curr.name,
       url: `/scaling/projects/${curr.slug}`,
+      description: curr.display.description,
     })
     return acc
   }, {} as ProjectByRaas)
