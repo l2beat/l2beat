@@ -57,7 +57,7 @@ export function FlowsGraphSkeleton({
             cx={nodeLayout.x}
             cy={nodeLayout.y}
             r={nodeLayout.radius}
-            className="fill-secondary/20"
+            className="fill-zinc-100 dark:fill-zinc-900"
           />
         )
       })}
