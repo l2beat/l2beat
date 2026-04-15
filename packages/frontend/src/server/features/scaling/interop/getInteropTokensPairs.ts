@@ -120,7 +120,7 @@ export async function getInteropTokensPairs({
 
     const currentProtocol = current.protocols.get(pair.id)
     if (currentProtocol) {
-      current.protocols.set(pair.id, currentProtocol + pair.volume)
+      current.protocols.set(pair.id, (currentProtocol ?? 0) + pair.volume)
     } else {
       current.protocols.set(pair.id, pair.volume)
     }
