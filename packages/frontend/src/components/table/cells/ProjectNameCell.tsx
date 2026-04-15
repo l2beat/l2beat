@@ -265,7 +265,7 @@ export function ProjectNameCell({
 
   return (
     <div className={className}>
-      <DesktopInfoTooltip project={project}>
+      <div className="max-md:hidden">
         <div className="flex items-center gap-1.5">
           <PrimaryValueCell className="font-bold leading-none!">
             {projectName}
@@ -276,7 +276,7 @@ export function ProjectNameCell({
           />
         </div>
         <CellBottomContent project={project} />
-      </DesktopInfoTooltip>
+      </div>
       <div className="md:hidden">
         <div className="flex items-center gap-1.5">
           <PrimaryValueCell className="font-bold leading-none!">
@@ -293,12 +293,12 @@ export function ProjectNameCell({
   )
 }
 
-function DesktopInfoTooltip({
+export function ProjectNameInfoTooltip({
   project,
   children,
 }: {
   project: ProjectCellProject
-  children: React.ReactNode
+  children: React.ReactElement
 }) {
   const projectName = project.shortName ?? project.name
   const warningSections = getTooltipWarningSections(project)
@@ -308,14 +308,12 @@ function DesktopInfoTooltip({
     warningSections.length > 0
 
   if (!hasTooltipContent) {
-    return <div className="max-md:hidden">{children}</div>
+    return children
   }
 
   return (
     <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger asChild>
-        <div className="max-md:hidden">{children}</div>
-      </TooltipTrigger>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipPortal>
         <TooltipContent sideOffset={16} className="flex flex-col gap-2">
           <span className="text-heading-18">What is {projectName}?</span>
