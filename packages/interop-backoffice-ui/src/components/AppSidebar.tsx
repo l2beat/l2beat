@@ -98,7 +98,6 @@ const items = [
         title: 'Anomalies',
         url: '/insights/anomalies',
         icon: AlertTriangleIcon,
-        isUpcoming: true,
       },
       {
         title: 'Suspicious transfers',
