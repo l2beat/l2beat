@@ -1,7 +1,10 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import { TableLink } from '~/components/table/TableLink'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
-import { ProjectNameCell, ProjectNameInfoTooltip } from '../cells/ProjectNameCell'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '../cells/ProjectNameCell'
 import type { CommonProjectColumnsOptions } from './CommonProjectColumns'
 import { getCommonProjectColumns } from './CommonProjectColumns'
 
