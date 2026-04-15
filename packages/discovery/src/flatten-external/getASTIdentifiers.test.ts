@@ -45,7 +45,6 @@ describe(getASTIdentifiers.name, () => {
       [
         'DefinedLibrary1',
         'Buffer',
-        'bytes',
         'data',
         'buf',
         'UsedLibrary1',

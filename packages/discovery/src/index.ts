@@ -123,8 +123,8 @@ export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export { findLeadingCommentStart } from './flatten/commentUtilities'
 export { flattenStartingFrom } from './flatten/flatten'
+export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export { format } from './flatten/format'
-export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export {
   buildSimilarityHashmap,

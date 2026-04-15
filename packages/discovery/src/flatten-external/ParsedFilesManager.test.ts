@@ -23,26 +23,26 @@ describe(ParsedFilesManager.name, () => {
       expect(manager.findDeclaration('Library1').declaration).toHaveSubset({
         name: 'Library1',
         type: 'library',
-        dynamicReferences: [],
-        inheritsFrom: [],
+        signatureReferences: [],
+        implementationReferences: [],
       })
       expect(manager.findDeclaration('Interface1').declaration).toHaveSubset({
         name: 'Interface1',
         type: 'interface',
-        dynamicReferences: [],
-        inheritsFrom: [],
+        signatureReferences: [],
+        implementationReferences: [],
       })
       expect(manager.findDeclaration('Abstract1').declaration).toHaveSubset({
         name: 'Abstract1',
         type: 'abstract',
-        dynamicReferences: [],
-        inheritsFrom: [],
+        signatureReferences: [],
+        implementationReferences: [],
       })
       expect(manager.findDeclaration('Contract1').declaration).toHaveSubset({
         name: 'Contract1',
         type: 'contract',
-        dynamicReferences: [],
-        inheritsFrom: [],
+        signatureReferences: [],
+        implementationReferences: [],
       })
     })
 
@@ -76,8 +76,8 @@ describe(ParsedFilesManager.name, () => {
         declaration: expect.subset({
           name: 'Contract1',
           type: 'contract',
-          dynamicReferences: [],
-          inheritsFrom: [],
+          signatureReferences: [],
+          implementationReferences: [],
         }),
         file: expect.subset({
           path: 'path1',
@@ -256,7 +256,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.dynamicReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['L1', 'L2'].sort(),
       )
     })
@@ -291,7 +291,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.dynamicReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })
@@ -325,7 +325,7 @@ describe(ParsedFilesManager.name, () => {
       })
       const root = manager.findDeclaration('User')
 
-      expect(root.declaration.dynamicReferences.sort()).toEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['CustomError', 'EventHappened', 'GLOBAL_VALUE'].sort(),
       )
       expect(manager.findDeclaration('GLOBAL_VALUE').declaration).toHaveSubset({
