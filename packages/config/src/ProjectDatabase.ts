@@ -63,6 +63,8 @@ const schema = {
   ecosystemInfo: 'TEXT',
   ecosystemConfig: 'TEXT',
 
+  privacyInfo: 'TEXT',
+
   permissions: 'TEXT',
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',

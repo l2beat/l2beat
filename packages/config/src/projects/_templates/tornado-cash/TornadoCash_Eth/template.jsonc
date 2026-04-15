@@ -5,6 +5,6 @@
   "ignoreInWatchMode": ["getLastRoot", "nextIndex"],
   "fields": {
     "operator": { "severity": "HIGH" },
-    "nextIndex": { "description": "Total number of deposits into the pool" },
+    "nextIndex": { "description": "Total number of deposits into the pool" }
   }
 }

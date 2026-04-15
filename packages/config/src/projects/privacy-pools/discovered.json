@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
   "timestamp": 1775744016,
-  "configHash": "0xf37fcceaff3ca1d3489db3cf95ae9102af92388edcbdbb35261f325395c5db22",
+  "configHash": "0xa8ba95ef6b79e105fe136a8e53f49a84842d7fe1ebb231e02437e7ea4a0a2fad",
   "entries": [
     {
       "name": "WithdrawalVerifier",
@@ -228,33 +228,6 @@
           "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159",
           "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187"
         ],
-        "associationSets": [
-          [
-            "6190063327416914933526649807596711562942473403260874688056563820140429817158",
-            "bafkreidpc2faaadoyp6bejzdjxnsaxqpbzbm2kwrg3cim4v6k6ilijngfq",
-            1743431771
-          ],
-          [
-            "3870142846635472744697142941044828814142065550921821896992086278427583110973",
-            "bafkreics3qwm5avrvbybbikg7m52dm4bxvemggof2u25bnqgclw34kyts4",
-            1743440567
-          ],
-          [
-            "11668755652791000937250180279985747512718339283222491121659424366360504393370",
-            "bafkreidjub7cw2clbh5s7whhaa2rbr7evgvsb2yackenm5y7mhzl3nwg4e",
-            1743535763
-          ],
-          [
-            "17531302184812247891614406270946394349354467019444146735467288176064113542222",
-            "bafkreiaoeyjh6uo4vcvasxykoykflcbyf2lcvhac5u2bl2epa5sm4n5roq",
-            1743613931
-          ],
-          [
-            "3153825146059881549629545176502988487846681022255191580581651058995918643194",
-            "bafkreif76kieyf2frt7bkgmxcsd6pl26wkjvrnnwp5qg4gbrfmgicbffru",
-            1743767327
-          ]
-        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "OwnerRole": ["eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159"],
         "pools": {
@@ -361,7 +334,6 @@
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "associationSets": "Processing error occurred." },
       "fieldMeta": {
         "pools": { "description": "All currently registered privacy pools" },
         "tokens": {

@@ -149,7 +149,6 @@
         "nextIndex": 53012,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
-        "totalDeposits": 53013,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
@@ -444,7 +443,6 @@
         "nextIndex": 81817,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
-        "totalDeposits": 81817,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
@@ -950,7 +948,6 @@
         "nextIndex": 70257,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
-        "totalDeposits": 70257,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
@@ -986,7 +983,6 @@
         "nextIndex": 45388,
         "operator": "eth:0x0000000000000000000000000000000000000000",
         "ROOT_HISTORY_SIZE": 100,
-        "totalDeposits": 45388,
         "verifier": "eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A",
         "ZERO_VALUE": "21663839004416932945382355908790599225266501822907911457504978515578255421292"
       },
@@ -2361,7 +2357,7 @@
     "tornado-cash/GovernanceProposalStateUpgrade": "0x17d6bbcc75e8a601721e292fb86a1273a449f246fdd7b0402ae60749d1d81d4e",
     "tornado-cash/Proposal": "0xe37afe51ed69dad9249ac8b842769488ba155e920bc5f3c08f3bbfec9e25945a",
     "tornado-cash/TornadoCash_erc20": "0x627381c1e1f6b0e6db2536aa62e6f26d8169aa4f49c8f187a70fe378dfa4590a",
-    "tornado-cash/TornadoCash_Eth": "0x1aea2570a3459560b78c62b65be7c54fcd12a2f039f60f8112b087e8822a2c0d",
+    "tornado-cash/TornadoCash_Eth": "0xf697f5c7358a67c3b79808930034c44463ffd1462d4dd4799b6f633f0596326c",
     "tornado-cash/TornadoTrees": "0x626f32eb736e95a01504acb75dc14dd1a1a0f37cab18a278931f05121fed9448"
   },
   "usedBlockNumbers": { "ethereum": 24842715 },

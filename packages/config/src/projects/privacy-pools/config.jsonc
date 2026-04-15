@@ -10,7 +10,8 @@
         "rootByIndex",
         "usedPrecommitments",
         "scopeToPool",
-        "proxiableUUID"
+        "proxiableUUID",
+        "associationSets"
       ]
     }
   }
