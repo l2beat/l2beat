@@ -32,7 +32,7 @@ export function FlowsGeneralStats() {
   const avgValuePerSecond = (data?.stats.totalVolume ?? 0) / UnixTime.DAY
 
   return (
-    <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
+    <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary">
       <div className="font-bold text-heading-20">General stats</div>
       <div className="mt-1 font-medium text-label-value-14 text-secondary">
         For past 24h between the selected chains and protocols

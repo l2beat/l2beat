@@ -27,7 +27,7 @@ export function FlowsSelectedPathPanel() {
   )
 
   return (
-    <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-4">
+    <div className="flex h-full flex-col rounded-lg bg-surface-secondary p-6 dark:bg-header-secondary">
       <div className="font-bold text-heading-20">Selected path</div>
       <div className="mt-1 flex items-center gap-1 font-medium text-label-value-14 text-secondary">
         <span>{chainA.name}</span>
