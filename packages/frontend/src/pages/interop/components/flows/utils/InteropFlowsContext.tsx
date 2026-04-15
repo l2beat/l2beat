@@ -10,11 +10,15 @@ import {
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 
+export const MAX_SELECTED_CHAINS = 15
+export const MIN_SELECTED_CHAINS = 2
+
 interface InteropFlowsContextType {
   selectedChains: string[]
   selectedProtocols: string[]
   allChains: InteropChainWithIcon[]
   toggleChainSelection: (chainId: string) => void
+  deselectAllChains: () => void
   toggleProtocolSelection: (protocolId: string) => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
@@ -42,7 +46,9 @@ export function InteropFlowsProvider({
     () => protocols.map((protocol) => protocol.id),
     [protocols],
   )
-  const [selectedChains, setSelectedChains] = useState<string[]>(allChainIds)
+  const [selectedChains, setSelectedChains] = useState<string[]>(
+    allChainIds.slice(0, MAX_SELECTED_CHAINS),
+  )
   const [selectedProtocols, setSelectedProtocols] =
     useState<string[]>(allProtocols)
   const [highlightedChains, setHighlightedChains] = useState<string[]>([])
@@ -53,8 +59,16 @@ export function InteropFlowsProvider({
         setHighlightedChains((h) => h.filter((id) => id !== chainId))
         return prev.filter((id) => id !== chainId)
       }
+      if (prev.length >= MAX_SELECTED_CHAINS) {
+        return prev
+      }
       return [...prev, chainId]
     })
+  }, [])
+
+  const deselectAllChains = useCallback(() => {
+    setSelectedChains([])
+    setHighlightedChains([])
   }, [])
 
   const toggleProtocolSelection = useCallback((protocolId: string) => {
@@ -86,6 +100,7 @@ export function InteropFlowsProvider({
         selectedChains,
         selectedProtocols,
         toggleChainSelection,
+        deselectAllChains,
         toggleProtocolSelection,
         highlightedChains,
         toggleHighlightedChain,

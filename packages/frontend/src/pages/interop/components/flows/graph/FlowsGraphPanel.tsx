@@ -1,9 +1,14 @@
 import { useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
+import { Logo } from '~/components/Logo'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
+import { CursorClickIcon } from '~/icons/CursorClick'
 import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
+import {
+  MIN_SELECTED_CHAINS,
+  useInteropFlows,
+} from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 
@@ -13,10 +18,14 @@ interface FlowsGraphPanelProps {
 
 export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   const { selectedChains, selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = api.interop.flows.useQuery({
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-  })
+  const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
+  const { data, isLoading } = api.interop.flows.useQuery(
+    {
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+    },
+    { enabled: hasEnoughChains },
+  )
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
   const size =
@@ -31,6 +40,8 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
     >
       {!size ? (
         <Skeleton className="h-full w-full rounded-lg" />
+      ) : !hasEnoughChains ? (
+        <NotEnoughChainsOverlay />
       ) : isLoading || !data ? (
         <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
       ) : (
@@ -41,6 +52,28 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
           isSmallScreen={isSmallScreen}
         />
       )}
+    </div>
+  )
+}
+
+function NotEnoughChainsOverlay() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-5">
+      <Logo
+        animated={false}
+        width={88 * 1.5}
+        height={36 * 1.5}
+        opacity={0.2}
+        className="pointer-events-none"
+      />
+      <div className="pointer-events-none flex items-center justify-center pb-6">
+        <div className="flex items-center gap-1.5 rounded-lg border border-divider bg-surface-primary px-3 py-2">
+          <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
+          <p className="font-medium text-brand text-label-value-14 leading-none">
+            Select at least {MIN_SELECTED_CHAINS} chains to view the graph
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
