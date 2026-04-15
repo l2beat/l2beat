@@ -1,4 +1,4 @@
-import type {
+ import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
   InteropTransferTypeStatsMap,
@@ -39,6 +39,11 @@ export type ProtocolEntry = {
 export type ProtocolDisplayable = {
   name: string
   iconUrl: string
+}
+
+export type ProtocolStats = {
+  volume: number
+  transferCount: number
 }
 
 export type ByBridgeTypeData = {

@@ -1,10 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {
-  getTopProtocolDisplay,
-  type ProtocolStats,
-} from './getTopProtocolDisplay'
+import type { ProtocolStats } from '../types'
+import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 describe(getTopProtocolDisplay.name, () => {
   it('selects the protocol with the highest volume', () => {

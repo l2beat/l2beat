@@ -20,7 +20,7 @@ export async function getInteropTokens({
   const [interopProject, interopProjects] = await Promise.all([
     id
       ? ps.getProject({ id, select: ['interopConfig'] })
-      : Promise.resolve(undefined),
+      : undefined,
     ps.getProjects({ select: ['interopConfig'] }),
   ])
   if (id && !interopProject) {

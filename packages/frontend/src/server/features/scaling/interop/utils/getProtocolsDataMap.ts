@@ -6,7 +6,7 @@ import type {
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TokenInteropData } from './buildTokensDataMap'
-import type { ProtocolStats } from './getTopProtocolDisplay'
+import type { ProtocolStats } from '../types'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {

@@ -4,12 +4,10 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   AggregatedInteropTransferWithTokens,
   ProtocolDisplayable,
+  ProtocolStats,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
-import {
-  getTopProtocolDisplay,
-  type ProtocolStats,
-} from './getTopProtocolDisplay'
+import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 export interface InteropTopTokenData {
   symbol: string

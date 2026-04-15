@@ -4,7 +4,7 @@ import type {
   TokenFlowData,
 } from '../types'
 import { accumulateTokens, INITIAL_COMMON_INTEROP_DATA } from './accumulate'
-import type { ProtocolStats } from './getTopProtocolDisplay'
+import type { ProtocolStats } from '../types'
 
 export type TokenInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>

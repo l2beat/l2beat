@@ -6,6 +6,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   CommonInteropData,
   InteropTopItemsParams,
+  ProtocolStats,
   TokenFlowData,
   TokensPairData,
 } from './types'
@@ -21,10 +22,7 @@ import {
 } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
-import {
-  getTopProtocolDisplay,
-  type ProtocolStats,
-} from './utils/getTopProtocolDisplay'
+import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
@@ -42,7 +40,7 @@ export async function getInteropTokensPairs({
   const [interopProject, interopProjects] = await Promise.all([
     id
       ? ps.getProject({ id, select: ['interopConfig'] })
-      : Promise.resolve(undefined),
+      : undefined,
     ps.getProjects({ select: ['interopConfig'] }),
   ])
   if (id && !interopProject) {

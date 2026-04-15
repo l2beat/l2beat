@@ -1,12 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { manifest } from '~/utils/Manifest'
-import type { ProtocolDisplayable } from '../types'
-import { pickTopProtocolIdByVolume } from './pickTopProtocolIdByVolume'
-
-export type ProtocolStats = {
-  volume: number
-  transferCount: number
-}
+import type { ProtocolDisplayable, ProtocolStats } from '../types'
 
 export function getTopProtocolDisplay(
   protocols: Map<string, ProtocolStats>,
@@ -25,4 +19,10 @@ export function getTopProtocolDisplay(
     name: protocolProject.interopConfig.name ?? protocolProject.name,
     iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
   }
+}
+
+export function pickTopProtocolIdByVolume(
+  volumeByProtocolId: Iterable<readonly [string, number]>,
+): string | undefined {
+  return Array.from(volumeByProtocolId).toSorted((a, b) => b[1] - a[1])[0]?.[0]
 }
