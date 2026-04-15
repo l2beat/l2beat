@@ -26,7 +26,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   return (
     <div
       id="flows-graph"
-      className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center max-lg:order-2 max-lg:py-6"
+      className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6 max-lg:order-2"
       ref={containerRef}
     >
       {!steppedWidth || !steppedHeight ? (
