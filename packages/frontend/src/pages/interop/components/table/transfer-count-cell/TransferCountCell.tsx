@@ -17,12 +17,13 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import { api } from '~/trpc/React'
+import { api, type RouterInputs } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'
 import { columns, type TransferRow } from './columns'
 
 const SCROLL_LOAD_THRESHOLD_PX = 120
+type TransferDetailsQueryInput = RouterInputs['interop']['transfers']
 
 export function TransferCountCell({
   transferCount,
@@ -44,21 +45,36 @@ export function TransferCountCell({
   }
 }) {
   const [isOpen, setIsOpen] = useState(false)
+  const utils = api.useUtils()
+  const { selectionForApi } = useInteropSelectedChains()
+
+  const queryInput = {
+    ...selectionForApi,
+    id: protocol.id,
+    type,
+    expectedTransferCount,
+    expectedVolume,
+    snapshotTimestamp: snapshotTimestamp ?? 0,
+  }
 
   return (
     <>
       <button
         className="cursor-pointer font-medium text-label-value-15 text-primary hover:underline"
+        onMouseEnter={() => {
+          if (snapshotTimestamp === undefined) {
+            return
+          }
+          void utils.interop.transfers.prefetchInfinite(queryInput)
+        }}
         onClick={() => setIsOpen(true)}
       >
         {transferCount}
       </button>
       <TransferDetailsDialog
         protocol={protocol}
-        type={type}
-        expectedTransferCount={expectedTransferCount}
-        expectedVolume={expectedVolume}
         snapshotTimestamp={snapshotTimestamp}
+        queryInput={queryInput}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
@@ -68,10 +84,8 @@ export function TransferCountCell({
 
 function TransferDetailsDialog({
   protocol,
-  type,
-  expectedTransferCount,
-  expectedVolume,
   snapshotTimestamp,
+  queryInput,
   isOpen,
   setIsOpen,
 }: {
@@ -80,32 +94,19 @@ function TransferDetailsDialog({
     name: string
     iconUrl: string
   }
-  type: KnownInteropBridgeType | undefined
-  expectedTransferCount: number
-  expectedVolume: number
   snapshotTimestamp: number | undefined
+  queryInput: TransferDetailsQueryInput
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }) {
   const breakpoint = useBreakpoint()
-  const { selectionForApi } = useInteropSelectedChains()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.transfers.useInfiniteQuery(
-      {
-        ...selectionForApi,
-        id: protocol.id,
-        type,
-        expectedTransferCount,
-        expectedVolume,
-        snapshotTimestamp: snapshotTimestamp ?? 0,
-      },
-      {
-        enabled: isOpen && snapshotTimestamp !== undefined,
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
-      },
-    )
+    api.interop.transfers.useInfiniteQuery(queryInput, {
+      enabled: isOpen && snapshotTimestamp !== undefined,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    })
 
   const transferRows = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
@@ -197,7 +198,7 @@ function TransferDetailsDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[560px] w-max max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3">
+      <DialogContent className="max-h-[560px] w-full max-w-[calc(100vw-1rem)] gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-3 md:w-[920px]">
         <DialogClose />
         <DialogHeader className="fade-out-to-bottom-3 sticky top-0 z-10 bg-surface-primary px-6 pt-6 pb-4">
           <DialogTitle>
