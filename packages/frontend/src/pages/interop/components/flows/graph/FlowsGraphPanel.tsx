@@ -5,6 +5,7 @@ import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
+import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 
 interface FlowsGraphPanelProps {
   interopChains: InteropChainWithIcon[]
@@ -28,8 +29,14 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
       className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center max-lg:order-2 max-lg:py-6"
       ref={containerRef}
     >
-      {isLoading || !data || !steppedWidth || !steppedHeight ? (
+      {!steppedWidth || !steppedHeight ? (
         <Skeleton className="h-full w-full rounded-lg" />
+      ) : isLoading || !data ? (
+        <FlowsGraphSkeleton
+          width={steppedWidth}
+          height={steppedHeight}
+          isSmallScreen={isSmallScreen}
+        />
       ) : (
         <FlowsGraph
           interopChains={interopChains}
