@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1775057323,
+  "timestamp": 1775980180,
   "configHash": "0x5f6a42276cf8f372c3a6eef5a1675fdb096f62c32011d6406f791d8d919ed61b",
   "entries": [
     {
@@ -239,7 +239,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621179",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621197",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1477,22 +1477,14 @@
       "name": "AnchorStateRegistry",
       "address": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
       "type": "Contract",
-      "template": "opstack/AnchorStateRegistry_post13",
+      "template": "opstack/AnchorStateRegistry_post13_opsuccinct",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 42.",
-      "ignoreInWatchMode": [
-        "anchorGame",
-        "getAnchorRoot",
-        "absolutePrestateFromGame",
-        "vmFromGame",
-        "oracleFromVm",
-        "challengePeriodFromOracle",
-        "wethFromGame"
-      ],
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).",
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1774940723,
       "sinceBlock": 24775980,
       "values": {
@@ -1506,28 +1498,23 @@
           ]
         ],
         "$upgradeCount": 1,
-        "absolutePrestateFromGame": "eth:0x0000000000000000000000000000000000000000",
-        "anchorGame": "eth:0x0000000000000000000000000000000000000000",
-        "challengePeriodFromOracle": "eth:0x0000000000000000000000000000000000000000",
+        "anchorGame": "eth:0x1D9506316cfAA20a07FA00f5fD02720D84ae2EBA",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xe95b3d7baea0c1e1d2d193f00e0100422ef78a50b18763fd79f5d6d5139396ab",
-          62431629
+          "0x28552c3f2df1a05696e203ce9616ad4ba605e445461f97d4750eaedd6387f31f",
+          63472096
         ],
         "initVersion": 1,
-        "oracleFromVm": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "proxyAdmin": "eth:0x783A434532Ee94667979213af1711505E8bFE374",
         "proxyAdminOwner": "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "RespectedGameString": 42,
+        "RespectedGameString": "OPSuccinctFaultDisputeGame",
         "respectedGameType": 42,
         "retirementTimestamp": 1774940723,
         "superchainConfig": "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66",
         "systemConfig": "eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861",
-        "version": "3.5.0",
-        "vmFromGame": "eth:0x0000000000000000000000000000000000000000",
-        "wethFromGame": "eth:0x0000000000000000000000000000000000000000"
+        "version": "3.5.0"
       },
       "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
@@ -1540,6 +1527,7 @@
           "arg": {
             "0": "FaultDisputeGame",
             "1": "PermissionedDisputeGame",
+            "42": "OPSuccinctFaultDisputeGame",
             "1337": "KailuaGame"
           }
         }
@@ -2102,7 +2090,7 @@
         ],
         "$upgradeCount": 6,
         "anchorStateRegistry": "eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d",
-        "balance": "999849270110488482991621832",
+        "balance": "999849267240488482991621832",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "ethLockbox": "eth:0x0000000000000000000000000000000000000000",
@@ -2112,7 +2100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 463628,
-          "prevBlockNum": 24780523
+          "prevBlockNum": 24859460
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -2447,7 +2435,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1775055539,
+        "getLastProposalTimestamp": 1775979407,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
         "proposers": [
@@ -2513,7 +2501,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
-        "gameCount": 31316,
+        "gameCount": 31974,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3903,7 +3891,7 @@
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "gnosisSafeModules/SaferSafes": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
+    "opstack/AnchorStateRegistry_post13_opsuccinct": "0x57251e1ef1f7fa58d5f83ab797eaed6cb14ee882b9a6eca56d6588ac9cac5d2a",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0x8e238948fd295fbbcd65a82d3723114f83cf0e8358b0b50126a80c68748d8920",
@@ -3924,6 +3912,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24785644 },
+  "usedBlockNumbers": { "ethereum": 24862284 },
   "permissionsConfigHash": "0x8cb566028558ef4de19c7d53b06bf27c539ce99587ada0b234ac80e90964dd0a"
 }

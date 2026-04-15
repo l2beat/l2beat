@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import { Badge, type BadgeProps } from '~/components/badge/Badge'
 import {
   Tooltip,
   TooltipContent,
@@ -10,30 +11,34 @@ import {
   TRANSFER_TYPE_DISPLAY,
 } from '../../utils/display'
 
-interface BridgeTypeBadgeProps {
+interface BridgeTypeBadgeProps extends Omit<BadgeProps, 'children'> {
   bridgeType: KnownInteropBridgeType
-  className?: string
 }
 
 export function BridgeTypeBadge({
   bridgeType,
   className,
+  padding,
+  size,
+  type,
 }: BridgeTypeBadgeProps) {
   const config = TRANSFER_TYPE_DISPLAY[bridgeType]
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          key={bridgeType}
+        <Badge
           className={cn(
             INTEROP_TYPE_TO_BG_COLOR[bridgeType],
-            'flex h-min w-max cursor-pointer items-center justify-center whitespace-nowrap rounded px-1.5 py-1 text-subtitle-10 text-white uppercase',
+            'cursor-pointer whitespace-nowrap text-white uppercase',
             className,
           )}
+          padding={padding}
+          size={size}
+          type={type}
         >
           {config.label}
-        </div>
+        </Badge>
       </TooltipTrigger>
       <TooltipContent>{config.description}</TooltipContent>
     </Tooltip>

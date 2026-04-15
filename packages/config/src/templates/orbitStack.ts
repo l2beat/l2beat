@@ -52,6 +52,7 @@ import type {
   ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
+  ProjectScalingContractsProgramHash,
   ProjectScalingDa,
   ProjectScalingProofSystem,
   ProjectScalingPurpose,
@@ -176,6 +177,7 @@ interface OrbitStackConfigCommon {
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   celestiaProofSystemInactive?: boolean
   nonTemplateZkVerifiers?: ChainSpecificAddress[]
+  nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -532,7 +534,9 @@ function orbitStackCommon(
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
-      programHashes: [PROGRAM_HASHES(wasmModuleRoot)],
+      programHashes: templateVars.nonTemplateProgramHashes ?? [
+        PROGRAM_HASHES(wasmModuleRoot),
+      ],
       zkVerifiers: templateVars.nonTemplateZkVerifiers,
     },
     chainConfig: templateVars.chainConfig && {

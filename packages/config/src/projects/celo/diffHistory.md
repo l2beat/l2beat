@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x82014727093a84a11e1570925ed58d2d755c1063
+
+# Diff at Sun, 12 Apr 2026 07:50:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1775057323
+- current timestamp: 1775980180
+
+## Description
+
+Celo's first OPSuccinct game resolved and became the AnchorStateRegistry anchor. The standard `post13` template calls Cannon-specific functions (`vm()`, `oracle()`, `weth()`, `absolutePrestate()`, `challengePeriod()`) on `anchorGame` — these revert on OPSuccinct games. New template variant `opstack/AnchorStateRegistry_post13_opsuccinct` omits those fields while keeping everything else.
+
+Cannon vs OPSuccinct game (for reference): [diff](https://disco.l2beat.com/diff/eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F/eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775057323 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x8fE58d2168b5412Cf1Bd212cE6137f8b7300222d) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      template:
+-        "opstack/AnchorStateRegistry_post13"
++        "opstack/AnchorStateRegistry_post13_opsuccinct"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the 42."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game)."
+      values.absolutePrestateFromGame:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.challengePeriodFromOracle:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.oracleFromVm:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.RespectedGameString:
+-        42
++        "OPSuccinctFaultDisputeGame"
+      values.vmFromGame:
+-        "eth:0x0000000000000000000000000000000000000000"
+      values.wethFromGame:
+-        "eth:0x0000000000000000000000000000000000000000"
+      usedTypes.0.arg.42:
++        "OPSuccinctFaultDisputeGame"
+    }
+```
+
 Generated with discovered.json: 0xd11be2c6ff76366ccec43a0489bf9f0f39f3e393
 
 # Diff at Wed, 01 Apr 2026 15:29:57 GMT:

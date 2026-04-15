@@ -395,6 +395,11 @@ function createSyncer(
     captureTx: mockFn().returns(undefined),
     saveProducedInteropEvents: mockFn().resolvesTo(undefined),
     clearChainSyncError: mockFn().resolvesTo(undefined),
+    blockProcessingStats: mockObject<
+      InteropEventSyncer['blockProcessingStats']
+    >({
+      record: mockFn().returns(undefined),
+    }),
     ...overrides,
   })
 }

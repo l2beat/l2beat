@@ -109,7 +109,7 @@ export function ContractsSection(props: ContractsSectionProps) {
         </>
       )}
       {props.programHashes && props.programHashes.length > 0 && (
-        <div className="mt-4 space-y-2 md:mt-6">
+        <div id="program-hashes" className="mt-4 space-y-2 md:mt-6">
           <div className="flex items-baseline gap-3">
             <h3 className="whitespace-pre text-heading-20">Program Hashes</h3>
             <div className="w-full border-divider border-b-2" />

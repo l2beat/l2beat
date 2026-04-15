@@ -42,7 +42,6 @@ const SERVER_CONFIG = {
   TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
-  REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
@@ -60,7 +59,7 @@ const SERVER_CONFIG = {
     .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
-  ES_BUFFER_LIMIT: z
+  ES_BUFFER_ALERT_BYTES: z
     .unknown()
     .transform((v) => Number(v))
     .optional(),
@@ -125,14 +124,13 @@ function getRawEnv(): Record<
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
-    ES_BUFFER_LIMIT: process.env.ES_BUFFER_LIMIT,
+    ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,

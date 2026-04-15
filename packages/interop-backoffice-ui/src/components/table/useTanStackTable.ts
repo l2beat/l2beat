@@ -48,6 +48,7 @@ export function useTanStackTable<TData extends RowData>({
   const table = useReactTable({
     data,
     columns,
+    sortDescFirst: true,
     state: {
       sorting,
       globalFilter,

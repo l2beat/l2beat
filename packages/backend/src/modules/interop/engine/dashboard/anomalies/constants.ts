@@ -1,2 +1,4 @@
-export const VALUE_DIFF_THRESHOLD_PERCENT = 15
-export const MINIMUM_SIDE_VALUE_USD_THRESHOLD = 50
+export {
+  MINIMUM_SIDE_VALUE_USD_THRESHOLD,
+  VALUE_DIFF_THRESHOLD_PERCENT,
+} from '../../InteropTransferAnalyzer'

@@ -132,6 +132,7 @@ export class AgglayerPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: bridgeEventLog,
+        includeTxEvents: [transferLog],
         addresses: bridges,
       },
       {

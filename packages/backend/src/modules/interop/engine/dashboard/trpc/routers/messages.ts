@@ -3,7 +3,7 @@ import {
   getInteropMessageDetails,
   getInteropMessageStats,
 } from '../../impls/messages'
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 const InteropMessageDetailsRequest = v.object({
@@ -15,10 +15,10 @@ const InteropMessageDetailsRequest = v.object({
 
 export function createMessagesRouter() {
   return router({
-    stats: publicProcedure.query(({ ctx }) => {
+    stats: protectedProcedure.query(({ ctx }) => {
       return getInteropMessageStats(ctx.db)
     }),
-    details: publicProcedure
+    details: protectedProcedure
       .input(InteropMessageDetailsRequest)
       .query(({ ctx, input }) => {
         return getInteropMessageDetails(ctx.db, input.type, {

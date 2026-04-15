@@ -80,13 +80,21 @@ export async function get7dTvsBreakdown(
   )
 
   const [from, to] = params.customTarget
-    ? [params.customTarget - 7 * UnixTime.DAY, params.customTarget]
-    : await getFullySyncedTvsRange(optionToRange('7d'))
+    ? [params.customTarget - 3 * UnixTime.DAY, params.customTarget]
+    : await getFullySyncedTvsRange(optionToRange('3d'))
+
   assert(from !== null, 'from is null')
+
+  const sevenDaysAgoFrom = from - 7 * UnixTime.DAY
+  const sevenDaysAgoTo = to - 7 * UnixTime.DAY
+
   const [values, syncMetadataRecords] = await Promise.all([
-    db.tvsTokenValue.getSummedByProjectForRange(
+    db.tvsTokenValue.getSummedByProjectForRanges(
       tvsProjects.map((p) => p.projectId),
-      [from - 7 * UnixTime.DAY, to],
+      [
+        [from, to],
+        [sevenDaysAgoFrom, sevenDaysAgoTo],
+      ],
       {
         excludeAssociatedTokens: params.excludeAssociatedTokens ?? false,
         excludeRwaRestrictedTokens: params.excludeRwaRestrictedTokens ?? true,
@@ -141,8 +149,10 @@ export async function get7dTvsBreakdown(
         external: latestExternal,
       })
 
-    const sevenDaysAgoValues = sevenDaysAgoGrouped[projectId]
-    if (!sevenDaysAgoValues || sevenDaysAgoValues.length === 0) {
+    const sevenDaysAgoValue = sevenDaysAgoGrouped[projectId]?.find(
+      (v) => v.timestamp === lastValue.timestamp - 7 * UnixTime.DAY,
+    )
+    if (!sevenDaysAgoValue) {
       projects[projectId] = {
         breakdown: {
           total: latestValue,
@@ -188,9 +198,6 @@ export async function get7dTvsBreakdown(
       }
       continue
     }
-
-    const sevenDaysAgoValue = sevenDaysAgoValues.at(-1)
-    assert(sevenDaysAgoValue, 'sevenDaysAgoValue is undefined')
 
     const {
       value: oldestValue,

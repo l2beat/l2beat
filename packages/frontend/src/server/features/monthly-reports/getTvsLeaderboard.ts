@@ -1,9 +1,9 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
-import type { ChartRange } from '~/utils/range/range'
 
 export interface TvsLeaderboard {
   projects: Record<
@@ -23,19 +23,20 @@ type TvsLeaderboardProjectFilter = v.infer<typeof TvsLeaderboardProjectFilter>
 
 export async function getTvsLeaderboard(
   props: TvsLeaderboardProjectFilter,
-  range: ChartRange,
+  [from, to]: [UnixTime, UnixTime],
 ): Promise<TvsLeaderboard> {
   if (env.MOCK) {
     return getMockTvsBreakdownData(props.projectIds)
   }
   const db = getDb()
 
-  const values = await db.tvsTokenValue.getSummedByProjectForRange(
-    props.projectIds,
-    range,
+  const values = await db.tvsTokenValue.getSummedAtTimestampsByProjects(
+    from,
+    to,
     {
       excludeAssociatedTokens: true,
       excludeRwaRestrictedTokens: true,
+      cutOffTimestamp: from,
     },
   )
 
@@ -43,8 +44,8 @@ export async function getTvsLeaderboard(
 
   const projects: TvsLeaderboard['projects'] = {}
   for (const [projectId, values] of Object.entries(groupedByProject)) {
-    const oldestValue = values[0]
     const latestValue = values.at(-1)
+    const oldestValue = values[0]
 
     if (!latestValue || !oldestValue) {
       continue

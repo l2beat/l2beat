@@ -1,6 +1,6 @@
 {
   "name": "adi",
-  "timestamp": 1774022071,
+  "timestamp": 1775809516,
   "configHash": "0x2ca17ca2e46fa2a6d8c6a1f96a830688ef32554ea3200a672b3ac95f6318a201",
   "entries": [
     {
@@ -108,9 +108,29 @@
               "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
               "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
             ]
+          ],
+          [
+            "2026-04-08T18:36:47.000Z",
+            "0x4428eb3c0a1be76b850c3a1cd744087320aa49dfa2304311ed0579c10ec1e568",
+            [
+              "eth:0xf9DD56364E3878056654C756cEBA692e577f8466",
+              "eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07",
+              "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
+              "eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c"
+            ]
+          ],
+          [
+            "2026-04-09T13:05:35.000Z",
+            "0x08471063fd03e8dacd215a9c030f4c54a0f002c778a9a8283bc5161efae20e39",
+            [
+              "eth:0xf9DD56364E3878056654C756cEBA692e577f8466",
+              "eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07",
+              "eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708",
+              "eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"
+            ]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 7,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 1,
         "facetAddresses": [
@@ -228,7 +248,7 @@
           "eth:0xFB630a206E6D7485cB9DFa929859E1a977F0a211",
           4
         ],
-        "getFirstUnprocessedPriorityTx": 93,
+        "getFirstUnprocessedPriorityTx": 102,
         "getL2BootloaderBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2DefaultAccountBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "getL2EvmEmulatorBytecodeHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -237,7 +257,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x93af827ef86260e3e245ebd289551c9bbd421ffc7823aa883917e970729cdb9d",
+        "getPriorityTreeRoot": "0xa476ce022e400136772fee85ca01a8a148a7592989e7ae315e47d6af9f0847de",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -245,13 +265,13 @@
         "getRollupDAManager": "eth:0x57B05e2394B3A12708C552A891f8b0f93645EdEA",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 756,
-        "getTotalBatchesExecuted": 756,
-        "getTotalBatchesVerified": 756,
-        "getTotalBlocksCommitted": 756,
-        "getTotalBlocksExecuted": 756,
-        "getTotalBlocksVerified": 756,
-        "getTotalPriorityTxs": 93,
+        "getTotalBatchesCommitted": 1070,
+        "getTotalBatchesExecuted": 1070,
+        "getTotalBatchesVerified": 1070,
+        "getTotalBlocksCommitted": 1070,
+        "getTotalBlocksExecuted": 1070,
+        "getTotalBlocksVerified": 1070,
+        "getTotalPriorityTxs": 102,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE",
         "getVerifierParams": {
@@ -1025,12 +1045,12 @@
       "sinceBlock": 23874720,
       "values": {
         "$immutable": true,
-        "executedCount": 8,
+        "executedCount": 10,
         "minDelay": 0,
         "owner": "eth:0xB272B188855128c10a933Edb62CC64c22B1f3754",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 8,
+        "scheduledTransparentCount": 10,
         "securityCouncil": "eth:0x59Be28DE6eFb1f78802E96188d2b7907059Be59f"
       },
       "fieldMeta": {
@@ -1194,7 +1214,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 3,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "fieldMeta": {
@@ -2751,6 +2771,6 @@
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 24699739 },
+  "usedBlockNumbers": { "ethereum": 24848115 },
   "permissionsConfigHash": "0x29f4991d67d4df8419a239190feb5b6687748fad792b610da03b0f73935d4469"
 }

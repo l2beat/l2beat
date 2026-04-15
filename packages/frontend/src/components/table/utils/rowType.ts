@@ -1,9 +1,10 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectVerificationWarnings } from '~/server/features/utils/getCommonProjectEntry'
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 
 export type RowBackgroundColor = 'blue' | 'red' | 'yellow' | undefined
 export function getRowBackgroundColor(statuses: {
-  redWarning?: string
+  redWarning?: ProjectRedWarning
   verificationWarnings?: ProjectVerificationWarnings
   underReview?: UnderReviewStatus
   ongoingAnomaly?: boolean

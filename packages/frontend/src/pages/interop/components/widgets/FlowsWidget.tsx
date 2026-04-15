@@ -153,10 +153,10 @@ export function FlowItem({
         <ArrowRightIcon className="size-5 fill-brand" />
         <img src={to.iconUrl} alt={to.id} className="size-5" />
       </div>
-      <span className="mt-2 font-medium text-label-value-12 text-secondary md:text-label-value-14">
+      <span className="mt-2 hidden font-medium text-label-value-12 text-secondary md:block md:text-label-value-14">
         Volume
       </span>
-      <div className="mt-0.5 font-bold text-heading-20 md:text-heading-24">
+      <div className="mt-2 font-bold text-heading-20 md:mt-0.5 md:text-heading-24">
         {formatCurrency(volume, 'usd')}
       </div>
     </div>

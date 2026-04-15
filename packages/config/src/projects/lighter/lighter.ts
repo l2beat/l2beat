@@ -42,7 +42,7 @@ export const lighter: ScalingProject = {
   badges: [BADGES.VM.AppChain, BADGES.DA.EthereumBlobs],
   display: {
     warning:
-      'Jan 5 2026: at the moment of writing, the desert mode circuits source code is not publicly available and therefore it is not possible to fully verify the escape hatch logic.',
+      'Apr 9 2026: the desert mode circuit source code is not publicly available, and L2BEAT research found that full state reconstruction from L1 data alone is not currently feasible. A prover migration (gnark → plonky2) occurred at block 23,711,820 without publishing a state snapshot, leaving pre-migration accounts unreconstructable. Users cannot exit without operator cooperation.',
     name: 'Lighter',
     slug: 'lighter',
     description:
@@ -198,7 +198,7 @@ export const lighter: ScalingProject = {
     stage1: {
       principle: false,
       usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
+      usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,
       noRedTrustedSetups: true,
       programHashesReproducible: null,
@@ -213,11 +213,20 @@ export const lighter: ScalingProject = {
   }),
   technology: {
     dataAvailability: {
-      name: 'All data required for forced exits is published onchain',
+      name: 'Data published onchain, but state reconstruction is blocked',
       description:
-        'All the data needed to recover the latest accounts state (represented by the Account Tree) and construct the zk proof necessary for forced exits is published onchain in the form of blobs. Only data that leads to state changes is posted.',
+        'Account delta data is published onchain in the form of blobs. However, a prover migration (gnark/MIMC → plonky2/Poseidon2) occurred at block 23,711,820 without publishing a state snapshot. The old gnark circuit was never open-sourced, so ~60k pre-migration blobs cannot be decoded. Without this snapshot, users cannot reconstruct the latest accounts state required for forced exits.',
       risks: [],
-      references: [],
+      references: [
+        {
+          title: 'Lighter Prover v0.0.1 (first public release, Dec 2025)',
+          url: 'https://github.com/elliottech/lighter-prover',
+        },
+        {
+          title: 'StateRootUpdate event — gnark to plonky2 migration',
+          url: 'https://etherscan.io/tx/0x6a50b2b00444914e5c53df2fb48404078a098f93fc3911e6fcbde1c7b6418225',
+        },
+      ],
     },
     operator: {
       name: 'Centralized operators',
@@ -237,7 +246,7 @@ export const lighter: ScalingProject = {
       {
         name: 'Escape hatch through ZK proofs',
         description:
-          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users can exit by reconstructing the latest settled state using the data available on L1 and providing a ZK proof of balance.',
+          'If the centralized operators fail to process forced transactions after the deadline, the system can be frozen (desert mode) and users are expected to exit by reconstructing the latest settled state and providing a ZK proof of balance. In practice, this is not currently possible: the desert mode circuit source code is not public, and pre-migration blob data cannot be decoded (see data availability note). Users must rely on operator cooperation to exit.',
         risks: [],
         references: [],
       },
@@ -283,7 +292,7 @@ export const lighter: ScalingProject = {
         references: [
           {
             title: 'ZK Lighter verifier verification keys',
-            url: 'https://etherscan.io/address/0xb20De28D78b63bc0c94eef89Db53F6338af17825#code#F1#L54',
+            url: 'https://etherscan.io/address/0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4#code#F1#L54',
           },
           {
             title: 'Desert verifier verification keys',

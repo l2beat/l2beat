@@ -149,7 +149,11 @@ export function getAllProtocolsColumns(
           return (
             <div className="flex items-center gap-1" key={ctx.row.original.id}>
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
-                <BridgeTypeBadge key={bridgeType} bridgeType={bridgeType} />
+                <BridgeTypeBadge
+                  size="extraSmall"
+                  key={bridgeType}
+                  bridgeType={bridgeType}
+                />
               ))}
             </div>
           )

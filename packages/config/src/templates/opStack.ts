@@ -113,9 +113,7 @@ export function EIGENDA_DA_PROVIDER(
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
             description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
-            projectId: ProjectId(
-              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
-            ),
+            projectId: ProjectId('eigenda-v2'),
           }
         : DA_BRIDGES.NONE
 
