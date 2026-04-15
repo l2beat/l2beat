@@ -13,6 +13,7 @@ import {
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import type { UsedInProject as ContractUsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
@@ -169,10 +170,13 @@ function getVerifiersWithProcessedUsedIn(
         deployment,
         usedIn: deployment.overrideUsedIn
           ? getProjectsUsedIn(deployment.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(
-              project.id,
-              ChainSpecificAddress.longChain(deployment.address),
-              toPlainAddress(deployment.address),
+          : addProjectsUsedInDisplayInfo(
+              contractUtils.getUsedIn(
+                project.id,
+                ChainSpecificAddress.longChain(deployment.address),
+                toPlainAddress(deployment.address),
+              ),
+              allProjects,
             ),
       }))
 
@@ -315,4 +319,19 @@ export function getProjectsUsedIn(
       }
     })
     .filter(notUndefined)
+}
+
+export function addProjectsUsedInDisplayInfo(
+  usedIn: ContractUsedInProject[],
+  allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
+): UsedInProjectWithIcon[] {
+  return usedIn.map((project) => ({
+    id: project.id,
+    name: project.name,
+    slug: project.slug,
+    icon: project.icon,
+    url: project.url,
+    description: allProjects.find((p) => p.id === project.id)?.display
+      .description,
+  }))
 }

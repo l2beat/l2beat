@@ -5,7 +5,10 @@ import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { VerifiersSectionProps } from '~/components/projects/sections/verifiers/VerifiersSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { getZkCatalogLogo } from '~/server/features/zk-catalog/getZkCatalogLogo'
-import { getProjectsUsedIn } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
+import {
+  addProjectsUsedInDisplayInfo,
+  getProjectsUsedIn,
+} from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import { ps } from '~/server/projects'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
 import type { ContractUtils } from './contracts-and-permissions/getContractUtils'
@@ -57,10 +60,13 @@ export async function getVerifiersSection(
         address: addressKey,
         projectsUsedIn: (d.overrideUsedIn
           ? getProjectsUsedIn(d.overrideUsedIn, allProjects)
-          : contractUtils.getUsedIn(
-              project.id,
-              ChainSpecificAddress.longChain(d.address),
-              addressKey,
+          : addProjectsUsedInDisplayInfo(
+              contractUtils.getUsedIn(
+                project.id,
+                ChainSpecificAddress.longChain(d.address),
+                addressKey,
+              ),
+              allProjects,
             )
         ).sort(tvsComparator(allProjects, tvs)),
       }
