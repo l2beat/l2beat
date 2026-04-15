@@ -58,13 +58,6 @@ export type ExplorerConfig =
   | RoutescanExplorerConfig
   | SourcifyExplorerConfig
 
-export interface CompilerSettings {
-  optimizationUsed: boolean
-  runs: number
-  evmVersion: string
-  rawJsonSettings?: Record<string, unknown>
-}
-
 export interface ContractSource {
   name: string
   isVerified: boolean
@@ -74,7 +67,6 @@ export interface ContractSource {
   files: Record<string, string>
   remappings: string[]
   libraries: Record<string, EthereumAddress>
-  compilerSettings?: CompilerSettings
 }
 
 export interface IEtherscanClient {

@@ -141,8 +141,6 @@ export {
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {
-  type CompilerSettings,
-  type ContractSource,
   type ExplorerConfig,
   getExplorerClient,
   type IEtherscanClient,

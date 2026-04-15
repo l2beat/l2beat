@@ -21,7 +21,6 @@ import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
 import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
-import { FlattenSnapshots } from './FlattenSnapshots'
 import { GenerateEntrypoints } from './GenerateEntrypoints'
 import { GetConfig } from './GetConfig'
 import { GetTokenMinters } from './GetTokenMinters'
@@ -69,7 +68,6 @@ export function getSubcommands() {
     FindUnusedShapes,
     FixDiscoverySchemaPaths,
     Flatten,
-    FlattenSnapshots,
     GenerateEntrypoints,
     GetConfig,
     GetTokenMinters,

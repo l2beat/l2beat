@@ -63,7 +63,6 @@ export class SourcifyClient implements IEtherscanClient {
 
     const abi = toHumanReadableAbi(result.abi)
 
-    const settings = result.compilation.compilerSettings
     return {
       name: result.compilation.name,
       isVerified: true,
@@ -72,16 +71,9 @@ export class SourcifyClient implements IEtherscanClient {
       constructorArguments:
         result.creationBytecode.transformationValues?.constructorArguments ??
         '',
-      remappings: settings.remappings ?? [],
+      remappings: result.compilation.compilerSettings.remappings ?? [],
       libraries: {},
       files,
-      compilerSettings: settings.optimizer
-        ? {
-            optimizationUsed: settings.optimizer.enabled,
-            runs: settings.optimizer.runs,
-            evmVersion: settings.evmVersion ?? 'default',
-          }
-        : undefined,
     }
   }
 
@@ -213,13 +205,6 @@ const SourcifySourceSchema = v.object({
     compilerVersion: v.string(),
     compilerSettings: v.object({
       remappings: v.array(v.string()).optional(),
-      optimizer: v
-        .object({
-          enabled: v.boolean(),
-          runs: v.number(),
-        })
-        .optional(),
-      evmVersion: v.string().optional(),
     }),
     name: v.string(),
   }),
