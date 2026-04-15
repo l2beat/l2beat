@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import Editor from 'react-simple-code-editor'
 import { useFacts } from '~/hooks/useFacts'
 import { useLog } from '~/hooks/useLog'
 import { api } from '~/react-query/trpc'
 import { Button } from './Button'
+import { highlightClingo } from './clingoHighlight'
 
 export function RulesEditor() {
   const { logs, addLog } = useLog()
@@ -53,12 +55,16 @@ export function RulesEditor() {
           {isRunning ? 'Running...' : 'Run'}
         </Button>
       </div>
-      <textarea
-        className="min-h-0 flex-1 resize-none rounded-md border border-input bg-card p-3 font-mono text-xs leading-relaxed outline-none transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        spellCheck={false}
-      />
+      <div className="min-h-0 flex-1 overflow-auto rounded-md border border-input bg-card font-mono text-xs leading-relaxed transition-[color,box-shadow] focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50">
+        <Editor
+          value={content}
+          onValueChange={setContent}
+          highlight={highlightClingo}
+          padding={12}
+          textareaClassName="outline-none"
+          spellCheck={false}
+        />
+      </div>
       <h3 className="font-medium text-muted-foreground text-xs">Logs</h3>
       <div className="h-28 shrink-0 overflow-auto rounded-md border border-input bg-card p-2 font-mono text-muted-foreground text-xs leading-relaxed">
         {logs.map((entry, i) => (

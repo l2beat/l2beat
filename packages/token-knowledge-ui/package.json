@@ -26,6 +26,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-router-dom": "^7.14.1",
+    "react-simple-code-editor": "^0.14.1",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "4.1.11"
   },
