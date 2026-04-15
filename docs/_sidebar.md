@@ -5,6 +5,11 @@
 - **Developers**
   - [Architecture](developers/architecture.md)
   - [Contributing](developers/contributing.md)
+  - **Features**
+    - [Permissions](developers/features/permissions.md)
+    - [Call Graph Analysis](developers/features/call-graph-analysis.md)
+    - [Scoring & Review](developers/features/scoring-and-review.md)
+    - [Infrastructure](developers/features/infrastructure.md)
 - **External Links**
   - [DeFiScan](https://defiscan.info)
   - [The DeFi Collective](https://deficollective.org)

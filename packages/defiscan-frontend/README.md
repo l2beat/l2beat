@@ -73,7 +73,7 @@ Three view modes toggled via tabs:
 
 ### About Page (`/about`)
 
-Static page describing DeFiScan's mission, methodology, open source commitment, and The DeFi Collective.
+Marketing-style page with a hero ("The Transparency Layer for DeFi."), Our Mission section with live stats (protocol count and total TVL from `useIndex()`), an "Our Approach" three-card grid (Open Source Logic → GitHub repo, Verifiable Data → Lens, Protocol Mapping → docs), and a "Built and Backed by DeFi Veterans" section with a CTA linking to The DeFi Collective.
 
 ### Compare Page (`/compare`)
 
@@ -112,7 +112,7 @@ src/
 │   ├── landing/
 │   │   └── LandingPage.tsx     # Protocol table + stats
 │   ├── about/
-│   │   └── AboutPage.tsx       # Mission, methodology, team
+│   │   └── AboutPage.tsx       # Hero, mission (+ live stats), approach cards, team section
 │   ├── compare/
 │   │   ├── ComparePage.tsx     # Main compare page
 │   │   ├── ComparisonTable.tsx

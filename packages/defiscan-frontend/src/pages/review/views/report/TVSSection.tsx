@@ -30,32 +30,29 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
   const { totals, funds } = review
   const totalTvs = totals.totalCapitalAtRisk + (includeTokens ? (totals.totalTokenValue ?? 0) : 0)
 
-  // Build pie data from fund holders — top 3 non-token + top 3 token + "Other"
+  // Build pie data from fund holders — top 4 entries (tokens + non-tokens combined) + "Other"
+  const TOP_N = 4
   const allFundValues = funds
     .map((f) => ({ fund: f, value: getFundValue(f, includeTokens), isToken: !!f.tokenInfo }))
     .filter((x) => x.value > 0)
     .sort((a, b) => b.value - a.value)
 
-  const nonTokenFunds = allFundValues.filter((x) => !x.isToken)
-  const tokenFunds = allFundValues.filter((x) => x.isToken)
-
-  const topNonToken = nonTokenFunds.slice(0, 3)
-  const topToken = includeTokens ? tokenFunds.slice(0, 3) : []
-  const shownKeys = new Set([...topNonToken, ...topToken].map((x) => x.fund.address))
-  const otherValue = allFundValues
-    .filter((x) => !shownKeys.has(x.fund.address) && (includeTokens || !x.isToken))
+  const eligible = allFundValues.filter((x) => includeTokens || !x.isToken)
+  const top = eligible.slice(0, TOP_N)
+  const shownKeys = new Set(top.map((x) => x.fund.address))
+  const otherValue = eligible
+    .filter((x) => !shownKeys.has(x.fund.address))
     .reduce((s, x) => s + x.value, 0)
 
+  let tokenIdx = 0
+  let nonTokenIdx = 0
   const pieData = [
-    ...topNonToken.map((x, i) => ({
+    ...top.map((x) => ({
       name: getFundName(x.fund),
       value: x.value,
-      color: CHART_COLORS[i % CHART_COLORS.length],
-    })),
-    ...topToken.map((x, i) => ({
-      name: getFundName(x.fund),
-      value: x.value,
-      color: TOKEN_COLORS[i % TOKEN_COLORS.length],
+      color: x.isToken
+        ? TOKEN_COLORS[tokenIdx++ % TOKEN_COLORS.length]
+        : CHART_COLORS[nonTokenIdx++ % CHART_COLORS.length],
     })),
     ...(otherValue > 0
       ? [{ name: 'Other', value: otherValue, color: OTHER_COLOR }]
@@ -67,14 +64,25 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
   return (
     <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
       {/* Section label */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <svg className="size-3.5 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
-          </svg>
-          <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
-            Total Value Secured
-          </span>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <svg className="size-3.5 text-text-muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+            </svg>
+            <span className="font-bold text-[11px] uppercase text-text-muted tracking-[1.2px]">
+              Total Value Secured
+            </span>
+          </div>
+          <label className="flex items-center gap-2 cursor-pointer shrink-0">
+            <input
+              type="checkbox"
+              checked={includeTokens}
+              onChange={(e) => setIncludeTokens(e.target.checked)}
+              className="size-3.5 rounded border-border accent-green-600"
+            />
+            <span className="text-[11px] text-text-muted">Include protocol tokens</span>
+          </label>
         </div>
         <ShowMoreButton onClick={onShowMore} />
       </div>
@@ -88,15 +96,6 @@ export function TVSSection({ review, onShowMore }: TVSSectionProps) {
           <p className="font-mono font-bold text-2xl sm:text-[36px] sm:leading-[40px] text-text-primary mt-1">
             {formatUsdValue(totalTvs)}
           </p>
-          <label className="flex items-center gap-2 cursor-pointer mt-3">
-            <input
-              type="checkbox"
-              checked={includeTokens}
-              onChange={(e) => setIncludeTokens(e.target.checked)}
-              className="size-3.5 rounded border-border accent-green-600"
-            />
-            <span className="text-[11px] text-text-muted">Include protocol tokens</span>
-          </label>
         </div>
         <div className="sm:border-t sm:border-border sm:pt-[33px] flex flex-col gap-1">
           <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">

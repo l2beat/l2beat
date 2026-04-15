@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "compiledAt": "2026-04-15T09:02:01.845Z",
+  "compiledAt": "2026-04-15T12:16:46.591Z",
   "project": "liquity-v1",
   "metadata": {
     "protocolName": "Liquity V1",
@@ -16,10 +16,10 @@
     "scoredFunctionCount": 0,
     "adminCount": 4,
     "dependencyCount": 2,
-    "totalCapitalAtRisk": 191760690.26605967,
-    "totalTokenValueAtRisk": 57001964.86086144,
-    "totalTokenValue": 57001964.86086144,
-    "linesOfCode": 0
+    "totalCapitalAtRisk": 192819754.24222076,
+    "totalTokenValueAtRisk": 57285577.10749224,
+    "totalTokenValue": 57285577.10749224,
+    "linesOfCode": 6930
   },
   "admins": [
     {
@@ -3779,51 +3779,6 @@
     }
   ],
   "activity": [
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-      "contractName": "GnosisSafe",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "67:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:contract-removed",
-      "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "67:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.stabilityPoolAddress",
-          "after": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
-      "contractName": "Chainlink LUSD/USD Price Feed",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "67:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:contract-removed",
-      "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "isDependency": true,
-      "entity": null,
-      "id": "67:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:contract-removed",
-      "type": "contract-removed"
-    },
     {
       "timestamp": "2026-03-07T07:39:26.000Z",
       "updateNotifierId": 64,

@@ -63,51 +63,6 @@
           "after": "liquity-v2/TroveManager_all"
         }
       ]
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
-      "contractName": "GnosisSafe",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "67:eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA:contract-removed",
-      "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007",
-      "contractName": "BorrowerOperations",
-      "entity": null,
-      "id": "67:eth:0x24179CD81c9e782A4096035f7eC97fB8B783e007:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.stabilityPoolAddress",
-          "after": "eth:0x66017D22b0f8556afDd19FC67041899Eb65a21bb"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0",
-      "contractName": "Chainlink LUSD/USD Price Feed",
-      "isDependency": true,
-      "entity": "Chainlink",
-      "id": "67:eth:0x3D7aE7E594f2f2091Ad8798313450130d0Aba3a0:contract-removed",
-      "type": "contract-removed"
-    },
-    {
-      "timestamp": "2026-03-11T07:53:00.000Z",
-      "updateNotifierId": 67,
-      "address": "eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
-      "contractName": "Tellor Tributes Token",
-      "isDependency": true,
-      "entity": null,
-      "id": "67:eth:0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0:contract-removed",
-      "type": "contract-removed"
     }
   ]
 }
