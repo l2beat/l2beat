@@ -2,6 +2,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { AggregatesPage } from './pages/aggregates/AggregatesPage'
 import { SuspiciousTransfersPage } from './pages/anomalies/SuspiciousTransfersPage'
 import { EventDetailsPage } from './pages/events/EventDetailsPage'
 import { EventsPage } from './pages/events/EventsPage'
@@ -30,6 +31,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<SummaryPage />} />
 
+            <Route path="/aggregates" element={<AggregatesPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:kind/:type" element={<EventDetailsPage />} />
 

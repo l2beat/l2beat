@@ -41,7 +41,6 @@ const items = [
         title: 'Aggregates',
         url: '/aggregates',
         icon: LayersIcon,
-        isUpcoming: true,
       },
 
       {
