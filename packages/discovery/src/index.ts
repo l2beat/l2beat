@@ -123,7 +123,6 @@ export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export { findLeadingCommentStart } from './flatten/commentUtilities'
 export { flattenStartingFrom } from './flatten/flatten'
-export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export { format } from './flatten/format'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export {
@@ -133,6 +132,7 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
+export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,
