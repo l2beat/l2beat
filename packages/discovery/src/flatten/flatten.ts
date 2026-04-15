@@ -1,6 +1,5 @@
 import { assert, unique } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
-import { parse } from '@mradomski/fast-solidity-parser'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   type DeclarationFilePair,
@@ -36,7 +35,7 @@ export function flattenStartingFrom(
 
   let flatSource = ''
   for (const { declaration, file } of order) {
-    let content = shouldBeInterface[declaration.id]
+    const content = shouldBeInterface[declaration.id]
       ? generateInterfaceSourceFromContract(declaration, typeMap)
       : declaration.content
 
@@ -46,10 +45,7 @@ export function flattenStartingFrom(
       return to !== undefined && from !== to ? [{ from, to }] : []
     })
 
-    const ast = parse(content, { range: true }).children[0] ?? null
-    content = renameIdentifiers(content, ast, remapNames)
-
-    flatSource += content + '\n\n'
+    flatSource += renameIdentifiers(content, remapNames) + '\n\n'
   }
 
   return flatSource.trimEnd().replace(/\r\n/g, '\n')

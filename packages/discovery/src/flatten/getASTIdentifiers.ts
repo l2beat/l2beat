@@ -13,6 +13,10 @@ export function getASTIdentifiers(
 
   let result: string[]
   switch (node.type) {
+    case 'SourceUnit': {
+      result = node.children.flatMap((n) => getASTIdentifiers(n, visit))
+      break
+    }
     case 'Identifier': {
       result = [node.name]
       break

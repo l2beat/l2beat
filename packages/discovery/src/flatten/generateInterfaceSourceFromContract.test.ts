@@ -1,5 +1,5 @@
-import { expect } from 'earl'
 import type * as AST from '@mradomski/fast-solidity-parser'
+import { expect } from 'earl'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   type DeclarationType,

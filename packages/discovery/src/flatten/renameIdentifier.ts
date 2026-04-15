@@ -1,4 +1,5 @@
 import type * as AST from '@mradomski/fast-solidity-parser'
+import { parse } from '@mradomski/fast-solidity-parser'
 import { getASTIdentifiers } from './getASTIdentifiers'
 
 export interface RenamePair {
@@ -12,18 +13,15 @@ interface Replacement {
   newName: string
 }
 
-export function renameIdentifiers(
-  source: string,
-  baseNode: AST.BaseASTNode | null,
-  pairs: RenamePair[],
-): string {
+export function renameIdentifiers(source: string, pairs: RenamePair[]): string {
   const filtered = pairs.filter((p) => p.from !== p.to)
-  if (baseNode === null || filtered.length === 0) return source
+  if (filtered.length === 0) return source
+  const ast = parse(source, { range: true })
 
   const pairMap = new Map(filtered.map((p) => [p.from, p.to]))
   const replacements: Replacement[] = []
 
-  getASTIdentifiers(baseNode, (node) => {
+  getASTIdentifiers(ast, (node) => {
     if (!node.range) return
     const [start, end] = [node.range[0], node.range[1] + 1]
 
