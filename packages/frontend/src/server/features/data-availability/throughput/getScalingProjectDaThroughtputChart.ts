@@ -3,15 +3,17 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import type { ChartResolution } from '~/utils/range/range'
-import { ChartRange } from '~/utils/range/range'
+import {
+  ChartRange,
+  type ChartResolution,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
-import { rangeToResolution } from './utils/range'
 
 export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]

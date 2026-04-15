@@ -23,8 +23,8 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
+import type { ChartResolution } from '~/utils/range/range'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
@@ -41,7 +41,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }
 
 const hiddenDataKeys = ['projectMax'] as const
@@ -179,7 +179,7 @@ export function ProjectDaThroughputCustomTooltip({
   resolution,
 }: CustomChartTooltipProps & {
   unit: string
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }) {
   const { meta: config } = useChart()
   if (!payload || typeof label !== 'number') return null

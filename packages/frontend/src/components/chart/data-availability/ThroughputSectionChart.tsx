@@ -7,13 +7,13 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
-import {
-  type DaThroughputResolution,
-  DaThroughputTimeRangeValues,
-  rangeToResolution,
-} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  type ChartResolution,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { ChartDataSourceInfo } from '../ChartDataSourceInfo'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
@@ -21,6 +21,7 @@ import {
   type ProjectChartDataWithConfiguredThroughput,
   ProjectDaAbsoluteThroughputChart,
 } from './ProjectDaAbsoluteThroughputChart'
+import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 interface Props {
   project: ChartProject
@@ -110,7 +111,7 @@ export function ThroughputSectionChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputChartPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
-  resolution: DaThroughputResolution,
+  resolution: ChartResolution,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -143,7 +144,7 @@ function getDataWithConfiguredThroughputs(
 }
 
 function adjustThoughputToRange(
-  resolution: DaThroughputResolution,
+  resolution: ChartResolution,
   throughput: number | null | undefined,
 ) {
   if (!throughput) return null
