@@ -7,12 +7,16 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { useQueryParam } from '~/hooks/useQueryParam'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 
 export const MAX_SELECTED_CHAINS = 15
 export const MIN_SELECTED_CHAINS = 2
 export const MIN_SELECTED_PROTOCOLS = 1
+
+const CHAINS_QUERY_KEY = 'chains'
+const PROTOCOLS_QUERY_KEY = 'protocols'
 
 interface InteropFlowsContextType {
   selectedChains: string[]
@@ -43,43 +47,87 @@ export function InteropFlowsProvider({
   protocols,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
-  const allProtocols = useMemo(
+  const allProtocolIds = useMemo(
     () => protocols.map((protocol) => protocol.id),
     [protocols],
   )
-  const [selectedChains, setSelectedChains] = useState<string[]>(
-    allChainIds.slice(0, MAX_SELECTED_CHAINS),
+
+  const defaultSelectedChainIds = useMemo(
+    () => allChainIds.slice(0, MAX_SELECTED_CHAINS),
+    [allChainIds],
   )
-  const [selectedProtocols, setSelectedProtocols] =
-    useState<string[]>(allProtocols)
+
+  const [chainsParam, setChainsParam] = useQueryParam(
+    CHAINS_QUERY_KEY,
+    defaultSelectedChainIds.join(','),
+    { replaceState: true },
+  )
+  const [protocolsParam, setProtocolsParam] = useQueryParam(
+    PROTOCOLS_QUERY_KEY,
+    allProtocolIds.join(','),
+    { replaceState: true },
+  )
+
+  const selectedChains = useMemo(
+    () => parseIdsParam(chainsParam, allChainIds).slice(0, MAX_SELECTED_CHAINS),
+    [chainsParam, allChainIds],
+  )
+  const selectedProtocols = useMemo(
+    () => parseIdsParam(protocolsParam, allProtocolIds),
+    [protocolsParam, allProtocolIds],
+  )
+
   const [highlightedChains, setHighlightedChains] = useState<string[]>([])
 
-  const toggleChainSelection = useCallback((chainId: string) => {
-    setSelectedChains((prev) => {
-      if (prev.includes(chainId)) {
+  const setSelectedChains = useCallback(
+    (next: string[]) => {
+      // Keep canonical order so that a selection equal to the default serializes identically and gets removed from the URL
+      const canonical = allChainIds.filter((id) => next.includes(id))
+      setChainsParam(canonical.join(','))
+    },
+    [allChainIds, setChainsParam],
+  )
+
+  const setSelectedProtocols = useCallback(
+    (next: string[]) => {
+      const canonical = allProtocolIds.filter((id) => next.includes(id))
+      setProtocolsParam(canonical.join(','))
+    },
+    [allProtocolIds, setProtocolsParam],
+  )
+
+  const toggleChainSelection = useCallback(
+    (chainId: string) => {
+      if (selectedChains.includes(chainId)) {
         setHighlightedChains((h) => h.filter((id) => id !== chainId))
-        return prev.filter((id) => id !== chainId)
+        setSelectedChains(selectedChains.filter((id) => id !== chainId))
+        return
       }
-      if (prev.length >= MAX_SELECTED_CHAINS) {
-        return prev
+      if (selectedChains.length >= MAX_SELECTED_CHAINS) {
+        return
       }
-      return [...prev, chainId]
-    })
-  }, [])
+      setSelectedChains([...selectedChains, chainId])
+    },
+    [selectedChains, setSelectedChains],
+  )
 
   const deselectAllChains = useCallback(() => {
     setSelectedChains([])
     setHighlightedChains([])
-  }, [])
+  }, [setSelectedChains])
 
-  const toggleProtocolSelection = useCallback((protocolId: string) => {
-    setSelectedProtocols((prev) => {
-      if (prev.includes(protocolId)) {
-        return prev.filter((id) => id !== protocolId)
+  const toggleProtocolSelection = useCallback(
+    (protocolId: string) => {
+      if (selectedProtocols.includes(protocolId)) {
+        setSelectedProtocols(
+          selectedProtocols.filter((id) => id !== protocolId),
+        )
+        return
       }
-      return [...prev, protocolId]
-    })
-  }, [])
+      setSelectedProtocols([...selectedProtocols, protocolId])
+    },
+    [selectedProtocols, setSelectedProtocols],
+  )
 
   const toggleHighlightedChain = useCallback((chainId: string) => {
     setHighlightedChains((prev) => {
@@ -118,4 +166,10 @@ export function useInteropFlows() {
     throw new Error('useInteropFlows must be used within InteropFlowsProvider')
   }
   return context
+}
+
+function parseIdsParam(value: string, validIds: string[]): string[] {
+  if (!value) return []
+  const provided = new Set(value.split(','))
+  return validIds.filter((id) => provided.has(id))
 }
