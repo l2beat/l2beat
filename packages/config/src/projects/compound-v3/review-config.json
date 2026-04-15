@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-17T15:00:00.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "compound-v3",
   "protocolName": "Compound V3",
   "tokenName": "COMP",
@@ -118,5 +118,6 @@
     "cusdcv3Balance": "fundsdata.contracts[\"eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3\"].balances.totalUsdValue",
     "cusdtv3Balance": "fundsdata.contracts[\"eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94\"].balances.totalUsdValue",
     "compMarketCap": "fundsdata.contracts[\"eth:0xc00e94Cb662C3520282E6f5717214004A7f26888\"].tokenInfo.tokenValue"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

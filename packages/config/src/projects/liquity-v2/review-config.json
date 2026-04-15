@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-01T09:17:14.503Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "liquity-v2",
   "protocolName": "Liquity V2",
   "tokenName": "BOLD",
@@ -144,5 +144,6 @@
     "rethStabilityPoolBalance": "fundsdata.contracts[\"eth:0xd442E41019B7F5C4dD78F50dc03726C446148695\"].balances.totalUsdValue",
     "boldMarketCap": "fundsdata.contracts[\"eth:0x6440f144b7e50D6a8439336510312d2F54beB01D\"].tokenInfo.tokenValue",
     "rethTroveManagerReachableCapital": "v2score.inventory.admins.breakdown[\"eth:0xb2B2ABEb5C357a234363FF5D180912D319e3e19e\"].totalReachableCapital"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

@@ -11,6 +11,7 @@ import { GovernanceSection } from './GovernanceSection'
 import { DependenciesSection } from './DependenciesSection'
 import { FrontendsSection } from './FrontendsSection'
 import { ActivitySection } from './ActivitySection'
+import { TimestampsFooter } from './TimestampsFooter'
 import { FundsTab } from '../explorer/FundsTab'
 import { AdminsTab } from '../explorer/AdminsTab'
 import { GovernanceTab } from '../explorer/GovernanceTab'
@@ -86,6 +87,11 @@ export function ReportView({ review, onExportPdf }: ReportViewProps) {
       {/* Protocol Activity */}
       <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
         <ActivitySection review={review} onShowMore={goToActivity} />
+      </section>
+
+      {/* Timestamps footer */}
+      <section className="mx-auto w-full max-w-[1280px] px-4 sm:px-6">
+        <TimestampsFooter review={review} />
       </section>
 
       {/* Show More modals */}

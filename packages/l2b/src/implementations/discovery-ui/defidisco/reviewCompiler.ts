@@ -19,8 +19,8 @@ import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
 import { countLinesOfCode } from './countLinesOfCode'
-import { getAudits, getResources } from './resources'
-import { getGovernance } from './governance'
+import { getAudits, getResources, getResourcesLastModified } from './resources'
+import { getGovernance, getGovernanceLastModified } from './governance'
 import { getActivityEvents } from './activity'
 import type {
   ActivityFileEvent,
@@ -54,6 +54,15 @@ import * as path from 'path'
 
 export interface CompiledReview {
   version: '1.0'
+  /** First time review-config.json was created. Preserved across regenerations. */
+  publishedAt: string
+  /** Last time a researcher edited review-config, resources, audits, or governance. */
+  updatedAt: string
+  /**
+   * Live on-chain data freshness — sourced from discovered.json.timestamp,
+   * NOT the wall-clock compile time. Only bumps when the monitor runs a
+   * fresh discovery; a researcher-triggered recompile keeps it unchanged.
+   */
   compiledAt: string
   project: string
 
@@ -820,9 +829,45 @@ export class ReviewCompiler {
         new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
     )
 
+    // compiledAt = on-chain data freshness. Sourced from discovered.json's
+    // top-level timestamp (Unix seconds), which the discovery engine stamps
+    // every time it runs. This field NO LONGER reflects wall-clock compile
+    // time — a researcher edit that triggers a recompile will keep it
+    // unchanged. Only a fresh monitor discovery cycle bumps it.
+    const onchainAtMs = (discovery.timestamp ?? 0) * 1000
+    const compiledAt =
+      onchainAtMs > 0
+        ? new Date(onchainAtMs).toISOString()
+        : new Date().toISOString() // fallback only for discovery outputs missing the field
+
+    // updatedAt = latest researcher-initiated edit across review-config,
+    // resources (incl. audits), and governance. Sorted lexicographically,
+    // which works for ISO timestamps.
+    const resourcesLastModified = getResourcesLastModified(this.paths, project)
+    const governanceLastModified = getGovernanceLastModified(
+      this.paths,
+      project,
+    )
+    const updatedAtCandidates = [
+      reviewConfig.lastModified,
+      resourcesLastModified,
+      governanceLastModified,
+    ].filter((s): s is string => typeof s === 'string' && s.length > 0)
+    const updatedAt =
+      updatedAtCandidates.length > 0
+        ? (updatedAtCandidates.sort().pop() as string)
+        : compiledAt
+
+    // publishedAt = first time review-config.json was created. Preserved by
+    // writeReviewConfig and the /generate-review skill. Fall back to
+    // updatedAt for legacy projects whose configs predate this field.
+    const publishedAt = reviewConfig.publishedAt || updatedAt
+
     return {
       version: '1.0',
-      compiledAt: new Date().toISOString(),
+      publishedAt,
+      updatedAt,
+      compiledAt,
       project,
 
       metadata: {

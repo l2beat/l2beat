@@ -2,6 +2,15 @@
 
 export interface CompiledReview {
   version: '1.0'
+  /** First time review-config.json was created. Preserved across regenerations. */
+  publishedAt: string
+  /** Last time a researcher edited review-config, resources, audits, or governance. */
+  updatedAt: string
+  /**
+   * Live on-chain data freshness — sourced from discovered.json.timestamp,
+   * NOT wall-clock compile time. Only bumps when the monitor runs a fresh
+   * discovery cycle; researcher-triggered recompiles keep it unchanged.
+   */
   compiledAt: string
   project: string
 

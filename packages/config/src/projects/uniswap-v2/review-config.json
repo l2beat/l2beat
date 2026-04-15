@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-14T16:15:49.014Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "uniswap-v2",
   "protocolName": "Uniswap V2",
   "tokenName": "UNI",
@@ -72,5 +72,6 @@
   "dataKeys": {
     "uniswapV2TotalLiquidity": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.totalUsdValue",
     "uniswapV2PairCount": "fundsdata.contracts[\"eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f\"].aggregate.contractCount"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

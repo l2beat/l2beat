@@ -206,6 +206,7 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
           </div>
         </div>
       )}
+
     </div>
   )
 }

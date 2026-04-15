@@ -838,6 +838,8 @@ export interface GovernanceConfig {
 export interface ReviewConfig {
   version: string
   lastModified: string
+  /** First time the review-config was created. Preserved across regenerations. */
+  publishedAt?: string
   protocolSlug: string
   protocolName: string
   tokenName: string

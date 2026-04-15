@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-01T09:17:05.803Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "liquity-v1",
   "protocolName": "Liquity V1",
   "tokenName": "LUSD",
@@ -101,5 +101,6 @@
     "gasPoolBalance": "fundsdata.contracts[\"eth:0x9555b042F969E561855e5F28cB1230819149A8d9\"].balances.totalUsdValue",
     "lqtyMarketCap": "fundsdata.contracts[\"eth:0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D\"].tokenInfo.tokenValue",
     "lusdMarketCap": "fundsdata.contracts[\"eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0\"].tokenInfo.tokenValue"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

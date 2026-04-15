@@ -22,6 +22,9 @@ export function getReviewConfig(
       // Backfill defaults for configs created before the merge
       config.version ??= '1.0'
       config.lastModified ??= ''
+      // publishedAt was added later — fall back to lastModified so legacy
+      // configs have a best-effort publication date.
+      config.publishedAt ??= config.lastModified || ''
       config.description ??= ''
       config.admins ??= {}
       config.dependencies ??= {}
@@ -97,6 +100,29 @@ function writeReviewConfig(
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
+
+  // Preserve publishedAt across writes: it's set exactly once (first time
+  // a config is created) and must survive every subsequent save, including
+  // the wipe-and-rewrite performed by /generate-review via the API path.
+  // Note: /generate-review bypasses this chokepoint entirely (it writes via
+  // the Write tool directly), so the skill itself must also preserve the
+  // field — see the generate-review SKILL.md.
+  if (!config.publishedAt) {
+    let existingPublishedAt: string | undefined
+    if (fs.existsSync(configPath)) {
+      try {
+        const existing = JSON.parse(
+          fs.readFileSync(configPath, 'utf8'),
+        ) as ReviewConfig
+        existingPublishedAt = existing.publishedAt
+      } catch (_) {
+        // ignore parse errors — treat as fresh create
+      }
+    }
+    config.publishedAt =
+      existingPublishedAt || config.lastModified || new Date().toISOString()
+  }
+
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
 }
 

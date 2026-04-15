@@ -229,6 +229,8 @@ In the terminal panel, click **Compile Review** to produce `compiled-review.json
 
 Compile Review also runs a deduplicated **lines-of-code count** (top-level Solidity declarations, deduped by name so inlined libraries don't double-count) and stores it alongside the review. If you only need to refresh the count — for example after changing a contract's external flag — click **Count Lines of Code** in the terminal panel.
 
+**Compile is not the same as "updated"**. The compiled review carries three distinct timestamps: `publishedAt` (set once when you first save `review-config.json`, never changes again), `updatedAt` (bumps only when you edit review content — `review-config.json`, `resources.json`, or `governance.json`), and `compiledAt` (the freshness of the on-chain data, which comes from the last discovery run, **not** from the moment you clicked Compile). A recompile without any other change bumps **none** of the three — so clicking Compile a second time to verify output is safe and won't silently reset any dates on the public frontend.
+
 ### Preview in the DeFiScan Frontend
 
 ```bash

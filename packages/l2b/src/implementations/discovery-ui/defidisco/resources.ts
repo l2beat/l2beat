@@ -7,6 +7,9 @@ interface ResourcesFile {
   resources: ResourceEntry[]
   audits: AuditEntry[]
   linesOfCode?: number
+  /** Last time a researcher edited resources or audits. NOT bumped by
+   *  auto-populated linesOfCode writes (those are a compile-time side effect). */
+  lastModified?: string
 }
 
 function readResourcesFile(resourcesPath: string): ResourcesFile {
@@ -22,20 +25,31 @@ function readResourcesFile(resourcesPath: string): ResourcesFile {
     resources: (parsed.resources ?? []) as ResourceEntry[],
     audits: (parsed.audits ?? []) as AuditEntry[],
     linesOfCode: parsed.linesOfCode as number | undefined,
+    lastModified: parsed.lastModified as string | undefined,
   }
 }
 
-function writeResourcesFile(resourcesPath: string, file: ResourcesFile): void {
+function writeResourcesFile(
+  resourcesPath: string,
+  file: ResourcesFile,
+  options: { bumpLastModified: boolean },
+): void {
   const dir = path.dirname(resourcesPath)
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
+  const lastModified = options.bumpLastModified
+    ? new Date().toISOString()
+    : file.lastModified
   const out: Record<string, unknown> = {
     resources: file.resources,
     audits: file.audits,
   }
   if (file.linesOfCode !== undefined) {
     out.linesOfCode = file.linesOfCode
+  }
+  if (lastModified !== undefined) {
+    out.lastModified = lastModified
   }
   fs.writeFileSync(resourcesPath, JSON.stringify(out, null, 2))
 }
@@ -115,11 +129,15 @@ export function updateResources(
     }
   }
 
-  writeResourcesFile(resourcesPath, {
-    resources,
-    audits: existingAudits,
-    linesOfCode: existingLinesOfCode,
-  })
+  writeResourcesFile(
+    resourcesPath,
+    {
+      resources,
+      audits: existingAudits,
+      linesOfCode: existingLinesOfCode,
+    },
+    { bumpLastModified: true },
+  )
 
   // One-time migration: strip resources from review-config.json if present
   const reviewConfigPath = path.join(
@@ -161,11 +179,15 @@ export function updateAudits(
     }
   }
 
-  writeResourcesFile(resourcesPath, {
-    resources: existingResources,
-    audits,
-    linesOfCode: existingLinesOfCode,
-  })
+  writeResourcesFile(
+    resourcesPath,
+    {
+      resources: existingResources,
+      audits,
+      linesOfCode: existingLinesOfCode,
+    },
+    { bumpLastModified: true },
+  )
 }
 
 export function getLinesOfCode(
@@ -194,21 +216,49 @@ export function updateLinesOfCode(
 
   let existingResources: ResourceEntry[] = []
   let existingAudits: AuditEntry[] = []
+  let existingLastModified: string | undefined
   if (fs.existsSync(resourcesPath)) {
     try {
       const existing = readResourcesFile(resourcesPath)
       existingResources = existing.resources
       existingAudits = existing.audits
+      existingLastModified = existing.lastModified
     } catch (_) {
       // ignore parse errors — start fresh
     }
   }
 
-  writeResourcesFile(resourcesPath, {
-    resources: existingResources,
-    audits: existingAudits,
-    linesOfCode,
-  })
+  // LoC is produced automatically by the compiler — do NOT bump lastModified
+  // here, otherwise every compile would silently re-stamp the review as
+  // "just updated" and defeat the distinction between researcher edits and
+  // compile-time side effects.
+  writeResourcesFile(
+    resourcesPath,
+    {
+      resources: existingResources,
+      audits: existingAudits,
+      linesOfCode,
+      lastModified: existingLastModified,
+    },
+    { bumpLastModified: false },
+  )
+}
+
+export function getResourcesLastModified(
+  paths: DiscoveryPaths,
+  project: string,
+): string | undefined {
+  const resourcesPath = getResourcesPath(paths, project)
+
+  if (fs.existsSync(resourcesPath)) {
+    try {
+      return readResourcesFile(resourcesPath).lastModified
+    } catch (error) {
+      console.error('Error reading lastModified from resources file:', error)
+    }
+  }
+
+  return undefined
 }
 
 function getResourcesPath(paths: DiscoveryPaths, project: string): string {

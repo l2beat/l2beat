@@ -70,53 +70,15 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
   function toggleExpand(key: string) {
     setExpandedKey((cur) => (cur === key ? null : key))
   }
-  if (!activity || activity.length === 0) {
-    return (
-      <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-6">
-        <SectionHeader
-          icon={
-            <svg
-              className="size-4 text-accent"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-          }
-          label="Protocol Activity"
-        />
-        <div className="bg-white border border-border rounded-lg p-[33px] flex flex-col items-center justify-center gap-4 min-h-[160px] sm:min-h-[220px]">
-          <svg
-            className="size-14 text-accent"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
-            />
-          </svg>
-          <p className="text-sm text-text-muted">
-            No protocol changes recorded yet.
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  const sorted = [...activity].sort(
+  const events = activity ?? []
+  const sorted = [...events].sort(
     (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
   )
   const recent = sorted.slice(0, 3)
+  // Only fill in the "Monitoring Started" marker on quiet reviews: once there
+  // are 3+ real events, the top-3 list is already full and the marker would
+  // just be noise.
+  const showMonitoringStarted = events.length < 3
 
   function formatDate(iso: string) {
     const d = new Date(iso)
@@ -412,6 +374,52 @@ export function ActivitySection({ review, onShowMore }: ActivitySectionProps) {
             </div>
           )
         })}
+
+        {showMonitoringStarted && (
+          <div
+            className={
+              recent.length > 0
+                ? 'pt-[25px] border-t border-border/60'
+                : ''
+            }
+          >
+            {/* Desktop */}
+            <div className="hidden sm:flex items-center gap-[32px]">
+              <div className="w-[120px] shrink-0">
+                <p className="font-mono font-normal text-[12px] text-text-muted">
+                  {formatDate(review.publishedAt)}
+                </p>
+              </div>
+              <span className="inline-flex items-center px-[8px] py-[2px] rounded-sm text-[9px] font-bold uppercase tracking-[0.225px] shrink-0 bg-emerald-100 text-emerald-700">
+                Monitoring Started
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-[14px] text-text-primary truncate">
+                  {review.metadata.protocolName}
+                </p>
+                <p className="text-[13px] text-text-primary truncate">
+                  Continuous monitoring of this protocol began on this date.
+                </p>
+              </div>
+              <div className="w-[1px] shrink-0" />
+            </div>
+            {/* Mobile */}
+            <div className="flex flex-col gap-1.5 sm:hidden">
+              <span className="inline-flex items-center px-[8px] py-[2px] rounded-sm text-[9px] font-bold uppercase tracking-[0.225px] self-start bg-emerald-100 text-emerald-700">
+                Monitoring Started
+              </span>
+              <p className="font-semibold text-[14px] text-text-primary">
+                {review.metadata.protocolName}
+              </p>
+              <p className="text-[13px] text-text-primary">
+                Continuous monitoring of this protocol began on this date.
+              </p>
+              <p className="font-mono font-normal text-[12px] text-text-muted">
+                {formatDate(review.publishedAt)}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

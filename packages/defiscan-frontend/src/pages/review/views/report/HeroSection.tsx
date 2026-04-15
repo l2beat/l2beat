@@ -20,12 +20,12 @@ interface HeroSectionProps {
 const RADAR_AXES = ['CONTROL', 'DEPENDENCIES', 'ACCESS', 'VERIFIABILITY', 'ABILITY TO EXIT']
 
 export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionProps) {
-  const { metadata, compiledAt } = review
+  const { metadata, updatedAt } = review
   const radarData = deriveRadarData(review)
   const [descExpanded, setDescExpanded] = useState(false)
 
-  const updateDate = compiledAt
-    ? new Date(compiledAt).toLocaleDateString('en-CA').replace(/-/g, '.')
+  const updateDate = updatedAt
+    ? new Date(updatedAt).toLocaleDateString('en-CA').replace(/-/g, '.')
     : '—'
 
   return (

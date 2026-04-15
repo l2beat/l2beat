@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-26T15:00:00.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "EtherFi-Stake",
   "protocolName": "EtherFi Stake",
   "tokenName": "eETH",
@@ -133,18 +133,34 @@
               "type": "dataTable",
               "dataSource": "project.contracts",
               "columns": [
-                { "field": "name", "header": "Name" },
-                { "field": "address", "header": "Address", "format": "address" },
-                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
               ],
-              "filters": { "excludeExternal": true }
+              "filters": {
+                "excludeExternal": true
+              }
             }
           ]
         },
         {
           "title": "Audits",
           "content": [
-            { "type": "text", "content": "" }
+            {
+              "type": "text",
+              "content": ""
+            }
           ]
         }
       ]
@@ -162,5 +178,6 @@
     "eethMarketCap": "fundsdata.contracts[\"eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2\"].tokenInfo.tokenValue",
     "weethBalance": "fundsdata.contracts[\"eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee\"].balances.totalUsdValue",
     "restakerPositions": "fundsdata.contracts[\"eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf\"].positions.totalUsdValue"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

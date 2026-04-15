@@ -72,11 +72,14 @@ export function LandingPage() {
 
   const protocols = indexData?.protocols ?? []
 
+  // Rank by updatedAt (researcher edit time) rather than compiledAt
+  // (on-chain data freshness) — "recently updated" on the landing page
+  // should mean "review content changed", not "monitor ran a cycle".
   const reviewMap = useMemo(() => {
     const map = new Map<string, string>()
     if (allReviews) {
       for (const r of allReviews) {
-        map.set(r.metadata.protocolSlug, r.compiledAt)
+        map.set(r.metadata.protocolSlug, r.updatedAt)
       }
     }
     return map

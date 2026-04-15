@@ -13,9 +13,9 @@
         "scoredFunctionCount": 84,
         "adminCount": 37,
         "dependencyCount": 7,
-        "totalCapitalAtRisk": 1034979753.1349221,
-        "totalTokenValueAtRisk": 6484189980.088141,
-        "totalTokenValue": 6484189980.088141,
+        "totalCapitalAtRisk": 1028241970.8751577,
+        "totalTokenValueAtRisk": 6447286993.577241,
+        "totalTokenValue": 6447286993.577241,
         "linesOfCode": 0
       }
     },
@@ -31,10 +31,10 @@
         "scoredFunctionCount": 18,
         "adminCount": 1,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 85848545.69647127,
-        "totalTokenValueAtRisk": 35952770.32444614,
-        "totalTokenValue": 35952770.32444614,
-        "linesOfCode": 0
+        "totalCapitalAtRisk": 85366218.29643911,
+        "totalTokenValueAtRisk": 36077249.53263232,
+        "totalTokenValue": 36077249.53263232,
+        "linesOfCode": 1598
       }
     },
     {
@@ -49,7 +49,7 @@
         "scoredFunctionCount": 14,
         "adminCount": 6,
         "dependencyCount": 2,
-        "totalCapitalAtRisk": 190950929.93282408,
+        "totalCapitalAtRisk": 193046136.78044477,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 0
@@ -67,9 +67,9 @@
         "scoredFunctionCount": 11,
         "adminCount": 1,
         "dependencyCount": 5,
-        "totalCapitalAtRisk": 845080542.4518044,
+        "totalCapitalAtRisk": 834074376.6290525,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 209399997.56243446,
+        "totalTokenValue": 214299997.50539497,
         "linesOfCode": 0
       }
     },
@@ -85,9 +85,9 @@
         "scoredFunctionCount": 214,
         "adminCount": 30,
         "dependencyCount": 1,
-        "totalCapitalAtRisk": 470870276.58957213,
+        "totalCapitalAtRisk": 451863541.9237974,
         "totalTokenValueAtRisk": 0,
-        "totalTokenValue": 22178612268.273525,
+        "totalTokenValue": 21999839125.370544,
         "linesOfCode": 0
       }
     },
@@ -105,8 +105,8 @@
         "dependencyCount": 2,
         "totalCapitalAtRisk": 192819754.24222076,
         "totalTokenValueAtRisk": 57285577.10749224,
-        "totalTokenValue": 57285577.10749224,
-        "linesOfCode": 0
+        "totalTokenValue": 57001964.86086144,
+        "linesOfCode": 6930
       }
     },
     {
@@ -121,9 +121,9 @@
         "scoredFunctionCount": 17,
         "adminCount": 0,
         "dependencyCount": 3,
-        "totalCapitalAtRisk": 127928965.60498689,
-        "totalTokenValueAtRisk": 31958391.247819275,
-        "totalTokenValue": 31958391.247819275,
+        "totalCapitalAtRisk": 127483561.84415698,
+        "totalTokenValueAtRisk": 32261623.208601844,
+        "totalTokenValue": 32261623.208601844,
         "linesOfCode": 0
       }
     },
@@ -139,7 +139,7 @@
         "scoredFunctionCount": 0,
         "adminCount": 0,
         "dependencyCount": 0,
-        "totalCapitalAtRisk": 819697661.514328,
+        "totalCapitalAtRisk": 810285688.0093193,
         "totalTokenValueAtRisk": 0,
         "totalTokenValue": 0,
         "linesOfCode": 0
@@ -147,9 +147,9 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 3768176429.1671295,
-    "totalTokenValueAtRisk": 28872202245.924103,
-    "totalTokenValue": 28997398984.603855,
+    "totalCapitalAtRisk": 3723181248.600589,
+    "totalTokenValueAtRisk": 28661426116.45318,
+    "totalTokenValue": 28786766954.05528,
     "protocolsReviewed": 8
   },
   "dependencies": [
@@ -157,7 +157,7 @@
       "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "name": "Lido stETH Token",
       "entity": "Lido stETH",
-      "totalFundsAtRisk": 7128643855.775055,
+      "totalFundsAtRisk": 7085718227.61396,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -169,7 +169,7 @@
       "address": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
       "name": "EigenLayer DelegationManager",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -181,7 +181,7 @@
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "name": "EigenLayer StrategyManager",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -193,7 +193,7 @@
       "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
       "name": "EigenLayer RewardsCoordinator",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -205,7 +205,7 @@
       "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
       "name": "Lido WithdrawalQueueERC721",
       "entity": "Lido",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -217,7 +217,7 @@
       "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
       "name": "Coinbase cbETH Token",
       "entity": "Coinbase cbETH",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -229,7 +229,7 @@
       "address": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1",
       "name": "Curve WrapTokenV3ETH",
       "entity": "Curve",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -241,7 +241,7 @@
       "address": "eth:0x5FAE7E604FC3e24fd43A72867ceBaC94c65b404A",
       "name": "Curve Vyper_contract",
       "entity": "Curve",
-      "totalFundsAtRisk": 1034957041.2941685,
+      "totalFundsAtRisk": 1028219386.8472672,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -253,7 +253,7 @@
       "address": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
       "name": "EACAggregatorProxy",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 696127752.7337201,
+      "totalFundsAtRisk": 686540723.093009,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -265,7 +265,7 @@
       "address": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
       "name": "Circle USDC Token",
       "entity": "Circle USDC",
-      "totalFundsAtRisk": 696127752.7337201,
+      "totalFundsAtRisk": 686540723.093009,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -277,7 +277,7 @@
       "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
       "name": "Chainlink ETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 320748719.84720767,
+      "totalFundsAtRisk": 319244252.1102166,
       "protocols": [
         {
           "slug": "liquity-v1",
@@ -290,22 +290,10 @@
       ]
     },
     {
-      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
-      "name": "Tellor Price Feed",
-      "entity": "Tellor",
-      "totalFundsAtRisk": 192819754.24222076,
-      "protocols": [
-        {
-          "slug": "liquity-v1",
-          "name": "Liquity V1"
-        }
-      ]
-    },
-    {
       "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
       "entity": "Morpho",
-      "totalFundsAtRisk": 190950929.93282408,
+      "totalFundsAtRisk": 193046136.78044477,
       "protocols": [
         {
           "slug": "Steakhouse-USDC",
@@ -314,10 +302,22 @@
       ]
     },
     {
+      "address": "eth:0xAd430500ECDa11E38C9bCB08a702274b94641112",
+      "name": "Tellor Price Feed",
+      "entity": "Tellor",
+      "totalFundsAtRisk": 191760690.26605967,
+      "protocols": [
+        {
+          "slug": "liquity-v1",
+          "name": "Liquity V1"
+        }
+      ]
+    },
+    {
       "address": "eth:0xD72ac1bCE9177CFe7aEb5d0516a38c88a64cE0AB",
       "name": "ConstantPriceFeed (USDT)",
       "entity": null,
-      "totalFundsAtRisk": 148952789.7180843,
+      "totalFundsAtRisk": 147533653.53604355,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -329,7 +329,7 @@
       "address": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
       "name": "Wrapped Ether (WETH)",
       "entity": null,
-      "totalFundsAtRisk": 148952789.7180843,
+      "totalFundsAtRisk": 147533653.53604355,
       "protocols": [
         {
           "slug": "compound-v3",
@@ -341,7 +341,7 @@
       "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
       "name": "Chainlink rETH/ETH Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 127928965.60498689,
+      "totalFundsAtRisk": 127483561.84415698,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -353,7 +353,7 @@
       "address": "eth:0xae78736Cd615f374D3085123A210448E74Fc6393",
       "name": "RocketPool rETH Token",
       "entity": "RocketPool",
-      "totalFundsAtRisk": 127928965.60498689,
+      "totalFundsAtRisk": 127483561.84415698,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -365,7 +365,7 @@
       "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
       "name": "Chainlink stETH/USD Price Feed",
       "entity": "Chainlink",
-      "totalFundsAtRisk": 124225863.93963787,
+      "totalFundsAtRisk": 123780788.8357053,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -377,7 +377,7 @@
       "address": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "name": "Lido wstETH Token",
       "entity": "Lido",
-      "totalFundsAtRisk": 124225863.93963787,
+      "totalFundsAtRisk": 123780788.8357053,
       "protocols": [
         {
           "slug": "liquity-v2",
@@ -389,7 +389,7 @@
       "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "name": "Ethereum Beacon Chain DepositContract",
       "entity": "Ethereum",
-      "totalFundsAtRisk": 26979852.866189823,
+      "totalFundsAtRisk": 25896147.696970724,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -405,7 +405,7 @@
       "address": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
       "name": "EigenLayer EigenPodManager",
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 26979852.866189823,
+      "totalFundsAtRisk": 25896147.696970724,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -417,7 +417,7 @@
       "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
       "name": "LayerZero EndpointV2",
       "entity": "LayerZero",
-      "totalFundsAtRisk": 26979852.866189823,
+      "totalFundsAtRisk": 25896147.696970724,
       "protocols": [
         {
           "slug": "EtherFi-Stake",
@@ -429,7 +429,7 @@
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNX Franc (VCHF)",
       "entity": "VCHF",
-      "totalFundsAtRisk": 427612.88071325293,
+      "totalFundsAtRisk": 427612.8807294232,
       "protocols": [
         {
           "slug": "Frankencoin",

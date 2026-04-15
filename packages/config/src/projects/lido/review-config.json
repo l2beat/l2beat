@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-22T12:00:00.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "lido",
   "protocolName": "Lido",
   "tokenName": "stETH",
@@ -221,18 +221,34 @@
               "type": "dataTable",
               "dataSource": "project.contracts",
               "columns": [
-                { "field": "name", "header": "Name" },
-                { "field": "address", "header": "Address", "format": "address" },
-                { "field": "proxyType", "header": "Proxy Type", "format": "badge" }
+                {
+                  "field": "name",
+                  "header": "Name"
+                },
+                {
+                  "field": "address",
+                  "header": "Address",
+                  "format": "address"
+                },
+                {
+                  "field": "proxyType",
+                  "header": "Proxy Type",
+                  "format": "badge"
+                }
               ],
-              "filters": { "excludeExternal": true }
+              "filters": {
+                "excludeExternal": true
+              }
             }
           ]
         },
         {
           "title": "Audits",
           "content": [
-            { "type": "text", "content": "" }
+            {
+              "type": "text",
+              "content": ""
+            }
           ]
         }
       ]
@@ -251,5 +267,6 @@
     "withdrawalQueuePositions": "fundsdata.contracts[\"eth:0x889edc2edab5f40e902b864ad4d7ade8e412f9b1\"].positions.totalUsdValue",
     "stethBufferBalance": "fundsdata.contracts[\"eth:0xae7ab96520de3a18e5e111b5eaab095312d7fe84\"].balances.totalUsdValue",
     "ldoTokenBalance": "fundsdata.contracts[\"eth:0x5a98fcbea516cf06857215779fd812ca3bef1b32\"].balances.totalUsdValue"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

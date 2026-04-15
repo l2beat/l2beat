@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-09T13:14:05.870Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
   "protocolSlug": "Frankencoin",
   "protocolName": "Frankencoin",
   "tokenName": "ZCHF",
@@ -182,5 +182,6 @@
     "savingsLegacyBalance": "fundsdata.contracts[\"eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE\"].balances.totalUsdValue",
     "vchfBridgeBalance": "fundsdata.contracts[\"eth:0x3B71ba73299F925a837836160c3E1Fec74340403\"].balances.totalUsdValue",
     "zchfMarketCap": "fundsdata.contracts[\"eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB\"].tokenInfo.tokenValue"
-  }
+  },
+  "publishedAt": "2026-04-01T00:00:00.000Z"
 }

@@ -2,32 +2,5 @@
   "version": "1.1",
   "lastReconciledAt": 1776179334,
   "lastConsumedUpdateNotifierId": 97,
-  "events": [
-    {
-      "timestamp": "2026-04-09T08:27:30.000Z",
-      "updateNotifierId": 97,
-      "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-      "contractName": "VNXCToken",
-      "isDependency": true,
-      "entity": "VCHF",
-      "id": "97:eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.$upgradeCount",
-          "before": 1,
-          "after": 2
-        },
-        {
-          "field": "values.$implementation",
-          "before": "eth:0xf72eE0D3a252eA41845ec1185d8495e2246E6Ba6",
-          "after": "eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC"
-        },
-        {
-          "field": "implementationNames.eth:0xD1d7193CE1Aa7808d577058F48Ef8289FC2F81fC",
-          "after": "VNXCToken"
-        }
-      ]
-    }
-  ]
+  "events": []
 }

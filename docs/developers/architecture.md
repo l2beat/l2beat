@@ -160,6 +160,8 @@ See [Scoring & Review: ProjectAnalysis](features/scoring-and-review.md#projectan
 
 `reviewCompiler.ts` is a **thin assembly layer**. It calls `ProjectAnalysis` internally, overlays human-written descriptions from `review-config.json`, plus resources, audits, governance, and the activity feed, and writes a self-contained `compiled-review.json`. If data needs to be computed differently, the change belongs in `ProjectAnalysis`, not in the compiler.
 
+The compiled artifact carries a **three-timestamp model** rather than a single "last compiled" time: `publishedAt` (first publication of the review, preserved forever), `updatedAt` (max of researcher edit times across `review-config.json` / `resources.json` / `governance.json`), and `compiledAt` (live on-chain data freshness, sourced from `discovered.json.timestamp` — **not** wall-clock compile time, so a researcher-triggered recompile without a fresh discovery keeps it frozen). See [Scoring & Review: Timestamps](features/scoring-and-review.md#timestamps-three-timestamp-model) for the full field-by-field breakdown and consumer sites.
+
 ### Stage 3 — Index Aggregation
 
 `defiscan-frontend/scripts/compile-data.ts` reads every `compiled-review.json` and produces `index.json` with cross-protocol totals (capital, functions, admins, dependencies), aggregate fund values, and a global dependency map keyed by address.
