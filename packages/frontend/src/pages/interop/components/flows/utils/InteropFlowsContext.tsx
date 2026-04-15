@@ -12,6 +12,7 @@ import type { InteropChainWithIcon } from '../../chain-selector/types'
 
 export const MAX_SELECTED_CHAINS = 15
 export const MIN_SELECTED_CHAINS = 2
+export const MIN_SELECTED_PROTOCOLS = 1
 
 interface InteropFlowsContextType {
   selectedChains: string[]
@@ -74,6 +75,9 @@ export function InteropFlowsProvider({
   const toggleProtocolSelection = useCallback((protocolId: string) => {
     setSelectedProtocols((prev) => {
       if (prev.includes(protocolId)) {
+        if (prev.length <= MIN_SELECTED_PROTOCOLS) {
+          return prev
+        }
         return prev.filter((id) => id !== protocolId)
       }
       return [...prev, protocolId]

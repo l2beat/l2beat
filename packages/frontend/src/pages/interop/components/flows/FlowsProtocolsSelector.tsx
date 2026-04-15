@@ -16,8 +16,12 @@ import {
   DrawerTrigger,
 } from '~/components/core/Drawer'
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
+import { InfoIcon } from '~/icons/Info'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { useInteropFlows } from './utils/InteropFlowsContext'
+import {
+  MIN_SELECTED_PROTOCOLS,
+  useInteropFlows,
+} from './utils/InteropFlowsContext'
 
 export function FlowsProtocolsSelector({
   allProtocols,
@@ -38,6 +42,17 @@ export function FlowsProtocolsSelector({
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
   )
+
+  const isAtMin = selectedProtocols.length <= MIN_SELECTED_PROTOCOLS
+
+  const selectionMessage = isAtMin ? (
+    <div className="flex items-center gap-1 px-4">
+      <InfoIcon className="shrink-0 fill-negative" />
+      <div className="font-medium text-negative text-paragraph-14">
+        At least {MIN_SELECTED_PROTOCOLS} protocol must be selected.
+      </div>
+    </div>
+  ) : null
 
   const trigger = (
     <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
@@ -80,6 +95,7 @@ export function FlowsProtocolsSelector({
             <DrawerDescription className="font-semibold text-secondary text-xs leading-none">
               Select protocols
             </DrawerDescription>
+            {selectionMessage}
           </DrawerHeader>
           <ScrollWithGradient className="min-h-0">
             {protocolsWithDetails.map((protocol) => (
@@ -88,6 +104,7 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
+                disabled={isAtMin && protocol.isSelected}
                 onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
@@ -116,6 +133,7 @@ export function FlowsProtocolsSelector({
             <DialogDescription className="sr-only">
               Select protocols
             </DialogDescription>
+            {selectionMessage}
           </DialogHeader>
           <ScrollWithGradient>
             {protocolsWithDetails.map((protocol) => (
@@ -124,6 +142,7 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
+                disabled={isAtMin && protocol.isSelected}
                 onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
