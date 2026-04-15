@@ -1,7 +1,6 @@
 import { Address32 } from '@l2beat/shared-pure'
 import { createColumnHelper, type TableOptions } from '@tanstack/react-table'
 import { ExternalLink } from '~/components/ExternalLink'
-import type { NotIncludedTransferRow } from '../types'
 import {
   formatDollars,
   formatTokenAmount,
@@ -13,6 +12,7 @@ import {
   shortenHash,
   toCsvIsoTimestamp,
 } from '~/pages/transfers/utils'
+import type { NotIncludedTransferRow } from '../types'
 
 const columnHelper = createColumnHelper<NotIncludedTransferRow>()
 
