@@ -75,9 +75,6 @@ export function InteropFlowsProvider({
   const toggleProtocolSelection = useCallback((protocolId: string) => {
     setSelectedProtocols((prev) => {
       if (prev.includes(protocolId)) {
-        if (prev.length <= MIN_SELECTED_PROTOCOLS) {
-          return prev
-        }
         return prev.filter((id) => id !== protocolId)
       }
       return [...prev, protocolId]

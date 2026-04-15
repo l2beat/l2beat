@@ -7,6 +7,7 @@ import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
+  MIN_SELECTED_PROTOCOLS,
   useInteropFlows,
 } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
@@ -19,12 +20,13 @@ interface FlowsGraphPanelProps {
 export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   const { selectedChains, selectedProtocols } = useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
+  const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
   const { data, isLoading } = api.interop.flows.useQuery(
     {
       chains: selectedChains,
       protocolIds: selectedProtocols,
     },
-    { enabled: hasEnoughChains },
+    { enabled: hasEnoughChains && hasEnoughProtocols },
   )
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
@@ -41,7 +43,13 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
       {!size ? (
         <Skeleton className="h-full w-full rounded-lg" />
       ) : !hasEnoughChains ? (
-        <NotEnoughChainsOverlay />
+        <SelectionOverlay
+          message={`Select at least ${MIN_SELECTED_CHAINS} chains to view the graph`}
+        />
+      ) : !hasEnoughProtocols ? (
+        <SelectionOverlay
+          message={`Select at least ${MIN_SELECTED_PROTOCOLS} protocol to view the graph`}
+        />
       ) : isLoading || !data ? (
         <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
       ) : (
@@ -56,7 +64,7 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   )
 }
 
-function NotEnoughChainsOverlay() {
+function SelectionOverlay({ message }: { message: string }) {
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <Logo
@@ -70,7 +78,7 @@ function NotEnoughChainsOverlay() {
         <div className="flex items-center gap-1.5 rounded-lg border border-divider bg-surface-primary px-3 py-2">
           <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
           <p className="font-medium text-brand text-label-value-14 leading-none">
-            Select at least {MIN_SELECTED_CHAINS} chains to view the graph
+            {message}
           </p>
         </div>
       </div>

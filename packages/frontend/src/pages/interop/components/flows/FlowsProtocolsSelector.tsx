@@ -43,9 +43,9 @@ export function FlowsProtocolsSelector({
     (protocol) => protocol.isSelected,
   )
 
-  const isAtMin = selectedProtocols.length <= MIN_SELECTED_PROTOCOLS
+  const hasNoSelection = selectedProtocols.length < MIN_SELECTED_PROTOCOLS
 
-  const selectionMessage = isAtMin ? (
+  const selectionMessage = hasNoSelection ? (
     <div className="flex items-center gap-1 px-4">
       <InfoIcon className="shrink-0 fill-negative" />
       <div className="font-medium text-negative text-paragraph-14">
@@ -104,7 +104,6 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                disabled={isAtMin && protocol.isSelected}
                 onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
@@ -142,7 +141,6 @@ export function FlowsProtocolsSelector({
                 name={protocol.name}
                 className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
-                disabled={isAtMin && protocol.isSelected}
                 onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
                 <div className="flex items-center gap-2">
