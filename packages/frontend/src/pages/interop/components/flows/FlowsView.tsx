@@ -44,7 +44,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       <div className="h-full max-lg:order-3">
         <FlowsGeneralStats />
       </div>
-      <div className="group/flows flex w-full min-w-0 flex-col items-center gap-10">
+      <div className="group/flows flex w-full min-w-0 flex-col items-center gap-10 lg:h-[calc(100svh-12rem)]">
         <div className="flex flex-col items-center gap-3 max-lg:order-1">
           <div className="flex gap-2">
             <FlowsChainsSelector allChains={interopChains} />
