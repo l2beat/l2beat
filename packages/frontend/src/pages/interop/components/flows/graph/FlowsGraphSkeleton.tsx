@@ -5,14 +5,12 @@ import { FlowsLogo } from './FlowsLogo'
 import { computeGraphLayout } from './utils/computeGraphLayout'
 
 interface FlowsGraphSkeletonProps {
-  width: number
-  height: number
+  size: number
   isSmallScreen: boolean
 }
 
 export function FlowsGraphSkeleton({
-  width,
-  height,
+  size,
   isSmallScreen,
 }: FlowsGraphSkeletonProps) {
   const { selectedChains } = useInteropFlows()
@@ -22,30 +20,31 @@ export function FlowsGraphSkeleton({
       computeGraphLayout(
         selectedChains,
         selectedChains.map((chainId) => ({ chainId, totalVolume: 1 })),
-        width,
-        height,
+        size,
         isSmallScreen,
       ),
-    [selectedChains, width, height, isSmallScreen],
+    [selectedChains, size, isSmallScreen],
   )
+
+  const center = size / 2
 
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
       overflow="visible"
       className="animate-pulse"
     >
       <BackgroundRoads
         chainIds={selectedChains}
         layout={layout}
-        centerX={width / 2}
-        centerY={height / 2}
+        centerX={center}
+        centerY={center}
       />
       <FlowsLogo
-        centerX={width / 2}
-        centerY={height / 2}
+        centerX={center}
+        centerY={center}
         isSmallScreen={isSmallScreen}
       />
       {selectedChains.map((chainId) => {

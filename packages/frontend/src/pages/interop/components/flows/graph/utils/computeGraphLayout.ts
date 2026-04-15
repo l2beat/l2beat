@@ -19,12 +19,11 @@ const SMALL_SCREEN_MAX_BUBBLE_RADIUS = 35
 export function computeGraphLayout(
   chainIds: string[],
   chainVolumes: { chainId: string; totalVolume: number }[],
-  width: number,
-  height: number,
+  size: number,
   isSmallScreen: boolean,
 ): FlowsGraphLayout {
   const layout: FlowsGraphLayout = new Map()
-  if (chainIds.length === 0 || width === 0 || height === 0) return layout
+  if (chainIds.length === 0 || size === 0) return layout
 
   const volumeMap = new Map(
     chainVolumes.map((cv) => [cv.chainId, cv.totalVolume]),
@@ -36,9 +35,9 @@ export function computeGraphLayout(
 
   const spreadIds = spreadByVolume(chainIds, volumeMap)
 
-  const centerX = width / 2
-  const centerY = height / 2
-  const circleRadius = Math.min(width, height) * 0.4
+  const centerX = size / 2
+  const centerY = size / 2
+  const circleRadius = size * 0.4
 
   for (let i = 0; i < spreadIds.length; i++) {
     const chainId = spreadIds[i]

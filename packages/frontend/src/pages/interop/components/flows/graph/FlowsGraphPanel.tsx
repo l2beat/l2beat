@@ -19,9 +19,9 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
   })
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
-  const steppedWidth = width ? getSteppedSize(width) : undefined
-  const steppedHeight = height ? getSteppedSize(height) : undefined
-  const isSmallScreen = steppedWidth ? steppedWidth <= 500 : false
+  const size =
+    width && height ? getSteppedSize(Math.min(width, height)) : undefined
+  const isSmallScreen = size ? size <= 500 : false
 
   return (
     <div
@@ -29,20 +29,15 @@ export function FlowsGraphPanel({ interopChains }: FlowsGraphPanelProps) {
       className="flex aspect-square min-h-0 w-full flex-1 items-center justify-center pb-6 max-lg:order-2"
       ref={containerRef}
     >
-      {!steppedWidth || !steppedHeight ? (
+      {!size ? (
         <Skeleton className="h-full w-full rounded-lg" />
       ) : isLoading || !data ? (
-        <FlowsGraphSkeleton
-          width={steppedWidth}
-          height={steppedHeight}
-          isSmallScreen={isSmallScreen}
-        />
+        <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
       ) : (
         <FlowsGraph
           interopChains={interopChains}
           data={data}
-          width={steppedWidth}
-          height={steppedHeight}
+          size={size}
           isSmallScreen={isSmallScreen}
         />
       )}

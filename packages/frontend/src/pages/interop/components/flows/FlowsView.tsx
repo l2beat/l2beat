@@ -82,7 +82,7 @@ function SelectInfo({
       className={cn(
         'flex items-center gap-0.5 transition-transform duration-200',
         highlightedChainsNumber === 0 &&
-          'group-has-[#flows-graph:hover]/flows:scale-[1.15]',
+          'group-has-[#flows-graph_svg:hover]/flows:scale-[1.15]',
       )}
     >
       <CursorClickIcon className="size-3 fill-brand" />

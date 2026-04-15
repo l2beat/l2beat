@@ -11,16 +11,14 @@ import { computeGraphLayout } from './utils/computeGraphLayout'
 interface FlowsGraphProps {
   interopChains: InteropChainWithIcon[]
   data: InteropFlowsData
-  width: number
-  height: number
+  size: number
   isSmallScreen: boolean
 }
 
 export function FlowsGraph({
   interopChains,
   data,
-  width,
-  height,
+  size,
   isSmallScreen,
 }: FlowsGraphProps) {
   const { selectedChains } = useInteropFlows()
@@ -30,39 +28,39 @@ export function FlowsGraph({
       computeGraphLayout(
         selectedChains,
         data.chainData,
-        width,
-        height,
+        size,
         isSmallScreen,
       ),
-    [selectedChains, data.chainData, width, height, isSmallScreen],
+    [selectedChains, data.chainData, size, isSmallScreen],
   )
 
   const maxVolume = Math.max(...data.flows.map((f) => f.volume))
+  const center = size / 2
 
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
       overflow="visible"
     >
       <BackgroundRoads
         chainIds={selectedChains}
         layout={layout}
-        centerX={width / 2}
-        centerY={height / 2}
+        centerX={center}
+        centerY={center}
       />
       <FlowsLogo
-        centerX={width / 2}
-        centerY={height / 2}
+        centerX={center}
+        centerY={center}
         isSmallScreen={isSmallScreen}
       />
       <ParticleLayer
         flows={data.flows}
         layout={layout}
         interopChains={interopChains}
-        centerX={width / 2}
-        centerY={height / 2}
+        centerX={center}
+        centerY={center}
         maxVolume={maxVolume}
         isSmallScreen={isSmallScreen}
       />
