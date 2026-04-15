@@ -29,4 +29,4 @@ token(SC, SA) :-transfer(_, _, SC, SA, _, _).
 
 #show cgId/3.
 #show token/2.
-% #show sameAbstract/4.
+#show sameAbstract/4.
