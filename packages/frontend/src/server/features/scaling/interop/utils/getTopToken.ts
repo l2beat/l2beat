@@ -4,7 +4,6 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   AggregatedInteropTransferWithTokens,
   ProtocolDisplayable,
-  ProtocolStats,
 } from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getTopProtocolDisplay } from './getTopProtocolDisplay'
@@ -81,13 +80,7 @@ export function getTopToken({
 
   if (!topToken) return undefined
 
-  const protocolStats = new Map<string, ProtocolStats>(
-    Array.from(topToken.protocols, ([id, volume]) => [
-      id,
-      { volume, transferCount: 0 },
-    ]),
-  )
-  const topProtocol = getTopProtocolDisplay(protocolStats, projectsById)
+  const topProtocol = getTopProtocolDisplay(topToken.protocols, projectsById)
 
   return {
     symbol: topToken.symbol,

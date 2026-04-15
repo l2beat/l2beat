@@ -41,11 +41,6 @@ export type ProtocolDisplayable = {
   iconUrl: string
 }
 
-export type ProtocolStats = {
-  volume: number
-  transferCount: number
-}
-
 export type ByBridgeTypeData = {
   lockAndMint: LockAndMintProtocolData | undefined
   nonMinting: NonMintingProtocolData | undefined

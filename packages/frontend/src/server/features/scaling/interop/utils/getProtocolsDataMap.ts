@@ -2,7 +2,6 @@ import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
-  ProtocolStats,
   TokenFlowData,
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
@@ -277,7 +276,7 @@ function mergeTokensData(
     const current = result.get(token.abstractTokenId) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
-      protocols: new Map<string, ProtocolStats>(),
+      protocols: new Map<string, number>(),
     }
     result.set(
       token.abstractTokenId,

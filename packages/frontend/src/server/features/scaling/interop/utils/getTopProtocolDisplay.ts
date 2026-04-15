@@ -1,14 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { manifest } from '~/utils/Manifest'
-import type { ProtocolDisplayable, ProtocolStats } from '../types'
+import type { ProtocolDisplayable } from '../types'
 
 export function getTopProtocolDisplay(
-  protocols: Map<string, ProtocolStats>,
+  protocols: Map<string, number>,
   projectsById: Map<string, Project<'interopConfig'>>,
 ): ProtocolDisplayable | undefined {
-  const topProtocolId = pickTopProtocolIdByVolume(
-    Array.from(protocols, ([id, stats]) => [id, stats.volume]),
-  )
+  const topProtocolId = pickTopProtocolIdByVolume(protocols)
 
   if (!topProtocolId) return undefined
 

@@ -61,13 +61,9 @@ export function accumulateTokens(
 
   const currentProtocol = current.protocols.get(chainInfo.protocolId)
   if (currentProtocol) {
-    currentProtocol.volume += token.volume
-    currentProtocol.transferCount += token.transferCount
+    current.protocols.set(chainInfo.protocolId, currentProtocol + token.volume)
   } else {
-    current.protocols.set(chainInfo.protocolId, {
-      volume: token.volume,
-      transferCount: token.transferCount,
-    })
+    current.protocols.set(chainInfo.protocolId, token.volume)
   }
 
   return result

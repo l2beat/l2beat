@@ -6,7 +6,6 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   CommonInteropData,
   InteropTopItemsParams,
-  ProtocolStats,
   TokenFlowData,
   TokensPairData,
 } from './types'
@@ -26,7 +25,7 @@ import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
-  protocols: Map<string, ProtocolStats>
+  protocols: Map<string, number>
 }
 
 export async function getInteropTokensPairs({
@@ -92,7 +91,7 @@ export async function getInteropTokensPairs({
     const current = result.get(pairKey) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
-      protocols: new Map<string, ProtocolStats>(),
+      protocols: new Map<string, number>(),
     }
 
     result.set(pairKey, {
@@ -121,13 +120,9 @@ export async function getInteropTokensPairs({
 
     const currentProtocol = current.protocols.get(pair.id)
     if (currentProtocol) {
-      currentProtocol.volume += pair.volume
-      currentProtocol.transferCount += pair.transferCount
+      current.protocols.set(pair.id, currentProtocol + pair.volume)
     } else {
-      current.protocols.set(pair.id, {
-        volume: pair.volume,
-        transferCount: pair.transferCount,
-      })
+      current.protocols.set(pair.id, pair.volume)
     }
   }
 
