@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -77,58 +76,76 @@ Lighter prover implements recursive aggregation of transaction proofs to make th
     ],
     verifierHashes: [
       {
-        hash: '0x8d5bf346c2d12732ea0b947623dcb66bfffa532e8c33d0b9493cffca41c8fa39',
+        hash: '0x5748f2cfc9d31f5d13f096ee5f5d96988fa5dbc8cbd3895612aead78e2664417',
         name: 'Lighter verifier',
-        sourceLink:
-          'https://github.com/elliottech/lighter-prover/tree/a07b2759345d53a29b22ebd97d815e4d443b59b0/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xb20De28D78b63bc0c94eef89Db53F6338af17825',
+              '0xC8A6CCec3f41dF6a80905030251c39A6b434f0b4',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: `
-  The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
-
-  The steps below are for Ubuntu 22.04 OS.
-
-  1. Install rust, gcc, go version 1.21 and later.
-
-  \`\`\`
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  . .cargo/env
-
-  sudo apt update
-  sudo apt install build-essential
-
-  # one way to install latest go on Ubuntu 22.04
-  wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-  sudo tar -xvf go1.21.0.linux-amd64.tar.gz
-  sudo mv go /usr/local
-  export GOROOT=/usr/local/go
-  export GOPATH=$HOME/go
-  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-  source ~/.profile
-  \`\`\`
-
-  2. Run the correct version of the script to regenerate the keys.
-
-  \`\`\`
-  git clone https://github.com/elliottech/lighter-prover.git
-  cd lighter-prover
-  git checkout a07b2759345d53a29b22ebd97d815e4d443b59b0
-  chmod +x build_circuits.sh
-  ./build_circuits.sh
-  \`\`\`
-
-  The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
-    `,
+        verificationStatus: 'notVerified',
+        verificationSteps:
+          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
+      //     {
+      //       hash: '0x8d5bf346c2d12732ea0b947623dcb66bfffa532e8c33d0b9493cffca41c8fa39',
+      //       name: 'Lighter verifier',
+      //       sourceLink:
+      //         'https://github.com/elliottech/lighter-prover/tree/a07b2759345d53a29b22ebd97d815e4d443b59b0/circuit/src',
+      //       proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+      //       knownDeployments: [
+      //         {
+      //           address: ChainSpecificAddress.fromLong(
+      //             'ethereum',
+      //             '0xb20De28D78b63bc0c94eef89Db53F6338af17825',
+      //           ),
+      //         },
+      //       ],
+      //       verificationStatus: 'successful',
+      //       attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+      //       verificationSteps: `
+      // The verification process below is based on the \`build_circuits.sh\` [script](https://github.com/elliottech/lighter-prover/blob/main/build_circuits.sh) in the lighter-prover repo. It consumed around 100 GiB of memory at the peak, so we recommend rerunning it on a machine with 128 GiB of RAM.
+
+      // The steps below are for Ubuntu 22.04 OS.
+
+      // 1. Install rust, gcc, go version 1.21 and later.
+
+      // \`\`\`
+      // curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      // . .cargo/env
+
+      // sudo apt update
+      // sudo apt install build-essential
+
+      // # one way to install latest go on Ubuntu 22.04
+      // wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
+      // sudo tar -xvf go1.21.0.linux-amd64.tar.gz
+      // sudo mv go /usr/local
+      // export GOROOT=/usr/local/go
+      // export GOPATH=$HOME/go
+      // export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+      // source ~/.profile
+      // \`\`\`
+
+      // 2. Run the correct version of the script to regenerate the keys.
+
+      // \`\`\`
+      // git clone https://github.com/elliottech/lighter-prover.git
+      // cd lighter-prover
+      // git checkout a07b2759345d53a29b22ebd97d815e4d443b59b0
+      // chmod +x build_circuits.sh
+      // ./build_circuits.sh
+      // \`\`\`
+
+      // The script will generate the \`final::....sol\` file that contains the verifier smart contract with the verification keys.
+      //   `,
+      //     },
       {
         // DesertVerifier
         hash: '0xc3d58029fabf2a93d6cb9b96315c484e4bea2e238aaa081460c9027863c650e7',

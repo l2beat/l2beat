@@ -1,5 +1,10 @@
 import { StatCard } from '~/components/chart/stats/StatCard'
 import { StatsGrid } from '~/components/chart/stats/StatsGrid'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -100,10 +105,17 @@ function Stat({
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
         {change !== undefined ? (
-          <PercentChange
-            textClassName="md:text-heading-20 w-full text-heading-16"
-            value={change}
-          />
+          <Tooltip>
+            <TooltipTrigger>
+              <PercentChange
+                textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
+                value={change}
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              Percentage change compared to 7D ago.
+            </TooltipContent>
+          </Tooltip>
         ) : null}
       </div>
     </StatCard>

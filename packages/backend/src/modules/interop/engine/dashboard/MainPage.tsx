@@ -526,6 +526,8 @@ function MainPageLayout(props: {
       />
       {' | '}
       <a href="/interop/anomalies">Anomalies dashboard</a>
+      {' | '}
+      <a href="/interop/block-stats">Block processing stats</a>
       <DataTablePage
         showHome={false}
         tables={[

@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AnchorStateRegistry",
+  "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the {{ RespectedGameString }}. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).",
+  "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+  "ignoreRelatives": ["anchorGame"],
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame",
+        "1337": "KailuaGame",
+        "42": "OPSuccinctFaultDisputeGame"
+      }
+    }
+  },
+  "fields": {
+    "respectedGameType": {
+      "severity": "HIGH"
+    },
+    "RespectedGameString": {
+      "handler": {
+        "type": "call",
+        "method": "respectedGameType",
+        "args": []
+      },
+      "edit": ["format", "DisputeGameMap"]
+    }
+  }
+}

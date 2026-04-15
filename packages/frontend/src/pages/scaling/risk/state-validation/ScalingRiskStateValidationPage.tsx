@@ -3,21 +3,23 @@ import { TableFilterContextProvider } from '~/components/table/filters/TableFilt
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type {
+  ScalingRiskStateValidationNoProofsEntry,
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { ScalingRiskStateValidationTabs } from './components/ScalingRiskStateValidationTabs'
 
 interface Props extends AppLayoutProps {
-  validity: TabbedScalingEntries<ScalingRiskStateValidationValidityEntry>
-  optimistic: TabbedScalingEntries<ScalingRiskStateValidationOptimisticEntry>
+  validity: ScalingRiskStateValidationValidityEntry[]
+  optimistic: ScalingRiskStateValidationOptimisticEntry[]
+  noProofs: ScalingRiskStateValidationNoProofsEntry[]
 }
 
 export function ScalingRiskStateValidationPage({
   validity,
   optimistic,
+  noProofs,
   ...props
 }: Props) {
   return (
@@ -28,6 +30,7 @@ export function ScalingRiskStateValidationPage({
           <ScalingRiskStateValidationTabs
             validity={validity}
             optimistic={optimistic}
+            noProofs={noProofs}
           />
         </TableFilterContextProvider>
       </SideNavLayout>

@@ -1,9 +1,9 @@
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 export function createMissingTokensRouter() {
   return router({
-    list: publicProcedure.query(({ ctx }) => {
+    list: protectedProcedure.query(({ ctx }) => {
       return ctx.db.interopTransfer.getMissingTokensInfo()
     }),
   })

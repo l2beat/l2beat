@@ -21,6 +21,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
+import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
@@ -83,7 +84,7 @@ export function ProjectScalingStats({ project, className }: Props) {
             className="text-nowrap font-medium! text-base! leading-[100%]!"
             changeClassName="text-label-value-14 font-bold"
           >
-            {project.header.activity.lastDayUops.toFixed(2)}
+            {formatActivityCount(project.header.activity.lastDayUops)}
           </ValueWithPercentageChange>
         ) : (
           <NoDataBadge />

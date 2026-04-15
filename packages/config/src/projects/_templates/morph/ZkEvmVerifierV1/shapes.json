@@ -4,5 +4,11 @@
     "address": "eth:0x045d4BC73Bd1918192f34e98532A5272Ef620423",
     "chain": "ethereum",
     "blockNumber": 24124509
+  },
+  "ZkEvmVerifierV1_v5_0_0": {
+    "hash": "0xe768d966c7b9e6eba422736e59046849ce9b3236ab36b790ec7b87cadfa383b8",
+    "address": "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63",
+    "chain": "ethereum",
+    "blockNumber": 24848194
   }
 }

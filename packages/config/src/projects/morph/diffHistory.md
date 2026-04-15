@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xd5242dc7d79b6563ea1dd001d25789afa00f530e
+
+# Diff at Fri, 10 Apr 2026 10:18:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1775051589
+- current timestamp: 1775810477
+
+## Description
+
+Upgraded one (out of two) SP1 verifiers to a standard SP1 Turbo version.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.latestVerifier.0.verifier:
+-        "eth:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70"
++        "eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63"
+      values.latestVerifier.0.startBatchIndex:
+-        47944
++        51566
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (eth:0x5ff102a4A4Ce2040288a797CE4CCCa85eE1E2d70)
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (eth:0x059adC0Db833f7cCb12dC41BE0017626337AfA63)
+    +++ description: A snark verifier based on SP1 by Succinct. It verifies RISC-V execution in a PLONK proof. Used to verify the validity of L2 state transitions for single round fraud proofs.
+```
+
+## Source code changes
+
+```diff
+...0x059adC0Db833f7cCb12dC41BE0017626337AfA63.sol} | 210 +++++++++++----------
+ 1 file changed, 113 insertions(+), 97 deletions(-)
+```
+
 Generated with discovered.json: 0xf903b1e901704fc1b25dcb9507716c6ba10b0867
 
 # Diff at Wed, 01 Apr 2026 15:00:34 GMT:

@@ -20,6 +20,17 @@ export interface WarningWithSentiment {
   sentiment: 'bad' | 'warning' | 'neutral'
 }
 
+export type ProjectDetailsSectionId =
+  | 'contracts'
+  | 'program-hashes'
+  | 'permissions'
+  | 'liveness'
+
+export interface ProjectRedWarning {
+  text: string
+  detailAnchor?: ProjectDetailsSectionId
+}
+
 export interface TableReadyValue<T extends string = string> {
   value: T
   secondLine?: string
@@ -142,7 +153,7 @@ export interface ProjectCustomColors {
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ChainSpecificAddress[]
@@ -152,6 +163,7 @@ export interface ProjectDisplay {
   description: string
   links: ProjectLinks
   badges: Badge[]
+  redWarning?: ProjectRedWarning
 }
 
 export interface ProjectLinks {

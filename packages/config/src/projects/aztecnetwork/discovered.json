@@ -1,6 +1,6 @@
 {
   "name": "aztecnetwork",
-  "timestamp": 1775561692,
+  "timestamp": 1776071799,
   "configHash": "0xb11802a34cef560d6a748091b60637afa7ca5e3a16ed8666fe305162971823d4",
   "entries": [
     {
@@ -71,7 +71,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 0,
-        "getCurrentRound": 40,
+        "getCurrentRound": 47,
         "getGovernance": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "getInstance": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "GSE": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
@@ -163,8 +163,8 @@
         "governanceProposer": "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef",
         "isAllBeneficiariesAllowed": true,
         "proposalCount": 3,
-        "totalPowerNow": "743992001636901014525243317",
-        "withdrawalCount": 2831
+        "totalPowerNow": "749620001636901014525243317",
+        "withdrawalCount": 3151
       },
       "implementationNames": {
         "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": "Governance"
@@ -318,11 +318,11 @@
       "values": {
         "$immutable": true,
         "GOVERNANCE": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-        "isSlashingEnabled": true,
+        "isSlashingEnabled": false,
         "PROPOSER": "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958",
         "SLASHING_DISABLE_DURATION": 259200,
         "SLASHING_DISABLE_DURATION_fmt": "3d",
-        "slashingDisabledUntil": 0,
+        "slashingDisabledUntil": 1776137255,
         "VETOER": "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480"
       },
       "implementationNames": {
@@ -392,6 +392,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "EscapeHatch",
       "address": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
       "type": "Contract",
@@ -411,7 +416,7 @@
         "getBondSizeFmt": "332,000,000",
         "getBondToken": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getCandidateCount": 0,
-        "getCurrentHatch": 11,
+        "getCurrentHatch": 13,
         "getFailedHatchPunishment": "9600000000000000000000000",
         "getFailedHatchPunishmentFmt": "9,600,000",
         "getFrequency": 112,
@@ -489,13 +494,13 @@
         "$immutable": true,
         "FEE_ASSET_PORTAL": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
         "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
-        "getInProgress": 7448,
+        "getInProgress": 13777,
         "getState": {
-          "rollingHash": "0xd8b4960f5659d0ff5350af9d3e753d83",
-          "totalMessagesInserted": 23,
-          "inProgress": 7448
+          "rollingHash": "0x1c81725b5baf0751283f1291f10b56ae",
+          "totalMessagesInserted": 34,
+          "inProgress": 13777
         },
-        "getTotalMessagesInserted": 23,
+        "getTotalMessagesInserted": 34,
         "LAG": 1,
         "ROLLUP": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "VERSION": 2934756905
@@ -596,7 +601,7 @@
           "extensions": []
         },
         "EXECUTION_DELAY_IN_ROUNDS": 28,
-        "getCurrentRound": 315,
+        "getCurrentRound": 370,
         "INSTANCE": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "LIFETIME_IN_ROUNDS": 34,
         "MAX_ROUND_SIZE": 1024,
@@ -641,7 +646,7 @@
         "getLatestRollup": "eth:0xAe2001f7e21d5EcABf6234E9FDd1E76F50F74962",
         "owner": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
         "proofOfPossessionGasLimit": 250000,
-        "totalSupply": "741684000000000000000000000"
+        "totalSupply": "747312000000000000000000000"
       },
       "implementationNames": {
         "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f": "GSE"
@@ -697,7 +702,7 @@
       "values": {
         "_epochProofVerifier": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
         "$immutable": true,
-        "archive": "0x212b845f5ebe7215649faa5acc4d4f7774b47ea2a9e1297d31e2144b9198c09b",
+        "archive": "0x2ae633b3edefa93ad9e378df91fd5b5f4f897089fd5863e4db8cc5408055dac4",
         "checkBlob": true,
         "constructorArgs": {
           "_feeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
@@ -770,21 +775,21 @@
           "extensions": []
         },
         "getActivationThreshold": "200000000000000000000000",
-        "getActiveAttesterCount": 3709,
+        "getActiveAttesterCount": 3740,
         "getAvailableValidatorFlushes": 4,
         "getBurnAddress": "eth:0x4355415548584943414c4c490000000000000000",
         "getCheckpointReward": "500000000000000000000",
-        "getCurrentBlobCommitmentsHash": "0x005367458d7108354971e04c496debf9709375f1f3e2617d49e05e14a4cff3c1",
-        "getCurrentEpoch": 1261,
-        "getCurrentSampleSeed": "53056565612485860114084965258497501247042532364369728604372801725508702249063",
-        "getCurrentSlot": 40382,
+        "getCurrentBlobCommitmentsHash": "0x00bd73afba992f9e4f491d422682b58f3191a5290f4ce916785815a0433f1a32",
+        "getCurrentEpoch": 1483,
+        "getCurrentSampleSeed": "28685018594121808024826102513192037793628849828697354251829559403073951886339",
+        "getCurrentSlot": 47467,
         "getEarliestRewardsClaimableTimestamp": 0,
         "getEjectionThreshold": "100000000000000000000000",
         "getEntryQueueFlushSize": 4,
         "getEntryQueueLength": 0,
         "getEpochDuration": 32,
         "getEscapeHatch": "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-        "getEthPerFeeAsset": 8838961,
+        "getEthPerFeeAsset": 9454366,
         "getExitDelay": 345600,
         "getFeeAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getFeeAssetPortal": "eth:0x2891F8b941067F8B5a3F34545A30Cf71E3E23617",
@@ -797,13 +802,13 @@
         "getLocalEjectionThreshold": "190000000000000000000000",
         "getManaLimit": 150000000,
         "getManaTarget": 75000000,
-        "getNextFlushableEpoch": 1067,
+        "getNextFlushableEpoch": 1451,
         "getOutbox": "eth:0xc9698B7AdEf9ee63F3Bf5cFF38086e4E836579f0",
-        "getPendingCheckpointNumber": 7446,
+        "getPendingCheckpointNumber": 13775,
         "getProofSubmissionEpochs": 1,
-        "getProvenCheckpointNumber": 7418,
+        "getProvenCheckpointNumber": 13764,
         "getProvingCostPerManaInEth": 25000000,
-        "getProvingCostPerManaInFeeAsset": 2828386730070,
+        "getProvingCostPerManaInFeeAsset": 2644280959718,
         "getRewardConfig": {
           "rewardDistributor": "eth:0x3D6A1B00C830C5f278FC5dFb3f6Ff0b74Db6dfe0",
           "sequencerBps": 7000,
@@ -815,7 +820,7 @@
         "getSlotDuration": 72,
         "getStakingAsset": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
         "getTargetCommitteeSize": 48,
-        "getTips": { "pending": 7446, "proven": 7418 },
+        "getTips": { "pending": 13775, "proven": 13764 },
         "getVersion": 2934756905,
         "isRewardsClaimable": true,
         "L1_BLOCK_AT_GENESIS": 24586322,
@@ -865,11 +870,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xb31e6d9661720A93d54AF7D1815d9bb399280629",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xb33a08eF4624eE8F409F749Ee73766E225bEd0F4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -910,7 +910,7 @@
           "eth:0x81062F03742B88923eaB121243B69D0a0092089e",
           "eth:0x32e90E88bb2E6Ee4382e6884cC5c299a6bA27920",
           "eth:0x23d4A9533627eA70915026638ff5989a967Be667",
-          "eth:0xb31e6d9661720A93d54AF7D1815d9bb399280629",
+          "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D",
           "eth:0x0Fb6215099f48D723CfB89434C2cb887357Bc871",
           "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe"
         ],
@@ -919,7 +919,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1802,6 +1802,6 @@
     "aztecnetwork/TallySlashingProposer": "0x79d17506e76ca87ca29df48adf9222a01821722b0096d11689dad9fbc27f40c7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24827543 },
-  "permissionsConfigHash": "0xad77cb773e6bdf3be18aa5849dca5c91a0a8118d7be055eeea90dcb46676329b"
+  "usedBlockNumbers": { "ethereum": 24869896 },
+  "permissionsConfigHash": "0x4f9f421c161b2c68235c86172fa243ab68875b364427647129eff850e522a251"
 }

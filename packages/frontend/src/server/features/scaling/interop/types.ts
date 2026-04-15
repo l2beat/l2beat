@@ -128,9 +128,11 @@ export type InteropProtocolTransferDetailsItem = {
   valueUsd: number | undefined
   duration: number | undefined
   srcChain: string
+  srcChainIconUrl: string | undefined
   srcTxHash: string | undefined
   srcTxHashHref: string | undefined
   dstChain: string
+  dstChainIconUrl: string | undefined
   dstTxHash: string | undefined
   dstTxHashHref: string | undefined
 }

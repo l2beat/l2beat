@@ -157,6 +157,7 @@ export async function makeConfig(
       flags,
       chains,
       activeChains,
+      isLocal,
     ),
     newClientsEnabled: env.boolean('NEW_CLIENTS_ENABLED', false),
     // Must be last

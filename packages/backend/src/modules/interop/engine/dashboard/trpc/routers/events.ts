@@ -3,7 +3,7 @@ import {
   getInteropEventDetails,
   type InteropEventKind,
 } from '../../impls/events'
-import { publicProcedure } from '../procedures'
+import { protectedProcedure } from '../procedures'
 import { router } from '../trpc'
 
 const InteropEventDetailsRequest = v.object({
@@ -13,10 +13,10 @@ const InteropEventDetailsRequest = v.object({
 
 export function createEventsRouter() {
   return router({
-    stats: publicProcedure.query(({ ctx }) => {
+    stats: protectedProcedure.query(({ ctx }) => {
       return ctx.db.interopEvent.getStats()
     }),
-    details: publicProcedure
+    details: protectedProcedure
       .input(InteropEventDetailsRequest)
       .query(({ ctx, input }) => {
         return getInteropEventDetails(

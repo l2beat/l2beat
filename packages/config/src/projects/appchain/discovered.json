@@ -945,7 +945,7 @@
         "0x9a0f84345e9dc0b83470c088eba1df01ac6baf465d028aff97b004efb39f7054"
       ],
       "proxyType": "immutable",
-      "description": "Verifies attestations of an AWS Nitro TEE.",
+      "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
       "sinceTimestamp": 1753736531,
       "sinceBlock": 23020192,
       "values": {

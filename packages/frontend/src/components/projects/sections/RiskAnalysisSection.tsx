@@ -1,3 +1,4 @@
+import type { ProjectRedWarning } from '@l2beat/config'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { BigPizzaRosette } from '../../rosette/pizza/BigPizzaRosette'
@@ -11,7 +12,7 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteValues: RosetteValue[]
   warning: string | undefined
   isVerified: boolean | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
   shouldHideRosette?: boolean | undefined
 }
 
@@ -41,7 +42,7 @@ export function RiskAnalysisSection({
       )}
       {redWarning && (
         <WarningBar
-          text={redWarning}
+          text={redWarning.text}
           color="red"
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}

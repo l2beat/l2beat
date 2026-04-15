@@ -75,22 +75,19 @@ const items = [
     title: 'Indexing',
     items: [
       {
-        title: 'Resyncable plugins',
+        title: 'Plugin statuses',
         url: '/indexing/plugin-statuses',
         icon: RefreshCwIcon,
-        isUpcoming: true,
       },
       {
         title: 'Processor statuses',
         url: '/indexing/processor-statuses',
         icon: CpuIcon,
-        isUpcoming: true,
       },
       {
         title: 'Financial actions',
         url: '/financials/actions',
         icon: CircleDollarSignIcon,
-        isUpcoming: true,
       },
     ],
   },

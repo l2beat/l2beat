@@ -23,7 +23,7 @@ export const rise: ScalingProject = upcomingL2({
       socialMedia: [
         'https://discord.com/invite/risechain',
         'https://medium.com/@rise_chain',
-        'https://x.com/rise_chain',
+        'https://x.com/risechain',
       ],
     },
   },

@@ -14,19 +14,15 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     ...getCommonProjectColumns(columnHelper, getHref),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
-      cell: (ctx) => {
-        const projectName = (
+      cell: (ctx) => (
+        <TableLink href={getHref(ctx.row.original)}>
           <ProjectNameCell
             project={ctx.row.original}
             withInfoTooltip
             ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
           />
-        )
-
-        return (
-          <TableLink href={getHref(ctx.row.original)}>{projectName}</TableLink>
-        )
-      },
+        </TableLink>
+      ),
       enableHiding: false,
     }),
   ]

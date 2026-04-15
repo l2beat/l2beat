@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd5330447b7517fadfe067dcefe4d35ee9fe67c54
+
+# Diff at Fri, 10 Apr 2026 08:24:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1775561575
+- current timestamp: 1775809429
+
+## Description
+
+Rotated one member, removed two members from Polygon admin ms.
+
+## Watched changes
+
+```diff
+    contract Polygon Multisig 2 (eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x1B054e6c9F424879d8ad829EE254F88B4D3ac304"
++        "eth:0x4A658D678804DD0a4Ad0A2c26AD4F4EB2517154b"
+      values.$members.3:
+-        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.$members.4:
+-        "eth:0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xd89f2ed9ba53595826282026a670b0527d96f786
 
 # Diff at Tue, 07 Apr 2026 11:34:04 GMT:

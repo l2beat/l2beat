@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TaikoL1",
   "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages L1 liveness bonds, validates batch parameters, and acts as the state machine for the L2.",
   "ignoreMethods": [
