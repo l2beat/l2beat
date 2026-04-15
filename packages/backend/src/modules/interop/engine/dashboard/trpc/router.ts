@@ -3,6 +3,7 @@ import type { PluginSyncStatus } from '../../sync/InteropSyncersManager'
 import type { ProcessorStatus } from '../impls/processors'
 import { createAnomaliesRouter } from './routers/anomalies'
 import { createChainsRouter } from './routers/chains'
+import { createCoveragePiesRouter } from './routers/coveragePies'
 import { createEventsRouter } from './routers/events'
 import { createFinancialsRouter } from './routers/financials'
 import { createKnownAppsRouter } from './routers/knownApps'
@@ -21,6 +22,7 @@ export function createInteropTrpcRouter(deps: {
   return router({
     anomalies: createAnomaliesRouter(),
     chains: createChainsRouter(deps),
+    coveragePies: createCoveragePiesRouter(),
     events: createEventsRouter(),
     financials: createFinancialsRouter(),
     messages: createMessagesRouter(),

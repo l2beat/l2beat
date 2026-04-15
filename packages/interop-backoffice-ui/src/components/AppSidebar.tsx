@@ -109,7 +109,6 @@ const items = [
         title: 'Coverage pies',
         url: '/insights/coverage-pies',
         icon: PieChartIcon,
-        isUpcoming: true,
       },
       {
         title: 'Memory',

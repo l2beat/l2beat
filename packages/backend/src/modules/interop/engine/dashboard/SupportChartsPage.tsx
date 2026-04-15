@@ -1,192 +1,17 @@
-import type { InteropEventSupportBreakdownRecord } from '@l2beat/database'
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import type {
+  InteropCoveragePieChart,
+  InteropCoveragePiesData,
+} from './impls/coveragePies'
 
-const COLLAPSE_THRESHOLD_PCT = 2
-
-const CHAIN_ALIASES: Record<string, string> = {
-  Unknown_792703809: 'solana',
-  Unknown_30367: 'hyperevm',
-  Unknown_30383: 'plasma',
-  Unknown_30385: 'dinari',
-  Unknown_30390: 'monad',
-  Unknown_30396: 'stable',
-  Unknown_30292: 'etherlink',
-  Unknown_30403: 'citrea',
-  Unknown_30420: 'tron',
-  Unknown_30362: 'berachain',
-  Unknown_30212: 'conflux',
-  Unknown_30150: 'klaytn',
-}
-
-interface AggregatedSlice {
-  label: string
-  rawChains: string[]
-  isSupported: boolean
-  count: number
-  pctOfTotal: number
-  color: string
-}
-
-interface EventSupportChart {
-  id: string
-  title: string
-  centerLabel: string
-  totalCount: number
-  supportedCount: number
-  unsupportedCount: number
-  supportedPct: number
-  unsupportedPct: number
-  slices: AggregatedSlice[]
-}
-
-interface ChartInput {
-  id: string
-  title: string
-  centerLabel: string
-  rows: InteropEventSupportBreakdownRecord[]
-}
-
-function resolveChainAlias(chain: string): string {
-  return CHAIN_ALIASES[chain] ?? chain
-}
-
-function hsl(h: number, s: number, l: number): string {
-  return `hsl(${h} ${s}% ${l}%)`
-}
-
-function addColors(rows: Omit<AggregatedSlice, 'color'>[]): AggregatedSlice[] {
-  const supported = rows.filter((r) => r.isSupported)
-  const unsupported = rows.filter((r) => !r.isSupported)
-
-  let supportedIndex = 0
-  let unsupportedIndex = 0
-
-  return rows.map((row) => {
-    if (row.isSupported) {
-      const t =
-        supported.length <= 1 ? 0.5 : supportedIndex / (supported.length - 1)
-      supportedIndex++
-      return { ...row, color: hsl(136, 65, 30 + t * 40) }
-    }
-
-    const t =
-      unsupported.length <= 1
-        ? 0.5
-        : unsupportedIndex / (unsupported.length - 1)
-    unsupportedIndex++
-    return { ...row, color: hsl(0, 75, 30 + t * 40) }
-  })
-}
-
-function buildChartData(input: ChartInput): EventSupportChart {
-  const grouped = new Map<
-    string,
-    {
-      count: number
-      supportedCount: number
-      unsupportedCount: number
-      rawChains: Set<string>
-    }
-  >()
-
-  for (const row of input.rows) {
-    const label = resolveChainAlias(row.chain)
-    const current = grouped.get(label) ?? {
-      count: 0,
-      supportedCount: 0,
-      unsupportedCount: 0,
-      rawChains: new Set<string>(),
-    }
-
-    current.count += row.count
-    if (row.isSupported) {
-      current.supportedCount += row.count
-    } else {
-      current.unsupportedCount += row.count
-    }
-    current.rawChains.add(row.chain)
-    grouped.set(label, current)
-  }
-
-  const merged = Array.from(grouped.entries())
-    .map(([label, value]) => ({
-      label,
-      rawChains: Array.from(value.rawChains).sort(),
-      count: value.count,
-      isSupported: value.unsupportedCount === 0,
-    }))
-    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
-
-  const totalCount = merged.reduce((acc, row) => acc + row.count, 0)
-
-  const withPct = merged.map((row) => ({
-    ...row,
-    pctOfTotal: totalCount === 0 ? 0 : (100 * row.count) / totalCount,
-  }))
-
-  const large = withPct.filter((x) => x.pctOfTotal >= COLLAPSE_THRESHOLD_PCT)
-  const small = withPct.filter((x) => x.pctOfTotal < COLLAPSE_THRESHOLD_PCT)
-
-  const smallSupported = small.filter((x) => x.isSupported)
-  const smallUnsupported = small.filter((x) => !x.isSupported)
-
-  const collapsed: Omit<AggregatedSlice, 'color'>[] = [...large]
-
-  if (smallSupported.length > 0) {
-    const count = smallSupported.reduce((acc, row) => acc + row.count, 0)
-    collapsed.push({
-      label: `Other supported (<${COLLAPSE_THRESHOLD_PCT}%, ${smallSupported.length} chains)`,
-      rawChains: smallSupported.flatMap((x) => x.rawChains),
-      isSupported: true,
-      count,
-      pctOfTotal: totalCount === 0 ? 0 : (100 * count) / totalCount,
-    })
-  }
-
-  if (smallUnsupported.length > 0) {
-    const count = smallUnsupported.reduce((acc, row) => acc + row.count, 0)
-    collapsed.push({
-      label: `Other unsupported (<${COLLAPSE_THRESHOLD_PCT}%, ${smallUnsupported.length} chains)`,
-      rawChains: smallUnsupported.flatMap((x) => x.rawChains),
-      isSupported: false,
-      count,
-      pctOfTotal: totalCount === 0 ? 0 : (100 * count) / totalCount,
-    })
-  }
-
-  const slices = addColors(
-    collapsed.sort(
-      (a, b) => b.count - a.count || a.label.localeCompare(b.label),
-    ),
-  )
-
-  const supportedCount = slices
-    .filter((x) => x.isSupported)
-    .reduce((acc, row) => acc + row.count, 0)
-  const unsupportedCount = totalCount - supportedCount
-
-  return {
-    id: input.id,
-    title: input.title,
-    centerLabel: input.centerLabel,
-    totalCount,
-    supportedCount,
-    unsupportedCount,
-    supportedPct: totalCount === 0 ? 0 : (100 * supportedCount) / totalCount,
-    unsupportedPct:
-      totalCount === 0 ? 0 : (100 * unsupportedCount) / totalCount,
-    slices,
-  }
-}
-
-function toJsonPayload(charts: EventSupportChart[]) {
+function toJsonPayload(charts: InteropCoveragePieChart[]) {
   return charts.map((chart) => ({
     id: chart.id,
-    labels: chart.slices.map((x) => x.label),
-    values: chart.slices.map((x) => x.count),
-    percentages: chart.slices.map((x) => x.pctOfTotal),
-    colors: chart.slices.map((x) => x.color),
+    labels: chart.slices.map((slice) => slice.label),
+    values: chart.slices.map((slice) => slice.count),
+    percentages: chart.slices.map((slice) => slice.pctOfTotal),
+    colors: chart.slices.map((slice) => slice.color),
   }))
 }
 
@@ -198,10 +23,7 @@ function formatPct(value: number): string {
   return `${value.toFixed(2)}%`
 }
 
-function SupportChartsPageLayout(props: {
-  charts: EventSupportChart[]
-  generatedAt: string
-}) {
+function SupportChartsPageLayout(props: InteropCoveragePiesData) {
   const jsonPayload = JSON.stringify(toJsonPayload(props.charts)).replaceAll(
     '<',
     '\\u003c',
@@ -288,7 +110,7 @@ function SupportChartsPageLayout(props: {
         <h1>Coverage pies</h1>
         <p className="meta">
           Support source of truth: <code>InteropEvent.unsupported</code>. Slices
-          below {COLLAPSE_THRESHOLD_PCT}% are collapsed by support status.
+          below {props.collapseThresholdPct}% are collapsed by support status.
           Generated at: {props.generatedAt}
         </p>
 
@@ -393,16 +215,9 @@ function SupportChartsPageLayout(props: {
   )
 }
 
-export function renderSupportChartsPage(props: { charts: ChartInput[] }) {
-  const charts = props.charts.map((chart) => buildChartData(chart))
-
+export function renderSupportChartsPage(props: InteropCoveragePiesData) {
   return (
     '<!DOCTYPE html>' +
-    renderToStaticMarkup(
-      <SupportChartsPageLayout
-        charts={charts}
-        generatedAt={new Date().toISOString()}
-      />,
-    )
+    renderToStaticMarkup(<SupportChartsPageLayout {...props} />)
   )
 }

@@ -32,6 +32,9 @@ export function SummaryPage() {
             <Button asChild variant="outline">
               <Link to="/missing-tokens">Open missing tokens</Link>
             </Button>
+            <Button asChild variant="outline">
+              <Link to="/insights/coverage-pies">Open coverage pies</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
