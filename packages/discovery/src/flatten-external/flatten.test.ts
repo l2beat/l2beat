@@ -4,8 +4,8 @@ import type { FileContent } from './ParsedFilesManager'
 
 function dedent(s: string): string {
   const lines = s.split('\n')
-  if (lines.length > 0 && lines[0].trim() === '') lines.shift()
-  while (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop()
+  if (lines.length > 0 && lines[0]?.trim() === '') lines.shift()
+  while (lines.length > 0 && lines[lines.length - 1]?.trim() === '') lines.pop()
   const indent = Math.min(
     ...lines
       .filter((l) => l.trim().length > 0)
