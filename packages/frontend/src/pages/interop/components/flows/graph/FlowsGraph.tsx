@@ -25,12 +25,7 @@ export function FlowsGraph({
 
   const layout = useMemo(
     () =>
-      computeGraphLayout(
-        selectedChains,
-        data.chainData,
-        size,
-        isSmallScreen,
-      ),
+      computeGraphLayout(selectedChains, data.chainData, size, isSmallScreen),
     [selectedChains, data.chainData, size, isSmallScreen],
   )
 
