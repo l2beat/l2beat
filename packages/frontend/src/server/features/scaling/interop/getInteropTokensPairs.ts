@@ -38,9 +38,7 @@ export async function getInteropTokensPairs({
   const db = getDb()
 
   const [interopProject, interopProjects] = await Promise.all([
-    id
-      ? ps.getProject({ id, select: ['interopConfig'] })
-      : undefined,
+    id ? ps.getProject({ id, select: ['interopConfig'] }) : undefined,
     ps.getProjects({ select: ['interopConfig'] }),
   ])
   if (id && !interopProject) {

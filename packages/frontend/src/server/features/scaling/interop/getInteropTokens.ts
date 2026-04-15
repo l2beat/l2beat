@@ -18,9 +18,7 @@ export async function getInteropTokens({
   type,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   const [interopProject, interopProjects] = await Promise.all([
-    id
-      ? ps.getProject({ id, select: ['interopConfig'] })
-      : undefined,
+    id ? ps.getProject({ id, select: ['interopConfig'] }) : undefined,
     ps.getProjects({ select: ['interopConfig'] }),
   ])
   if (id && !interopProject) {

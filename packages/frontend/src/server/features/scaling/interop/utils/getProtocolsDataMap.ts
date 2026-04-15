@@ -2,11 +2,11 @@ import { assertUnreachable, getInteropTransferValue } from '@l2beat/shared-pure'
 import type {
   AggregatedInteropTransferWithTokens,
   CommonInteropData,
+  ProtocolStats,
   TokenFlowData,
 } from '../types'
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TokenInteropData } from './buildTokensDataMap'
-import type { ProtocolStats } from '../types'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
