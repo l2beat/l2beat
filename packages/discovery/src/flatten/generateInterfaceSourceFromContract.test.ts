@@ -1,6 +1,8 @@
 import { expect } from 'earl'
+import type * as AST from '@mradomski/fast-solidity-parser'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
+  type DeclarationType,
   ParsedFilesManager,
   type TopLevelDeclaration,
 } from './ParsedFilesManager'
@@ -34,13 +36,13 @@ describe(generateInterfaceSourceFromContract.name, () => {
                 return 1234;
             }
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    uint256 public variableToSkip;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function variableToSkip() external view returns (uint256);
 
     struct MyStructDifferent {
         mapping(uint256 => uint256) elementInside;
@@ -60,8 +62,8 @@ abstract contract E {
         B
     }
 
-    function B(uint256 element, MyStruct memory arg2) public virtual returns (uint256);
-    function X() public virtual returns (uint256);
+    function B(uint256 element, MyStruct memory arg2) external returns (uint256);
+    function X() external returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -72,15 +74,15 @@ abstract contract E {
             function X() returns (uint256) { return 1234; }
             function XYZ(address receiver) payable public returns (uint256);
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function B(uint256 element) public virtual returns (uint256);
-    function X() public virtual returns (uint256);
-    function XYZ(address receiver) public payable virtual returns (uint256);
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function B(uint256 element) external returns (uint256);
+    function X() external returns (uint256);
+    function XYZ(address receiver) external payable returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -91,15 +93,15 @@ abstract contract E {
             function X() override(C1) returns (uint256) { return 1234; }
             function XYZ(address receiver) override(C1, C2) payable public returns (uint256);
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function A(uint256 element) public virtual override returns (uint256);
-    function X() public virtual override(C1) returns (uint256);
-    function XYZ(address receiver) public payable virtual override(C1, C2) returns (uint256);
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function A(uint256 element) external override returns (uint256);
+    function X() external override(C1) returns (uint256);
+    function XYZ(address receiver) external payable override(C1, C2) returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -108,13 +110,13 @@ abstract contract E {
     const source = String.raw`contract E {
             function foo(address payable to) external {}
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function foo(address payable to) external virtual;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function foo(address payable to) external;
 }`
     expect(result).toEqual(expected)
   })
@@ -123,13 +125,13 @@ abstract contract E {
     const source = String.raw`contract E {
             uint256 public totalSupply;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    uint256 public totalSupply;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function totalSupply() external view returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -138,13 +140,13 @@ abstract contract E {
     const source = String.raw`contract E {
             mapping(address => uint256) public balanceOf;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    mapping(address => uint256) public balanceOf;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function balanceOf(address) external view returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -153,13 +155,13 @@ abstract contract E {
     const source = String.raw`contract E {
             mapping(address => mapping(address => uint256)) public allowance;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    mapping(address => mapping(address => uint256)) public allowance;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function allowance(address, address) external view returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -168,13 +170,13 @@ abstract contract E {
     const source = String.raw`contract E {
             address[] public owners;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    address[] public owners;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function owners(uint256) external view returns (address);
 }`
     expect(result).toEqual(expected)
   })
@@ -185,13 +187,13 @@ abstract contract E {
             uint256 internal data;
             function x() returns (uint256) { return 1; }
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function x() public virtual returns (uint256);
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function x() external returns (uint256);
 }`
     expect(result).toEqual(expected)
   })
@@ -201,14 +203,14 @@ abstract contract E {
             bytes public data;
             string public name;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    bytes public data;
-    string public name;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function data() external view returns (bytes memory);
+    function name() external view returns (string memory);
 }`
     expect(result).toEqual(expected)
   })
@@ -218,17 +220,17 @@ abstract contract E {
             struct Info { uint256 value; }
             Info public info;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
     struct Info {
         uint256 value;
     }
 
-    Info public info;
+    function info() external view returns (Info memory);
 }`
     expect(result).toEqual(expected)
   })
@@ -237,13 +239,13 @@ abstract contract E {
     const source = String.raw`contract E {
             mapping(uint256 => bytes) public items;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    mapping(uint256 => bytes) public items;
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function items(uint256) external view returns (bytes memory);
 }`
     expect(result).toEqual(expected)
   })
@@ -253,15 +255,15 @@ abstract contract E {
             type Position is uint256;
             Position public currentPos;
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
     type Position is uint256;
 
-    Position public currentPos;
+    function currentPos() external view returns (Position);
 }`
     expect(result).toEqual(expected)
   })
@@ -270,13 +272,13 @@ abstract contract E {
     const source = String.raw`contract E {
             bytes public constant VERSION = "1.0.0";
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function VERSION() external view virtual returns (bytes memory);
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function VERSION() external view returns (bytes memory);
 }`
     expect(result).toEqual(expected)
   })
@@ -289,73 +291,76 @@ abstract contract E {
                 owner = address(0);
             }
         }`
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    const result = generateInterfaceSourceFromContract(entry)
+    const result = generateInterfaceSourceFromContract(declaration, typeMap)
 
-    const expected = String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract E {
-    function owner() external view virtual returns (address);
+    const expected = String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface E {
+    function owner() external view returns (address);
 }`
     expect(result).toEqual(expected)
   })
 
   it('throws for enum', () => {
     const source = 'enum E { A, B }'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 
   it('throws for interface', () => {
     const source = 'interface E { function B(); }'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 
   it('throws for library', () => {
     const source = 'library E { function B() public {} }'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 
   it('throws for struct', () => {
     const source = 'struct E { uint256 a; }'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 
   it('throws for function', () => {
     const source = 'function E() public {}'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 
   it('throws for typedef', () => {
     const source = 'type E is uint256;'
-    const entry = fromSource(source, 'E')
+    const { declaration, typeMap } = fromSource(source, 'E')
 
-    expect(() => generateInterfaceSourceFromContract(entry)).toThrow(
-      'Only contracts',
-    )
+    expect(() =>
+      generateInterfaceSourceFromContract(declaration, typeMap),
+    ).toThrow('Only contracts')
   })
 })
 
-function fromSource(source: string, entryName: string): TopLevelDeclaration {
+function fromSource(
+  source: string,
+  entryName: string,
+): { declaration: TopLevelDeclaration; typeMap: Map<string, DeclarationType> } {
   const parsedFilesManager = ParsedFilesManager.parseFiles(
     [
       {
@@ -366,5 +371,35 @@ function fromSource(source: string, entryName: string): TopLevelDeclaration {
     [],
   )
 
-  return parsedFilesManager.findDeclaration(entryName).declaration
+  const declaration = parsedFilesManager.findDeclaration(entryName).declaration
+  const typeMap = new Map<string, DeclarationType>()
+
+  // Build type map from all declarations in the file
+  const file = parsedFilesManager.findFileDeclaring(entryName)
+  for (const decl of file.topLevelDeclarations) {
+    typeMap.set(decl.name, decl.type)
+    if (
+      decl.type === 'contract' ||
+      decl.type === 'abstract' ||
+      decl.type === 'interface' ||
+      decl.type === 'library'
+    ) {
+      const ast = decl.ast as AST.ContractDefinition
+      for (const sub of ast.subNodes) {
+        const node = sub as AST.ASTNode
+        if (node.type === 'StructDefinition') {
+          typeMap.set(`${decl.name}.${node.name}`, 'struct')
+          if (!typeMap.has(node.name)) typeMap.set(node.name, 'struct')
+        } else if (node.type === 'EnumDefinition') {
+          typeMap.set(`${decl.name}.${node.name}`, 'enum')
+          if (!typeMap.has(node.name)) typeMap.set(node.name, 'enum')
+        } else if (node.type === 'TypeDefinition') {
+          typeMap.set(`${decl.name}.${node.name}`, 'typedef')
+          if (!typeMap.has(node.name)) typeMap.set(node.name, 'typedef')
+        }
+      }
+    }
+  }
+
+  return { declaration, typeMap }
 }

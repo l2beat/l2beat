@@ -1,8 +1,10 @@
 import { assert, unique } from '@l2beat/shared-pure'
+import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   type DeclarationFilePair,
+  type DeclarationType,
   type FileContent,
   type ParsedFile,
   ParsedFilesManager,
@@ -29,12 +31,13 @@ export function flattenStartingFrom(
     order,
   )
 
+  const typeMap = buildTypeMap(order)
   const renameMap = buildRenameMap(order)
 
   let flatSource = ''
   for (const { declaration, file } of order) {
     let content = shouldBeInterface[declaration.id]
-      ? generateInterfaceSourceFromContract(declaration)
+      ? generateInterfaceSourceFromContract(declaration, typeMap)
       : declaration.content
 
     const remapNames = getVisibleNames(file).flatMap((from) => {
@@ -139,6 +142,37 @@ function getVisibleNames(file: ParsedFile): string[] {
     ...file.topLevelDeclarations.map((d) => d.name),
     ...file.importDirectives.map((i) => i.importedName),
   ])
+}
+
+function buildTypeMap(
+  order: DeclarationFilePair[],
+): Map<string, DeclarationType> {
+  const map = new Map<string, DeclarationType>()
+  for (const { declaration } of order) {
+    map.set(declaration.name, declaration.type)
+    if (
+      declaration.type === 'contract' ||
+      declaration.type === 'abstract' ||
+      declaration.type === 'interface' ||
+      declaration.type === 'library'
+    ) {
+      const ast = declaration.ast as AST.ContractDefinition
+      for (const sub of ast.subNodes) {
+        const node = sub as AST.ASTNode
+        if (node.type === 'StructDefinition') {
+          map.set(`${declaration.name}.${node.name}`, 'struct')
+          if (!map.has(node.name)) map.set(node.name, 'struct')
+        } else if (node.type === 'EnumDefinition') {
+          map.set(`${declaration.name}.${node.name}`, 'enum')
+          if (!map.has(node.name)) map.set(node.name, 'enum')
+        } else if (node.type === 'TypeDefinition') {
+          map.set(`${declaration.name}.${node.name}`, 'typedef')
+          if (!map.has(node.name)) map.set(node.name, 'typedef')
+        }
+      }
+    }
+  }
+  return map
 }
 
 function buildRenameMap(order: DeclarationFilePair[]): Map<string, string> {

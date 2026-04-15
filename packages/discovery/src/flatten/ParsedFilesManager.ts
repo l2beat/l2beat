@@ -14,7 +14,7 @@ export interface ByteRange {
   end: number
 }
 
-type DeclarationType =
+export type DeclarationType =
   | 'contract'
   | 'interface'
   | 'library'

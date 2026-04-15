@@ -654,13 +654,13 @@ library UsesNewing {
     }
 }
 
-// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract DynamicContract {
+// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface DynamicContract {
     struct Structure {
         uint256 field;
     }
 
-    function usingLibrary() public virtual;
+    function usingLibrary() external;
 }
 
 contract R1 {
@@ -738,11 +738,10 @@ contract R is WhitelistConsumer { }
 
     const flattened = flattenStartingFrom('R', files, [], { includeAll: true })
     expect(flattened).toEqual(
-      String.raw`// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract Whitelist {
-    mapping(address => bool) public isAllowed;
-
-    function setWhitelist(address[] memory user, bool[] memory val) external virtual;
+      String.raw`// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface Whitelist {
+    function isAllowed(address) external view returns (bool);
+    function setWhitelist(address[] memory user, bool[] memory val) external;
 }
 
 abstract contract WhitelistConsumer {
@@ -783,9 +782,9 @@ contract R {
 	function foo(address payable to) external;
 }
 
-// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract ContractUsingIface is Iface {
-    function foo(address payable to) external virtual;
+// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface ContractUsingIface is Iface {
+    function foo(address payable to) external;
 }
 
 contract R {
@@ -818,14 +817,14 @@ contract R1 is Name { function r1(NameDifferent x) public {} }`,
       })
 
       // Name(abc.sol) is only used as a type parameter, not inherited,
-      // so the flattener converts it to an abstract contract. The key assertion is
+      // so the flattener converts it to an interface. The key assertion is
       // that the two declarations are disambiguated (Name vs Name_1).
       expect(flattened).toEqual(
         String.raw`contract Name { function cba() public {} }
 
-// NOTE(l2beat): This is an abstract contract, generated from the contract source code.
-abstract contract Name_1 {
-    function abc() public virtual;
+// NOTE(l2beat): This is an interface, generated from the contract source code.
+interface Name_1 {
+    function abc() external;
 }
 
 contract R1 is Name { function r1(Name_1 x) public {} }`,

@@ -1,9 +1,10 @@
 import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
-import type { TopLevelDeclaration } from './ParsedFilesManager'
+import type { DeclarationType, TopLevelDeclaration } from './ParsedFilesManager'
 
 export function generateInterfaceSourceFromContract(
   contract: TopLevelDeclaration,
+  typeMap: Map<string, DeclarationType>,
 ): string {
   assert(
     contract.type === 'contract' || contract.type === 'abstract',
@@ -12,9 +13,9 @@ export function generateInterfaceSourceFromContract(
   const ast = contract.ast as AST.ContractDefinition
 
   let result =
-    '// NOTE(l2beat): This is an abstract contract, generated from the contract source code.\n'
+    '// NOTE(l2beat): This is an interface, generated from the contract source code.\n'
 
-  result += `abstract contract ${contract.name}`
+  result += `interface ${contract.name}`
   if (ast.baseContracts.length > 0) {
     const baseNames = []
     for (const base of ast.baseContracts) {
@@ -80,15 +81,10 @@ export function generateInterfaceSourceFromContract(
       case 'StateVariableDeclaration': {
         for (const variable of child.variables) {
           if (variable.visibility === 'public') {
-            const type =
-              variable.isDeclaredConst || variable.isImmutable
-                ? 'FunctionDefinition'
-                : 'StateVariableDeclaration'
-            const element =
-              variable.isDeclaredConst || variable.isImmutable
-                ? formatPublicVariableGetter(variable)
-                : formatVariable(variable)
-            elements.push([type, padding + element])
+            elements.push([
+              'FunctionDefinition',
+              padding + formatPublicVariableGetter(variable, typeMap),
+            ])
           }
         }
         break
@@ -203,11 +199,10 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   declaration += ')'
 
   const addons: string[] = []
-  addons.push(getFunctionVisibility(fn))
+  addons.push('external')
   if (fn.stateMutability !== null) {
     addons.push(fn.stateMutability)
   }
-  addons.push('virtual')
   if (fn.override !== null) {
     let value = 'override'
     const args = fn.override.map((x) => x.namePath)
@@ -232,30 +227,33 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
   return declaration
 }
 
-function getFunctionVisibility(
-  fn: AST.FunctionDefinition,
-): 'external' | 'public' {
-  if (fn.isReceiveEther || fn.isFallback || fn.visibility === 'external') {
-    return 'external'
-  }
-  return 'public'
-}
-
-function formatVariable(
-  variable: AST.StateVariableDeclarationVariable,
-): string {
-  assert(variable.typeName !== null, 'Variable must have a type')
-  let result = formatTypeName(variable.typeName)
-  result += ` ${variable.visibility} ${variable.name};`
-  return result
-}
-
 function formatPublicVariableGetter(
   variable: AST.StateVariableDeclarationVariable,
+  typeMap: Map<string, DeclarationType>,
 ): string {
   assert(variable.typeName !== null, 'Variable must have a type')
-  const returnType = formatTypeNameForReturn(variable.typeName)
-  return `function ${variable.name}() external view virtual returns (${returnType});`
+
+  const params: string[] = []
+  const leafType = unwindGetterType(variable.typeName, params)
+  const returnStr = formatTypeNameForReturn(leafType, typeMap)
+
+  const paramStr = params.join(', ')
+  return `function ${variable.name}(${paramStr}) external view returns (${returnStr});`
+}
+
+function unwindGetterType(
+  typeName: AST.TypeName,
+  params: string[],
+): AST.TypeName {
+  if (typeName.type === 'Mapping') {
+    params.push(formatTypeName(typeName.keyType))
+    return unwindGetterType(typeName.valueType, params)
+  }
+  if (typeName.type === 'ArrayTypeName') {
+    params.push('uint256')
+    return unwindGetterType(typeName.baseTypeName, params)
+  }
+  return typeName
 }
 
 function formatParameter(param: AST.VariableDeclaration): string {
@@ -323,14 +321,27 @@ function formatTypeName(typeName: AST.TypeName): string {
   }
 }
 
-function formatTypeNameForReturn(typeName: AST.TypeName): string {
+function formatTypeNameForReturn(
+  typeName: AST.TypeName,
+  typeMap: Map<string, DeclarationType>,
+): string {
   const name = formatTypeName(typeName)
-  if (typeName.type === 'ElementaryTypeName') {
-    return typeName.name === 'bytes' || typeName.name === 'string'
-      ? `${name} memory`
-      : name
+  switch (typeName.type) {
+    case 'ElementaryTypeName':
+      return typeName.name === 'bytes' || typeName.name === 'string'
+        ? `${name} memory`
+        : name
+    case 'ArrayTypeName':
+      return `${name} memory`
+    case 'Mapping':
+      return `${name} memory`
+    case 'UserDefinedTypeName': {
+      const kind = typeMap.get(typeName.namePath)
+      return kind === 'struct' ? `${name} memory` : name
+    }
+    case 'FunctionTypeName':
+      return name
   }
-  return name
 }
 
 function formatExpression(expression: AST.Expression): string {
