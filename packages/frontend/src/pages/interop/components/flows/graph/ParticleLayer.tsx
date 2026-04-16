@@ -88,7 +88,7 @@ export function ParticleLayer({
     totalCapped > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCapped : 1
 
   return (
-    <g>
+    <g pointerEvents="none" aria-hidden="true">
       {filteredFlows.map((flow, flowIndex) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
