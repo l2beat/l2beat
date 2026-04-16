@@ -26,10 +26,15 @@ interface Props {
 
 /**
  * Renders animated dots flowing along each connection path.
+ * Particles move at a constant speed across the graph: the longest visible
+ * flow takes MAX_DURATION_S, and shorter flows take proportionally less time
+ * (based on the straight-line src→dst distance, which closely approximates
+ * the mildly-curved bezier path).
+ *
  * Particle count logic:
  *   volume in 24h total → divide by 86400 to get $/second →
  *   divide by DOLLARS_PER_PARTICLE to get particles/second →
- *   multiply by BASE_DURATION_S to get how many particles are visible
+ *   multiply by per-flow duration to get how many particles are visible
  *   on the path at any given moment
  *
  * All particles travel at a constant speed (px/s). The speed is
@@ -51,23 +56,6 @@ export function ParticleLayer({
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
 
-  // Compute the exact fractional on-screen particle count per flow
-  const exactCounts = flows.map((flow) => {
-    const volumePerSecond = flow.volume / UnixTime.DAY
-    const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
-    return particlesPerSecond * BASE_DURATION_S
-  })
-
-  // Apply per-flow cap
-  const cappedCounts = exactCounts.map((c) =>
-    Math.min(c, MAX_PARTICLES_PER_FLOW),
-  )
-
-  // Apply global cap — scale all counts down proportionally if needed
-  const totalCapped = cappedCounts.reduce((sum, c) => sum + Math.max(c, 1), 0)
-  const globalScale =
-    totalCapped > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCapped : 1
-
   // Precompute straight-line distances for constant-speed scaling
   const distances = flows.map((flow) => {
     const src = layout.get(flow.srcChain)
@@ -80,6 +68,26 @@ export function ParticleLayer({
 
   // Constant speed: the longest path takes BASE_DURATION_S, shorter paths take less
   const maxDistance = Math.max(...distances, 1)
+  const travelDurations = distances.map(
+    (d) => (d / maxDistance) * BASE_DURATION_S,
+  )
+
+  // Compute the exact fractional on-screen particle count per flow
+  const exactCounts = flows.map((flow, i) => {
+    const volumePerSecond = flow.volume / UnixTime.DAY
+    const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
+    return particlesPerSecond * (travelDurations[i] ?? 0)
+  })
+
+  // Apply per-flow cap
+  const cappedCounts = exactCounts.map((c) =>
+    Math.min(c, MAX_PARTICLES_PER_FLOW),
+  )
+
+  // Apply global cap — scale all counts down proportionally if needed
+  const totalCapped = cappedCounts.reduce((sum, c) => sum + Math.max(c, 1), 0)
+  const globalScale =
+    totalCapped > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCapped : 1
 
   return (
     <g>
@@ -105,10 +113,7 @@ export function ParticleLayer({
 
         const groupOpacity = highlighted ? 1 : 0.15
 
-        // Duration proportional to distance (constant speed)
-        const travelDuration =
-          ((distances[flowIndex] ?? 0) / maxDistance) * BASE_DURATION_S
-
+        const travelDuration = travelDurations[flowIndex] ?? BASE_DURATION_S
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
         if (exact < 1) {
