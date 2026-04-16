@@ -28,7 +28,12 @@ export function FlowsProtocolsSelector({
     id: string
   })[]
 }) {
-  const { selectedProtocols, toggleProtocolSelection } = useInteropFlows()
+  const {
+    selectedProtocols,
+    toggleProtocolSelection,
+    selectAllProtocols,
+    deselectAllProtocols,
+  } = useInteropFlows()
 
   const protocolsWithDetails = allProtocols.map(({ id, name, iconUrl }) => ({
     id,
@@ -40,6 +45,8 @@ export function FlowsProtocolsSelector({
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
   )
+
+  const allSelected = selectedProtocols.length === allProtocols.length
 
   const hasNoSelection = selectedProtocols.length < MIN_SELECTED_PROTOCOLS
 
@@ -74,6 +81,27 @@ export function FlowsProtocolsSelector({
           </span>
         )}
       </div>
+    </div>
+  )
+
+  const footer = (
+    <div className="flex gap-4">
+      <button
+        type="button"
+        onClick={selectAllProtocols}
+        disabled={allSelected}
+        className="w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
+      >
+        Select all
+      </button>
+      <button
+        type="button"
+        onClick={deselectAllProtocols}
+        disabled={selectedProtocols.length === 0}
+        className="w-fit cursor-pointer font-medium text-brand text-label-value-15 underline disabled:cursor-not-allowed disabled:text-secondary"
+      >
+        Deselect all
+      </button>
     </div>
   )
 
@@ -117,6 +145,7 @@ export function FlowsProtocolsSelector({
               </Checkbox>
             ))}
           </ScrollWithGradient>
+          <div className="mt-4 px-4">{footer}</div>
         </DrawerContent>
       </Drawer>
       {/* Desktop */}
@@ -154,6 +183,7 @@ export function FlowsProtocolsSelector({
               </Checkbox>
             ))}
           </ScrollWithGradient>
+          <div className="mt-1">{footer}</div>
         </DialogContent>
       </Dialog>
     </div>
