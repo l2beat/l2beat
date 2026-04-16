@@ -36,10 +36,12 @@ const DOCS_URL = 'https://metadata.layerzero-api.com/v1/metadata/deployments'
 const DocsResult = v.record(
   v.string(),
   v.object({
+    chainKey: v.string(),
     deployments: v
       .array(
         v.object({
           eid: v.string().optional(),
+          chainKey: v.string().optional(),
           version: v.number().optional(),
           stage: v.string().optional(),
           endpointV2: v
@@ -78,13 +80,54 @@ const DocsResult = v.record(
   }),
 )
 
-const OVERRIDES = {
-  v2: [
-    {
-      eid: 30168,
-      chain: 'solana',
-    },
-  ],
+const LAYERZERO_CHAIN_KEY_OVERRIDES = {
+  ape: 'apechain',
+  edu: 'educhain',
+  hyperliquid: 'hyperevm',
+  mp1: 'corn',
+  plumephoenix: 'plumenetwork',
+  polygon: 'polygonpos',
+  zklink: 'zklinknova',
+  zkevm: 'polygonzkevm',
+  zksync: 'zksync2',
+} as const
+
+function normalizeLayerZeroChainKey(chainKey: string) {
+  const normalized = chainKey
+    .toLowerCase()
+    .replace(/-mainnet(?:-custom)?$/, '')
+    .replace(/-testnet$/, '')
+
+  const override =
+    LAYERZERO_CHAIN_KEY_OVERRIDES[
+      normalized as keyof typeof LAYERZERO_CHAIN_KEY_OVERRIDES
+    ]
+
+  return override ?? normalized
+}
+
+function getAddress(
+  value:
+    | string
+    | {
+        address: string
+      },
+) {
+  return typeof value === 'string' ? value : value.address
+}
+
+function toEthereumAddress(
+  value:
+    | string
+    | {
+        address: string
+      }
+    | undefined,
+) {
+  if (!value) return
+  const address = getAddress(value)
+  if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) return
+  return EthereumAddress(address)
 }
 
 export class LayerZeroConfigPlugin
@@ -148,71 +191,57 @@ export class LayerZeroConfigPlugin
   }> {
     const response = await this.http.fetch(DOCS_URL, { timeout: 10_000 })
     const docs = DocsResult.parse(response)
+    const chainsById = new Map(this.chains.map((chain) => [chain.id, chain]))
+    const v1: LayerZeroV1Network[] = []
+    const v2: LayerZeroV2Network[] = []
 
-    const config: {
-      v1: LayerZeroV1Network[]
-      v2: LayerZeroV2Network[]
-    } = {
-      v1: [],
-      v2: [...OVERRIDES.v2],
-    }
-    for (const [_, value] of Object.entries(docs)) {
-      if (
-        value === undefined ||
-        value.chainDetails === undefined ||
-        value.chainDetails.nativeChainId === undefined
-      ) {
-        continue
-      }
+    for (const value of Object.values(docs)) {
+      const chain = normalizeLayerZeroChainKey(value.chainKey)
 
-      // API returns chainId = 1 for Aptos xd
-      if (value.chainDetails.chainKey === 'aptos') {
-        continue
-      }
+      const chainById =
+        value.chainDetails?.nativeChainId !== undefined
+          ? chainsById.get(value.chainDetails.nativeChainId)
+          : undefined
 
-      const chain = this.chains.find(
-        (c) => c.id === value.chainDetails?.nativeChainId,
-      )
-
-      if (chain) {
-        const v1 = value.deployments?.find((d) => d.version === 1)
+      // API returns chainId = 1 for Aptos, so only trust v1 entries when
+      // the chainKey agrees with our local chain map.
+      if (chainById?.name === chain) {
+        const deployment = value.deployments?.find((d) => d.version === 1)
         if (
-          v1 &&
-          v1.stage === 'mainnet' &&
-          v1.eid &&
-          v1.sendUln301 &&
-          v1.receiveUln301
+          deployment &&
+          deployment.stage === 'mainnet' &&
+          deployment.eid &&
+          deployment.sendUln301 &&
+          deployment.receiveUln301
         ) {
-          config.v1.push({
-            chain: chain.name,
-            chainId: chain.id,
-            eid: Number(v1.eid),
-            sendLib:
-              typeof v1.sendUln301 === 'string'
-                ? EthereumAddress(v1.sendUln301)
-                : EthereumAddress(v1.sendUln301.address),
-            receiveLib:
-              typeof v1.receiveUln301 === 'string'
-                ? EthereumAddress(v1.receiveUln301)
-                : EthereumAddress(v1.receiveUln301.address),
-          })
-        }
-
-        const v2 = value.deployments?.find((d) => d.version === 2)
-        if (v2 && v2.stage === 'mainnet' && v2.eid && v2.endpointV2) {
-          config.v2.push({
-            chain: chain.name,
-            chainId: chain.id,
-            eid: Number(v2.eid),
-            endpointV2:
-              typeof v2.endpointV2 === 'string'
-                ? EthereumAddress(v2.endpointV2)
-                : EthereumAddress(v2.endpointV2.address),
+          v1.push({
+            chain: chainById.name,
+            chainId: chainById.id,
+            eid: Number(deployment.eid),
+            sendLib: EthereumAddress(getAddress(deployment.sendUln301)),
+            receiveLib: EthereumAddress(getAddress(deployment.receiveUln301)),
           })
         }
       }
+
+      for (const deployment of value.deployments ?? []) {
+        if (
+          deployment.version !== 2 ||
+          deployment.stage !== 'mainnet' ||
+          !deployment.eid
+        ) {
+          continue
+        }
+
+        v2.push({
+          chain,
+          chainId: value.chainDetails?.nativeChainId,
+          eid: Number(deployment.eid),
+          endpointV2: toEthereumAddress(deployment.endpointV2),
+        })
+      }
     }
 
-    return config
+    return { v1, v2 }
   }
 }
