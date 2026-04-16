@@ -44,8 +44,7 @@ export const privacyPools: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    // TODO: Replace with the actual trusted setup used by the project.
-    trustedSetup: TRUSTED_SETUPS.Stub,
+    trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     assets: getPrivacyPoolsAssets(),
   },
   permissions: discovery.getDiscoveredPermissions(),

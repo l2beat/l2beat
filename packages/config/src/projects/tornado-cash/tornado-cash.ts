@@ -147,7 +147,7 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     // TODO: Replace with the actual trusted setup used by the project.
-    trustedSetup: TRUSTED_SETUPS.Stub,
+    trustedSetup: TRUSTED_SETUPS.TornadoCash,
     assets: getTornadoAssets(),
   },
   permissions: discovery.getDiscoveredPermissions(),
