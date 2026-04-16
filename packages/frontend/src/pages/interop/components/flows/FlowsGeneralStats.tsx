@@ -10,7 +10,8 @@ import { formatInteger } from '~/utils/number-format/formatInteger'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats() {
-  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
+  const { selectedChains, allChains, selectedProtocols, dollarsPerParticle } =
+    useInteropFlows()
 
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
@@ -126,15 +127,25 @@ export function FlowsGeneralStats() {
           />
         </div>
       </div>
-      <div className="mt-auto pt-4 text-center font-medium text-label-value-14 text-secondary">
+      <div className="mt-auto space-y-1 pt-4 text-center font-medium text-label-value-14 text-secondary">
         {isLoading ? (
           <Skeleton className="mx-auto h-5 w-40" />
         ) : (
           <>
-            Avg value per second ≈{' '}
-            <span className="font-bold text-brand">
-              {formatCurrency(avgValuePerSecond, 'usd')}
-            </span>
+            {dollarsPerParticle && (
+              <div className="flex items-center justify-center gap-1">
+                <div className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
+                <span className="font-bold text-brand">
+                  {formatCurrency(dollarsPerParticle, 'usd')}
+                </span>
+              </div>
+            )}
+            <div>
+              Avg value per second ≈{' '}
+              <span className="font-bold text-brand">
+                {formatCurrency(avgValuePerSecond, 'usd')}
+              </span>
+            </div>
           </>
         )}
       </div>

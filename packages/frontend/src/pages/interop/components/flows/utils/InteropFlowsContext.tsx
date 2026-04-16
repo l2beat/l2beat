@@ -26,6 +26,8 @@ interface InteropFlowsContextType {
   deselectAllProtocols: () => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
+  dollarsPerParticle: number | undefined
+  setDollarsPerParticle: (value: number) => void
 }
 
 export const InteropFlowsContext = createContext<
@@ -77,6 +79,9 @@ export function InteropFlowsProvider({
   )
 
   const [highlightedChains, setHighlightedChains] = useState<string[]>([])
+  const [dollarsPerParticle, setDollarsPerParticle] = useState<
+    number | undefined
+  >(undefined)
 
   const setSelectedChains = useCallback(
     (next: string[]) => {
@@ -162,6 +167,8 @@ export function InteropFlowsProvider({
         deselectAllProtocols,
         highlightedChains,
         toggleHighlightedChain,
+        dollarsPerParticle,
+        setDollarsPerParticle,
       }}
     >
       {children}

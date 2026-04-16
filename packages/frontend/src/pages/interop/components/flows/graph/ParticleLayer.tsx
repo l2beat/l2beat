@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { useEffect } from 'react'
 import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { BASE_DURATION_S, DOLLARS_PER_PARTICLE } from '../consts'
@@ -50,7 +51,7 @@ export function ParticleLayer({
   centerY,
   isSmallScreen,
 }: Props) {
-  const { highlightedChains } = useInteropFlows()
+  const { highlightedChains, setDollarsPerParticle } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
   const filteredFlows = flows.filter((flow) => flow.volume > 0)
 
@@ -77,7 +78,12 @@ export function ParticleLayer({
     return particlesPerSecond * (travelDurations[i] ?? 0)
   })
 
-  const scaledCounts = getScaledParticleCounts(exactCounts)
+  const { counts: scaledCounts, combinedScale } =
+    getScaledParticleCounts(exactCounts)
+
+  useEffect(() => {
+    setDollarsPerParticle(DOLLARS_PER_PARTICLE / combinedScale)
+  }, [combinedScale, setDollarsPerParticle])
 
   return (
     <g pointerEvents="none" aria-hidden="true">
