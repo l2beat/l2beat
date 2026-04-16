@@ -3,6 +3,7 @@ import type {
   InteropTransferRecord,
   TokenFactInputRecord,
 } from '@l2beat/database'
+import { type ClingoFact, parseClingoFact } from './clingo/parseClingoFact'
 
 const FACT_NAME = 'transfer'
 const PADDED_EVM_ADDRESS_REGEX = /^0x([0-9a-f]{24})([0-9a-f]{40})$/i
@@ -48,11 +49,22 @@ function normalizeTokenAddress(address: string): string {
   return `0x${evmAddress.toLowerCase()}`
 }
 
+function isToken(
+  param: string | number | ClingoFact | undefined,
+): param is ClingoFact {
+  return (
+    typeof param === 'object' &&
+    param !== null &&
+    'atom' in param &&
+    param.atom === 't'
+  )
+}
+
 function transferToArguments(t: InteropTransferRecord): string {
   const srcAddr = normalizeTokenAddress(t.srcTokenAddress as string)
   const dstAddr = normalizeTokenAddress(t.dstTokenAddress as string)
   const bridge = t.bridgeType ?? 'unknown'
-  return `${t.srcChain},"${srcAddr}",${t.dstChain},"${dstAddr}",${t.plugin},${bridge}`
+  return `t(${t.srcChain},"${srcAddr}"),t(${t.dstChain},"${dstAddr}"),${t.plugin},${bridge}`
 }
 
 function transferToContext(t: InteropTransferRecord): {
@@ -72,20 +84,22 @@ export async function importTransferFacts(
   const existing = await db.tokenFactInput.getByName(FACT_NAME)
   const seen = new Set<string>()
   for (const fact of existing) {
-    // Format: srcChain,"srcAddr",dstChain,"dstAddr",plugin,bridge
-    const [srcChain, srcAddr, dstChain, dstAddr, plugin, bridge] =
-      fact.arguments.split(',').map((s: string) => s.replace(/"/g, ''))
-    if (!srcChain || !srcAddr || !dstChain || !dstAddr || !plugin || !bridge) {
+    // Format: t(srcChain,"srcAddr"),t(dstChain,"dstAddr"),plugin,bridge
+    const parsed = parseClingoFact(`${FACT_NAME}(${fact.arguments})`)
+    const [src, dst, plugin, bridge] = parsed.params
+    if (!isToken(src) || !isToken(dst) || !plugin || !bridge) {
       throw new Error(`Invalid transfer fact arguments: ${fact.arguments}`)
     }
+    const [srcChain, srcAddr] = src.params as [string, string]
+    const [dstChain, dstAddr] = dst.params as [string, string]
     seen.add(
       transferKey(
         srcChain,
         normalizeTokenAddress(srcAddr),
         dstChain,
         normalizeTokenAddress(dstAddr),
-        plugin,
-        bridge,
+        plugin as string,
+        bridge as string,
       ),
     )
   }
