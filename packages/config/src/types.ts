@@ -81,6 +81,7 @@ export interface BaseProject {
   name: string
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
+  aliases?: string[]
   addedAt: UnixTime
 
   // common data

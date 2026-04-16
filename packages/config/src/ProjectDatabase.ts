@@ -24,6 +24,7 @@ const schema = {
   slug: 'TEXT NOT NULL',
   name: 'TEXT NOT NULL',
   shortName: 'TEXT',
+  aliases: 'TEXT',
   addedAt: 'INTEGER NOT NULL',
 
   statuses: 'TEXT',
