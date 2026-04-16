@@ -1,34 +1,40 @@
-import { MAX_PARTICLES_PER_FLOW, MAX_TOTAL_PARTICLES } from '../../consts'
+import {
+  DOLLARS_PER_PARTICLE,
+  DOLLARS_PER_PARTICLE_STEP,
+  MAX_PARTICLES_PER_FLOW,
+  MAX_TOTAL_PARTICLES,
+} from '../../consts'
 
 interface ScaledParticleResult {
   counts: number[]
-  combinedScale: number
+  dollarsPerParticle: number
 }
 
+/**
+ * Given base particle counts (computed at DOLLARS_PER_PARTICLE), finds the
+ * lowest dollars-per-particle value (in DOLLARS_PER_PARTICLE_STEP increments)
+ * where both constraints are satisfied:
+ *   - no single flow exceeds MAX_PARTICLES_PER_FLOW
+ *   - total across all flows does not exceed MAX_TOTAL_PARTICLES
+ */
 export function getScaledParticleCounts(
-  exactCounts: number[],
+  baseExactCounts: number[],
 ): ScaledParticleResult {
-  if (exactCounts.length === 0) return { counts: [], combinedScale: 1 }
+  if (baseExactCounts.length === 0)
+    return { counts: [], dollarsPerParticle: DOLLARS_PER_PARTICLE }
 
-  // Keep the local ceiling, but preserve relative differences between flows.
-  const maxExactCount = Math.max(...exactCounts)
-  const localScale =
-    maxExactCount > MAX_PARTICLES_PER_FLOW
-      ? MAX_PARTICLES_PER_FLOW / maxExactCount
-      : 1
+  let dollarsPerParticle = DOLLARS_PER_PARTICLE
 
-  const locallyScaledCounts = exactCounts.map((count) => count * localScale)
+  while (true) {
+    const scale = DOLLARS_PER_PARTICLE / dollarsPerParticle
+    const counts = baseExactCounts.map((c) => c * scale)
 
-  const totalCount = locallyScaledCounts.reduce((sum, count) => {
-    if (count === 0) return sum
-    return sum + count
-  }, 0)
+    const maxCount = Math.max(...counts)
+    const totalCount = counts.reduce((sum, c) => sum + c, 0)
 
-  const globalScale =
-    totalCount > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCount : 1
+    if (maxCount <= MAX_PARTICLES_PER_FLOW && totalCount <= MAX_TOTAL_PARTICLES)
+      return { counts, dollarsPerParticle }
 
-  return {
-    counts: locallyScaledCounts.map((count) => count * globalScale),
-    combinedScale: localScale * globalScale,
+    dollarsPerParticle += DOLLARS_PER_PARTICLE_STEP
   }
 }

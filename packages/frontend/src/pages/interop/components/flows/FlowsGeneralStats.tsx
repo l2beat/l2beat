@@ -136,7 +136,9 @@ export function FlowsGeneralStats() {
               <div className="flex items-center justify-center gap-1">
                 <div className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
                 <span className="font-bold text-brand">
-                  {formatCurrency(dollarsPerParticle, 'usd')}
+                  {formatCurrency(dollarsPerParticle, 'usd', {
+                    decimals: 0,
+                  })}
                 </span>
               </div>
             )}

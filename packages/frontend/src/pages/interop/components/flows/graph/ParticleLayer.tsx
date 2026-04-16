@@ -78,12 +78,12 @@ export function ParticleLayer({
     return particlesPerSecond * (travelDurations[i] ?? 0)
   })
 
-  const { counts: scaledCounts, combinedScale } =
+  const { counts: scaledCounts, dollarsPerParticle } =
     getScaledParticleCounts(exactCounts)
 
   useEffect(() => {
-    setDollarsPerParticle(DOLLARS_PER_PARTICLE / combinedScale)
-  }, [combinedScale, setDollarsPerParticle])
+    setDollarsPerParticle(dollarsPerParticle)
+  }, [dollarsPerParticle, setDollarsPerParticle])
 
   return (
     <g pointerEvents="none" aria-hidden="true">
