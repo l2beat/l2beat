@@ -57,9 +57,9 @@ export type {
   InteropMissingTokenInfo,
   InteropSuspiciousTransferRecord,
   InteropTransferRecord,
-  InteropTransferTokenInfo,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
+  InteropTransferTokenInfo,
   InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
