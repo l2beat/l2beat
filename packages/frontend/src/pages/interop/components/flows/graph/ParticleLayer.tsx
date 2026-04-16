@@ -32,6 +32,10 @@ interface Props {
  *   multiply by BASE_DURATION_S to get how many particles are visible
  *   on the path at any given moment
  *
+ * All particles travel at a constant speed (px/s). The speed is
+ * calibrated so that the longest path takes exactly BASE_DURATION_S
+ * to traverse; shorter paths take proportionally less time.
+ *
  * For flows too small for even 1 particle, we still render 1 particle
  * but slow it down proportionally — e.g. a flow that computes to
  * 0.1 on-screen particles gets 1 particle with 10x the travel time
@@ -64,6 +68,19 @@ export function ParticleLayer({
   const globalScale =
     totalCapped > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCapped : 1
 
+  // Precompute straight-line distances for constant-speed scaling
+  const distances = flows.map((flow) => {
+    const src = layout.get(flow.srcChain)
+    const dst = layout.get(flow.dstChain)
+    if (!src || !dst) return 0
+    const dx = dst.x - src.x
+    const dy = dst.y - src.y
+    return Math.sqrt(dx * dx + dy * dy)
+  })
+
+  // Constant speed: the longest path takes BASE_DURATION_S, shorter paths take less
+  const maxDistance = Math.max(...distances, 1)
+
   return (
     <g>
       {flows.map((flow, flowIndex) => {
@@ -88,14 +105,16 @@ export function ParticleLayer({
 
         const groupOpacity = highlighted ? 1 : 0.15
 
+        // Duration proportional to distance (constant speed)
+        const travelDuration =
+          ((distances[flowIndex] ?? 0) / maxDistance) * BASE_DURATION_S
+
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
         if (exact < 1) {
-          // Sub-1 flow: render 1 particle that still travels in exactly
-          // BASE_DURATION_S, but with a longer gap between trips.
-          // e.g. exact=0.2 → cycle=25s, particle visible for first 5s only.
-          const cycleDuration = BASE_DURATION_S / exact
-          const t = BASE_DURATION_S / cycleDuration
+          // Sub-1 flow: render 1 particle with a longer gap between trips.
+          const cycleDuration = travelDuration / exact
+          const t = travelDuration / cycleDuration
           return (
             <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
               <circle r={particleRadius} fill={color} opacity={0}>
@@ -124,19 +143,19 @@ export function ParticleLayer({
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
             {Array.from({ length: count }, (_, i) => {
-              const begin = `${(i / count) * BASE_DURATION_S}s`
+              const begin = `${(i / count) * travelDuration}s`
 
               return (
                 <circle key={i} r={particleRadius} fill={color} opacity={0}>
                   <animateMotion
                     path={path}
-                    dur={`${BASE_DURATION_S}s`}
+                    dur={`${travelDuration}s`}
                     begin={begin}
                     repeatCount="indefinite"
                   />
                   <animate
                     attributeName="opacity"
-                    dur={`${BASE_DURATION_S}s`}
+                    dur={`${travelDuration}s`}
                     begin={begin}
                     values="0;0.8;0.8;0"
                     keyTimes="0;0.001;0.999;1"

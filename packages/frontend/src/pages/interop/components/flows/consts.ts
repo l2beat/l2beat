@@ -4,7 +4,7 @@ export const MIN_SELECTED_PROTOCOLS = 1
 
 // Each particle represents 50 USD of volume
 export const DOLLARS_PER_PARTICLE = 50
-// Base travel time for a particle to cross the full path
+// Travel time (seconds) for the longest path — shorter paths take proportionally less
 export const BASE_DURATION_S = 5
 // Per-flow upper bound to avoid excessive DOM nodes
 export const MAX_PARTICLES_PER_FLOW = 50
