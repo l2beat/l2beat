@@ -166,7 +166,7 @@ export function createInteropPlugins(
         name: 'layerzero',
         plugins: [
           new StargatePlugin(deps.configs), // should be run before ofts, lzv2
-          new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+          new LayerZeroV2OFTsPlugin(deps.configs, deps.oneSidedChains), // should be run before LayerZeroV2
           new LayerZeroV2Plugin(deps.configs),
         ],
       },

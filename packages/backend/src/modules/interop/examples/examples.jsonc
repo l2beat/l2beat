@@ -4146,6 +4146,27 @@
       ]
     }
   },
+  "oftonesided": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xbcd2356e85243b70ee9804f077b1afd970c01d452a84257da4b7bb98dc3fa7ce" // eth ->plasma
+      },
+      {
+        "chain": "base",
+        "tx": "0x32a6df95002ceb8be3f5b787ce9385a06c36779fb0f3305732a868a082577792" // base -> tron
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x8915c0a9974e62652cc60c389c2fb746497fe7ce0e7e9ac0200c3cbf3a3ca06b" // bsc -> solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
+      }
+    ]
+  },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
     // should be 4 cctpv1 message and 2 cctpv2 matched transfers and some stray events around.
