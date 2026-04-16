@@ -1,12 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-import {
-  BASE_DURATION_S,
-  DOLLARS_PER_PARTICLE,
-  MAX_PARTICLES_PER_FLOW,
-  MAX_TOTAL_PARTICLES,
-} from '../consts'
+import { BASE_DURATION_S, DOLLARS_PER_PARTICLE } from '../consts'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
@@ -14,6 +9,7 @@ import {
   BIDIRECTIONAL_OFFSET,
   getConnectionPath,
 } from './utils/getConnectionPath'
+import { getScaledParticleCounts } from './utils/getScaledParticleCounts'
 
 interface Props {
   flows: Flow[]
@@ -34,6 +30,10 @@ interface Props {
  * Particle emission rate is exact (no rounding):
  *   volume in 24h → $/second → particles/second (R)
  *   → on-screen count = R × travelDuration (fractional)
+ *
+ * Counts are scaled in two stages:
+ *   1. local scale so the largest flow stays within the per-flow ceiling
+ *   2. global scale so the overall graph stays within the total ceiling
  *
  * To render a fractional count (e.g. 2.5), we ceil to 3 DOM circles,
  * each cycling with period `3/R` (= 3/2.5 × travelDuration). Each
@@ -77,15 +77,7 @@ export function ParticleLayer({
     return particlesPerSecond * (travelDurations[i] ?? 0)
   })
 
-  // Apply per-flow cap
-  const cappedCounts = exactCounts.map((c) =>
-    Math.min(c, MAX_PARTICLES_PER_FLOW),
-  )
-
-  // Apply global cap — scale all counts down proportionally if needed
-  const totalCapped = cappedCounts.reduce((sum, c) => sum + Math.max(c, 1), 0)
-  const globalScale =
-    totalCapped > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCapped : 1
+  const scaledCounts = getScaledParticleCounts(exactCounts)
 
   return (
     <g pointerEvents="none" aria-hidden="true">
@@ -112,7 +104,7 @@ export function ParticleLayer({
         const groupOpacity = highlighted ? 1 : 0.15
 
         const travelDuration = travelDurations[flowIndex] ?? BASE_DURATION_S
-        const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
+        const exact = scaledCounts[flowIndex] ?? 0
 
         if (exact <= 0) return null
 
