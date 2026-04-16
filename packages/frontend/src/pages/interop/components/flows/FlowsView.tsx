@@ -35,7 +35,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
   return (
     <PrimaryCard
       className={cn(
-        'grid grid-cols-1 gap-4 transition-all duration-300 ease-in-out motion-reduce:transition-none',
+        'grid grid-cols-1 gap-4 transition-[grid-template-columns] duration-300 ease-in-out motion-reduce:transition-none',
         hasGraphSelection
           ? 'lg:grid-cols-[240px_1fr_280px]'
           : 'lg:grid-cols-[240px_1fr_0px]',
@@ -56,7 +56,7 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
       </div>
       <div
         className={cn(
-          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-2 lg:translate-x-3 lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out',
+          'min-w-0 overflow-hidden motion-reduce:transition-none max-lg:order-2 lg:translate-x-3 lg:opacity-0 lg:transition-[transform,opacity] lg:duration-300 lg:ease-out',
           hasGraphSelection && 'lg:translate-x-0 lg:opacity-100',
         )}
       >
