@@ -101,7 +101,7 @@ describe(importTransferFacts.name, () => {
     expect(inserted.length).toEqual(1)
     expect(inserted[0]!.name).toEqual('transfer')
     expect(inserted[0]!.arguments).toEqual(
-      `ethereum,"${ADDR_A}",base,"${ADDR_B}",hop,lockAndMint`,
+      `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
     )
     expect(inserted[0]!.context).toEqual({
       srcTxHash: '0xsrctx',
@@ -197,7 +197,7 @@ describe(importTransferFacts.name, () => {
 
     expect(result.imported).toEqual(1)
     expect(inserted[0]!.arguments).toEqual(
-      `ethereum,"${ADDR_A}",base,"${ADDR_B}",testPlugin,unknown`,
+      `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),testPlugin,unknown`,
     )
   })
 
@@ -205,7 +205,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
+      arguments: `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
       context: null,
     }
 
@@ -234,7 +234,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `"ethereum","${PADDED_ADDR_A}","base","${PADDED_ADDR_B}",hop,lockAndMint`,
+      arguments: `t(ethereum,"${PADDED_ADDR_A}"),t(base,"${PADDED_ADDR_B}"),hop,lockAndMint`,
       context: null,
     }
 
@@ -261,7 +261,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `"ethereum","${ADDR_A}","base","${ADDR_B}",hop,lockAndMint`,
+      arguments: `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
       context: null,
     }
 
@@ -376,7 +376,7 @@ describe(importTransferFacts.name, () => {
 
     expect(result.imported).toEqual(1)
     expect(inserted[0]!.arguments).toEqual(
-      `ethereum,"native",base,"${ADDR_B}",testPlugin,unknown`,
+      `t(ethereum,"native"),t(base,"${ADDR_B}"),testPlugin,unknown`,
     )
   })
 

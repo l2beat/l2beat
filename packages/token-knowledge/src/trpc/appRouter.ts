@@ -26,11 +26,11 @@ export const appRouter = router({
         .map((f) => `${f.name}(${f.arguments}).`)
         .join('\n')
 
-      const kb = await infer(factsProgram, input.rules)
+      const inferredFacts = await infer(factsProgram, input.rules)
 
       return {
         inputFactCount: allFacts.length,
-        facts: kb.facts,
+        facts: inferredFacts,
       }
     }),
 
