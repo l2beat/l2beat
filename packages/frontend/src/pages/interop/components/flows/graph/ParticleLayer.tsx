@@ -55,9 +55,10 @@ export function ParticleLayer({
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
+  const filteredFlows = flows.filter((flow) => flow.volume > 0)
 
   // Precompute straight-line distances for constant-speed scaling
-  const distances = flows.map((flow) => {
+  const distances = filteredFlows.map((flow) => {
     const src = layout.get(flow.srcChain)
     const dst = layout.get(flow.dstChain)
     if (!src || !dst) return 0
@@ -73,7 +74,7 @@ export function ParticleLayer({
   )
 
   // Compute the exact fractional on-screen particle count per flow
-  const exactCounts = flows.map((flow, i) => {
+  const exactCounts = filteredFlows.map((flow, i) => {
     const volumePerSecond = flow.volume / UnixTime.DAY
     const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
     return particlesPerSecond * (travelDurations[i] ?? 0)
@@ -91,7 +92,7 @@ export function ParticleLayer({
 
   return (
     <g>
-      {flows.map((flow, flowIndex) => {
+      {filteredFlows.map((flow, flowIndex) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
         if (!src || !dst) return null
