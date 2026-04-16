@@ -19,7 +19,7 @@ export function TopItemsList({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12">{label}</div>
+      <div className="mb-1.5 font-bold text-label-value-12 uppercase">{label}</div>
       <div className="space-y-1">
         {items.map((item) => (
           <div

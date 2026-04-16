@@ -34,7 +34,7 @@ export function SingleChainStats({
       <TopRoutes data={data} isLoading={isLoading} chainId={chainId} />
       {chainData && (
         <TopItemsList
-          label="TOP TOKENS"
+          label="Top tokens"
           items={chainData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
@@ -43,7 +43,7 @@ export function SingleChainStats({
       )}
       {chainData && (
         <TopItemsList
-          label="TOP BRIDGES"
+          label="Top bridges"
           items={chainData.topProtocols.map((p) => ({
             ...p,
             title: p.name,
@@ -76,7 +76,7 @@ function Stats({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12">STATS</div>
+      <div className="mb-1.5 font-bold text-label-value-12 uppercase">Stats</div>
       <div className="space-y-1.5">
         <StatRow
           label="Volume in"
@@ -145,7 +145,7 @@ function TopRoutes({
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
-      <div className="mb-1.5 font-bold text-label-value-12">TOP ROUTES</div>
+      <div className="mb-1.5 font-bold text-label-value-12 uppercase">Top routes</div>
       <div className="space-y-1">
         {flows.map((flow) => {
           const srcChain = allChains.find((c) => c.id === flow.srcChain)
