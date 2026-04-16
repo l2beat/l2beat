@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776179316,
-  "lastConsumedUpdateNotifierId": 94,
+  "lastReconciledAt": 1776329851,
+  "lastConsumedUpdateNotifierId": 104,
   "events": [
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
@@ -264,6 +264,45 @@
           "field": "values.$members.2",
           "before": "eth:0x2afc096981c2CFe3501bE4054160048718F6C0C8",
           "after": "eth:0x86Bd534A95Fb2Cc36D526ba149464c4477315C32"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-16T08:53:59.000Z",
+      "updateNotifierId": 104,
+      "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "104:eth:0x255c7705e8BB334DfCae438197f7C4297988085a:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "name",
+          "before": "GnosisSafe",
+          "after": "Safe"
+        },
+        {
+          "field": "values.VERSION",
+          "before": "1.3.0",
+          "after": "1.4.1"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+          "after": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+        },
+        {
+          "field": "sourceHashes.1",
+          "before": "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940",
+          "after": "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        },
+        {
+          "field": "implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+          "before": "GnosisSafe"
+        },
+        {
+          "field": "implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+          "after": "Safe"
         }
       ]
     }

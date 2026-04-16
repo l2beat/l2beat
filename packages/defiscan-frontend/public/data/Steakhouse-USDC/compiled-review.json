@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-15T00:00:00.000Z",
-  "compiledAt": "2026-04-15T09:01:55.078Z",
+  "updatedAt": "2026-04-16T08:48:19.777Z",
+  "compiledAt": "2026-04-16T08:53:59.000Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -18,7 +18,7 @@
     "scoredFunctionCount": 14,
     "adminCount": 7,
     "dependencyCount": 9,
-    "totalCapitalAtRisk": 193046136.78044477,
+    "totalCapitalAtRisk": 186859223.0494701,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
     "linesOfCode": 0
@@ -151,7 +151,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -184,7 +184,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -263,9 +263,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 193046136.78044477,
+      "totalDirectCapital": 186859223.0494701,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 193046136.78044477,
+      "totalReachableCapital": 186859223.0494701,
       "totalReachableTokenValue": 0
     },
     {
@@ -280,7 +280,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -313,7 +313,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -374,9 +374,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 193046136.78044477,
+      "totalDirectCapital": 186859223.0494701,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 193046136.78044477,
+      "totalReachableCapital": 186859223.0494701,
       "totalReachableTokenValue": 0
     },
     {
@@ -590,7 +590,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 193046136.78044477,
+    "totalFundsAtRisk": 186859223.0494701,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -634,7 +634,7 @@
         },
         {
           "contractAddress": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
-          "contractName": "2/4 50% GnosisSafe",
+          "contractName": "2/4 50% Safe",
           "functionName": "checkNSignatures",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -643,7 +643,7 @@
         },
         {
           "contractAddress": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
-          "contractName": "2/4 50% GnosisSafe",
+          "contractName": "2/4 50% Safe",
           "functionName": "checkSignatures",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -652,7 +652,7 @@
         },
         {
           "contractAddress": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
-          "contractName": "2/4 50% GnosisSafe",
+          "contractName": "2/4 50% Safe",
           "functionName": "execTransaction",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -866,7 +866,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -875,7 +875,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -884,7 +884,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -902,7 +902,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -950,7 +950,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -979,12 +979,12 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 193046136.78044477,
+          "directFundsUsd": 186859223.0494701,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 193046136.78044477,
+      "totalFundsAtRisk": 186859223.0494701,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -997,12 +997,12 @@
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 193046136.78044477,
+      "totalFundsAtRisk": 186859223.0494701,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 193046136.78044477,
+    "totalFundsAtRisk": 186859223.0494701,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
@@ -1011,10 +1011,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006718633297616619
+        "totalUsdValue": 0.006771581535967889
       },
       "positions": {
-        "totalUsdValue": 193046136.77372614
+        "totalUsdValue": 186859223.0426985
       },
       "tokenInfo": null,
       "aggregate": null
@@ -1389,6 +1389,45 @@
   "resources": [],
   "audits": [],
   "activity": [
+    {
+      "timestamp": "2026-04-16T08:53:59.000Z",
+      "updateNotifierId": 104,
+      "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "104:eth:0x255c7705e8BB334DfCae438197f7C4297988085a:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "name",
+          "before": "GnosisSafe",
+          "after": "Safe"
+        },
+        {
+          "field": "values.VERSION",
+          "before": "1.3.0",
+          "after": "1.4.1"
+        },
+        {
+          "field": "values.$implementation",
+          "before": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+          "after": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+        },
+        {
+          "field": "sourceHashes.1",
+          "before": "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940",
+          "after": "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+        },
+        {
+          "field": "implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+          "before": "GnosisSafe"
+        },
+        {
+          "field": "implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+          "after": "Safe"
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-07T08:22:05.000Z",
       "updateNotifierId": 94,

@@ -1,6 +1,6 @@
 {
   "name": "Steakhouse-USDC",
-  "timestamp": 1776243152,
+  "timestamp": 1776329639,
   "configHash": "0xf93560ab5849bcadc1d2b6ca66dc9a6b4b6447d3c25478fef5d817f021bdfe12",
   "entries": [
     {
@@ -164,13 +164,13 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Safe",
       "address": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -178,7 +178,7 @@
       "sinceBlock": 18926572,
       "values": {
         "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xd8bAA2606c4f0d121d4a08b0D83acF0Dee9dCA77",
           "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
@@ -190,12 +190,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 179,
-        "VERSION": "1.3.0"
+        "nonce": 182,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "eth:0x255c7705e8BB334DfCae438197f7C4297988085a": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -265,7 +265,7 @@
         "$immutable": true,
         "BASE_FEED_1": "eth:0x4F67e4d9BD67eFa28236013288737D39AeF48e79",
         "BASE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
-        "price": "2858638163170760942103758437",
+        "price": "2887019073018079066137613721",
         "QUOTE_FEED_1": "eth:0x986b5E1e1755e3C2440e960477f25201B0a8bbD4",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "10000000000000000000000000000000000",
@@ -629,7 +629,7 @@
         "fee": 0,
         "feeRecipient": "eth:0x255c7705e8BB334DfCae438197f7C4297988085a",
         "guardian": "eth:0xaa0500198B4425DfC4E272FbE42C8E64E21fc03d",
-        "lastTotalAssets": 193142426349989,
+        "lastTotalAssets": 186896494932216,
         "marketOracles": [
           "eth:0xA6D6950c9F177F1De7f7757FB33539e3Ec60182a",
           "eth:0xDddd770BADd886dF3864029e4B377B5F6a2B6b83",
@@ -703,8 +703,8 @@
         "supplyQueueLength": 5,
         "symbol": "steakUSDC",
         "timelock": 604800,
-        "totalAssets": 193142566067290,
-        "totalSupply": "172019323085653994811884265",
+        "totalAssets": 186896588670243,
+        "totalSupply": "166440596571902099225396378",
         "withdrawQueueLength": 5
       },
       "fieldMeta": {
@@ -833,7 +833,7 @@
         "$immutable": true,
         "BASE_FEED_1": "eth:0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23",
         "BASE_FEED_2": "eth:0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
-        "price": "740080625712874099990997929523790471808",
+        "price": "745892867269781258439103429651633810423",
         "QUOTE_FEED_1": "eth:0x8fFfFfd4AfB6115b954Bd326cbe7B4BA576818f6",
         "QUOTE_FEED_2": "eth:0x0000000000000000000000000000000000000000",
         "SCALE_FACTOR": "100000000000000000000000000",
@@ -1743,6 +1743,6 @@
     "Steakhouse-USDC/EACAggregatorProxy": "0x3ba2cbd9a884cdfea15efe908af481b5a5a9c747391c8580bd38b0f8b1603921",
     "taiko/DAO": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24884135 },
-  "permissionsConfigHash": "0xe131ce9ddf18a08f397f83805d408bc58a67eea0e9c333bf45719507f843f3c1"
+  "usedBlockNumbers": { "ethereum": 24891318 },
+  "permissionsConfigHash": "0xe9407f041ee4a3d3aeaabe55bd3ee5757db89548029e8e7a69771c6302f7c3a5"
 }
