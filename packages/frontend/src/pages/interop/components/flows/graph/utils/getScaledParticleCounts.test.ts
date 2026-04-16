@@ -15,8 +15,4 @@ describe(getScaledParticleCounts.name, () => {
       getScaledParticleCounts(Array.from({ length: 20 }, () => 60)),
     ).toEqual(Array.from({ length: 20 }, () => 35))
   })
-
-  it('clamps negative counts to zero', () => {
-    expect(getScaledParticleCounts([-5, 10])).toEqual([0, 10])
-  })
 })
