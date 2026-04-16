@@ -8,6 +8,7 @@ import { createTRPCContext } from '../trpc'
 import { createKoaMiddleware } from './koa-middleware'
 
 type Dependencies = {
+  aggregationConfigs: InteropFeatureConfig['aggregation']
   db: Database
   getExplorerUrl: (chain: string) => string | undefined
   syncersManager: InteropSyncersManager
@@ -25,6 +26,9 @@ export function getInteropTrpcRouterDeps(
   deps: Dependencies,
 ): InteropTrpcRouterDeps {
   return {
+    aggregationConfigs: deps.aggregationConfigs
+      ? deps.aggregationConfigs.configs
+      : [],
     getExplorerUrl: deps.getExplorerUrl,
     getChainsForPlugin: (pluginName: string) =>
       deps.syncersManager.getChainsForPlugin(pluginName),

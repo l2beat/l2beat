@@ -36,7 +36,6 @@ import { HyperlaneHwrPlugin } from './hyperlane-hwr'
 import { HyperlaneMerklyTokenBridgePlugin } from './hyperlane-merkly-tokenbridge'
 import { HyperlaneSimpleAppsPlugIn } from './hyperlane-simple-apps'
 import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
-import { LayerZeroV1Plugin } from './layerzero/layerzero-v1.plugin'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
@@ -112,7 +111,6 @@ export function createInteropPlugins(
         deps.configIntervalMs,
       ),
       new LayerZeroConfigPlugin(
-        deps.chains,
         deps.configs,
         deps.logger,
         deps.httpClient,
@@ -168,9 +166,8 @@ export function createInteropPlugins(
         name: 'layerzero',
         plugins: [
           new StargatePlugin(deps.configs), // should be run before ofts, lzv2
-          new LayerZeroV2OFTsPlugin(deps.configs), // should be run before LayerZeroV2
+          new LayerZeroV2OFTsPlugin(deps.configs, deps.oneSidedChains), // should be run before LayerZeroV2
           new LayerZeroV2Plugin(deps.configs),
-          new LayerZeroV1Plugin(deps.configs),
         ],
       },
       {

@@ -1207,7 +1207,6 @@ export type InteropPluginName =
   | 'hyperlane-hwr'
   | 'hyperlane-merkly-tokenbridge'
   | 'hyperlane-simple-apps'
-  | 'layerzero-v1'
   | 'layerzero-v2'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
