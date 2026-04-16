@@ -29,7 +29,6 @@ export function FlowsGraph({
     [selectedChains, data.chainData, size, isSmallScreen],
   )
 
-  const maxVolume = Math.max(...data.flows.map((f) => f.volume))
   const center = size / 2
 
   return (
@@ -56,7 +55,6 @@ export function FlowsGraph({
         interopChains={interopChains}
         centerX={center}
         centerY={center}
-        maxVolume={maxVolume}
         isSmallScreen={isSmallScreen}
       />
       <ChainBubblesLayer

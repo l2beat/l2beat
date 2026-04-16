@@ -6,7 +6,6 @@ import {
   DOLLARS_PER_PARTICLE,
   MAX_PARTICLES_PER_FLOW,
   MAX_TOTAL_PARTICLES,
-  VOLUME_THRESHOLD_RATIO,
 } from '../consts'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
@@ -22,7 +21,6 @@ interface Props {
   interopChains: InteropChainWithIcon[]
   centerX: number
   centerY: number
-  maxVolume: number
   isSmallScreen: boolean
 }
 
@@ -44,16 +42,13 @@ export function ParticleLayer({
   interopChains,
   centerX,
   centerY,
-  maxVolume,
   isSmallScreen,
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
-  const threshold = maxVolume * VOLUME_THRESHOLD_RATIO
-  const visibleFlows = flows.filter((f) => f.volume >= threshold)
 
   // Compute the exact fractional on-screen particle count per flow
-  const exactCounts = visibleFlows.map((flow) => {
+  const exactCounts = flows.map((flow) => {
     const volumePerSecond = flow.volume / UnixTime.DAY
     const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
     return particlesPerSecond * BASE_DURATION_S
@@ -71,7 +66,7 @@ export function ParticleLayer({
 
   return (
     <g>
-      {visibleFlows.map((flow, flowIndex) => {
+      {flows.map((flow, flowIndex) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
         if (!src || !dst) return null
@@ -99,7 +94,7 @@ export function ParticleLayer({
           // Sub-1 flow: render 1 particle that still travels in exactly
           // BASE_DURATION_S, but with a longer gap between trips.
           // e.g. exact=0.2 → cycle=25s, particle visible for first 5s only.
-          const cycleDuration = BASE_DURATION_S / Math.max(exact, 0.01)
+          const cycleDuration = BASE_DURATION_S / exact
           const t = BASE_DURATION_S / cycleDuration
           return (
             <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
