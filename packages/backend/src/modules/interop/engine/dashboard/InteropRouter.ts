@@ -63,6 +63,7 @@ export function createInteropRouter(
     ['/interop/trpc', '/interop/trpc/(.*)'],
     createInteropTrpc(
       {
+        aggregationConfigs: config.aggregation,
         db,
         getExplorerUrl: config.dashboard.getExplorerUrl,
         syncersManager,

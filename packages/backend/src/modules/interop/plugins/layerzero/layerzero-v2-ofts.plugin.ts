@@ -41,7 +41,7 @@ const parseTransfer = createEventParser(
   'event Transfer(address indexed from, address indexed to, uint256 value)',
 )
 
-const OFTSentPacketSent = createInteropEventType<{
+type OFTSentPacketSentArgs = {
   $dstChain: string
   guid: string
   amountSentLD: bigint
@@ -50,9 +50,14 @@ const OFTSentPacketSent = createInteropEventType<{
   srcTokenAddress?: Address32
   srcAmount?: bigint
   burned?: boolean
-}>('layerzero-v2.PacketOFTSent', { direction: 'outgoing' })
+}
 
-const OFTReceivedPacketDelivered = createInteropEventType<{
+const OFTSentPacketSent = createInteropEventType<OFTSentPacketSentArgs>(
+  'layerzero-v2.PacketOFTSent',
+  { direction: 'outgoing' },
+)
+
+type OFTReceivedPacketDeliveredArgs = {
   $srcChain: string
   guid: string
   amountReceivedLD: bigint
@@ -60,7 +65,13 @@ const OFTReceivedPacketDelivered = createInteropEventType<{
   dstTokenAddress?: Address32
   dstAmount?: bigint
   minted?: boolean
-}>('layerzero-v2.PacketOFTDelivered', { direction: 'incoming' })
+}
+
+const OFTReceivedPacketDelivered =
+  createInteropEventType<OFTReceivedPacketDeliveredArgs>(
+    'layerzero-v2.PacketOFTDelivered',
+    { direction: 'incoming' },
+  )
 
 type NormalizedOFTSentAmounts = {
   amountSentLD: bigint
@@ -186,7 +197,10 @@ export function findOFTSentTransferData(
 export class LayerZeroV2OFTsPlugin implements InteropPlugin {
   readonly name = 'layerzero-v2-ofts'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(LayerZeroV2Config)
@@ -311,19 +325,50 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
     }
   }
 
-  matchTypes = [OFTReceivedPacketDelivered]
+  matchTypes = [OFTReceivedPacketDelivered, OFTSentPacketSent]
   match(
-    oftReceivedPacketDelivered: InteropEvent,
+    event: InteropEvent,
     db: InteropEventDb,
     tokenMap: TokenMap,
   ): MatchResult | undefined {
-    if (!OFTReceivedPacketDelivered.checkType(oftReceivedPacketDelivered))
-      return
+    if (OFTReceivedPacketDelivered.checkType(event)) {
+      return this.matchReceived(event, db, tokenMap)
+    }
 
+    if (OFTSentPacketSent.checkType(event)) {
+      return this.matchSent(event, db)
+    }
+  }
+
+  private matchReceived(
+    oftReceivedPacketDelivered: InteropEvent<OFTReceivedPacketDeliveredArgs>,
+    db: InteropEventDb,
+    tokenMap: TokenMap,
+  ): MatchResult | undefined {
     const guid = oftReceivedPacketDelivered.args.guid
 
     const oftSentPacketSent = db.find(OFTSentPacketSent, { guid })
-    if (!oftSentPacketSent) return
+    if (!oftSentPacketSent) {
+      const rawSrcChain = oftReceivedPacketDelivered.args.$srcChain
+      const srcChain =
+        rawSrcChain && this.oneSidedChains.includes(rawSrcChain)
+          ? rawSrcChain
+          : undefined
+      if (!srcChain) return
+
+      const packetDelivered = db.find(PacketDelivered, { guid })
+
+      return [
+        Result.Transfer('oftv2.Transfer', {
+          srcChain,
+          dstEvent: oftReceivedPacketDelivered,
+          dstAmount: oftReceivedPacketDelivered.args.amountReceivedLD,
+          dstTokenAddress: oftReceivedPacketDelivered.args.dstTokenAddress,
+          dstWasMinted: oftReceivedPacketDelivered.args.minted,
+          extraEvents: packetDelivered ? [packetDelivered] : undefined,
+        }),
+      ]
+    }
 
     const packetSent = db.find(PacketSent, { guid })
     if (!packetSent) return
@@ -361,6 +406,35 @@ export class LayerZeroV2OFTsPlugin implements InteropPlugin {
         srcWasBurned,
         dstWasMinted,
         bridgeType,
+      }),
+    ]
+  }
+
+  private matchSent(
+    oftSentPacketSent: InteropEvent<OFTSentPacketSentArgs>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const rawDstChain = oftSentPacketSent.args.$dstChain
+    const dstChain =
+      rawDstChain && this.oneSidedChains.includes(rawDstChain)
+        ? rawDstChain
+        : undefined
+    if (!dstChain) return
+
+    const guid = oftSentPacketSent.args.guid
+    const hasCounterpart = db.find(OFTReceivedPacketDelivered, { guid })
+    if (hasCounterpart) return
+
+    const packetSent = db.find(PacketSent, { guid })
+
+    return [
+      Result.Transfer('oftv2.Transfer', {
+        srcEvent: oftSentPacketSent,
+        dstChain,
+        srcAmount: oftSentPacketSent.args.amountSentLD,
+        srcTokenAddress: oftSentPacketSent.args.srcTokenAddress,
+        srcWasBurned: oftSentPacketSent.args.burned,
+        extraEvents: packetSent ? [packetSent] : undefined,
       }),
     ]
   }
