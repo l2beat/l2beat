@@ -126,6 +126,7 @@ export function createInteropModule({
   const router = createInteropRouter(
     db,
     config.interop,
+    tokenDbClient,
     processors,
     syncersManager,
     logger.for('InteropRouter'),

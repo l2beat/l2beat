@@ -1,9 +1,9 @@
 import Router from '@koa/router'
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import type { TokenDbClient } from '@l2beat/token-backend'
 import { v } from '@l2beat/validate'
 import type { InteropFeatureConfig } from '../../../../config/Config'
 import type { InteropBlockProcessor } from '../capture/InteropBlockProcessor'
@@ -36,6 +36,7 @@ import { createInteropTrpc } from './trpc/server/middleware'
 export function createInteropRouter(
   db: Database,
   config: InteropFeatureConfig,
+  tokenDbClient: TokenDbClient,
   processors: InteropBlockProcessor[],
   syncersManager: InteropSyncersManager,
   logger: Logger,
@@ -67,6 +68,8 @@ export function createInteropRouter(
         syncersManager,
         getProcessorStatuses: () => getProcessorsStatus(processors),
         dashboard: config.dashboard,
+        chains: config.capture.chains,
+        tokenDbClient,
       },
       { prefix: '/interop/trpc' },
     ),

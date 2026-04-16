@@ -26,7 +26,10 @@ export function getTableCsvData<TData extends RowData>(
   const rows = table.getRowModel().rows
   const columns = table
     .getVisibleLeafColumns()
-    .filter((column) => column.getIsVisible())
+    .filter(
+      (column) =>
+        column.getIsVisible() && column.columnDef.meta?.excludeFromCsv !== true,
+    )
 
   const headers = columns.map((column) => {
     return (

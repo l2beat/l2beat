@@ -57,6 +57,7 @@ export type {
   InteropMissingTokenInfo,
   InteropSuspiciousTransferRecord,
   InteropTransferRecord,
+  InteropTransferTokenInfo,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
   InteropTransferUpdate,
