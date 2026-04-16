@@ -124,9 +124,9 @@ export function FlowsProtocolsSelector({
         <DialogTrigger className="cursor-pointer max-md:hidden" asChild>
           {trigger}
         </DialogTrigger>
-        <DialogContent className="flex max-h-[60dvh] w-full flex-col overflow-y-hidden bg-surface-primary md:max-w-[720px]">
+        <DialogContent className="flex max-h-[60dvh] w-full flex-col gap-1 overflow-y-hidden bg-surface-primary md:max-w-112">
           <DialogHeader>
-            <DialogTitle className="text-2xl">Protocols</DialogTitle>
+            <DialogTitle className="text-heading-24">Protocols</DialogTitle>
             <DialogDescription className="sr-only">
               Select protocols
             </DialogDescription>
@@ -137,7 +137,7 @@ export function FlowsProtocolsSelector({
               <Checkbox
                 key={protocol.id}
                 name={protocol.name}
-                className="flex h-10 w-full flex-row-reverse items-center justify-between px-4 py-2.5 hover:bg-surface-secondary"
+                className="flex h-10 w-full flex-row-reverse items-center justify-between px-3 py-2.5 hover:bg-surface-secondary"
                 checked={protocol.isSelected}
                 onCheckedChange={() => toggleProtocolSelection(protocol.id)}
               >
@@ -147,7 +147,7 @@ export function FlowsProtocolsSelector({
                     alt={protocol.name}
                     className="size-4"
                   />
-                  <span className="font-semibold text-xs leading-none">
+                  <span className="font-bold text-label-value-16">
                     {protocol.name}
                   </span>
                 </div>
