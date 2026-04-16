@@ -26,7 +26,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/core/Sidebar'
-import { cn } from '~/utils/cn'
 
 const items = [
   {
@@ -132,13 +131,8 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className={cn(
-                      item.isUpcoming && 'pointer-events-none opacity-20',
-                    )}
-                  >
-                    <SidebarMenuButton asChild disabled={item.isUpcoming}>
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
                       <Link to={item.url}>
                         <item.icon />
                         <span>{item.title}</span>
