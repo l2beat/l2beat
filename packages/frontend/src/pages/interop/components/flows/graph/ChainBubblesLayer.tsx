@@ -132,7 +132,7 @@ function getBubbleStyle(highlighted: boolean, highlightedCount: number) {
     return { fillOpacity: 0.3, strokeWidth: 4, strokeOpacity: 1 }
   }
   if (highlightedCount === 2) {
-    return { fillOpacity: 0.075, strokeWidth: 0, strokeOpacity: 0 }
+    return { fillOpacity: 0.1125, strokeWidth: 0, strokeOpacity: 0 }
   }
   return { fillOpacity: 0.15, strokeWidth: 1.5, strokeOpacity: 0.5 }
 }
