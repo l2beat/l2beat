@@ -10,10 +10,7 @@ import {
 import { useQueryParam } from '~/hooks/useQueryParam'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-
-export const MAX_SELECTED_CHAINS = 15
-export const MIN_SELECTED_CHAINS = 2
-export const MIN_SELECTED_PROTOCOLS = 1
+import { MAX_SELECTED_CHAINS } from '../consts'
 
 const CHAINS_QUERY_KEY = 'chains'
 const PROTOCOLS_QUERY_KEY = 'protocols'

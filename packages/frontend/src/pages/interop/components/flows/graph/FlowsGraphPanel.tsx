@@ -5,11 +5,8 @@ import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import { api } from '~/trpc/React'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-import {
-  MIN_SELECTED_CHAINS,
-  MIN_SELECTED_PROTOCOLS,
-  useInteropFlows,
-} from '../utils/InteropFlowsContext'
+import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
+import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 

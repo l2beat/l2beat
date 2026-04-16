@@ -1,6 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
+import {
+  BASE_DURATION_S,
+  DOLLARS_PER_PARTICLE,
+  MAX_PARTICLES_PER_FLOW,
+  MAX_TOTAL_PARTICLES,
+  VOLUME_THRESHOLD_RATIO,
+} from '../consts'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
@@ -18,17 +25,6 @@ interface Props {
   maxVolume: number
   isSmallScreen: boolean
 }
-
-// Each particle represents 50 USD of volume
-export const DOLLARS_PER_PARTICLE = 50
-// Base travel time for a particle to cross the full path
-const BASE_DURATION_S = 5
-// Per-flow upper bound to avoid excessive DOM nodes
-const MAX_PARTICLES_PER_FLOW = 50
-// Global upper bound — if exceeded, all counts are scaled down proportionally
-const MAX_TOTAL_PARTICLES = 700
-// Flows below this fraction of the max volume are hidden to reduce visual noise
-export const VOLUME_THRESHOLD_RATIO = 0.001
 
 /**
  * Renders animated dots flowing along each connection path.

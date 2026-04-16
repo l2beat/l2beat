@@ -16,11 +16,8 @@ import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 import { ChainSelectorChainToggle } from '../chain-selector/ChainSelectorChainToggle'
 import type { InteropChainWithIcon } from '../chain-selector/types'
-import {
-  MAX_SELECTED_CHAINS,
-  MIN_SELECTED_CHAINS,
-  useInteropFlows,
-} from './utils/InteropFlowsContext'
+import { MAX_SELECTED_CHAINS, MIN_SELECTED_CHAINS } from './consts'
+import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsChainsSelector({
   allChains,

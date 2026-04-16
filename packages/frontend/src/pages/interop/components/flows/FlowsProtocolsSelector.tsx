@@ -18,10 +18,8 @@ import {
 import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import { InfoIcon } from '~/icons/Info'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import {
-  MIN_SELECTED_PROTOCOLS,
-  useInteropFlows,
-} from './utils/InteropFlowsContext'
+import { MIN_SELECTED_PROTOCOLS } from './consts'
+import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsProtocolsSelector({
   allProtocols,
