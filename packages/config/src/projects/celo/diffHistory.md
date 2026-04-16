@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb08f85afcb83dae4f26e9f51b6aaca522de385c1
 
 ## Description
 
-SystemConfig minBaseFee raised from 25 gwei to 50 gwei. AccessManager (OPSuccinct proposer/challenger access control) owner transferred from an EOA (0x95FFAC, now deleted from discovery) to the Celo cLabs Multisig (0x9Eb44D).
+SystemConfig minBaseFee raised from 25 gwei to 50 gwei. AccessManager (OPSuccinct proposer/challenger access control) owner transferred from an EIP-7702 delegator EOA (0x95FFAC, now deleted from discovery) to the Celo cLabs Multisig (0x9Eb44D).
 
 ## Watched changes
 

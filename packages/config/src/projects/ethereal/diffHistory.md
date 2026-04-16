@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xf2c702c42ebd211fed9b233d070e6833bc726e9c
+Generated with discovered.json: 0x6871f8f9707aab87c4342335adbb72027b6cc7df
 
-# Diff at Thu, 16 Apr 2026 10:25:11 GMT:
+# Diff at Thu, 16 Apr 2026 21:36:02 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1770823999
-- current timestamp: 1776335039
+- current timestamp: 1776375286
 
 ## Description
 
-ExchangeGateway upgraded: all previously separate auxiliary contracts (ActionHandler, CollateralManager, ExchangeConfig, PerpEngine, Liquidation) deleted and their functionality inlined into the ExchangeGateway implementation. The new implementation inherits IActionHandler, ICollateralManager, IExchangeConfig, IExchangeGateway directly instead of delegating via the registry. New Wrapped USDe token (0xB6fC4B1) added. List of tradable exchange tokens expanded (now includes SUI, XRP, AAVE, ENA, FARTCOIN, PUMP, ZEC, MON, XMR, LIT, BERA). New shape added to ethereal/ExchangeGateway template.
+ExchangeGateway upgraded (still delegatecalls auxiliary modules via the registry). ActionHandler and Liquidation redeployed at new addresses; a new Deleverage module was added to the registry. Old ActionHandler (0xA23081) and Liquidation (0xF925Bf) deleted from discovery. CollateralManager, ExchangeConfig, and PerpEngine unchanged.
+
+Shapes added: ExchangeGateway v2 (0x86b4515...), and new auxiliary shapes for ActionHandler_v2, Liquidation_v2, Deleverage in ethereal/ExchangeGatewayRegistryContracts template.
 
 ExchangeGateway: [diff](https://disco.l2beat.com/diff/ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d/ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db)
 
@@ -58,19 +60,19 @@ ExchangeGateway: [diff](https://disco.l2beat.com/diff/ethereal:0x922Eb912285225c
 ```diff
 +   Status: CREATED
     contract Liquidation (ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1)
-    +++ description: None
+    +++ description: Auxiliary contract of the ExchangeGateway.
 ```
 
 ```diff
 +   Status: CREATED
     contract ActionHandler (ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96)
-    +++ description: None
+    +++ description: Auxiliary contract of the ExchangeGateway.
 ```
 
 ```diff
 +   Status: CREATED
     contract Deleverage (ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B)
-    +++ description: None
+    +++ description: Auxiliary contract of the ExchangeGateway.
 ```
 
 ## Source code changes

@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1776335039,
+  "timestamp": 1776375286,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -38,7 +38,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4795,
+        "batchCount": 4806,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -404,7 +404,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0x5825301c9d6b93af455bebd5f2c80e165d51d9d01578c73ea057d052f32fb36a",
+        "latestConfirmed": "0xdd26c23b114bb02abe06d660eb4b9e5fb187b88d6c79a2007a0ce95f3a1df721",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -891,8 +891,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 4795,
-        "sequencerReportedSubMessageCount": 4259711
+        "sequencerMessageCount": 4806,
+        "sequencerReportedSubMessageCount": 4266845
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1131,10 +1131,12 @@
       "name": "Liquidation",
       "address": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
       "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
         "0x6aac002e19307973aae2c7f4e38a5804b35dff1da8b348242101dc26b8f6b5b3"
       ],
       "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258775,
       "values": { "$immutable": true },
@@ -1173,10 +1175,12 @@
       "name": "ActionHandler",
       "address": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
       "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
         "0xad7e7fd7b43fd83e9a1b0fb841090fe2c1a4244dbc6b2a9a64780714e1cdf93a"
       ],
       "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258774,
       "values": {
@@ -1466,10 +1470,12 @@
       "name": "Deleverage",
       "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
       "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
         "0xcf06ecba5335035199e65edcc6e047920089cd2ef278275008a53a8c4af61045"
       ],
       "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
       "sinceTimestamp": 1776326201,
       "sinceBlock": 4258776,
       "values": { "$immutable": true },
@@ -2779,6 +2785,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 453064916, "ethereal": 4259830 },
+  "usedBlockNumbers": { "arbitrum": 453225640, "ethereal": 4267057 },
   "permissionsConfigHash": "0xc484e12eacef04cf8d9120b5e2072d35c3e691536e055a07952ab82314811cd9"
 }
