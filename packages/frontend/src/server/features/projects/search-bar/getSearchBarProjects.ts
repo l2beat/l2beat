@@ -24,6 +24,7 @@ export async function getSearchBarProjects(
       'zkCatalogInfo',
       'contracts',
       'permissions',
+      'aliases',
     ],
   })
 

@@ -29,6 +29,20 @@ function dedupeTags(tags: Array<string | undefined>): string[] {
   return [...new Set(tags.filter((tag): tag is string => !!tag))]
 }
 
+export function getCommonSearchBarProjectTags(project: {
+  slug: string
+  name: string
+  shortName?: string
+  aliases?: string[]
+}): string[] {
+  return dedupeTags([
+    project.slug,
+    project.name,
+    project.shortName,
+    ...(project.aliases ?? []),
+  ])
+}
+
 export function getSearchBarProjectEntries<
   T extends Project<
     never,
@@ -42,6 +56,7 @@ export function getSearchBarProjectEntries<
     | 'zkCatalogInfo'
     | 'contracts'
     | 'permissions'
+    | 'aliases'
   >,
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
@@ -56,7 +71,7 @@ export function getSearchBarProjectEntries<
     return []
   }
 
-  const commonTags = dedupeTags([project.slug, project.name, project.shortName])
+  const commonTags = getCommonSearchBarProjectTags(project)
 
   const common = {
     type: 'project',
