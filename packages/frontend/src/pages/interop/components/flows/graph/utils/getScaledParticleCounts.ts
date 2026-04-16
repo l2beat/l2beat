@@ -1,4 +1,4 @@
-import { MAX_PARTICLES_PER_FLOW, MAX_TOTAL_PARTICLES } from '../../consts'
+import { MAX_TOTAL_PARTICLES } from '../../consts'
 
 export function getScaledParticleCounts(exactCounts: number[]): number[] {
   if (exactCounts.length === 0) return []
@@ -6,18 +6,20 @@ export function getScaledParticleCounts(exactCounts: number[]): number[] {
   const positiveCounts = exactCounts.map((count) => Math.max(count, 0))
 
   // Keep the local ceiling, but preserve relative differences between flows.
-  const maxExactCount = Math.max(...positiveCounts)
-  const localScale =
-    maxExactCount > MAX_PARTICLES_PER_FLOW
-      ? MAX_PARTICLES_PER_FLOW / maxExactCount
-      : 1
+  // const maxExactCount = Math.max(...positiveCounts)
+  // // const localScale =
+  // //   maxExactCount > MAX_PARTICLES_PER_FLOW
+  // //     ? MAX_PARTICLES_PER_FLOW / maxExactCount
+  // //     : 1
 
-  const locallyScaledCounts = positiveCounts.map((count) => count * localScale)
+  const locallyScaledCounts = positiveCounts.map((count) => count * 1)
 
   const totalCount = locallyScaledCounts.reduce((sum, count) => {
     if (count <= 0) return sum
     return sum + Math.max(count, 1)
   }, 0)
+
+  console.log('totalCount', totalCount)
 
   const globalScale =
     totalCount > MAX_TOTAL_PARTICLES ? MAX_TOTAL_PARTICLES / totalCount : 1
