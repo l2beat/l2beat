@@ -10,23 +10,12 @@ import {
 } from '../../engine/config/InteropConfigStore'
 import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 
-export interface LayerZeroV1Network {
-  chain: string
-  chainId: number
-  eid: number
-  sendLib: EthereumAddress
-  receiveLib: EthereumAddress
-}
-
 export interface LayerZeroV2Network {
   chain: string
   chainId?: number
   eid: number
   endpointV2?: EthereumAddress
 }
-
-export const LayerZeroV1Config =
-  defineConfig<LayerZeroV1Network[]>('layerzero-v1')
 
 export const LayerZeroV2Config =
   defineConfig<LayerZeroV2Network[]>('layerzero-v2')
@@ -36,6 +25,7 @@ const DOCS_URL = 'https://metadata.layerzero-api.com/v1/metadata/deployments'
 const DocsResult = v.record(
   v.string(),
   v.object({
+    chainKey: v.string(),
     deployments: v
       .array(
         v.object({
@@ -50,51 +40,64 @@ const DocsResult = v.record(
               v.string(),
             ])
             .optional(),
-          sendUln301: v
-            .union([
-              v.object({
-                address: v.string(),
-              }),
-              v.string(),
-            ])
-            .optional(),
-          receiveUln301: v
-            .union([
-              v.object({
-                address: v.string(),
-              }),
-              v.string(),
-            ])
-            .optional(),
         }),
       )
       .optional(),
     chainDetails: v
       .object({
-        chainKey: v.string().optional(),
         nativeChainId: v.number().optional(),
       })
       .optional(),
   }),
 )
 
-const OVERRIDES = {
-  v2: [
-    {
-      eid: 30168,
-      chain: 'solana',
-    },
-  ],
+const LAYERZERO_CHAIN_KEY_OVERRIDES = {
+  ape: 'apechain',
+  edu: 'educhain',
+  hyperliquid: 'hyperevm',
+  mp1: 'corn',
+  plumephoenix: 'plumenetwork',
+  polygon: 'polygonpos',
+  zklink: 'zklinknova',
+  zkevm: 'polygonzkevm',
+  zksync: 'zksync2',
+} as const
+
+function normalizeLayerZeroChainKey(chainKey: string) {
+  const normalized = chainKey
+    .toLowerCase()
+    .replace(/-mainnet(?:-custom)?$/, '')
+    .replace(/-testnet$/, '')
+
+  const override =
+    LAYERZERO_CHAIN_KEY_OVERRIDES[
+      normalized as keyof typeof LAYERZERO_CHAIN_KEY_OVERRIDES
+    ]
+
+  return override ?? normalized
+}
+
+function toEthereumAddress(
+  value:
+    | string
+    | {
+        address: string
+      }
+    | undefined,
+) {
+  if (!value) return
+  const address = typeof value === 'string' ? value : value.address
+  if (!address || !/^0x[a-fA-F0-9]{40}$/.test(address)) return
+  return EthereumAddress(address)
 }
 
 export class LayerZeroConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
 {
-  provides = [LayerZeroV1Config, LayerZeroV2Config]
+  provides = [LayerZeroV2Config]
 
   constructor(
-    private chains: { id: number; name: string }[],
     private store: InteropConfigStore,
     protected logger: Logger,
     private http: HttpClient,
@@ -107,25 +110,8 @@ export class LayerZeroConfigPlugin
   async run() {
     const latest = await this.getLatestNetworks()
 
-    const previousV1 = this.store.get(LayerZeroV1Config)
-    const reconciledV1 = reconcileNetworks(previousV1, latest.v1)
-
-    if (reconciledV1.removed.length > 0) {
-      this.logger.info('Upstream networks removed', {
-        plugin: LayerZeroV1Config.key,
-        removed: reconciledV1.removed,
-      })
-    }
-
-    if (reconciledV1.updated.length > 0) {
-      this.logger.info('Networks updated', {
-        plugin: LayerZeroV1Config.key,
-      })
-      this.store.set(LayerZeroV1Config, reconciledV1.updated)
-    }
-
     const previousV2 = this.store.get(LayerZeroV2Config)
-    const reconciledV2 = reconcileNetworks(previousV2, latest.v2)
+    const reconciledV2 = reconcileNetworks(previousV2, latest)
 
     if (reconciledV2.removed.length > 0) {
       this.logger.info('Upstream networks removed', {
@@ -142,77 +128,32 @@ export class LayerZeroConfigPlugin
     }
   }
 
-  async getLatestNetworks(): Promise<{
-    v1: LayerZeroV1Network[]
-    v2: LayerZeroV2Network[]
-  }> {
+  async getLatestNetworks(): Promise<LayerZeroV2Network[]> {
     const response = await this.http.fetch(DOCS_URL, { timeout: 10_000 })
     const docs = DocsResult.parse(response)
+    const v2: LayerZeroV2Network[] = []
 
-    const config: {
-      v1: LayerZeroV1Network[]
-      v2: LayerZeroV2Network[]
-    } = {
-      v1: [],
-      v2: [...OVERRIDES.v2],
-    }
-    for (const [_, value] of Object.entries(docs)) {
-      if (
-        value === undefined ||
-        value.chainDetails === undefined ||
-        value.chainDetails.nativeChainId === undefined
-      ) {
-        continue
-      }
+    for (const value of Object.values(docs)) {
+      const chain = normalizeLayerZeroChainKey(value.chainKey)
 
-      // API returns chainId = 1 for Aptos xd
-      if (value.chainDetails.chainKey === 'aptos') {
-        continue
-      }
-
-      const chain = this.chains.find(
-        (c) => c.id === value.chainDetails?.nativeChainId,
-      )
-
-      if (chain) {
-        const v1 = value.deployments?.find((d) => d.version === 1)
+      for (const deployment of value.deployments ?? []) {
         if (
-          v1 &&
-          v1.stage === 'mainnet' &&
-          v1.eid &&
-          v1.sendUln301 &&
-          v1.receiveUln301
+          deployment.version !== 2 ||
+          deployment.stage !== 'mainnet' ||
+          !deployment.eid
         ) {
-          config.v1.push({
-            chain: chain.name,
-            chainId: chain.id,
-            eid: Number(v1.eid),
-            sendLib:
-              typeof v1.sendUln301 === 'string'
-                ? EthereumAddress(v1.sendUln301)
-                : EthereumAddress(v1.sendUln301.address),
-            receiveLib:
-              typeof v1.receiveUln301 === 'string'
-                ? EthereumAddress(v1.receiveUln301)
-                : EthereumAddress(v1.receiveUln301.address),
-          })
+          continue
         }
 
-        const v2 = value.deployments?.find((d) => d.version === 2)
-        if (v2 && v2.stage === 'mainnet' && v2.eid && v2.endpointV2) {
-          config.v2.push({
-            chain: chain.name,
-            chainId: chain.id,
-            eid: Number(v2.eid),
-            endpointV2:
-              typeof v2.endpointV2 === 'string'
-                ? EthereumAddress(v2.endpointV2)
-                : EthereumAddress(v2.endpointV2.address),
-          })
-        }
+        v2.push({
+          chain,
+          chainId: value.chainDetails?.nativeChainId,
+          eid: Number(deployment.eid),
+          endpointV2: toEthereumAddress(deployment.endpointV2),
+        })
       }
     }
 
-    return config
+    return v2
   }
 }

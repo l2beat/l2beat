@@ -4,7 +4,7 @@ import {
   asStructured,
   codeIsEOA,
   findLeadingCommentStart,
-  flattenStartingFrom,
+  flattenBytecodeEquivalentStartingFrom,
   getChainConfigs,
   getChainFullName,
   getDiscoveryPaths,
@@ -104,9 +104,12 @@ export class DiffoveryController {
       }
     }
 
-    const flat = flattenStartingFrom(source.name, input, source.remappings, {
-      includeAll: true,
-    })
+    const flat = flattenBytecodeEquivalentStartingFrom(
+      source.name,
+      input,
+      source.remappings,
+      { includeAll: true },
+    )
     const parts = splitFlatSolidity(flat)
 
     const result = {

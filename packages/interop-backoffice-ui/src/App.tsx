@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
 import { AggregatesPage } from './pages/aggregates/AggregatesPage'
+import { AnomaliesPage } from './pages/anomalies/AnomaliesPage'
+import { AnomalyDetailsPage } from './pages/anomalies/AnomalyDetailsPage'
 import { SuspiciousTransfersPage } from './pages/anomalies/SuspiciousTransfersPage'
 import { EventDetailsPage } from './pages/events/EventDetailsPage'
 import { EventsPage } from './pages/events/EventsPage'
@@ -52,6 +54,11 @@ export function App() {
             <Route path="/missing-tokens" element={<MissingTokensPage />} />
             <Route path="/indexing/plugin-statuses" element={<StatusPage />} />
 
+            <Route path="/insights/anomalies" element={<AnomaliesPage />} />
+            <Route
+              path="/insights/anomalies/aggregate/:id"
+              element={<AnomalyDetailsPage />}
+            />
             <Route
               path="/insights/anomalies/suspicious-transfers"
               element={<SuspiciousTransfersPage />}
