@@ -1,4 +1,5 @@
 import { getInteropTransferValue, type ProjectId } from '@l2beat/shared-pure'
+import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type { AggregatedInteropTransferWithTokens } from '../types'
 
 export interface TopEntry {
@@ -39,7 +40,7 @@ export function getInteropFlowAggregates(
 
     const volume = getInteropTransferValue(record) ?? 0
     const pairKey = chainPairKey(record.srcChain, record.dstChain)
-    const flowKey = `${record.srcChain}::${record.dstChain}`
+    const flowKey = `${record.srcChain}${INTEROP_PAIR_SEPARATOR}${record.dstChain}`
 
     // Flows
     const flow = flowMap.get(flowKey) ?? { volume: 0, transferCount: 0 }
@@ -114,7 +115,7 @@ function toFlows(
   const flows: InteropFlowAggregate[] = []
   for (const [key, { volume, transferCount }] of flowMap) {
     if (volume <= 0) continue
-    const [srcChain, dstChain] = key.split('::')
+    const [srcChain, dstChain] = key.split(INTEROP_PAIR_SEPARATOR)
     if (srcChain && dstChain)
       flows.push({ srcChain, dstChain, volume, transferCount })
   }
@@ -122,7 +123,9 @@ function toFlows(
 }
 
 function chainPairKey(chainA: string, chainB: string) {
-  return chainA < chainB ? `${chainA}::${chainB}` : `${chainB}::${chainA}`
+  return chainA < chainB
+    ? `${chainA}${INTEROP_PAIR_SEPARATOR}${chainB}`
+    : `${chainB}${INTEROP_PAIR_SEPARATOR}${chainA}`
 }
 
 function collectTopTokenIds(

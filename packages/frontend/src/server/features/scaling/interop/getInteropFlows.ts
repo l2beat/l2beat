@@ -1,7 +1,8 @@
-import { notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { INTEROP_PAIR_SEPARATOR } from './consts'
 import type { InteropFlowsParams } from './types'
 import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
 import { getInteropChains } from './utils/getInteropChains'
@@ -166,14 +167,14 @@ export async function getInteropFlows(
 
   const chainPairData: ChainPairData[] = []
   for (const [pairKey, topTokens] of resolvedPairTokens) {
-    const [chainA, chainB] = pairKey.split('::')
-    if (chainA && chainB) {
-      chainPairData.push({
-        chains: [chainA, chainB],
-        topTokens,
-        topProtocols: resolvedPairProtocols.get(pairKey) ?? [],
-      })
-    }
+    const [chainA, chainB] = pairKey.split(INTEROP_PAIR_SEPARATOR)
+
+    assert(chainA && chainB, `Invalid pair key: ${pairKey}`)
+    chainPairData.push({
+      chains: [chainA, chainB],
+      topTokens,
+      topProtocols: resolvedPairProtocols.get(pairKey) ?? [],
+    })
   }
 
   let totalVolume = 0
@@ -220,7 +221,9 @@ export async function getInteropFlows(
 }
 
 function chainPairKey(chainA: string, chainB: string) {
-  return chainA < chainB ? `${chainA}::${chainB}` : `${chainB}::${chainA}`
+  return chainA < chainB
+    ? `${chainA}${INTEROP_PAIR_SEPARATOR}${chainB}`
+    : `${chainB}${INTEROP_PAIR_SEPARATOR}${chainA}`
 }
 
 function resolveEntries<T>(
@@ -358,7 +361,7 @@ function getMockInteropFlows(): InteropFlowsData {
     const pairVolume = flows
       .filter((f) => chainPairKey(f.srcChain, f.dstChain) === key)
       .reduce((sum, f) => sum + f.volume, 0)
-    const [chainA, chainB] = key.split('::') as [string, string]
+    const [chainA, chainB] = key.split(INTEROP_PAIR_SEPARATOR) as [string, string]
     chainPairData.push({
       chains: [chainA, chainB],
       topTokens: buildMockTopTokens(
