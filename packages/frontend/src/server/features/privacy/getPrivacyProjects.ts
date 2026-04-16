@@ -11,7 +11,7 @@ export async function getPrivacyProjects(): Promise<PrivacyProjectConfig[]> {
   const projects = await ps.getProjects({
     slugs: [...PRIVACY_PROJECT_SLUGS],
     select: ['display', 'privacyInfo', 'statuses'],
-    optional: ['permissions', 'discoveryInfo'],
+    optional: ['contracts', 'permissions', 'discoveryInfo'],
   })
 
   const bySlug = new Map(projects.map((project) => [project.slug, project]))

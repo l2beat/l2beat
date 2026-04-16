@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
@@ -9,7 +10,7 @@ import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 export type PrivacyProjectConfig = Project<
   'display' | 'privacyInfo' | 'statuses',
-  'permissions' | 'discoveryInfo'
+  'contracts' | 'permissions' | 'discoveryInfo'
 >
 
 export interface PrivacyBucketSnapshot {
@@ -48,6 +49,7 @@ export interface PrivacyProjectSnapshot {
   name: string
   shortName?: string
   display: ProjectDisplay
+  contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   trustedSetup: TrustedSetup

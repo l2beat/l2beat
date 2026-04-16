@@ -2,14 +2,18 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { ContractsSectionProps } from '~/components/projects/sections/contracts/ContractsSection'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import { getPrivacySnapshot } from '~/server/features/privacy/getPrivacySnapshot'
 import type { PrivacyAssetSnapshot } from '~/server/features/privacy/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
@@ -41,6 +45,9 @@ export interface PrivacyProjectEntry {
   permissionsSection:
     | Omit<PermissionsSectionProps, 'id' | 'title' | 'sectionOrder'>
     | undefined
+  contractsSection:
+    | Omit<ContractsSectionProps, 'id' | 'title' | 'sectionOrder' | 'discoUi'>
+    | undefined
   summary: {
     totalValueSecuredUsd: number
     deposits: {
@@ -70,16 +77,33 @@ const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
   getBecameVerifiedContracts: () => ({}),
 }
 
+const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
+  total: 0,
+  projects: {},
+}
+
 export async function getPrivacyProjectData(
   manifest: Manifest,
   slug: string,
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
-  const [appLayoutProps, snapshot, contractUtils] = await Promise.all([
+  const [
+    appLayoutProps,
+    snapshot,
+    contractUtils,
+    allProjectsWithContracts,
+    zkCatalogProjects,
+  ] = await Promise.all([
     getAppLayoutProps(),
     getPrivacySnapshot(cache),
     getContractUtils(),
+    ps.getProjects({
+      select: ['contracts'],
+    }),
+    ps.getProjects({
+      select: ['zkCatalogInfo'],
+    }),
   ])
 
   const project = snapshot.projects.find((project) => project.slug === slug)
@@ -95,6 +119,21 @@ export async function getPrivacyProjectData(
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
+  )
+
+  const contractsSection = getContractsSection(
+    {
+      id: project.id,
+      slug: project.slug,
+      contracts: project.contracts,
+      isVerified: true,
+      isUnderReview: !!project.statuses.reviewStatus,
+    },
+    contractUtils,
+    EMPTY_PROJECTS_CHANGE_REPORT,
+    zkCatalogProjects,
+    allProjectsWithContracts,
+    EMPTY_TVS_BREAKDOWN,
   )
 
   const projectEntry: PrivacyProjectEntry = {
@@ -124,6 +163,7 @@ export async function getPrivacyProjectData(
       description: project.trustedSetup.longDescription,
     },
     permissionsSection,
+    contractsSection,
     summary: {
       totalValueSecuredUsd: project.summary.totalValueSecuredUsd,
       deposits: project.summary.deposits,

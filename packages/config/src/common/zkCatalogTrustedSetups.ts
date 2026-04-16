@@ -1,6 +1,13 @@
 import type { TrustedSetup } from '../types'
 
 export const TRUSTED_SETUPS = {
+  Stub: {
+    id: 'Stub',
+    name: 'Stub trusted setup',
+    risk: 'red',
+    shortDescription: 'Needs more research',
+    longDescription: 'Needs more research',
+  },
   AztecIgnition: {
     id: 'AztecIgnition',
     name: 'Aztec Ignition',

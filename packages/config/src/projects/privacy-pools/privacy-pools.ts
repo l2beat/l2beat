@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject, ProjectPrivacyAsset } from '../../types'
 import {
@@ -44,10 +45,14 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     // TODO: Replace with the actual trusted setup used by the project.
-    trustedSetup: TRUSTED_SETUPS.TransparentSetup,
+    trustedSetup: TRUSTED_SETUPS.Stub,
     assets: getPrivacyPoolsAssets(),
   },
   permissions: discovery.getDiscoveredPermissions(),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [],
+  },
 }
 
 function getPrivacyPoolsAssets(): ProjectPrivacyAsset[] {

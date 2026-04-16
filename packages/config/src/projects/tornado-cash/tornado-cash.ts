@@ -7,6 +7,7 @@ import {
 import { utils } from 'ethers'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject, ProjectPrivacyAsset } from '../../types'
 
@@ -146,10 +147,14 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     // TODO: Replace with the actual trusted setup used by the project.
-    trustedSetup: TRUSTED_SETUPS.TransparentSetup,
+    trustedSetup: TRUSTED_SETUPS.Stub,
     assets: getTornadoAssets(),
   },
   permissions: discovery.getDiscoveredPermissions(),
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [],
+  },
 }
 
 function getTornadoAssets(): ProjectPrivacyAsset[] {

@@ -7,6 +7,7 @@ import type { ProjectNavigationSection } from '~/components/projects/navigation/
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { ContractsSection } from '~/components/projects/sections/contracts/ContractsSection'
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import { PermissionsSection } from '~/components/projects/sections/permissions/PermissionsSection'
 import { TrustedSetupSection } from '~/components/projects/sections/TrustedSetupsSection'
@@ -145,6 +146,16 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                       discoUi={entry.discoUi}
                     />
                   )}
+
+                  {entry.contractsSection && (
+                    <ContractsSection
+                      {...entry.contractsSection}
+                      id="contracts"
+                      title="Smart contracts"
+                      sectionOrder={entry.permissionsSection ? '05' : '04'}
+                      discoUi={entry.discoUi}
+                    />
+                  )}
                 </HighlightableLinkContextProvider>
               </div>
 
@@ -193,6 +204,14 @@ function getNavigationSections(
           {
             id: 'permissions',
             title: 'Permissions',
+          },
+        ]
+      : []),
+    ...(entry.contractsSection
+      ? [
+          {
+            id: 'contracts',
+            title: 'Smart contracts',
           },
         ]
       : []),

@@ -123,6 +123,7 @@ function buildProjectSnapshot(
     name: project.name,
     shortName: project.shortName,
     display: project.display,
+    contracts: project.contracts,
     permissions: project.permissions,
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
