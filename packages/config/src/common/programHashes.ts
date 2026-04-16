@@ -54,6 +54,18 @@ const OP_SUCCINCT_RANGE_EIGENDA = {
     'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks. Data availability layer is set to EigenDA.',
 }
 
+const OP_SUCCINCT_AGG = {
+  title: 'Aggregation program of OP Succinct',
+  description:
+    'Aggregates proofs of correct execution for several consecutive block ranges of OP L2 client.',
+}
+
+const OP_SUCCINCT_RANGE = {
+  title: 'Range program of OP Succinct',
+  description:
+    'Proves correct state transition function within an OP L2 client over a range of consecutive L2 blocks.',
+}
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -569,12 +581,12 @@ Verify:
   `,
   },
   '0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654': {
-    ...OP_SUCCINCT_AGG_EIGENDA,
+    ...OP_SUCCINCT_AGG,
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },
   '0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a': {
-    ...OP_SUCCINCT_RANGE_EIGENDA,
+    ...OP_SUCCINCT_RANGE,
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'notVerified',
   },

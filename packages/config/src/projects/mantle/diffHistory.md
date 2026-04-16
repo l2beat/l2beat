@@ -1,23 +1,23 @@
-Generated with discovered.json: 0xe3a73680d56c574c7f9561bb0f142c78ad8c8e96
+Generated with discovered.json: 0x73f9634ad29a5b09ba32aa344b854881e170810c
 
-# Diff at Thu, 16 Apr 2026 10:04:10 GMT:
+# Diff at Thu, 16 Apr 2026 21:38:17 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1769533383
-- current timestamp: 1776333773
+- current timestamp: 1776375430
 
 ## Description
 
 SystemConfig upgraded to v1.4.0 (Arsia upgrade), new implementation at `0x9CA047689261E35c9e507b1BB0B7443C2A436310` ([diff](https://disco.l2beat.com/diff/eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3/eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310)). The owner (MantleSecurityMultisig) keeps `onlyOwner` control but the setter surface changes significantly:
 
-- Removed `setPreconfer`, `setBatchInbox`, and the `preconfer` / `batchInbox` storage fields. The shared opstack template's owner-permission text (which still referenced "preconfer" and "batch submitter") is overridden in the project's `config.jsonc` to match the new setters.
-- Added separate base/blob fee scalars via `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)` (legacy `setGasConfig(overhead, scalar)` kept as deprecated).
+- Removed `setPreconfer`, `setBatchInbox`, and the `preconfer` / `batchInbox` storage fields. The shape is moved to a new dedicated `opstack/SystemConfig_v1_4_0_mantle` template (restricted by `validAddresses` to the Mantle SystemConfig proxy) so the owner-permission description matches the actual v1.4.0 setter surface instead of the shared template's stale "preconfer/batch submitter" wording.
+- Added separate base/blob fee scalars via `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`; the legacy `setGasConfig(overhead, scalar)` is still callable and marked deprecated.
 - Added `setEIP1559Params(denominator, elasticity)`, `setMinBaseFee`, `setDAFootprintGasScalar`, `setBaseFee`, and an EIP-7706-style `setOperatorFeeScalars(operatorFeeScalar, operatorFeeConstant)`.
-- Added explicit `maximumGasLimit()` pure getter capped at 500,000,000 gas; `batcherHash` now returned as raw `bytes32` by the new ABI (the template's view override casts it back to an address).
+- Added `maximumGasLimit()` pure getter returning `500_000_000`. The currently stored `gasLimit` is `200_000_000_000` — i.e. 400× the new cap — and is retained as-is in storage (the cap is enforced on `initialize` and `setGasLimit`, not on existing storage). As a consequence, any future owner-initiated `setGasLimit` call must reduce the limit to `≤ 500_000_000`; raising it back above that ceiling would require another implementation upgrade. `batcherHash` now returns a raw `bytes32` from the new ABI (the template's view override casts it back to an address).
 
 The new Arsia-era fields (`basefeeScalar`, `blobbasefeeScalar`, `daFootprintGasScalar`, `eip1559Denominator`, `eip1559Elasticity`, `minBaseFee`, `operatorFeeConstant`, `operatorFeeScalar`) all initialize to zero, so the new fee mechanics are not yet activated onchain. The legacy `baseFee`, `overhead`, `scalar`, and `resourceConfig` values remain populated as before. `sequencerInbox` is still derived by the template from `batcherHash` and continues to track the same batch inbox address.
 
-OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0x00767dc6...`, `rangeVkeyCommitment` `0x47fd478c...`) and the `rollupConfigHash`. The new keys were not found in the `mantle-xyz/op-succinct` releases or in the recent `main` / `arsia` / `mantle_arsia` branches that were checked, and are registered as `notVerified` entries in `programHashes.ts`. The EigenDA variant classification is provisional — it matches the Mantle v2.1.8 precedent (whose SP1 program was built with `--features eigenda` for Mantle's Hydro/offchain-EigenDA path), and should be reconfirmed once the Arsia op-succinct build is published.
+OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0x00767dc6...`, `rangeVkeyCommitment` `0x47fd478c...`) and the `rollupConfigHash`. The new keys were not found in the `mantle-xyz/op-succinct` releases or in the `main` / `arsia` / `mantle_arsia` branches that were checked, so the exact build and DA feature flags used to produce them could not be verified. The entries in `programHashes.ts` are registered as `notVerified` against the generic `OP_SUCCINCT_AGG` / `OP_SUCCINCT_RANGE` descriptions (no DA claim); they can be attached to an EigenDA- or blobs-specific variant once the Arsia op-succinct build is published. Onchain, Mantle's DA provider is Ethereum blobs (`isSequencerSendingBlobTx: true`, no onchain EigenDA verifier).
 
 ## Watched changes
 
@@ -38,10 +38,16 @@ OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0
 
 ```diff
     contract SystemConfig (eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+    +++ description: Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).
+      template:
+-        "opstack/SystemConfig"
++        "opstack/SystemConfig_v1_4_0_mantle"
       sourceHashes.1:
 -        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
 +        "0x7ccc5496582a9154f67199e39a3b2e8f330f1acf0fe0b80d8f151067e7e9fa14"
+      description:
+-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
++        "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee)."
       values.$implementation:
 -        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
 +        "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"
@@ -72,10 +78,22 @@ OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0
 +        0
       values.operatorFeeScalar:
 +        0
+      fieldMeta.gasLimit.description:
+-        "Gas limit for blocks on L2."
++        "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
       implementationNames.eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3:
 -        "SystemConfig"
       implementationNames.eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310:
 +        "SystemConfig"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`."
     }
 ```
 
@@ -84,21 +102,6 @@ OPSuccinctL2OutputOracle rotated its SP1 verification keys (`aggregationVkey` `0
 ```diff
 .../SystemConfig/SystemConfig.sol                  | 220 +++++++++++++++++----
  1 file changed, 181 insertions(+), 39 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1769533383 (main branch discovery), not current.
-
-```diff
-    contract MantleSecurityMultisig (eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
-    +++ description: None
-      receivedPermissions.1.description:
--        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-+        "it can update the batch submitter (Sequencer) address, the unsafe block signer and all gas and fee configuration parameters of the system (gas limit, base fee, EIP-1559 denominator/elasticity, minimum base fee, DA footprint gas scalar, base/blob fee scalars, operator fee scalars and the resource metering config)."
-    }
 ```
 
 Generated with discovered.json: 0x9dc37b6c07b7d4b61f985c2d68acbcc7658cf044

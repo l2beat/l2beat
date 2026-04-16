@@ -14,20 +14,6 @@
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
-    },
-    "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf": {
-      // SystemConfig v1.4.0 (Arsia) overrides the shared opstack owner permission
-      // description because the contract no longer exposes setPreconfer / setBatchInbox.
-      "fields": {
-        "owner": {
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "it can update the batch submitter (Sequencer) address, the unsafe block signer and all gas and fee configuration parameters of the system (gas limit, base fee, EIP-1559 denominator/elasticity, minimum base fee, DA footprint gas scalar, base/blob fee scalars, operator fee scalars and the resource metering config)."
-            }
-          ]
-        }
-      }
     }
   }
 }
