@@ -4,6 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -51,7 +52,7 @@ export const railgun: BaseProject = {
     links: {
       websites: ['https://railgun.org'],
     },
-    badges: [],
+    badges: [BADGES.Other.Governance],
   },
   privacyInfo: {
     // TODO: Replace with the actual trusted setup used by the project.
@@ -90,14 +91,9 @@ function getRailgunAssets(): ProjectPrivacyAsset[] {
           },
           deposits: {
             total: {
-              type: 'eventExtract',
-              chain: 'ethereum',
-              event: RAILGUN_SHIELD_EVENT,
-              address: railgunCore.address,
-              extractor: 'railgunShieldDeposits',
-              params: {
-                tokenAddress: EthereumAddress(token),
-              },
+              type: 'discoveryValue',
+              contract: railgunCore.address.toString(),
+              key: 'totalShielded',
             },
             last7d: {
               type: 'eventExtract',

@@ -18,6 +18,7 @@ const discovery = new ProjectDiscovery('privacy-pools')
 const DEPOSITED_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const NATIVE_ETH_ASSET = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+const MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS = 20
 
 export const privacyPools: BaseProject = {
   id: ProjectId('privacy-pools'),
@@ -64,6 +65,14 @@ function getPrivacyPoolsAssets(): ProjectPrivacyAsset[] {
   for (const poolAddress of Object.keys(pools)) {
     const pool = discovery.getContract(poolAddress)
     const asset = pool.values?.ASSET?.toString()
+
+    if (
+      Number(pool.values?.totalDeposits ?? 0) <
+      MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS
+    ) {
+      // pool is too small
+      continue
+    }
 
     if (!asset) {
       throw new Error(`Missing asset on Privacy Pools pool: ${poolAddress}`)

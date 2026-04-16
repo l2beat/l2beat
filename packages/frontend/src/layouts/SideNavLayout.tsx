@@ -16,6 +16,7 @@ import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
+import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { InteropSelectedChainsContext } from '~/pages/interop/utils/InteropSelectedChainsContext'
@@ -206,6 +207,15 @@ export function SideNavLayout({
               title: ecosystem.name,
               href: `/ecosystems/${ecosystem.slug}`,
             })),
+        },
+        {
+          type: 'single',
+          title: 'Privacy',
+          match: 'privacy',
+          href: '/privacy',
+          icon: (
+            <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+          ),
         },
       ]),
     [selectedChainsContext],

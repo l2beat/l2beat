@@ -16,6 +16,7 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createInteropRouter } from './interop/InteropRouter'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
+import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
@@ -66,6 +67,7 @@ export function createServerPageRouter(
     createGlossaryRouter,
     createDaRiskFrameworkRouter,
     createMultisigReportRouter,
+    createPrivacyRouter,
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,

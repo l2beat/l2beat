@@ -51,6 +51,7 @@
     "@trpc/server": "^11.0.0-rc.446",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
+    "better-sqlite3": "^11.10.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
@@ -79,6 +80,7 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "@tailwindcss/vite": "^4.1.11",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/lodash": "^4.17.4",

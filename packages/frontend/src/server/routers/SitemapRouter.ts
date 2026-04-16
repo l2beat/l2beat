@@ -26,6 +26,7 @@ const STATIC_PATHS = [
   '/data-availability/throughput',
   '/data-availability/liveness',
   '/data-availability/archived',
+  '/privacy/summary',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',
@@ -77,6 +78,7 @@ async function getDynamicPaths(): Promise<string[]> {
     ecosystemProjects,
     daLayers,
     daBridges,
+    privacyProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
@@ -87,6 +89,7 @@ async function getDynamicPaths(): Promise<string[]> {
     ps.getProjects({ where: ['ecosystemConfig'] }),
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
+    ps.getProjects({ select: ['privacyInfo'] }),
   ])
 
   const paths: string[] = []
@@ -104,6 +107,10 @@ async function getDynamicPaths(): Promise<string[]> {
 
   for (const project of ecosystemProjects) {
     paths.push(`/ecosystems/${project.slug}`)
+  }
+
+  for (const project of privacyProjects) {
+    paths.push(`/privacy/projects/${project.slug}`)
   }
 
   for (const layer of daLayers) {

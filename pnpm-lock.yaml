@@ -503,6 +503,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      better-sqlite3:
+        specifier: ^11.10.0
+        version: 11.10.0
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -582,6 +585,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.11
         version: 4.1.11(vite@7.3.1(@types/node@20.17.2)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0))
+      '@types/better-sqlite3':
+        specifier: ^7.6.13
+        version: 7.6.13
       '@types/connect-timeout':
         specifier: ^1.9.0
         version: 1.9.0
@@ -4243,6 +4249,9 @@ packages:
   '@types/basic-auth@1.1.8':
     resolution: {integrity: sha512-dKcUeixGuZn8pBjcUrf1N7x5K6lWuKuwHHitM2IZ4vwZUDWEhhNtwCWiba8jTA9zn0GQQ+fTFkWpKx8pOU/enw==}
 
+  '@types/better-sqlite3@7.6.13':
+    resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
+
   '@types/bn.js@5.1.6':
     resolution: {integrity: sha512-Xh8vSwUeMKeYYrj3cX4lGQgFSF/N03r+tv4AiLl1SucqV+uTQpxRcnM8AkXKHwYP9ZPXOYXRr2KPXpVlIvqh9w==}
 
@@ -4714,6 +4723,9 @@ packages:
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
+
+  better-sqlite3@11.10.0:
+    resolution: {integrity: sha512-EwhOpyXiOEL/lKzHz9AW1msWFNzGc/z+LzeB3/jnFJpxu+th2yqvzsSWas1v9jgs9+xiXJcD5A8CJxAG2TaghQ==}
 
   bignumber.js@9.1.2:
     resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
@@ -11333,6 +11345,10 @@ snapshots:
     dependencies:
       '@types/node': 20.17.2
 
+  '@types/better-sqlite3@7.6.13':
+    dependencies:
+      '@types/node': 20.17.2
+
   '@types/bn.js@5.1.6':
     dependencies:
       '@types/node': 20.17.2
@@ -11837,6 +11853,11 @@ snapshots:
   better-path-resolve@1.0.0:
     dependencies:
       is-windows: 1.0.2
+
+  better-sqlite3@11.10.0:
+    dependencies:
+      bindings: 1.5.0
+      prebuild-install: 7.1.3
 
   bignumber.js@9.1.2: {}
 
