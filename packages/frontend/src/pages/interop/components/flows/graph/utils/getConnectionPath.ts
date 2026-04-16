@@ -41,4 +41,3 @@ export function getConnectionPath(
 
   return `M ${src.x} ${src.y} Q ${ctrlX} ${ctrlY} ${dst.x} ${dst.y}`
 }
-
