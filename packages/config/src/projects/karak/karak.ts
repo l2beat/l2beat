@@ -17,6 +17,7 @@ export const karak: ScalingProject = opStackL2({
   ],
   display: {
     name: 'K2',
+    aliases: ['Karak', 'OpenGDP'],
     slug: 'k2',
     description:
       'K2 is a general-purpose L2, which rebranded to the OpenGDP Network to soon become an asset tokenization-focused L1.',
