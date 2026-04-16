@@ -27,23 +27,20 @@ interface Props {
 /**
  * Renders animated dots flowing along each connection path.
  * Particles move at a constant speed across the graph: the longest visible
- * flow takes MAX_DURATION_S, and shorter flows take proportionally less time
+ * flow takes BASE_DURATION_S, and shorter flows take proportionally less time
  * (based on the straight-line src→dst distance, which closely approximates
  * the mildly-curved bezier path).
  *
- * Particle count logic:
- *   volume in 24h total → divide by 86400 to get $/second →
- *   divide by DOLLARS_PER_PARTICLE to get particles/second →
- *   multiply by per-flow duration to get how many particles are visible
- *   on the path at any given moment
+ * Particle emission rate is exact (no rounding):
+ *   volume in 24h → $/second → particles/second (R)
+ *   → on-screen count = R × travelDuration (fractional)
  *
- * All particles travel at a constant speed (px/s). The speed is
- * calibrated so that the longest path takes exactly BASE_DURATION_S
- * to traverse; shorter paths take proportionally less time.
- *
- * For flows too small for even 1 particle, we still render 1 particle
- * but slow it down proportionally — e.g. a flow that computes to
- * 0.1 on-screen particles gets 1 particle with 10x the travel time
+ * To render a fractional count (e.g. 2.5), we ceil to 3 DOM circles,
+ * each cycling with period `3/R` (= 3/2.5 × travelDuration). Each
+ * particle travels the path for `travelDuration`, then stays hidden
+ * for the remainder of the cycle. This way the visible density is
+ * exactly 2.5 on average and the emission rate is exactly R/s —
+ * two flows with slightly different volumes are always visually distinct.
  */
 export function ParticleLayer({
   flows,
@@ -117,54 +114,59 @@ export function ParticleLayer({
         const travelDuration = travelDurations[flowIndex] ?? BASE_DURATION_S
         const exact = (cappedCounts[flowIndex] ?? 0) * globalScale
 
-        if (exact < 1) {
-          // Sub-1 flow: render 1 particle with a longer gap between trips.
-          const cycleDuration = travelDuration / exact
-          const t = travelDuration / cycleDuration
-          return (
-            <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-              <circle r={particleRadius} fill={color} opacity={0}>
-                <animateMotion
-                  path={path}
-                  dur={`${cycleDuration}s`}
-                  keyPoints="0;1;1"
-                  keyTimes={`0;${t};1`}
-                  calcMode="linear"
-                  begin="0s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="opacity"
-                  dur={`${cycleDuration}s`}
-                  values="0.8;0.8;0;0"
-                  keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
-                  repeatCount="indefinite"
-                />
-              </circle>
-            </g>
-          )
-        }
+        if (exact <= 0) return null
 
-        const count = Math.round(exact)
+        // ceil → DOM element count; stretch cycleDuration so emission rate is exact
+        const count = Math.max(1, Math.ceil(exact))
+        const cycleDuration = (count / exact) * travelDuration
+        // fraction of each cycle spent traveling (rest is idle / hidden)
+        const t = exact / count
+
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
             {Array.from({ length: count }, (_, i) => {
-              const begin = `${(i / count) * travelDuration}s`
+              const begin = `${(i / count) * cycleDuration}s`
 
+              if (t > 0.999) {
+                // Near-integer exact count — no idle phase needed
+                return (
+                  <circle key={i} r={particleRadius} fill={color} opacity={0}>
+                    <animateMotion
+                      path={path}
+                      dur={`${travelDuration}s`}
+                      begin={begin}
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      dur={`${travelDuration}s`}
+                      begin={begin}
+                      values="0;0.8;0.8;0"
+                      keyTimes="0;0.001;0.999;1"
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                )
+              }
+
+              // Fractional: travel for `t` of the cycle, hide for the rest
               return (
                 <circle key={i} r={particleRadius} fill={color} opacity={0}>
                   <animateMotion
                     path={path}
-                    dur={`${travelDuration}s`}
+                    dur={`${cycleDuration}s`}
+                    keyPoints="0;1;1"
+                    keyTimes={`0;${t};1`}
+                    calcMode="linear"
                     begin={begin}
                     repeatCount="indefinite"
                   />
                   <animate
                     attributeName="opacity"
-                    dur={`${travelDuration}s`}
+                    dur={`${cycleDuration}s`}
                     begin={begin}
-                    values="0;0.8;0.8;0"
-                    keyTimes="0;0.001;0.999;1"
+                    values="0.8;0.8;0;0"
+                    keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
                     repeatCount="indefinite"
                   />
                 </circle>
