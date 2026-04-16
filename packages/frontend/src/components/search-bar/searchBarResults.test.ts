@@ -62,6 +62,35 @@ describe(searchEntries.name, () => {
     expect(isDirectMatch('ethere', entries[1]!)).toEqual(true)
     expect(isDirectMatch('ethere', entries[2]!)).toEqual(false)
   })
+
+  it('does not treat generic tag substrings as direct matches', () => {
+    const pages: IndexedSearchBarPage[] = [
+      {
+        type: 'page',
+        category: 'scaling',
+        name: 'Summary',
+        tags: ['pages', 'scaling'],
+        href: '/scaling/summary',
+        index: 0,
+      },
+    ]
+
+    const projects = [
+      projectEntry({
+        name: 'Agglayer',
+        tags: ['agglayer', 'Agglayer'],
+      }),
+    ]
+
+    const pageResults = searchEntries('ag', pages)
+    const projectResults = searchEntries('ag', projects)
+    const grouped = groupSearchResults([...projectResults, ...pageResults])
+
+    expect(isDirectMatch('ag', pages[0]!)).toEqual(false)
+    expect(isDirectMatch('ag', projects[0]!)).toEqual(true)
+    expect(grouped.map(([category]) => category)).toEqual(['scaling'])
+    expect(grouped[0]?.[1].map((entry) => entry.name)).toEqual(['Agglayer'])
+  })
 })
 
 describe(groupSearchResults.name, () => {

@@ -100,7 +100,7 @@ export function isDirectMatch(
 
   return [entry.name, ...(entry.tags ?? [])]
     .map(normalize)
-    .some((value) => value.includes(normalizedQuery))
+    .some((value) => isStrongMatch(normalizedQuery, value))
 }
 
 function normalize(value: string): string {
@@ -108,4 +108,10 @@ function normalize(value: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim()
+}
+
+function isStrongMatch(query: string, value: string): boolean {
+  if (value === query) return true
+
+  return value.split(' ').some((token) => token.startsWith(query))
 }
