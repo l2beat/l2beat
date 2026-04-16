@@ -220,12 +220,6 @@ export async function getInteropFlows(
   }
 }
 
-function chainPairKey(chainA: string, chainB: string) {
-  return chainA < chainB
-    ? `${chainA}${INTEROP_PAIR_SEPARATOR}${chainB}`
-    : `${chainB}${INTEROP_PAIR_SEPARATOR}${chainA}`
-}
-
 function resolveEntries<T>(
   map: Map<string, TopEntry[]>,
   resolve: (entry: TopEntry) => T | undefined,
@@ -303,100 +297,37 @@ function computeChainsData(
 function getMockInteropFlows(): InteropFlowsData {
   const chainIds = getInteropChains().map((c) => c.id)
 
-  const mockTokens: FlowToken[] = [
-    { symbol: 'ETH', iconUrl: '/icons/tokens/ether.png', volume: 0 },
-    { symbol: 'USDC', iconUrl: '/icons/tokens/usdc.png', volume: 0 },
-    { symbol: 'USDT', iconUrl: '/icons/tokens/usdt.png', volume: 0 },
-  ]
-
-  const buildMockTopTokens = (volume: number, seed: number): FlowToken[] =>
-    mockTokens.map((token, i) => ({
-      ...token,
-      volume: Math.round((volume * (3 - i)) / (6 + (seed % 3))),
-    }))
-
-  // Generate a deterministic mock volume for every chain pair
   const flows: Flow[] = []
-  for (let i = 0; i < chainIds.length; i++) {
-    for (let j = 0; j < chainIds.length; j++) {
-      if (i === j) continue
-      const volume = (((i + 1) * (j + 2) * 7_123_456) % 50_000_000) + 500_000
-      const transferCount = Math.round(volume / 1250) // ~$1250 avg transfer
-      const srcChain = chainIds[i]
-      const dstChain = chainIds[j]
-      if (srcChain && dstChain)
-        flows.push({ srcChain, dstChain, volume, transferCount })
+  for (const srcChain of chainIds) {
+    for (const dstChain of chainIds) {
+      if (srcChain === dstChain) continue
+      flows.push({ srcChain, dstChain, volume: 1_000_000, transferCount: 100 })
     }
   }
 
-  const totalVolume = flows.reduce((sum, f) => sum + f.volume, 0)
-  const totalTransferCount = flows.length * 150 // deterministic mock count
-  const topFlow = flows.reduce<Flow | undefined>(
-    (max, f) => (!max || f.volume > max.volume ? f : max),
-    undefined,
-  )
-  const chainData = computeChainsData(
-    flows,
-    chainIds,
-    new Map(
-      chainIds.map((chainId) => {
-        const chainVolume = flows
-          .filter((f) => f.srcChain === chainId || f.dstChain === chainId)
-          .reduce((sum, f) => sum + f.volume, 0)
-        return [
-          chainId,
-          buildMockTopTokens(chainVolume, chainIds.indexOf(chainId)),
-        ]
-      }),
-    ),
-    new Map(),
-  )
-
-  const chainPairData: ChainPairData[] = []
-  const seenPairs = new Set<string>()
-  for (const flow of flows) {
-    const key = chainPairKey(flow.srcChain, flow.dstChain)
-    if (seenPairs.has(key)) continue
-    seenPairs.add(key)
-    const pairVolume = flows
-      .filter((f) => chainPairKey(f.srcChain, f.dstChain) === key)
-      .reduce((sum, f) => sum + f.volume, 0)
-    const [chainA, chainB] = key.split(INTEROP_PAIR_SEPARATOR) as [string, string]
-    chainPairData.push({
-      chains: [chainA, chainB],
-      topTokens: buildMockTopTokens(
-        pairVolume,
-        chainIds.indexOf(chainA) + chainIds.indexOf(chainB),
-      ),
-      topProtocols: [],
-    })
-  }
-
-  const topChain = chainData.reduce<ChainData | undefined>((max, chain) => {
-    return !max || chain.totalVolume > max.totalVolume ? chain : max
-  }, undefined)
+  const chainData = computeChainsData(flows, chainIds, new Map(), new Map())
 
   return {
     flows,
     chainData,
-    chainPairData,
+    chainPairData: [],
     stats: {
-      totalVolume,
-      totalTransferCount: totalTransferCount,
+      totalVolume: flows.reduce((sum, f) => sum + f.volume, 0),
+      totalTransferCount: flows.reduce((sum, f) => sum + f.transferCount, 0),
       activeFlows: flows.length,
-      topRoute: topFlow
-        ? { srcChain: topFlow.srcChain, dstChain: topFlow.dstChain }
+      topRoute: flows[0]
+        ? { srcChain: flows[0].srcChain, dstChain: flows[0].dstChain }
         : undefined,
-      topChain: topChain
+      topChain: chainData[0]
         ? {
-            chainId: topChain.chainId,
-            totalVolume: topChain.totalVolume,
+            chainId: chainData[0].chainId,
+            totalVolume: chainData[0].totalVolume,
           }
         : undefined,
       topToken: {
         symbol: 'ETH',
         iconUrl: '/icons/tokens/ether.png',
-        volume: 253_700_000,
+        volume: 1_000_000,
       },
     },
   }
