@@ -119,13 +119,16 @@ export function ParticleLayer({
         // ceil → DOM element count; stretch cycleDuration so emission rate is exact
         const count = Math.max(1, Math.ceil(exact))
         const cycleDuration = (count / exact) * travelDuration
+        const particleInterval = cycleDuration / count
+        const initialOffset = Math.random() * particleInterval
+
         // fraction of each cycle spent traveling (rest is idle / hidden)
         const t = exact / count
 
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
             {Array.from({ length: count }, (_, i) => {
-              const begin = `${(i / count) * cycleDuration}s`
+              const begin = `${initialOffset + i * particleInterval}s`
 
               if (t > 0.999) {
                 // Near-integer exact count — no idle phase needed
