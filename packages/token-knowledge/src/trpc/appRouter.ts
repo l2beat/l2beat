@@ -1,12 +1,9 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import { v } from '@l2beat/validate'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { getRulesContent } from '../getRules'
 import { importTransferFacts } from '../importTransferFacts'
 import { infer } from '../infer'
 import { publicProcedure, router, writeProcedure } from './trpc'
-
-const rulesPath = path.join(__dirname, '..', 'rules.lp')
 
 export const appRouter = router({
   getConfig: publicProcedure.query(({ ctx }) => {
@@ -39,7 +36,7 @@ export const appRouter = router({
     }),
 
   getRules: publicProcedure.query(() => {
-    return { content: fs.readFileSync(rulesPath, 'utf-8') }
+    return { content: getRulesContent(__dirname) }
   }),
 })
 
