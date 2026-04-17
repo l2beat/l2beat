@@ -142,6 +142,28 @@ SP1 Hypercube supports Plonk (with KZG polynomial commitments) or Groth16 final 
     ],
     verifierHashes: [
       {
+        hash: '0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac',
+        name: 'SP1 Hypercube Plonk v6.1.0',
+        sourceLink:
+          'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A',
+            ),
+          },
+        ],
+        verificationStatus: 'notVerified',
+      },
+      {
         hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
         name: 'SP1 Hypercube Plonk v6.0.0',
         sourceLink:

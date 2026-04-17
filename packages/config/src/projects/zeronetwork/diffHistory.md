@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x1ecc05c6029684f954ee11dd3b6e2a48a020b5f2
+
+# Diff at Fri, 17 Apr 2026 09:32:49 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1761642925
+- current timestamp: 1776418304
+
+## Description
+
+Added new validator EOAs.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.2:
++        "eth:0xef854E09fa6e281268e1051D4d5465d8c92862ee"
+      values.validatorsVTL.3:
++        "eth:0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+    }
+```
+
 Generated with discovered.json: 0xa9e12182d8f6db6ed779103511e2371273d83820
 
 # Diff at Wed, 17 Dec 2025 14:34:43 GMT:
