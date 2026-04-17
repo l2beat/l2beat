@@ -4,7 +4,7 @@
   "configHash": "0xff1404656bb03745941b707354054f3dc570581bd9077b577bc3ebc1f73eef36",
   "entries": [
     {
-      "name": "StablesPlusTBTCOracle",
+      "name": "GoldSpokeOracle",
       "address": "eth:0x0083421fd178749af2201ddA5A7C3feB5790B80c",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -44,7 +44,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "RsETHACLManager",
+      "name": "PrimeACLManager",
       "address": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
       "type": "Contract",
       "template": "aave-v4/ACLManager",
@@ -155,7 +155,7 @@
       }
     },
     {
-      "name": "EthenaHub",
+      "name": "PlusHub",
       "address": "eth:0x06002e9c4412CB7814a791eA3666D905871E536A",
       "type": "Contract",
       "template": "aave-v4/HubInstance",
@@ -1204,7 +1204,7 @@
       }
     },
     {
-      "name": "BTCSpokeOracle",
+      "name": "LombardBTCSpokeOracle",
       "address": "eth:0x198Cac7f54FFc7d709Ac0FEc4B6454CE73e21D3D",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -2104,7 +2104,7 @@
       }
     },
     {
-      "name": "EthenaInterestRateStrategy",
+      "name": "PlusHubIRStrategy",
       "address": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
       "type": "Contract",
       "template": "aave-v4/AssetInterestRateStrategy",
@@ -2185,7 +2185,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "RsETHCorrelatedSpoke",
+      "name": "KelpeSpoke",
       "address": "eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -2315,7 +2315,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "RsETHCorrelatedOracle",
+      "name": "KelpeSpokeOracle",
       "address": "eth:0x37C316996C714Bf906743071e04E62220b3271ac",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -2912,7 +2912,7 @@
       }
     },
     {
-      "name": "MainHubProxyAdmin",
+      "name": "CoreHubProxyAdmin",
       "address": "eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf",
       "type": "Contract",
       "template": "global/ProxyAdmin",
@@ -2944,7 +2944,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EthenaIsolatedSpoke",
+      "name": "EthenaCorrelatedSpoke",
       "address": "eth:0x58131E79531caB1d52301228d1f7b842F26B9649",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -3324,7 +3324,7 @@
       }
     },
     {
-      "name": "StablesPlusTBTCSpoke",
+      "name": "GoldSpoke",
       "address": "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -3540,7 +3540,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "WstETHCorrelatedOracle",
+      "name": "LidoeSpokeOracle",
       "address": "eth:0x664D73b6C3591333Fd79510f7ce9ef81228824F5",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -3674,7 +3674,7 @@
       }
     },
     {
-      "name": "BTCSpoke",
+      "name": "LombardBTCSpoke",
       "address": "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -4046,7 +4046,7 @@
       }
     },
     {
-      "name": "CorePrimeHub",
+      "name": "PrimeHub",
       "address": "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931",
       "type": "Contract",
       "template": "aave-v4/HubInstance",
@@ -4600,7 +4600,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "MainSpokeV2",
+      "name": "BluechipSpoke",
       "address": "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -5004,7 +5004,7 @@
       }
     },
     {
-      "name": "EthenaIsolatedOracle",
+      "name": "EthenaCorrelatedSpokeOracle",
       "address": "eth:0x9b91a0943CADf554742E8Fb358B1cC4ae4F85F01",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -5224,7 +5224,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "MainInterestRateStrategy",
+      "name": "CoreHubIRStrategy",
       "address": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
       "type": "Contract",
       "template": "aave-v4/AssetInterestRateStrategy",
@@ -5378,7 +5378,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "StablesOracle",
+      "name": "ForexSpokeOracle",
       "address": "eth:0xB3CE6E7b6d389a66eA4a3777bA07219d00FB3a9D",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -5459,7 +5459,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Treasury",
+      "name": "TreasurySpoke",
       "address": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
       "type": "Contract",
       "template": "aave-v4/Treasury",
@@ -5510,7 +5510,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EthenaPlusStablesSpoke",
+      "name": "EthenaEcosystemSpoke",
       "address": "eth:0xba1B3D55D249692b669A164024A838309B7508AF",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -5785,7 +5785,7 @@
       }
     },
     {
-      "name": "WeETHCorrelatedSpoke",
+      "name": "EtherFieSpoke",
       "address": "eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -5953,7 +5953,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "MainACLManager",
+      "name": "CoreACLManager",
       "address": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
       "type": "Contract",
       "template": "aave-v4/ACLManager",
@@ -6051,7 +6051,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EthenaPlusStablesOracle",
+      "name": "EthenaEcosystemSpokeOracle",
       "address": "eth:0xc390dbe9fc00D6db73C52d375642b47008C33c90",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -6492,7 +6492,7 @@
       }
     },
     {
-      "name": "MainHub",
+      "name": "CoreHub",
       "address": "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9",
       "type": "Contract",
       "template": "aave-v4/HubInstance",
@@ -7079,7 +7079,7 @@
       }
     },
     {
-      "name": "WeETHCorrelatedOracle",
+      "name": "EtherFieSpokeOracle",
       "address": "eth:0xd8B153FaAA8f2b1bC774916FEd333A4F3dE48792",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -7113,7 +7113,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "StablesSpoke",
+      "name": "ForexSpoke",
       "address": "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -7313,7 +7313,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "MainSpokeV2Oracle",
+      "name": "BluechipSpokeOracle",
       "address": "eth:0xdA1266a7b8620819dAE3F8bd6B546Da36e505bB8",
       "type": "Contract",
       "template": "aave-v4/AaveOracle",
@@ -7732,7 +7732,7 @@
       }
     },
     {
-      "name": "CorePrimeInterestRateStrategy",
+      "name": "PrimeHubIRStrategy",
       "address": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
       "type": "Contract",
       "template": "aave-v4/AssetInterestRateStrategy",
@@ -7840,7 +7840,7 @@
       }
     },
     {
-      "name": "WstETHCorrelatedSpoke",
+      "name": "LidoeSpoke",
       "address": "eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd",
       "type": "Contract",
       "template": "aave-v4/SpokeInstance",
@@ -11972,5 +11972,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 24841035 },
-  "permissionsConfigHash": "0xcdbe8bd501513946f3d783713d6d3aca3faf610d9f8dd0456d3340afba363e23"
+  "permissionsConfigHash": "0x9da3a49fd1ffadc30056e9baf3e3a5855cb2d2dd850a9b1105e9bd78a3074175"
 }

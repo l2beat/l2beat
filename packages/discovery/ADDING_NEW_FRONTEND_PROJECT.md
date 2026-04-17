@@ -133,13 +133,23 @@ export const myproject: BaseProject = {
 <Lead with what users do, what flows the protocol enables. Two or three
 paragraphs of plain language. Don't open with architecture.>
 
+## User flows
+
+<Document the main user-facing functions: what to call, on which contract,
+with what parameters, and what happens internally. For each flow (e.g.,
+supply, borrow, withdraw, repay, liquidation), describe: the function
+signature, what tokens move where, what state changes, and what access
+control gates it. This section lets a reviewer trace exactly what happens
+when a user interacts with the protocol.>
+
 ## Architecture
 
-<Contract topology only after the user-facing intro.>
+<Contract topology only after the user-facing intro and user flows.>
 
 ## Trust map
 
-<Who can change what; the governance chain; how upgrades work.>
+<Who can change what; the governance chain; how upgrades work. Name the
+actual end actors (multisigs, governance contracts) and what each can do.>
 `,
     otherConsiderations: [
       // optional named sections, each is { name, description, references, risks }
@@ -198,7 +208,7 @@ const NUM_SPOKES = discovery.getContracts()
 
 ### 5. Lead with the user, not the architecture
 
-The first thing a reader sees is `display.description` and the start of `scalingTechnology.detailedDescription`. If either opens with "X is a hub-and-spoke protocol with a central registry" you've already lost the reader. Open with what the protocol does for users: what flows happen, what they get back, what risk they take. Architecture comes after, as a separate markdown section.
+The first thing a reader sees is `display.description` and the start of `scalingTechnology.detailedDescription`. If either opens with "X is a hub-and-spoke protocol with a central registry" you've already lost the reader. Open with what the protocol does for users: what flows happen, what they get back, what risk they take. Then document the user flows (function signatures, parameters, what happens internally). Architecture and trust map come after.
 
 The two descriptions render adjacently, so they have to share a tone. Don't make `display.description` technical and `detailedDescription` user-friendly. Readers see two different writers and bounce.
 

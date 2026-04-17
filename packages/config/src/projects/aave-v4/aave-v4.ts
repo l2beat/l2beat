@@ -1,7 +1,16 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import generatedTokens from '../../tokens/generated.json'
 import type { BaseProject } from '../../types'
+
+// Build address -> symbol lookup from the token registry
+const tokenSymbols: Record<string, string> = {}
+for (const t of generatedTokens.tokens) {
+  if (t.chainId === 1 && t.address) {
+    tokenSymbols[t.address.toLowerCase()] = t.symbol
+  }
+}
 
 const discovery = new ProjectDiscovery('aave-v4')
 
@@ -11,12 +20,184 @@ const discovery = new ProjectDiscovery('aave-v4')
 // logic. On Ethereum we currently see 3 Hubs (Main, CorePrime, Ethena)
 // and 10 Spokes (markets) sharing one OpenZeppelin V5 AccessManager.
 
-const NUM_SPOKES = discovery
-  .getContracts()
-  .filter((c) => c.template === 'aave-v4/SpokeInstance').length
-const NUM_HUBS = discovery
-  .getContracts()
-  .filter((c) => c.template === 'aave-v4/HubInstance').length
+const contracts = discovery.getContracts()
+const NUM_SPOKES = contracts.filter(
+  (c) => c.template === 'aave-v4/SpokeInstance',
+).length
+const NUM_HUBS = contracts.filter(
+  (c) => c.template === 'aave-v4/HubInstance',
+).length
+const NUM_PRICE_ADAPTERS = contracts.filter(
+  (c) => c.template === 'aave-v4/PriceCapAdapter',
+).length
+
+// Resolve an eth: address to a token symbol
+function tokenName(addr: string): string {
+  const raw = addr.replace('eth:', '').toLowerCase()
+  return tokenSymbols[raw] ?? addr.slice(0, 10) + '...'
+}
+
+// Map hub addresses to names
+const hubNames: Record<string, string> = {}
+for (const c of contracts.filter(
+  (c) => c.template === 'aave-v4/HubInstance',
+)) {
+  hubNames[c.address.toString()] = c.name ?? c.address.toString()
+}
+
+type ReserveValue = { underlying: string; hub: string }
+type LiqConfig = {
+  targetHealthFactor: string
+  healthFactorForMaxBonus: string
+  liquidationBonusFactor: number
+}
+
+// Build per-spoke detail with per-hub reserve grouping
+const spokeEntries = contracts.filter(
+  (c) => c.template === 'aave-v4/SpokeInstance',
+)
+const spokeDetails = spokeEntries
+  .map((s) => {
+    const reserves = (s.values?.getReserve as ReserveValue[]) ?? []
+    const liq = s.values?.getLiquidationConfig as LiqConfig | undefined
+    const thf = liq
+      ? (Number(liq.targetHealthFactor) / 1e18).toFixed(2)
+      : '?'
+    const mbhf = liq
+      ? (Number(liq.healthFactorForMaxBonus) / 1e18).toFixed(2)
+      : '?'
+    const bf = liq
+      ? (liq.liquidationBonusFactor / 100).toFixed(0) + '%'
+      : '?'
+
+    // Group reserves by hub
+    const byHub: Record<string, string[]> = {}
+    for (const r of reserves) {
+      const hub = hubNames[r.hub] ?? r.hub
+      byHub[hub] ??= []
+      byHub[hub].push(tokenName(r.underlying))
+    }
+    // Per-reserve detail with flags
+    const configs = (s.values?.getReserveConfig as {
+      borrowable: boolean
+      paused: boolean
+      frozen: boolean
+    }[]) ?? []
+
+    const reserveLines = reserves.map((r, i) => {
+      const symbol = tokenName(r.underlying)
+      const hub = hubNames[r.hub] ?? r.hub
+      const cfg = configs[i]
+      const flags = []
+      if (cfg?.borrowable) flags.push('borrowable')
+      if (!cfg?.borrowable) flags.push('supply-only')
+      if (cfg?.paused) flags.push('PAUSED')
+      if (cfg?.frozen) flags.push('FROZEN')
+      return `- ${symbol} → ${hub} (${flags.join(', ')})`
+    }).join('\n')
+
+    return `**${s.name}** — ${reserves.length} reserves, target HF ${thf}, max bonus HF ${mbhf}, bonus ${bf}\n\n${reserveLines}`
+  })
+  .join('\n\n')
+
+
+// Hub detail builder
+type AssetStruct = {
+  underlying: string
+  irStrategy: string
+  feeReceiver: string
+  liquidityFee: number
+  reinvestmentController: string
+  decimals: number
+  liquidity: string
+  drawnShares: string
+  drawnRate: string
+  deficitRay: number
+}
+type AssetConfig = {
+  feeReceiver: string
+  liquidityFee: number
+  irStrategy: string
+  reinvestmentController: string
+}
+type RateData = {
+  optimalUsageRatio: number
+  baseDrawnRate: number
+  rateGrowthBeforeOptimal: number
+  rateGrowthAfterOptimal: number
+}
+
+const hubList = ['CoreHub', 'PrimeHub', 'PlusHub'] as const
+const strategyNames: Record<string, string> = {}
+for (const c of contracts.filter(
+  (c) => c.template === 'aave-v4/AssetInterestRateStrategy',
+)) {
+  strategyNames[c.address.toString()] = c.name ?? c.address.toString()
+}
+
+function buildHubDetail(hubName: string): string {
+  const assetCount = discovery.getContractValue<number>(hubName, 'getAssetCount')
+  const assets = discovery.getContractValue<AssetStruct[]>(hubName, 'getAsset')
+  const configs = discovery.getContractValue<AssetConfig[]>(hubName, 'getAssetConfig')
+  const spokeCounts = discovery.getContractValue<number[]>(hubName, 'getSpokeCount')
+
+  // Find the strategy for this hub
+  const strategyAddr = configs[0]?.irStrategy ?? ''
+  const strategyName = strategyNames[strategyAddr] ?? strategyAddr
+
+  // Find the rate data from the strategy
+  const strategyEntry = contracts.find(
+    (c) => c.template === 'aave-v4/AssetInterestRateStrategy' && c.address.toString() === strategyAddr,
+  )
+  const rateData = strategyEntry?.values?.getInterestRateData as RateData[] | undefined
+
+  const lines = []
+  for (let i = 0; i < assetCount; i++) {
+    const a = assets[i]
+    const cfg = configs[i]
+    const symbol = tokenName(a.underlying)
+    const fee = cfg.liquidityFee / 100
+    const spokes = spokeCounts[i]
+    const rate = rateData?.[i]
+    const optUtil = rate ? (rate.optimalUsageRatio / 100).toFixed(0) : '?'
+    const baseRate = rate ? (rate.baseDrawnRate / 100).toFixed(1) : '?'
+    const slope1 = rate ? (rate.rateGrowthBeforeOptimal / 100).toFixed(1) : '?'
+    const slope2 = rate ? (rate.rateGrowthAfterOptimal / 100).toFixed(1) : '?'
+    const hasReinvestment = cfg.reinvestmentController !== 'eth:0x0000000000000000000000000000000000000000'
+    const isCollateralOnly = rate && rate.rateGrowthBeforeOptimal === 0 && rate.rateGrowthAfterOptimal === 0
+
+    // Format liquidity values
+    const liq = Number(a.liquidity) / 10 ** a.decimals
+    const liqStr = liq > 1e6 ? `${(liq / 1e6).toFixed(1)}M` : liq > 1e3 ? `${(liq / 1e3).toFixed(0)}K` : liq.toFixed(2)
+    const hasDeficit = a.deficitRay > 0
+
+    if (isCollateralOnly) {
+      lines.push(
+        `- **${symbol}**: collateral-only (not borrowable), ` +
+        `${spokes} spoke(s), ${liqStr} liquidity` +
+        (hasDeficit ? ', HAS DEFICIT' : '') +
+        (hasReinvestment ? ', has reinvestment controller' : ''),
+      )
+    } else {
+      lines.push(
+        `- **${symbol}**: ` +
+        `${fee}% protocol fee, ${spokes} spoke(s), ${liqStr} liquidity, ` +
+        `rates: ${baseRate}% base → ${slope1}%/${slope2}% slopes at ${optUtil}% optimal` +
+        (hasDeficit ? ', HAS DEFICIT' : '') +
+        (hasReinvestment ? ', has reinvestment controller' : ''),
+      )
+    }
+  }
+
+  return `**${hubName}** — ${assetCount} assets, strategy: ${strategyName}\n\n${lines.join('\n')}`
+}
+
+const hubDetails = hubList.map(buildHubDetail).join('\n\n')
+
+const NUM_ROLES = discovery.getContractValue<number>(
+  'AccessManager',
+  'getRoleCount',
+)
 
 export const aavev4: BaseProject = {
   id: ProjectId('aave-v4'),
@@ -36,7 +217,7 @@ export const aavev4: BaseProject = {
   },
   display: {
     description:
-      'Aave V4 is a lending protocol. Users deposit assets to earn yield from borrowers, or post collateral to borrow against it; positions stay open as long as they remain overcollateralized, otherwise they get liquidated. V4 splits the deposits across several risk-isolated markets per chain so a problem in one market is contained.',
+      'Aave V4 is a lending protocol. Users deposit assets to earn yield from borrowers, or post collateral to borrow against it; positions stay open as long as they remain overcollateralized, otherwise they get liquidated. V4 introduces a Hub and Spoke model: multiple markets (Spokes) with independent risk parameters share liquidity through a common Hub, with per-spoke caps bounding the maximum damage from any single market.',
     links: {
       websites: ['https://aave.com/'],
       documentation: ['https://aave.com/docs'],
@@ -59,7 +240,7 @@ export const aavev4: BaseProject = {
         shortDescription:
           'Aave V4 is a DeFi lending protocol on Ethereum, not a scaling solution.',
         description:
-          'Aave V4 is tracked here for its discovery-driven contract and permission map. It is not a scaling solution: it is a hub-and-spoke lending protocol that lives on Ethereum (and other chains via cross-chain spokes).',
+          'Aave V4 is tracked here for its discovery-driven contract and permission map. It is not a scaling solution: it is a hub-and-spoke lending protocol. Hubs and Spokes on the same chain communicate via direct contract calls.',
       },
     ],
     hostChain: {
@@ -99,16 +280,58 @@ Aave is a lending protocol. Users come to Aave to do one of two things:
 - **Earn yield on assets they're not actively using.** A user deposits an asset (USDC, ETH, wstETH, ...) into a market and immediately starts accruing interest paid by borrowers of that same asset. The deposit is liquid: it can be withdrawn at any time as long as the market has spare liquidity, and the deposit can also be used as collateral for borrowing without giving up the yield.
 - **Borrow against collateral they want to keep.** A user posts collateral (typically ETH, an LST like wstETH/weETH/rsETH, BTC, or another supported asset) and draws a loan in a different asset (often a stable like USDC, USDT, GHO). The loan accrues interest at a rate that floats with how much of the supply side is currently being borrowed. As long as the position stays sufficiently overcollateralized, it stays open indefinitely; if the collateral value drops too far, anyone can liquidate the position by repaying part of the debt and seizing collateral at a discount.
 
-Both flows happen through the same per-market contract on the chain the user is on. Internally, every deposit, borrow, repay, withdraw, and liquidation goes through the **Spoke** for that market, which talks to a shared **Hub** that does the cross-chain accounting (so global supply and borrow numbers per asset are consistent across every chain Aave V4 lives on). Prices come from a per-spoke **AaveOracle** that wraps Chainlink feeds with a growth-rate cap; interest rate parameters per asset come from an **InterestRateStrategy**; the protocol's revenue share is sent to a single **Treasury**.
+Both flows happen on a **Spoke** contract. A Spoke is a market: it defines which assets you can supply, which you can borrow, which count as collateral, and at what parameters. All your positions (supplies, borrows, collateral flags) on a given Spoke are tied together into one health factor. You cannot supply on one Spoke and borrow against that collateral on a different Spoke: each Spoke is a self-contained position boundary.
 
-The big design choice in V4 is that markets are **risk-isolated**. Instead of one pool with every asset listed, V4 deploys several Spokes on each chain: a main blue-chip Spoke, a pure-stables Spoke, a BTC Spoke, separate Spokes for Ethena (USDe / sUSDe / Pendle PTs), and a correlated-LST Spoke per ETH derivative (wstETH, weETH, rsETH). A risk event in one market (a depeg, an oracle failure, a governance pause) is contained to that Spoke and can't drain collateral that's posted in another.
+Each Spoke holds a set of **reserves** (one per asset). Each reserve points to a **Hub** for that asset's liquidity pool. The Hub is where the actual tokens sit and where interest accounting happens. A single Spoke can have reserves pointing to different Hubs (for example, the Ethena Ecosystem Spoke routes Ethena assets through the Plus Hub and stablecoins through the Core Hub). Prices come from a per-spoke **AaveOracle** that wraps Chainlink feeds with a growth-rate cap; interest rate parameters come from an **InterestRateStrategy** per Hub; protocol revenue is sent to a single **Treasury**.
+
+The design choice in V4 is **shared liquidity with bounded per-segment risk**. In V3, each pool is fully isolated: separate liquidity, separate risk. Adding a risky asset to the main pool exposes all suppliers; creating a separate pool fragments liquidity and worsens rates. V4 breaks this tradeoff:
+
+- Multiple **Spokes** (markets) on each chain define independent collateral/borrow rules, risk parameters, and oracle sources. Each Spoke has a **drawCap** per asset set by governance that hard-limits how much liquidity it can borrow from the Hub.
+- A shared **Hub** pools the underlying liquidity across all Spokes. Suppliers on any Spoke earn yield from borrowers on every Spoke connected to the same Hub.
+- **Positions are isolated per Spoke.** Your health factor on one Spoke is independent of your positions on another. A liquidation cascade on one Spoke cannot trigger liquidations on another. The same asset (e.g., USDC) can be configured differently on different Spokes: usable as collateral on one, supply-only on another, not listed on a third.
+
+If a risky collateral type depegs and creates bad debt on one Spoke, that bad debt IS absorbed by the Hub (all suppliers across all Spokes sharing that Hub see reduced share value). However, the maximum damage is bounded by the Spoke's drawCap. For example, if a Spoke has a 375K USDC drawCap and the total Hub has 100M USDC, the worst-case loss from that Spoke is 0.375% of the pool. In V3's single-pool model, there is no such per-segment bound.
+
+Additionally, governance can halt or deactivate individual Spokes without affecting others. In V3, pausing is per-asset and affects all users of that asset across the entire pool.
+
+## Where does the yield come from?
+
+Supplier yield comes directly from interest paid by borrowers. There is no token emission, no external subsidy, and no Ponzi-like mechanism. The flow:
+
+1. **Borrowers pay interest.** Every borrowed position accrues interest at a rate (\`drawnRate\`) computed by the InterestRateStrategy contract. The rate is a function of utilization: \`calculateInterestRate(liquidity, drawn, deficit, swept)\`. When utilization is low, rates are low (incentivizing borrowing); when utilization is high, rates rise sharply (incentivizing repayment and new supply). The interest compounds via a \`drawnIndex\` that grows linearly over time: each second, the index increases by \`previousIndex * rate * timeDelta\`.
+
+2. **The interest grows the pool.** The Hub tracks \`totalAddedAssets\` per asset, which includes: the idle liquidity + swept liquidity + total debt owed by borrowers (drawn + premium) - protocol fees. As borrowers' debt grows (the drawnIndex increases), the total pool grows, and each supplier's \`addedShares\` become worth more underlying tokens. Suppliers don't receive yield as a separate payment; instead, their share of the pool appreciates.
+
+3. **The protocol takes a cut.** A configurable \`liquidityFee\` (set per asset by governance via the HubConfigurator) is deducted from the interest accrued between index updates. This fee is tracked as \`realizedFees\` on the Hub and sent to the Treasury (the \`feeReceiver\` address in each asset's config). The fee is subtracted from the pool before computing supplier share value, so suppliers receive the borrower interest minus the protocol's percentage.
+
+4. **Riskier borrowers pay more.** On top of the base interest rate, borrowers with lower-quality collateral pay a **risk premium** that scales with their position's collateral composition. This premium is tracked separately (\`premiumShares\` and \`premiumOffsetRay\`) and flows into the same pool, benefiting suppliers.
+
+In short: the yield is the interest spread. Borrowers pay \`baseRate + riskPremium\`, suppliers receive \`baseRate + riskPremium - protocolFee\`, and the Treasury receives \`protocolFee\`. All rates are algorithmically determined by utilization and collateral quality, not by governance votes or token emissions.
+
+## User flows
+
+All user interactions happen on a **Spoke** contract. Users (or their approved position managers) call functions on the Spoke for the market they want to use. Each function takes a \`reserveId\` (identifying which asset within the Spoke) and an \`onBehalfOf\` address (who the position belongs to).
+
+- **Supply**: \`supply(reserveId, amount, onBehalfOf)\`. Transfers the underlying token from the caller to the Hub and credits the user's \`suppliedShares\`. The deposit immediately starts earning yield. The caller must have approved the Spoke for the token transfer.
+
+- **Withdraw**: \`withdraw(reserveId, amount, onBehalfOf)\`. Burns the user's \`suppliedShares\` and transfers the underlying token from the Hub to the caller. If the user is using this asset as collateral, the Spoke validates that the withdrawal doesn't make the position undercollateralized.
+
+- **Borrow**: \`borrow(reserveId, amount, onBehalfOf)\`. Draws liquidity from the Hub and transfers the borrowed token to the caller, recording the user's \`drawnShares\`. The Spoke validates the user's health factor: the borrow only succeeds if total collateral value (at oracle prices) exceeds total debt value by the required margin.
+
+- **Repay**: \`repay(reserveId, amount, onBehalfOf)\`. Transfers tokens from the caller back to the Hub, reducing the user's \`drawnShares\`. The repayment covers both the base debt and the accrued risk premium.
+
+- **Liquidation**: \`liquidationCall(collateralReserveId, debtReserveId, user, debtToCover, receiveShares)\`. Permissionless: anyone can call this to liquidate an undercollateralized position. The liquidator repays part of the user's debt (transferred from the liquidator to the Hub) and receives the user's collateral at a discount. The liquidation bonus scales with how far below the health factor threshold the position is. If the position is in deficit (debt exceeds collateral value), the loss is reported to the Hub.
+
+- **Set collateral**: \`setUsingAsCollateral(reserveId, usingAsCollateral, onBehalfOf)\`. Toggles whether a supplied asset counts as collateral for borrowing. Disabling collateral releases the asset from liquidation risk but reduces borrowing power.
+
+All of these except \`liquidationCall\` require the caller to be an approved **position manager** for the \`onBehalfOf\` user. Users approve position managers via \`setUserPositionManager\` (or via EIP-712 signature). Two default position managers are pre-registered: a NativeTokenGateway (for ETH wrapping) and a SignatureGateway (for ERC-20 permit flows).
 
 ## Architecture
 
-Aave V4 splits its protocol into two contract families that talk to each other across chains:
+Aave V4 splits its protocol into two contract families:
 
-- A **Hub** holds the per-asset accounting that needs to be globally consistent across chains: the registry of supported assets, the per-asset interest rate strategy, the per-asset spoke registry, and the per-asset treasury split.
-- A **Spoke** sits on a specific chain, holds the actual asset reserves and the per-reserve config (collateral and borrow flags, freeze, pause, oracle source), and routes liquidity through its paired Hub.
+- A **Hub** holds the per-asset accounting: the registry of supported assets, the per-asset interest rate strategy, the per-asset spoke registry, and the per-asset treasury split. Hubs and Spokes communicate via direct EVM contract calls (not cross-chain messaging), so they must be deployed on the same chain.
+- A **Spoke** sits on a specific chain and holds a set of **reserves** (one per supported asset). Each reserve defines the per-asset config (collateral and borrow flags, freeze, pause, oracle source) and points to a specific Hub for that asset's liquidity pool. A single Spoke can have reserves pointing to different Hubs (e.g., the Ethena Ecosystem Spoke has Ethena assets routed through the Plus Hub and stablecoin assets routed through the Core Hub).
 
 On Ethereum there are ${NUM_HUBS} Hubs and ${NUM_SPOKES} Spokes. The Spokes are organized by market type: a main "Prime" spoke that lists most blue-chip assets, plus several risk-isolated spokes for stables, BTC, Ethena, and the major correlated-LST pairs (wstETH, weETH, rsETH).
 
@@ -139,7 +362,7 @@ Each Spoke has its own paired **AaveOracle** that exposes one price source per r
       {
         name: 'Cross-chain spoke registry',
         description:
-          "The Hub keeps a per-asset list of every Spoke that holds that asset, across all chains. The discovery on Ethereum only walks the Spokes deployed on Ethereum; sibling Spokes on other chains exist but are out of scope for this project entry. The Hub's getSpokeCount per-asset numbers (3-7 across the 17 assets on the main Hub) reflect the full cross-chain spoke set.",
+          "The Hub keeps a per-asset list of every Spoke registered for that asset. All Hubs and Spokes on Ethereum communicate via direct contract calls (no cross-chain messaging). If Aave V4 deploys on another chain, that chain gets its own independent Hub(s) and Spoke(s).",
         references: [],
         risks: [],
       },
@@ -153,6 +376,28 @@ Each Spoke has its own paired **AaveOracle** that exposes one price source per r
         name: 'Two independent access control systems',
         description:
           'Aave V4 uses two separate, independent access control systems with five total end actors. The OZ V5 AccessManager gates all Hub and Spoke admin functions (reserve listing, oracle source replacement, interest rate changes, pause/freeze, position manager assignment) and is controlled by the AaveV4AdminMultisig (5/8) and AaveGovV3Executor. The legacy ACLManager gates PriceCapAdapter discount rate changes and is operated by the RiskCouncilMultisig (2/2), GhoRiskCouncilMultisig (3/4), and EmergencyAdminMultisig (5/9) through automation steward contracts. The two systems have different role holders, different admin hierarchies, and different trust chains.',
+        references: [],
+        risks: [],
+      },
+      {
+        name: 'Hubs',
+        description: `${NUM_HUBS} Hubs pool liquidity across Spokes. Each Hub has its own InterestRateStrategy, fee configuration, and per-asset spoke registry. For each asset: the protocol fee (percentage of interest taken by the Treasury), the number of Spokes that can draw/add liquidity for that asset, and the interest rate curve parameters (base rate, slope before optimal utilization, slope after optimal utilization, optimal utilization target).
+
+${hubDetails}`,
+        references: [],
+        risks: [],
+      },
+      {
+        name: 'Spokes',
+        description: `${NUM_SPOKES} Spokes on Ethereum, each a self-contained market with its own position boundary, liquidation parameters, and oracle. Each reserve within a Spoke routes to a specific Hub for liquidity.
+
+${spokeDetails}`,
+        references: [],
+        risks: [],
+      },
+      {
+        name: 'AccessManager roles',
+        description: `${NUM_ROLES} roles configured on the AccessManager: ADMIN_ROLE, HUB_CONFIGURATOR_ROLE, HUB_CONFIGURATOR_DOMAIN_ADMIN_ROLE, HUB_FEE_MINTER_ROLE, HUB_DEFICIT_ELIMINATOR_ROLE, SPOKE_DOMAIN_ADMIN_ROLE, SPOKE_CONFIGURATOR_ROLE, SPOKE_USER_POSITION_UPDATER_ROLE, SPOKE_CONFIGURATOR_DOMAIN_ADMIN_ROLE. ${NUM_PRICE_ADAPTERS} PriceCapAdapters are deployed across all markets.`,
         references: [],
         risks: [],
       },

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8e24a33c465ef92ae4b0e498b3c787b88a37dd0c
+Generated with discovered.json: 0x773be8aca32ec6e3ae5057649669ac9db222efeb
 
-# Diff at Sat, 11 Apr 2026 10:15:31 GMT:
+# Diff at Sun, 12 Apr 2026 12:50:19 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1775724196
@@ -13,13 +13,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract StablesPlusTBTCOracle (eth:0x0083421fd178749af2201ddA5A7C3feB5790B80c)
+    contract GoldSpokeOracle (eth:0x0083421fd178749af2201ddA5A7C3feB5790B80c)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
 ```diff
 +   Status: CREATED
-    contract RsETHACLManager (eth:0x013E2C7567b6231e865BB9273F8c7656103611c0)
+    contract PrimeACLManager (eth:0x013E2C7567b6231e865BB9273F8c7656103611c0)
     +++ description: Legacy Aave V3 access control contract (OpenZeppelin AccessControl with bytes32 roles). This is the SECOND trust path in Aave V4, independent of the OZ V5 AccessManager. RISK_ADMIN and POOL_ADMIN role holders can change PriceCapAdapter discount rates (setDiscountRatePerYear), which directly affects wrapped-asset price caps and liquidation thresholds. DEFAULT_ADMIN_ROLE can grant and revoke every other role. Users must trust both access control systems independently.
 ```
 
@@ -31,7 +31,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract EthenaHub (eth:0x06002e9c4412CB7814a791eA3666D905871E536A)
+    contract PlusHub (eth:0x06002e9c4412CB7814a791eA3666D905871E536A)
     +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
@@ -67,7 +67,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract BTCSpokeOracle (eth:0x198Cac7f54FFc7d709Ac0FEc4B6454CE73e21D3D)
+    contract LombardBTCSpokeOracle (eth:0x198Cac7f54FFc7d709Ac0FEc4B6454CE73e21D3D)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -151,19 +151,19 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract EthenaInterestRateStrategy (eth:0x31280650661b8443723fa9739b3A164E3696af48)
+    contract PlusHubIRStrategy (eth:0x31280650661b8443723fa9739b3A164E3696af48)
     +++ description: Per-asset interest rate model used by the Aave V4 Hub. Stores the kink + growth-rate parameters per assetId; the assetId space is owned by HUB.getAssetCount. Trust assumption: anyone who can change these parameters can squeeze borrowers or starve depositors.
 ```
 
 ```diff
 +   Status: CREATED
-    contract RsETHCorrelatedSpoke (eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4)
+    contract KelpeSpoke (eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
 +   Status: CREATED
-    contract RsETHCorrelatedOracle (eth:0x37C316996C714Bf906743071e04E62220b3271ac)
+    contract KelpeSpokeOracle (eth:0x37C316996C714Bf906743071e04E62220b3271ac)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -223,13 +223,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MainHubProxyAdmin (eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf)
+    contract CoreHubProxyAdmin (eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract EthenaIsolatedSpoke (eth:0x58131E79531caB1d52301228d1f7b842F26B9649)
+    contract EthenaCorrelatedSpoke (eth:0x58131E79531caB1d52301228d1f7b842F26B9649)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
@@ -265,13 +265,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract StablesPlusTBTCSpoke (eth:0x65407b940966954b23dfA3caA5C0702bB42984DC)
+    contract GoldSpoke (eth:0x65407b940966954b23dfA3caA5C0702bB42984DC)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
 +   Status: CREATED
-    contract WstETHCorrelatedOracle (eth:0x664D73b6C3591333Fd79510f7ce9ef81228824F5)
+    contract LidoeSpokeOracle (eth:0x664D73b6C3591333Fd79510f7ce9ef81228824F5)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -283,7 +283,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract BTCSpoke (eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D)
+    contract LombardBTCSpoke (eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
@@ -325,7 +325,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract CorePrimeHub (eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931)
+    contract PrimeHub (eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931)
     +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
@@ -337,7 +337,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MainSpokeV2 (eth:0x973a023A77420ba610f06b3858aD991Df6d85A08)
+    contract BluechipSpoke (eth:0x973a023A77420ba610f06b3858aD991Df6d85A08)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
@@ -361,7 +361,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract EthenaIsolatedOracle (eth:0x9b91a0943CADf554742E8Fb358B1cC4ae4F85F01)
+    contract EthenaCorrelatedSpokeOracle (eth:0x9b91a0943CADf554742E8Fb358B1cC4ae4F85F01)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -391,13 +391,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MainInterestRateStrategy (eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f)
+    contract CoreHubIRStrategy (eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f)
     +++ description: Per-asset interest rate model used by the Aave V4 Hub. Stores the kink + growth-rate parameters per assetId; the assetId space is owned by HUB.getAssetCount. Trust assumption: anyone who can change these parameters can squeeze borrowers or starve depositors.
 ```
 
 ```diff
 +   Status: CREATED
-    contract StablesOracle (eth:0xB3CE6E7b6d389a66eA4a3777bA07219d00FB3a9D)
+    contract ForexSpokeOracle (eth:0xB3CE6E7b6d389a66eA4a3777bA07219d00FB3a9D)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -409,13 +409,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract Treasury (eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155)
+    contract TreasurySpoke (eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155)
     +++ description: Receives the per-asset accrued protocol fees (configured in Hub.getAssetConfig.feeReceiver). Uses Ownable2Step (NOT the AccessManager), meaning the owner (a GnosisSafe multisig) has unconstrained authority. The transfer(token, to, amount) and withdraw(hub, assetId, amount, to) functions can move any token the Treasury holds to any address with no timelock. Ownership transfer requires acceptance by the new owner (2-step).
 ```
 
 ```diff
 +   Status: CREATED
-    contract EthenaPlusStablesSpoke (eth:0xba1B3D55D249692b669A164024A838309B7508AF)
+    contract EthenaEcosystemSpoke (eth:0xba1B3D55D249692b669A164024A838309B7508AF)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
@@ -427,7 +427,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract WeETHCorrelatedSpoke (eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219)
+    contract EtherFieSpoke (eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
@@ -439,13 +439,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MainACLManager (eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
+    contract CoreACLManager (eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0)
     +++ description: Legacy Aave V3 access control contract (OpenZeppelin AccessControl with bytes32 roles). This is the SECOND trust path in Aave V4, independent of the OZ V5 AccessManager. RISK_ADMIN and POOL_ADMIN role holders can change PriceCapAdapter discount rates (setDiscountRatePerYear), which directly affects wrapped-asset price caps and liquidation thresholds. DEFAULT_ADMIN_ROLE can grant and revoke every other role. Users must trust both access control systems independently.
 ```
 
 ```diff
 +   Status: CREATED
-    contract EthenaPlusStablesOracle (eth:0xc390dbe9fc00D6db73C52d375642b47008C33c90)
+    contract EthenaEcosystemSpokeOracle (eth:0xc390dbe9fc00D6db73C52d375642b47008C33c90)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -457,7 +457,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract MainHub (eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9)
+    contract CoreHub (eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9)
     +++ description: Aave V4 Hub. Cross-chain accounting hub: per-asset config (interest rate strategy, treasury, premium) and the registry of spokes that hold each asset across all chains. Trust assumption: governance (via HubConfigurator) can change feeReceiver (redirecting revenue), irStrategy (swapping the interest rate model), reinvestmentController (who can sweep idle liquidity), and liquidityFee (fee percentage) per asset. The Hub also gates spoke-to-hub calls (add/remove/draw/restore) via data-level checks: the calling spoke must be registered, active, and not halted.
 ```
 
@@ -481,19 +481,19 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract WeETHCorrelatedOracle (eth:0xd8B153FaAA8f2b1bC774916FEd333A4F3dE48792)
+    contract EtherFieSpokeOracle (eth:0xd8B153FaAA8f2b1bC774916FEd333A4F3dE48792)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
 ```diff
 +   Status: CREATED
-    contract StablesSpoke (eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1)
+    contract ForexSpoke (eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
 ```diff
 +   Status: CREATED
-    contract MainSpokeV2Oracle (eth:0xdA1266a7b8620819dAE3F8bd6B546Da36e505bB8)
+    contract BluechipSpokeOracle (eth:0xdA1266a7b8620819dAE3F8bd6B546Da36e505bB8)
     +++ description: Per-reserve price oracle for an Aave V4 spoke. Maps each reserveId on the paired spoke to a price source contract (a Chainlink feed wrapped in a price-cap adapter, or a fixed-price adapter for stables). The Spoke depends on it for every borrow, withdraw, and liquidation calculation.
 ```
 
@@ -505,7 +505,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract CorePrimeInterestRateStrategy (eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D)
+    contract PrimeHubIRStrategy (eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D)
     +++ description: Per-asset interest rate model used by the Aave V4 Hub. Stores the kink + growth-rate parameters per assetId; the assetId space is owned by HUB.getAssetCount. Trust assumption: anyone who can change these parameters can squeeze borrowers or starve depositors.
 ```
 
@@ -517,7 +517,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract WstETHCorrelatedSpoke (eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd)
+    contract LidoeSpoke (eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd)
     +++ description: Aave V4 Spoke. The user-facing lending contract that holds per-asset reserves and routes liquidity through the Hub. Trust assumption: you trust the AccessManager role holders not to swap the oracle feed (updateReservePriceSource), not to activate a malicious position manager (updatePositionManager), not to freeze your reserves (updateReserveConfig), and not to push a malicious code upgrade via the proxy admin. All admin functions carry the restricted modifier, user functions require onlyPositionManager, and liquidationCall is permissionless by design.
 ```
 
