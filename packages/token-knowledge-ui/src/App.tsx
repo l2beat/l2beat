@@ -13,15 +13,16 @@ import { LogProvider } from '~/hooks/useLog'
 import { cn } from '~/utils/cn'
 import { FactsPage } from './pages/FactsPage'
 import { ImportPage } from './pages/ImportPage'
-import { TRPCReactProvider } from './react-query/trpc'
+import { api, TRPCReactProvider } from './react-query/trpc'
 
-const navItems = [
-  { to: '/', label: 'Facts', icon: Database },
-  { to: '/import', label: 'Import', icon: Download },
-]
+const baseNavItems = [{ to: '/', label: 'Facts', icon: Database }]
+const writeNavItems = [{ to: '/import', label: 'Import', icon: Download }]
 
-function Navbar() {
+function Navbar({ writeEnabled }: { writeEnabled: boolean }) {
   const { pathname } = useLocation()
+  const navItems = writeEnabled
+    ? [...baseNavItems, ...writeNavItems]
+    : baseNavItems
   return (
     <nav className="flex h-12 shrink-0 items-center justify-between bg-navbar px-4 text-navbar-foreground">
       <div className="flex items-center gap-2">
@@ -52,6 +53,8 @@ function Navbar() {
 function Layout() {
   const [asideWidth, setAsideWidth] = useState(680)
   const dragging = useRef(false)
+  const { data: config } = api.getConfig.useQuery()
+  const writeEnabled = config?.writeEnabled ?? false
 
   const onMouseDown = useCallback(() => {
     dragging.current = true
@@ -70,12 +73,12 @@ function Layout() {
 
   return (
     <div className="flex h-screen flex-col">
-      <Navbar />
+      <Navbar writeEnabled={writeEnabled} />
       <div className="flex min-h-0 flex-1">
         <main className="min-w-0 flex-1 overflow-auto p-5">
           <Routes>
             <Route path="/" element={<FactsPage />} />
-            <Route path="/import" element={<ImportPage />} />
+            {writeEnabled && <Route path="/import" element={<ImportPage />} />}
           </Routes>
         </main>
         <div

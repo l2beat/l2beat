@@ -4,16 +4,20 @@ import { v } from '@l2beat/validate'
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { importTransferFacts } from '../importTransferFacts'
 import { infer } from '../infer'
-import { publicProcedure, router } from './trpc'
+import { publicProcedure, router, writeProcedure } from './trpc'
 
 const rulesPath = path.join(__dirname, '..', 'rules.lp')
 
 export const appRouter = router({
-  importFacts: publicProcedure.mutation(({ ctx }) => {
+  getConfig: publicProcedure.query(({ ctx }) => {
+    return { writeEnabled: ctx.writeEnabled }
+  }),
+
+  importFacts: writeProcedure.mutation(({ ctx }) => {
     return importTransferFacts(ctx.db)
   }),
 
-  clearFacts: publicProcedure.mutation(async ({ ctx }) => {
+  clearFacts: writeProcedure.mutation(async ({ ctx }) => {
     const deleted = await ctx.db.tokenFactInput.deleteAll()
     return { deleted }
   }),

@@ -8,7 +8,7 @@ import { createContext } from './trpc/trpc'
 dotenv()
 
 function main() {
-  const connectionString = process.env['LOCAL_DB_URL']
+  const connectionString = process.env['DATABASE_URL']
   if (connectionString === undefined) {
     throw new Error('LOCAL_DB_URL is required')
   }
@@ -23,6 +23,8 @@ function main() {
       : undefined,
   })
 
+  const writeEnabled = process.env['TOKEN_KNOWLEDGE_WRITE_ENABLED'] === 'true'
+
   const app = express()
 
   app.get('/health', (_, res) => {
@@ -33,7 +35,7 @@ function main() {
     '/trpc',
     trpcExpress.createExpressMiddleware({
       router: appRouter,
-      createContext: createContext(db),
+      createContext: createContext(db, writeEnabled),
     }),
   )
 
