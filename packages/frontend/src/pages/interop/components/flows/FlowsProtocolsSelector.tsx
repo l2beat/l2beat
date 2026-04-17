@@ -48,9 +48,10 @@ export function FlowsProtocolsSelector({
 
   const allSelected = selectedProtocols.length === allProtocols.length
 
-  const hasNoSelection = selectedProtocols.length < MIN_SELECTED_PROTOCOLS
+  const belowMinimumSelection =
+    selectedProtocols.length < MIN_SELECTED_PROTOCOLS
 
-  const selectionMessage = hasNoSelection ? (
+  const selectionMessage = belowMinimumSelection ? (
     <div className="flex items-center gap-1 px-4">
       <InfoIcon className="shrink-0 fill-negative" />
       <div className="font-medium text-negative text-paragraph-14">
