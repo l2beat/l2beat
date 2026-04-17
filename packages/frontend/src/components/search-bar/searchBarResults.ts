@@ -51,9 +51,10 @@ function rankSearchResults<T extends SearchableSearchBarEntry>(
   entries: SearchResult<T>[],
   limit?: number,
 ): SearchResult<T>[] {
-  const filtered = entries.some((entry) => entry.searchMatchKind === 'direct')
-    ? entries.filter((entry) => entry.searchMatchKind === 'direct')
-    : entries
+  const directEntries = entries.filter(
+    (entry) => entry.searchMatchKind === 'direct',
+  )
+  const filtered = directEntries.length > 0 ? directEntries : entries
 
   const sorted = [...filtered].sort((a, b) => {
     if (a.searchScore !== b.searchScore) {
