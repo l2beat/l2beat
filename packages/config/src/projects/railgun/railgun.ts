@@ -56,8 +56,7 @@ export const railgun: BaseProject = {
     badges: [BADGES.Other.Governance],
   },
   privacyInfo: {
-    // TODO: Replace with the actual trusted setup used by the project.
-    trustedSetup: TRUSTED_SETUPS.Stub,
+    trustedSetup: TRUSTED_SETUPS.Railgun,
     assets: getRailgunAssets(),
   },
   permissions: discovery.getDiscoveredPermissions(),
