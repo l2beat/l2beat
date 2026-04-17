@@ -24,9 +24,9 @@ import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
-import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
+import type { ChartResolution } from '~/utils/range/range'
 
 const chartMeta = {
   ethereum: {
@@ -62,7 +62,7 @@ interface DataPostedChartDataPoint {
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
   project?: ChartProject
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
   isLoading: boolean
   syncedUntil: number | undefined
   tickCount?: number
@@ -142,7 +142,7 @@ function DataPostedCustomTooltip({
   label: timestamp,
   resolution,
 }: CustomChartTooltipProps & {
-  resolution: DaThroughputResolution
+  resolution: ChartResolution
 }) {
   const { meta } = useChart()
   if (!payload || typeof timestamp !== 'number') return null

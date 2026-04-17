@@ -34,11 +34,12 @@ const chainIconMap = new Map(
 export function accumulateTokens(
   current: TokenInteropData,
   token: AggregatedInteropTransferWithTokens['tokens'][number],
-  chainInfo: { srcChain: string; dstChain: string },
+  chainInfo: { protocolId: string; srcChain: string; dstChain: string },
 ) {
   const result = {
     ...accumulate(current, token),
     flows: current.flows,
+    protocols: current.protocols,
   }
 
   const flowKey = `${chainInfo.srcChain}${INTEROP_PAIR_SEPARATOR}${chainInfo.dstChain}`
@@ -57,6 +58,16 @@ export function accumulateTokens(
       },
       volume: token.volume,
     })
+  }
+
+  const currentProtocol = current.protocols.get(chainInfo.protocolId)
+  if (currentProtocol) {
+    current.protocols.set(
+      chainInfo.protocolId,
+      (currentProtocol ?? 0) + token.volume,
+    )
+  } else {
+    current.protocols.set(chainInfo.protocolId, token.volume)
   }
 
   return result

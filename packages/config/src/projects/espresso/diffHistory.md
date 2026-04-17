@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xfa443d52777f4a37cecbf757e54aaa66deee9300
+
+# Diff at Tue, 14 Apr 2026 15:09:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@e4b25e7655a23f29781df0da3ff85ec323eb78d4 block: 1772726425
+- current timestamp: 1776179280
+
+## Description
+
+HotShotLightClient admin/owner moved from EspressoMultisig (0x34F5af5, 3-of-5) directly to a new OpsTimelock (0x67861f1, OpenZeppelin TimelockController, 48-hour minimum delay).
+
+Role graph on the timelock:
+- PROPOSER: EspressoMultisig (3-of-5) + new EspressoOpsMultisig (0x5e37B8, 3-of-5)
+- CANCELLER: EspressoMultisig + EspressoOpsMultisig
+- EXECUTOR: EspressoOpsMultisig only (sole executor)
+- DEFAULT_ADMIN (manages all roles): timelock itself + EspressoOpsMultisig
+
+Net effect: upgrades require either multisig to propose, a 48-hour wait, and then EspressoOpsMultisig to execute. EspressoOpsMultisig is the single point of execution and can also grant/revoke roles directly (not timelock-gated) via DEFAULT_ADMIN_ROLE.
+
+## Watched changes
+
+```diff
+    contract EspressoMultisig (eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".owner"
++        ".Canceller"
+      receivedPermissions.0.description:
+-        "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
++        "cancel queued transactions."
+      receivedPermissions.0.from:
+-        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700"
+      receivedPermissions.1.description:
++        "propose transactions."
+      receivedPermissions.1.role:
+-        "admin"
++        ".Proposer"
+      receivedPermissions.1.from:
+-        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+    }
+```
+
+```diff
+    contract HotShotLightClient (eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      values.$admin:
+-        "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700"
+      values.owner:
+-        "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoOpsMultisig (eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpsTimelock (eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700)
+    +++ description: A timelock with access control. The current minimum delay is 2d.
+```
+
+## Source code changes
+
+```diff
+.../espresso/.flat/EspressoOpsMultisig/Safe.sol    | 1088 ++++++++++++++++++++
+ .../.flat/EspressoOpsMultisig/SafeProxy.p.sol      |   37 +
+ .../src/projects/espresso/.flat/OpsTimelock.sol    | 1009 ++++++++++++++++++
+ 3 files changed, 2134 insertions(+)
+```
+
 Generated with discovered.json: 0xfef2d89377979ee215831f381f05b5297f636411
 
 # Diff at Wed, 04 Mar 2026 15:29:14 GMT:

@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x2073e49aae1e5aa29e9b61985d8474174de1d589
+
+# Diff at Wed, 15 Apr 2026 11:26:14 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d59bd3e4deb0e2eb3efe1c6ec1ca5032fc282467 block: 1771857553
+- current timestamp: 1776252265
+
+## Description
+
+Espresso TEE verification architecture upgraded (same pattern as Molten on 2026-04-09): AWS Nitro enclave attestations are now verified via ZK proofs (RiscZero, Succinct SP1, or Pico) instead of on-chain X.509 certificate chain validation.
+
+- Old EspressoNitroTEEVerifier (0xDa72802) + CertManager (0x1Ff280d) deleted.
+- New EspressoNitroTEEVerifier (0x9E490ce) delegates attestation verification to a new NitroEnclaveVerifier (0x0d1AD56) that accepts ZK proofs of off-chain attestation validation.
+- New SP1Verifier (0x294a1Ee, v5.0.0) added for SP1 proof verification.
+- EspressoTEEVerifier (0xcC75834, unchanged) now points to the new NitroTEEVerifier.
+- Safe (0x6Dc61D) interact permission migrated from old to new verifier.
+
+Security implications: same TEE trust model (AWS Nitro), but adds trust in the ZK verifier (RiscZero/Succinct/Pico) and configured program IDs. Owner of EspressoNitroTEEVerifier can still register signers and set valid enclave hashes.
+
+EspressoNitroTEEVerifier: [diff](https://disco.l2beat.com/diff/eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24/eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract CertManager (eth:0x1Ff280d8B34E97E2CcA0bdb461F4bA2CF9b8E494)
+    +++ description: The CertManager is used for anchoring TEE attestation keys to a trusted Certificate Authority (CA).
+```
+
+```diff
+    contract Safe (eth:0x6Dc61D9E366697979f69D89a154f2F8cd2F11dA5) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24","description":"set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.","role":".owner"}
+    }
+```
+
+```diff
+    contract EspressoTEEVerifier (eth:0xcC758349CBd99bAA7fAD0558634dAaB176c777D0) {
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
++++ severity: HIGH
+      values.espressoNitroTEEVerifier:
+-        "eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24"
++        "eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (eth:0xDa72802AaF0a7af96d9FF7d0D94A7388B85f9f24)
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+```diff
++   Status: CREATED
+    contract NitroEnclaveVerifier (eth:0x0d1AD56885440A92799dC766D65B5C8377c60A35)
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x294a1Ee119C4B2510530572481A6a50892A9ae9f)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f)
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+```
+
+## Source code changes
+
+```diff
+.../.flat@1771857553/CertManager.sol => /dev/null  | 1978 ---------
+ .../EspressoNitroTEEVerifier.sol                   | 1893 +--------
+ .../appchain/.flat/NitroEnclaveVerifier.sol        | 4283 ++++++++++++++++++++
+ .../src/projects/appchain/.flat/SP1Verifier.sol    |  602 +++
+ 4 files changed, 4981 insertions(+), 3775 deletions(-)
+```
+
 Generated with discovered.json: 0x299563e2dc26babfa9ad32fd419c1a65505de967
 
 # Diff at Tue, 14 Apr 2026 11:01:10 GMT:

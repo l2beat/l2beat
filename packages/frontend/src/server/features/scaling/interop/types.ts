@@ -191,6 +191,7 @@ export type TokenData = {
   symbol: string
   issuer: string | null
   iconUrl: string
+  topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -205,6 +206,7 @@ export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
   tokenB: { symbol: string; iconUrl: string }
+  topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null

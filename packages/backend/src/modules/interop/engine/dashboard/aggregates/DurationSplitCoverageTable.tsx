@@ -1,73 +1,7 @@
-import type { InteropDurationSplit } from '@l2beat/config'
-import type { InteropTransferRecord } from '@l2beat/database'
-import { InteropTransferClassifier } from '@l2beat/shared'
-import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
 import React from 'react'
-import type { InteropAggregationConfig } from '../../../../../config/features/interop'
+import type { DurationSplitCoverageRow } from './utils'
 
-interface DurationSplitCoverageRow {
-  projectId: string
-  projectName: string
-  bridgeType: KnownInteropBridgeType
-  observedTransferTypes: string[]
-  includedSplits: {
-    label: string
-    transferTypes: string[]
-  }[]
-  notIncludedTransferTypes: string[]
-}
-
-export function buildDurationSplitCoverageRows(
-  transfers: InteropTransferRecord[],
-  configs: InteropAggregationConfig[],
-): DurationSplitCoverageRow[] {
-  const classifier = new InteropTransferClassifier()
-  const rows: DurationSplitCoverageRow[] = []
-
-  for (const config of configs) {
-    if (!config.durationSplit) continue
-
-    const classifiedTransfers = classifier.classifyTransfers(
-      transfers,
-      config.plugins,
-    )
-
-    for (const [bridgeType, durationSplit] of Object.entries(
-      config.durationSplit,
-    ) as [KnownInteropBridgeType, InteropDurationSplit][]) {
-      const includedSplits = durationSplit.map((split) => ({
-        label: split.label,
-        transferTypes: [...new Set(split.transferTypes)].sort(),
-      }))
-      const includedTransferTypes = new Set(
-        includedSplits.flatMap((split) => split.transferTypes),
-      )
-      const observedTransferTypes = [
-        ...new Set(
-          classifiedTransfers[bridgeType].map((transfer) => transfer.type),
-        ),
-      ].sort()
-
-      rows.push({
-        projectId: config.id,
-        projectName: config.shortName ?? config.name ?? config.id,
-        bridgeType,
-        observedTransferTypes,
-        includedSplits,
-        notIncludedTransferTypes: observedTransferTypes.filter(
-          (transferType) => !includedTransferTypes.has(transferType),
-        ),
-      })
-    }
-  }
-
-  return [...rows].sort(
-    (a, b) =>
-      b.notIncludedTransferTypes.length - a.notIncludedTransferTypes.length ||
-      a.projectName.localeCompare(b.projectName) ||
-      a.bridgeType.localeCompare(b.bridgeType),
-  )
-}
+export { buildDurationSplitCoverageRows } from './utils'
 
 export function DurationSplitCoverageTable(props: {
   rows: DurationSplitCoverageRow[]
