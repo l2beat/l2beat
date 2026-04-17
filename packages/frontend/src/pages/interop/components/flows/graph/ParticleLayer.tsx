@@ -128,29 +128,6 @@ export function ParticleLayer({
             {Array.from({ length: count }, (_, i) => {
               const begin = `${initialOffset + i * particleInterval}s`
 
-              if (t > 0.999) {
-                // Near-integer exact count — no idle phase needed
-                return (
-                  <circle key={i} r={particleRadius} fill={color} opacity={0}>
-                    <animateMotion
-                      path={path}
-                      dur={`${travelDuration}s`}
-                      begin={begin}
-                      repeatCount="indefinite"
-                    />
-                    <animate
-                      attributeName="opacity"
-                      dur={`${travelDuration}s`}
-                      begin={begin}
-                      values="0;0.8;0.8;0"
-                      keyTimes="0;0.001;0.999;1"
-                      repeatCount="indefinite"
-                    />
-                  </circle>
-                )
-              }
-
-              // Fractional: travel for `t` of the cycle, hide for the rest
               return (
                 <circle key={i} r={particleRadius} fill={color} opacity={0}>
                   <animateMotion
@@ -166,8 +143,9 @@ export function ParticleLayer({
                     attributeName="opacity"
                     dur={`${cycleDuration}s`}
                     begin={begin}
-                    values="0.8;0.8;0;0"
-                    keyTimes={`0;${t};${Math.min(t + 0.001, 0.999)};1`}
+                    calcMode="discrete"
+                    values={'0.8;0'}
+                    keyTimes={`0;${t}`}
                     repeatCount="indefinite"
                   />
                 </circle>
