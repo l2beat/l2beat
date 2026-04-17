@@ -1,42 +1,82 @@
+import { join } from 'node:path'
+import { Worker } from 'node:worker_threads'
 import type { ClingoError, ClingoResult } from 'clingo-wasm'
 
 export type { ClingoError, ClingoResult }
 
-type RunFn = (
-  program: string,
-  models?: number,
-) => ClingoResult | ClingoError | Promise<ClingoResult | ClingoError>
+export interface RunClingoOptions {
+  timeoutMs?: number
+}
 
-let runnerPromise: Promise<RunFn> | null = null
+function getWorkerPath() {
+  return join(
+    __dirname,
+    __filename.endsWith('.ts') ? 'runClingo.worker.ts' : 'runClingo.worker.js',
+  )
+}
 
-function getRunner(): Promise<RunFn> {
-  if (!runnerPromise) {
-    runnerPromise = (async () => {
-      const clingoModule = await import('clingo-wasm')
-      // Handle both ESM and CommonJS module formats
-      // @ts-ignore
-      const init = clingoModule.default?.init ?? clingoModule.init
-      return init()
-    })()
+function getWorkerExecArgv() {
+  if (__filename.endsWith('.ts')) {
+    return ['-r', 'esbuild-register']
   }
-  return runnerPromise
+  return undefined
 }
 
 export async function runClingo(
   program: string,
+  options: RunClingoOptions = {},
 ): Promise<ClingoResult | ClingoError> {
-  const run = await getRunner()
-  const result = await run(program, 0)
-  // When clingo-wasm hits a syntax error, the underlying ccall throws
-  // mid-execution and the Emscripten line-buffered stdout is left with an
-  // unflushed partial line. That partial line then leaks into the beginning
-  // of the next run's output and produces malformed JSON, so any subsequent
-  // inference fails with a generic parse error. Drop the cached runner so
-  // the next call spins up a fresh, clean WASM instance.
-  if (result.Result === 'ERROR') {
-    runnerPromise = null
-  }
-  return result
+  const worker = new Worker(getWorkerPath(), {
+    execArgv: getWorkerExecArgv(),
+  })
+
+  return await new Promise((resolve) => {
+    let settled = false
+    let timeout: ReturnType<typeof setTimeout> | undefined
+
+    const finish = (result: ClingoResult | ClingoError) => {
+      if (settled) {
+        return
+      }
+      settled = true
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+      void worker.terminate()
+      resolve(result)
+    }
+
+    worker.once('message', (result: ClingoResult | ClingoError) => {
+      finish(result)
+    })
+
+    worker.once('error', (error) => {
+      finish({
+        Result: 'ERROR',
+        Error: error.message,
+      })
+    })
+
+    worker.once('exit', (code) => {
+      if (code !== 0) {
+        finish({
+          Result: 'ERROR',
+          Error: `Clingo worker exited with code ${code}`,
+        })
+      }
+    })
+
+    if (options.timeoutMs !== undefined) {
+      timeout = setTimeout(() => {
+        finish({
+          Result: 'ERROR',
+          Error: `Clingo timed out after ${options.timeoutMs}ms`,
+        })
+      }, options.timeoutMs)
+    }
+
+    worker.postMessage({ program })
+  })
 }
 
 export function extractFacts(result: ClingoResult | ClingoError): string[] {

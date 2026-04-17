@@ -19,12 +19,12 @@ describe(infer.name, () => {
 
   it('runs rules on facts and returns inferred knowledge', async () => {
     const factsProgram = [
-      `transfer(t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),hop,lockAndMint).`,
-      `transfer(t("base","${ADDR_B}"),t("zora","${ADDR_C}"),hop,lockAndMint).`,
+      `transfer(t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"hop","lockAndMint").`,
+      `transfer(t("base","${ADDR_B}"),t("zora","${ADDR_C}"),"hop","lockAndMint").`,
     ].join('\n')
 
     const rules = [
-      'same_token(T1, T2) :- transfer(T1, T2, _, lockAndMint).',
+      'same_token(T1, T2) :- transfer(T1, T2, _, "lockAndMint").',
       'same_token(T1, T3) :- T1 != T3, same_token(T1, T2), same_token(T2, T3).',
       'same_token(T2, T1) :- same_token(T1, T2).',
       '#show same_token/2.',
@@ -51,10 +51,10 @@ describe(infer.name, () => {
   })
 
   it('does not infer same_token for non-canonical bridges', async () => {
-    const factsProgram = `transfer(t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),hop,nonMinting).\n`
+    const factsProgram = `transfer(t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"hop","nonMinting").\n`
 
     const rules = [
-      'same_token(T1, T2) :- transfer(T1, T2, _, lockAndMint).',
+      'same_token(T1, T2) :- transfer(T1, T2, _, "lockAndMint").',
       '#show same_token/2.',
     ].join('\n')
 

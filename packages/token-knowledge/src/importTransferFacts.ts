@@ -17,7 +17,7 @@ function transferKey(
   plugin: string,
   bridge: string,
 ): string {
-  return `${srcChain}|${srcAddr}|${dstChain}|${dstAddr}|${plugin}|${bridge}`
+  return JSON.stringify([srcChain, srcAddr, dstChain, dstAddr, plugin, bridge])
 }
 
 function normalizeTokenAddress(address: string): string {
@@ -64,7 +64,7 @@ function transferToArguments(t: InteropTransferRecord): string {
   const srcAddr = normalizeTokenAddress(t.srcTokenAddress as string)
   const dstAddr = normalizeTokenAddress(t.dstTokenAddress as string)
   const bridge = t.bridgeType ?? 'unknown'
-  return `t(${t.srcChain},"${srcAddr}"),t(${t.dstChain},"${dstAddr}"),${t.plugin},${bridge}`
+  return `t("${t.srcChain}","${srcAddr}"),t("${t.dstChain}","${dstAddr}"),"${t.plugin}","${bridge}"`
 }
 
 function transferToContext(t: InteropTransferRecord): {
@@ -84,7 +84,7 @@ export async function importTransferFacts(
   const existing = await db.tokenFactInput.getByName(FACT_NAME)
   const seen = new Set<string>()
   for (const fact of existing) {
-    // Format: t(srcChain,"srcAddr"),t(dstChain,"dstAddr"),plugin,bridge
+    // Format: t("srcChain","srcAddr"),t("dstChain","dstAddr"),"plugin","bridge"
     const parsed = parseClingoFact(`${FACT_NAME}(${fact.arguments})`)
     const [src, dst, plugin, bridge] = parsed.params
     if (!isToken(src) || !isToken(dst) || !plugin || !bridge) {

@@ -101,7 +101,7 @@ describe(importTransferFacts.name, () => {
     expect(inserted.length).toEqual(1)
     expect(inserted[0]!.name).toEqual('transfer')
     expect(inserted[0]!.arguments).toEqual(
-      `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
+      `t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"hop","lockAndMint"`,
     )
     expect(inserted[0]!.context).toEqual({
       srcTxHash: '0xsrctx',
@@ -197,7 +197,7 @@ describe(importTransferFacts.name, () => {
 
     expect(result.imported).toEqual(1)
     expect(inserted[0]!.arguments).toEqual(
-      `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),testPlugin,unknown`,
+      `t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"testPlugin","unknown"`,
     )
   })
 
@@ -205,7 +205,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
+      arguments: `t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"hop","lockAndMint"`,
       context: null,
     }
 
@@ -234,7 +234,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `t(ethereum,"${PADDED_ADDR_A}"),t(base,"${PADDED_ADDR_B}"),hop,lockAndMint`,
+      arguments: `t("ethereum","${PADDED_ADDR_A}"),t("base","${PADDED_ADDR_B}"),"hop","lockAndMint"`,
       context: null,
     }
 
@@ -261,7 +261,7 @@ describe(importTransferFacts.name, () => {
     const existingFact: TokenFactInputRecord = {
       id: 1,
       name: 'transfer',
-      arguments: `t(ethereum,"${ADDR_A}"),t(base,"${ADDR_B}"),hop,lockAndMint`,
+      arguments: `t("ethereum","${ADDR_A}"),t("base","${ADDR_B}"),"hop","lockAndMint"`,
       context: null,
     }
 
@@ -308,6 +308,58 @@ describe(importTransferFacts.name, () => {
     expect(result.imported).toEqual(1)
     expect(result.skipped).toEqual(2)
     expect(inserted.length).toEqual(1)
+  })
+
+  it('preserves hyphens in plugin and chain names by writing strings', async () => {
+    const { db, inserted } = mockDb(
+      [],
+      [
+        makeTransfer({
+          srcChain: 'monad',
+          srcTokenAddress: ADDR_A,
+          dstChain: 'bsc',
+          dstTokenAddress: ADDR_B,
+          plugin: 'layerzero-v2-ofts',
+          bridgeType: 'burnAndMint',
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(1)
+    expect(inserted[0]!.arguments).toEqual(
+      `t("monad","${ADDR_A}"),t("bsc","${ADDR_B}"),"layerzero-v2-ofts","burnAndMint"`,
+    )
+  })
+
+  it('re-imports without duplicating facts when existing facts already use strings', async () => {
+    const existingFact: TokenFactInputRecord = {
+      id: 1,
+      name: 'transfer',
+      arguments: `t("monad","${ADDR_A}"),t("bsc","${ADDR_B}"),"layerzero-v2-ofts","burnAndMint"`,
+      context: null,
+    }
+
+    const { db, inserted } = mockDb(
+      [existingFact],
+      [
+        makeTransfer({
+          srcChain: 'monad',
+          srcTokenAddress: ADDR_A,
+          dstChain: 'bsc',
+          dstTokenAddress: ADDR_B,
+          plugin: 'layerzero-v2-ofts',
+          bridgeType: 'burnAndMint',
+        }),
+      ],
+    )
+
+    const result = await importTransferFacts(db)
+
+    expect(result.imported).toEqual(0)
+    expect(result.skipped).toEqual(1)
+    expect(inserted.length).toEqual(0)
   })
 
   it('treats different bridge types as different facts', async () => {
@@ -376,7 +428,7 @@ describe(importTransferFacts.name, () => {
 
     expect(result.imported).toEqual(1)
     expect(inserted[0]!.arguments).toEqual(
-      `t(ethereum,"native"),t(base,"${ADDR_B}"),testPlugin,unknown`,
+      `t("ethereum","native"),t("base","${ADDR_B}"),"testPlugin","unknown"`,
     )
   })
 

@@ -7,7 +7,7 @@ export async function infer(
 ): Promise<ClingoFact[]> {
   const program = facts + '\n' + rules
 
-  const result = await runClingo(program)
+  const result = await runClingo(program, { timeoutMs: 10 * 1000 })
   const rawFacts = extractFacts(result)
   return rawFacts.map(parseClingoFact)
 }

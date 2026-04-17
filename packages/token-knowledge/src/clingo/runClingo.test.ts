@@ -19,14 +19,23 @@ describe(runClingo.name, () => {
   })
 
   it('recovers after a syntax error in a previous run', async () => {
-    // Emscripten's stdout is line-buffered; a failing ccall leaves a partial
-    // line in the buffer that would corrupt the next run's JSON output unless
-    // the runner is discarded and re-initialized.
     const ok = await runClingo('a. b :- a.')
     expect(ok.Result).toEqual('SATISFIABLE')
 
     const bad = await runClingo('this is not valid clingo')
     expect(bad.Result).toEqual('ERROR')
+
+    const again = await runClingo('x. y :- x.')
+    expect(again.Result).toEqual('SATISFIABLE')
+    expect(extractFacts(again)).toEqual(['x', 'y'])
+  })
+
+  it('returns ERROR on timeout and recovers on the next run', async () => {
+    const timedOut = await runClingo('a. b :- a.', { timeoutMs: 0 })
+    expect(timedOut).toEqual({
+      Result: 'ERROR',
+      Error: 'Clingo timed out after 0ms',
+    })
 
     const again = await runClingo('x. y :- x.')
     expect(again.Result).toEqual('SATISFIABLE')

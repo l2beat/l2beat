@@ -201,6 +201,8 @@ All facts are stored in a single database table `token-facts-input` with two col
 
 This deliberately minimal schema keeps the prototype simple. The inference engine reads all facts from this table, concatenates `name(arguments).` for each row to produce a valid Clingo program, runs the solver, and returns the derived catalog.
 
+**Representation note.** Values such as chain names, plugin names, bridge types, token addresses, and Coingecko IDs are written as quoted strings (e.g. "ethereum"), not clingo atoms (ethereum). That's because Clingo internalizes both atoms and sring into compact internal IDs so apart from initial parsing, there's no performance impact (this has been verified with a script and AI discussion). Using quoted strings allows using any original set of charactes without processing.
+
 ### Transfer Facts
 
 One of the first automatic fact types is the **transfer fact**, which records that a token at one address was bridged to a token at another address by a specific protocol. Its arguments are:
