@@ -1,6 +1,6 @@
 {
   "name": "celo",
-  "timestamp": 1776422569,
+  "timestamp": 1776433625,
   "configHash": "0x5f6a42276cf8f372c3a6eef5a1675fdb096f62c32011d6406f791d8d919ed61b",
   "entries": [
     {
@@ -1506,12 +1506,12 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0xdB56a653E58651970d06620FC987f8FbfE5Ed763",
+        "anchorGame": "eth:0xbbd3d355348436b1F0357e79352a79e1909BF784",
         "disputeGameFactory": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x58a3603dcce28f2ce82e84c6ff777a9faf5c17d82bedbb4e9bfc9c3f8d26cb15",
-          63914898
+          "0xa6fa5313f81267352b6698503ac81966484ef715e145c8b43f79b69df880ee72",
+          63925698
         ],
         "initVersion": 1,
         "paused": false,
@@ -2022,6 +2022,7 @@
       "name": "SP1Verifier",
       "address": "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A",
       "type": "Contract",
+      "template": "shared-sp1/SP1Verifier",
       "sourceHashes": [
         "0x68780a934a8768b2f68bc94eca4854522d61b8d14187d1dd49909153c10066c7"
       ],
@@ -2434,7 +2435,7 @@
         "DEPLOYMENT_TIMESTAMP": 1764689339,
         "DISPUTE_GAME_FACTORY": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
         "FALLBACK_TIMEOUT": 1209600,
-        "getLastProposalTimestamp": 1776421643,
+        "getLastProposalTimestamp": 1776433151,
         "isProposalPermissionlessMode": false,
         "owner": "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
         "proposers": [
@@ -2500,7 +2501,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0xE7bd695d6A17970A2D9dB55cfeF7F2024d630aE1",
-        "gameCount": 32223,
+        "gameCount": 32229,
         "gameImpls": [
           "eth:0x25Bd434Aa96EE31D6661c89CF4290281f1ed856F",
           "eth:0xa83a2E8595b602aD98C928E9cD123c0E05C84FD9",
@@ -3865,12 +3866,13 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "shared-sp1/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/OPSuccinct/AccessManager": "0x57aa4b6b7430cf6f540cc3ea3f53a2addf4348c8fc64b0bf9c34b7f4dae2f74b",
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0xd43e10bdf24f9a99590fd00cd3f1d135a25ebad1d8fa81943db21c274c6b634a",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "tokens/CELO": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24899046 },
+  "usedBlockNumbers": { "ethereum": 24899966 },
   "permissionsConfigHash": "0xbbf69680b43e5ab646c03408a33a865ac0f34249efebd4621d33cf64ac871937"
 }
