@@ -161,7 +161,11 @@ function NavCollapsibleItem({
             <SidebarGroupSubButton
               href={item.href}
               key={item.title}
-              isActive={isLinkActive({ href: item.href, pathname })}
+              isActive={isLinkActive({
+                href: item.href,
+                pathname,
+                exact: item.exact,
+              })}
             >
               <span className="leading-tight">{item.title}</span>
             </SidebarGroupSubButton>
@@ -173,7 +177,11 @@ function NavCollapsibleItem({
                 <SidebarGroupSubButton
                   href={item.href}
                   key={item.title}
-                  isActive={isLinkActive({ href: item.href, pathname })}
+                  isActive={isLinkActive({
+                    href: item.href,
+                    pathname,
+                    exact: item.exact,
+                  })}
                 >
                   <span>{item.title}</span>
                 </SidebarGroupSubButton>

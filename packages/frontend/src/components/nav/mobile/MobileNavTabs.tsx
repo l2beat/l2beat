@@ -34,7 +34,11 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
         {currentGroup.links
           .filter((link) => !link.disabled)
           .map((link) => {
-            const isSelected = isLinkActive({ href: link.href, pathname })
+            const isSelected = isLinkActive({
+              href: link.href,
+              pathname,
+              exact: link.exact,
+            })
             return (
               <a
                 ref={(node) => {
