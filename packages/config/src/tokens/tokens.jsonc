@@ -7621,6 +7621,35 @@
   ],
   "morph": [
     {
+      "symbol": "USDT0",
+      "address": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xCfb1186F4e93D60E60a8bDd997427D1F33bc372B",
+      "category": "stablecoin",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "BGB",
       "coingeckoId": "bitget-token",
       "address": "0x389C08Bc23A7317000a1FD76c7c5B0cb0b4640b5",

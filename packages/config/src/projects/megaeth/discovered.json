@@ -1,6 +1,6 @@
 {
   "name": "megaeth",
-  "timestamp": 1775212027,
+  "timestamp": 1776158984,
   "configHash": "0x41ebe06aeb510eda130b32372516b66d975a6bf8b017740e4c327a31672c52f9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -218,6 +218,11 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BLSApkRegistry",
       "address": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
       "type": "Contract",
@@ -417,11 +422,8 @@
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x0ceb3306c4166f83984b224c6046136f85df1bcb09da0605a5131736d5e40a77",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0x61a037630ed03eba219a0c1b99e744f25072c3ec2040d50091664182b1feee43",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x9e6f62da5509519a81e7ce9549000fa7991483cb9053221968351252b70a1fb9",
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
-          "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
           "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
@@ -471,7 +473,9 @@
           "0x6c44dee76ef91585c58c16f5dc19694fc94a31fc65808cc7e6a08f4ee209e7db",
           "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
           "0x4237db2359e8736fb9987c4c34707454ab3b0089c8ae1bd363decfa693d66c15",
-          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e"
+          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
+          "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
+          "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -861,7 +865,7 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": "452312848583266388373324160190187140051835877600158453279131187530910664024",
-        "sequencerInbox": "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2",
+        "sequencerInbox": "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 23770457,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
@@ -1375,7 +1379,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664676",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292664985",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1536,7 +1540,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 24798447
+          "prevBlockNum": 24877010
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1675,7 +1679,7 @@
         "game1337": "eth:0x78F8F8FED1d589b7098EC4B47220465A9Fa071C9",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3449,
+        "gameCount": 3712,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152",
@@ -2649,7 +2653,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 0,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0xfc46698E88Dbddf327ea8aBf4B41E05FC6067006",
+        "lastResolved": "eth:0xc76b1ed33201be3Dedcc16f745AB922E8cB462e3",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8",
@@ -4497,6 +4501,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "usedBlockNumbers": { "ethereum": 24798498 },
-  "permissionsConfigHash": "0xa510ae4785e3a6e9a11645323f348486cfe12d68e1c990e094a0c92b71703c6d"
+  "usedBlockNumbers": { "ethereum": 24877142 },
+  "permissionsConfigHash": "0x4075f117b9d9fe9eedef8dac8fa1bc6aa1b6d6c70dd0e044e3933205ebb195a4"
 }

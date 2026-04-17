@@ -1191,21 +1191,6 @@
     "messages": ["circle-gateway.Message"],
     "transfers": ["circle-gateway.Transfer"]
   },
-  "layerzerov1": {
-    "loadConfigs": ["layerzero-v1"],
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0x3b2b8b9fe6bfbc1ddb52cb08758527eb78e5fff2041f25badd574b09ba7cf4b4"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x9644fa9892c2cad338fea622f3700598c38b34d3a89989a05c2df1cbceb60a10"
-      }
-    ],
-    "events": ["layerzero-v1.PacketSent", "layerzero-v1.PacketDelivered"],
-    "messages": ["layerzero-v1.Message"]
-  },
   "layerzerov2": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
@@ -3489,6 +3474,27 @@
         }
       ]
     }
+  },
+  "oftonesided": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xbcd2356e85243b70ee9804f077b1afd970c01d452a84257da4b7bb98dc3fa7ce" // eth ->plasma
+      },
+      {
+        "chain": "base",
+        "tx": "0x32a6df95002ceb8be3f5b787ce9385a06c36779fb0f3305732a868a082577792" // base -> tron
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x8915c0a9974e62652cc60c389c2fb746497fe7ce0e7e9ac0200c3cbf3a3ca06b" // bsc -> solana
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6938c3677d8855d94f289f5ece9aed150bee9744a221a2124112338a251752b5" // solana -> eth
+      }
+    ]
   },
   "cctp-debug": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],

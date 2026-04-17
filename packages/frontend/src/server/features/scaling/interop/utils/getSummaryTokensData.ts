@@ -1,3 +1,4 @@
+import type { Project } from '@l2beat/config'
 import { getLogger } from '~/server/utils/logger'
 import type { AggregatedInteropTransferWithTokens, TokenData } from '../types'
 import { buildTokensDataMap } from './buildTokensDataMap'
@@ -9,6 +10,7 @@ const logger = getLogger().for('getSummaryTokensData')
 export function getSummaryTokensData(
   records: AggregatedInteropTransferWithTokens[],
   tokensDetailsMap: TokensDetailsMap,
+  interopProjects: Project<'interopConfig'>[],
 ): TokenData[] {
   const counts = {
     transferCount: records.reduce(
@@ -26,6 +28,7 @@ export function getSummaryTokensData(
   return getTokensData({
     tokens: tokenDataMap,
     tokensDetailsMap,
+    interopProjects,
     unknownTransfersCount: counts.transferCount - counts.identifiedCount,
     logger,
     // No duration split map for tokens summary view

@@ -95,7 +95,6 @@ export function ScalingTvsTabs(props: Props) {
             <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
               <RollupsInfo />
               <ScalingTvsCharts
-                tab="rollups"
                 entries={entries.rollups}
                 milestones={props.milestones}
               />
@@ -115,7 +114,6 @@ export function ScalingTvsTabs(props: Props) {
             >
               <ValidiumsAndOptimiumsInfo />
               <ScalingTvsCharts
-                tab="validiumsAndOptimiums"
                 entries={entries.validiumsAndOptimiums}
                 milestones={props.milestones}
               />
@@ -132,7 +130,6 @@ export function ScalingTvsTabs(props: Props) {
             <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
               <OthersInfo />
               <ScalingTvsCharts
-                tab="others"
                 entries={entries.others}
                 milestones={props.milestones}
               />

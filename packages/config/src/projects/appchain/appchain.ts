@@ -1,6 +1,7 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -8,6 +9,12 @@ import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('appchain')
+
+const succinctConfig = discovery.getContractValue<{
+  verifierId: string
+  aggregatorId: string
+  zkVerifier: ChainSpecificAddress
+}>('NitroEnclaveVerifier', 'succintZkConfig')
 
 export const appchain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
@@ -59,4 +66,9 @@ export const appchain: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplateZkVerifiers: [succinctConfig.zkVerifier],
+  nonTemplateProgramHashes: [
+    PROGRAM_HASHES(succinctConfig.verifierId),
+    PROGRAM_HASHES(succinctConfig.aggregatorId),
+  ],
 })

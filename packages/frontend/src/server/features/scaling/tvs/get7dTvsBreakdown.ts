@@ -6,7 +6,6 @@ import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getLogger } from '~/server/utils/logger'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getSyncState, type SyncState } from '../../utils/syncState'
@@ -67,7 +66,6 @@ export const TvsBreakdownProjectFilter = v.union([
 export type TvsBreakdownProjectFilter = v.infer<
   typeof TvsBreakdownProjectFilter
 >
-const logger = getLogger().for('get7dTvsBreakdown')
 
 export async function get7dTvsBreakdown(
   params: TvsBreakdownProjectFilter,
@@ -155,10 +153,6 @@ export async function get7dTvsBreakdown(
       (v) => v.timestamp === lastValue.timestamp - 7 * UnixTime.DAY,
     )
     if (!sevenDaysAgoValue) {
-      logger.error('No seven days ago value found for project', {
-        projectId,
-        lastValueTimestamp: lastValue.timestamp,
-      })
       projects[projectId] = {
         breakdown: {
           total: latestValue,

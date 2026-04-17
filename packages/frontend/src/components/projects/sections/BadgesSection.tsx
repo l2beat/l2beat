@@ -1,4 +1,3 @@
-import { keepPreviousData } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -23,14 +22,6 @@ export function BadgesSection({
   const [selectedBadgeId, setSelectedBadgeId] = useState<string>()
   const utils = api.useUtils()
 
-  const { data, isLoading } = api.projects.badgesDialog.useQuery(
-    { badgeId: selectedBadgeId ?? '' },
-    {
-      enabled: !!selectedBadgeId,
-      placeholderData: keepPreviousData,
-    },
-  )
-
   return (
     <>
       <div
@@ -50,7 +41,7 @@ export function BadgesSection({
               withDialog ? (
                 <button
                   key={key}
-                  className="cursor-pointer"
+                  className="shrink-0 cursor-pointer"
                   onMouseEnter={() =>
                     utils.projects.badgesDialog.prefetch({ badgeId: badge.id })
                   }
@@ -67,14 +58,12 @@ export function BadgesSection({
       </div>
       {withDialog && selectedBadgeId && (
         <BadgesDialog
+          initialBadgeId={selectedBadgeId}
           onOpenChange={(open) => {
             if (!open) {
               setSelectedBadgeId(undefined)
             }
           }}
-          data={data}
-          isLoading={isLoading}
-          onBadgeSelect={setSelectedBadgeId}
         />
       )}
     </>

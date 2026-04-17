@@ -505,6 +505,16 @@
   --animate-collapsible-up: collapsible-up 0.3s ease-out;
   --animate-row-highlight: row-highlight 2.5s ease-in-out;
   --animate-row-highlight-no-opacity: row-highlight-no-opacity 2.5s ease-in-out;
+  --animate-badge-dialog-loading: badge-dialog-loading 1.2s linear infinite;
+
+  @keyframes badge-dialog-loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(250%);
+    }
+  }
 
   @keyframes beat {
     0% {

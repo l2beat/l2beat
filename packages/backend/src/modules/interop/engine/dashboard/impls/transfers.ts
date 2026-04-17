@@ -1,5 +1,6 @@
 import type {
   Database,
+  InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
 } from '@l2beat/database'
@@ -43,14 +44,10 @@ export interface InteropTransferStatsItem extends InteropTransfersStatsRecord {
   chains: InteropTransfersDetailedStatsRecord[]
 }
 
-export async function getInteropTransferDetails(
-  db: Database,
-  type: string,
-  filters: InteropTransferFilters = {},
-): Promise<InteropTransferDetailsRecord[]> {
-  const transfers = await db.interopTransfer.getByType(type, filters)
-
-  return transfers.map((transfer) => ({
+export function toInteropTransferDetailsRecord(
+  transfer: InteropTransferRecord,
+): InteropTransferDetailsRecord {
+  return {
     plugin: transfer.plugin,
     type: transfer.type,
     transferId: transfer.transferId,
@@ -77,7 +74,17 @@ export async function getInteropTransferDetails(
     dstAmount: transfer.dstAmount,
     dstValueUsd: transfer.dstValueUsd,
     dstWasMinted: transfer.dstWasMinted,
-  }))
+  }
+}
+
+export async function getInteropTransferDetails(
+  db: Database,
+  type: string,
+  filters: InteropTransferFilters = {},
+): Promise<InteropTransferDetailsRecord[]> {
+  const transfers = await db.interopTransfer.getByType(type, filters)
+
+  return transfers.map(toInteropTransferDetailsRecord)
 }
 
 export async function getInteropTransferStats(

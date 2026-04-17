@@ -4,9 +4,8 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
-import { rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),

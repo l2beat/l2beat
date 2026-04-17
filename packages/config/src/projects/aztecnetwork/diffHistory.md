@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xf1cc5eb6e31d7af45d5272b52e5ca985fcf89551
+
+# Diff at Mon, 13 Apr 2026 09:17:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c3a2f0d255f241d65a403d105d2fa770f7305170 block: 1775561692
+- current timestamp: 1776071799
+
+## Description
+
+the slashVeto council vetoes slashing for 3d because of [this request](https://github.com/aztec-slash-veto/council/issues/7). Affected payloads can be seen on https://slashveto.me. The argument is that v4.1.3 was a bugfix release on a friday and the wave of slashing can be attributed to people not having updated in time.
+
+one slashVeto council member is replaced (https://forum.aztec.network/t/join-the-slashveto-council/8521).
+
+## Watched changes
+
+```diff
+    contract Slasher (eth:0x64E6e9Bb9f1E33D319578B9f8a9C719Ca6D46eBb) {
+    +++ description: The executor contract for penalties. It receives authorization to slash validator stakes, subject to an execution delay and a vetoer.
+      values.isSlashingEnabled:
+-        true
++        false
+      values.slashingDisabledUntil:
+-        0
++        1776137255
+    }
+```
+
+```diff
+    contract SlashVeto Council (eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480) {
+    +++ description: None
+      values.$members.6:
+-        "eth:0xb31e6d9661720A93d54AF7D1815d9bb399280629"
++        "eth:0x8138c46A572D989E54837d5e5dEB506889edFb5D"
+    }
+```
+
 Generated with discovered.json: 0x36253eb4bd41b547d115e00ec21edefefdba852e
 
 # Diff at Tue, 07 Apr 2026 11:42:01 GMT:

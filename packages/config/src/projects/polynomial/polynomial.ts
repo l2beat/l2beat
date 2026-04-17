@@ -13,6 +13,7 @@ export const polynomial: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1726570826), // 2024-09-17T11:00:26Z
+  archivedAt: UnixTime(1776247158), // 2026-04-15T09:59:18Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
   additionalPurposes: ['Exchange'],

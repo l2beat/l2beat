@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import {
   getSummedTvsValues,
   type SummedTvsValues,
@@ -14,7 +14,6 @@ import {
   createTvsProjectsFilter,
   TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { rangeToResolution } from './utils/range'
 
 export const RecategorisedTvsChartDataParams = v.object({
   range: ChartRange,

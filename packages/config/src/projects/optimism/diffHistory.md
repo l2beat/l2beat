@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x845a974b7e99efaa571448fcf5e555a7c3f2e4d9
+
+# Diff at Thu, 09 Apr 2026 08:07:35 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4d0af4fe89d4d4973bad92299c5e52a23c8673da block: 1774433205
+- current timestamp: 1775721846
+
+## Description
+
+MintManagerOwner on OP Mainnet (L2) restructured: the previous 3-of-5 multisig was replaced by a 1-of-1 Safe whose sole owner is a 6-of-9 SafeL2 multisig (0x3F3Cd7...). All 5 original EOA members were removed. The 6-of-9 Safe also has a SaferSafes module (0xA8447329...) that can act on its behalf, providing an additional execution path. Net effect: OP token inflation policy now requires 6-of-9 signatures (or the SaferSafes module) through the 1-of-1 delegate, instead of 3-of-5 directly.
+
+## Watched changes
+
+```diff
+    contract MintManagerOwner (oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      values.$members.0:
+-        "oeth:0x3041BA32f451F5850c147805F5521AC206421623"
+      values.$members.1:
+-        "oeth:0x7cB07FE039a92B3D784f284D919503A381BEC54f"
+      values.$members.2:
+-        "oeth:0xdb203D7f00fF435dA107543B33495f9cA2c484C6"
+      values.$members.3:
+-        "oeth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15"
+      values.$members.4:
+-        "oeth:0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94"
++        "oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2"
+      values.$threshold:
+-        3
++        1
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "1 of 1 (100%)"
+      receivedPermissions:
+-        [{"permission":"interact","from":"oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy.","role":".owner"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy.","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SaferSafes (oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/optimism/.flat/SafeL2/SafeL2.sol  | 1152 +++++++
+ .../projects/optimism/.flat/SafeL2/SafeProxy.p.sol |   37 +
+ ...0xA8447329e52F64AED2bFc9E7a2506F7D369f483a.sol} |    0
+ ...:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a.sol | 3530 ++++++++++++++++++++
+ 4 files changed, 4719 insertions(+)
+```
+
 Generated with discovered.json: 0xc32ad39f264106dd5fd22f123b4d8456948f818a
 
 # Diff at Wed, 25 Mar 2026 10:07:55 GMT:
