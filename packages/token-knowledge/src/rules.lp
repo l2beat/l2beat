@@ -1,14 +1,17 @@
-% Token Knowledge - Inference Rules
+% - token arguments are in the form: t("Chain", "Addr")
+% - imported transfers are in the form:
+%   transfer(
+%    t("SrcChain", "SrcAddr"), t("DstChain", "DstAddr"), 
+%    "Plugin", "BridgeType"
+%   ).
 
-% tokens argumens are in the form: `t("Chain", "Address")
-
-% imported transfers are in the form:
-% transfer(t("SrcChain", "SrcAddr"), t("DstChain", "DstAddr"), "Plugin", "BridgeType").
+% --- RULES ---
 
 % Two tokens have the same abstract token
 % if there was a nonMinting transfer between them
+% using non-swapping plugin
 sameAbstract(T1, T2) :- 
-  transfer(T1, T2, _, "nonMinting").
+  transfer(T1, T2, Plugin, "nonMinting"), nonSwap(Plugin).
  
 % sameAbstract is transitive: if A=B and B=C then A=C.
 sameAbstract(T1, T3) :- 
@@ -26,10 +29,21 @@ cgId(T, CoingeckoId) :-
 issuer(T, Issuer) :- 
   issuer(T2, Issuer), sameAbstract(T, T2).
 
+% --- FACTS PLAYGROUND  ---
+
 % some manualy added facts:
 cgId(t("base", "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"), "usd-coin").
 issuer(t("base", "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"), "Circle").
 cgId(t("base", "0xc3de830ea07524a0761646a6a4e4be0e114a3c83"), "uniswap").
+% Some non-swapping plugins:
+nonSwap("across").
+nonSwap("relay").
+nonSwap("gaszip").
+nonSwap("polygon").
+nonSwap("agglayer").
+nonSwap("opstack").
+nonSwap("ccip").
+nonSwap("orbitstack").
 
 #show sameAbstract/2.
 #show cgId/2.
