@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1776422777,
+  "timestamp": 1776375286,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -38,7 +38,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4819,
+        "batchCount": 4806,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -891,8 +891,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 4819,
-        "sequencerReportedSubMessageCount": 4272419
+        "sequencerMessageCount": 4806,
+        "sequencerReportedSubMessageCount": 4266845
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1119,7 +1119,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 83,
+        "nonce": 81,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2785,6 +2785,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 453414096, "ethereal": 4272786 },
+  "usedBlockNumbers": { "arbitrum": 453225640, "ethereal": 4267057 },
   "permissionsConfigHash": "0xc484e12eacef04cf8d9120b5e2072d35c3e691536e055a07952ab82314811cd9"
 }
