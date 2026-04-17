@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:dependencies": "cd ../.. && pnpm build:dependencies:token-knowledge-ui",
+    "test": "mocha",
     "typecheck": "tsc --noEmit",
     "watch:dependencies": "cd ../.. && pnpm watch:dependencies:token-knowledge-ui",
     "format": "biome format .",

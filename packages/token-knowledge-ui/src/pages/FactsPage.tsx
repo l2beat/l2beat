@@ -1,7 +1,64 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { Input } from '~/components/Input'
-import { useFacts } from '~/hooks/useFacts'
-import { paramToString, searchFacts } from '~/utils/searchFacts'
+import { type Fact, useFacts } from '~/hooks/useFacts'
+import { searchFacts } from '~/utils/searchFacts'
+
+type Param = Fact['params'][number]
+type Tone = 'plain' | 'nested'
+
+function ParamValue({ value, tone }: { value: Param; tone: Tone }) {
+  if (Array.isArray(value)) {
+    return (
+      <>
+        <span className="text-muted-foreground">[</span>
+        <ParamList params={value} tone={tone} />
+        <span className="text-muted-foreground">]</span>
+      </>
+    )
+  }
+
+  if (value == null) {
+    return <span className="text-muted-foreground italic">nil</span>
+  }
+
+  if (typeof value === 'object') {
+    return (
+      <>
+        <span className="font-semibold text-sky-700 dark:text-sky-400">
+          {value.atom}
+        </span>
+        <span className="text-muted-foreground">(</span>
+        <ParamList params={value.params} tone="nested" />
+        <span className="text-muted-foreground">)</span>
+      </>
+    )
+  }
+
+  if (typeof value === 'number') {
+    return <span className="text-cyan-700 dark:text-cyan-400">{value}</span>
+  }
+
+  return (
+    <span
+      className={
+        tone === 'nested'
+          ? 'text-emerald-700 dark:text-emerald-400'
+          : 'text-amber-700 dark:text-amber-400'
+      }
+    >
+      {value}
+    </span>
+  )
+}
+
+function ParamList({ params, tone }: { params: Fact['params']; tone: Tone }) {
+  return params.map((param, i) => (
+    <Fragment key={i}>
+      {i > 0 && <span className="text-muted-foreground">, </span>}
+      <ParamValue value={param} tone={tone} />
+    </Fragment>
+  ))
+}
 
 export function FactsPage() {
   const { facts } = useFacts()
@@ -11,7 +68,7 @@ export function FactsPage() {
   return (
     <div className="flex h-full flex-col gap-4">
       <Input
-        placeholder="Search facts (regex)..."
+        placeholder="Search facts (* = any text)..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -34,9 +91,11 @@ export function FactsPage() {
             <tbody>
               {results.map((r, i) => (
                 <tr key={i} className="border-b hover:bg-accent">
-                  <td className="p-2 font-mono">{r.atom}</td>
+                  <td className="p-2 font-mono font-semibold">{r.atom}</td>
                   <td className="p-2 font-mono">
-                    {r.params.map(paramToString).join(', ')}
+                    <span className="text-muted-foreground">(</span>
+                    <ParamList params={r.params} tone="plain" />
+                    <span className="text-muted-foreground">)</span>
                   </td>
                 </tr>
               ))}

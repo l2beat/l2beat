@@ -3,7 +3,11 @@ import type {
   InteropTransferRecord,
   TokenFactInputRecord,
 } from '@l2beat/database'
-import { type ClingoFact, parseClingoFact } from './clingo/parseClingoFact'
+import {
+  type ClingoFact,
+  type ClingoValue,
+  parseClingoFact,
+} from './clingo/parseClingoFact'
 
 const FACT_NAME = 'transfer'
 const PADDED_EVM_ADDRESS_REGEX = /^0x([0-9a-f]{24})([0-9a-f]{40})$/i
@@ -49,12 +53,11 @@ function normalizeTokenAddress(address: string): string {
   return `0x${evmAddress.toLowerCase()}`
 }
 
-function isToken(
-  param: string | number | ClingoFact | undefined,
-): param is ClingoFact {
+function isToken(param: ClingoValue): param is ClingoFact {
   return (
     typeof param === 'object' &&
     param !== null &&
+    !Array.isArray(param) &&
     'atom' in param &&
     param.atom === 't'
   )
@@ -87,7 +90,12 @@ export async function importTransferFacts(
     // Format: t("srcChain","srcAddr"),t("dstChain","dstAddr"),"plugin","bridge"
     const parsed = parseClingoFact(`${FACT_NAME}(${fact.arguments})`)
     const [src, dst, plugin, bridge] = parsed.params
-    if (!isToken(src) || !isToken(dst) || !plugin || !bridge) {
+    if (
+      !isToken(src) ||
+      !isToken(dst) ||
+      typeof plugin !== 'string' ||
+      typeof bridge !== 'string'
+    ) {
       throw new Error(`Invalid transfer fact arguments: ${fact.arguments}`)
     }
     const [srcChain, srcAddr] = src.params as [string, string]
