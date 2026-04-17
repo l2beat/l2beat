@@ -236,6 +236,18 @@ Token Knowledge requires a UI for the following tasks:
 - **Entering and editing rules.** Advanced users need to add or modify inference rules. This could start as a text editor for Clingo-syntax rules and evolve into a more structured interface over time.
 - **Inspecting derivation chains.** When a user sees a derived fact, they should be able to trace back through the chain of rules and source facts that produced it. This is essential for debugging and for building trust in the system's output.
 
+### Logs Panel
+
+The `token-knowledge-ui` package renders a **read-only logs panel** that looks like a terminal-style output box but is not editable. Messages are appended programmatically, each prefixed with a local time stamp, and the panel auto-scrolls as new entries arrive.
+
+Entries are written from the tRPC action callbacks across the UI — one line per action on both the success and error paths. Typical shapes:
+
+- `Imported N new facts, skipped M duplicates.` / `Import error: <message>`
+- `Cleared N facts.` / `Clear error: <message>`
+- `Running inference...` / `Inferred N facts from M inputs.` / `Inference error: <message>`
+
+When the user refers to "logs from the UI", they mean the text rendered in this read-only panel — **not** browser console logs. The error messages in it are typically composed from the `Error.message` string surfaced by a failing tRPC call on the server, so they are the quickest way to see what the server-side code threw.
+
 ## Relationship to Existing Packages
 
 - **`token-backend` (TokenDB):** Token Knowledge is intended to supersede TokenDB. During the transition, both systems may coexist. The manual facts in Token Knowledge will initially be seeded from the existing TokenDB data. Once Token Knowledge is validated, TokenDB can be deprecated.
