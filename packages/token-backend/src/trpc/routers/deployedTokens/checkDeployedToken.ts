@@ -7,6 +7,7 @@ import type { ChainRecord } from '@l2beat/database/dist/repositories/ChainReposi
 import { Address32, type UnixTime } from '@l2beat/shared-pure'
 import { Chain } from '../../../chains/Chain'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
+import { getDeploymentTimestampFromRpc } from '../../../chains/clients/rpc/getDeploymentTimestampFromRpc'
 import {
   buildAliasToChainMap,
   findUnregisteredPlatformTokens,
@@ -62,6 +63,14 @@ async function fetchDeploymentTimestamp(
       const txHash = contractCreation[0].txHash
       const txInfo = await chain.blockscout.getTransactionInfo(txHash)
       return txInfo.timeStamp
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  if (chain.rpc) {
+    try {
+      return await getDeploymentTimestampFromRpc(chain.rpc, address)
     } catch (error) {
       console.error(error)
     }
