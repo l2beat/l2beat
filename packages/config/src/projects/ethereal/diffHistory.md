@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x6871f8f9707aab87c4342335adbb72027b6cc7df
+
+# Diff at Thu, 16 Apr 2026 21:36:02 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1770823999
+- current timestamp: 1776375286
+
+## Description
+
+ExchangeGateway upgraded (still delegatecalls auxiliary modules via the registry). ActionHandler and Liquidation redeployed at new addresses; a new Deleverage module was added to the registry. Old ActionHandler (0xA23081) and Liquidation (0xF925Bf) deleted from discovery. CollateralManager, ExchangeConfig, and PerpEngine unchanged.
+
+Shapes added: ExchangeGateway v2 (0x86b4515...), and new auxiliary shapes for ActionHandler_v2, Liquidation_v2, Deleverage in ethereal/ExchangeGatewayRegistryContracts template.
+
+ExchangeGateway: [diff](https://disco.l2beat.com/diff/ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d/ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ActionHandler (ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      sourceHashes.1:
+-        "0x4e74883670a055318a8d4bdb7d266c2d62a87f06d7ebac1e09659053810ddd70"
++        "0x86b45155220c874371724e1491434de1633d3c9ec81f0e45455e5621da661872"
+      values.$implementation:
+-        "ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d"
++        "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db"
+      values.$pastUpgrades.1:
++        ["2026-04-16T07:56:41.000Z","0x5af5474916ab2d51c82b367a4de90b08e07eb9dd8bc452788c9856ff70cabad2",["ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.registry.0x414354494f4e5f48414e444c4552000000000000000000000000000000000000:
+-        "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a"
++        "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96"
+      values.registry.0x4c49515549444154494f4e000000000000000000000000000000000000000000:
+-        "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0"
++        "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1"
+      values.registry.0x44454c4556455241474500000000000000000000000000000000000000000000:
++        "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B"
+      implementationNames.ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d:
+-        "ExchangeGateway"
+      implementationNames.ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db:
++        "ExchangeGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Liquidation (ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract Liquidation (ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract ActionHandler (ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract Deleverage (ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B)
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1770823999 => .flat}/ActionHandler.sol  |  118 +-
+ .../src/projects/ethereal/.flat/Deleverage.sol     | 4047 ++++++++++++++++++++
+ .../ExchangeGateway/ExchangeGateway.sol            |   41 +-
+ .../{.flat@1770823999 => .flat}/Liquidation.sol    |  776 ++--
+ 4 files changed, 4641 insertions(+), 341 deletions(-)
+```
+
 Generated with discovered.json: 0xf8fd33dc19f3d548ab5707d20cf8c15a9ec38370
 
 # Diff at Wed, 11 Feb 2026 15:34:28 GMT:

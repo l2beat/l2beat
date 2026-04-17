@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xb08f85afcb83dae4f26e9f51b6aaca522de385c1
+
+# Diff at Thu, 16 Apr 2026 09:31:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1775980180
+- current timestamp: 1776331734
+
+## Description
+
+SystemConfig minBaseFee raised from 25 gwei to 50 gwei. AccessManager (OPSuccinct proposer/challenger access control) owner transferred from an EIP-7702 delegator EOA (0x95FFAC, now deleted from discovery) to the Celo cLabs Multisig (0x9Eb44D).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        25000000000
++        50000000000
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      values.owner:
+-        "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B"
++        "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d"
+    }
+```
+
 Generated with discovered.json: 0x82014727093a84a11e1570925ed58d2d755c1063
 
 # Diff at Sun, 12 Apr 2026 07:50:49 GMT:
