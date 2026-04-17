@@ -86,7 +86,7 @@ export function ShareButton({ review, onExportPdf }: ShareButtonProps) {
       </button>
 
       {showShareMenu && (
-        <div className="absolute right-0 z-50 mt-1 w-48 rounded-lg border border-border bg-white shadow-lg">
+        <div className="absolute left-0 sm:left-auto sm:right-0 z-50 mt-1 w-48 rounded-lg border border-border bg-white shadow-lg">
           <button
             type="button"
             onClick={handleCopyLink}

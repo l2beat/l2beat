@@ -320,6 +320,8 @@ export interface IndexData {
     totalTokenValueAtRisk: number
     totalTokenValue: number
     protocolsReviewed: number
+    totalContractCount: number
+    recentUpdateCount: number
   }
   dependencies: AggregatedDependency[]
 }

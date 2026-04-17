@@ -160,8 +160,17 @@ export function humanizeFieldName(key: string): string {
   return stripped
 }
 
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+function isZeroAddress(v: unknown): boolean {
+  if (typeof v !== 'string') return false
+  const raw = v.includes(':') ? v.split(':').pop()! : v
+  return raw.toLowerCase() === ZERO_ADDRESS
+}
+
 export function formatValue(value: unknown): string {
-  if (value === undefined || value === null) return '∅'
+  if (value === undefined || value === null) return 'None'
+  if (isZeroAddress(value)) return '0x0'
   if (typeof value === 'string') {
     const trimmed = value.startsWith('eth:')
       ? shortenAddress(value)
@@ -172,6 +181,11 @@ export function formatValue(value: unknown): string {
   }
   if (typeof value === 'number' || typeof value === 'boolean') {
     return String(value)
+  }
+  if (Array.isArray(value)) {
+    const formatted = value.map((v) => isZeroAddress(v) ? '0x0' : formatValue(v))
+    const s = `[${formatted.join(', ')}]`
+    return s.length > 60 ? `${s.slice(0, 57)}…` : s
   }
   try {
     const s = JSON.stringify(value)

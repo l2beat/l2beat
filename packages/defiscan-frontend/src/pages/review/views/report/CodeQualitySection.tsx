@@ -162,8 +162,8 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
                 {license1?.licenseScope ?? 'Frontend'}
               </span>
               <div className="flex-1 flex items-center justify-center py-4">
-                <span className="font-bold text-[36px] uppercase text-accent text-center leading-none">
-                  {license1?.label ?? '—'}
+                <span className={`font-bold uppercase text-accent text-center leading-none ${license1?.label ? 'text-[36px]' : 'text-[18px]'}`}>
+                  {license1?.label ?? 'Closed Source'}
                 </span>
               </div>
             </a>

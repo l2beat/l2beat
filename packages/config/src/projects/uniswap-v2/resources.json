@@ -30,6 +30,12 @@
     {
       "url": "https://www.defiscan.info/protocols/uniswap-v2/ethereum",
       "type": "defiscan-v1"
+    },
+    {
+      "url": "https://github.com/Uniswap/interface/blob/main/apps/web/LICENSE",
+      "type": "license",
+      "label": "GPL-3.0",
+      "licenseScope": "Frontend"
     }
   ],
   "audits": [
@@ -47,5 +53,6 @@
       "bounty": 15500000
     }
   ],
-  "linesOfCode": 1979
+  "linesOfCode": 1979,
+  "lastModified": "2026-04-16T15:45:40.573Z"
 }

@@ -61,5 +61,6 @@ jobs:
           git add packages/config/src/projects/*/funds-data.json
           git add packages/config/src/projects/*/discovered.json
           git add packages/config/src/projects/*/activity.json
+          git add packages/config/src/projects/*/resources.json
           git diff --staged --quiet || git commit -m "Update discovery, compiled reviews, funds and activity data [monitor]"
           git push

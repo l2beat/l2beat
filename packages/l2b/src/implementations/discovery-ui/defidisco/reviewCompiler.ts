@@ -19,7 +19,12 @@ import { getFunctions } from './functions'
 import { getFundsData } from './fundsData'
 import { getContractTags } from './contractTags'
 import { countLinesOfCode } from './countLinesOfCode'
-import { getAudits, getResources, getResourcesLastModified } from './resources'
+import {
+  getAudits,
+  getLinesOfCode,
+  getResources,
+  getResourcesLastModified,
+} from './resources'
 import { getGovernance, getGovernanceLastModified } from './governance'
 import { getActivityEvents } from './activity'
 import type {
@@ -334,18 +339,24 @@ export class ReviewCompiler {
       // 3. Read funds data
       const fundsData = getFundsData(this.paths, project)
 
-      // 4. Read contract tags, resources, audits; compute linesOfCode fresh
+      // 4. Read contract tags, resources, audits; compute linesOfCode
       const contractTags = getContractTags(this.paths, project)
       const resources = getResources(this.paths, project)
       const audits = getAudits(this.paths, project)
-      let linesOfCode: number | undefined
-      try {
-        linesOfCode = countLinesOfCode(this.paths, configReader, project).count
-      } catch (error) {
-        this.log(
-          `Warning: failed to count lines of code: ${error instanceof Error ? error.message : String(error)}`,
-        )
-        linesOfCode = undefined
+      let linesOfCode = getLinesOfCode(this.paths, project)
+      if (linesOfCode === undefined) {
+        try {
+          linesOfCode = countLinesOfCode(
+            this.paths,
+            configReader,
+            project,
+          ).count
+        } catch (error) {
+          this.log(
+            `Warning: failed to count lines of code: ${error instanceof Error ? error.message : String(error)}`,
+          )
+          linesOfCode = undefined
+        }
       }
 
       // 5. Read functions data (for mitigations)

@@ -59,6 +59,11 @@ interface CompiledReview {
       label?: string
     } | null
   }[]
+  activity?: ActivityEvent[]
+}
+
+interface ActivityEvent {
+  timestamp: string
 }
 
 interface FundsData {
@@ -117,6 +122,10 @@ function main() {
   let totalCapitalAtRisk = 0
   let totalTokenValueAtRisk = 0
   let totalTokenValue = 0
+  let totalContractCount = 0
+
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  let recentUpdateCount = 0
 
   const HUMAN_ADMIN_TYPES = new Set(['EOA', 'EOAPermissioned', 'Multisig', 'Timelock'])
 
@@ -206,6 +215,17 @@ function main() {
     })
 
     totalCapitalAtRisk += review.totals.totalCapitalAtRisk
+    totalContractCount += review.totals.contractCount
+
+    // Count activity events from the last 7 days
+    if (review.activity) {
+      for (const event of review.activity) {
+        if (event.timestamp >= sevenDaysAgo) {
+          recentUpdateCount++
+        }
+      }
+    }
+
     const protocolTokenValue = totalTokenValueForProtocol > 0
       ? totalTokenValueForProtocol
       : (review.totals.totalTokenValueAtRisk ?? 0)
@@ -257,6 +277,8 @@ function main() {
       totalTokenValueAtRisk,
       totalTokenValue,
       protocolsReviewed: protocols.length,
+      totalContractCount,
+      recentUpdateCount,
     },
     dependencies,
   }

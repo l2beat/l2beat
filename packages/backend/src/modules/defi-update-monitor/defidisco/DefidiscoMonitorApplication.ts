@@ -10,6 +10,8 @@ import {
 } from '@l2beat/discovery'
 import { DiscordClient, HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import { writeFile, mkdir, rm } from 'fs/promises'
+import { dirname, join } from 'path'
 import { createDefiscanServer } from '@l2beat/defiscan-endpoints/build/server'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
@@ -29,6 +31,7 @@ import {
 } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/activity'
 import { classifyDiff } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/activityClassifier'
 import { getContractTags } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/contractTags'
+import { getLinesOfCode } from '@l2beat/l2b/dist/implementations/discovery-ui/defidisco/resources'
 
 /**
  * DeFiDisco Continuous Monitoring Service
@@ -261,7 +264,7 @@ export class DefidiscoMonitorApplication {
 
     try {
       // Step 1: Discovery
-      const { discovery, diff } = await this.runDiscovery(project, timestamp)
+      const { discovery, flatSources, diff } = await this.runDiscovery(project, timestamp)
 
       changeCount = diff?.length ?? 0
 
@@ -270,10 +273,13 @@ export class DefidiscoMonitorApplication {
         await this.notifyChanges(project, discovery, diff, timestamp)
       }
 
-      // Step 3: Store discovery (DB snapshot + committed discovered.json)
+      // Step 3: Store discovery (DB snapshot + committed discovered.json + flat sources)
       if (discovery) {
         await this.storeDiscovery(project, discovery, timestamp)
         await this.writeDiscoveredJson(project, discovery)
+        if (flatSources && getLinesOfCode(this.config.discovery.paths, project) === undefined) {
+          await this.writeFlatSources(project, flatSources)
+        }
       }
 
       // Step 4: Refresh funds
@@ -316,6 +322,7 @@ export class DefidiscoMonitorApplication {
     timestamp: UnixTime,
   ): Promise<{
     discovery: DiscoveryOutput | undefined
+    flatSources: Record<string, string> | undefined
     diff: ReturnType<typeof diffDiscovery> | undefined
   }> {
     const { configReader } = this.config.discovery
@@ -328,12 +335,12 @@ export class DefidiscoMonitorApplication {
         project,
         error: String(error),
       })
-      return { discovery: undefined, diff: undefined }
+      return { discovery: undefined, flatSources: undefined, diff: undefined }
     }
 
     if (projectConfig.archived) {
       this.logger.info('Skipping archived project', { project })
-      return { discovery: undefined, diff: undefined }
+      return { discovery: undefined, flatSources: undefined, diff: undefined }
     }
 
     // Run discovery
@@ -344,13 +351,13 @@ export class DefidiscoMonitorApplication {
       { [projectConfig.name]: { timestamp } },
     )
 
-    const { discovery } = runResult
+    const { discovery, flatSources } = runResult
 
     // Get previous discovery for diffing
     const previousDiscovery = await this.getPreviousDiscovery(project)
     if (!previousDiscovery) {
       this.logger.info('No previous discovery — first run', { project })
-      return { discovery, diff: undefined }
+      return { discovery, flatSources, diff: undefined }
     }
 
     // Diff
@@ -369,7 +376,7 @@ export class DefidiscoMonitorApplication {
       unverifiedEntries,
     )
 
-    return { discovery, diff }
+    return { discovery, flatSources, diff }
   }
 
   private async getPreviousDiscovery(
@@ -473,6 +480,46 @@ export class DefidiscoMonitorApplication {
         error instanceof Error
           ? error
           : new Error(`Failed to write discovered.json: ${String(error)}`),
+      )
+    }
+  }
+
+  /**
+   * Writes the flat sources returned by DiscoveryRunner to the project's
+   * `.flat/` directory so that downstream consumers (countLinesOfCode in the
+   * review compiler) can read them.
+   *
+   * `.flat/` is gitignored so these files don't exist after a fresh checkout —
+   * this method recreates them from the in-memory discovery result.
+   */
+  private async writeFlatSources(
+    project: string,
+    flatSources: Record<string, string>,
+  ): Promise<void> {
+    try {
+      const projectPath =
+        this.config.discovery.configReader.getProjectPath(project)
+      const flatDir = join(projectPath, '.flat')
+
+      await rm(flatDir, { recursive: true, force: true })
+      await mkdir(flatDir, { recursive: true })
+
+      for (const [filePath, content] of Object.entries(flatSources)) {
+        const outputPath = join(flatDir, filePath)
+        await mkdir(dirname(outputPath), { recursive: true })
+        await writeFile(outputPath, content)
+      }
+
+      this.logger.info('.flat sources written', {
+        project,
+        files: Object.keys(flatSources).length,
+      })
+    } catch (error) {
+      this.logger.error(
+        { project },
+        error instanceof Error
+          ? error
+          : new Error(`Failed to write flat sources: ${String(error)}`),
       )
     }
   }

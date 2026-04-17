@@ -79,7 +79,7 @@ function formatFieldLabel(field: string, roleName?: string): string {
 }
 
 function stringifyForTitle(value: unknown): string {
-  if (value === undefined || value === null) return '∅'
+  if (value === undefined || value === null) return 'None'
   if (typeof value === 'string') return value
   try {
     return JSON.stringify(value)

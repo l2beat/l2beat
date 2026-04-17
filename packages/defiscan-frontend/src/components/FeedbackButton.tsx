@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useFeedbackModal } from '../contexts/FeedbackModalContext'
 
 const TALLY_FORM_ID = 'Ek0oer'
 const TALLY_FORM_URL = `https://tally.so/r/${TALLY_FORM_ID}?transparentBackground=1`
 
 export function FeedbackButton() {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isFeedbackOpen, openFeedback, closeFeedback } = useFeedbackModal()
   const [isFooterVisible, setIsFooterVisible] = useState(false)
-
-  const openFeedback = useCallback(() => setIsOpen(true), [])
-  const closeFeedback = useCallback(() => setIsOpen(false), [])
 
   useEffect(() => {
     const footer = document.getElementById('site-footer')
@@ -50,7 +48,7 @@ export function FeedbackButton() {
         Feedback
       </button>
 
-      {isOpen && (
+      {isFeedbackOpen && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50"
           onClick={closeFeedback}

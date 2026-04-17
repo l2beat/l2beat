@@ -124,7 +124,6 @@ export function ActivityView({ review }: ActivityViewProps) {
   const lastVerified = formatRelative(review.compiledAt)
   const protocolName = review.metadata.protocolName
   const protocolSlug = review.metadata.protocolSlug
-  const description = review.metadata.description
 
   return (
     <div className="flex flex-col gap-8 pt-2">
@@ -143,11 +142,6 @@ export function ActivityView({ review }: ActivityViewProps) {
               {protocolName}
             </h1>
           </div>
-          {description && (
-            <p className="line-clamp-3 text-sm text-text-muted leading-relaxed">
-              {description}
-            </p>
-          )}
         </div>
 
         {/* Right: stats grid */}

@@ -19,17 +19,14 @@ const PAGE_SIZE = 12
 const ACCENT_COLOR = '#2563eb'
 const ACCENT_GRID_COLOR = 'rgba(37,99,235,0.12)'
 
-type Status = 'active' | 'attention'
+type Status = 'active' | 'updated'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 function deriveStatus(review: CompiledReview): Status {
-  const recentUpgrade = review.activity?.some(
-    (e) => Date.now() - new Date(e.timestamp).getTime() < SEVEN_DAYS_MS,
-  )
-  if (recentUpgrade) return 'attention'
+  if (Date.now() - new Date(review.updatedAt).getTime() < SEVEN_DAYS_MS) return 'updated'
   return 'active'
 }
 
@@ -76,24 +73,6 @@ function relativeTime(isoDate: string): string {
   return `${years} year${years !== 1 ? 's' : ''} ago`
 }
 
-function countImpactFunctions(review: CompiledReview): number {
-  const adminFns = review.admins
-    .filter((a) => a.adminType !== 'Immutable')
-    .reduce(
-      (s, a) => s + (a.functions?.filter((f) => f.impact === 'critical').length ?? 0),
-      0,
-    )
-  const depFns = review.dependencies.reduce(
-    (s, d) =>
-      s +
-      d.functions.filter(
-        (f) => f.directFundsUsd > 0 || f.directTokenValueUsd > 0 || f.reachableContracts.length > 0,
-      ).length,
-    0,
-  )
-  return adminFns + depFns
-}
-
 function buildPageNumbers(current: number, total: number): (number | '…')[] {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
   const pages: (number | '…')[] = [1]
@@ -120,7 +99,7 @@ function MetaTag({ label }: { label: string }) {
 
 const STATUS_CFG: Record<Status, { label: string; cls: string }> = {
   active: { label: 'ACTIVE', cls: 'bg-status-green/10 text-status-green' },
-  attention: { label: 'ATTENTION', cls: 'bg-status-amber/10 text-status-amber' },
+  updated: { label: 'UPDATED', cls: 'bg-status-amber/10 text-status-amber' },
 }
 
 // ─── Protocol Card ────────────────────────────────────────────────────────────
@@ -162,7 +141,6 @@ function ProtocolCard({
     return relativeTime(newest.timestamp)
   })()
 
-  const pointsOfTrust = review ? countImpactFunctions(review) : 0
   const radarData = review ? deriveRadarData(review) : null
 
   return (
@@ -185,6 +163,7 @@ function ProtocolCard({
         </div>
         <span
           className={`shrink-0 ml-2 px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-[0.5px] ${statusCfg.cls}`}
+          title={status === 'updated' ? 'Review updated within the last 7 days' : 'Actively monitored'}
         >
           {statusCfg.label}
         </span>
@@ -269,25 +248,6 @@ function ProtocolCard({
 
       {/* Footer */}
       <div className="mt-auto border-t border-border px-5 py-4 flex flex-col gap-3">
-        {review && (
-          <div className="flex items-center gap-1.5 text-xs text-text-muted">
-            <svg
-              className="size-3.5 text-status-green shrink-0"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span>
-              {pointsOfTrust} Point{pointsOfTrust !== 1 ? 's' : ''} of Trust
-              identified
-            </span>
-          </div>
-        )}
         <Link
           to={`/protocol/${protocol.slug}`}
           className="block w-full text-center bg-accent-dark text-white text-xs font-bold uppercase tracking-[1px] py-3 rounded hover:bg-accent-dark/80 transition-colors"
@@ -335,7 +295,7 @@ export function GalleryPage() {
   const [ecosystemFilter, setEcosystemFilter] = useState('All')
   const [typeFilter, setTypeFilter] = useState('All')
   const [activeStatuses, setActiveStatuses] = useState<Set<Status>>(
-    new Set(['active', 'attention']),
+    new Set(['active', 'updated']),
   )
   const [page, setPage] = useState(1)
 
@@ -478,7 +438,7 @@ export function GalleryPage() {
           <span className="text-[10px] font-bold text-text-muted uppercase tracking-[1.2px] shrink-0">
             Status
           </span>
-          {(['active', 'attention'] as Status[]).map((s) => (
+          {(['active', 'updated'] as Status[]).map((s) => (
             <FilterPill
               key={s}
               label={STATUS_CFG[s].label}
@@ -487,7 +447,7 @@ export function GalleryPage() {
               activeClass={
                 s === 'active'
                   ? 'bg-green-100 text-green-700'
-                  : 'bg-amber-100 text-amber-700'
+                  : 'bg-amber-100 text-amber-700' // updated
               }
             />
           ))}

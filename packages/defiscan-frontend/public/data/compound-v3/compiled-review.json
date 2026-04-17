@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-16T08:48:19.900Z",
+  "updatedAt": "2026-04-16T07:20:32.115Z",
   "compiledAt": "2026-04-16T08:53:59.000Z",
   "project": "compound-v3",
   "metadata": {
@@ -21,7 +21,7 @@
     "totalCapitalAtRisk": 838807990.990376,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 225599997.37385488,
-    "linesOfCode": 0
+    "linesOfCode": 8966
   },
   "admins": [
     {

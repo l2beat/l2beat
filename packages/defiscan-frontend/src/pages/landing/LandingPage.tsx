@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   Radar,
   RadarChart,
@@ -18,6 +18,7 @@ import {
   ShieldCheckIcon,
 } from '../../components/icons'
 import { ProtocolLogo } from '../../components/ProtocolLogo'
+import { useSearchModal } from '../../contexts/SearchModalContext'
 
 const trustPostureData = [
   { axis: 'CONTROL', value: 85 },
@@ -56,7 +57,7 @@ const methodologyItems = [
 ]
 
 export function LandingPage() {
-  const navigate = useNavigate()
+  const { openSearchModal } = useSearchModal()
   const [search, setSearch] = useState('')
   const { data: indexData, isLoading: indexLoading } = useIndex()
   const { data: allReviews, isLoading: reviewsLoading } = useAllReviews()
@@ -65,9 +66,8 @@ export function LandingPage() {
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
-    if (search.trim()) {
-      navigate(`/protocols?search=${encodeURIComponent(search.trim())}`)
-    }
+    openSearchModal(search.trim())
+    setSearch('')
   }
 
   const protocols = indexData?.protocols ?? []
@@ -203,6 +203,43 @@ export function LandingPage() {
           </form>
         </div>
       </section>
+
+      {/* Stats Bar */}
+      {indexData && (
+        <section className="bg-[#f8f9fb] border-t border-b border-border/60">
+          <div className="mx-auto max-w-7xl px-6 md:px-16 lg:px-24 py-10 md:py-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-xs text-text-muted uppercase tracking-tight">
+                  Contracts Tracked
+                </span>
+                <span className="font-mono font-bold text-3xl md:text-4xl text-text-primary tracking-[-1.8px]">
+                  {indexData.globalTotals.totalContractCount.toLocaleString()}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-xs text-text-muted uppercase tracking-tight">
+                  TVS Covered
+                </span>
+                <span className="font-mono font-bold text-3xl md:text-4xl text-text-primary tracking-[-1.8px]">
+                  {formatUsdValue(
+                    indexData.globalTotals.totalCapitalAtRisk +
+                      indexData.globalTotals.totalTokenValue,
+                  )}
+                </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-xs text-text-muted uppercase tracking-tight">
+                  Updates Identified (7D)
+                </span>
+                <span className="font-mono font-bold text-3xl md:text-4xl text-accent-dark tracking-[-1.8px]">
+                  {indexData.globalTotals.recentUpdateCount.toLocaleString()}
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* The Trust Posture / Methodology Section */}
       <section className="bg-bg-muted">
