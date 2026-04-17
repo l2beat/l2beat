@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 
@@ -48,15 +48,10 @@ export class BlockTargetIndexer extends RootIndexer {
         this.daLayer,
       )
 
-    if (blockNumber < this.blockHeight) {
-      this.logger.error('Block number cannot be smaller', {
-        blockNumber,
-        blockHeight: this.blockHeight,
-      })
-      throw new Error(
-        `Block number cannot be smaller: ${blockNumber} < ${this.blockHeight}`,
-      )
-    }
+    assert(blockNumber >= this.blockHeight, 'Block number cannot be smaller', {
+      blockNumber,
+      blockHeight: this.blockHeight,
+    })
 
     this.blockHeight = blockNumber
     await this.options?.onTick?.(timestamp, blockNumber)

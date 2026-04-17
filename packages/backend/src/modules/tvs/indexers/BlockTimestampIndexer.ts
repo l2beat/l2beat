@@ -78,15 +78,10 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
       blockNumber,
     })
 
-    if (blockNumber < this.blockHeight) {
-      this.logger.error('Block number cannot be smaller', {
-        blockNumber,
-        blockHeight: this.blockHeight,
-      })
-      throw new Error(
-        `Block number cannot be smaller: ${blockNumber} < ${this.blockHeight}`,
-      )
-    }
+    assert(blockNumber >= this.blockHeight, 'Block number cannot be smaller', {
+      blockNumber,
+      blockHeight: this.blockHeight,
+    })
 
     this.blockHeight = blockNumber
 
