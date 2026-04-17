@@ -6,6 +6,7 @@ import { createTRPCReact } from '@trpc/react-query'
 import type React from 'react'
 import { useState } from 'react'
 import { createQueryClient } from './queryClient'
+import { getTrpcClientUrl } from './trpcUrl'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
@@ -33,7 +34,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             serialize: JSON.stringify,
             deserialize: JSON.parse,
           },
-          url: '/trpc',
+          url: getTrpcClientUrl(import.meta.env.VITE_TRPC_URL),
         }),
       ],
     }),
