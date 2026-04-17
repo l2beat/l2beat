@@ -49,7 +49,12 @@ export const railgun: BaseProject = {
   },
   display: {
     description:
-      'A smart-contract privacy system for shielding assets and interacting with DeFi from private balances.',
+      'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
+    detailedDescription: `Railgun is a non-custodial privacy protocol on Ethereum built around encrypted UTXO-style private balances rather than fixed-denomination pools. A shield transaction moves assets from a public 0x address into the Railgun contract and creates encrypted commitments in a Merkle-tree state, and later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount.
+
+Because balances are variable-amount UTXOs, Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. External DeFi calls are executed through the Relay Adapt flow, which temporarily unshields tokens into an adapter contract, performs a sequence of contract calls, and shields the resulting assets back into a private balance in a single transaction. Transactions from 0zk addresses can also be sent through broadcasters over Waku so they remain unlinkable to public addresses.
+
+The main tradeoff is governance and separate compliance infrastructure. Railgun's privacy system is non-custodial, but the deployed contracts are controlled through a DAO-governed upgradeable proxy, so governance remains a trust assumption. For compliance, Private Proof of Innocence sits alongside the core contracts and lets users prove against external list providers that shielded funds are not linked to known illicit activity, without exposing private balance data.`,
     links: {
       websites: ['https://railgun.org'],
     },

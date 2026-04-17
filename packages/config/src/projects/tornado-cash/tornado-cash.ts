@@ -140,6 +140,11 @@ export const tornadoCash: BaseProject = {
   display: {
     description:
       'A classic Ethereum mixer design based on fixed-denomination pools and zk withdrawals.',
+    detailedDescription: `Tornado Cash is a non-custodial mixer on Ethereum built around separate fixed-denomination pools. A deposit publishes a commitment into a Merkle tree, and a later withdrawal uses a zk-SNARK proof plus an unused nullifier to send the same denomination to a different address without revealing which deposit it came from.
+
+This design gives strong privacy for the deposit-withdrawal link, but it is rigid: users must split funds across fixed pool sizes, which fragments liquidity and anonymity. Deposits are also public, and practical privacy can be weakened by timing analysis, amount patterns across pools, and wallet reuse. Lower usage after the August 2022 sanctions further reduced the size of some anonymity sets.
+
+The core mixer contracts are immutable and have no admin, pause, or upgrade path, so funds can only move with a valid proof. This makes the trust model relatively strong, but the protocol has no built-in compliance layer or native way to prove that funds came from legitimate activity.`,
     links: {
       websites: ['https://tornadocash.network'],
     },

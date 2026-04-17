@@ -8,6 +8,7 @@ import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ContractsSection } from '~/components/projects/sections/contracts/ContractsSection'
+import { MarkdownSection } from '~/components/projects/sections/MarkdownSection'
 import { ProjectSection } from '~/components/projects/sections/ProjectSection'
 import { PermissionsSection } from '~/components/projects/sections/permissions/PermissionsSection'
 import { TrustedSetupSection } from '~/components/projects/sections/TrustedSetupsSection'
@@ -32,6 +33,8 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
     (sum, asset) => sum + asset.bucketCount,
     0,
   )
+  const protocolDescription = entry.detailedDescription ?? ''
+  const hasProtocolDescription = !!entry.detailedDescription
 
   return (
     <AppLayout {...props}>
@@ -107,10 +110,19 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                     )}
                   </PrimaryCard>
 
+                  {hasProtocolDescription && (
+                    <MarkdownSection
+                      id="detailed-description"
+                      title="Protocol description"
+                      sectionOrder="01"
+                      content={protocolDescription}
+                    />
+                  )}
+
                   <ProjectSection
                     id="tvs"
                     title="Value Secured Breakdown"
-                    sectionOrder="01"
+                    sectionOrder={hasProtocolDescription ? '02' : '01'}
                   >
                     <PrivacyValueBreakdownTable assets={entry.assets} />
                   </ProjectSection>
@@ -118,7 +130,7 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                   <ProjectSection
                     id="activity"
                     title="Deposits Breakdown"
-                    sectionOrder="02"
+                    sectionOrder={hasProtocolDescription ? '03' : '02'}
                   >
                     <PrivacyDepositsBreakdownTable assets={entry.assets} />
                   </ProjectSection>
@@ -126,7 +138,7 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                   <TrustedSetupSection
                     id="trusted-setups"
                     title="Trusted Setup"
-                    sectionOrder="03"
+                    sectionOrder={hasProtocolDescription ? '04' : '03'}
                     trustedSetups={[
                       {
                         name: entry.trustedSetup.name,
@@ -142,7 +154,7 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                       {...entry.permissionsSection}
                       id="permissions"
                       title="Permissions"
-                      sectionOrder="04"
+                      sectionOrder={hasProtocolDescription ? '05' : '04'}
                       discoUi={entry.discoUi}
                     />
                   )}
@@ -152,7 +164,15 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
                       {...entry.contractsSection}
                       id="contracts"
                       title="Smart contracts"
-                      sectionOrder={entry.permissionsSection ? '05' : '04'}
+                      sectionOrder={
+                        hasProtocolDescription
+                          ? entry.permissionsSection
+                            ? '06'
+                            : '05'
+                          : entry.permissionsSection
+                            ? '05'
+                            : '04'
+                      }
                       discoUi={entry.discoUi}
                     />
                   )}
@@ -187,6 +207,14 @@ function getNavigationSections(
       id: 'summary',
       title: 'Summary',
     },
+    ...(entry.detailedDescription
+      ? [
+          {
+            id: 'detailed-description',
+            title: 'Protocol description',
+          },
+        ]
+      : []),
     {
       id: 'tvs',
       title: 'Value Secured',

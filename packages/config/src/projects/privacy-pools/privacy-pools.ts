@@ -38,6 +38,11 @@ export const privacyPools: BaseProject = {
   display: {
     description:
       'A selective-disclosure privacy system for Ethereum that adds compliance-aware association sets.',
+    detailedDescription: `Privacy Pools is a non-custodial privacy protocol on Ethereum built around asset-specific pools and private withdrawals. A deposit creates a commitment from the deposited value, a pool-specific label, and a precommitment derived from a secret and nullifier, and a later withdrawal uses a zero-knowledge proof to spend that commitment, either partially or in full, without revealing the matching deposit.
+
+Compliance is enforced through the ASP layer. A private withdrawal must prove both ownership of a commitment and inclusion of its label in the latest approved association set, so only ASP-approved deposits can exit privately. Withdrawals can be submitted directly or relayed through the Entrypoint, while the pool checks the state root, ASP root, and nullifier uniqueness before spending the old commitment and inserting a new one for any remainder.
+
+The main tradeoff is upgradeability and ASP dependence. The Entrypoint is a UUPS proxy with privileged roles for pool management and ASP root updates, while the asset-specific pools and proof verifiers are immutable. If a label is excluded or revoked from the ASP set, the original depositor can still publicly recover the full remaining amount through ragequit, so funds are not trapped by an ASP decision.`,
     links: {
       websites: ['https://www.privacypools.com'],
     },

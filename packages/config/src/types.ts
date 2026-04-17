@@ -151,6 +151,7 @@ export interface ProjectStatuses {
 
 export interface ProjectDisplay {
   description: string
+  detailedDescription?: string
   links: ProjectLinks
   badges: Badge[]
 }

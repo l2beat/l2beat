@@ -26,6 +26,7 @@ export interface PrivacyProjectEntry {
   shortName?: string
   icon: string
   description: string
+  detailedDescription?: string
   badges: BadgeWithParams[]
   projectLinks: ProjectLink[]
   discoveryHref: string
@@ -143,6 +144,7 @@ export async function getPrivacyProjectData(
     shortName: project.shortName,
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     description: project.display.description,
+    detailedDescription: project.display.detailedDescription,
     badges: project.display.badges.flatMap((badge) => {
       const badgeWithParams = getBadgeWithParams(badge)
       return badgeWithParams ? [badgeWithParams] : []
