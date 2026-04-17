@@ -1,6 +1,7 @@
 {
   "name": "@l2beat/token-knowledge",
   "version": "0.1.0",
+  "packageManager": "pnpm@latest",
   "private": true,
   "main": "build/index.js",
   "types": "build/index.d.ts",
