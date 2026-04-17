@@ -1,8 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { useEffect } from 'react'
-import type { Flow } from '~/server/features/scaling/interop/getInteropFlows'
+import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
+import type {
+  ChainData,
+  Flow,
+} from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
-import { BASE_DURATION_S, DOLLARS_PER_PARTICLE } from '../consts'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
@@ -10,10 +11,11 @@ import {
   BIDIRECTIONAL_OFFSET,
   getConnectionPath,
 } from './utils/getConnectionPath'
-import { getScaledParticleCounts } from './utils/getScaledParticleCounts'
+import { useScaledParticleCounts } from './utils/useScaledParticleCounts'
 
 interface Props {
   flows: Flow[]
+  chainData: ChainData[]
   layout: FlowsGraphLayout
   interopChains: InteropChainWithIcon[]
   centerX: number
@@ -28,14 +30,6 @@ interface Props {
  * (based on the straight-line src→dst distance, which closely approximates
  * the mildly-curved bezier path).
  *
- * Particle emission rate is exact (no rounding):
- *   volume in 24h → $/second → particles/second (R)
- *   → on-screen count = R × travelDuration (fractional)
- *
- * Counts are scaled in two stages:
- *   1. local scale so the largest flow stays within the per-flow ceiling
- *   2. global scale so the overall graph stays within the total ceiling
- *
  * To render a fractional count (e.g. 2.5), we ceil to 3 DOM circles,
  * each cycling with period `3/R` (= 3/2.5 × travelDuration). Each
  * particle travels the path for `travelDuration`, then stays hidden
@@ -45,52 +39,33 @@ interface Props {
  */
 export function ParticleLayer({
   flows,
+  chainData,
   layout,
   interopChains,
   centerX,
   centerY,
   isSmallScreen,
 }: Props) {
-  const { highlightedChains, setDollarsPerParticle } = useInteropFlows()
+  const { highlightedChains, selectedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
-  const filteredFlows = flows.filter((flow) => flow.volume > 0)
 
-  // Precompute straight-line distances for constant-speed scaling
-  const distances = filteredFlows.map((flow) => {
-    const src = layout.get(flow.srcChain)
-    const dst = layout.get(flow.dstChain)
-    if (!src || !dst) return 0
-    const dx = dst.x - src.x
-    const dy = dst.y - src.y
-    return Math.sqrt(dx * dx + dy * dy)
-  })
-
-  // Constant speed: the longest path takes BASE_DURATION_S, shorter paths take less
-  const maxDistance = Math.max(...distances, 1)
-  const travelDurations = distances.map(
-    (d) => (d / maxDistance) * BASE_DURATION_S,
+  const { flowsParticles } = useScaledParticleCounts(
+    selectedChains,
+    chainData,
+    flows,
   )
-
-  // Compute the exact fractional on-screen particle count per flow
-  const exactCounts = filteredFlows.map((flow, i) => {
-    const volumePerSecond = flow.volume / UnixTime.DAY
-    const particlesPerSecond = volumePerSecond / DOLLARS_PER_PARTICLE
-    return particlesPerSecond * (travelDurations[i] ?? 0)
-  })
-
-  const { counts: scaledCounts, dollarsPerParticle } =
-    getScaledParticleCounts(exactCounts)
-
-  useEffect(() => {
-    setDollarsPerParticle(dollarsPerParticle)
-  }, [dollarsPerParticle, setDollarsPerParticle])
 
   return (
     <g pointerEvents="none" aria-hidden="true">
-      {filteredFlows.map((flow, flowIndex) => {
+      {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
         if (!src || !dst) return null
+
+        const particles = flowsParticles.get(
+          `${flow.srcChain}${INTEROP_PAIR_SEPARATOR}${flow.dstChain}`,
+        )
+        if (!particles || particles.exactCount <= 0) return null
 
         const path = getConnectionPath(
           src,
@@ -109,19 +84,16 @@ export function ParticleLayer({
 
         const groupOpacity = highlighted ? 1 : 0.15
 
-        const travelDuration = travelDurations[flowIndex] ?? BASE_DURATION_S
-        const exact = scaledCounts[flowIndex] ?? 0
-
-        if (exact <= 0) return null
+        const { exactCount, travelDuration } = particles
 
         // ceil → DOM element count; stretch cycleDuration so emission rate is exact
-        const count = Math.max(1, Math.ceil(exact))
-        const cycleDuration = (count / exact) * travelDuration
+        const count = Math.max(1, Math.ceil(exactCount))
+        const cycleDuration = (count / exactCount) * travelDuration
         const particleInterval = cycleDuration / count
         const initialOffset = Math.random() * particleInterval
 
         // fraction of each cycle spent traveling (rest is idle / hidden)
-        const t = exact / count
+        const t = exactCount / count
 
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>

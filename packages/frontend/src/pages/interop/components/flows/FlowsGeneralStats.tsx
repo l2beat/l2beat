@@ -7,16 +7,22 @@ import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { useScaledParticleCounts } from './graph/utils/useScaledParticleCounts'
 import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsGeneralStats() {
-  const { selectedChains, allChains, selectedProtocols, dollarsPerParticle } =
-    useInteropFlows()
+  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
 
   const { data, isLoading } = api.interop.flows.useQuery({
     chains: selectedChains,
     protocolIds: selectedProtocols,
   })
+
+  const { dollarsPerParticle } = useScaledParticleCounts(
+    selectedChains,
+    data?.chainData,
+    data?.flows,
+  )
 
   const topRoute = data?.stats.topRoute
   const srcChain = topRoute
