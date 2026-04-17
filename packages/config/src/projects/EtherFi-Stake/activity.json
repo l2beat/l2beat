@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776179343,
-  "lastConsumedUpdateNotifierId": 80,
+  "lastReconciledAt": 1776427266,
+  "lastConsumedUpdateNotifierId": 106,
   "events": [
     {
       "timestamp": "2026-03-26T08:10:03.000Z",
@@ -479,6 +479,39 @@
         {
           "field": "values.admins.1",
           "before": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-17T11:53:33.000Z",
+      "updateNotifierId": 106,
+      "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+      "contractName": "EtherFiRestaker",
+      "isDependency": false,
+      "entity": null,
+      "id": "106:eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.isDelegated",
+          "before": false,
+          "after": true
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-17T11:53:33.000Z",
+      "updateNotifierId": 106,
+      "address": "eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+      "contractName": "EtherFiTimelock",
+      "entity": null,
+      "id": "106:eth:0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getMinDelay",
+          "before": 28800,
+          "after": 172800
         }
       ]
     }

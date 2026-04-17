@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-16T08:48:19.777Z",
-  "compiledAt": "2026-04-16T08:53:59.000Z",
+  "updatedAt": "2026-04-17T11:52:41.769Z",
+  "compiledAt": "2026-04-17T11:53:33.000Z",
   "project": "Steakhouse-USDC",
   "metadata": {
     "protocolName": "Steakhouse USDC",
@@ -18,10 +18,10 @@
     "scoredFunctionCount": 14,
     "adminCount": 7,
     "dependencyCount": 9,
-    "totalCapitalAtRisk": 186859223.0494701,
+    "totalCapitalAtRisk": 194749132.27827755,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
-    "linesOfCode": 0
+    "linesOfCode": 8842
   },
   "admins": [
     {
@@ -151,7 +151,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -184,7 +184,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -263,9 +263,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 186859223.0494701,
+      "totalDirectCapital": 194749132.27827755,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 186859223.0494701,
+      "totalReachableCapital": 194749132.27827755,
       "totalReachableTokenValue": 0
     },
     {
@@ -280,7 +280,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "impact": "critical",
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -313,7 +313,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitMarketRemoval",
           "impact": "critical",
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -374,9 +374,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 186859223.0494701,
+      "totalDirectCapital": 194749132.27827755,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 186859223.0494701,
+      "totalReachableCapital": 194749132.27827755,
       "totalReachableTokenValue": 0
     },
     {
@@ -590,7 +590,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 186859223.0494701,
+    "totalFundsAtRisk": 194749132.27827755,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -661,7 +661,7 @@
         },
         {
           "contractAddress": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
-          "contractName": "2/5 40% Katana Steakhouse Financial / Morpho Multisig",
+          "contractName": "2/6 33% Katana Steakhouse Financial / Morpho Multisig",
           "functionName": "checkNSignatures",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -670,7 +670,7 @@
         },
         {
           "contractAddress": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
-          "contractName": "2/5 40% Katana Steakhouse Financial / Morpho Multisig",
+          "contractName": "2/6 33% Katana Steakhouse Financial / Morpho Multisig",
           "functionName": "checkSignatures",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -679,7 +679,7 @@
         },
         {
           "contractAddress": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
-          "contractName": "2/5 40% Katana Steakhouse Financial / Morpho Multisig",
+          "contractName": "2/6 33% Katana Steakhouse Financial / Morpho Multisig",
           "functionName": "execTransaction",
           "viewOnlyPath": false,
           "directFundsUsd": 0,
@@ -866,7 +866,7 @@
           "contractName": "MetaMorpho",
           "functionName": "acceptCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -875,7 +875,7 @@
           "contractName": "MetaMorpho",
           "functionName": "deposit",
           "viewOnlyPath": false,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -884,7 +884,7 @@
           "contractName": "MetaMorpho",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -902,7 +902,7 @@
           "contractName": "MetaMorpho",
           "functionName": "redeem",
           "viewOnlyPath": false,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -950,7 +950,7 @@
           "contractName": "MetaMorpho",
           "functionName": "submitCap",
           "viewOnlyPath": true,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": [],
           "mitigations": [
@@ -979,12 +979,12 @@
           "contractName": "MetaMorpho",
           "functionName": "withdraw",
           "viewOnlyPath": false,
-          "directFundsUsd": 186859223.0494701,
+          "directFundsUsd": 194749132.27827755,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 186859223.0494701,
+      "totalFundsAtRisk": 194749132.27827755,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     }
@@ -997,12 +997,12 @@
     },
     {
       "entity": "Morpho",
-      "totalFundsAtRisk": 186859223.0494701,
+      "totalFundsAtRisk": 194749132.27827755,
       "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 186859223.0494701,
+    "totalFundsAtRisk": 194749132.27827755,
     "totalTokenValueAtRisk": 0
   },
   "funds": [
@@ -1011,10 +1011,10 @@
       "name": "MetaMorpho Vault (steakUSDC)",
       "description": "Main vault contract holding all depositor assets. Contains USDC positions across four Morpho Blue lending markets, generating yield through optimized capital allocation. The vault implements a MetaMorpho architecture with timelock-protected governance and curator-managed market selection.",
       "balances": {
-        "totalUsdValue": 0.006771581535967889
+        "totalUsdValue": 0.006777968949215764
       },
       "positions": {
-        "totalUsdValue": 186859223.0426985
+        "totalUsdValue": 194749132.27149957
       },
       "tokenInfo": null,
       "aggregate": null
@@ -1389,6 +1389,38 @@
   "resources": [],
   "audits": [],
   "activity": [
+    {
+      "timestamp": "2026-04-17T11:53:33.000Z",
+      "updateNotifierId": 105,
+      "address": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+      "contractName": "Katana Steakhouse Financial / Morpho Multisig",
+      "entity": null,
+      "id": "105:eth:0x827e86072B06674a077f592A531dcE4590aDeCdB:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.multisigThreshold",
+          "before": "2 of 5 (40%)",
+          "after": "2 of 6 (33%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-17T11:53:33.000Z",
+      "updateNotifierId": 105,
+      "address": "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB",
+      "contractName": "Katana Steakhouse Financial / Morpho Multisig",
+      "entity": null,
+      "id": "105:eth:0x827e86072B06674a077f592A531dcE4590aDeCdB:role:Safe.owners",
+      "type": "role-update",
+      "roleName": "Safe.owners",
+      "changes": [
+        {
+          "field": "values.$members.0",
+          "after": "eth:0xf83dB716A1Ff12F9005F98f678D8BE97B8Bc81d6"
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-16T08:53:59.000Z",
       "updateNotifierId": 104,
