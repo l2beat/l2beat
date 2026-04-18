@@ -10,9 +10,22 @@ jobs:
     name: Run Monitor Cycle
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    if: github.actor != 'defi-monitoring[bot]'
+    permissions:
+      contents: write
 
     steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -55,8 +68,8 @@ jobs:
 
       - name: Commit monitor outputs
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "defi-monitoring[bot]"
+          git config user.email "${{ vars.APP_ID }}+defi-monitoring[bot]@users.noreply.github.com"
           git add packages/defiscan-frontend/public/data/
           git add packages/config/src/projects/*/funds-data.json
           git add packages/config/src/projects/*/discovered.json

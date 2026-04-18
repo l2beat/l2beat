@@ -1,6 +1,6 @@
 {
   "name": "lido",
-  "timestamp": 1776426813,
+  "timestamp": 1776501792,
   "configHash": "0xaa505f39e5ae94b0b48010d8d3c4127dfaa146b0860b9f00ae2c367455a7785b",
   "entries": [
     {
@@ -23,8 +23,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xab82250000000000",
-        "get_deposit_root": "0x1b9a2726a0b45628bff62c87f16113de5048f0a09f82e2ba437e11d8b54d77ff"
+        "get_deposit_count": "0x3984250000000000",
+        "get_deposit_root": "0xe7155e73e37d0592b824ba76d36b6ed9425e69d0a2ef03169a4f8b0052c897b5"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -81,6 +81,11 @@
       "implementationNames": {
         "eth:0x02Ca7772FF14a9F6c1a08aF385aA96bb1b34175A": "VaultFactory"
       }
+    },
+    {
+      "address": "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x052ab6bFa8aA30CC47ea02e648f90c3B24749B7b",
@@ -215,9 +220,9 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
         "getConsensusReport": {
-          "hash": "0x14ce566f4d0479c0d122b2bf8aa545a2638769dc89ddc2e9b19c6fddd83d1374",
-          "refSlot": 14131199,
-          "processingDeadlineTime": 1776427211,
+          "hash": "0xb290c5645f4224326fe65ed325d451852d9446f66c14d16637d5487520acc94c",
+          "refSlot": 14138399,
+          "processingDeadlineTime": 1776513611,
           "processingStarted": true
         },
         "getConsensusVersion": 4,
@@ -231,9 +236,9 @@
         },
         "getMaxValidatorsPerReport": 600,
         "getProcessingState": {
-          "currentFrameRefSlot": 14131199,
-          "processingDeadlineTime": 1776427211,
-          "dataHash": "0x14ce566f4d0479c0d122b2bf8aa545a2638769dc89ddc2e9b19c6fddd83d1374",
+          "currentFrameRefSlot": 14138399,
+          "processingDeadlineTime": 1776513611,
+          "dataHash": "0xb290c5645f4224326fe65ed325d451852d9446f66c14d16637d5487520acc94c",
           "dataSubmitted": true,
           "dataFormat": 1,
           "requestsCount": 0,
@@ -268,26 +273,29 @@
       "name": "VaultHub",
       "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
       "type": "Contract",
-      "template": "tokens/Lido/VaultHub",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0x1dd4ca17f1d07d16fc3bc5c4f5373e5ce36f59220db6cb3f08e93e90300455ad"
+        "0x5a96636cae49d9865336a069167358aa1056cd74f8308fd55834376c6cbf67e5"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["vaultsCount"],
       "sinceTimestamp": 1764766391,
       "sinceBlock": 23933041,
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "$implementation": "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50",
+        "$implementation": "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70",
         "$pastUpgrades": [
           [
             "2025-12-03T12:53:11.000Z",
             "0x982025c6295107b4a32e9512b84a826a9868fc653e0d1499067ee43d604ff234",
             ["eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"]
+          ],
+          [
+            "2026-04-17T16:42:11.000Z",
+            "0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",
+            ["eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "BAD_DEBT_MASTER_ROLE": "0xa85bab4b576ca359fa6ae02ab8744b5c85c7e7ed4d7e0bca7b5b64580ac5d17d",
         "badDebtToInternalize": 0,
         "badDebtToInternalizeForLastRefSlot": 0,
@@ -302,7 +310,7 @@
         "PAUSE_INFINITELY": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PAUSE_ROLE": "0x8d0e4ae4847b49935b55c99f9c3ce025c87e7c4604c35b7ae56929bd32fa5a78",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "proxy__getImplementation": "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50",
+        "proxy__getImplementation": "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70",
         "proxy__getIsOssified": false,
         "REDEMPTION_MASTER_ROLE": "0x44f007e8cc2a08047a03d8d9c295057454942eb49ee3ced9c87e9b9406f21174",
         "REPORT_FRESHNESS_DELTA": 172800,
@@ -315,11 +323,11 @@
           "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
           "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4"
         ],
-        "vaultsCount": 14
+        "vaultsCount": 15
       },
       "implementationNames": {
         "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709": "OssifiableProxy",
-        "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50": "VaultHub"
+        "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70": "VaultHub"
       }
     },
     {
@@ -378,11 +386,6 @@
       "implementationNames": {
         "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9": "TokenRateNotifier"
       }
-    },
-    {
-      "address": "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Dashboard",
@@ -792,6 +795,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CSFeeOracle",
       "address": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
       "type": "Contract",
@@ -933,7 +941,7 @@
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SET_BOND_CURVE_ROLE": "0x645c9e6d2a86805cb5a28b1e4751c0dab493df7cf935070ce405489ba1a7bf72",
-        "totalBondShares": "23581181599769109290399",
+        "totalBondShares": "23590615154828354417377",
         "WITHDRAWAL_QUEUE": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -980,38 +988,37 @@
       "name": "LazyOracle",
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "type": "Contract",
-      "template": "tokens/Lido/LazyOracle",
       "sourceHashes": [
         "0x04c21a54dfbc4ca3baf7ce93d62b487e1071a6439bde71a1896d76f073a66848",
-        "0xb435a1c81fa691bd4ab244f90b03bb5ce2c1a97f0a4ff9c39dabf062c0b0bb5c"
+        "0x458c2f866141c2cf9eae20f1615ea8870280742c4c0e674575619c0088821291"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": [
-        "latestReportData",
-        "latestReportTimestamp",
-        "vaultsCount"
-      ],
       "sinceTimestamp": 1764766343,
       "sinceBlock": 23933037,
       "values": {
         "$admin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "$implementation": "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B",
+        "$implementation": "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
         "$pastUpgrades": [
           [
             "2025-12-03T12:52:23.000Z",
             "0xfe172172aa9958a04136f504f36df5b94040c7363c3e4d70b76fe406c817613e",
             ["eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B"]
+          ],
+          [
+            "2026-04-17T16:42:11.000Z",
+            "0xf43f6fe63edc60ae6eb0bc919b3c682ac0c068df7eb1cb44aa514302539f19cb",
+            ["eth:0x96c9a897D116ef660086d3aA67b3af653324aB37"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "latestReportData": {
-          "timestamp": 1776340811,
-          "refSlot": 14126399,
-          "treeRoot": "0x0bf66fb8496f39e86b1cc3af7579d402c0a4af18ecac2057c6cf0691e0fad5fa",
-          "reportCid": "QmTwrHHqVn2otCLxA8uAs3FgW9J9rEJ3Qax65iKZ66Bfm3"
+          "timestamp": 1776427211,
+          "refSlot": 14133599,
+          "treeRoot": "0x34b5bc6d84063ef1e29b310e32b8babaaacf61e6a9ac0c490027cc12fa172323",
+          "reportCid": "QmSchK6ac7khnv2UQ1BDctNZyttYDG8hSmNLC487KAcCep"
         },
-        "latestReportTimestamp": 1776340811,
+        "latestReportTimestamp": 1776427211,
         "LIDO_LOCATOR": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "MAX_LIDO_FEE_RATE_PER_SECOND": "10000000000000000000",
         "MAX_QUARANTINE_PERIOD": 2592000,
@@ -1019,15 +1026,15 @@
         "maxLidoFeeRatePerSecond": "180000000000000000",
         "maxRewardRatioBP": 350,
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "proxy__getImplementation": "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B",
+        "proxy__getImplementation": "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
         "proxy__getIsOssified": false,
         "quarantinePeriod": 259200,
         "UPDATE_SANITY_PARAMS_ROLE": "0x7baf7f4a9784fa74c97162de631a3eb567edeb85878cb6965945310f2c512c63",
-        "vaultsCount": 14
+        "vaultsCount": 15
       },
       "implementationNames": {
         "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": "OssifiableProxy",
-        "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B": "LazyOracle"
+        "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37": "LazyOracle"
       }
     },
     {
@@ -1172,15 +1179,13 @@
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
             "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf"
           ],
-          "lastReportedRefSlots": [
-            14105279, 14105279, 14105279, 14105279, 14105279
-          ]
+          "lastReportedRefSlots": [13680479, 14105279, 0, 14105279, 14105279]
         },
         "getFrameConfig": {
           "initialEpoch": 434490,
@@ -1191,18 +1196,18 @@
         "getMembers": {
           "addresses": [
             "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
-            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
             "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            13680479, 14105279, 14105279, 14105279, 14105279, 14105279,
-            13478879, 13903679, 13680479
+            13680479, 13680479, 14105279, 0, 14105279, 14105279, 13478879,
+            13903679, 0
           ]
         },
         "getQuorum": 5,
@@ -1279,10 +1284,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1232028890295057401",
+        "stEthPerToken": "1232111422954067182",
         "symbol": "wstETH",
-        "tokensPerStEth": "811669278112878482",
-        "totalSupply": "3757452994462126090902922"
+        "tokensPerStEth": "811614908660155940",
+        "totalSupply": "3759986372589594586949418"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -1328,24 +1333,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 14131199,
-          "consensusReport": "0x14ce566f4d0479c0d122b2bf8aa545a2638769dc89ddc2e9b19c6fddd83d1374",
+          "refSlot": 14138399,
+          "consensusReport": "0xb290c5645f4224326fe65ed325d451852d9446f66c14d16637d5487520acc94c",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 14131199,
-          "reportProcessingDeadlineSlot": 14133599
+          "refSlot": 14138399,
+          "reportProcessingDeadlineSlot": 14140799
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
-            "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
-            "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922",
+            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
             "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
-            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
+            "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
+            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78"
           ],
           "lastReportedRefSlots": [
-            14131199, 14131199, 14131199, 14131199, 14131199
+            14138399, 14138399, 14138399, 14138399, 14138399
           ]
         },
         "getFrameConfig": {
@@ -1357,25 +1362,25 @@
         "getMembers": {
           "addresses": [
             "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
-            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
             "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            14131199, 14121599, 14123999, 14126399, 14128799, 14131199,
-            14131199, 14131199, 14131199
+            14138399, 14138399, 14138399, 14138399, 14135999, 14135999,
+            14133599, 14135999, 14138399
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "getReportVariants": {
           "variants": [
-            "0x14ce566f4d0479c0d122b2bf8aa545a2638769dc89ddc2e9b19c6fddd83d1374"
+            "0xb290c5645f4224326fe65ed325d451852d9446f66c14d16637d5487520acc94c"
           ],
           "support": [5]
         },
@@ -1455,17 +1460,17 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
         "getConsensusReport": {
-          "hash": "0xd9de2b1db55b02882898593b3b4379e311381cd8c3213c1ae66d6cc5d1ea2901",
-          "refSlot": 14126399,
-          "processingDeadlineTime": 1776427211,
+          "hash": "0x2052558c36c88b7c378074399e8d73c0770fd72b4d811e3acf57082b2468e699",
+          "refSlot": 14133599,
+          "processingDeadlineTime": 1776513611,
           "processingStarted": true
         },
         "getConsensusVersion": 5,
         "getContractVersion": 4,
         "getProcessingState": {
-          "currentFrameRefSlot": 14126399,
-          "processingDeadlineTime": 1776427211,
-          "mainDataHash": "0xd9de2b1db55b02882898593b3b4379e311381cd8c3213c1ae66d6cc5d1ea2901",
+          "currentFrameRefSlot": 14133599,
+          "processingDeadlineTime": 1776513611,
+          "mainDataHash": "0x2052558c36c88b7c378074399e8d73c0770fd72b4d811e3acf57082b2468e699",
           "mainDataSubmitted": true,
           "extraDataHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extraDataFormat": 0,
@@ -1561,9 +1566,9 @@
         "FINALIZE_ROLE": "0x485191a2ef18512555bd4426d18a716ce8e98c80ec2de16394dcf86d7d91bc80",
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastFinalizedRequestId": 120437,
-        "getLastRequestId": 120813,
-        "getLockedEtherAmount": "26074089062027974459357",
+        "getLastFinalizedRequestId": 120446,
+        "getLastRequestId": 120859,
+        "getLockedEtherAmount": "33548634496241666560711",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1582,14 +1587,19 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 376,
-        "unfinalizedStETH": "52804812513425234937359",
+        "unfinalizedRequestNumber": 413,
+        "unfinalizedStETH": "44113702199231467314198",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
         "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "OssifiableProxy",
         "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": "WithdrawalQueueERC721"
       }
+    },
+    {
+      "address": "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EIP712StETH",
@@ -1620,11 +1630,6 @@
       "implementationNames": {
         "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec": "MiniMeTokenFactory"
       }
-    },
-    {
-      "address": "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ACL",
@@ -1954,15 +1959,15 @@
         "getBeaconStat": {
           "depositedValidators": 455863,
           "beaconValidators": 446218,
-          "beaconBalance": "9102728999891452000000000"
+          "beaconBalance": "9102821598319798000000000"
         },
-        "getBufferedEther": "8563116060369267242586",
+        "getBufferedEther": "3849143256062778248883",
         "getContractVersion": 3,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
         "getEIP712StETH": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
         "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
-        "getExternalEther": "4543866702001656442361",
+        "getExternalEther": "4544171092104888835803",
         "getExternalShares": "3688117005854830419411",
         "getFee": 999,
         "getFeeDistribution": {
@@ -1973,7 +1978,7 @@
         "getInitializationBlock": 11473216,
         "getLidoLocator": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getMaxExternalRatioBP": 3000,
-        "getMaxMintableExternalShares": "3273113097462831468500520",
+        "getMaxMintableExternalShares": "3271286126221749742668036",
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getStakeLimitFullInfo": {
           "isStakingPaused_": false,
@@ -1981,11 +1986,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999970228582594108634",
-          "prevStakeBlockNumber": 24899281
+          "prevStakeLimit": "149997477006396902690452",
+          "prevStakeBlockNumber": 24905621
         },
-        "getTotalPooledEther": "9424475982653822923684947",
-        "getTotalShares": "7649557617432789527899251",
+        "getTotalPooledEther": "9419854912667965667084686",
+        "getTotalShares": "7645294684536932167623456",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -2002,7 +2007,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9424475982653822923684947",
+        "totalSupply": "9419854912667965667084686",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -2984,11 +2989,6 @@
       }
     },
     {
-      "address": "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OpStackTokenRatePusher",
       "address": "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
       "type": "Contract",
@@ -3054,25 +3054,23 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 14126399,
-          "consensusReport": "0xd9de2b1db55b02882898593b3b4379e311381cd8c3213c1ae66d6cc5d1ea2901",
+          "refSlot": 14133599,
+          "consensusReport": "0x2052558c36c88b7c378074399e8d73c0770fd72b4d811e3acf57082b2468e699",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 14126399,
-          "reportProcessingDeadlineSlot": 14133599
+          "refSlot": 14133599,
+          "reportProcessingDeadlineSlot": 14140799
         },
         "getFastLaneMembers": {
           "addresses": [
-            "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922",
+            "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
           ],
-          "lastReportedRefSlots": [
-            14126399, 14126399, 14126399, 14126399, 14126399
-          ]
+          "lastReportedRefSlots": [14133599, 14126399, 14133599, 0, 14133599]
         },
         "getFrameConfig": {
           "initialEpoch": 201600,
@@ -3083,25 +3081,25 @@
         "getMembers": {
           "addresses": [
             "eth:0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
-            "eth:0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
+            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3",
             "eth:0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "eth:0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "eth:0x8dB977C13CAA938BC58464bFD622DF0570564b78",
             "eth:0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "eth:0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
             "eth:0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
             "eth:0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
-            "eth:0x4118DAD7f348A4063bD15786c299De2f3B1333F3"
+            "eth:0x042a9e5acCfa17e28300F1b5967f20891E973922"
           ],
           "lastReportedRefSlots": [
-            14126399, 14126399, 14111999, 14119199, 14126399, 14126399,
-            14126399, 14126399, 14126399
+            14133599, 14133599, 14111999, 0, 14133599, 14133599, 14126399,
+            14133599, 0
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "eth:0x852deD011285fe67063a08005c71a85690503Cee",
         "getReportVariants": {
           "variants": [
-            "0xd9de2b1db55b02882898593b3b4379e311381cd8c3213c1ae66d6cc5d1ea2901"
+            "0x2052558c36c88b7c378074399e8d73c0770fd72b4d811e3acf57082b2468e699"
           ],
           "support": [7]
         },
@@ -3160,14 +3158,14 @@
         "distributionDataHistoryCount": 7,
         "getInitializedVersion": 2,
         "ORACLE": "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-        "pendingSharesToDistribute": "7272938102270371099",
+        "pendingSharesToDistribute": "9763663456821076231",
         "proxy__getAdmin": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "eth:0x5DCF7cF7c6645E9E822a379dF046a8b0390251A1",
         "proxy__getIsOssified": false,
         "rebateRecipient": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "totalClaimableShares": "101795732292688014494",
+        "totalClaimableShares": "101642255392018250602",
         "treeRoot": "0xb3de2f624121f0ccee9945c7db9f649966c7132e8de501fadb3b849d2a177d8c"
       },
       "errors": { "distributedShares": "Processing error occurred." },
@@ -3220,12 +3218,12 @@
         "getActiveNodeOperatorsCount": 566,
         "getInitializedVersion": 2,
         "getNodeOperatorsCount": 566,
-        "getNonce": 4146,
+        "getNonce": 4148,
         "getResumeSinceTimestamp": 1729872203,
         "getStakingModuleSummary": {
           "totalExitedValidators": 1086,
           "totalDepositedValidators": 22488,
-          "depositableValidatorsCount": 596
+          "depositableValidatorsCount": 605
         },
         "getType": "0x636f6d6d756e6974792d6f6e636861696e2d7631000000000000000000000000",
         "isPaused": false,
@@ -3390,7 +3388,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "availableBalance": "26000000000000000",
+        "availableBalance": "35000008157308219",
         "beaconChainDepositsPaused": false,
         "DEPOSIT_CONTRACT": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositor": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
@@ -3400,7 +3398,7 @@
         "nodeOperator": "eth:0xbc06976A1A1AAc67b85737eE927f3f693a6224B1",
         "owner": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "stagedBalance": "62000000000000000000",
+        "stagedBalance": 0,
         "version": 1,
         "withdrawalCredentials": "0x020000000000000000000000e2cc063dec5685718bd57aac6aee9941b25b7c37"
       },
@@ -3452,7 +3450,7 @@
         "getContractVersion": 1,
         "getCoverSharesBurnt": "14684898881648297203",
         "getExcessStETH": 0,
-        "getNonCoverSharesBurnt": "12671922232786531979652645",
+        "getNonCoverSharesBurnt": "12679228688290945803156090",
         "getSharesRequestedToBurn": { "coverShares": 0, "nonCoverShares": 0 },
         "isMigrationAllowed": false,
         "LIDO": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -3716,7 +3714,7 @@
         "getAllStakingModuleDigests": [
           {
             "nodeOperatorsCount": 39,
-            "activeNodeOperatorsCount": 37,
+            "activeNodeOperatorsCount": 36,
             "state": {
               "id": 1,
               "stakingModuleAddress": "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
@@ -3735,7 +3733,7 @@
             "summary": {
               "totalExitedValidators": 161171,
               "totalDepositedValidators": 421296,
-              "depositableValidatorsCount": 35141
+              "depositableValidatorsCount": 34693
             }
           },
           {
@@ -3770,20 +3768,20 @@
               "stakingModuleAddress": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
               "stakingModuleFee": 600,
               "treasuryFee": 400,
-              "stakeShareLimit": 750,
+              "stakeShareLimit": 850,
               "status": 0,
               "name": "Community Staking",
               "lastDepositAt": 1776001427,
               "lastDepositBlock": 24864048,
               "exitedValidatorsCount": 1086,
-              "priorityExitShareThreshold": 900,
+              "priorityExitShareThreshold": 1020,
               "maxDepositsPerBlock": 30,
               "minDepositBlockDistance": 25
             },
             "summary": {
               "totalExitedValidators": 1086,
               "totalDepositedValidators": 22488,
-              "depositableValidatorsCount": 596
+              "depositableValidatorsCount": 605
             }
           }
         ],
@@ -3802,7 +3800,7 @@
         "getStakingModuleLastDepositBlock": [24858497, 24687607, 24864048],
         "getStakingModuleMaxDepositsPerBlock": [150, 150, 30],
         "getStakingModuleMinDepositBlockDistance": [25, 25, 25],
-        "getStakingModuleNonce": [17886, 1081, 4146],
+        "getStakingModuleNonce": [17888, 1081, 4148],
         "getStakingModules": [
           {
             "id": 1,
@@ -3839,13 +3837,13 @@
             "stakingModuleAddress": "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F",
             "stakingModuleFee": 600,
             "treasuryFee": 400,
-            "stakeShareLimit": 750,
+            "stakeShareLimit": 850,
             "status": 0,
             "name": "Community Staking",
             "lastDepositAt": 1776001427,
             "lastDepositBlock": 24864048,
             "exitedValidatorsCount": 1086,
-            "priorityExitShareThreshold": 900,
+            "priorityExitShareThreshold": 1020,
             "maxDepositsPerBlock": 30,
             "minDepositBlockDistance": 25
           }
@@ -3908,10 +3906,10 @@
         "getGuardians": [
           "eth:0x5fd0dDbC3351d009eb3f88DE7Cd081a614C519F1",
           "eth:0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
-          "eth:0xd4EF84b638B334699bcf5AF4B0410B8CCD71943f",
+          "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389",
           "eth:0xf82D88217C249297C6037BA77CE34b3d8a90ab43",
           "eth:0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
-          "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389"
+          "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E"
         ],
         "getMaxOperatorsPerUnvetting": 200,
         "getOwner": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
@@ -5042,67 +5040,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x47f3a6b1E70F7Ec7dBC3CB510B1fdB948C863a5B": [
-      "constructor(address _lidoLocator)",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AdminCannotBeZero()",
-      "error CumulativeLidoFeesTooLarge(uint256 feeIncrease, uint256 maxFeeIncrease)",
-      "error CumulativeLidoFeesTooLow(uint256 reportingFees, uint256 previousFees)",
-      "error InOutDeltaCacheIsOverwritten()",
-      "error InvalidInitialization()",
-      "error InvalidMaxLiabilityShares()",
-      "error InvalidProof()",
-      "error MaxLidoFeeRatePerSecondTooLarge(uint256 feeRate, uint256 maxFeeRate)",
-      "error MaxRewardRatioTooLarge(uint256 rewardRatio, uint256 maxRewardRatio)",
-      "error NotAuthorized()",
-      "error NotInitializing()",
-      "error QuarantinePeriodTooLarge(uint256 quarantinePeriod, uint256 maxQuarantinePeriod)",
-      "error TotalValueTooLarge()",
-      "error UnderflowInTotalValueCalculation()",
-      "error VaultReportIsFreshEnough()",
-      "event Initialized(uint64 version)",
-      "event QuarantineActivated(address indexed vault, uint256 delta)",
-      "event QuarantineReleased(address indexed vault, uint256 delta)",
-      "event QuarantineRemoved(address indexed vault)",
-      "event QuarantineUpdated(uint256 totalValueReminder)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SanityParamsUpdated(uint256 quarantinePeriod, uint256 maxRewardRatioBP, uint256 maxLidoFeeRatePerSecond)",
-      "event VaultsReportDataUpdated(uint256 indexed timestamp, uint256 indexed refSlot, bytes32 indexed root, string cid)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function LIDO_LOCATOR() view returns (address)",
-      "function MAX_LIDO_FEE_RATE_PER_SECOND() view returns (uint256)",
-      "function MAX_QUARANTINE_PERIOD() view returns (uint256)",
-      "function MAX_REWARD_RATIO() view returns (uint256)",
-      "function UPDATE_SANITY_PARAMS_ROLE() view returns (bytes32)",
-      "function batchValidatorStatuses(bytes[] _pubkeys) view returns (tuple(uint8 stage, address stakingVault, address nodeOperator)[] batch)",
-      "function batchVaultsInfo(uint256 _offset, uint256 _limit) view returns (tuple(address vault, uint256 aggregatedBalance, int256 inOutDelta, bytes32 withdrawalCredentials, uint256 liabilityShares, uint256 maxLiabilityShares, uint256 mintableStETH, uint96 shareLimit, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool pendingDisconnect)[])",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getRoleMembers(bytes32 role) view returns (address[])",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _admin, uint256 _quarantinePeriod, uint256 _maxRewardRatioBP, uint256 _maxLidoFeeRatePerSecond)",
-      "function latestReportData() view returns (uint256 timestamp, uint256 refSlot, bytes32 treeRoot, string reportCid)",
-      "function latestReportTimestamp() view returns (uint256)",
-      "function maxLidoFeeRatePerSecond() view returns (uint256)",
-      "function maxRewardRatioBP() view returns (uint256)",
-      "function quarantinePeriod() view returns (uint256)",
-      "function quarantineValue(address _vault) view returns (uint256)",
-      "function removeVaultQuarantine(address _vault)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function updateReportData(uint256 _vaultsDataTimestamp, uint256 _vaultsDataRefSlot, bytes32 _vaultsDataTreeRoot, string _vaultsDataReportCid)",
-      "function updateSanityParams(uint256 _quarantinePeriod, uint256 _maxRewardRatioBP, uint256 _maxLidoFeeRatePerSecond)",
-      "function updateVaultData(address _vault, uint256 _totalValue, uint256 _cumulativeLidoFees, uint256 _liabilityShares, uint256 _maxLiabilityShares, uint256 _slashingReserve, bytes32[] _proof)",
-      "function vaultInfo(address _vault) view returns (tuple(address vault, uint256 aggregatedBalance, int256 inOutDelta, bytes32 withdrawalCredentials, uint256 liabilityShares, uint256 maxLiabilityShares, uint256 mintableStETH, uint96 shareLimit, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool pendingDisconnect))",
-      "function vaultQuarantine(address _vault) view returns (tuple(bool isActive, uint256 pendingTotalValueIncrease, uint256 startTimestamp, uint256 endTimestamp, uint256 totalValueRemainder))",
-      "function vaultsCount() view returns (uint256)"
-    ],
     "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
@@ -5287,6 +5224,150 @@
       "event BeaconUpgraded(address indexed beacon)",
       "function implementation() view returns (address)",
       "function isOssified() view returns (bool)"
+    ],
+    "eth:0x6330fE7756FBE8649adfb9A541d61C5edB8B4D70": [
+      "constructor(address _locator, address _lido, address _consensusContract, uint256 _maxRelativeShareLimitBP)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AlreadyConnected(address vault, uint256 index)",
+      "error AmountExceedsTotalValue(address vault, uint256 totalValue, uint256 withdrawAmount)",
+      "error AmountExceedsWithdrawableValue(address vault, uint256 withdrawable, uint256 requested)",
+      "error BadDebtSocializationNotAllowed()",
+      "error ForcedValidatorExitNotAllowed()",
+      "error InsufficientSharesToBurn(address vault, uint256 amount)",
+      "error InsufficientStagedBalance(address vault)",
+      "error InsufficientValue(address vault, uint256 etherToLock, uint256 maxLockableValue)",
+      "error InvalidBasisPoints(uint256 valueBP, uint256 maxValueBP)",
+      "error InvalidInitialization()",
+      "error NoFundsForForceRebalance(address vault)",
+      "error NoFundsToSettleLidoFees(address vault, uint256 unsettledLidoFees)",
+      "error NoLiabilitySharesShouldBeLeft(address vault, uint256 liabilityShares)",
+      "error NoReasonForForceRebalance(address vault)",
+      "error NoUnsettledLidoFeesShouldBeLeft(address vault, uint256 unsettledLidoFees)",
+      "error NoUnsettledLidoFeesToSettle(address vault)",
+      "error NotAuthorized()",
+      "error NotConnectedToHub(address vault)",
+      "error NotInitializing()",
+      "error PDGNotDepositor(address vault)",
+      "error PartialValidatorWithdrawalNotAllowed()",
+      "error PauseIntentAlreadySet()",
+      "error PauseIntentAlreadyUnset()",
+      "error PauseUntilMustBeInFuture()",
+      "error PausedExpected()",
+      "error ResumedExpected()",
+      "error SafeCastOverflowedIntToUint(int256 value)",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error ShareLimitExceeded(address vault, uint256 expectedSharesAfterMint, uint256 shareLimit)",
+      "error ShareLimitTooHigh(uint256 shareLimit, uint256 maxShareLimit)",
+      "error VaultHubNotPendingOwner(address vault)",
+      "error VaultInsufficientBalance(address vault, uint256 currentBalance, uint256 expectedBalance)",
+      "error VaultIsDisconnecting(address vault)",
+      "error VaultMintingCapacityExceeded(address vault, uint256 totalValue, uint256 liabilityShares, uint256 newRebalanceThresholdBP)",
+      "error VaultNotFactoryDeployed(address vault)",
+      "error VaultOssified(address vault)",
+      "error VaultReportStale(address vault)",
+      "error ZeroAddress()",
+      "error ZeroArgument()",
+      "error ZeroPauseDuration()",
+      "event BadDebtSocialized(address indexed vaultDonor, address indexed vaultAcceptor, uint256 badDebtShares)",
+      "event BadDebtWrittenOffToBeInternalized(address indexed vault, uint256 badDebtShares)",
+      "event BeaconChainDepositsPauseIntentSet(address indexed vault, bool pauseIntent)",
+      "event BurnedSharesOnVault(address indexed vault, uint256 amountOfShares)",
+      "event ForcedValidatorExitTriggered(address indexed vault, bytes pubkeys, address refundRecipient)",
+      "event Initialized(uint64 version)",
+      "event LidoFeesSettled(address indexed vault, uint256 transferred, uint256 cumulativeLidoFees, uint256 settledLidoFees)",
+      "event MintedSharesOnVault(address indexed vault, uint256 amountOfShares, uint256 lockedAmount)",
+      "event Paused(uint256 duration)",
+      "event Resumed()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event VaultConnected(address indexed vault, uint256 shareLimit, uint256 reserveRatioBP, uint256 forcedRebalanceThresholdBP, uint256 infraFeeBP, uint256 liquidityFeeBP, uint256 reservationFeeBP)",
+      "event VaultConnectionUpdated(address indexed vault, address indexed nodeOperator, uint256 shareLimit, uint256 reserveRatioBP, uint256 forcedRebalanceThresholdBP)",
+      "event VaultDisconnectAborted(address indexed vault, uint256 slashingReserve)",
+      "event VaultDisconnectCompleted(address indexed vault)",
+      "event VaultDisconnectInitiated(address indexed vault)",
+      "event VaultFeesUpdated(address indexed vault, uint256 preInfraFeeBP, uint256 preLiquidityFeeBP, uint256 preReservationFeeBP, uint256 infraFeeBP, uint256 liquidityFeeBP, uint256 reservationFeeBP)",
+      "event VaultInOutDeltaUpdated(address indexed vault, int256 inOutDelta)",
+      "event VaultOwnershipTransferred(address indexed vault, address indexed newOwner, address indexed oldOwner)",
+      "event VaultRebalanced(address indexed vault, uint256 sharesBurned, uint256 etherWithdrawn)",
+      "event VaultRedemptionSharesUpdated(address indexed vault, uint256 redemptionShares)",
+      "event VaultReportApplied(address indexed vault, uint256 reportTimestamp, uint256 reportTotalValue, int256 reportInOutDelta, uint256 reportCumulativeLidoFees, uint256 reportLiabilityShares, uint256 reportMaxLiabilityShares, uint256 reportSlashingReserve)",
+      "function BAD_DEBT_MASTER_ROLE() view returns (bytes32)",
+      "function CONNECT_DEPOSIT() view returns (uint256)",
+      "function CONSENSUS_CONTRACT() view returns (address)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function LIDO() view returns (address)",
+      "function LIDO_LOCATOR() view returns (address)",
+      "function MAX_RELATIVE_SHARE_LIMIT_BP() view returns (uint256)",
+      "function PAUSE_INFINITELY() view returns (uint256)",
+      "function PAUSE_ROLE() view returns (bytes32)",
+      "function REDEMPTION_MASTER_ROLE() view returns (bytes32)",
+      "function REPORT_FRESHNESS_DELTA() view returns (uint256)",
+      "function RESUME_ROLE() view returns (bytes32)",
+      "function VALIDATOR_EXIT_ROLE() view returns (bytes32)",
+      "function VAULT_MASTER_ROLE() view returns (bytes32)",
+      "function applyVaultReport(address _vault, uint256 _reportTimestamp, uint256 _reportTotalValue, int256 _reportInOutDelta, uint256 _reportCumulativeLidoFees, uint256 _reportLiabilityShares, uint256 _reportMaxLiabilityShares, uint256 _reportSlashingReserve)",
+      "function badDebtToInternalize() view returns (uint256)",
+      "function badDebtToInternalizeForLastRefSlot() view returns (uint256)",
+      "function burnShares(address _vault, uint256 _amountOfShares)",
+      "function collectERC20FromVault(address _vault, address _token, address _recipient, uint256 _amount)",
+      "function connectVault(address _vault)",
+      "function decreaseInternalizedBadDebt(uint256 _amountOfShares)",
+      "function disconnect(address _vault)",
+      "function forceRebalance(address _vault)",
+      "function forceValidatorExit(address _vault, bytes _pubkeys, address _refundRecipient) payable",
+      "function fund(address _vault) payable",
+      "function getResumeSinceTimestamp() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMembers(bytes32 role) view returns (address[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function healthShortfallShares(address _vault) view returns (uint256)",
+      "function initialize(address _admin)",
+      "function internalizeBadDebt(address _badDebtVault, uint256 _maxSharesToInternalize) returns (uint256)",
+      "function isPaused() view returns (bool)",
+      "function isPendingDisconnect(address _vault) view returns (bool)",
+      "function isReportFresh(address _vault) view returns (bool)",
+      "function isVaultConnected(address _vault) view returns (bool)",
+      "function isVaultHealthy(address _vault) view returns (bool)",
+      "function latestReport(address _vault) view returns (tuple(uint104 totalValue, int104 inOutDelta, uint48 timestamp))",
+      "function liabilityShares(address _vault) view returns (uint256)",
+      "function locked(address _vault) view returns (uint256)",
+      "function maxLockableValue(address _vault) view returns (uint256)",
+      "function mintShares(address _vault, address _recipient, uint256 _amountOfShares)",
+      "function obligations(address _vault) view returns (uint256 sharesToBurn, uint256 feesToSettle)",
+      "function obligationsShortfallValue(address _vault) view returns (uint256)",
+      "function pauseBeaconChainDeposits(address _vault)",
+      "function pauseFor(uint256 _duration)",
+      "function pauseUntil(uint256 _pauseUntilInclusive)",
+      "function proveUnknownValidatorToPDG(address _vault, tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness)",
+      "function rebalance(address _vault, uint256 _shares)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function requestValidatorExit(address _vault, bytes _pubkeys)",
+      "function resume()",
+      "function resumeBeaconChainDeposits(address _vault)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setLiabilitySharesTarget(address _vault, uint256 _liabilitySharesTarget)",
+      "function settleLidoFees(address _vault)",
+      "function settleableLidoFeesValue(address _vault) view returns (uint256)",
+      "function socializeBadDebt(address _badDebtVault, address _vaultAcceptor, uint256 _maxSharesToSocialize) returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function totalMintingCapacityShares(address _vault, int256 _deltaValue) view returns (uint256)",
+      "function totalValue(address _vault) view returns (uint256)",
+      "function transferAndBurnShares(address _vault, uint256 _amountOfShares)",
+      "function transferVaultOwnership(address _vault, address _newOwner)",
+      "function triggerValidatorWithdrawals(address _vault, bytes _pubkeys, uint64[] _amountsInGwei, address _refundRecipient) payable",
+      "function updateConnection(address _vault, uint256 _shareLimit, uint256 _reserveRatioBP, uint256 _forcedRebalanceThresholdBP, uint256 _infraFeeBP, uint256 _liquidityFeeBP, uint256 _reservationFeeBP)",
+      "function vaultByIndex(uint256 _index) view returns (address)",
+      "function vaultConnection(address _vault) view returns (tuple(address owner, uint96 shareLimit, uint96 vaultIndex, uint48 disconnectInitiatedTs, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool beaconChainDepositsPauseIntent))",
+      "function vaultRecord(address _vault) view returns (tuple(tuple(uint104 totalValue, int104 inOutDelta, uint48 timestamp) report, uint96 maxLiabilityShares, uint96 liabilityShares, tuple(int104 value, int104 valueOnRefSlot, uint48 refSlot)[2] inOutDelta, uint128 minimalReserve, uint128 redemptionShares, uint128 cumulativeLidoFees, uint128 settledLidoFees))",
+      "function vaultsCount() view returns (uint256)",
+      "function voluntaryDisconnect(address _vault)",
+      "function withdraw(address _vault, address _recipient, uint256 _ether)",
+      "function withdrawableValue(address _vault) view returns (uint256)"
     ],
     "eth:0x65D4D92Cd0EabAa05cD5A46269C24b71C21cfdc4": [
       "constructor(address module)",
@@ -5717,150 +5798,6 @@
       "function reseal(address sealable)",
       "function resume(address sealable)"
     ],
-    "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50": [
-      "constructor(address _locator, address _lido, address _consensusContract, uint256 _maxRelativeShareLimitBP)",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AlreadyConnected(address vault, uint256 index)",
-      "error AmountExceedsTotalValue(address vault, uint256 totalValue, uint256 withdrawAmount)",
-      "error AmountExceedsWithdrawableValue(address vault, uint256 withdrawable, uint256 requested)",
-      "error BadDebtSocializationNotAllowed()",
-      "error ForcedValidatorExitNotAllowed()",
-      "error InsufficientSharesToBurn(address vault, uint256 amount)",
-      "error InsufficientStagedBalance(address vault)",
-      "error InsufficientValue(address vault, uint256 etherToLock, uint256 maxLockableValue)",
-      "error InvalidBasisPoints(uint256 valueBP, uint256 maxValueBP)",
-      "error InvalidInitialization()",
-      "error NoFundsForForceRebalance(address vault)",
-      "error NoFundsToSettleLidoFees(address vault, uint256 unsettledLidoFees)",
-      "error NoLiabilitySharesShouldBeLeft(address vault, uint256 liabilityShares)",
-      "error NoReasonForForceRebalance(address vault)",
-      "error NoUnsettledLidoFeesShouldBeLeft(address vault, uint256 unsettledLidoFees)",
-      "error NoUnsettledLidoFeesToSettle(address vault)",
-      "error NotAuthorized()",
-      "error NotConnectedToHub(address vault)",
-      "error NotInitializing()",
-      "error PDGNotDepositor(address vault)",
-      "error PartialValidatorWithdrawalNotAllowed()",
-      "error PauseIntentAlreadySet()",
-      "error PauseIntentAlreadyUnset()",
-      "error PauseUntilMustBeInFuture()",
-      "error PausedExpected()",
-      "error ResumedExpected()",
-      "error SafeCastOverflowedIntToUint(int256 value)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error ShareLimitExceeded(address vault, uint256 expectedSharesAfterMint, uint256 shareLimit)",
-      "error ShareLimitTooHigh(uint256 shareLimit, uint256 maxShareLimit)",
-      "error VaultHubNotPendingOwner(address vault)",
-      "error VaultInsufficientBalance(address vault, uint256 currentBalance, uint256 expectedBalance)",
-      "error VaultIsDisconnecting(address vault)",
-      "error VaultMintingCapacityExceeded(address vault, uint256 totalValue, uint256 liabilityShares, uint256 newRebalanceThresholdBP)",
-      "error VaultNotFactoryDeployed(address vault)",
-      "error VaultOssified(address vault)",
-      "error VaultReportStale(address vault)",
-      "error ZeroAddress()",
-      "error ZeroArgument()",
-      "error ZeroPauseDuration()",
-      "event BadDebtSocialized(address indexed vaultDonor, address indexed vaultAcceptor, uint256 badDebtShares)",
-      "event BadDebtWrittenOffToBeInternalized(address indexed vault, uint256 badDebtShares)",
-      "event BeaconChainDepositsPauseIntentSet(address indexed vault, bool pauseIntent)",
-      "event BurnedSharesOnVault(address indexed vault, uint256 amountOfShares)",
-      "event ForcedValidatorExitTriggered(address indexed vault, bytes pubkeys, address refundRecipient)",
-      "event Initialized(uint64 version)",
-      "event LidoFeesSettled(address indexed vault, uint256 transferred, uint256 cumulativeLidoFees, uint256 settledLidoFees)",
-      "event MintedSharesOnVault(address indexed vault, uint256 amountOfShares, uint256 lockedAmount)",
-      "event Paused(uint256 duration)",
-      "event Resumed()",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event VaultConnected(address indexed vault, uint256 shareLimit, uint256 reserveRatioBP, uint256 forcedRebalanceThresholdBP, uint256 infraFeeBP, uint256 liquidityFeeBP, uint256 reservationFeeBP)",
-      "event VaultConnectionUpdated(address indexed vault, address indexed nodeOperator, uint256 shareLimit, uint256 reserveRatioBP, uint256 forcedRebalanceThresholdBP)",
-      "event VaultDisconnectAborted(address indexed vault, uint256 slashingReserve)",
-      "event VaultDisconnectCompleted(address indexed vault)",
-      "event VaultDisconnectInitiated(address indexed vault)",
-      "event VaultFeesUpdated(address indexed vault, uint256 preInfraFeeBP, uint256 preLiquidityFeeBP, uint256 preReservationFeeBP, uint256 infraFeeBP, uint256 liquidityFeeBP, uint256 reservationFeeBP)",
-      "event VaultInOutDeltaUpdated(address indexed vault, int256 inOutDelta)",
-      "event VaultOwnershipTransferred(address indexed vault, address indexed newOwner, address indexed oldOwner)",
-      "event VaultRebalanced(address indexed vault, uint256 sharesBurned, uint256 etherWithdrawn)",
-      "event VaultRedemptionSharesUpdated(address indexed vault, uint256 redemptionShares)",
-      "event VaultReportApplied(address indexed vault, uint256 reportTimestamp, uint256 reportTotalValue, int256 reportInOutDelta, uint256 reportCumulativeLidoFees, uint256 reportLiabilityShares, uint256 reportMaxLiabilityShares, uint256 reportSlashingReserve)",
-      "function BAD_DEBT_MASTER_ROLE() view returns (bytes32)",
-      "function CONNECT_DEPOSIT() view returns (uint256)",
-      "function CONSENSUS_CONTRACT() view returns (address)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function LIDO() view returns (address)",
-      "function LIDO_LOCATOR() view returns (address)",
-      "function MAX_RELATIVE_SHARE_LIMIT_BP() view returns (uint256)",
-      "function PAUSE_INFINITELY() view returns (uint256)",
-      "function PAUSE_ROLE() view returns (bytes32)",
-      "function REDEMPTION_MASTER_ROLE() view returns (bytes32)",
-      "function REPORT_FRESHNESS_DELTA() view returns (uint256)",
-      "function RESUME_ROLE() view returns (bytes32)",
-      "function VALIDATOR_EXIT_ROLE() view returns (bytes32)",
-      "function VAULT_MASTER_ROLE() view returns (bytes32)",
-      "function applyVaultReport(address _vault, uint256 _reportTimestamp, uint256 _reportTotalValue, int256 _reportInOutDelta, uint256 _reportCumulativeLidoFees, uint256 _reportLiabilityShares, uint256 _reportMaxLiabilityShares, uint256 _reportSlashingReserve)",
-      "function badDebtToInternalize() view returns (uint256)",
-      "function badDebtToInternalizeForLastRefSlot() view returns (uint256)",
-      "function burnShares(address _vault, uint256 _amountOfShares)",
-      "function collectERC20FromVault(address _vault, address _token, address _recipient, uint256 _amount)",
-      "function connectVault(address _vault)",
-      "function decreaseInternalizedBadDebt(uint256 _amountOfShares)",
-      "function disconnect(address _vault)",
-      "function forceRebalance(address _vault)",
-      "function forceValidatorExit(address _vault, bytes _pubkeys, address _refundRecipient) payable",
-      "function fund(address _vault) payable",
-      "function getResumeSinceTimestamp() view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getRoleMembers(bytes32 role) view returns (address[])",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function healthShortfallShares(address _vault) view returns (uint256)",
-      "function initialize(address _admin)",
-      "function internalizeBadDebt(address _badDebtVault, uint256 _maxSharesToInternalize) returns (uint256)",
-      "function isPaused() view returns (bool)",
-      "function isPendingDisconnect(address _vault) view returns (bool)",
-      "function isReportFresh(address _vault) view returns (bool)",
-      "function isVaultConnected(address _vault) view returns (bool)",
-      "function isVaultHealthy(address _vault) view returns (bool)",
-      "function latestReport(address _vault) view returns (tuple(uint104 totalValue, int104 inOutDelta, uint48 timestamp))",
-      "function liabilityShares(address _vault) view returns (uint256)",
-      "function locked(address _vault) view returns (uint256)",
-      "function maxLockableValue(address _vault) view returns (uint256)",
-      "function mintShares(address _vault, address _recipient, uint256 _amountOfShares)",
-      "function obligations(address _vault) view returns (uint256 sharesToBurn, uint256 feesToSettle)",
-      "function obligationsShortfallValue(address _vault) view returns (uint256)",
-      "function pauseBeaconChainDeposits(address _vault)",
-      "function pauseFor(uint256 _duration)",
-      "function pauseUntil(uint256 _pauseUntilInclusive)",
-      "function proveUnknownValidatorToPDG(address _vault, tuple(bytes32[] proof, bytes pubkey, uint256 validatorIndex, uint64 childBlockTimestamp, uint64 slot, uint64 proposerIndex) _witness)",
-      "function rebalance(address _vault, uint256 _shares)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function requestValidatorExit(address _vault, bytes _pubkeys)",
-      "function resume()",
-      "function resumeBeaconChainDeposits(address _vault)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setLiabilitySharesTarget(address _vault, uint256 _liabilitySharesTarget)",
-      "function settleLidoFees(address _vault)",
-      "function settleableLidoFeesValue(address _vault) view returns (uint256)",
-      "function socializeBadDebt(address _badDebtVault, address _vaultAcceptor, uint256 _maxSharesToSocialize) returns (uint256)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function totalMintingCapacityShares(address _vault, int256 _deltaValue) view returns (uint256)",
-      "function totalValue(address _vault) view returns (uint256)",
-      "function transferAndBurnShares(address _vault, uint256 _amountOfShares)",
-      "function transferVaultOwnership(address _vault, address _newOwner)",
-      "function triggerValidatorWithdrawals(address _vault, bytes _pubkeys, uint64[] _amountsInGwei, address _refundRecipient) payable",
-      "function updateConnection(address _vault, uint256 _shareLimit, uint256 _reserveRatioBP, uint256 _forcedRebalanceThresholdBP, uint256 _infraFeeBP, uint256 _liquidityFeeBP, uint256 _reservationFeeBP)",
-      "function vaultByIndex(uint256 _index) view returns (address)",
-      "function vaultConnection(address _vault) view returns (tuple(address owner, uint96 shareLimit, uint96 vaultIndex, uint48 disconnectInitiatedTs, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool beaconChainDepositsPauseIntent))",
-      "function vaultRecord(address _vault) view returns (tuple(tuple(uint104 totalValue, int104 inOutDelta, uint48 timestamp) report, uint96 maxLiabilityShares, uint96 liabilityShares, tuple(int104 value, int104 valueOnRefSlot, uint48 refSlot)[2] inOutDelta, uint128 minimalReserve, uint128 redemptionShares, uint128 cumulativeLidoFees, uint128 settledLidoFees))",
-      "function vaultsCount() view returns (uint256)",
-      "function voluntaryDisconnect(address _vault)",
-      "function withdraw(address _vault, address _recipient, uint256 _ether)",
-      "function withdrawableValue(address _vault) view returns (uint256)"
-    ],
     "eth:0x7D2BAa6094E1C4B60Da4cbAF4A77C3f4694fD53D": [
       "constructor(address _lido, address _treasury, address _triggerableWithdrawalsGateway)",
       "error ArraysLengthMismatch(uint256 firstArrayLength, uint256 secondArrayLength)",
@@ -6156,6 +6093,67 @@
     ],
     "eth:0x909d05F384D0663eD4BE59863815aB43b4f347Ec": [
       "function createCloneToken(address _parentToken, uint256 _snapshotBlock, string _tokenName, uint8 _decimalUnits, string _tokenSymbol, bool _transfersEnabled) returns (address)"
+    ],
+    "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37": [
+      "constructor(address _lidoLocator)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AdminCannotBeZero()",
+      "error CumulativeLidoFeesTooLarge(uint256 feeIncrease, uint256 maxFeeIncrease)",
+      "error CumulativeLidoFeesTooLow(uint256 reportingFees, uint256 previousFees)",
+      "error InOutDeltaCacheIsOverwritten()",
+      "error InvalidInitialization()",
+      "error InvalidMaxLiabilityShares()",
+      "error InvalidProof()",
+      "error MaxLidoFeeRatePerSecondTooLarge(uint256 feeRate, uint256 maxFeeRate)",
+      "error MaxRewardRatioTooLarge(uint256 rewardRatio, uint256 maxRewardRatio)",
+      "error NotAuthorized()",
+      "error NotInitializing()",
+      "error QuarantinePeriodTooLarge(uint256 quarantinePeriod, uint256 maxQuarantinePeriod)",
+      "error TotalValueTooLarge()",
+      "error UnderflowInTotalValueCalculation()",
+      "error VaultReportIsFreshEnough()",
+      "event Initialized(uint64 version)",
+      "event QuarantineActivated(address indexed vault, uint256 delta)",
+      "event QuarantineReleased(address indexed vault, uint256 delta)",
+      "event QuarantineRemoved(address indexed vault)",
+      "event QuarantineUpdated(uint256 totalValueReminder)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SanityParamsUpdated(uint256 quarantinePeriod, uint256 maxRewardRatioBP, uint256 maxLidoFeeRatePerSecond)",
+      "event VaultsReportDataUpdated(uint256 indexed timestamp, uint256 indexed refSlot, bytes32 indexed root, string cid)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function LIDO_LOCATOR() view returns (address)",
+      "function MAX_LIDO_FEE_RATE_PER_SECOND() view returns (uint256)",
+      "function MAX_QUARANTINE_PERIOD() view returns (uint256)",
+      "function MAX_REWARD_RATIO() view returns (uint256)",
+      "function UPDATE_SANITY_PARAMS_ROLE() view returns (bytes32)",
+      "function batchValidatorStatuses(bytes[] _pubkeys) view returns (tuple(uint8 stage, address stakingVault, address nodeOperator)[] batch)",
+      "function batchVaultsInfo(uint256 _offset, uint256 _limit) view returns (tuple(address vault, uint256 aggregatedBalance, int256 inOutDelta, bytes32 withdrawalCredentials, uint256 liabilityShares, uint256 maxLiabilityShares, uint256 mintableStETH, uint96 shareLimit, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool pendingDisconnect)[])",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getRoleMembers(bytes32 role) view returns (address[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _admin, uint256 _quarantinePeriod, uint256 _maxRewardRatioBP, uint256 _maxLidoFeeRatePerSecond)",
+      "function latestReportData() view returns (uint256 timestamp, uint256 refSlot, bytes32 treeRoot, string reportCid)",
+      "function latestReportTimestamp() view returns (uint256)",
+      "function maxLidoFeeRatePerSecond() view returns (uint256)",
+      "function maxRewardRatioBP() view returns (uint256)",
+      "function quarantinePeriod() view returns (uint256)",
+      "function quarantineValue(address _vault) view returns (uint256)",
+      "function removeVaultQuarantine(address _vault)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateReportData(uint256 _vaultsDataTimestamp, uint256 _vaultsDataRefSlot, bytes32 _vaultsDataTreeRoot, string _vaultsDataReportCid)",
+      "function updateSanityParams(uint256 _quarantinePeriod, uint256 _maxRewardRatioBP, uint256 _maxLidoFeeRatePerSecond)",
+      "function updateVaultData(address _vault, uint256 _totalValue, uint256 _cumulativeLidoFees, uint256 _liabilityShares, uint256 _maxLiabilityShares, uint256 _slashingReserve, bytes32[] _proof)",
+      "function vaultInfo(address _vault) view returns (tuple(address vault, uint256 aggregatedBalance, int256 inOutDelta, bytes32 withdrawalCredentials, uint256 liabilityShares, uint256 maxLiabilityShares, uint256 mintableStETH, uint96 shareLimit, uint16 reserveRatioBP, uint16 forcedRebalanceThresholdBP, uint16 infraFeeBP, uint16 liquidityFeeBP, uint16 reservationFeeBP, bool pendingDisconnect))",
+      "function vaultQuarantine(address _vault) view returns (tuple(bool isActive, uint256 pendingTotalValueIncrease, uint256 startTimestamp, uint256 endTimestamp, uint256 totalValueRemainder))",
+      "function vaultsCount() view returns (uint256)"
     ],
     "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -7729,7 +7727,6 @@
     "tokens/Lido/DepositSecurityModule": "0x99ae4ecad8b09875ad720b21d7a45c1e420639eb19bb5cb3311f71c2c9e872c8",
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/HashConsensus": "0x6eca9c2f29c0c6143851b340df63f7ef9b1054d55e02c4d6f8a7382132b1df35",
-    "tokens/Lido/LazyOracle": "0xadceb34e1696a91fcbd228be8377d78a8231254cbb005c28794ce625b7d773c0",
     "tokens/Lido/LidoDaoAgent": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500",
     "tokens/Lido/OperatorGrid": "0x28ee228d6e9e26658f4b8e76a09e431b35aa0969608357e7ceec062875c093c5",
@@ -7740,11 +7737,10 @@
     "tokens/Lido/stETH": "0x2080eca52531b41fd56005cb8fbff2e333d17fc420f97e956a799da2a041baf6",
     "tokens/Lido/TriggerableWithdrawalsGateway": "0x43bb1049d79437979475f3a6978307abd2341b2f72488ce38b32aaf0a9ea5559",
     "tokens/Lido/ValidatorsExitBusOracle": "0x11365707f780cd17f5f0f1cc48c59745a28a1f5725b533c928cdaac71c9e3938",
-    "tokens/Lido/VaultHub": "0x6365024364e81706f62c2107b6c50ff5f81333b8fe50226327c2a14bfff2cefb",
     "tokens/Lido/Voting": "0xfe60c9f930249cf52507a6861a5f27ba4d2b0e05965376084669ce656fa4565f",
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24899398 },
-  "permissionsConfigHash": "0x33cb9fcefb2dabe0b770a3af2eda18963f6315eeb73d168bbb0f5a2c35a8c150"
+  "usedBlockNumbers": { "ethereum": 24905629 },
+  "permissionsConfigHash": "0xa744907618c66ab5cd6ccf73ed99759d7a7d8038ca0ba259274df6e52ce8df70"
 }
