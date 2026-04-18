@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T08:41:43.245Z",
-  "compiledAt": "2026-04-18T08:43:12.000Z",
+  "updatedAt": "2026-04-18T09:02:23.478Z",
+  "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -18,7 +18,7 @@
     "scoredFunctionCount": 18,
     "adminCount": 19,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 86762089.22645678,
+    "totalCapitalAtRisk": 86712220.55434835,
     "totalTokenValueAtRisk": 36031878.71921739,
     "totalTokenValue": 36031878.71921739,
     "linesOfCode": 1598
@@ -1002,7 +1002,7 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub (Current)",
-      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: $71.80M.",
+      "description": "Immutable contract that serves as the primary entry point for opening collateral positions, cloning existing positions, initiating challenges, and processing bids. Controls Frankencoin minting and burning functions on behalf of position holders. Each new position requires a 1000 ZCHF opening fee and collateral deposit. Total collateral locked in positions: $71.75M.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -1956,7 +1956,7 @@
           "contractName": "Equity",
           "functionName": "kamikaze",
           "impact": "critical",
-          "directFundsUsd": 14965084.426191673,
+          "directFundsUsd": 14965084.426192867,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2027,9 +2027,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 14965084.426191673,
+      "totalDirectCapital": 14965084.426192867,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 14965084.426191673,
+      "totalReachableCapital": 14965084.426192867,
       "totalReachableTokenValue": 1000
     },
     {
@@ -2146,7 +2146,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 14965084.426191673,
+    "totalFundsAtRisk": 14965084.426192867,
     "totalTokenValueAtRisk": 36031878.71921739
   },
   "dependencies": [
@@ -2207,7 +2207,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mint",
           "viewOnlyPath": false,
-          "directFundsUsd": 427612.8807555595,
+          "directFundsUsd": 427612.8807562985,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2218,7 +2218,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1572387.1192444405,
+              "tokenValueUsd": 1572387.1192437015,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2272,7 +2272,7 @@
           "contractName": "StablecoinBridge",
           "functionName": "mintTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 427612.8807555595,
+          "directFundsUsd": 427612.8807562985,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -2283,7 +2283,7 @@
                 "mint"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 1572387.1192444405,
+              "tokenValueUsd": 1572387.1192437015,
               "fundsAtRisk": true,
               "effectiveCapUsd": 2000000
             }
@@ -2459,8 +2459,8 @@
           ]
         }
       ],
-      "totalFundsAtRisk": 427612.8807555595,
-      "totalTokenValueAtRisk": 1572387.1192444405,
+      "totalFundsAtRisk": 427612.8807562985,
+      "totalTokenValueAtRisk": 1572387.1192437015,
       "dependencyType": "callgraph"
     },
     {
@@ -3873,8 +3873,8 @@
   "dependencyEntityGroups": [
     {
       "entity": "VCHF",
-      "totalFundsAtRisk": 427612.8807555595,
-      "totalTokenValueAtRisk": 1572387.1192444405
+      "totalFundsAtRisk": 427612.8807562985,
+      "totalTokenValueAtRisk": 1572387.1192437015
     },
     {
       "entity": "Chainlink",
@@ -3888,7 +3888,7 @@
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 427612.8807555595,
+    "totalFundsAtRisk": 427612.8807562985,
     "totalTokenValueAtRisk": 36031878.71921739
   },
   "funds": [
@@ -3897,7 +3897,7 @@
       "name": "Equity (FPS Reserve Pool)",
       "description": "Protocol reserve pool that backs the ZCHF stablecoin. Holds $14.94M primarily in ZCHF, serving as the loss-absorption buffer for challenged and liquidated positions. FPS token holders have a proportional claim on this reserve.",
       "balances": {
-        "totalUsdValue": 14937091.222372945
+        "totalUsdValue": 14937091.22237414
       },
       "positions": {
         "totalUsdValue": 27993.20381872809
@@ -3908,12 +3908,12 @@
     {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "name": "MintingHub V2 (Collateral Positions)",
-      "description": "Current MintingHub with $71.80M locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral.",
+      "description": "Current MintingHub with $71.75M locked across 51 collateral positions including WBTC, cbBTC, wstETH, LsETH, BOSS, PAXG, XAUt, and other assets. This represents the majority of protocol collateral.",
       "balances": null,
       "positions": null,
       "tokenInfo": null,
       "aggregate": {
-        "totalUsdValue": 71797004.8002651,
+        "totalUsdValue": 71747136.12815548,
         "contractCount": 64,
         "handlerName": "frankencoin-mintinghub"
       }
@@ -3923,7 +3923,7 @@
       "name": "Savings (Current)",
       "description": "Current savings contract holding $10.23M in deposited ZCHF from users earning interest on their stablecoin holdings.",
       "balances": {
-        "totalUsdValue": 10232068.285914859
+        "totalUsdValue": 10232068.285916055
       },
       "positions": {
         "totalUsdValue": 0
@@ -3936,7 +3936,7 @@
       "name": "StablecoinBridge (VCHF)",
       "description": "Bridge contract holding $543.90K in VCHF tokens backing ZCHF minted through the 1:1 VCHF-to-ZCHF bridge.",
       "balances": {
-        "totalUsdValue": 543902.8029700917
+        "totalUsdValue": 543902.8029712873
       },
       "positions": null,
       "tokenInfo": null,
