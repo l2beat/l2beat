@@ -1,6 +1,6 @@
 {
   "name": "compound-v3",
-  "timestamp": 1776503277,
+  "timestamp": 1776513995,
   "configHash": "0x7adb18c8899a16d2bca5647a972f2b6b17b002c1d72a57394e049470212434bb",
   "entries": [
     {
@@ -496,7 +496,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": "55155820158865196",
+        "totalSupply": "55155444869292617",
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -810,9 +810,9 @@
         "getBorrowRate": [
           317097919, 317097919, 317097919, 317097919, 317097919
         ],
-        "getReserves": "947764504753298127997",
+        "getReserves": "947774677206631293871",
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "792251954629435331",
+        "getUtilization": "792253241834382576",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -827,8 +827,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 35673515981,
         "supplyPerSecondInterestRateSlopeLow": 684931506,
         "targetReserves": "5000000000000000000000",
-        "totalBorrow": "43980206632127998593195",
-        "totalSupply": "55512878698955908958868",
+        "totalBorrow": "43980539969069606027500",
+        "totalSupply": "55513198990068058061590",
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -972,7 +972,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2127805566193946784591636"
+        "totalSupply": "2128417755901074497350228"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1309,9 +1309,9 @@
         "getBorrowRate": [
           475646879, 475646879, 475646879, 475646879, 475646879
         ],
-        "getReserves": 13963929707647,
+        "getReserves": 13963816050014,
         "getSupplyRate": [0, 0, 0, 0, 0],
-        "getUtilization": "710863485019722501",
+        "getUtilization": "710862436620844390",
         "governor": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
         "isAbsorbPaused": false,
         "isBuyPaused": false,
@@ -1326,8 +1326,8 @@
         "supplyPerSecondInterestRateSlopeHigh": 101344495180,
         "supplyPerSecondInterestRateSlopeLow": 1141552511,
         "targetReserves": 20000000000000,
-        "totalBorrow": 266495930439389,
-        "totalSupply": 374890124210879,
+        "totalBorrow": 266499155456216,
+        "totalSupply": 374895511647422,
         "trackingIndexScale": 1000000000000000
       },
       "errors": {
@@ -1369,8 +1369,8 @@
         "latestRoundData": {
           "roundId": 1,
           "answer": 100000000,
-          "startedAt": 1776503255,
-          "updatedAt": 1776503255,
+          "startedAt": 1776513983,
+          "updatedAt": 1776513983,
           "answeredInRound": 1
         },
         "version": 1
@@ -2281,6 +2281,6 @@
     "tokens": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "tokens/circle/USDC": "0x7263a38223ab636dc8a5aa9a09174968ffed892ce24134bf7e2407576d7fbbdb"
   },
-  "usedBlockNumbers": { "ethereum": 24905752 },
+  "usedBlockNumbers": { "ethereum": 24906645 },
   "permissionsConfigHash": "0x51a19a14b5f3e5515041c3bdfcb96e5c115f4be56119d8c36d9befd0ec0c3a3c"
 }

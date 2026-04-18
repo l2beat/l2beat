@@ -1,6 +1,6 @@
 {
   "name": "Frankencoin",
-  "timestamp": 1776503277,
+  "timestamp": 1776513995,
   "configHash": "0x8ed871ba537b55e5ce0ab95a1042bc396d34a8e4254f97ba3f6ca1295dcebd44",
   "entries": [
     {
@@ -25,10 +25,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1468103919027339210188",
+        "price": "1468102056512532499878",
         "symbol": "FPS",
         "totalSupply": "9275381250618285132663",
-        "totalVotes": "190483729442909506064240264313439793",
+        "totalVotes": "190588069350511930029949459241502257",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -55,7 +55,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 950415540000,
+        "currentTicks": 950791020000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -151,7 +151,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1184348580000,
+        "currentTicks": 1184455860000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -585,14 +585,14 @@
         ],
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "4539074521501802391303834",
+        "equity": "4539068762990163338053396",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
         "minterReserve": "7105929007209219915654202",
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "28143309161303909197142383"
+        "totalSupply": "28145518777869340397200735"
       },
       "implementationNames": {
         "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
@@ -1587,6 +1587,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
-  "usedBlockNumbers": { "ethereum": 24905752 },
+  "usedBlockNumbers": { "ethereum": 24906645 },
   "permissionsConfigHash": "0xd8a9712e522a444081838b952adbfb037f369cbe1df66fa9049cae6bac372f6a"
 }

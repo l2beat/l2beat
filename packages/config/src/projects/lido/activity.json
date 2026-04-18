@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776501979,
-  "lastConsumedUpdateNotifierId": 107,
+  "lastReconciledAt": 1776514197,
+  "lastConsumedUpdateNotifierId": 108,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1776,6 +1776,84 @@
           "field": "values.getGuardians.5",
           "before": "eth:0x6d22aE126eB2c37F67a1391B37FF4f2863e61389",
           "after": "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0x00000961Ef480Eb55e80D19ad83579A64c007002",
+      "contractName": "",
+      "entity": null,
+      "id": "108:eth:0x00000961Ef480Eb55e80D19ad83579A64c007002:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02",
+      "contractName": "",
+      "entity": null,
+      "id": "108:eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02:contract-removed",
+      "type": "contract-removed"
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f",
+      "contractName": "WithdrawalVault",
+      "entity": null,
+      "id": "108:eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.WITHDRAWAL_REQUEST",
+          "before": "eth:0x00000961Ef480Eb55e80D19ad83579A64c007002"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f",
+      "contractName": "ValidatorExitDelayVerifier",
+      "entity": null,
+      "id": "108:eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.BEACON_ROOTS",
+          "before": "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0xdC5FE1782B6943f318E05230d688713a560063DC",
+      "contractName": "CSVerifier",
+      "entity": null,
+      "id": "108:eth:0xdC5FE1782B6943f318E05230d688713a560063DC:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.BEACON_ROOTS",
+          "before": "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-18T12:06:35.000Z",
+      "updateNotifierId": 108,
+      "address": "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3",
+      "contractName": "PredepositGuarantee",
+      "entity": null,
+      "id": "108:eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.BEACON_ROOTS",
+          "before": "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02"
         }
       ]
     }
