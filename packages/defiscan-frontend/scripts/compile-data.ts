@@ -123,9 +123,9 @@ function main() {
   let totalTokenValueAtRisk = 0
   let totalTokenValue = 0
   let totalContractCount = 0
+  let totalAdminCount = 0
 
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
-  let recentUpdateCount = 0
+  let totalUpdateCount = 0
 
   const HUMAN_ADMIN_TYPES = new Set(['EOA', 'EOAPermissioned', 'Multisig', 'Timelock'])
 
@@ -216,14 +216,10 @@ function main() {
 
     totalCapitalAtRisk += review.totals.totalCapitalAtRisk
     totalContractCount += review.totals.contractCount
+    totalAdminCount += activeAdminCount
 
-    // Count activity events from the last 7 days
     if (review.activity) {
-      for (const event of review.activity) {
-        if (event.timestamp >= sevenDaysAgo) {
-          recentUpdateCount++
-        }
-      }
+      totalUpdateCount += review.activity.length
     }
 
     const protocolTokenValue = totalTokenValueForProtocol > 0
@@ -278,7 +274,8 @@ function main() {
       totalTokenValue,
       protocolsReviewed: protocols.length,
       totalContractCount,
-      recentUpdateCount,
+      totalAdminCount,
+      totalUpdateCount,
     },
     dependencies,
   }

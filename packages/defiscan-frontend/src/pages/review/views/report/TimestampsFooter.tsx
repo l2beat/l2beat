@@ -1,22 +1,30 @@
 import type { CompiledReview } from '../../../../types'
+import { getLatestActivityTimestamp } from '../activityTimestamp'
 
 interface TimestampsFooterProps {
   review: CompiledReview
 }
 
 export function TimestampsFooter({ review }: TimestampsFooterProps) {
+  const latestActivity = getLatestActivityTimestamp(review)
   return (
     <div className="bg-bg-card border border-border rounded-lg px-5 py-4 sm:px-8 sm:py-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4 sm:gap-0">
       <TimestampItem
         label="Published"
         iso={review.publishedAt}
         showRelative={false}
+        secondary={
+          review.lastModified
+            ? `last modified ${formatDate(review.lastModified)}`
+            : undefined
+        }
       />
       <Divider />
       <TimestampItem
-        label="Last updated"
-        iso={review.updatedAt}
+        label="Latest activity"
+        iso={latestActivity}
         showRelative
+        emptyFallback="Not monitored"
       />
       <Divider />
       <TimestampItem
@@ -38,28 +46,45 @@ function TimestampItem({
   label,
   iso,
   showRelative,
+  secondary,
+  emptyFallback,
 }: {
   label: string
-  iso: string
+  iso: string | null
   showRelative: boolean
+  secondary?: string
+  emptyFallback?: string
 }) {
   return (
     <div className="flex flex-col items-center gap-1">
       <p className="font-bold text-[10px] uppercase text-text-muted tracking-[0.5px]">
         {label}
       </p>
-      <p className="font-mono text-[13px] text-text-primary">
-        {new Date(iso).toLocaleString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-        })}
-        {showRelative && (
-          <span className="text-text-muted"> ({timeAgo(iso)})</span>
-        )}
-      </p>
+      {iso ? (
+        <p className="font-mono text-[13px] text-text-primary">
+          {formatDate(iso)}
+          {showRelative && (
+            <span className="text-text-muted"> ({timeAgo(iso)})</span>
+          )}
+          {secondary && (
+            <span className="text-text-muted"> ({secondary})</span>
+          )}
+        </p>
+      ) : (
+        <p className="font-mono text-[13px] text-text-muted">
+          {emptyFallback ?? '—'}
+        </p>
+      )}
     </div>
   )
+}
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
 }
 
 function timeAgo(isoString: string): string {

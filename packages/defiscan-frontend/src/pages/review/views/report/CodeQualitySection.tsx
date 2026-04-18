@@ -67,10 +67,15 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
             <div className="border-t border-border pt-4 flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-[14px] text-text-muted">Coverage</span>
-                <span className="font-mono font-bold text-[14px] text-text-muted">—</span>
+                <span className={`font-mono font-bold text-[14px] ${totals.coverage !== undefined ? 'text-text-primary' : 'text-text-muted'}`}>
+                  {totals.coverage !== undefined ? `${totals.coverage}%` : '—'}
+                </span>
               </div>
-              <div className="h-1.5 bg-border rounded-full mt-1">
-                <div className="h-1.5 w-0 bg-accent rounded-full" />
+              <div className="h-1.5 bg-border rounded-full mt-1 overflow-hidden">
+                <div
+                  className="h-1.5 bg-accent rounded-full transition-[width]"
+                  style={{ width: `${totals.coverage ?? 0}%` }}
+                />
               </div>
             </div>
           </div>

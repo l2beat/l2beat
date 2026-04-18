@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.480Z",
+  "lastModified": "2026-04-16T07:20:32.111Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "Steakhouse-USDC",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 198319532.90949094,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
-    "linesOfCode": 8842
+    "linesOfCode": 8842,
+    "verifiedContractCount": 23,
+    "coverage": 100
   },
   "admins": [
     {

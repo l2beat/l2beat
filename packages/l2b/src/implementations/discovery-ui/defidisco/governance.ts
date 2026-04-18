@@ -102,7 +102,7 @@ function getGovernancePath(paths: DiscoveryPaths, project: string): string {
 /**
  * Returns the last modification time of governance.json, derived from
  * filesystem mtime. Used by the review compiler to compute the review's
- * `updatedAt` timestamp.
+ * `lastModified` timestamp.
  *
  * governance.json has no compile-time mutation path (the compiler only reads
  * via getGovernance), so mtime is a safe signal — it only bumps when a

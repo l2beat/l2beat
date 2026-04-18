@@ -5,7 +5,7 @@ export interface CompiledReview {
   /** First time review-config.json was created. Preserved across regenerations. */
   publishedAt: string
   /** Last time a researcher edited review-config, resources, audits, or governance. */
-  updatedAt: string
+  lastModified: string
   /**
    * Live on-chain data freshness — sourced from discovered.json.timestamp,
    * NOT wall-clock compile time. Only bumps when the monitor runs a fresh
@@ -33,6 +33,8 @@ export interface CompiledReview {
     totalTokenValueAtRisk: number
     totalTokenValue: number
     linesOfCode?: number
+    verifiedContractCount?: number
+    coverage?: number
   }
 
   admins: CompiledAdmin[]
@@ -321,7 +323,8 @@ export interface IndexData {
     totalTokenValue: number
     protocolsReviewed: number
     totalContractCount: number
-    recentUpdateCount: number
+    totalAdminCount: number
+    totalUpdateCount: number
   }
   dependencies: AggregatedDependency[]
 }

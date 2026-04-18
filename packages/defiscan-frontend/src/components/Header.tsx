@@ -53,7 +53,7 @@ export function Header() {
             className="relative hidden sm:flex items-center gap-2 pl-9 pr-4 py-1.5 w-40 md:w-64 rounded border border-border bg-hover text-sm text-text-muted/60 hover:border-accent/40 transition-colors cursor-text"
           >
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
-            <span>Search protocol...</span>
+            <span className="truncate">Search protocol or address...</span>
           </button>
         )}
 

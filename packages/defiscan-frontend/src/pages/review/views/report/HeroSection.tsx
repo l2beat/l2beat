@@ -10,6 +10,7 @@ import type { CompiledReview } from '../../../../types'
 import { MoreInfoButton } from '../../../../components/MoreInfoButton'
 import { ShareButton } from '../../../../components/ShareButton'
 import { deriveRadarData } from '../../../../utils/radar'
+import { getLatestActivityTimestamp } from '../activityTimestamp'
 
 interface HeroSectionProps {
   review: CompiledReview
@@ -20,13 +21,14 @@ interface HeroSectionProps {
 const RADAR_AXES = ['CONTROL', 'DEPENDENCIES', 'ACCESS', 'VERIFIABILITY', 'ABILITY TO EXIT']
 
 export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionProps) {
-  const { metadata, updatedAt } = review
+  const { metadata } = review
   const radarData = deriveRadarData(review)
   const [descExpanded, setDescExpanded] = useState(false)
 
-  const updateDate = updatedAt
-    ? new Date(updatedAt).toLocaleDateString('en-CA').replace(/-/g, '.')
-    : '—'
+  const latestActivity = getLatestActivityTimestamp(review)
+  const activityDate = latestActivity
+    ? new Date(latestActivity).toLocaleDateString('en-CA').replace(/-/g, '.')
+    : null
 
   return (
     <div className="grid grid-cols-12 gap-6 items-center">
@@ -37,9 +39,11 @@ export function HeroSection({ review, onExportPdf, onSubscribe }: HeroSectionPro
           <span className="bg-[#059669] text-white font-bold text-[10px] uppercase tracking-[0.5px] px-[10px] py-[2px] rounded-[2px]">
             Active
           </span>
-          <span className="font-mono text-xs text-text-muted uppercase">
-            Updated: {updateDate}
-          </span>
+          {activityDate && (
+            <span className="font-mono text-xs text-text-muted uppercase">
+              Latest activity: {activityDate}
+            </span>
+          )}
         </div>
 
         {/* Protocol name */}

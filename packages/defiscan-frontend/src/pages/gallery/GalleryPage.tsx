@@ -12,6 +12,7 @@ import { deriveRadarData } from '../../utils/radar'
 import { formatUsdValue } from '../../utils/format'
 import { isHumanAdminType } from '../../utils/admins'
 import { ProtocolLogo } from '../../components/ProtocolLogo'
+import { getLatestActivityTimestamp } from '../review/views/activityTimestamp'
 import type { CompiledReview, ProtocolSummary, CompiledAdmin, CompiledDependency } from '../../types'
 
 const PAGE_SIZE = 12
@@ -26,8 +27,11 @@ type Status = 'active' | 'updated'
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 function deriveStatus(review: CompiledReview): Status {
-  if (Date.now() - new Date(review.updatedAt).getTime() < SEVEN_DAYS_MS) return 'updated'
-  return 'active'
+  const newest = getLatestActivityTimestamp(review)
+  if (!newest) return 'active'
+  return Date.now() - new Date(newest).getTime() < SEVEN_DAYS_MS
+    ? 'updated'
+    : 'active'
 }
 
 function adminSummary(admins: CompiledAdmin[]): string {
@@ -132,13 +136,8 @@ function ProtocolCard({
 
   const lastActivity = (() => {
     if (!review) return null
-    if (!review.activity || review.activity.length === 0) return 'Not monitored'
-    const sorted = [...review.activity].sort((a, b) =>
-      b.timestamp.localeCompare(a.timestamp),
-    )
-    const newest = sorted[0]
-    if (!newest) return 'Not monitored'
-    return relativeTime(newest.timestamp)
+    const newest = getLatestActivityTimestamp(review)
+    return newest ? relativeTime(newest) : 'Not monitored'
   })()
 
   const radarData = review ? deriveRadarData(review) : null
@@ -163,7 +162,7 @@ function ProtocolCard({
         </div>
         <span
           className={`shrink-0 ml-2 px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-[0.5px] ${statusCfg.cls}`}
-          title={status === 'updated' ? 'Review updated within the last 7 days' : 'Actively monitored'}
+          title={status === 'updated' ? 'Activity event detected within the last 7 days' : 'Actively monitored'}
         >
           {statusCfg.label}
         </span>
@@ -247,7 +246,7 @@ function ProtocolCard({
       </div>
 
       {/* Footer */}
-      <div className="mt-auto border-t border-border px-5 py-4 flex flex-col gap-3">
+      <div className="mt-auto px-5 py-4 flex flex-col gap-3">
         <Link
           to={`/protocol/${protocol.slug}`}
           className="block w-full text-center bg-accent-dark text-white text-xs font-bold uppercase tracking-[1px] py-3 rounded hover:bg-accent-dark/80 transition-colors"
@@ -345,6 +344,13 @@ export function GalleryPage() {
       const status = review ? deriveStatus(review) : 'active'
       return activeStatuses.has(status)
     })
+
+    const tvsOf = (p: ProtocolSummary) => {
+      const tvl = p.totals.totalCapitalAtRisk
+      const token = p.totals.totalTokenValue ?? p.totals.totalTokenValueAtRisk
+      return tvl + token
+    }
+    list = [...list].sort((a, b) => tvsOf(b) - tvsOf(a))
 
     return list
   }, [protocols, ecosystemFilter, typeFilter, activeStatuses, reviewMap, reviewsLoading])

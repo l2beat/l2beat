@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.601Z",
+  "lastModified": "2026-04-16T07:20:32.115Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "compound-v3",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 855523854.9550084,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 262199996.94780475,
-    "linesOfCode": 8966
+    "linesOfCode": 8966,
+    "verifiedContractCount": 21,
+    "coverage": 100
   },
   "admins": [
     {

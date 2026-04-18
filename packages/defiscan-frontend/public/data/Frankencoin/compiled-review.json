@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.478Z",
+  "lastModified": "2026-04-16T07:20:32.111Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "Frankencoin",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 86712220.55434835,
     "totalTokenValueAtRisk": 36031878.71921739,
     "totalTokenValue": 36031878.71921739,
-    "linesOfCode": 1598
+    "linesOfCode": 1598,
+    "verifiedContractCount": 24,
+    "coverage": 100
   },
   "admins": [
     {

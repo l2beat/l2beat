@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.477Z",
+  "lastModified": "2026-04-16T07:20:32.107Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "EtherFi-Stake",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 1062012644.2380248,
     "totalTokenValueAtRisk": 6582650531.042696,
     "totalTokenValue": 6582650531.042696,
-    "linesOfCode": 18031
+    "linesOfCode": 18031,
+    "verifiedContractCount": 63,
+    "coverage": 98
   },
   "admins": [
     {

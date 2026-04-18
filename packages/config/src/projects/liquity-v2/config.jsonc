@@ -121,6 +121,15 @@
         "totalSupply"
       ],
       "ignoreMethods": ["getEthValue", "getRethValue"]
+    },
+    "eth:0x84087689B0D6a8A8f11C297e9e7f8De99f398258": {
+      "ignoreMethods": ["pointer"]
+    },
+    "eth:0xa5224865040034A9f8E5C60e0a616c9c8A63f237": {
+      "ignoreMethods": ["pointer"]
+    },
+    "eth:0xcC77baf5706BDf7CFA7FefD5337833e2e1fd0d8e": {
+      "ignoreMethods": ["pointer"]
     }
   }
 }

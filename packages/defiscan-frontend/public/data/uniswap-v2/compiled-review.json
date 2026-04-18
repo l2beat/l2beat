@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.733Z",
+  "lastModified": "2026-04-16T15:45:40.573Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "uniswap-v2",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 833336786.4001709,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 0,
-    "linesOfCode": 1979
+    "linesOfCode": 1979,
+    "verifiedContractCount": 12,
+    "coverage": 100
   },
   "admins": [
     {

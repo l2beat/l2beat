@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.655Z",
+  "lastModified": "2026-04-16T07:20:32.127Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "liquity-v2",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 129789691.14905563,
     "totalTokenValueAtRisk": 32500626.320502788,
     "totalTokenValue": 32500626.320502788,
-    "linesOfCode": 12870
+    "linesOfCode": 12870,
+    "verifiedContractCount": 41,
+    "coverage": 93
   },
   "admins": [
     {

@@ -128,6 +128,18 @@
     },
     "eth:0x553337946F2FAb8911774b20025fa776B76a7CcE": {
       "ignoreMethods": ["canScheduleProposal"]
+    },
+    "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": {
+      "ignoreMethods": ["WITHDRAWAL_REQUEST"]
+    },
+    "eth:0xdC5FE1782B6943f318E05230d688713a560063DC": {
+      "ignoreMethods": ["BEACON_ROOTS"]
+    },
+    "eth:0xbDb567672c867DB533119C2dcD4FB9d8b44EC82f": {
+      "ignoreMethods": ["BEACON_ROOTS"]
+    },
+    "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3": {
+      "ignoreMethods": ["BEACON_ROOTS"]
     }
   }
 }

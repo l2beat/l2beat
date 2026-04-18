@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "updatedAt": "2026-04-18T09:02:23.650Z",
+  "lastModified": "2026-04-16T07:20:32.123Z",
   "compiledAt": "2026-04-18T09:07:57.000Z",
   "project": "lido",
   "metadata": {
@@ -21,7 +21,9 @@
     "totalCapitalAtRisk": 289542505.31383336,
     "totalTokenValueAtRisk": 0,
     "totalTokenValue": 22369410651.988186,
-    "linesOfCode": 28758
+    "linesOfCode": 28758,
+    "verifiedContractCount": 60,
+    "coverage": 97
   },
   "admins": [
     {
