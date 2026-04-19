@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776179236,
-  "lastConsumedUpdateNotifierId": 101,
+  "lastReconciledAt": 1776586718,
+  "lastConsumedUpdateNotifierId": 110,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -2142,6 +2142,50 @@
       "entity": null,
       "id": "101:eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40:contract-added",
       "type": "contract-added"
+    },
+    {
+      "timestamp": "2026-04-19T08:15:14.000Z",
+      "updateNotifierId": 110,
+      "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+      "contractName": "cUSDTv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "110:eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.isTransferPaused",
+          "before": false,
+          "after": true
+        },
+        {
+          "field": "values.isWithdrawPaused",
+          "before": false,
+          "after": true
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-19T08:15:14.000Z",
+      "updateNotifierId": 110,
+      "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+      "contractName": "cUSDCv3",
+      "isDependency": false,
+      "entity": null,
+      "id": "110:eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.isTransferPaused",
+          "before": false,
+          "after": true
+        },
+        {
+          "field": "values.isWithdrawPaused",
+          "before": false,
+          "after": true
+        }
+      ]
     }
   ]
 }

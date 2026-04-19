@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "lastModified": "2026-04-18T12:10:22.245Z",
+  "lastModified": "2026-04-19T08:21:21.818Z",
   "contracts": {
     "eth:0x5721cbbd64fc7Ae3Ef44A0A3F9a790A9264Cf9BF": {
-      "lastFetched": "2026-04-18T12:10:15.960Z",
+      "lastFetched": "2026-04-19T08:21:15.576Z",
       "balances": {
         "tokens": [
           {
@@ -12,23 +12,23 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007248889113938389
+            "usdValue": 0.0006944816450582888
           },
           {
             "assetAddress": "0x6440f144b7e50d6a8439336510312d2f54beb01d",
             "symbol": "BOLD",
             "name": "BOLD Stablecoin",
-            "balance": "8.457459425069304e+24",
+            "balance": "8.407162901634088e+24",
             "decimals": 18,
-            "usdValue": 8464054.572689164
+            "usdValue": 8418947.160542175
           },
           {
             "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "symbol": "WETH",
             "name": "Wrapped Ether",
-            "balance": "22668629309534780000",
+            "balance": "22666654682352796000",
             "decimals": 18,
-            "usdValue": 53437.43993024563
+            "usdValue": 52557.62554506507
           },
           {
             "assetAddress": "0xe92ec83d8ea27f802393f084004491e463209acb",
@@ -39,13 +39,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 8517492.013344299,
-        "timestamp": "2026-04-18T12:10:16.302Z",
+        "totalUsdValue": 8471504.786781723,
+        "timestamp": "2026-04-19T08:21:15.871Z",
         "source": "debank"
       }
     },
     "eth:0x9502b7c397E9aa22FE9dB7EF7DAF21cD2AEBe56B": {
-      "lastFetched": "2026-04-18T12:10:16.303Z",
+      "lastFetched": "2026-04-19T08:21:15.872Z",
       "balances": {
         "tokens": [
           {
@@ -54,15 +54,15 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007248889113938389
+            "usdValue": 0.0006944816450582888
           },
           {
             "assetAddress": "0x6440f144b7e50d6a8439336510312d2f54beb01d",
             "symbol": "BOLD",
             "name": "BOLD Stablecoin",
-            "balance": "8.892391725087855e+24",
+            "balance": "8.877727329404518e+24",
             "decimals": 18,
-            "usdValue": 8899326.03398288
+            "usdValue": 8890171.175038194
           },
           {
             "assetAddress": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
@@ -70,7 +70,7 @@
             "name": "Wrapped liquid staked Ether 2.0",
             "balance": "42403258111688000000",
             "decimals": 18,
-            "usdValue": 123188.68563599128
+            "usdValue": 120645.2834119395
           },
           {
             "assetAddress": "0x9d24364b97270961b2948734afe8d58832efd43a",
@@ -81,13 +81,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 9022514.720343761,
-        "timestamp": "2026-04-18T12:10:17.148Z",
+        "totalUsdValue": 9010816.459144615,
+        "timestamp": "2026-04-19T08:21:16.843Z",
         "source": "debank"
       }
     },
     "eth:0xd442E41019B7F5C4dD78F50dc03726C446148695": {
-      "lastFetched": "2026-04-18T12:10:17.149Z",
+      "lastFetched": "2026-04-19T08:21:16.844Z",
       "balances": {
         "tokens": [
           {
@@ -96,15 +96,15 @@
             "name": "HEX",
             "balance": "100000000",
             "decimals": 8,
-            "usdValue": 0.0007248889113938389
+            "usdValue": 0.0006944816450582888
           },
           {
             "assetAddress": "0x6440f144b7e50d6a8439336510312d2f54beb01d",
             "symbol": "BOLD",
             "name": "BOLD Stablecoin",
-            "balance": "3.6960407880011043e+24",
+            "balance": "3.6941394821770636e+24",
             "decimals": 18,
-            "usdValue": 3698922.9696801123
+            "usdValue": 3699317.530540097
           },
           {
             "assetAddress": "0xae78736cd615f374d3085123a210448e74fc6393",
@@ -112,25 +112,25 @@
             "name": "Rocket Pool ETH",
             "balance": "3027019792617564700",
             "decimals": 18,
-            "usdValue": 8290.056301472865
+            "usdValue": 8151.890208032141
           }
         ],
-        "totalUsdValue": 3707213.026706474,
-        "timestamp": "2026-04-18T12:10:18.292Z",
+        "totalUsdValue": 3707469.4214426107,
+        "timestamp": "2026-04-19T08:21:17.741Z",
         "source": "debank"
       }
     },
     "eth:0xeB5A8C825582965f1d84606E078620a84ab16AfE": {
-      "lastFetched": "2026-04-18T12:10:18.293Z",
+      "lastFetched": "2026-04-19T08:21:17.742Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
             "symbol": "WETH",
             "name": "Wrapped Ether",
-            "balance": "7.776972267743778e+21",
+            "balance": "7.284880463866755e+21",
             "decimals": 18,
-            "usdValue": 18332890.035920437
+            "usdValue": 16891598.02917712
           },
           {
             "assetAddress": "0xe92ec83d8ea27f802393f084004491e463209acb",
@@ -141,22 +141,22 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 18332890.035920437,
-        "timestamp": "2026-04-18T12:10:19.267Z",
+        "totalUsdValue": 16891598.02917712,
+        "timestamp": "2026-04-19T08:21:18.830Z",
         "source": "debank"
       }
     },
     "eth:0x531a8f99c70D6A56A7CEe02d6B4281650d7919a0": {
-      "lastFetched": "2026-04-18T12:10:19.268Z",
+      "lastFetched": "2026-04-19T08:21:18.832Z",
       "balances": {
         "tokens": [
           {
             "assetAddress": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
             "symbol": "wstETH",
             "name": "Wrapped liquid staked Ether 2.0",
-            "balance": "2.6178168464271707e+22",
+            "balance": "2.625403043034521e+22",
             "decimals": 18,
-            "usdValue": 76052037.25093691
+            "usdValue": 74697678.50460565
           },
           {
             "assetAddress": "0x9d24364b97270961b2948734afe8d58832efd43a",
@@ -175,13 +175,13 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 76052037.25093691,
-        "timestamp": "2026-04-18T12:10:20.275Z",
+        "totalUsdValue": 74697678.50460565,
+        "timestamp": "2026-04-19T08:21:19.850Z",
         "source": "debank"
       }
     },
     "eth:0x9074D72cc82DaD1e13E454755Aa8f144c479532F": {
-      "lastFetched": "2026-04-18T12:10:20.276Z",
+      "lastFetched": "2026-04-19T08:21:19.851Z",
       "balances": {
         "tokens": [
           {
@@ -198,7 +198,7 @@
             "name": "Rocket Pool ETH",
             "balance": "4.862131606357308e+21",
             "decimals": 18,
-            "usdValue": 13315851.075759795
+            "usdValue": 13093922.652469194
           },
           {
             "assetAddress": "0xbaa70614c7aafb568a93e62a98d55696bcc85dfe",
@@ -209,21 +209,21 @@
             "usdValue": 0
           }
         ],
-        "totalUsdValue": 13315851.075759795,
-        "timestamp": "2026-04-18T12:10:21.262Z",
+        "totalUsdValue": 13093922.652469194,
+        "timestamp": "2026-04-19T08:21:20.850Z",
         "source": "debank"
       }
     },
     "eth:0x6440f144b7e50D6a8439336510312d2F54beB01D": {
-      "lastFetched": "2026-04-18T12:10:21.263Z",
+      "lastFetched": "2026-04-19T08:21:20.851Z",
       "tokenInfo": {
         "symbol": "BOLD",
         "name": "BOLD Stablecoin",
         "decimals": 18,
-        "price": 1.0007798024546604,
-        "totalSupply": "32471818.498153906",
-        "tokenValue": 32497140.10192605,
-        "timestamp": "2026-04-18T12:10:22.245Z",
+        "price": 1.0014016927048954,
+        "totalSupply": "32427226.982684433",
+        "tokenValue": 32472679.99018605,
+        "timestamp": "2026-04-19T08:21:21.817Z",
         "source": "debank"
       }
     }

@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-18T12:01:08.186Z",
-  "compiledAt": "2026-04-18T12:06:35.000Z",
+  "lastModified": "2026-04-19T08:09:27.781Z",
+  "compiledAt": "2026-04-19T08:15:14.000Z",
   "project": "lido",
   "metadata": {
     "protocolName": "Lido",
@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "stETH",
-    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $287.44M in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract."
+    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $738.95M in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract."
   },
   "totals": {
     "contractCount": 60,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 214,
     "adminCount": 37,
     "dependencyCount": 1,
-    "totalCapitalAtRisk": 287444532.8453473,
+    "totalCapitalAtRisk": 738947994.3163295,
     "totalTokenValueAtRisk": 0,
-    "totalTokenValue": 22226947730.26883,
+    "totalTokenValue": 21756921787.23627,
     "linesOfCode": 28758,
     "verifiedContractCount": 60,
     "coverage": 100
@@ -29,7 +29,7 @@
     {
       "address": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "name": "Lido DAO Agent",
-      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $287.44M in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
+      "description": "The primary governance executor for the Lido DAO. Holds DEFAULT_ADMIN_ROLE on most protocol contracts and can upgrade proxies, manage staking modules, configure oracle parameters, and grant/revoke roles across the entire system. Controls $738.95M in direct capital exposure across 17 contracts. All actions flow through the Voting contract, which is gated by the DualGovernance module.",
       "adminType": "Contract",
       "isGovernance": true,
       "functions": [
@@ -48,7 +48,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -69,7 +69,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -90,7 +90,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -111,7 +111,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -132,7 +132,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -153,7 +153,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -174,7 +174,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -195,7 +195,7 @@
               "calledFunctions": [
                 "decreaseStakingModuleVettedKeysCountByNodeOperator"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -925,7 +925,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 0.000029005522151967918,
+          "directFundsUsd": 0.00002879448742369857,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -934,7 +934,7 @@
           "contractName": "StakingRouter",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 0.000029005522151967918,
+          "directFundsUsd": 0.00002879448742369857,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -944,7 +944,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029005522151967918,
+          "directFundsUsd": 0.00002879448742369857,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -954,7 +954,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 0.000029005522151967918,
+          "directFundsUsd": 0.00002879448742369857,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1043,7 +1043,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1066,7 +1066,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1090,7 +1090,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1114,7 +1114,7 @@
                 "reportStakingModuleExitedValidatorsCountByNodeOperator",
                 "onValidatorsCountsByNodeOperatorReportingFinished"
               ],
-              "fundsUsd": 0.000029005522151967918,
+              "fundsUsd": 0.00002879448742369857,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1125,7 +1125,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__ossify",
           "impact": "critical",
-          "directFundsUsd": 287443835.89727336,
+          "directFundsUsd": 738947305.1422498,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1134,7 +1134,7 @@
           "contractName": "WithdrawalQueueERC721",
           "functionName": "proxy__changeAdmin",
           "impact": "critical",
-          "directFundsUsd": 287443835.89727336,
+          "directFundsUsd": 738947305.1422498,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1144,7 +1144,7 @@
           "functionName": "proxy__upgradeTo",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 287443835.89727336,
+          "directFundsUsd": 738947305.1422498,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1154,7 +1154,7 @@
           "functionName": "proxy__upgradeToAndCall",
           "impact": "critical",
           "isUpgrade": true,
-          "directFundsUsd": 287443835.89727336,
+          "directFundsUsd": 738947305.1422498,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -1397,9 +1397,9 @@
           ]
         }
       ],
-      "totalDirectCapital": 287443835.8973024,
+      "totalDirectCapital": 738947305.1422787,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 287443835.8973024,
+      "totalReachableCapital": 738947305.1422787,
       "totalReachableTokenValue": 0
     },
     {
@@ -2819,9 +2819,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029005522151967918,
+      "totalDirectCapital": 0.00002879448742369857,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029005522151967918,
+      "totalReachableCapital": 0.00002879448742369857,
       "totalReachableTokenValue": 0
     },
     {
@@ -3039,7 +3039,7 @@
     {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
       "name": "TokenManager",
-      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $696.95 in direct capital through the LDO token and Voting contract.",
+      "description": "Aragon TokenManager app that manages the LDO governance token. Can mint and destroy LDO tokens, change the token controller, and enable/disable token transfers. Controls $689.17 in direct capital through the LDO token and Voting contract.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -3048,7 +3048,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "changeController",
           "impact": "critical",
-          "directFundsUsd": 696.9480449139716,
+          "directFundsUsd": 689.1740507769989,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3057,7 +3057,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "generateTokens",
           "impact": "critical",
-          "directFundsUsd": 696.9480449139716,
+          "directFundsUsd": 689.1740507769989,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3066,7 +3066,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "destroyTokens",
           "impact": "critical",
-          "directFundsUsd": 696.9480449139716,
+          "directFundsUsd": 689.1740507769989,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3075,7 +3075,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "enableTransfers",
           "impact": "critical",
-          "directFundsUsd": 696.9480449139716,
+          "directFundsUsd": 689.1740507769989,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3084,7 +3084,7 @@
           "contractName": "Lido DAO Token",
           "functionName": "claimTokens",
           "impact": "critical",
-          "directFundsUsd": 696.9480449139716,
+          "directFundsUsd": 689.1740507769989,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3098,9 +3098,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 696.9480449139716,
+      "totalDirectCapital": 689.1740507769989,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 696.9480449139716,
+      "totalReachableCapital": 689.1740507769989,
       "totalReachableTokenValue": 0
     },
     {
@@ -3295,9 +3295,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029005522151967918,
+      "totalDirectCapital": 0.00002879448742369857,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029005522151967918,
+      "totalReachableCapital": 0.00002879448742369857,
       "totalReachableTokenValue": 0
     },
     {
@@ -3335,9 +3335,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029005522151967918,
+      "totalDirectCapital": 0.00002879448742369857,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029005522151967918,
+      "totalReachableCapital": 0.00002879448742369857,
       "totalReachableTokenValue": 0
     },
     {
@@ -3357,9 +3357,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029005522151967918,
+      "totalDirectCapital": 0.00002879448742369857,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029005522151967918,
+      "totalReachableCapital": 0.00002879448742369857,
       "totalReachableTokenValue": 0
     },
     {
@@ -3379,9 +3379,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 0.000029005522151967918,
+      "totalDirectCapital": 0.00002879448742369857,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 0.000029005522151967918,
+      "totalReachableCapital": 0.00002879448742369857,
       "totalReachableTokenValue": 0
     },
     {
@@ -3457,7 +3457,7 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 287444532.8453473,
+    "totalFundsAtRisk": 738947994.3163295,
     "totalTokenValueAtRisk": 0
   },
   "dependencies": [
@@ -3512,10 +3512,10 @@
       "name": "wstETH (Wrapped stETH)",
       "description": "The wrapped stETH contract that holds stETH on behalf of wstETH holders. Contains (N/A) in stETH, making it the largest single concentration of protocol funds. wstETH provides a non-rebasing wrapper around stETH for DeFi integrations.",
       "balances": {
-        "totalUsdValue": 10931373336.434679
+        "totalUsdValue": 10562090836.153599
       },
       "positions": {
-        "totalUsdValue": 10918528875.720167
+        "totalUsdValue": 10693157966.237593
       },
       "tokenInfo": null,
       "aggregate": null
@@ -3525,10 +3525,10 @@
       "name": "WithdrawalQueueERC721 (stETH)",
       "description": "Withdrawal request queue where users lock stETH to receive ETH. Holds (N/A) in stETH and ETH balances, plus (N/A) in DeFi positions. Requests are fulfilled as the protocol processes validator exits and receives Beacon Chain withdrawals.",
       "balances": {
-        "totalUsdValue": 183430497.32733512
+        "totalUsdValue": 441886399.9239214
       },
       "positions": {
-        "totalUsdValue": 104013338.56993823
+        "totalUsdValue": 297060905.21832836
       },
       "tokenInfo": null,
       "aggregate": null
@@ -3538,14 +3538,14 @@
       "name": "Lido stETH Token (ETH Buffer)",
       "description": "The stETH token contract itself holds (N/A) in ETH as a deposit buffer before it is staked on the Beacon Chain. This buffer provides immediate withdrawal liquidity for small requests.",
       "balances": {
-        "totalUsdValue": 9232179.791419476
+        "totalUsdValue": 4200241.521904324
       },
       "positions": null,
       "tokenInfo": {
         "symbol": "stETH",
-        "price": 2359.588624,
-        "totalSupply": "9419840.180696188",
-        "tokenValue": 22226947730.26883
+        "price": 2310.524696,
+        "totalSupply": "9416441.999041187",
+        "tokenValue": 21756921787.23627
       },
       "aggregate": null
     },
@@ -3554,10 +3554,10 @@
       "name": "Lido DAO Token (LDO)",
       "description": "The LDO governance token contract. Holds (N/A) in miscellaneous token balances.",
       "balances": {
-        "totalUsdValue": 696.9455697298877
+        "totalUsdValue": 689.171617209057
       },
       "positions": {
-        "totalUsdValue": 0.0024751840839202345
+        "totalUsdValue": 0.0024335679419625234
       },
       "tokenInfo": null,
       "aggregate": null
@@ -5223,6 +5223,42 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-04-19T08:15:14.000Z",
+      "updateNotifierId": 111,
+      "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
+      "contractName": "LazyOracle",
+      "entity": null,
+      "id": "111:eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.latestReportData.refSlot",
+          "before": 14133599,
+          "after": 14140799
+        },
+        {
+          "field": "values.latestReportData.treeRoot",
+          "before": "0x34b5bc6d84063ef1e29b310e32b8babaaacf61e6a9ac0c490027cc12fa172323",
+          "after": "0xfebc22c2a607b3a45e2f82a2bf2a93a89e84530aacc79ecb122f45d3ef39670f"
+        },
+        {
+          "field": "values.latestReportData.reportCid",
+          "before": "QmSchK6ac7khnv2UQ1BDctNZyttYDG8hSmNLC487KAcCep",
+          "after": "QmPGP2u19GSus9F11Xx4rzLNYRiv7zBVzra8CbF3b7MEwD"
+        },
+        {
+          "field": "values.latestReportData.timestamp",
+          "before": 1776427211,
+          "after": 1776513611
+        },
+        {
+          "field": "values.latestReportTimestamp",
+          "before": 1776427211,
+          "after": 1776513611
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-18T12:06:35.000Z",
       "updateNotifierId": 108,
