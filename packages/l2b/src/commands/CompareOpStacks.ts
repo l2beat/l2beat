@@ -4,7 +4,7 @@ import { analyzeAllOpStackChains } from '../implementations/compareOpStacks'
 import { discoveryPath } from './args'
 
 const CompareSingleOpStackProjects = command({
-  name: 'compare-op-stacks-all',
+  name: 'compare-op-stacks-single',
   description:
     'Compare semantic versioning in all projects using the op stack.',
   version: '1.0.0',
