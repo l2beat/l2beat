@@ -30,8 +30,16 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
     el.scrollBy({ left: dir === 'next' ? 304 : -304, behavior: 'smooth' })
   }
 
-  const license0 = licenses[0]
-  const license1 = licenses[1]
+  const maxLabelLen = licenses.reduce((m, l) => Math.max(m, l.label?.length ?? 0), 0)
+  // 1–3 licenses: single row of N tiles. 4+ licenses: wrap to a 2-column grid
+  // so each tile gets the width of the 2-license case instead of cramping.
+  const useTwoColumnGrid = licenses.length >= 4
+  const tilesPerRow = useTwoColumnGrid ? 2 : Math.max(licenses.length, 1)
+  // Outer sub-card content ≈ 270px, gaps = (tilesPerRow-1)*4px, tile px-1.5 = 12px.
+  const approxTileWidth = Math.floor((270 - (tilesPerRow - 1) * 4) / tilesPerRow - 12)
+  const fitSize = Math.floor(approxTileWidth / Math.max(maxLabelLen, 1) / 0.55)
+  const licenseLabelPx = Math.max(10, Math.min(36, fitSize || 36))
+  const licenseScopeSize = 'text-[8px]'
 
   return (
     <div className="bg-bg-card border border-border rounded-lg p-5 sm:p-[33px] flex flex-col gap-8">
@@ -139,39 +147,45 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
           <p className="font-bold text-[12px] uppercase text-text-muted tracking-[1.2px]">
             Licensing
           </p>
-          <div className="flex gap-4">
-            {/* Smart Contracts license */}
-            <a
-              href={license0?.url ?? undefined}
-              target={license0 ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              className="flex-1 bg-white border border-border rounded-sm p-[13px] flex flex-col gap-1 items-center"
-            >
-              <span className="font-bold text-[8px] uppercase text-text-muted text-center">
-                {license0?.licenseScope ?? 'Smart Contracts'}
-              </span>
-              <div className="flex-1 flex items-center justify-center py-4">
-                <span className="font-bold text-[36px] uppercase text-accent text-center leading-none">
-                  {license0?.label ?? '—'}
+          <div className={useTwoColumnGrid ? 'grid grid-cols-2 gap-1' : 'flex gap-1'}>
+            {licenses.length === 0 ? (
+              <div className="flex-1 bg-white border border-border rounded-sm px-1.5 py-[13px] flex flex-col gap-1 items-center">
+                <span className="font-bold text-[8px] uppercase text-text-muted text-center">
+                  License
                 </span>
+                <div className="flex-1 flex items-center justify-center py-4">
+                  <span className="font-bold text-[36px] uppercase text-accent text-center leading-none">
+                    —
+                  </span>
+                </div>
               </div>
-            </a>
-            {/* Frontend license */}
-            <a
-              href={license1?.url ?? undefined}
-              target={license1 ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              className="flex-1 bg-white border border-border rounded-sm p-[13px] flex flex-col gap-1 items-center"
-            >
-              <span className="font-bold text-[8px] uppercase text-text-muted text-center">
-                {license1?.licenseScope ?? 'Frontend'}
-              </span>
-              <div className="flex-1 flex items-center justify-center py-4">
-                <span className={`font-bold uppercase text-accent text-center leading-none ${license1?.label ? 'text-[36px]' : 'text-[18px]'}`}>
-                  {license1?.label ?? 'Closed Source'}
-                </span>
-              </div>
-            </a>
+            ) : (
+              licenses.map((license, i) => (
+                <a
+                  key={`license-${i}`}
+                  href={license.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-0 bg-white border border-border rounded-sm px-1.5 py-[13px] flex flex-col gap-1 items-center"
+                >
+                  <span
+                    className={`font-bold ${licenseScopeSize} uppercase text-text-muted text-center truncate max-w-full`}
+                    title={license.licenseScope}
+                  >
+                    {license.licenseScope ?? 'License'}
+                  </span>
+                  <div className="flex-1 flex items-center justify-center py-4 w-full">
+                    <span
+                      className="font-bold uppercase text-accent text-center leading-none truncate max-w-full"
+                      style={{ fontSize: `${licenseLabelPx}px` }}
+                      title={license.label}
+                    >
+                      {license.label ?? '—'}
+                    </span>
+                  </div>
+                </a>
+              ))
+            )}
           </div>
         </div>
       </div>

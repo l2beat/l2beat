@@ -28,6 +28,12 @@
     {
       "url": "https://www.defiscan.info/protocols/compound-v3/ethereum",
       "type": "defiscan-v1"
+    },
+    {
+      "url": "https://github.com/compound-finance/palisade/blob/main/LICENSE",
+      "type": "license",
+      "label": "GPL-3.0",
+      "licenseScope": "Frontend"
     }
   ],
   "audits": [
@@ -69,5 +75,6 @@
       "bounty": 1000000
     }
   ],
-  "linesOfCode": 8966
+  "linesOfCode": 8966,
+  "lastModified": "2026-04-19T09:10:03.694Z"
 }
