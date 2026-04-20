@@ -47,9 +47,10 @@ export function computeGraphLayout(
 
     // sqrt scaling: bubble area is proportional to volume
     const ratio = maxVolume > 0 ? (volumeMap.get(chainId) ?? 0) / maxVolume : 0
-    const radius =
-      MIN_BUBBLE_RADIUS +
-      (maxBubbleRadius - MIN_BUBBLE_RADIUS) * Math.sqrt(ratio)
+    const radius = Math.max(
+      MIN_BUBBLE_RADIUS,
+      maxBubbleRadius * Math.sqrt(ratio),
+    )
 
     layout.set(chainId, {
       x: centerX + circleRadius * Math.cos(angle),
