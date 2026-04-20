@@ -29,7 +29,6 @@
     "test": "mocha",
     "typecheck": "tsc --noEmit",
     "import-generated": "ts-node ./scripts/import-generated.ts",
-    "coingecko-suggestions": "ts-node ./scripts/coingecko-suggestions.ts",
     "test-client": "ts-node ./scripts/test-client.ts"
   },
   "dependencies": {
@@ -39,7 +38,6 @@
     "@l2beat/typescript-config": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "@trpc/server": "^11.0.0-rc.446",
-    "cmd-ts": "^0.13.0",
     "fuzzysort": "3.1.0",
     "jose": "^6.1.0",
     "viem": "^2.31.6"
