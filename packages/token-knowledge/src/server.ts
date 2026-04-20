@@ -10,7 +10,7 @@ dotenv()
 function main() {
   const connectionString = process.env['DATABASE_URL']
   if (connectionString === undefined) {
-    throw new Error('LOCAL_DB_URL is required')
+    throw new Error('DATABASE_URL is required')
   }
 
   const db = createDatabase({
