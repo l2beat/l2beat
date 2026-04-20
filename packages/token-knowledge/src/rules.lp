@@ -6,13 +6,21 @@
 %   ).
 
 % --- RULES ---
+nonSwapBridgeType("lockAndMint").
+nonSwapBridgeType("burnAndMint").
+
+% srcWasBurned dstWasMinted
+%     T           T            -> burnMint
+%     F           T            -> lockMint
+%     T           F            -> burnUnlock
+%     F           F            -> nonMinting (intent transfer) <- not same cluster
 
 % Two tokens have the same abstract token
 % if there was a nonMinting transfer between them
-% using non-swapping plugin
+% using non-swapping bridge
 sameAbstract(T1, T2) :- 
-  transfer(T1, T2, Plugin, "nonMinting"), nonSwap(Plugin).
- 
+  transfer(T1, T2, _, BridgeType), nonSwapBridgeType(BridgeType).
+
 % sameAbstract is transitive: if A=B and B=C then A=C.
 sameAbstract(T1, T3) :- 
   T1 != T3, sameAbstract(T1, T2), sameAbstract(T2, T3).
@@ -35,15 +43,6 @@ issuer(T, Issuer) :-
 cgId(t("base", "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"), "usd-coin").
 issuer(t("base", "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"), "Circle").
 cgId(t("base", "0xc3de830ea07524a0761646a6a4e4be0e114a3c83"), "uniswap").
-% Some non-swapping plugins:
-nonSwap("across").
-nonSwap("relay").
-nonSwap("gaszip").
-nonSwap("polygon").
-nonSwap("agglayer").
-nonSwap("opstack").
-nonSwap("ccip").
-nonSwap("orbitstack").
 
 #show sameAbstract/2.
 #show cgId/2.
