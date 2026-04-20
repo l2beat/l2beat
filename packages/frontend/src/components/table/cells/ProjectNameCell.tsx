@@ -244,53 +244,90 @@ function CellBottomContent({ project }: { project: ProjectCellProject }) {
   )
 }
 
+function DesktopProjectNameContent({
+  project,
+  ignoreUnderReviewIcon,
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
+  const projectName = project.shortName ?? project.name
+
+  return (
+    <div className="max-md:hidden">
+      <div className="flex items-center gap-1.5">
+        <PrimaryValueCell className="font-bold leading-none!">
+          {projectName}
+        </PrimaryValueCell>
+        <DesktopStatusIcons
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+      </div>
+      <CellBottomContent project={project} />
+    </div>
+  )
+}
+
+function MobileProjectNameContent({
+  project,
+  ignoreUnderReviewIcon,
+}: {
+  project: ProjectCellProject
+  ignoreUnderReviewIcon?: boolean
+}) {
+  const projectName = project.shortName ?? project.name
+
+  return (
+    <div className="md:hidden">
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5">
+          <PrimaryValueCell className="font-bold leading-none!">
+            {projectName}
+          </PrimaryValueCell>
+          <ProjectNameMobileStatusIcons
+            className="shrink-0"
+            project={project}
+            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+          />
+        </div>
+        <CellBottomContent project={project} />
+      </div>
+    </div>
+  )
+}
+
 export function ProjectNameCell({
   project,
   className,
   withInfoTooltip,
   ignoreUnderReviewIcon,
 }: ProjectCellProps) {
-  const projectName = project.shortName ?? project.name
-
   if (!withInfoTooltip) {
     return (
       <div className={className}>
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-          <ProjectNameMobileStatusIcons
-            project={project}
-            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
-          />
-        </div>
-        <CellBottomContent project={project} />
+        <MobileProjectNameContent
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
+        <DesktopProjectNameContent
+          project={project}
+          ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+        />
       </div>
     )
   }
 
   return (
     <div className={className}>
-      <div className="max-md:hidden">
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-          <DesktopStatusIcons
-            project={project}
-            ignoreUnderReviewIcon={ignoreUnderReviewIcon}
-          />
-        </div>
-        <CellBottomContent project={project} />
-      </div>
-      <div className="md:hidden">
-        <div className="flex items-center gap-1.5">
-          <PrimaryValueCell className="font-bold leading-none!">
-            {projectName}
-          </PrimaryValueCell>
-        </div>
-        <CellBottomContent project={project} />
-      </div>
+      <DesktopProjectNameContent
+        project={project}
+        ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+      />
+      <MobileProjectNameContent
+        project={project}
+        ignoreUnderReviewIcon={ignoreUnderReviewIcon}
+      />
     </div>
   )
 }
@@ -315,22 +352,25 @@ export function ProjectNameInfoTooltip({
   }
 
   return (
-    <Tooltip disableHoverableContent={false}>
-      <TooltipTrigger disabledOnMobile asChild>
-        {children}
-      </TooltipTrigger>
-      <TooltipPortal>
-        <TooltipContent sideOffset={16} className="flex flex-col gap-2">
-          <ProjectTooltipContent
-            projectName={projectName}
-            description={project.description}
-            quantumResistant={project.quantumResistant}
-            sections={warningSections}
-            badges={project.badges}
-          />
-        </TooltipContent>
-      </TooltipPortal>
-    </Tooltip>
+    <>
+      <div className="contents max-md:hidden">
+        <Tooltip disableHoverableContent={false}>
+          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent sideOffset={16} className="flex flex-col gap-2">
+              <ProjectTooltipContent
+                projectName={projectName}
+                description={project.description}
+                quantumResistant={project.quantumResistant}
+                sections={warningSections}
+                badges={project.badges}
+              />
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+      </div>
+      <div className="contents md:hidden">{children}</div>
+    </>
   )
 }
 

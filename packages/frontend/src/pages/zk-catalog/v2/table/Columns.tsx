@@ -3,7 +3,6 @@ import { createColumnHelper } from '@tanstack/react-table'
 import {
   ProjectNameCell,
   ProjectNameInfoTooltip,
-  ProjectNameMobileStatusIcons,
 } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
@@ -28,16 +27,12 @@ export const zkCatalogColumns = [
         nameSecondLine: ctx.row.original.creator,
       }
       return (
-        <div className="flex items-center gap-1.5 md:contents">
+        <div className="md:contents">
           <ProjectNameInfoTooltip project={project}>
             <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
               <ProjectNameCell project={project} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>
-          <ProjectNameMobileStatusIcons
-            className="shrink-0 md:hidden"
-            project={project}
-          />
         </div>
       )
     },
