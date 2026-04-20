@@ -289,6 +289,56 @@
       "transfers": [{ "type": "ccip.Transfer" }]
     }
   },
+  "ccip-unichain": {
+    "loadConfigs": ["ccip", "cctp-v1"],
+    "txs": [
+      // Unichain → Ethereum (USDC via CCTP, isCctpBacked, transfer handled by CCTP plugin)
+      {
+        "chain": "unichain",
+        "tx": "0xee58ca9757156680239f792aa1c40a34b49f2e13cfd4d38245698c28ea7ca9a3"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xdefb613dc9ca89f8281caa6c0f3ce342555af9ba9a71e0c769ece8782ee151cd"
+      },
+      // Ethereum → Unichain (USDC via CCTP, isCctpBacked, transfer handled by CCTP plugin)
+      {
+        "chain": "ethereum",
+        "tx": "0x3ee30df9d1161c2919c7a0cc8cdb427b076a13f361fed1fe14b7230cffbe103a"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0x0080f2656b6ed444c8214cb9b49a60002f8b4a520393c36e341601166bf47d22"
+      },
+      // Arbitrum → Unichain (v1.5 Burned + Minted, BETS)
+      {
+        "chain": "arbitrum",
+        "tx": "0x3058c89f49df33e3bafd494d63d90c93eeac2414d2135e2265d599ace769a371"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0xa9318c830b3e3c4f5a43f8f3a6601989dd8b78f3f7804f0637b3746e54027f3c"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // Unichain → Ethereum USDC via CCTP
+        {
+          "type": "cctp-v1.Transfer",
+          "src": { "financials": { "symbol": "USDC", "amount": 33640.694422 } },
+          "dst": { "financials": { "symbol": "USDC", "amount": 33640.694422 } }
+        },
+        // Ethereum → Unichain USDC via CCTP
+        {
+          "type": "cctp-v1.Transfer",
+          "src": { "financials": { "symbol": "USDC", "amount": 24.803953 } },
+          "dst": { "financials": { "symbol": "USDC", "amount": 24.803953 } }
+        },
+        // Arbitrum → Unichain BETS (no financials enrichment available)
+        { "type": "ccip.Transfer" }
+      ]
+    }
+  },
   "ccip-monad": {
     "loadConfigs": ["ccip"],
     "txs": [
