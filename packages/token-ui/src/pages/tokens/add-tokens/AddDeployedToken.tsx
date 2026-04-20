@@ -21,7 +21,6 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
-import { Checkbox } from '~/components/core/Checkbox'
 import {
   Dialog,
   DialogContent,
@@ -37,7 +36,6 @@ import {
   EmptyTitle,
 } from '~/components/core/Empty'
 import { Label } from '~/components/core/Label'
-import { Separator } from '~/components/core/Separator'
 import {
   Sheet,
   SheetContent,
@@ -473,15 +471,7 @@ function Queue({
 }) {
   const [csvInput, setCsvInput] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [interopOnly, setInteropOnly] = useState(false)
   const [isClearQueueDialogOpen, setIsClearQueueDialogOpen] = useState(false)
-  const {
-    refetch: refetchCoingeckoSuggestions,
-    isFetching: isFetchingCoingeckoSuggestions,
-  } = api.deployedTokens.getCoingeckoSuggestions.useQuery(
-    { interopOnly },
-    { enabled: false },
-  )
 
   function handleImport() {
     try {
@@ -503,48 +493,6 @@ function Queue({
       setError(null)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to parse CSV'
-      setError(message)
-    }
-  }
-
-  async function handleLoadCoingeckoSuggestions() {
-    try {
-      setError(null)
-      const result = await refetchCoingeckoSuggestions()
-
-      if (result.error) {
-        throw result.error
-      }
-
-      const report = result.data
-      if (!report) {
-        throw new Error('Failed to load CoinGecko suggestions')
-      }
-
-      const tokens = report.results.flatMap((result) =>
-        result.suggestions.map((suggestion) => ({
-          chain: suggestion.chain,
-          address: suggestion.address,
-          abstractTokenId: result.abstractToken.id,
-        })),
-      )
-
-      if (tokens.length === 0) {
-        toast.success('No CoinGecko suggestions found')
-        return
-      }
-
-      onImport(tokens)
-      toast.success(
-        report.errors.length > 0
-          ? `Loaded ${tokens.length} token(s). ${report.errors.length} abstract token(s) were skipped.`
-          : `Loaded ${tokens.length} token(s) from CoinGecko suggestions`,
-      )
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : 'Failed to load CoinGecko suggestions'
       setError(message)
     }
   }
@@ -615,31 +563,6 @@ function Queue({
           )}
         </div>
         <SheetFooter className="gap-4 border-t">
-          <div className="space-y-2">
-            <Label className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-              Load from CoinGecko
-            </Label>
-            <Label
-              htmlFor="coingecko-interop-only"
-              className="font-normal text-sm"
-            >
-              <Checkbox
-                id="coingecko-interop-only"
-                checked={interopOnly}
-                onCheckedChange={(checked) => setInteropOnly(checked === true)}
-              />
-              Only interop chains
-            </Label>
-            <ButtonWithSpinner
-              isLoading={isFetchingCoingeckoSuggestions}
-              type="button"
-              onClick={handleLoadCoingeckoSuggestions}
-              className="w-full"
-            >
-              Get suggestions
-            </ButtonWithSpinner>
-          </div>
-          <Separator />
           <div className="space-y-2">
             <Label
               htmlFor="queue-csv-input"
