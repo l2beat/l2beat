@@ -83,6 +83,7 @@ export type {
   TokenConnectionRecord,
   TokenConnectionUpdateable,
 } from './repositories/TokenConnectionRepository'
+export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
