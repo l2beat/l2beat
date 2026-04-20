@@ -98,4 +98,3 @@ export function updateGovernance(
 function getGovernancePath(paths: DiscoveryPaths, project: string): string {
   return path.join(paths.discovery, project, 'governance.json')
 }
-
