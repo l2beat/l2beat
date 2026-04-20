@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xdba748d6aa232bf6d266e507b4626f7d513b835a
+
+# Diff at Tue, 14 Apr 2026 09:31:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ab81aee13d178d88bf4431c3eea7328c9a3001a7 block: 1775212027
+- current timestamp: 1776158984
+
+## Description
+
+New EOA inbox, moving away from the BunnyInbox that was intended to be used as a DA verifier in the future.
+
+# Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.sequencerInbox:
+-        "eth:0x02B8d1329B653d6f53A8420C8DDbBbb5518F51b2"
++        "eth:0x00656C604FC470e6a566A695B74455e18a6D75D3"
+    }
+```
+
 Generated with discovered.json: 0xb85a721bdf1bea458c691b0da4ba9c479b38fe61
 
 # Diff at Fri, 03 Apr 2026 10:29:12 GMT:

@@ -8,18 +8,19 @@ import {
 
 export interface ElasticSearchTransportOptions
   extends ElasticSearchClientOptions {
-  bufferLimit?: number
+  /** UTF-8 byte threshold for CRITICAL alert when buffered size exceeds it; nothing is trimmed. */
+  bufferAlertBytes?: number
   flushInterval?: number
   indexPrefix?: string
 }
 
 export type UuidProvider = () => string
 
-const DEFAULT_BUFFER_LIMIT = 20_000
+export const DEFAULT_BUFFER_ALERT_BYTES = 128 * 1024 * 1024 // 128 MiB
 
 export class ElasticSearchTransport implements LoggerTransport {
   private readonly buffer: string[]
-  private readonly bufferLimit: number
+  private readonly bufferAlertBytes: number
 
   constructor(
     private readonly options: ElasticSearchTransportOptions,
@@ -29,7 +30,8 @@ export class ElasticSearchTransport implements LoggerTransport {
     private readonly uuidProvider: UuidProvider = uuidv4,
   ) {
     this.buffer = []
-    this.bufferLimit = options.bufferLimit ?? DEFAULT_BUFFER_LIMIT
+    this.bufferAlertBytes =
+      options.bufferAlertBytes ?? DEFAULT_BUFFER_ALERT_BYTES
     this.start()
   }
 
@@ -39,11 +41,6 @@ export class ElasticSearchTransport implements LoggerTransport {
 
   push(log: string) {
     this.buffer.push(log)
-    const overflow = this.buffer.length - this.bufferLimit
-    if (overflow > 0) {
-      void this.reportBufferOverflow(overflow)
-      this.buffer.splice(0, overflow)
-    }
   }
 
   private start(): void {
@@ -69,7 +66,12 @@ export class ElasticSearchTransport implements LoggerTransport {
       return
     }
 
-    /** In scope for `catch` so we can correlate flush failures with batched log lines. */
+    const bufferedBytes = sumBufferUtf8Bytes(this.buffer)
+    if (bufferedBytes > this.bufferAlertBytes) {
+      await this.reportBufferOverflow(bufferedBytes, this.buffer.length)
+    }
+
+    /** In scope for `catch` so we can correlate flush failures with batched log strings. */
     let batch: string[] = []
 
     try {
@@ -126,30 +128,6 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
   }
 
-  private async reportBufferOverflow(droppedCount: number): Promise<void> {
-    try {
-      await this.client.bulk(
-        [
-          {
-            id: this.uuidProvider(),
-            ...JSON.parse(
-              formatEcsLog({
-                time: new Date(),
-                level: 'CRITICAL',
-                message: 'Elastic Search transport buffer overflowed',
-                parameters: {
-                  droppedCount,
-                  bufferLimit: this.bufferLimit,
-                },
-              }),
-            ),
-          },
-        ],
-        await this.createIndex(),
-      )
-    } catch {}
-  }
-
   private async createIndex(): Promise<string> {
     const indexName = `${this.options.indexPrefix ?? 'logs'}-${formatDate(
       new Date(),
@@ -161,6 +139,42 @@ export class ElasticSearchTransport implements LoggerTransport {
     }
     return indexName
   }
+
+  private async reportBufferOverflow(
+    bufferedBytes: number,
+    bufferItemCount: number,
+  ): Promise<void> {
+    try {
+      await this.client.bulk(
+        [
+          {
+            id: this.uuidProvider(),
+            ...JSON.parse(
+              formatEcsLog({
+                time: new Date(),
+                level: 'CRITICAL',
+                message: 'Elastic Search transport buffer exceeds byte budget',
+                parameters: {
+                  bufferedBytes,
+                  bufferItemCount,
+                  bufferAlertBytes: this.bufferAlertBytes,
+                },
+              }),
+            ),
+          },
+        ],
+        await this.createIndex(),
+      )
+    } catch {}
+  }
+}
+
+function sumBufferUtf8Bytes(buffer: string[]): number {
+  let sum = 0
+  for (const item of buffer) {
+    sum += Buffer.byteLength(item, 'utf8')
+  }
+  return sum
 }
 
 export function formatDate(date: Date): string {

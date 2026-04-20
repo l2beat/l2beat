@@ -1,15 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { InteropDurationSplit } from '@l2beat/config'
+import type { InteropDurationSplit, Project } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { TokenData } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
 import { getAverageDuration } from './getAverageDuration'
+import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 type Params = {
   tokens: Map<string, TokenInteropData>
   tokensDetailsMap: TokensDetailsMap
+  interopProjects: Project<'interopConfig'>[]
   unknownTransfersCount: number
   logger: Logger
   durationSplit: InteropDurationSplit | undefined
@@ -18,10 +20,15 @@ type Params = {
 export function getTokensData({
   tokens,
   tokensDetailsMap,
+  interopProjects,
   unknownTransfersCount,
   logger,
   durationSplit,
 }: Params): TokenData[] {
+  const projectsById = new Map(
+    interopProjects.map((project) => [project.id, project]),
+  )
+
   const tokensData: TokenData[] = Array.from(tokens.entries())
     .map(([tokenId, token]) => {
       const tokenDetails = tokensDetailsMap.get(tokenId)
@@ -38,6 +45,7 @@ export function getTokensData({
         symbol: tokenDetails.symbol,
         issuer: tokenDetails.issuer,
         iconUrl: tokenDetails.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
+        topProtocol: getTopProtocolDisplay(token.protocols, projectsById),
         volume: token.volume,
         transferCount: token.transferCount,
         avgDuration: avgDuration,
@@ -66,6 +74,7 @@ export function getTokensData({
       symbol: 'Unknown',
       issuer: null,
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+      topProtocol: undefined,
       transferCount: unknownTransfersCount,
       avgDuration: null,
       avgValue: null,

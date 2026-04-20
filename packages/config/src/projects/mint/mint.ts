@@ -12,6 +12,7 @@ export const mint: ScalingProject = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
+  archivedAt: UnixTime(1775534349), // 2026-04-07T03:59:09Z
   discovery,
   additionalBadges: [],
   additionalPurposes: ['NFT'],
@@ -51,6 +52,7 @@ export const mint: ScalingProject = opStackL2({
       },
     ],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    untilTimestamp: UnixTime(1775534349), // 2026-04-07T03:59:09Z
     apis: [
       { type: 'rpc', url: 'https://rpc.mintchain.io', callsPerMinute: 800 },
       { type: 'blockscout', url: 'https://explorer.mintchain.io/api' },

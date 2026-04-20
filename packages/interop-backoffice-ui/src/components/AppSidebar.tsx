@@ -26,7 +26,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/core/Sidebar'
-import { cn } from '~/utils/cn'
 
 const items = [
   {
@@ -41,7 +40,6 @@ const items = [
         title: 'Aggregates',
         url: '/aggregates',
         icon: LayersIcon,
-        isUpcoming: true,
       },
 
       {
@@ -75,22 +73,19 @@ const items = [
     title: 'Indexing',
     items: [
       {
-        title: 'Resyncable plugins',
+        title: 'Plugin statuses',
         url: '/indexing/plugin-statuses',
         icon: RefreshCwIcon,
-        isUpcoming: true,
       },
       {
         title: 'Processor statuses',
         url: '/indexing/processor-statuses',
         icon: CpuIcon,
-        isUpcoming: true,
       },
       {
         title: 'Financial actions',
         url: '/financials/actions',
         icon: CircleDollarSignIcon,
-        isUpcoming: true,
       },
     ],
   },
@@ -101,7 +96,6 @@ const items = [
         title: 'Anomalies',
         url: '/insights/anomalies',
         icon: AlertTriangleIcon,
-        isUpcoming: true,
       },
       {
         title: 'Suspicious transfers',
@@ -112,7 +106,6 @@ const items = [
         title: 'Coverage pies',
         url: '/insights/coverage-pies',
         icon: PieChartIcon,
-        isUpcoming: true,
       },
       {
         title: 'Memory',
@@ -138,13 +131,8 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem
-                    key={item.title}
-                    className={cn(
-                      item.isUpcoming && 'pointer-events-none opacity-20',
-                    )}
-                  >
-                    <SidebarMenuButton asChild disabled={item.isUpcoming}>
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
                       <Link to={item.url}>
                         <item.icon />
                         <span>{item.title}</span>

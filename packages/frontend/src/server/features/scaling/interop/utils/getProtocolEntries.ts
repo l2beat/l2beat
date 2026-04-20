@@ -86,6 +86,7 @@ export function getProtocolEntries(
     const tokens = getTokensData({
       tokens: data.tokens,
       tokensDetailsMap,
+      interopProjects,
       unknownTransfersCount: data.transferCount - data.identifiedTransferCount,
       // No duration split map for aggregated view
       durationSplit: undefined,
@@ -163,6 +164,7 @@ function getByBridgeTypeData(
             getTokensData({
               tokens: data.lockAndMint.tokens,
               tokensDetailsMap,
+              interopProjects: [project],
               durationSplit: getDurationSplit(project, ['lockAndMint']),
               unknownTransfersCount:
                 data.lockAndMint.transferCount -
@@ -192,6 +194,7 @@ function getByBridgeTypeData(
             getTokensData({
               tokens: data.nonMinting.tokens,
               tokensDetailsMap,
+              interopProjects: [project],
               durationSplit: getDurationSplit(project, ['nonMinting']),
               unknownTransfersCount:
                 data.nonMinting.transferCount -
@@ -217,6 +220,7 @@ function getByBridgeTypeData(
             getTokensData({
               tokens: data.burnAndMint.tokens,
               tokensDetailsMap,
+              interopProjects: [project],
               durationSplit: getDurationSplit(project, ['burnAndMint']),
               unknownTransfersCount:
                 data.burnAndMint.transferCount -

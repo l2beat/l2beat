@@ -226,6 +226,10 @@ export const sp1turbo: BaseProject = {
         projectId: ProjectId('celo'),
         sinceTimestamp: UnixTime(1765324800),
       },
+      {
+        projectId: ProjectId('appchain'),
+        sinceTimestamp: UnixTime(1776165024),
+      },
     ],
     verifierHashes: [
       {
@@ -257,6 +261,12 @@ export const sp1turbo: BaseProject = {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x059adC0Db833f7cCb12dC41BE0017626337AfA63',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0x294a1Ee119C4B2510530572481A6a50892A9ae9f',
             ),
           },
         ],
@@ -306,6 +316,12 @@ The script will generate Plonk verifier smart contract with verification keys an
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'arbitrum',
+              '0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D',
             ),
           },
           // {

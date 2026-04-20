@@ -1,19 +1,19 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
-import { manifest } from '~/utils/Manifest'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type { AggregatedInteropTransferWithTokens } from '../types'
+import type {
+  AggregatedInteropTransferWithTokens,
+  ProtocolDisplayable,
+} from '../types'
 import type { TokensDetailsMap } from './buildTokensDetailsMap'
+import { getTopProtocolDisplay } from './getTopProtocolDisplay'
 
 export interface InteropTopTokenData {
   symbol: string
   iconUrl: string
   volume: number
   transferCount: number
-  topProtocol?: {
-    name: string
-    iconUrl: string
-  }
+  topProtocol?: ProtocolDisplayable
 }
 
 export interface GetTopTokenParams {
@@ -80,22 +80,7 @@ export function getTopToken({
 
   if (!topToken) return undefined
 
-  const topProtocolId = Array.from(topToken.protocols.entries())
-    .toSorted((a, b) => b[1] - a[1])
-    .map(([key]) => key)[0]
-
-  const protocolProject = topProtocolId
-    ? projectsById.get(ProjectId(topProtocolId))
-    : undefined
-  const topProtocol = protocolProject
-    ? {
-        name:
-          protocolProject.interopConfig.name ??
-          protocolProject.shortName ??
-          protocolProject.name,
-        iconUrl: manifest.getUrl(`/icons/${protocolProject.slug}.png`),
-      }
-    : undefined
+  const topProtocol = getTopProtocolDisplay(topToken.protocols, projectsById)
 
   return {
     symbol: topToken.symbol,

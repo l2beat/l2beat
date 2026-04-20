@@ -128,9 +128,11 @@ export type InteropProtocolTransferDetailsItem = {
   valueUsd: number | undefined
   duration: number | undefined
   srcChain: string
+  srcChainIconUrl: string | undefined
   srcTxHash: string | undefined
   srcTxHashHref: string | undefined
   dstChain: string
+  dstChainIconUrl: string | undefined
   dstTxHash: string | undefined
   dstTxHashHref: string | undefined
 }
@@ -183,6 +185,7 @@ export type TokenData = {
   symbol: string
   issuer: string | null
   iconUrl: string
+  topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null
@@ -197,6 +200,7 @@ export type TokensPairData = {
   id: string
   tokenA: { symbol: string; iconUrl: string }
   tokenB: { symbol: string; iconUrl: string }
+  topProtocol: ProtocolDisplayable | undefined
   volume: number | null
   transferCount: number
   avgDuration: AverageDuration | null

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -6,43 +5,36 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import {
-  OthersInfo,
-  RollupsInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type {
+  ScalingRiskStateValidationNoProofsEntry,
   ScalingRiskStateValidationOptimisticEntry,
   ScalingRiskStateValidationValidityEntry,
 } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
-import { ScalingRiskStateValidationTable } from './table/ScalingRiskStateValidationTable'
+import {
+  ScalingRiskNoProofsTable,
+  ScalingRiskOptimisticTable,
+  ScalingRiskValidityTable,
+} from './table/ScalingRiskStateValidationTable'
 
 type Props = {
-  validity: TabbedScalingEntries<ScalingRiskStateValidationValidityEntry>
-  optimistic: TabbedScalingEntries<ScalingRiskStateValidationOptimisticEntry>
+  validity: ScalingRiskStateValidationValidityEntry[]
+  optimistic: ScalingRiskStateValidationOptimisticEntry[]
+  noProofs: ScalingRiskStateValidationNoProofsEntry[]
 }
 
 export function ScalingRiskStateValidationTabs({
   validity,
   optimistic,
+  noProofs,
 }: Props) {
-  const [tableTab, setTableTab] = useState<'validity' | 'optimistic'>(
-    'validity',
-  )
   const filterEntries = useFilterEntries()
 
-  const entries = {
-    rollups: [...validity.rollups, ...optimistic.rollups].filter(filterEntries),
-    validiumsAndOptimiums: [
-      ...validity.validiumsAndOptimiums,
-      ...optimistic.validiumsAndOptimiums,
-    ].filter(filterEntries),
-    others: [...validity.others, ...optimistic.others].filter(filterEntries),
-  }
+  const filteredValidity = validity.filter(filterEntries)
+  const filteredOptimistic = optimistic.filter(filterEntries)
+  const filteredNoProofs = noProofs.filter(filterEntries)
 
   const initialSort = {
     id: '#',
@@ -53,60 +45,33 @@ export function ScalingRiskStateValidationTabs({
     <>
       <TableFilters
         className="max-md:mt-4 max-md:px-4"
-        entries={[
-          ...validity.rollups,
-          ...validity.validiumsAndOptimiums,
-          ...validity.others,
-          ...optimistic.rollups,
-          ...optimistic.validiumsAndOptimiums,
-          ...optimistic.others,
-        ]}
+        entries={[...validity, ...optimistic, ...noProofs]}
       />
-
-      <DirectoryTabs defaultValue="rollups">
+      <DirectoryTabs defaultValue="validity">
         <DirectoryTabsList>
-          <DirectoryTabsTrigger value="rollups">
-            Rollups <CountBadge>{entries.rollups.length}</CountBadge>
+          <DirectoryTabsTrigger value="validity">
+            Validity <CountBadge>{filteredValidity.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="validiumsAndOptimiums">
-            Validiums & Optimiums
-            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
+          <DirectoryTabsTrigger value="optimistic">
+            Optimistic <CountBadge>{filteredOptimistic.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="others">
-            Others <CountBadge>{entries.others.length}</CountBadge>
+          <DirectoryTabsTrigger value="noProofs">
+            No Proofs <CountBadge>{filteredNoProofs.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups">
-            <RollupsInfo />
-            <ScalingRiskStateValidationTable
-              tableTab={tableTab}
-              setTableTab={setTableTab}
-              validity={validity.rollups}
-              optimistic={optimistic.rollups}
-            />
+          <DirectoryTabsContent value="validity">
+            <ScalingRiskValidityTable entries={filteredValidity} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiumsAndOptimiums">
-            <ValidiumsAndOptimiumsInfo />
-            <ScalingRiskStateValidationTable
-              tableTab={tableTab}
-              setTableTab={setTableTab}
-              validity={validity.validiumsAndOptimiums}
-              optimistic={optimistic.validiumsAndOptimiums}
-            />
+          <DirectoryTabsContent value="optimistic">
+            <ScalingRiskOptimisticTable entries={filteredOptimistic} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others">
-            <OthersInfo />
-            <ScalingRiskStateValidationTable
-              tableTab={tableTab}
-              setTableTab={setTableTab}
-              validity={validity.others}
-              optimistic={optimistic.others}
-            />
+          <DirectoryTabsContent value="noProofs">
+            <ScalingRiskNoProofsTable entries={filteredNoProofs} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

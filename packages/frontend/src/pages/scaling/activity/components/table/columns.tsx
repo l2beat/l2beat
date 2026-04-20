@@ -109,7 +109,7 @@ export const getScalingActivityColumns = (
       meta: {
         align: 'right',
         headClassName: 'max-w-[110px]',
-        tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage changed compared to 7D ago.`,
+        tooltip: `${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`,
         colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
       },
     }),

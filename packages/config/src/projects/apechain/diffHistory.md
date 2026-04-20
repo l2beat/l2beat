@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x9012c77267f76ee42e5e23e8b750740323d22215
+
+# Diff at Tue, 14 Apr 2026 11:01:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1770822607
+- current timestamp: 1770822607
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770822607 (main branch discovery), not current.
+
+```diff
+    contract EspressoNitroTEEVerifier (arb1:0xC17cd192bd0aF90a0a5c6021ee038E9223bf390C) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      description:
+-        "Verifies attestations of an AWS Nitro TEE."
++        "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used."
+    }
+```
+
 Generated with discovered.json: 0xde170299c6b3f10fe808cc430d07da4f03a4c33e
 
 # Diff at Tue, 10 Feb 2026 15:08:50 GMT:

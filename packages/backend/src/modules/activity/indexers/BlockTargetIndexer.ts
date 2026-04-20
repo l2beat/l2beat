@@ -68,9 +68,9 @@ export class BlockTargetIndexer extends RootIndexer {
       }
     }
 
-    assert(
-      blockNumber >= this.blockHeight,
-      `Block number cannot be smaller: ${blockNumber} < ${this.blockHeight}`,
-    )
+    assert(blockNumber >= this.blockHeight, 'Block number cannot be smaller', {
+      blockNumber,
+      blockHeight: this.blockHeight,
+    })
   }
 }

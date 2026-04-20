@@ -21,9 +21,11 @@ import {
 } from './utils/getAverageDuration'
 import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
+import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
+  protocols: Map<string, number>
 }
 
 export async function getInteropTokensPairs({
@@ -34,9 +36,10 @@ export async function getInteropTokensPairs({
 }: InteropTopItemsParams): Promise<TokensPairData[]> {
   const db = getDb()
 
-  const interopProject = id
-    ? await ps.getProject({ id, select: ['interopConfig'] })
-    : undefined
+  const [interopProject, interopProjects] = await Promise.all([
+    id ? ps.getProject({ id, select: ['interopConfig'] }) : undefined,
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
   if (id && !interopProject) {
     return []
   }
@@ -75,6 +78,9 @@ export async function getInteropTokensPairs({
       manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
     ]),
   )
+  const projectsById = new Map(
+    interopProjects.map((project) => [project.id, project]),
+  )
 
   const result: Map<string, TokensPairInteropData> = new Map()
   for (const pair of pairs) {
@@ -85,11 +91,13 @@ export async function getInteropTokensPairs({
     const current = result.get(pairKey) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
+      protocols: new Map<string, number>(),
     }
 
     result.set(pairKey, {
       ...accumulateTokensPairs(current, pair),
       flows: current.flows,
+      protocols: current.protocols,
     })
 
     const flowKey = `${pair.srcChain}::${pair.dstChain}`
@@ -109,6 +117,13 @@ export async function getInteropTokensPairs({
         volume: pair.volume,
       })
     }
+
+    const currentProtocol = current.protocols.get(pair.id)
+    if (currentProtocol) {
+      current.protocols.set(pair.id, (currentProtocol ?? 0) + pair.volume)
+    } else {
+      current.protocols.set(pair.id, pair.volume)
+    }
   }
 
   return Array.from(result.entries())
@@ -118,6 +133,7 @@ export async function getInteropTokensPairs({
           id: pairId,
           tokenA: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
           tokenB: { symbol: 'Unknown', iconUrl: TOKEN_PLACEHOLDER_ICON_URL },
+          topProtocol: undefined,
           volume: null,
           transferCount: data.transferCount,
           avgDuration: null,
@@ -141,6 +157,7 @@ export async function getInteropTokensPairs({
         id: pairId,
         tokenA,
         tokenB,
+        topProtocol: getTopProtocolDisplay(data.protocols, projectsById),
         volume: data.volume,
         transferCount: data.transferCount,
         avgDuration,

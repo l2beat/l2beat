@@ -53,6 +53,7 @@ export function TokensDialog({
 
   const utils = api.useUtils()
   const queryInput = { ...selectionForApi, id, type }
+  const showTopProtocolColumn = id === undefined
 
   const tabsList = (
     <>
@@ -83,12 +84,14 @@ export function TokensDialog({
         <TokensTable
           queryInput={queryInput}
           showNetMintedValueColumn={showNetMintedValueColumn}
+          showTopProtocolColumn={showTopProtocolColumn}
         />
       </TabsContent>
       <TabsContent value="pairs">
         <TokensPairsTable
           queryInput={queryInput}
           hideSameToken={hideSameToken}
+          showTopProtocolColumn={showTopProtocolColumn}
         />
       </TabsContent>
     </>
@@ -120,7 +123,7 @@ export function TokensDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="primary-card flex max-h-3/5 w-[1040px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
+      <DialogContent className="primary-card flex max-h-3/5 w-[1120px] max-w-[calc(100vw-1rem)] flex-col gap-0 overflow-hidden bg-surface-primary px-0 pt-0 pb-0">
         <DialogClose />
         <Tabs
           name="tokens"

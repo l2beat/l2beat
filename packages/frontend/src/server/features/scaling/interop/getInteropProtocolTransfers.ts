@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
   InteropProtocolTransferDetailsItem,
@@ -33,6 +34,12 @@ const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 const INTEROP_CHAIN_EXPLORER_URLS = new Map(
   INTEROP_CHAINS.map((chain) => [chain.id, chain.explorerUrl]),
+)
+const INTEROP_CHAIN_ICON_URLS = new Map(
+  INTEROP_CHAINS.map((chain) => [
+    chain.id,
+    manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+  ]),
 )
 const interopTransfersCache = new InMemoryCache({})
 
@@ -221,9 +228,11 @@ export function toInteropProtocolTransferDetailsItem(
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
     duration: transfer.duration,
     srcChain: transfer.srcChain,
+    srcChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.srcChain),
     srcTxHash: transfer.srcTxHash,
     srcTxHashHref,
     dstChain: transfer.dstChain,
+    dstChainIconUrl: INTEROP_CHAIN_ICON_URLS.get(transfer.dstChain),
     dstTxHash: transfer.dstTxHash,
     dstTxHashHref,
   }

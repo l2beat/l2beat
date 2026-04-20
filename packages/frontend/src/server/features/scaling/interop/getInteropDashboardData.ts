@@ -48,7 +48,11 @@ export async function getInteropDashboardData(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),
   )
   const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
-  const summaryTokens = getSummaryTokensData(records, tokensDetailsMap)
+  const summaryTokens = getSummaryTokensData(
+    records,
+    tokensDetailsMap,
+    interopProjects,
+  )
 
   // Projects that are part of other projects
   const subgroupProjects = new Set(
@@ -96,13 +100,14 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       transfers: { value: 5000 - i * 800, share: 20 - i * 3 },
     }))
 
-  const mockTokens = [
+  const mockTokens: TokenData[] = [
     {
       id: 'eth001',
       symbol: 'ETH',
       issuer: 'ethereum',
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
+      topProtocol: undefined,
       volume: 10_000_000,
       transferCount: 1000,
       avgDuration: { type: 'single', duration: 100_000 } as const,
@@ -118,6 +123,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       issuer: 'circle',
       iconUrl:
         'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
+      topProtocol: undefined,
       volume: 5_000_000,
       transferCount: 500,
       avgDuration: { type: 'single', duration: 50_000 } as const,
@@ -179,12 +185,13 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     snapshotTimestamp: undefined,
   }))
 
-  const topToken: InteropTopTokenData | undefined = mockTokens[0]
+  const firstMockToken = mockTokens[0]
+  const topToken: InteropTopTokenData | undefined = firstMockToken
     ? {
-        symbol: mockTokens[0].symbol,
-        iconUrl: mockTokens[0].iconUrl,
-        volume: mockTokens[0].volume,
-        transferCount: mockTokens[0].transferCount,
+        symbol: firstMockToken.symbol,
+        iconUrl: firstMockToken.iconUrl,
+        volume: firstMockToken.volume ?? 0,
+        transferCount: firstMockToken.transferCount,
         topProtocol: interopProjects[0]
           ? {
               name:

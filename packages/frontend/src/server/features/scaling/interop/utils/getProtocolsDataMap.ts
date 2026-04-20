@@ -276,10 +276,12 @@ function mergeTokensData(
     const current = result.get(token.abstractTokenId) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
+      protocols: new Map<string, number>(),
     }
     result.set(
       token.abstractTokenId,
       accumulateTokens(current, token, {
+        protocolId: record.id,
         srcChain: record.srcChain,
         dstChain: record.dstChain,
       }),

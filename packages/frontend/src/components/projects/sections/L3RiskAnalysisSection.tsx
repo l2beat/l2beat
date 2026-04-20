@@ -1,4 +1,4 @@
-import type { Sentiment } from '@l2beat/config'
+import type { ProjectRedWarning, Sentiment } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { BigIndividualRosette } from '~/components/rosette/individual/BigIndividualRosette'
@@ -27,7 +27,7 @@ export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   combined?: RosetteValueTuple
   warning: string | undefined
   isVerified: boolean | undefined
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
 }
 
 export function L3RiskAnalysisSection({
@@ -62,7 +62,7 @@ export function L3RiskAnalysisSection({
       )}
       {redWarning && (
         <WarningBar
-          text={redWarning}
+          text={redWarning.text}
           color="red"
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}

@@ -51,7 +51,12 @@
     },
     "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": {
       // EmissionsController.getDistribution references AVS addresses (e.g. EigenDAServiceManager) - don't follow
-      "ignoreRelatives": ["getDistribution"]
+      "ignoreRelatives": ["getDistribution"],
+      "ignoreInWatchMode": [
+        "getCurrentEpoch",
+        "lastTimeButtonPressable",
+        "nextTimeButtonPressable"
+      ]
     },
     "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": {
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }

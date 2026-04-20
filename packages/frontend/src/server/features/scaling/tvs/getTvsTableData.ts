@@ -1,14 +1,41 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import compact from 'lodash/compact'
 import {
   createTvsBreakdownProjectFilter,
   get7dTvsBreakdown,
   type ProjectSevenDayTvsBreakdown,
-  type TvsBreakdownProjectFilter,
 } from './get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from './utils/getAssociatedTokenWarning'
 import { getTvsProjects } from './utils/getTvsProjects'
+
+const baseParams = {
+  excludeAssociatedTokens: v.boolean().optional(),
+  excludeRwaRestrictedTokens: v.boolean().optional(),
+}
+
+export const TvsBreakdownProjectParams = v.union([
+  v.object({
+    type: v.enum([
+      'all',
+      'layer2',
+      'rollups',
+      'validiumsAndOptimiums',
+      'others',
+      'notReviewed',
+    ]),
+    ...baseParams,
+  }),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
+    ...baseParams,
+  }),
+])
+export type TvsBreakdownProjectParams = v.infer<
+  typeof TvsBreakdownProjectParams
+>
 
 export type TvsTableData = Record<string, TvsTableProjectData>
 
@@ -17,7 +44,7 @@ interface TvsTableProjectData extends ProjectSevenDayTvsBreakdown {
 }
 
 export async function getTvsTableData(
-  params: TvsBreakdownProjectFilter,
+  params: TvsBreakdownProjectParams,
 ): Promise<{ total: number; projects: TvsTableData }> {
   const tvsProjects = await getTvsProjects(
     createTvsBreakdownProjectFilter(params),

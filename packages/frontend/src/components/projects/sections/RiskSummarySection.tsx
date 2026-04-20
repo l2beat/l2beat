@@ -1,4 +1,4 @@
-import type { ProjectRiskCategory } from '@l2beat/config'
+import type { ProjectRedWarning, ProjectRiskCategory } from '@l2beat/config'
 import type { HostChainRisksWarningProps } from '~/components/HostChainRisksWarning'
 import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { WarningBar } from '~/components/WarningBar'
@@ -13,7 +13,7 @@ export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]
   warning: string | undefined
   verificationWarnings: ProjectVerificationWarnings
-  redWarning: string | undefined
+  redWarning: ProjectRedWarning | undefined
   hostChainWarning?: HostChainRisksWarningProps
 }
 
@@ -63,7 +63,7 @@ export function RiskSummarySection({
       )}
       {redWarning && (
         <WarningBar
-          text={redWarning}
+          text={redWarning.text}
           color="red"
           className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}

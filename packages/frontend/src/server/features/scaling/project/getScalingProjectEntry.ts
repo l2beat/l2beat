@@ -2,6 +2,7 @@ import type {
   Project,
   ProjectAssociatedToken,
   ProjectCustomColors,
+  ProjectRedWarning,
   ProjectScalingCategory,
   ProjectScalingProofSystem,
   ProjectScalingStage,
@@ -79,7 +80,7 @@ export interface ProjectScalingEntry {
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     ongoingAnomaly?: 'single' | 'multiple'
     description?: string
