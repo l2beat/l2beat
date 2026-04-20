@@ -68,7 +68,6 @@ const schema = {
   discoveryInfo: 'TEXT',
 
   isScaling: 'BOOLEAN',
-  isInteropProtocol: 'BOOLEAN',
   isUpcoming: 'BOOLEAN',
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

@@ -20,5 +20,4 @@ export const hyperlaneHwr: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

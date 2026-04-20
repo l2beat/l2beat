@@ -20,5 +20,4 @@ export const axelarits: BaseProject = {
     ],
     type: 'multichain',
   },
-  isInteropProtocol: true,
 }

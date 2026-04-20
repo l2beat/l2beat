@@ -132,7 +132,6 @@ export interface BaseProject {
 
   // tags
   isScaling?: true
-  isInteropProtocol?: true
   isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true
