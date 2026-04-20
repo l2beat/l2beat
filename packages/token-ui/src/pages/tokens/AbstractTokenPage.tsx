@@ -1,3 +1,4 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
@@ -32,10 +33,8 @@ import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
-import {
-  type AbstractTokenSuggestion,
-  groupAbstractTokenSuggestions,
-} from './groupAbstractTokenSuggestions'
+
+const INTEROP_CHAIN_IDS = new Set(INTEROP_CHAINS.map((chain) => chain.id))
 
 export function AbstractTokenPage() {
   const { id } = useParams()
@@ -98,14 +97,12 @@ function AbstractTokenView({
       },
     )
 
-  const groupedSuggestions = suggestions
-    ? groupAbstractTokenSuggestions(suggestions)
-    : undefined
-
-  const sortedSuggestions = [
-    ...(groupedSuggestions?.interopSuggestions ?? []),
-    ...(groupedSuggestions?.otherSuggestions ?? []),
-  ]
+  const sortedSuggestions = (suggestions ?? [])
+    .map((suggestion) => ({
+      ...suggestion,
+      isInterop: INTEROP_CHAIN_IDS.has(suggestion.chain),
+    }))
+    .sort((a, b) => Number(b.isInterop) - Number(a.isInterop))
 
   return (
     <>
@@ -253,7 +250,7 @@ function AbstractTokenView({
 function SuggestionRow({
   suggestion,
 }: {
-  suggestion: AbstractTokenSuggestion
+  suggestion: { chain: string; address: string; isInterop: boolean }
 }) {
   return (
     <div className="flex items-center justify-between gap-2 px-6 py-2 odd:bg-muted">
