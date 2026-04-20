@@ -1,3 +1,5 @@
 build
 .env
 .cache
+scripts/coingecko-suggestions.json
+scripts/coingecko-suggestions-queue.csv

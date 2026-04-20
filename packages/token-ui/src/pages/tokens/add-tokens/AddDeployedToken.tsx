@@ -6,6 +6,7 @@ import {
   ListPlusIcon,
   ListXIcon,
   PlusIcon,
+  TrashIcon,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -20,12 +21,23 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import { Checkbox } from '~/components/core/Checkbox'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
 import {
   Empty,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Label } from '~/components/core/Label'
+import { Separator } from '~/components/core/Separator'
 import {
   Sheet,
   SheetContent,
@@ -64,6 +76,9 @@ export function AddDeployedToken() {
   )
   const addToQueue = useCallback((item: QueueItem) => {
     setQueue((prev) => [...prev, item])
+  }, [])
+  const clearQueue = useCallback(() => {
+    setQueue([])
   }, [])
 
   const form = useForm<DeployedTokenSchema>({
@@ -359,7 +374,7 @@ export function AddDeployedToken() {
               )}
             </Button>
           </SheetTrigger>
-          <Queue queue={queue} onImport={handleImport} />
+          <Queue queue={queue} onImport={handleImport} onClear={clearQueue} />
         </Sheet>
       </Card>
       {checks?.data?.suggestions && checks.data.suggestions.length !== 0 && (
@@ -450,12 +465,23 @@ function Suggestions({
 function Queue({
   queue,
   onImport,
+  onClear,
 }: {
   queue: QueueItem[]
   onImport: (tokens: QueueItem[]) => void
+  onClear: () => void
 }) {
   const [csvInput, setCsvInput] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [interopOnly, setInteropOnly] = useState(false)
+  const [isClearQueueDialogOpen, setIsClearQueueDialogOpen] = useState(false)
+  const {
+    refetch: refetchCoingeckoSuggestions,
+    isFetching: isFetchingCoingeckoSuggestions,
+  } = api.deployedTokens.getCoingeckoSuggestions.useQuery(
+    { interopOnly },
+    { enabled: false },
+  )
 
   function handleImport() {
     try {
@@ -481,55 +507,196 @@ function Queue({
     }
   }
 
+  async function handleLoadCoingeckoSuggestions() {
+    try {
+      setError(null)
+      const result = await refetchCoingeckoSuggestions()
+
+      if (result.error) {
+        throw result.error
+      }
+
+      const report = result.data
+      if (!report) {
+        throw new Error('Failed to load CoinGecko suggestions')
+      }
+
+      const tokens = report.results.flatMap((result) =>
+        result.suggestions.map((suggestion) => ({
+          chain: suggestion.chain,
+          address: suggestion.address,
+          abstractTokenId: result.abstractToken.id,
+        })),
+      )
+
+      if (tokens.length === 0) {
+        toast.success('No CoinGecko suggestions found')
+        return
+      }
+
+      onImport(tokens)
+      toast.success(
+        report.errors.length > 0
+          ? `Loaded ${tokens.length} token(s). ${report.errors.length} abstract token(s) were skipped.`
+          : `Loaded ${tokens.length} token(s) from CoinGecko suggestions`,
+      )
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Failed to load CoinGecko suggestions'
+      setError(message)
+    }
+  }
+
+  function handleClearQueue() {
+    onClear()
+    setIsClearQueueDialogOpen(false)
+    toast.success('Queue cleared')
+  }
+
   return (
-    <SheetContent side="right" className="flex flex-col">
-      <SheetHeader>
-        <SheetTitle>Queue</SheetTitle>
-      </SheetHeader>
-      <div className="flex-1 overflow-y-auto px-4">
-        {queue.length > 0 ? (
-          <ul className="list-inside list-decimal space-y-2">
-            {queue.map((item, index) => (
-              <li
-                key={index}
-                className="truncate whitespace-nowrap even:bg-muted"
-              >
-                {[item.chain, formatAddress(item.address), item.abstractTokenId]
-                  .filter(Boolean)
-                  .join(' | ')}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <Empty>
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <ListXIcon />
-              </EmptyMedia>
-              <EmptyTitle>No tokens in queue</EmptyTitle>
-            </EmptyHeader>
-          </Empty>
-        )}
-      </div>
-      <SheetFooter>
-        <div className="space-y-2">
-          <Textarea
-            value={csvInput}
-            onChange={(e) => {
-              setCsvInput(e.target.value)
-              setError(null)
-            }}
-            placeholder="chain*,address*,abstractTokenId"
-            rows={10}
-            className="max-h-[192px] font-mono text-sm"
-          />
-          {error && <p className="text-destructive text-sm">{error}</p>}
+    <>
+      <SheetContent side="right" className="flex flex-col gap-0">
+        <SheetHeader>
+          <SheetTitle>Queue</SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-1 flex-col overflow-hidden">
+          {queue.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between px-4 pb-2">
+                <span className="text-muted-foreground text-xs">
+                  {queue.length} {queue.length === 1 ? 'token' : 'tokens'}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  type="button"
+                  onClick={() => setIsClearQueueDialogOpen(true)}
+                  className="h-7 text-muted-foreground hover:text-foreground"
+                >
+                  <TrashIcon className="size-3.5" />
+                  Clear
+                </Button>
+              </div>
+              <ol className="flex-1 space-y-px overflow-y-auto px-4 pb-2 font-mono text-sm">
+                {queue.map((item, index) => (
+                  <li
+                    key={index}
+                    className="flex gap-2 truncate whitespace-nowrap rounded px-2 py-1 odd:bg-muted/50"
+                  >
+                    <span className="w-8 shrink-0 text-right text-muted-foreground tabular-nums">
+                      {index + 1}.
+                    </span>
+                    <span className="truncate">
+                      {[
+                        item.chain,
+                        formatAddress(item.address),
+                        item.abstractTokenId,
+                      ]
+                        .filter(Boolean)
+                        .join(' | ')}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </>
+          ) : (
+            <div className="flex-1 overflow-y-auto px-4">
+              <Empty>
+                <EmptyHeader>
+                  <EmptyMedia variant="icon">
+                    <ListXIcon />
+                  </EmptyMedia>
+                  <EmptyTitle>No tokens in queue</EmptyTitle>
+                </EmptyHeader>
+              </Empty>
+            </div>
+          )}
         </div>
-        <Button className="w-full" onClick={handleImport}>
-          Import
-        </Button>
-      </SheetFooter>
-    </SheetContent>
+        <SheetFooter className="gap-4 border-t">
+          <div className="space-y-2">
+            <Label className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+              Load from CoinGecko
+            </Label>
+            <Label
+              htmlFor="coingecko-interop-only"
+              className="font-normal text-sm"
+            >
+              <Checkbox
+                id="coingecko-interop-only"
+                checked={interopOnly}
+                onCheckedChange={(checked) => setInteropOnly(checked === true)}
+              />
+              Only interop chains
+            </Label>
+            <ButtonWithSpinner
+              isLoading={isFetchingCoingeckoSuggestions}
+              type="button"
+              onClick={handleLoadCoingeckoSuggestions}
+              className="w-full"
+            >
+              Get suggestions
+            </ButtonWithSpinner>
+          </div>
+          <Separator />
+          <div className="space-y-2">
+            <Label
+              htmlFor="queue-csv-input"
+              className="font-medium text-muted-foreground text-xs uppercase tracking-wide"
+            >
+              Import from CSV
+            </Label>
+            <Textarea
+              id="queue-csv-input"
+              value={csvInput}
+              onChange={(e) => {
+                setCsvInput(e.target.value)
+                setError(null)
+              }}
+              placeholder="chain*,address*,abstractTokenId"
+              rows={6}
+              className="max-h-[192px] font-mono text-sm"
+            />
+            {error && <p className="text-destructive text-sm">{error}</p>}
+            <Button className="w-full" onClick={handleImport}>
+              Import
+            </Button>
+          </div>
+        </SheetFooter>
+      </SheetContent>
+      <Dialog
+        open={isClearQueueDialogOpen}
+        onOpenChange={setIsClearQueueDialogOpen}
+      >
+        <DialogContent showCloseButton={false}>
+          <DialogHeader>
+            <DialogTitle>Clear queue?</DialogTitle>
+            <DialogDescription>
+              {queue.length === 1
+                ? 'This will remove the only queued token.'
+                : `This will remove all ${queue.length} queued tokens.`}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => setIsClearQueueDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              type="button"
+              onClick={handleClearQueue}
+            >
+              Clear queue
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 

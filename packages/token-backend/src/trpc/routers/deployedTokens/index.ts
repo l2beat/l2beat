@@ -2,6 +2,7 @@ import { v } from '@l2beat/validate'
 import { readOnlyProcedure } from '../../procedures'
 import { router } from '../../trpc'
 import { checkDeployedToken } from './checkDeployedToken'
+import { getCoingeckoSuggestions } from './getCoingeckoSuggestions'
 import { getSuggestionsByCoingeckoId } from './getSuggestionsByCoingeckoId'
 import { getSuggestionsByPartialTransfers } from './getSuggestionsByPartialTransfers'
 import type { DeployedTokensRouterDeps } from './types'
@@ -40,6 +41,12 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       .input(v.string())
       .query(({ ctx, input }) =>
         getSuggestionsByCoingeckoId(deps.coingeckoClient, ctx.tokenDb, input),
+      ),
+
+    getCoingeckoSuggestions: readOnlyProcedure
+      .input(v.object({ interopOnly: v.boolean() }))
+      .query(({ ctx, input }) =>
+        getCoingeckoSuggestions(deps.coingeckoClient, ctx.tokenDb, input),
       ),
 
     getSuggestionsByPartialTransfers: readOnlyProcedure.query(({ ctx }) =>
