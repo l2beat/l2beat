@@ -19,5 +19,4 @@ export const wormholeWtt: BaseProject = {
     ],
     type: 'other',
   },
-  isInteropProtocol: true,
 }

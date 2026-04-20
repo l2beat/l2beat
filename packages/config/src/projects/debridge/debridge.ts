@@ -21,5 +21,4 @@ export const debridge: BaseProject = {
     ],
     type: 'other',
   },
-  isInteropProtocol: true,
 }

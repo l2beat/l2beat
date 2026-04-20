@@ -20,5 +20,4 @@ export const cbridge: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

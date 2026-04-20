@@ -131,7 +131,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isInteropProtocol?: true
   isDaLayer?: true
   isUpcoming?: true
   archivedAt?: UnixTime
