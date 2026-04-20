@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
+import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import {
   Card,
@@ -31,6 +32,10 @@ import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
+import {
+  type AbstractTokenSuggestion,
+  groupAbstractTokenSuggestions,
+} from './groupAbstractTokenSuggestions'
 
 export function AbstractTokenPage() {
   const { id } = useParams()
@@ -92,6 +97,15 @@ function AbstractTokenView({
         enabled: !!token.coingeckoId,
       },
     )
+
+  const groupedSuggestions = suggestions
+    ? groupAbstractTokenSuggestions(suggestions)
+    : undefined
+
+  const sortedSuggestions = [
+    ...(groupedSuggestions?.interopSuggestions ?? []),
+    ...(groupedSuggestions?.otherSuggestions ?? []),
+  ]
 
   return (
     <>
@@ -157,29 +171,13 @@ function AbstractTokenView({
               {isLoadingSuggestions ? (
                 <LoadingState />
               ) : suggestions && suggestions.length !== 0 ? (
-                <div className="-mx-6 flex flex-col gap-2">
-                  {suggestions.map((suggestion) => {
-                    return (
-                      <div
-                        key={suggestion.chain}
-                        className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
-                      >
-                        {suggestion.chain} ({suggestion.address})
-                        <Button variant="link" asChild size="icon">
-                          <Link
-                            to={buildUrlWithParams('/tokens/new', {
-                              tab: 'deployed',
-                              chain: suggestion.chain,
-                              address: suggestion.address,
-                            })}
-                            target="_blank"
-                          >
-                            <PlusIcon />
-                          </Link>
-                        </Button>
-                      </div>
-                    )
-                  })}
+                <div className="-mx-6 flex flex-col">
+                  {sortedSuggestions.map((suggestion) => (
+                    <SuggestionRow
+                      key={`${suggestion.chain}-${suggestion.address}`}
+                      suggestion={suggestion}
+                    />
+                  ))}
                 </div>
               ) : (
                 <Empty>
@@ -249,5 +247,41 @@ function AbstractTokenView({
         </ButtonWithSpinner>
       </div>
     </>
+  )
+}
+
+function SuggestionRow({
+  suggestion,
+}: {
+  suggestion: AbstractTokenSuggestion
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 px-6 py-2 odd:bg-muted">
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="font-medium">{suggestion.chain}</span>
+          {suggestion.isInterop && (
+            <Badge variant="outline" className="text-[10px] uppercase">
+              Interop
+            </Badge>
+          )}
+        </div>
+        <p className="truncate font-mono text-muted-foreground text-xs">
+          {suggestion.address}
+        </p>
+      </div>
+      <Button variant="link" asChild size="icon">
+        <Link
+          to={buildUrlWithParams('/tokens/new', {
+            tab: 'deployed',
+            chain: suggestion.chain,
+            address: suggestion.address,
+          })}
+          target="_blank"
+        >
+          <PlusIcon />
+        </Link>
+      </Button>
+    </div>
   )
 }
