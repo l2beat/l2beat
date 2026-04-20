@@ -8,11 +8,7 @@ import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
 import type { RelayApiClient } from './RelayApiClient'
-import {
-  buildRelayFallbackNetworks,
-  RelayConfig,
-  type RelayNetwork,
-} from './relay.config'
+import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
@@ -53,7 +49,7 @@ export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
-  private readonly fallbackNetworks: RelayNetwork[]
+  private readonly bootstrapChainNamesById: Map<number, string>
 
   constructor(
     chains: { id: number; name: string }[],
@@ -78,7 +74,10 @@ export class RelayIndexer extends ManagedChildIndexer {
       logger,
     )
 
-    this.fallbackNetworks = buildRelayFallbackNetworks(chains, oneSidedChains)
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(
+      chains,
+      oneSidedChains,
+    )
   }
 
   override async start(): Promise<void> {
@@ -95,15 +94,17 @@ export class RelayIndexer extends ManagedChildIndexer {
     await super.start()
   }
 
-  private getNetworks() {
-    return this.configs.get(RelayConfig) ?? this.fallbackNetworks
-  }
-
   private getChainName(chainId: number | undefined) {
     if (chainId === undefined) {
       return 'Unknown'
     }
-    return findChain(this.getNetworks(), (network) => network.chainId, chainId)
+
+    const networks = this.configs.get(RelayConfig)
+    if (networks) {
+      return findChain(networks, (network) => network.chainId, chainId)
+    }
+
+    return this.bootstrapChainNamesById.get(chainId) ?? `Unknown_${chainId}`
   }
 
   async update(from: number, to: number): Promise<number> {

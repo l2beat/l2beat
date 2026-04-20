@@ -12,7 +12,6 @@ import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 export interface RelayNetwork {
   chain: string
   chainId: number
-  relayName: string
 }
 
 export const RelayConfig = defineConfig<RelayNetwork[]>('relay')
@@ -30,9 +29,13 @@ const ChainsResponse = v.object({
 })
 
 const RELAY_CHAIN_NAME_OVERRIDES = {
-  b3: 'b3',
+  'arbitrum-nova': 'nova',
+  ancient8: 'ancient',
+  boba: 'bobanetwork',
   'manta-pacific': 'mantapacific',
+  plume: 'plumenetwork',
   polygon: 'polygonpos',
+  shape: 'shape',
   swellchain: 'swell',
   'world-chain': 'worldchain',
   'zero-network': 'zeronetwork',
@@ -40,59 +43,60 @@ const RELAY_CHAIN_NAME_OVERRIDES = {
 } as const
 
 const RELAY_ONE_SIDED_CHAIN_FALLBACKS = [
-  { chain: 'bitcoin', chainId: 8_253_038, relayName: 'bitcoin' },
-  { chain: 'solana', chainId: 792_703_809, relayName: 'solana' },
-  { chain: 'tron', chainId: 728_126_428, relayName: 'tron' },
+  { chain: 'bitcoin', chainId: 8_253_038 },
+  { chain: 'solana', chainId: 792_703_809 },
+  { chain: 'tron', chainId: 728_126_428 },
 ] as const satisfies RelayNetwork[]
+
+function getRelayChainNameOverride(normalizedRelayName: string) {
+  return RELAY_CHAIN_NAME_OVERRIDES[
+    normalizedRelayName as keyof typeof RELAY_CHAIN_NAME_OVERRIDES
+  ]
+}
 
 export function normalizeRelayChainName(relayName: string) {
   const normalized = relayName.toLowerCase()
-
-  const override =
-    RELAY_CHAIN_NAME_OVERRIDES[
-      normalized as keyof typeof RELAY_CHAIN_NAME_OVERRIDES
-    ]
-
-  return override ?? normalized
+  return getRelayChainNameOverride(normalized) ?? normalized
 }
 
 function toRelayNetwork(
   chain: { id: number; name: string },
-  chainsById: Map<number, string>,
+  chainNamesById: Map<number, string>,
 ): RelayNetwork {
+  const relayKey = chain.name.toLowerCase()
+  const override = getRelayChainNameOverride(relayKey)
+
   return {
-    chain: chainsById.get(chain.id) ?? normalizeRelayChainName(chain.name),
+    chain:
+      override ??
+      chainNamesById.get(chain.id) ??
+      normalizeRelayChainName(chain.name),
     chainId: chain.id,
-    relayName: chain.name,
   }
 }
 
-export function buildRelayFallbackNetworks(
+export function buildRelayBootstrapChainNamesById(
   chains: { id: number; name: string }[],
   oneSidedChains: string[],
-): RelayNetwork[] {
-  const result = new Map<number, RelayNetwork>()
+): Map<number, string> {
+  const result = new Map<number, string>()
 
   for (const chain of chains) {
-    result.set(chain.id, {
-      chain: chain.name,
-      chainId: chain.id,
-      relayName: chain.name,
-    })
+    result.set(chain.id, chain.name)
   }
 
   for (const chain of RELAY_ONE_SIDED_CHAIN_FALLBACKS) {
     if (!oneSidedChains.includes(chain.chain)) continue
-    result.set(chain.chainId, chain)
+    result.set(chain.chainId, chain.chain)
   }
 
-  return [...result.values()]
+  return result
 }
 
 export class RelayConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   provides = [RelayConfig]
 
-  private readonly fallbackNetworks: RelayNetwork[]
+  private readonly bootstrapChainNamesById: Map<number, string>
 
   constructor(
     chains: { id: number; name: string }[],
@@ -104,7 +108,10 @@ export class RelayConfigPlugin extends TimeLoop implements InteropConfigPlugin {
   ) {
     super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: RelayConfig.key })
-    this.fallbackNetworks = buildRelayFallbackNetworks(chains, oneSidedChains)
+    this.bootstrapChainNamesById = buildRelayBootstrapChainNamesById(
+      chains,
+      oneSidedChains,
+    )
   }
 
   async run() {
@@ -132,12 +139,8 @@ export class RelayConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const response = await this.http.fetch(CHAINS_URL, { timeout: 10_000 })
     const parsed = ChainsResponse.parse(response)
 
-    const chainsById = new Map(
-      this.fallbackNetworks.map((network) => [network.chainId, network.chain]),
-    )
-
     return parsed.chains
       .filter((chain) => !chain.disabled)
-      .map((chain) => toRelayNetwork(chain, chainsById))
+      .map((chain) => toRelayNetwork(chain, this.bootstrapChainNamesById))
   }
 }

@@ -34,8 +34,8 @@ export class RelayPlugin implements InteropPlugin {
   ): MatchResult | undefined {
     const tokenSent = db.find(TokenSent, { id: tokenReceived.args.id })
     if (!tokenSent) {
-      const srcChain = this.normalizeOneSidedChain(tokenReceived.args.$srcChain)
-      if (!srcChain) return
+      const srcChain = tokenReceived.args.$srcChain
+      if (!this.oneSidedChains.includes(srcChain)) return
 
       return [
         Result.Transfer('relay.Transfer', {
@@ -77,8 +77,8 @@ export class RelayPlugin implements InteropPlugin {
     tokenSent: InteropEvent<TokenSentArgs>,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    const dstChain = this.normalizeOneSidedChain(tokenSent.args.$dstChain)
-    if (!dstChain) return
+    const dstChain = tokenSent.args.$dstChain
+    if (!this.oneSidedChains.includes(dstChain)) return
 
     const hasCounterpart = db.find(TokenReceived, { id: tokenSent.args.id })
     if (hasCounterpart) return
@@ -94,13 +94,5 @@ export class RelayPlugin implements InteropPlugin {
         srcWasBurned: false,
       }),
     ]
-  }
-
-  private normalizeOneSidedChain(chain: string | undefined) {
-    if (!chain || !this.oneSidedChains.includes(chain)) {
-      return
-    }
-
-    return chain
   }
 }
