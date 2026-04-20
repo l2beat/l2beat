@@ -13,7 +13,7 @@ import {
 import groupBy from 'lodash/groupBy'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { UsedInProject as ContractUsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
+import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { manifest } from '~/utils/Manifest'
 import type { ContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
@@ -322,7 +322,7 @@ export function getProjectsUsedIn(
 }
 
 export function addProjectsUsedInDisplayInfo(
-  usedIn: ContractUsedInProject[],
+  usedIn: UsedInProject[],
   allProjects: Project<'display', 'daBridge' | 'isScaling' | 'isDaLayer'>[],
 ): UsedInProjectWithIcon[] {
   return usedIn.map((project) => ({
