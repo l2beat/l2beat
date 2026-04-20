@@ -24,11 +24,9 @@ type ChainBreakdownAccumulator = {
 } & CommonInteropData
 
 type ProtocolAccumulator = {
-  metadata: {
-    id: string
-    slug: string
-    name: string
-  }
+  id: string
+  slug: string
+  name: string
   project: ProjectMetadata | undefined
   totalVolume: number
   chains: Map<string, ChainBreakdownAccumulator>
@@ -76,9 +74,9 @@ export function getInteropProtocols(
 
   return [...protocols.values()]
     .map((protocol) => ({
-      id: protocol.metadata.id,
-      slug: protocol.metadata.slug,
-      name: protocol.metadata.name,
+      id: protocol.id,
+      slug: protocol.slug,
+      name: protocol.name,
       totalVolume: protocol.totalVolume,
       totalTransferCount: protocol.transferCount,
       avgTransferTime: getProtocolAverageTransferTime(protocol),
@@ -104,11 +102,9 @@ function createProtocolAccumulator(
   project: ProjectMetadata | undefined,
 ): ProtocolAccumulator {
   return {
-    metadata: {
-      id,
-      slug: project?.slug ?? id,
-      name: project?.interopConfig.name ?? project?.name ?? id,
-    },
+    id,
+    slug: project?.slug ?? id,
+    name: project?.interopConfig.name ?? project?.name ?? id,
     project,
     totalVolume: 0,
     transferCount: 0,
