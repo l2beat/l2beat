@@ -1,4 +1,4 @@
-import { INTEROP_CHAINS } from '../../../../config/src/global/interopChains'
+import { INTEROP_CHAINS } from '@l2beat/config'
 
 export interface AbstractTokenSuggestion {
   chain: string

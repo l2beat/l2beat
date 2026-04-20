@@ -1120,6 +1120,9 @@ importers:
 
   packages/token-ui:
     dependencies:
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
