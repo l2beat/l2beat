@@ -16,5 +16,4 @@ export const gaszip: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

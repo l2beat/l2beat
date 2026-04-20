@@ -25,5 +25,4 @@ export const axelar: BaseProject = {
     ],
     type: 'multichain', // technically its a token bridge, but >90% used for axlUSDC, which is a multichain token
   },
-  isInteropProtocol: true,
 }

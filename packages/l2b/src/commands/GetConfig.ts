@@ -45,7 +45,6 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'contracts',
   'discoveryInfo',
   'isScaling',
-  'isInteropProtocol',
   'isDaLayer',
   'isUpcoming',
   'archivedAt',
