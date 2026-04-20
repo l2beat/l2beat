@@ -1,6 +1,6 @@
 {
   "name": "lido",
-  "timestamp": 1776669246,
+  "timestamp": 1776676610,
   "configHash": "0xb78f3cc6dfe1495f1f24fa72c89dbd8e5540f581458cec188c21a9ee615f5e7e",
   "entries": [
     {
@@ -23,8 +23,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xed85250000000000",
-        "get_deposit_root": "0x6e97014e7b43bb9c896848b5578907575c4f1a913b0e9f19c0ec69de16cc0b44"
+        "get_deposit_count": "0xf985250000000000",
+        "get_deposit_root": "0x514cb525267958aa2e7bc5864073d93e35850e787ef9fb7aaf425fe43c95545a"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -554,6 +554,43 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Custom role-based operations entrypoint for Lido.",
+      "sinceTimestamp": 1608242396,
+      "sinceBlock": 11473216,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
+        "acl": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
+        "ADD_PRESIGNED_HASH_ROLE": "0x0b29780bb523a130b3b01f231ef49ed2fa2781645591a0b0a44ca98f15a5994c",
+        "ADD_PROTECTED_TOKEN_ROLE": "0x6eb2a499556bfa2872f5aa15812b956cc4a71b4d64eb3553f7073c7e41415aaa",
+        "appId": "0x701a4fd1f5174d12a0f1d9ad2c88d0ad11ab6aad0ac72b7d9ce621815f8016a9",
+        "DESIGNATE_SIGNER_ROLE": "0x23ce341656c3f14df6692eebd4757791e33662b7dcf9970c8308303da5472b7c",
+        "designatedSigner": "eth:0x0000000000000000000000000000000000000000",
+        "ERC1271_INTERFACE_ID": "0xfb855dc9",
+        "ERC1271_RETURN_INVALID_SIGNATURE": "0x00000000",
+        "ERC1271_RETURN_VALID_SIGNATURE": "0x20c13b0b",
+        "EXECUTE_ROLE": "0xcebf517aa4440d1d125e0355aae64401211d0848a23c02cc5d29a14822580ba4",
+        "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
+        "getInitializationBlock": 11473216,
+        "getProtectedTokensLength": 0,
+        "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
+        "hasInitialized": true,
+        "implementation": "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
+        "isDepositable": true,
+        "isForwarder": true,
+        "isPetrified": false,
+        "kernel": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+        "PROTECTED_TOKENS_CAP": 10,
+        "protectedTokens": [],
+        "proxyType": 2,
+        "REMOVE_PROTECTED_TOKEN_ROLE": "0x71eee93d500f6f065e38b27d242a756466a00a52a1dbcd6b4260f01a8640402a",
+        "RUN_SCRIPT_ROLE": "0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f",
+        "SAFE_EXECUTE_ROLE": "0x0a1ad7b87f5846153c6d5a1f761d71c7d0cfd122384f56066cd33239b7933694",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+      },
+      "implementationNames": {
+        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "AppProxyUpgradeable",
+        "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37": "Agent"
+      },
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -675,44 +712,7 @@
           "from": "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
           "role": "admin"
         }
-      ],
-      "sinceTimestamp": 1608242396,
-      "sinceBlock": 11473216,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
-        "acl": "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
-        "ADD_PRESIGNED_HASH_ROLE": "0x0b29780bb523a130b3b01f231ef49ed2fa2781645591a0b0a44ca98f15a5994c",
-        "ADD_PROTECTED_TOKEN_ROLE": "0x6eb2a499556bfa2872f5aa15812b956cc4a71b4d64eb3553f7073c7e41415aaa",
-        "appId": "0x701a4fd1f5174d12a0f1d9ad2c88d0ad11ab6aad0ac72b7d9ce621815f8016a9",
-        "DESIGNATE_SIGNER_ROLE": "0x23ce341656c3f14df6692eebd4757791e33662b7dcf9970c8308303da5472b7c",
-        "designatedSigner": "eth:0x0000000000000000000000000000000000000000",
-        "ERC1271_INTERFACE_ID": "0xfb855dc9",
-        "ERC1271_RETURN_INVALID_SIGNATURE": "0x00000000",
-        "ERC1271_RETURN_VALID_SIGNATURE": "0x20c13b0b",
-        "EXECUTE_ROLE": "0xcebf517aa4440d1d125e0355aae64401211d0848a23c02cc5d29a14822580ba4",
-        "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
-        "getInitializationBlock": 11473216,
-        "getProtectedTokensLength": 0,
-        "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
-        "hasInitialized": true,
-        "implementation": "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37",
-        "isDepositable": true,
-        "isForwarder": true,
-        "isPetrified": false,
-        "kernel": "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
-        "PROTECTED_TOKENS_CAP": 10,
-        "protectedTokens": [],
-        "proxyType": 2,
-        "REMOVE_PROTECTED_TOKEN_ROLE": "0x71eee93d500f6f065e38b27d242a756466a00a52a1dbcd6b4260f01a8640402a",
-        "RUN_SCRIPT_ROLE": "0xb421f7ad7646747f3051c50c0b8e2377839296cd4973e27f63821d73e390338f",
-        "SAFE_EXECUTE_ROLE": "0x0a1ad7b87f5846153c6d5a1f761d71c7d0cfd122384f56066cd33239b7933694",
-        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
-      },
-      "implementationNames": {
-        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "AppProxyUpgradeable",
-        "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37": "Agent"
-      }
+      ]
     },
     {
       "name": "StakingVault",
@@ -915,7 +915,7 @@
         "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SET_BOND_CURVE_ROLE": "0x645c9e6d2a86805cb5a28b1e4751c0dab493df7cf935070ce405489ba1a7bf72",
-        "totalBondShares": "23643702803392650064113",
+        "totalBondShares": "23643698736668305224321",
         "WITHDRAWAL_QUEUE": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -1262,7 +1262,7 @@
         "stEthPerToken": "1232284325871378326",
         "symbol": "wstETH",
         "tokensPerStEth": "811501030245495973",
-        "totalSupply": "3600760238513300611536527"
+        "totalSupply": "3601264650580322694873294"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -1542,8 +1542,8 @@
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
         "getLastFinalizedRequestId": 120453,
-        "getLastRequestId": 121550,
-        "getLockedEtherAmount": "25057736352429824477748",
+        "getLastRequestId": 121567,
+        "getLockedEtherAmount": "25033369000081053477338",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1562,8 +1562,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 1097,
-        "unfinalizedStETH": "224525599157028860340591",
+        "unfinalizedRequestNumber": 1114,
+        "unfinalizedStETH": "225438485802913297973271",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -2068,9 +2068,9 @@
           "beaconValidators": 446218,
           "beaconBalance": "9102026770469873000000000"
         },
-        "getBufferedEther": "8743654090241889865695",
+        "getBufferedEther": "8784926367938253928898",
         "getContractVersion": 3,
-        "getCurrentStakeLimit": "149017807490000000000000",
+        "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
         "getEIP712StETH": "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7",
         "getEVMScriptRegistry": "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
@@ -2085,19 +2085,19 @@
         "getInitializationBlock": 11473216,
         "getLidoLocator": "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb",
         "getMaxExternalRatioBP": 3000,
-        "getMaxMintableExternalShares": "3272252424638015683775117",
+        "getMaxMintableExternalShares": "3272266778564817617050493",
         "getRecoveryVault": "eth:0x0000000000000000000000000000000000000000",
         "getStakeLimitFullInfo": {
           "isStakingPaused_": false,
           "isStakingLimitSet": true,
-          "currentStakeLimit": "149017807490000000000000",
+          "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "148806869990000000000000",
-          "prevStakeBlockNumber": 24919531
+          "prevStakeLimit": "149998995000000000000000",
+          "prevStakeBlockNumber": 24920152
         },
-        "getTotalPooledEther": "9423955233338409475840369",
-        "getTotalShares": "7647549380841552696873310",
+        "getTotalPooledEther": "9423996505616105839903572",
+        "getTotalShares": "7647582873337423874515854",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -2114,7 +2114,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9423955233338409475840369",
+        "totalSupply": "9423996505616105839903572",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -7849,6 +7849,6 @@
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816",
     "tokens/Lido/wstETH": "0xd55ccc93c3f52e654ebbffee9194b0b8a0d974753091db2a43a185679e002e88"
   },
-  "usedBlockNumbers": { "ethereum": 24919540 },
+  "usedBlockNumbers": { "ethereum": 24920153 },
   "permissionsConfigHash": "0x5a9829dc4ae9ef0e06f3566cf1b48606f3d3e2d1308133c63664e70ec670c8da"
 }
