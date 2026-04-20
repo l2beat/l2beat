@@ -158,8 +158,6 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
     // tags
-    isScaling: true,
-    isInteropProtocol: p.interopConfig ? true : undefined,
     archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasTestnet: p.hasTestnet,

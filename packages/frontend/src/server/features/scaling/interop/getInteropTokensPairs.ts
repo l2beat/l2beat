@@ -3,6 +3,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { INTEROP_PAIR_SEPARATOR } from './consts'
 import type {
   CommonInteropData,
   InteropTopItemsParams,
@@ -87,7 +88,7 @@ export async function getInteropTokensPairs({
     const pairKey =
       pair.tokenA === 'unknown' && pair.tokenB === 'unknown'
         ? 'unknown'
-        : `${pair.tokenA}::${pair.tokenB}`
+        : `${pair.tokenA}${INTEROP_PAIR_SEPARATOR}${pair.tokenB}`
     const current = result.get(pairKey) ?? {
       ...INITIAL_COMMON_INTEROP_DATA,
       flows: new Map<string, TokenFlowData>(),
@@ -100,7 +101,7 @@ export async function getInteropTokensPairs({
       protocols: current.protocols,
     })
 
-    const flowKey = `${pair.srcChain}::${pair.dstChain}`
+    const flowKey = `${pair.srcChain}${INTEROP_PAIR_SEPARATOR}${pair.dstChain}`
     const currentFlow = current.flows.get(flowKey)
     if (currentFlow) {
       currentFlow.volume += pair.volume
@@ -145,7 +146,7 @@ export async function getInteropTokensPairs({
         }
       }
 
-      const parts = pairId.split('::')
+      const parts = pairId.split(INTEROP_PAIR_SEPARATOR)
       const tokenA = parts[0] ? tokensDetailsMap.get(parts[0]) : undefined
       const tokenB = parts[1] ? tokensDetailsMap.get(parts[1]) : undefined
 

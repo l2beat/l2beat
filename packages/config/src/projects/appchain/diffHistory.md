@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x8385e42c21620aa4cc88c2ac061b0494ae03a45a
+
+# Diff at Fri, 17 Apr 2026 10:47:08 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@839471cf1965b99b29c3fe4ae5662d8aee71c676 block: 1776252265
+- current timestamp: 1776422736
+
+## Description
+
+New TEE signer (0xEb2b1CE6) registered in EspressoNitroTEEVerifier. This is a new AWS Nitro enclave-derived signer authorized to submit batches via the sequencer flow.
+
+## Watched changes
+
+```diff
+    contract EspressoNitroTEEVerifier (eth:0x9E490ce0203d191Cae0ABF5614D561cC6fdc771f) {
+    +++ description: Verifies attestations of an AWS Nitro TEE. 
+Note: currently only Succinct proofs are used.
+      values.registeredSigners.0:
++        "eth:0xEb2b1CE6Ed647a91Ceab0D3B598f69F268f3Fc0D"
+    }
+```
+
 Generated with discovered.json: 0x2073e49aae1e5aa29e9b61985d8474174de1d589
 
 # Diff at Wed, 15 Apr 2026 11:26:14 GMT:

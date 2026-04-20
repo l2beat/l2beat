@@ -106,9 +106,7 @@ export function SideNavLayout({
           links: [
             {
               title: 'Summary',
-              href:
-                selectedChainsContext?.buildUrl('/interop/summary') ??
-                '/interop/summary',
+              href: '/interop/summary',
             },
             {
               title: 'Non-minting protocols',

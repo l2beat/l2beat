@@ -39,7 +39,7 @@ export async function getScalingLivenessEntries() {
           'trackedTxsConfig',
         ],
         optional: ['scalingDa', 'contracts'],
-        where: ['isScaling'],
+        where: ['scalingInfo'],
         whereNot: ['isUpcoming', 'archivedAt'],
       }),
       ps.getProjects({

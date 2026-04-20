@@ -1,19 +1,12 @@
-import {
-  type ConfigReader,
-  combineImplementationHashes,
-  flatteningHash,
-  get$Implementations,
-} from '@l2beat/discovery'
+import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
-import { isDeepStrictEqual } from 'util'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
 } from './getDiscoveries'
 import type { ApiCodeResponse } from './types'
-import { getReferencedProjects } from './utils'
 
 export function addFlattenerNote(code: string): string {
   const note = [
@@ -40,38 +33,40 @@ interface CodePathResult {
 }
 
 function isFlatCodeCurrent(
-  configReader: ConfigReader,
-  project: string,
-  address: ChainSpecificAddress,
-  codePaths: CodePathResult['codePaths'],
+  _configReader: ConfigReader,
+  _project: string,
+  _address: ChainSpecificAddress,
+  _codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const discovery = configReader.readDiscovery(project)
-  const discoveries = [discovery]
-  const referencedProjects = getReferencedProjects(discovery)
-
-  for (const refProj of referencedProjects) {
-    const refDiscovery = configReader.readDiscovery(refProj)
-    discoveries.push(refDiscovery)
-  }
-
-  const discoHashes =
-    discoveries
-      .flatMap((d) => d.entries)
-      .filter((e) => e.type !== 'Reference')
-      .find((e) => e.address === address)?.sourceHashes ?? []
-
-  const flatHashes = codePaths.map(({ path }) =>
-    flatteningHash(readFileSync(path, 'utf-8')),
-  )
-  const [proxy, ...implementations] = flatHashes
-  const calculatedHashes = [proxy]
-  if (implementations.length === 1) {
-    calculatedHashes.push(implementations[0])
-  } else if (implementations.length > 1) {
-    calculatedHashes.push(combineImplementationHashes(implementations))
-  }
-
-  return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
+  // TODO(radomski): Redo this feature with the newer flattener
+  //   const discovery = configReader.readDiscovery(project)
+  //   const discoveries = [discovery]
+  //   const referencedProjects = getReferencedProjects(discovery)
+  //
+  //   for (const refProj of referencedProjects) {
+  //     const refDiscovery = configReader.readDiscovery(refProj)
+  //     discoveries.push(refDiscovery)
+  //   }
+  //
+  //   const discoHashes =
+  //     discoveries
+  //       .flatMap((d) => d.entries)
+  //       .filter((e) => e.type !== 'Reference')
+  //       .find((e) => e.address === address)?.sourceHashes ?? []
+  //
+  //   const flatHashes = codePaths.map(({ path }) =>
+  //     flatteningHash(readFileSync(path, 'utf-8')),
+  //   )
+  //   const [proxy, ...implementations] = flatHashes
+  //   const calculatedHashes = [proxy]
+  //   if (implementations.length === 1) {
+  //     calculatedHashes.push(implementations[0])
+  //   } else if (implementations.length > 1) {
+  //     calculatedHashes.push(combineImplementationHashes(implementations))
+  //   }
+  //
+  //   return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
+  return true
 }
 
 export function getCode(

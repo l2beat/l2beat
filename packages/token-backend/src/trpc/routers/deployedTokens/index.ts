@@ -43,11 +43,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         getSuggestionsByCoingeckoId(deps.coingeckoClient, ctx.tokenDb, input),
       ),
 
-    getCoingeckoSuggestions: readOnlyProcedure
-      .input(v.object({ interopOnly: v.boolean() }))
-      .query(({ ctx, input }) =>
-        getCoingeckoSuggestions(deps.coingeckoClient, ctx.tokenDb, input),
-      ),
+    getCoingeckoSuggestions: readOnlyProcedure.query(({ ctx }) =>
+      getCoingeckoSuggestions(deps.coingeckoClient, ctx.tokenDb),
+    ),
 
     getSuggestionsByPartialTransfers: readOnlyProcedure.query(({ ctx }) =>
       getSuggestionsByPartialTransfers(ctx.db, ctx.tokenDb),

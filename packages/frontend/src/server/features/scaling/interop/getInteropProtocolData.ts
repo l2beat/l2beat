@@ -35,11 +35,9 @@ export async function getInteropProtocolData(
   }
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(
-      params,
-      undefined,
+    await getLatestAggregatedInteropTransferWithTokens(params, undefined, [
       params.id,
-    )
+    ])
 
   const abstractTokenIds = uniq(
     records.flatMap((r) => r.tokens.map((token) => token.abstractTokenId)),

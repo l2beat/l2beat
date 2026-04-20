@@ -6,43 +6,20 @@ import {
   platformsToChainAddressPairs,
 } from './chainAliases'
 
-export interface CoingeckoSuggestionResult {
-  abstractToken: Pick<
-    AbstractTokenRecord,
-    'id' | 'symbol' | 'issuer' | 'coingeckoId'
-  >
-  suggestions: {
-    chain: string
-    address: string
-  }[]
-}
-
-export interface CoingeckoSuggestionsReport {
-  generatedAt: string
-  totals: {
-    abstractTokens: number
-    abstractTokensWithCoingeckoId: number
-    abstractTokensWithSuggestions: number
-    totalSuggestions: number
-    errors: number
-  }
-  results: CoingeckoSuggestionResult[]
-  errors: {
-    abstractTokenId: string
-    coingeckoId: string
-    error: string
-  }[]
-}
-
 const INTEROP_CHAIN_IDS = new Set(INTEROP_CHAINS.map((chain) => chain.id))
+
+export type CoingeckoSuggestion = {
+  chain: string
+  address: string
+  explorerUrl: string | undefined
+  abstractToken: AbstractTokenRecord
+  isInterop: boolean
+}
 
 export async function getCoingeckoSuggestions(
   coingeckoClient: CoingeckoClient,
   tokenDb: TokenDatabase,
-  options: {
-    interopOnly: boolean
-  },
-): Promise<CoingeckoSuggestionsReport> {
+): Promise<CoingeckoSuggestion[]> {
   const [abstractTokens, deployedTokens, chains, coins] = await Promise.all([
     tokenDb.abstractToken.getAll(),
     tokenDb.deployedToken.getAll(),
@@ -50,113 +27,33 @@ export async function getCoingeckoSuggestions(
     coingeckoClient.getCoinList({ includePlatform: true }),
   ])
 
-  const abstractTokensWithCoingeckoId = abstractTokens
-    .filter((token) => token.coingeckoId)
-    .sort((a, b) => a.id.localeCompare(b.id))
-  const deployedTokensSet = new Set(
-    deployedTokens.map(
-      (token) => `${token.chain}:${token.address.toLowerCase()}`,
-    ),
+  const deployedTokenSet = new Set(
+    deployedTokens.map((t) => `${t.chain}:${t.address.toLowerCase()}`),
   )
   const aliasToChain = buildAliasToChainMap(chains)
   const coinsById = new Map(coins.map((coin) => [coin.id, coin]))
+  const chainMap = new Map(chains.map((c) => [c.name, c]))
 
-  const results: CoingeckoSuggestionResult[] = []
-  const errors: CoingeckoSuggestionsReport['errors'] = []
-  let abstractTokensWithSuggestions = 0
-  let totalSuggestions = 0
+  const suggestions: CoingeckoSuggestion[] = []
+  for (const abstractToken of abstractTokens) {
+    if (!abstractToken.coingeckoId) continue
+    const coin = coinsById.get(abstractToken.coingeckoId)
+    if (!coin?.platforms) continue
 
-  for (const abstractToken of abstractTokensWithCoingeckoId) {
-    const coingeckoId = abstractToken.coingeckoId
-    if (!coingeckoId) {
-      continue
-    }
-
-    try {
-      const platforms: Record<string, string | null | undefined> | undefined =
-        coinsById.get(coingeckoId)?.platforms
-
-      if (!platforms) {
-        throw new Error('Coin not found in CoinGecko /coins/list response')
+    const pairs = platformsToChainAddressPairs(coin.platforms, aliasToChain)
+    for (const pair of pairs) {
+      if (deployedTokenSet.has(`${pair.chain}:${pair.address.toLowerCase()}`)) {
+        continue
       }
-
-      const suggestions = getSuggestionsForCoin(
-        platforms,
-        aliasToChain,
-        deployedTokensSet,
-      )
-      const filteredSuggestions = options.interopOnly
-        ? suggestions.filter((suggestion) =>
-            INTEROP_CHAIN_IDS.has(suggestion.chain),
-          )
-        : suggestions
-
-      if (filteredSuggestions.length > 0) {
-        abstractTokensWithSuggestions += 1
-        totalSuggestions += filteredSuggestions.length
-        results.push(toSuggestionResult(abstractToken, filteredSuggestions))
-      }
-    } catch (error) {
-      errors.push({
-        abstractTokenId: abstractToken.id,
-        coingeckoId,
-        error: error instanceof Error ? error.message : String(error),
+      suggestions.push({
+        chain: pair.chain,
+        address: pair.address,
+        explorerUrl: chainMap.get(pair.chain)?.explorerUrl ?? undefined,
+        abstractToken,
+        isInterop: INTEROP_CHAIN_IDS.has(pair.chain),
       })
     }
   }
 
-  return {
-    generatedAt: new Date().toISOString(),
-    totals: {
-      abstractTokens: abstractTokens.length,
-      abstractTokensWithCoingeckoId: abstractTokensWithCoingeckoId.length,
-      abstractTokensWithSuggestions,
-      totalSuggestions,
-      errors: errors.length,
-    },
-    results,
-    errors,
-  }
-}
-
-export function toCoingeckoSuggestionsQueueCsv(
-  results: CoingeckoSuggestionResult[],
-) {
-  return results
-    .flatMap((result) =>
-      result.suggestions.map(
-        (suggestion) =>
-          `${suggestion.chain},${suggestion.address},${result.abstractToken.id}`,
-      ),
-    )
-    .join('\n')
-}
-
-function toSuggestionResult(
-  abstractToken: AbstractTokenRecord,
-  suggestions: { chain: string; address: string }[],
-): CoingeckoSuggestionResult {
-  return {
-    abstractToken: {
-      id: abstractToken.id,
-      symbol: abstractToken.symbol,
-      issuer: abstractToken.issuer,
-      coingeckoId: abstractToken.coingeckoId,
-    },
-    suggestions: [...suggestions].sort(
-      (a, b) =>
-        a.chain.localeCompare(b.chain) || a.address.localeCompare(b.address),
-    ),
-  }
-}
-
-function getSuggestionsForCoin(
-  platforms: Record<string, string | null | undefined>,
-  aliasToChain: Map<string, string>,
-  deployedTokensSet: Set<string>,
-) {
-  return platformsToChainAddressPairs(platforms, aliasToChain).filter(
-    ({ chain, address }) =>
-      !deployedTokensSet.has(`${chain}:${address.toLowerCase()}`),
-  )
+  return suggestions
 }

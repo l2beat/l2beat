@@ -12,7 +12,7 @@ export async function getScalingUpcomingEntries() {
   const [projects, zkCatalogProjects] = await Promise.all([
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'display'],
-      where: ['isScaling', 'isUpcoming'],
+      where: ['scalingInfo', 'isUpcoming'],
       optional: ['hasTestnet', 'contracts'],
     }),
     ps.getProjects({

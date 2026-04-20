@@ -21,7 +21,7 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
       optional: ['contracts'],
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
     helpers.costs.table.fetch({ range: optionToRange('30d') }),

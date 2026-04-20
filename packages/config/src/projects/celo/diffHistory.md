@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x9627ed09d51a483f5ca4bb2f1c17695020f8a249
+
+# Diff at Fri, 17 Apr 2026 13:48:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc806ac97299cdb9b08b4527d848aa09ff20f09c block: 1776331734
+- current timestamp: 1776433625
+
+## Description
+
+New SP1 Hypercube Plonk v6.1.0 verifier (0xc3c6dDD) registered in SP1VerifierGateway with selector 0x5a093a2f. Added to `activeVerifiers` and `allVerifiers`; SP1 proofs using this selector are now routed to the new contract. The verifier is the canonical Succinct deployment at that address on Ethereum mainnet (V6_1_0_SP1_VERIFIER_PLONK). Registered in sp1hypercube catalog.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ 1 file changed, 1421 insertions(+)
+```
+
 Generated with discovered.json: 0xb08f85afcb83dae4f26e9f51b6aaca522de385c1
 
 # Diff at Thu, 16 Apr 2026 09:31:01 GMT:
