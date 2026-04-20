@@ -35,10 +35,12 @@ export function CodeQualitySection({ review }: CodeQualitySectionProps) {
   // so each tile gets the width of the 2-license case instead of cramping.
   const useTwoColumnGrid = licenses.length >= 4
   const tilesPerRow = useTwoColumnGrid ? 2 : Math.max(licenses.length, 1)
-  // Outer sub-card content ≈ 270px, gaps = (tilesPerRow-1)*4px, tile px-1.5 = 12px.
-  const approxTileWidth = Math.floor((270 - (tilesPerRow - 1) * 4) / tilesPerRow - 12)
-  const fitSize = Math.floor(approxTileWidth / Math.max(maxLabelLen, 1) / 0.55)
-  const licenseLabelPx = Math.max(10, Math.min(36, fitSize || 36))
+  // Outer sub-card content ≈ 240px (narrower on mid-width screens), gaps = (tilesPerRow-1)*4px,
+  // tile px-1.5 = 12px + safety margin 8px so long labels (e.g. GPL-3.0) don't hit the edge.
+  const approxTileWidth = Math.floor((240 - (tilesPerRow - 1) * 4) / tilesPerRow - 20)
+  // Bold uppercase glyph width ≈ 0.68 × font-size (empirical, beats the old 0.55 estimate).
+  const fitSize = Math.floor(approxTileWidth / Math.max(maxLabelLen, 1) / 0.68)
+  const licenseLabelPx = Math.max(10, Math.min(28, fitSize || 28))
   const licenseScopeSize = 'text-[8px]'
 
   return (

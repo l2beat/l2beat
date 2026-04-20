@@ -9,11 +9,6 @@
       "timestamp": "2026-03-30T14:23:27.171Z"
     },
     {
-      "contractAddress": "eth:0x00000000219ab540356cbb839cbe05303d7705fa",
-      "isExternal": true,
-      "timestamp": "2025-11-06T14:22:03.982Z"
-    },
-    {
       "contractAddress": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "isExternal": false,
       "isGovernance": true,

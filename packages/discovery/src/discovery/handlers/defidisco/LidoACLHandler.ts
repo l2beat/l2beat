@@ -181,10 +181,15 @@ export async function fetchLidoACLPermissions(
     }
   }
 
-  // Filter out permissions with no entities and convert to final format
+  // Keep permissions that either have entities granted OR have a manager set.
+  // A role with a manager but no entities still has an effective controller
+  // (the manager can grant the role), so it must be surfaced for scoring.
   return Object.fromEntries(
     Object.entries(permissions)
-      .filter(([_, config]) => config.entities.size > 0)
+      .filter(
+        ([_, config]) =>
+          config.entities.size > 0 || config.manager !== undefined,
+      )
       .map(([key, config]) => [
         key,
         {

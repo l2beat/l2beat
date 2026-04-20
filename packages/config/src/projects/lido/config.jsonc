@@ -140,6 +140,15 @@
     },
     "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3": {
       "ignoreMethods": ["BEACON_ROOTS"]
+    },
+    "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": {
+      "ignoreMethods": ["latestReportData"],
+      "ignoreInWatchMode": ["latestReportTimestamp", "vaultsCount"],
+      "fields": {
+        "accessControl": {
+          "handler": { "type": "accessControl" }
+        }
+      }
     }
   }
 }

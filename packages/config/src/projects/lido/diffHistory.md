@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xd43cab372f43419453fde6e80b997fdbb99849c3
+
+# Diff at Mon, 20 Apr 2026 07:19:37 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@bb59efe75ea79518918e39ce415b9fce042da2b8 block: 1776586514
+- current timestamp: 1776669246
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract VettedGate (eth:0xB314D4A76C457c93150d308787939063F4Cc67E0) {
+    +++ description: None
+      values.treeCid:
+-        "bafkreiekobdx27a42ub7m4gcn4d5iu3i3u2iq2cdnceviuznhpotsgpvwa"
++        "bafkreihks67txtnswxd63vqq7pa5m26a34y6pctywfpulhj76wf3m5ofbu"
+      values.treeRoot:
+-        "0x4bbc2bb2b8db0e6e284de2c5ddc57ffc8deb5f3397f6462646456afeebdf8630"
++        "0x80c9f13dbc7b374c34198079de9deda62101b2b89aefa07e474fe0c95a095171"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776586514 (main branch discovery), not current.
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) {
+    +++ description: None
+      values.latestReportData:
+-        {"timestamp":1776513611,"refSlot":14140799,"treeRoot":"0xfebc22c2a607b3a45e2f82a2bf2a93a89e84530aacc79ecb122f45d3ef39670f","reportCid":"QmPGP2u19GSus9F11Xx4rzLNYRiv7zBVzra8CbF3b7MEwD"}
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]}}
+    }
+```
+
+```diff
+    contract ACL (eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) {
+    +++ description: None
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.ISSUE_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0xf73a1260d222f447210581DDf212D915c09a3249.BURN_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x2e59A20f205bB85a89C53f1936454680651E618e.UNSAFELY_MODIFY_VOTE_TIME_ROLE:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0x75abc64490e17b40ea1e66691c3eb493647b24430b358bd87ec3e5127f1621ee:
++        {"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0xe9367af2d321a2fc8d9c8f1e67f0fc1e2adf2f9844fb89ffa212619c713685b2:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0xd856e115ac9805c675a51831fa7d8ce01c333d666b0e34b3fc29833b7c68936a:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0x58412970477f41493548d908d4307dfca38391d6bc001d56ffef86bd4f4a72e8:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0xbf4b1c236312ab76e456c7a8cca624bd2f86c74a4f8e09b3a26d60b1ce492183:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5.0x18ad851afd4930ecc8d243c8869bd91583210624f3f1572e99ee8b450315c80f:
++        {"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}
+      values.permissions.eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc:
++        {"APP_MANAGER_ROLE":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]}}
+      values.permissions.eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A:
++        {"0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]},"0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]}}
+      values.permissions.eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84:
++        {"0x46b8504718b48a11e89304b407879435528b3cd3af96afde67dfe598e4683bd8":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"PAUSE_ROLE":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]},"0x96088a8483023eb2f67b12aabbaf17d1d055e6ef387e563902adc1bba1e4028b":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x11eba3f259e2be865238d718fd308257e3874ad4b3a642ea3af386a4eea190bd":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"BURN_ROLE":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x9f6f8058e4bcbf364e89c9e8da7eb7cada9d21b7aea6e2fd355b4669842c5795":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0xd6c7fda17708c7d91354c17ac044fde6f58fb548a5ded80960beba862b1f1d7d":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x2561bf26f818282a3be40719542054d2173eb0d38539e8a8d3cff22f29fd2384":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x9d68ad53a92b6f44b2e8fb18d211bf8ccb1114f6fafd56aa364515dfdf23c44f":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"STAKING_CONTROL_ROLE":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]},"RESUME_ROLE":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]},"STAKING_PAUSE_ROLE":{"manager":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","entities":[]},"0xca7d176c2da2028ed06be7e3b9457e6419ae0744dc311989e9b29f6a1ceb1003":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0xeb7bfce47948ec1179e2358171d5ee7c821994c911519349b95313b685109031":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}}
+      values.permissions.eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb:
++        {"0xbf6336045918ae0015f4cdb3441a2fdbfaa4bcde6558c8692aac7f56c69fb067":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0xa5ffa9f45fa52c446078e834e1914561bd9c2ab1e833572d62af775da092ccbc":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x16a273d48baf8111397316e6d961e6836913acb23b181e6c5fb35ec0bd2648fc":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0x44adaee26c92733e57241cb0b26ffaa2d182ed7120ba3ecd7e0dce3635c01dc1":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]},"0xe22a455f1bfbaf705ac3e891a64e156da92cb0b42cfc389158e6e82bd57f37be":{"manager":"eth:0x2e59A20f205bB85a89C53f1936454680651E618e","entities":[]}}
+    }
+```
+
 Generated with discovered.json: 0x133b9e2c8bafce2e16b61e4d24c16029b1d92bf5
 
 # Diff at Tue, 03 Mar 2026 15:22:32 GMT:

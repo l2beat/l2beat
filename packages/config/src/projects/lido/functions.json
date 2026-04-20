@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-30T15:40:56.219Z",
+  "lastModified": "2026-04-20T07:22:25.140Z",
   "contracts": {
     "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": {
       "functions": [
@@ -171,15 +171,19 @@
         {
           "functionName": "createPermission",
           "isPermissioned": true,
-          "timestamp": "2025-10-07T21:23:36.668Z",
           "checked": true,
           "score": "critical",
           "description": "Creates a new permission and specifies its permission manager and the role ID.\t",
           "ownerDefinitions": [
             {
-              "path": "$self.CREATE_PERMISSIONS_ROLE"
+              "path": "$self.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-04-20T07:01:41.104Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:01:41.104Z"
+          }
         },
         {
           "functionName": "grantPermission",
@@ -2065,54 +2069,82 @@
         {
           "functionName": "newAppInstance",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:16:03.134Z",
-          "checked": true,
+          "checked": false,
           "score": "critical",
           "description": "Creates a new upgradeable application instance by deploying the proxy. The instance has an app ID and will use the implementation contract (code logic) currently associated with this ID.\t",
           "ownerDefinitions": [
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            },
+            {
+              "path": "@acl.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-04-20T07:19:27.323Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:19:27.323Z"
+          }
         },
         {
           "functionName": "newPinnedAppInstance",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:17:43.679Z",
-          "checked": true,
+          "checked": false,
           "score": "critical",
           "description": "Creates a new non-upgradeable (pinned) application instance. The instance has an app ID and will use the implementation contract (code logic) associated with this ID.\t",
           "ownerDefinitions": [
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            },
+            {
+              "path": "@acl.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-04-20T07:19:27.346Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:19:27.346Z"
+          }
         },
         {
           "functionName": "setApp",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:15:38.344Z",
-          "checked": true,
+          "checked": false,
           "score": "critical",
           "description": "Sets the implementation contract (code logic) that corresponds to a given namespace and app ID in the registry. All proxies in this namespace with this AppID will now point to this new implementation.\t",
           "ownerDefinitions": [
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            },
+            {
+              "path": "@acl.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-04-20T07:19:27.362Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:19:27.362Z"
+          }
         },
         {
           "functionName": "setRecoveryVaultAppId",
           "isPermissioned": true,
-          "timestamp": "2025-10-08T16:16:37.995Z",
-          "checked": true,
+          "checked": false,
           "score": "critical",
           "description": "Sets the recovery vault. A contract to recover assets if neeeded. The current vault is the Agent contract.\t",
           "ownerDefinitions": [
             {
               "path": "@acl.permissions[eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc].APP_MANAGER_ROLE"
+            },
+            {
+              "path": "@acl.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb].CREATE_PERMISSIONS_ROLE"
             }
-          ]
+          ],
+          "timestamp": "2026-04-20T07:19:27.377Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:19:27.377Z"
+          }
         }
       ]
     },
@@ -7468,6 +7500,436 @@
           "lastChangedBy": {
             "author": "unknown",
             "date": "2026-03-22T15:16:25.047Z"
+          }
+        }
+      ]
+    },
+    "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c": {
+      "functions": [
+        {
+          "functionName": "proxy__ossify",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-20T06:40:59.665Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:40:59.665Z"
+          }
+        },
+        {
+          "functionName": "proxy__changeAdmin",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-20T06:40:59.683Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:40:59.683Z"
+          }
+        },
+        {
+          "functionName": "proxy__upgradeTo",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-20T06:40:59.699Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:40:59.699Z"
+          }
+        },
+        {
+          "functionName": "proxy__upgradeToAndCall",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.$admin"
+            }
+          ],
+          "timestamp": "2026-04-20T06:40:59.719Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:40:59.719Z"
+          }
+        }
+      ]
+    },
+    "eth:0x96c9a897D116ef660086d3aA67b3af653324aB37": {
+      "functions": [
+        {
+          "functionName": "updateReportData",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@LIDO_LOCATOR.accountingOracle"
+            }
+          ],
+          "timestamp": "2026-04-20T06:41:10.330Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:41:10.330Z"
+          }
+        },
+        {
+          "functionName": "removeVaultQuarantine",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@LIDO_LOCATOR.vaultHub"
+            }
+          ],
+          "timestamp": "2026-04-20T06:41:10.351Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:41:10.351Z"
+          }
+        },
+        {
+          "functionName": "updateSanityParams",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.UPDATE_SANITY_PARAMS_ROLE.members"
+            },
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-04-20T06:58:34.945Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:58:34.945Z"
+          }
+        },
+        {
+          "functionName": "grantRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-04-20T06:56:05.362Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:56:05.362Z"
+          }
+        },
+        {
+          "functionName": "revokeRole",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "$self.accessControl.DEFAULT_ADMIN_ROLE.members"
+            }
+          ],
+          "timestamp": "2026-04-20T06:56:05.376Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:56:05.376Z"
+          }
+        },
+        {
+          "functionName": "initialize",
+          "isPermissioned": true,
+          "timestamp": "2026-04-20T06:41:10.413Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:41:10.413Z"
+          }
+        }
+      ]
+    },
+    "eth:0x6ca84080381E43938476814be61B779A8bB6a600": {
+      "functions": [
+        {
+          "functionName": "receiveELRewards",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.elRewardsVault"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.604Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.604Z"
+          }
+        },
+        {
+          "functionName": "receiveWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.withdrawalVault"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.622Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.622Z"
+          }
+        },
+        {
+          "functionName": "deposit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.depositSecurityModule"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.638Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.638Z"
+          }
+        },
+        {
+          "functionName": "mintShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accounting"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.654Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.654Z"
+          }
+        },
+        {
+          "functionName": "burnShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.burner"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.670Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.670Z"
+          }
+        },
+        {
+          "functionName": "mintExternalShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.vaultHub"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.685Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.685Z"
+          }
+        },
+        {
+          "functionName": "burnExternalShares",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.vaultHub"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.703Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.703Z"
+          }
+        },
+        {
+          "functionName": "rebalanceExternalEtherToInternal",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.vaultHub"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.718Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.718Z"
+          }
+        },
+        {
+          "functionName": "processClStateUpdate",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accounting"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.731Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.731Z"
+          }
+        },
+        {
+          "functionName": "internalizeExternalBadDebt",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accounting"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.744Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.744Z"
+          }
+        },
+        {
+          "functionName": "collectRewardsAndProcessWithdrawals",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accounting"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.761Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.761Z"
+          }
+        },
+        {
+          "functionName": "emitTokenRebase",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@getLidoLocator.accounting"
+            }
+          ],
+          "timestamp": "2026-04-20T06:47:00.774Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T06:47:00.774Z"
+          }
+        },
+        {
+          "functionName": "pauseStaking",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][STAKING_PAUSE_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.872Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.872Z"
+          }
+        },
+        {
+          "functionName": "resumeStaking",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][STAKING_CONTROL_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.895Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.895Z"
+          }
+        },
+        {
+          "functionName": "setStakingLimit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][STAKING_CONTROL_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.912Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.912Z"
+          }
+        },
+        {
+          "functionName": "removeStakingLimit",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][STAKING_CONTROL_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.931Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.931Z"
+          }
+        },
+        {
+          "functionName": "setMaxExternalRatioBP",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][STAKING_CONTROL_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.949Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.949Z"
+          }
+        },
+        {
+          "functionName": "stop",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][PAUSE_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.971Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.971Z"
+          }
+        },
+        {
+          "functionName": "resume",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84][RESUME_ROLE].manager"
+            }
+          ],
+          "timestamp": "2026-04-20T07:20:34.988Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:20:34.988Z"
+          }
+        },
+        {
+          "functionName": "unsafeChangeDepositedValidators",
+          "isPermissioned": true,
+          "ownerDefinitions": [
+            {
+              "path": "@acl.permissions[eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb][CREATE_PERMISSIONS_ROLE].entities"
+            }
+          ],
+          "timestamp": "2026-04-20T07:22:25.140Z",
+          "lastChangedBy": {
+            "author": "unknown",
+            "date": "2026-04-20T07:22:25.140Z"
           }
         }
       ]
