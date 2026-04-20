@@ -2,7 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "Frankencoin",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"],
+  "initialAddresses": [
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+    "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8"
+  ],
   "overrides": {
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "fields": {
@@ -62,6 +65,70 @@
     },
     "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": {
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": {
+      "description": "Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields.",
+      "fields": {
+        "getRateLimitAdmin": {
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Polygon": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "4051577828743386545"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Arbitrum": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "4949039107694359620"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Optimism": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "3734403246176062136"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Base": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "15971525489660198786"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Avalanche": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "6433500567565415381"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_Gnosis": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "465200170687744372"
+          },
+          "severity": "HIGH"
+        },
+        "inboundRateLimit_BSC": {
+          "handler": {
+            "type": "ccipRateLimit",
+            "direction": "inbound",
+            "chainSelector": "1673871237479749969"
+          },
+          "severity": "HIGH"
+        }
+      }
     }
   }
 }

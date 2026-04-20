@@ -1,7 +1,7 @@
 {
   "name": "Frankencoin",
-  "timestamp": 1776676610,
-  "configHash": "0x8ed871ba537b55e5ce0ab95a1042bc396d34a8e4254f97ba3f6ca1295dcebd44",
+  "timestamp": 1776711422,
+  "configHash": "0x189ef5fcb85c2836da50f0dcb699f1e38541d0b089dd6df924b640b3f0f1a889",
   "entries": [
     {
       "address": "eth:0x0100000000000000000000000000000000000000",
@@ -25,10 +25,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1467704933378996627169",
+        "price": "1467699969637273489037",
         "symbol": "FPS",
         "totalSupply": "9274388722923145783649",
-        "totalVotes": "192095165811843525985808912588604977",
+        "totalVotes": "192411007367274605200321826818491953",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -40,6 +40,28 @@
       "address": "eth:0x21319ACf300Da97fE228E90D6CF5997Ed87bF929",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "CCIPAdmin",
+      "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xaa5f26b47ac1727ebfa25f3502b5f7762d1f80dbe6009eda23d9b0d2f2e96408"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1748940743,
+      "sinceBlock": 22623055,
+      "values": {
+        "$immutable": true,
+        "DAY": 86400,
+        "GOVERNANCE": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "TOKEN_ADMIN_REGISTRY": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+        "tokenPool": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+        "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": "CCIPAdmin"
+      }
     },
     {
       "name": "Savings",
@@ -55,7 +77,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 956482440000,
+        "currentTicks": 957701280000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -151,7 +173,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1186081980000,
+        "currentTicks": 1186430220000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -418,6 +440,7 @@
         "0x045251441b9a8be4d113c958a46b4fb9063f063773bcc2043d7a9e4b78d4b64b"
       ],
       "proxyType": "immutable",
+      "description": "Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields.",
       "ignoreInWatchMode": [
         "getOnRamps",
         "getCurrentBridgedAmount",
@@ -445,8 +468,53 @@
         ],
         "getToken": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
         "getTokenDecimals": 18,
+        "inboundRateLimit_Arbitrum": {
+          "isEnabled": true,
+          "capacity": "200000000000000000000000",
+          "rate": "1388888888888888888"
+        },
+        "inboundRateLimit_Avalanche": {
+          "isEnabled": true,
+          "capacity": "100000000000000000000000",
+          "rate": "1388888888888888888"
+        },
+        "inboundRateLimit_Base": {
+          "isEnabled": true,
+          "capacity": "500000000000000000000000",
+          "rate": "2777777777777777777"
+        },
+        "inboundRateLimit_BSC": {
+          "isEnabled": true,
+          "capacity": "100000000000000000000000",
+          "rate": "1388888888888888888"
+        },
+        "inboundRateLimit_Gnosis": {
+          "isEnabled": true,
+          "capacity": "500000000000000000000000",
+          "rate": "2777777777777777777"
+        },
+        "inboundRateLimit_Optimism": {
+          "isEnabled": true,
+          "capacity": "100000000000000000000000",
+          "rate": "1388888888888888888"
+        },
+        "inboundRateLimit_Polygon": {
+          "isEnabled": true,
+          "capacity": "200000000000000000000000",
+          "rate": "1388888888888888888"
+        },
         "owner": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
         "typeAndVersion": "BurnMintTokenPool 1.5.1"
+      },
+      "fieldMeta": {
+        "getRateLimitAdmin": { "severity": "HIGH" },
+        "inboundRateLimit_Polygon": { "severity": "HIGH" },
+        "inboundRateLimit_Arbitrum": { "severity": "HIGH" },
+        "inboundRateLimit_Optimism": { "severity": "HIGH" },
+        "inboundRateLimit_Base": { "severity": "HIGH" },
+        "inboundRateLimit_Avalanche": { "severity": "HIGH" },
+        "inboundRateLimit_Gnosis": { "severity": "HIGH" },
+        "inboundRateLimit_BSC": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": "BurnMintTokenPool"
@@ -585,14 +653,14 @@
         ],
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "4537355360902944430528227",
+        "equity": "4537340015679524238731769",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
         "minterReserve": "7092184427209219915654202",
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "28015453361995222700978211"
+        "totalSupply": "28032857595333386597016746"
       },
       "implementationNames": {
         "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
@@ -611,6 +679,13 @@
         "0xf936964831cae89cfea493a3a3b42408d0f893751008015da40da8bd6d4a7691"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "role": "admin"
+        }
+      ],
       "sinceTimestamp": 1626462994,
       "sinceBlock": 12839705,
       "values": {
@@ -621,14 +696,7 @@
       },
       "implementationNames": {
         "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": "VNXProxyAdmin"
-      },
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-          "role": "admin"
-        }
-      ]
+      }
     },
     {
       "name": "VNXManager",
@@ -862,6 +930,46 @@
       "function votes(address holder) view returns (uint256)",
       "function votesDelegated(address sender, address[] helpers) view returns (uint256)",
       "function zchf() view returns (address)"
+    ],
+    "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": [
+      "constructor(address tokenAdminRegistry, address zchf)",
+      "error AlreadyRegistered()",
+      "error ProposalAlreadyMade(bytes32 hash)",
+      "error TokenPoolNotSet()",
+      "error TooEarly(uint64 deadline)",
+      "error UnknownProposal(bytes32 hash)",
+      "event AddChainProposed(bytes32 hash, address indexed proposer, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) update)",
+      "event AdminTransferProposed(bytes32 hash, address indexed proposer, address newAdmin)",
+      "event AdminTransferred(address newAdmin)",
+      "event ChainAdded(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config)",
+      "event ChainRemoved(uint64 id)",
+      "event ProposalDenied(bytes32 hash)",
+      "event ProposalEnacted(bytes32 hash)",
+      "event ProposalMade(bytes32 hash, uint64 deadline)",
+      "event RateLimit(uint64 remoteChain, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfigs, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig)",
+      "event RemotePoolAdded(uint64 indexed chain, bytes indexed poolAddress)",
+      "event RemotePoolRemoved(uint64 indexed chain, bytes indexed poolAddress)",
+      "event RemotePoolUpdateProposed(bytes32 hash, address indexed proposer, tuple(bool add, uint64 chain, bytes poolAddress) update)",
+      "event RemoveChainProposed(bytes32 hash, address indexed proposer, uint64 chain)",
+      "event TokenPoolSet(address indexed tokenPool)",
+      "function DAY() view returns (uint64)",
+      "function GOVERNANCE() view returns (address)",
+      "function TOKEN_ADMIN_REGISTRY() view returns (address)",
+      "function ZCHF() view returns (address)",
+      "function acceptAdmin(address _tokenPool, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function applyAddChain(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config)",
+      "function applyAdminTransfer(address newAdmin)",
+      "function applyRateLimit(uint64 chain, tuple(bool isEnabled, uint128 capacity, uint128 rate) inbound, tuple(bool isEnabled, uint128 capacity, uint128 rate) outbound, address[] helpers)",
+      "function applyRemotePoolUpdate(tuple(bool add, uint64 chain, bytes poolAddress) update)",
+      "function applyRemoveChain(uint64 chainId)",
+      "function deny(bytes32 hash, address[] helpers)",
+      "function proposals(bytes32 hash) view returns (uint64 deadline)",
+      "function proposeAddChain(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config, address[] helpers)",
+      "function proposeAdminTransfer(address newAdmin, address[] helpers)",
+      "function proposeRemotePoolUpdate(tuple(bool add, uint64 chain, bytes poolAddress) update, address[] helpers)",
+      "function proposeRemoveChain(uint64 chainId, address[] helpers)",
+      "function registerToken(address registry, address _tokenPool, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function tokenPool() view returns (address)"
     ],
     "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": [
       "constructor(address zchf_, uint24 initialRatePPM)",
@@ -1587,6 +1695,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
-  "usedBlockNumbers": { "ethereum": 24920153 },
-  "permissionsConfigHash": "0xd8a9712e522a444081838b952adbfb037f369cbe1df66fa9049cae6bac372f6a"
+  "usedBlockNumbers": { "ethereum": 24923049 },
+  "permissionsConfigHash": "0x2bbfdfaf8ce1123e3a615553af6c8ab5813f5818053acd3d09c2f7dfaed5e119"
 }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastModified": "2026-03-15T09:02:23.320Z",
+  "lastModified": "2026-04-20T19:07:54.373Z",
   "contracts": {
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": {
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
@@ -127,7 +127,176 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-15T09:01:58.116Z"
+      "generatedAt": "2026-04-20T19:07:49.819Z"
+    },
+    "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": {
+      "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+      "name": "CCIPAdmin",
+      "externalCalls": [
+        {
+          "callerFunction": "acceptAdmin",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "acceptAdminRole",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "acceptAdmin",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "setPool",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "acceptAdmin",
+          "storageVariable": "_tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "acceptOwnership",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "acceptAdmin",
+          "storageVariable": "_tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "applyChainUpdates",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyAddChain",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "applyChainUpdates",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyAdminTransfer",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "transferAdminRole",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "applyAdminTransfer",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "transferOwnership",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyRateLimit",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "setChainRateLimiterConfig",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyRemotePoolUpdate",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "addRemotePool",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyRemotePoolUpdate",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "removeRemotePool",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "applyRemoveChain",
+          "storageVariable": "tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "applyChainUpdates",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "deterministic",
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "getTokenConfig",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "registry",
+          "interfaceType": "RegistryModuleOwnerCustom",
+          "calledFunction": "registerAdminViaGetCCIPAdmin"
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "acceptAdminRole",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "TOKEN_ADMIN_REGISTRY",
+          "interfaceType": "TokenAdminRegistry",
+          "calledFunction": "setPool",
+          "resolvedAddress": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "resolutionType": "deterministic"
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "_tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "acceptOwnership",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "discovered-values-scan",
+          "resolutionConfidence": 95,
+          "isViewCall": false
+        },
+        {
+          "callerFunction": "registerToken",
+          "storageVariable": "_tokenPool",
+          "interfaceType": "ITokenPool",
+          "calledFunction": "applyChainUpdates",
+          "resolvedAddress": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "resolvedContractName": "BurnMintTokenPool",
+          "resolutionType": "optimistic",
+          "resolutionHeuristic": "function-signature",
+          "resolutionConfidence": 99,
+          "isViewCall": false
+        }
+      ],
+      "generatedAt": "2026-04-20T19:07:54.253Z"
     },
     "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": {
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
@@ -394,7 +563,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-15T09:01:59.490Z"
+      "generatedAt": "2026-04-20T19:07:54.269Z"
     },
     "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": {
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
@@ -477,7 +646,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-15T09:02:03.952Z"
+      "generatedAt": "2026-04-20T19:07:54.273Z"
     },
     "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": {
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
@@ -736,7 +905,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-15T09:02:06.175Z"
+      "generatedAt": "2026-04-20T19:07:54.285Z"
     },
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": {
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
@@ -1133,7 +1302,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-15T09:02:09.626Z"
+      "generatedAt": "2026-04-20T19:07:54.306Z"
     },
     "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": {
       "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -1220,7 +1389,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-15T09:02:09.636Z"
+      "generatedAt": "2026-04-20T19:07:54.311Z"
     },
     "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": {
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
@@ -1488,8 +1657,8 @@
           "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
           "resolvedContractName": "Frankencoin",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99,
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -1878,8 +2047,8 @@
           "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
           "resolvedContractName": "Frankencoin",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99,
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2268,8 +2437,8 @@
           "resolvedAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
           "resolvedContractName": "Frankencoin",
           "resolutionType": "optimistic",
-          "resolutionHeuristic": "function-signature",
-          "resolutionConfidence": 99,
+          "resolutionHeuristic": "interface-name",
+          "resolutionConfidence": 90,
           "isViewCall": false
         },
         {
@@ -2327,7 +2496,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-15T09:02:18.288Z"
+      "generatedAt": "2026-04-20T19:07:54.341Z"
     },
     "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": {
       "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
@@ -2354,7 +2523,7 @@
           "isViewCall": true
         }
       ],
-      "generatedAt": "2026-03-15T09:02:18.301Z"
+      "generatedAt": "2026-04-20T19:07:54.345Z"
     },
     "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": {
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
@@ -2925,7 +3094,7 @@
           "isViewCall": false
         }
       ],
-      "generatedAt": "2026-03-15T09:02:23.318Z"
+      "generatedAt": "2026-04-20T19:07:54.372Z"
     }
   }
 }

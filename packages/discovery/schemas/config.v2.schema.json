@@ -766,6 +766,21 @@
                       },
                       "additionalProperties": false,
                       "required": ["type"]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": { "const": "ccipRateLimit" },
+                        "direction": {
+                          "anyOf": [
+                            { "const": "inbound" },
+                            { "const": "outbound" }
+                          ]
+                        },
+                        "chainSelector": { "type": "string" }
+                      },
+                      "additionalProperties": false,
+                      "required": ["type", "direction", "chainSelector"]
                     }
                   ]
                 },

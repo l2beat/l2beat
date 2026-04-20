@@ -28,7 +28,7 @@
       "projectType": "stablecoin",
       "tokenName": "ZCHF",
       "totals": {
-        "contractCount": 24,
+        "contractCount": 25,
         "permissionedFunctionCount": 73,
         "scoredFunctionCount": 18,
         "adminCount": 1,
@@ -36,8 +36,8 @@
         "totalCapitalAtRisk": 85128844.98393717,
         "totalTokenValueAtRisk": 35776636.3110119,
         "totalTokenValue": 35776636.3110119,
-        "linesOfCode": 1598,
-        "verifiedContractCount": 24,
+        "linesOfCode": 1976,
+        "verifiedContractCount": 25,
         "coverage": 100
       }
     },
@@ -88,7 +88,7 @@
       "projectType": "liquid-staking",
       "tokenName": "stETH",
       "totals": {
-        "contractCount": 188,
+        "contractCount": 56,
         "permissionedFunctionCount": 493,
         "scoredFunctionCount": 214,
         "adminCount": 33,
@@ -96,8 +96,8 @@
         "totalCapitalAtRisk": 21463155283.194496,
         "totalTokenValueAtRisk": 21616811032.080956,
         "totalTokenValue": 21616811032.080956,
-        "linesOfCode": 51487,
-        "verifiedContractCount": 188,
+        "linesOfCode": 38231,
+        "verifiedContractCount": 56,
         "coverage": 100
       }
     },
@@ -167,9 +167,9 @@
     "totalTokenValueAtRisk": 28188981217.30687,
     "totalTokenValue": 28314260207.757484,
     "protocolsReviewed": 8,
-    "totalContractCount": 391,
+    "totalContractCount": 260,
     "totalAdminCount": 78,
-    "totalUpdateCount": 631
+    "totalUpdateCount": 618
   },
   "dependencies": [
     {
@@ -469,6 +469,18 @@
       ]
     },
     {
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "name": "Chainlink BurnMintTokenPool",
+      "entity": "Chainlink",
+      "totalFundsAtRisk": 0,
+      "protocols": [
+        {
+          "slug": "Frankencoin",
+          "name": "Frankencoin"
+        }
+      ]
+    },
+    {
       "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
       "name": "Chainlink RBACTimelock (ARMProxy)",
       "entity": "Chainlink",
@@ -555,18 +567,6 @@
     {
       "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
       "name": "Chainlink TransferReference",
-      "entity": "Chainlink",
-      "totalFundsAtRisk": 0,
-      "protocols": [
-        {
-          "slug": "Frankencoin",
-          "name": "Frankencoin"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-      "name": "Chainlink BurnMintTokenPool",
       "entity": "Chainlink",
       "totalFundsAtRisk": 0,
       "protocols": [

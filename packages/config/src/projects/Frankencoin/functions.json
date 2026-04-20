@@ -372,6 +372,36 @@
             },
             {
               "type": "other",
+              "description": "Happy-path economic bound: mint amount mirrors tokens legitimately burned on the remote chain by the BurnMintTokenPool's lockOrBurn (i.e. the remote user burned the same amount before bridging). As long as each remote TokenPool and its OnRamp are honest, no net ZCHF is created — supply is only moved across chains.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Remote Burn Bound"
+            },
+            {
+              "type": "other",
+              "description": "Per-chain inbound CCIP rate limit (enforced on-chain): the BurnMintTokenPool runs a token-bucket limiter BEFORE calling mint (_consumeInboundRateLimit in releaseOrMint). Max burst per chain ≈ 500k ZCHF on Base/Gnosis, 100–200k on others; refills LINEARLY at ~10k/hour (Base) or ~5k/hour (others). Aggregate burst ≈ 1.7M ZCHF. This cap holds even if the CCIP Committing DON and RMN are both compromised — they cannot bypass the pool's own rate limiter. Rate limits are admin-changeable by the FPS governance.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "CCIP Rate Limit",
+              "impactCap": {
+                "hardcodedUsd": 1700000
+              }
+            },
+            {
+              "type": "other",
+              "description": "Trust assumption (NOT an on-chain cap): underneath the rate limit, message authenticity relies on Chainlink CCIP. The Committing DON signs the source-chain Merkle root, RMN / ARMProxy independently blesses it, then the OffRamp delivers it. If Committing DON AND RMN collude, forged mint messages could be delivered, but they are still bounded by the on-chain rate limiter above, which is the true cryptographic cap.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "CCIP DON+RMN Trust"
+            },
+            {
+              "type": "other",
               "description": "Flash loan only — mints ZCHF to itself and burns the exact same amount via burnFrom in the same transaction",
               "scopedTo": {
                 "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
@@ -1052,6 +1082,24 @@
             },
             {
               "type": "other",
+              "description": "Happy-path economic bound: the reported loss amount is bounded by actual losses on positions in the remote chain's BridgedFrankencoin. Each remote BridgedFrankencoin restricts its own coverLoss() to registered minters (e.g. remote MintingHub / position contracts), so the loss value in the CCIP payload mirrors real collateral-backed debt defaults on that chain. As long as each remote bridge's minter set and code are honest, this function cannot be used to claim arbitrary losses.",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Remote Minter Bound"
+            },
+            {
+              "type": "other",
+              "description": " If the Committing DON AND RMN collude (or are both compromised), a forged loss message with an arbitrary amount could drain the reserve up to its full balance. Emergency mitigation is RMN curse, a governance-layer response. Trust assumption (NOT an on-chain cap): message authenticity relies on Chainlink CCIP. The data path is validated by (1) the Committing DON signing the source-chain Merkle root, (2) RMN / ARMProxy independently blessing it, then (3) the OffRamp delivering it.",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "CCIP DON+RMN Trust"
+            },
+            {
+              "type": "other",
               "description": "StablecoinBridge (XCHF): does not invoke this function",
               "scopedTo": {
                 "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -1147,7 +1195,7 @@
             },
             {
               "type": "other",
-              "description": "Only transfers ZCHF balance into the reserve (additive); cannot drain or reduce funds",
+              "description": "Only transfers BridgeAccounting's own ZCHF balance into the reserve (additive accounting). Cannot drain or reduce reserve funds regardless of the CCIP message contents — the `amount` argument is not the payload value, it's `ZCHF.balanceOf(address(this))`. Even under a full CCIP compromise (Committing DON + RMN colluding) a forged profit message cannot cause a drain: the worst an attacker can do is force BridgeAccounting to forward its existing balance, which ends up in the reserve (benefiting FPS holders).",
               "scopedTo": {
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"

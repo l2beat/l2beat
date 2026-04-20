@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-20T09:10:53.662Z",
-  "compiledAt": "2026-04-20T09:16:50.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
+  "compiledAt": "2026-04-20T18:57:02.000Z",
   "project": "Frankencoin",
   "metadata": {
     "protocolName": "Frankencoin",
@@ -13,7 +13,7 @@
     "description": "Frankencoin is a collateral-backed stablecoin (ZCHF) pegged to the Swiss Franc, where users open positions by depositing collateral (WBTC, wstETH, cbBTC, LsETH, and others) via the MintingHub to mint ZCHF. All core protocol contracts are immutable with no admin upgrade keys. The system relies on a challenge mechanism for liquidations, a reserve pool (Equity/FPS) holding $14.87M, and StablecoinBridges to XCHF and VCHF for fiat-backed redemption. Chainlink CCIP infrastructure provides cross-chain bridging with burn/mint capabilities on the ZCHF token."
   },
   "totals": {
-    "contractCount": 24,
+    "contractCount": 25,
     "permissionedFunctionCount": 73,
     "scoredFunctionCount": 18,
     "adminCount": 19,
@@ -21,8 +21,8 @@
     "totalCapitalAtRisk": 85128844.98393717,
     "totalTokenValueAtRisk": 35776636.3110119,
     "totalTokenValue": 35776636.3110119,
-    "linesOfCode": 1598,
-    "verifiedContractCount": 24,
+    "linesOfCode": 1976,
+    "verifiedContractCount": 25,
     "coverage": 100
   },
   "admins": [
@@ -2153,6 +2153,348 @@
   },
   "dependencies": [
     {
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "name": "Chainlink BurnMintTokenPool",
+      "description": "Chainlink CCIP token pool that holds burn/mint permissions on the Frankencoin token for cross-chain transfers. Can mint ZCHF without collateral backing when receiving cross-chain messages, and burn ZCHF when sending. Operated by Chainlink's CCIP infrastructure.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "acceptOwnership",
+        "applyChainUpdates",
+        "transferOwnership",
+        "setChainRateLimiterConfig",
+        "addRemotePool",
+        "removeRemotePool",
+        "burnFrom",
+        "burnFromWithReserve",
+        "burnWithReserve",
+        "burnWithoutReserve",
+        "collectProfits",
+        "coverLoss",
+        "mint",
+        "mintWithReserve",
+        "registerPosition"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "acceptAdmin",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "applyAddChain",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "applyAdminTransfer",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "applyRateLimit",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "applyRemotePoolUpdate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "applyRemoveChain",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "contractName": "CCIPAdmin",
+          "functionName": "registerToken",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFrom",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnFromWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters) to repay debt from a payer and reclaim proportional reserve",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters) to repay debt and reclaim proportional reserve",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "burnWithoutReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "collectProfits",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "coverLoss",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mint",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 1700000,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Happy-path economic bound: mint amount mirrors tokens legitimately burned on the remote chain by the BurnMintTokenPool's lockOrBurn (i.e. the remote user burned the same amount before bridging). As long as each remote TokenPool and its OnRamp are honest, no net ZCHF is created — supply is only moved across chains.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Remote Burn Bound"
+            },
+            {
+              "type": "other",
+              "description": "Per-chain inbound CCIP rate limit (enforced on-chain): the BurnMintTokenPool runs a token-bucket limiter BEFORE calling mint (_consumeInboundRateLimit in releaseOrMint). Max burst per chain ≈ 500k ZCHF on Base/Gnosis, 100–200k on others; refills LINEARLY at ~10k/hour (Base) or ~5k/hour (others). Aggregate burst ≈ 1.7M ZCHF. This cap holds even if the CCIP Committing DON and RMN are both compromised — they cannot bypass the pool's own rate limiter. Rate limits are admin-changeable by the pool owner (0x2527…Def8) or rateLimitAdmin; discovered.json tracks all 7 chain configs + getRateLimitAdmin at HIGH severity.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "CCIP Rate Limit",
+              "impactCap": {
+                "hardcodedUsd": 1700000
+              },
+              "impactCapUsd": 1700000
+            },
+            {
+              "type": "other",
+              "description": "Trust assumption (NOT an on-chain cap): underneath the rate limit, message authenticity relies on Chainlink CCIP. The Committing DON signs the source-chain Merkle root, RMN / ARMProxy independently blesses it, then the OffRamp delivers it. If Committing DON AND RMN collude, forged mint messages could be delivered, but they are still bounded by the on-chain rate limiter above, which is the true cryptographic cap.",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "CCIP DON+RMN Trust"
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "mintWithReserve",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Only invoked by collateralized positions (not direct minters); each position has individual minting limits, minimum collateral requirements, reserve ratios, and expiration dates",
+              "label": "Position Limits"
+            },
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "contractName": "Frankencoin",
+          "functionName": "registerPosition",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "BurnMintTokenPool: does not invoke this function",
+              "scopedTo": {
+                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+                "type": "admin"
+              },
+              "label": "Not Called",
+              "impactCap": {
+                "hardcodedUsd": 0
+              },
+              "impactCapUsd": 0
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 1700000,
+      "dependencyType": "callgraph"
+    },
+    {
       "address": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
       "name": "VNX Franc (VCHF)",
       "description": "ERC-20 stablecoin issued by VNX, used as collateral in the StablecoinBridge (VCHF) for 1:1 ZCHF minting. The token is upgradeable via an EIP-1967 proxy controlled by VNXProxyAdmin, and its owner (VNXManager) can mint, burn, freeze, and pause transfers. Total funds at risk through the VCHF bridge: $543.90K.",
@@ -3337,246 +3679,6 @@
       "dependencyType": "write"
     },
     {
-      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-      "name": "Chainlink BurnMintTokenPool",
-      "description": "Chainlink CCIP token pool that holds burn/mint permissions on the Frankencoin token for cross-chain transfers. Can mint ZCHF without collateral backing when receiving cross-chain messages, and burn ZCHF when sending. Operated by Chainlink's CCIP infrastructure.",
-      "entity": "Chainlink",
-      "isAutoDetected": true,
-      "viewOnlyPath": false,
-      "calledFunctions": [
-        "burnFrom",
-        "burnFromWithReserve",
-        "burnWithReserve",
-        "burnWithoutReserve",
-        "collectProfits",
-        "coverLoss",
-        "mint",
-        "mintWithReserve",
-        "registerPosition"
-      ],
-      "functions": [
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "burnFrom",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "burnFromWithReserve",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "Only invoked by collateralized positions (not direct minters) to repay debt from a payer and reclaim proportional reserve",
-              "label": "Position Limits"
-            },
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "burnWithReserve",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "Only invoked by collateralized positions (not direct minters) to repay debt and reclaim proportional reserve",
-              "label": "Position Limits"
-            },
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "burnWithoutReserve",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "collectProfits",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "coverLoss",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "mint",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 35776636.3110119,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "mintWithReserve",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "Only invoked by collateralized positions (not direct minters); each position has individual minting limits, minimum collateral requirements, reserve ratios, and expiration dates",
-              "label": "Position Limits"
-            },
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "contractName": "Frankencoin",
-          "functionName": "registerPosition",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [],
-          "mitigations": [
-            {
-              "type": "other",
-              "description": "BurnMintTokenPool: does not invoke this function",
-              "scopedTo": {
-                "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
-                "type": "admin"
-              },
-              "label": "Not Called",
-              "impactCap": {
-                "hardcodedUsd": 0
-              },
-              "impactCapUsd": 0
-            }
-          ]
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 35776636.3110119,
-      "dependencyType": "write"
-    },
-    {
       "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
       "name": "Chainlink BridgeAccounting",
       "description": "Chainlink CCIP accounting contract that holds minter permissions on the Frankencoin token. Can call coverLoss (unbounded, no mitigations) and collectProfits on the Frankencoin reserve. Controlled by Chainlink infrastructure.",
@@ -3712,7 +3814,7 @@
           "mitigations": [
             {
               "type": "other",
-              "description": "Only transfers ZCHF balance into the reserve (additive); cannot drain or reduce funds",
+              "description": "Only transfers BridgeAccounting's own ZCHF balance into the reserve (additive accounting). Cannot drain or reduce reserve funds regardless of the CCIP message contents — the `amount` argument is not the payload value, it's `ZCHF.balanceOf(address(this))`. Even under a full CCIP compromise (Committing DON + RMN colluding) a forged profit message cannot cause a drain: the worst an attacker can do is force BridgeAccounting to forward its existing balance, which ends up in the reserve (benefiting FPS holders).",
               "scopedTo": {
                 "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
                 "type": "admin"
@@ -3732,7 +3834,27 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 35776636.3110119,
-          "reachableContracts": []
+          "reachableContracts": [],
+          "mitigations": [
+            {
+              "type": "other",
+              "description": "Happy-path economic bound: the reported loss amount is bounded by actual losses on positions in the remote chain's BridgedFrankencoin. Each remote BridgedFrankencoin restricts its own coverLoss() to registered minters (e.g. remote MintingHub / position contracts), so the loss value in the CCIP payload mirrors real collateral-backed debt defaults on that chain. As long as each remote bridge's minter set and code are honest, this function cannot be used to claim arbitrary losses.",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "Remote Minter Bound"
+            },
+            {
+              "type": "other",
+              "description": " If the Committing DON AND RMN collude (or are both compromised), a forged loss message with an arbitrary amount could drain the reserve up to its full balance. Emergency mitigation is RMN curse, a governance-layer response. Trust assumption (NOT an on-chain cap): message authenticity relies on Chainlink CCIP. The data path is validated by (1) the Committing DON signing the source-chain Merkle root, (2) RMN / ARMProxy independently blessing it, then (3) the OffRamp delivering it.",
+              "scopedTo": {
+                "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+                "type": "admin"
+              },
+              "label": "CCIP DON+RMN Trust"
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
@@ -3874,14 +3996,14 @@
   ],
   "dependencyEntityGroups": [
     {
-      "entity": "VCHF",
-      "totalFundsAtRisk": 427612.88072428637,
-      "totalTokenValueAtRisk": 1572387.1192757138
-    },
-    {
       "entity": "Chainlink",
       "totalFundsAtRisk": 0,
       "totalTokenValueAtRisk": 35776636.3110119
+    },
+    {
+      "entity": "VCHF",
+      "totalFundsAtRisk": 427612.88072428637,
+      "totalTokenValueAtRisk": 1572387.1192757138
     },
     {
       "entity": "XCHF",
@@ -3987,6 +4109,14 @@
   ],
   "functions": [],
   "contracts": [
+    {
+      "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+      "name": "CCIPAdmin",
+      "isExternal": false,
+      "isGovernance": false,
+      "entity": null,
+      "proxyType": "immutable"
+    },
     {
       "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
       "name": "Frankencoin (ZCHF Token)",
