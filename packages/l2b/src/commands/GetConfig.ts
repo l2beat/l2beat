@@ -46,7 +46,6 @@ const ALL_PROJECT_OPTIONAL_KEYS = [
   'discoveryInfo',
   'isScaling',
   'isInteropProtocol',
-  'isDaLayer',
   'isUpcoming',
   'archivedAt',
   'hasTestnet',

@@ -37,7 +37,6 @@ export function getSearchBarProjectEntries<
     | 'daBridge'
     | 'interopConfig'
     | 'isScaling'
-    | 'isDaLayer'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'contracts'
