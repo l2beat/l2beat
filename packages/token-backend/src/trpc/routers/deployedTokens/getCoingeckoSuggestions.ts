@@ -1,5 +1,5 @@
+import { INTEROP_CHAINS } from '@l2beat/config'
 import type { AbstractTokenRecord, TokenDatabase } from '@l2beat/database'
-import { INTEROP_CHAINS } from '../../../../../config/src/global/interopChains'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
 import {
   buildAliasToChainMap,
