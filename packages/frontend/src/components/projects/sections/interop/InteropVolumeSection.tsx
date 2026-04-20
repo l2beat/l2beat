@@ -170,7 +170,7 @@ export function InteropVolumeSection({
               ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 rounded-lg bg-surface-secondary p-4 md:grid-cols-3 md:gap-0 md:p-6">
+        <div className="grid grid-cols-1 rounded-lg bg-surface-secondary p-4 md:grid-cols-3 md:gap-4 md:p-6">
           <StatsItem
             title="Total volume"
             value={formatCurrency(entry?.volume ?? 0, 'usd')}
@@ -264,14 +264,14 @@ function StatsItem({
   isLoading: boolean
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 md:flex-col md:items-start md:justify-start">
-      <span className="font-medium text-paragraph-14 text-secondary leading-[1.25]">
+    <div className="flex flex-col items-start max-md:flex-row max-md:items-center max-md:justify-between">
+      <span className="font-medium text-secondary text-xs md:mb-1">
         {title}
       </span>
       {isLoading ? (
-        <Skeleton className="h-4 w-20" />
+        <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
       ) : (
-        <span className="font-bold text-label-value-18 leading-none md:text-label-value-16">
+        <span className="font-medium text-primary text-sm xs:text-lg md:font-bold">
           {value}
         </span>
       )}

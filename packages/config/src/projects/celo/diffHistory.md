@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x9627ed09d51a483f5ca4bb2f1c17695020f8a249
+
+# Diff at Fri, 17 Apr 2026 13:48:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bc806ac97299cdb9b08b4527d848aa09ff20f09c block: 1776331734
+- current timestamp: 1776433625
+
+## Description
+
+New SP1 Hypercube Plonk v6.1.0 verifier (0xc3c6dDD) registered in SP1VerifierGateway with selector 0x5a093a2f. Added to `activeVerifiers` and `allVerifiers`; SP1 proofs using this selector are now routed to the new contract. The verifier is the canonical Succinct deployment at that address on Ethereum mainnet (V6_1_0_SP1_VERIFIER_PLONK). Registered in sp1hypercube catalog.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ 1 file changed, 1421 insertions(+)
+```
+
+Generated with discovered.json: 0xb08f85afcb83dae4f26e9f51b6aaca522de385c1
+
+# Diff at Thu, 16 Apr 2026 09:31:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@dbe59fab54b844bd6d80a91ca8129ddbc1292028 block: 1775980180
+- current timestamp: 1776331734
+
+## Description
+
+SystemConfig minBaseFee raised from 25 gwei to 50 gwei. AccessManager (OPSuccinct proposer/challenger access control) owner transferred from an EIP-7702 delegator EOA (0x95FFAC, now deleted from discovery) to the Celo cLabs Multisig (0x9Eb44D).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x89E31965D844a309231B1f17759Ccaf1b7c09861) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.minBaseFee:
+-        25000000000
++        50000000000
+    }
+```
+
+```diff
+-   Status: DELETED
+    EOA  (eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B)
+    +++ description: None
+```
+
+```diff
+    contract AccessManager (eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816) {
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+      values.owner:
+-        "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B"
++        "eth:0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d"
+    }
+```
+
 Generated with discovered.json: 0x82014727093a84a11e1570925ed58d2d755c1063
 
 # Diff at Sun, 12 Apr 2026 07:50:49 GMT:

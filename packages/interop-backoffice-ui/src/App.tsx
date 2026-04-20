@@ -2,7 +2,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { AggregatesPage } from './pages/aggregates/AggregatesPage'
+import { AnomaliesPage } from './pages/anomalies/AnomaliesPage'
+import { AnomalyDetailsPage } from './pages/anomalies/AnomalyDetailsPage'
 import { SuspiciousTransfersPage } from './pages/anomalies/SuspiciousTransfersPage'
+import { CoveragePiesPage } from './pages/coverage-pies/CoveragePiesPage'
 import { EventDetailsPage } from './pages/events/EventDetailsPage'
 import { EventsPage } from './pages/events/EventsPage'
 import { FinancialActionsPage } from './pages/financials/FinancialActionsPage'
@@ -30,6 +34,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<SummaryPage />} />
 
+            <Route path="/aggregates" element={<AggregatesPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:kind/:type" element={<EventDetailsPage />} />
 
@@ -50,9 +55,18 @@ export function App() {
             <Route path="/missing-tokens" element={<MissingTokensPage />} />
             <Route path="/indexing/plugin-statuses" element={<StatusPage />} />
 
+            <Route path="/insights/anomalies" element={<AnomaliesPage />} />
+            <Route
+              path="/insights/anomalies/aggregate/:id"
+              element={<AnomalyDetailsPage />}
+            />
             <Route
               path="/insights/anomalies/suspicious-transfers"
               element={<SuspiciousTransfersPage />}
+            />
+            <Route
+              path="/insights/coverage-pies"
+              element={<CoveragePiesPage />}
             />
             <Route path="/insights/memory" element={<MemoryPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />

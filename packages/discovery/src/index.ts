@@ -124,7 +124,6 @@ export { sortBySeverity } from './discovery/utils/sortDiffs'
 export { findLeadingCommentStart } from './flatten/commentUtilities'
 export { flattenStartingFrom } from './flatten/flatten'
 export { format } from './flatten/format'
-export { ParsedFilesManager } from './flatten/ParsedFilesManager'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export {
   buildSimilarityHashmap,
@@ -133,6 +132,7 @@ export {
   flatteningHash,
   getHashToBeMatched,
 } from './flatten/utils'
+export { flattenStartingFrom as flattenBytecodeEquivalentStartingFrom } from './flatten-external/flatten'
 export {
   type ContractConfigSchema,
   type DiscoveryConfigSchema,

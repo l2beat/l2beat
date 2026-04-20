@@ -48,10 +48,10 @@ export class BlockTargetIndexer extends RootIndexer {
         this.daLayer,
       )
 
-    assert(
-      blockNumber >= this.blockHeight,
-      `Block number cannot be smaller: ${blockNumber} < ${this.blockHeight}`,
-    )
+    assert(blockNumber >= this.blockHeight, 'Block number cannot be smaller', {
+      blockNumber,
+      blockHeight: this.blockHeight,
+    })
 
     this.blockHeight = blockNumber
     await this.options?.onTick?.(timestamp, blockNumber)
