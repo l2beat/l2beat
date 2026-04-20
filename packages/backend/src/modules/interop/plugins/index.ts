@@ -199,7 +199,7 @@ export function createInteropPlugins(
           new AxelarPlugin(),
         ],
       },
-      new AcrossPlugin(deps.configs),
+      new AcrossPlugin(deps.configs, deps.oneSidedChains),
       {
         name: 'orbitstack',
         plugins: [

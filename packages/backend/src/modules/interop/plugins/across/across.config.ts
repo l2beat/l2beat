@@ -18,35 +18,79 @@ import { reconcileNetworks } from '../../engine/config/reconcileNetworks'
 export interface AcrossNetwork {
   chain: string
   chainId: number
-  spokePool: EthereumAddress
+  spokePool?: EthereumAddress
 }
 
 export const AcrossConfig = defineConfig<AcrossNetwork[]>('across')
+
+interface AcrossBootstrapChain {
+  name: string
+  id: number
+  querySpokePool: boolean
+}
 
 const abi = parseAbi([
   'function crossChainContracts(uint256) view returns (address adapter, address spokePool)',
 ])
 const HUB_POOL = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
 
-const OVERRIDES = [
+// Sourced from the official Across Swap API `/swap/chains` and Across
+// "Chains & Contracts" docs on April 20, 2026.
+const ACROSS_CHAIN_NAME_FALLBACKS = [
   {
-    name: 'hyperevm',
-    id: 999,
+    name: 'plasma',
+    id: 9_745,
+    querySpokePool: true,
   },
   {
     name: 'solana',
-    id: 34268394551451,
+    id: 34_268_394_551_451,
+    querySpokePool: false,
   },
-]
+  {
+    name: 'hypercore',
+    id: 1_337,
+    querySpokePool: false,
+  },
+  {
+    name: 'lighter',
+    id: 2_337,
+    querySpokePool: false,
+  },
+] as const satisfies AcrossBootstrapChain[]
+
+export function buildAcrossBootstrapChains(
+  chains: { id: number; name: string }[],
+): AcrossBootstrapChain[] {
+  const result: AcrossBootstrapChain[] = []
+  const seen = new Set<number>()
+
+  for (const chain of chains) {
+    result.push({
+      id: chain.id,
+      name: chain.name,
+      querySpokePool: true,
+    })
+    seen.add(chain.id)
+  }
+
+  for (const chain of ACROSS_CHAIN_NAME_FALLBACKS) {
+    if (seen.has(chain.id)) continue
+    result.push(chain)
+  }
+
+  return result
+}
 
 export class AcrossConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
 {
   provides = [AcrossConfig]
+  private readonly bootstrapChains: AcrossBootstrapChain[]
 
   constructor(
-    private chains: { id: number; name: string }[],
+    chains: { id: number; name: string }[],
     private store: InteropConfigStore,
     protected logger: Logger,
     private ethereumRpc: IRpcClient,
@@ -54,6 +98,7 @@ export class AcrossConfigPlugin
   ) {
     super({ intervalMs })
     this.logger = logger.for(this).tag({ tag: AcrossConfig.key })
+    this.bootstrapChains = buildAcrossBootstrapChains(chains)
   }
 
   async run() {
@@ -81,8 +126,7 @@ export class AcrossConfigPlugin
     const latest = await this.ethereumRpc.getLatestBlockNumber()
 
     const calls: CallParameters[] = []
-
-    const chains = [...this.chains, ...OVERRIDES]
+    const chains = this.bootstrapChains.filter((chain) => chain.querySpokePool)
 
     for (const chain of chains) {
       const data = encodeFunctionData({
@@ -101,6 +145,7 @@ export class AcrossConfigPlugin
     for (const [i, r] of result.entries()) {
       if (!r.success) {
         this.logger.warn(`Multicall failed for id ${chains[i].id}`)
+        continue
       }
       const [_, spokePool] = decodeFunctionResult({
         abi,
@@ -114,6 +159,14 @@ export class AcrossConfigPlugin
           spokePool: EthereumAddress(spokePool),
         })
       }
+    }
+
+    for (const chain of ACROSS_CHAIN_NAME_FALLBACKS) {
+      if (config.some((network) => network.chainId === chain.id)) continue
+      config.push({
+        chain: chain.name,
+        chainId: chain.id,
+      })
     }
 
     return config
