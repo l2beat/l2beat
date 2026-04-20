@@ -1,1 +1,0 @@
-{"solc_remaps": ["erc4626-tests/=lib/erc4626-tests/", "forge-std/=lib/forge-std/src/"], "solc_solcs_select": "0.8.28", "solc_args": "--via-ir --optimize --optimize-runs 750 --evm-version cancun"}
