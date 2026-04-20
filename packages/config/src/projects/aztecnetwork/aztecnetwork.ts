@@ -323,20 +323,6 @@ export const aztecnetwork: ScalingProject = {
       }),
     ],
     trackedTxs: [
-      // {
-      //   uses: [
-      //     { type: 'liveness', subtype: 'batchSubmissions' },
-      //     { type: 'l2costs', subtype: 'batchSubmissions' },
-      //   ],
-      //   query: {
-      //     formula: 'functionCall',
-      //     address: rollupAddress,
-      //     selector: '0x85b98fd8',
-      //     functionSignature:
-      //       'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)',
-      //     sinceTimestamp: alphaGenesisTimestamp,
-      //   },
-      // },
       {
         uses: [
           { type: 'liveness', subtype: 'batchSubmissions' },
@@ -347,10 +333,10 @@ export const aztecnetwork: ScalingProject = {
           address: rollupAddress,
           selector: '0x85b98fd8',
           functionSignature:
-            'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)', // inner call  / trace
-          // topics: [
-          //   '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
-          // ],
+            'function propose((bytes32,(int256),(bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,address,bytes32,(uint128,uint128),uint256)),(bytes,bytes),address[],(uint8,bytes32,bytes32),bytes)',
+          topics: [
+            '0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0', // CheckpointProposed
+          ],
           sinceTimestamp: alphaGenesisTimestamp,
         },
       },
