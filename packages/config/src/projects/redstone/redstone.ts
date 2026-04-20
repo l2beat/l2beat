@@ -77,7 +77,7 @@ export const redstone: ScalingProject = opStackL2({
       url: 'https://x.com/latticexyz/status/2044103611072835744',
       date: '2026-04-15T00:00:00Z',
       description:
-        'Lattice announces that Redstone will shut down on May 15, 2026. Users must withdraw their funds before that date.',
+        'Lattice announces Redstone shutdown on May 15, 2026. Users must withdraw before that date.',
       type: 'incident',
     },
   ],

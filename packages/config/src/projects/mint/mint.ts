@@ -75,7 +75,7 @@ export const mint: ScalingProject = opStackL2({
       url: 'https://mintchain.io/withdraw',
       date: '2026-04-17T00:00:00Z',
       description:
-        'Mint Blockchain ceases operations and only supports withdrawals. Users must withdraw ETH, WBTC, USDC, and USDT before October 20, 2026.',
+        'Mint Blockchain ceases operations. Users must withdraw funds before October 20, 2026.',
       type: 'incident',
     },
     {
