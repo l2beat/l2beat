@@ -4,11 +4,10 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -16,13 +15,11 @@ export const mantle: ScalingProject = opStackL2({
   addedAt: UnixTime(1680782525), // 2023-04-06T12:02:05Z
   discovery,
   genesisTimestamp: UnixTime(1688314886),
-  daProvider: EIGENDA_DA_PROVIDER(false, DA_LAYERS.ETH_BLOBS),
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Mantle',
     slug: 'mantle',
     description:
-      'Mantle is a modular general-purpose validium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
+      'Mantle is a modular general-purpose Ethereum rollup. Transaction data is posted to Ethereum blobs and state transitions are validated onchain via OP Succinct ZK validity proofs (SP1). Its design philosophy aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     links: {
       websites: ['https://mantle.xyz/'],
       bridges: ['https://bridge.mantle.xyz'],
@@ -140,16 +137,18 @@ export const mantle: ScalingProject = opStackL2({
         ),
       ],
     },
-    {
-      type: 'eigen-da',
-      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1738821600),
-    },
   ],
   associatedTokens: ['MNT'],
   additionalBadges: [BADGES.Stack.OPSuccinct],
   milestones: [
+    {
+      title: 'Arsia upgrade: full Ethereum DA',
+      url: 'https://etherscan.io/tx/0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a',
+      date: '2026-04-16T00:00:00.00Z',
+      description:
+        'EigenDA code path removed; DA is Ethereum only. Mantle reclassified as a rollup.',
+      type: 'general',
+    },
     {
       title: 'Upgrade to OP Succinct',
       url: 'https://x.com/Mantle_Official/status/1967936628678430965',
@@ -188,43 +187,6 @@ export const mantle: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplateTechnology: {
-    dataAvailability: {
-      name: 'Data is posted to EigenDA and Ethereum blobs',
-      description:
-        'Transaction data can be posted to both EigenDA and Ethereum blobs. Since the EigenDA ServiceManager bridge is not used, availability of the data posted to EigenDA is not verified against EigenDA operators, meaning that the Sequencer can publish unavailable EigenDA commitments. Mantle uses Hydro, a Go implementation that provides EigenDA blob derivation for OP stack chains.',
-      references: [
-        {
-          url: 'https://docs.eigenda.xyz/overview',
-          title: 'EigenDA Docs - Overview',
-        },
-        {
-          url: 'https://github.com/mantle-xyz/hydro',
-          title: 'Hydro - EigenDA blob derivation library',
-        },
-        {
-          title: 'Derivation: Batch submission - OP Mainnet specs',
-          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
-        },
-      ],
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the sequencer posts an unavailable transaction root.',
-          isCritical: true,
-        },
-      ],
-    },
-    otherConsiderations: [
-      {
-        name: 'Dual DA layer without onchain EigenDA verification',
-        description:
-          'Mantle can post transaction data to both EigenDA and Ethereum blobs. Should the sequencer post an EigenDA commitment to unavailable data, honest Mantle nodes would fail in the process of blob derivation and halt, refusing to process state updates. However, since there is no onchain proof system integration with the EigenDA verifier, the sequencer could potentially post unavailable data, collude with the state proposer, and still have a state root accepted onchain. This attack would put user funds at risk despite the offchain safety mechanism.',
-        references: [],
-        risks: [],
-      },
-    ],
-  },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/succinctlabs/op-succinct/',
 })
