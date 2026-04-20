@@ -29,20 +29,6 @@ function dedupeTags(tags: Array<string | undefined>): string[] {
   return [...new Set(tags.filter((tag): tag is string => !!tag))]
 }
 
-export function getCommonSearchBarProjectTags(project: {
-  slug: string
-  name: string
-  shortName?: string
-  aliases?: string[]
-}): string[] {
-  return dedupeTags([
-    project.slug,
-    project.name,
-    project.shortName,
-    ...(project.aliases ?? []),
-  ])
-}
-
 export function getSearchBarProjectEntries<
   T extends Project<
     never,
@@ -71,7 +57,12 @@ export function getSearchBarProjectEntries<
     return []
   }
 
-  const commonTags = getCommonSearchBarProjectTags(project)
+  const commonTags = dedupeTags([
+    project.slug,
+    project.name,
+    project.shortName,
+    ...(project.aliases ?? []),
+  ])
 
   const common = {
     type: 'project',
