@@ -573,7 +573,7 @@ Verify:
     programUrl:
       'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/aggregation',
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
 
@@ -593,7 +593,7 @@ Verify:
     programUrl:
       'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/range/ethereum',
     proverSystemProject: ProjectId('sp1turbo'),
-    verificationStatus: 'notVerified',
+    verificationStatus: 'successful',
     verificationSteps: `
 Prepare:
 
