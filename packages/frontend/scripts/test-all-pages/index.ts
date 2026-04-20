@@ -11,7 +11,7 @@ async function main() {
     zkCatalogProjects,
   ] = await Promise.all([
     ps.getProjects({
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       optional: ['tvsConfig'],
     }),
     ps.getProjects({

@@ -20,7 +20,7 @@ export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'activityConfig', 'display'],
     optional: ['contracts'],
-    where: ['isScaling'],
+    where: ['scalingInfo'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
   const projects = unfilteredProjects.filter(
