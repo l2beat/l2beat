@@ -5,8 +5,14 @@ import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
-import { createInteropEventType, type InteropEvent } from '../types'
+import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
+import { createInteropEventType, findChain, type InteropEvent } from '../types'
 import type { RelayApiClient } from './RelayApiClient'
+import {
+  buildRelayFallbackNetworks,
+  RelayConfig,
+  type RelayNetwork,
+} from './relay.config'
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
@@ -20,26 +26,39 @@ export class RelayRootIndexer extends RootIndexer {
   }
 }
 
-export const TokenSent = createInteropEventType<{
+export type TokenSentArgs = {
   id: string
   amount?: string
   token?: Address32
   $dstChain: string
-}>('relay.TokenSent', { direction: 'outgoing' })
+}
 
-export const TokenReceived = createInteropEventType<{
+export const TokenSent = createInteropEventType<TokenSentArgs>(
+  'relay.TokenSent',
+  { direction: 'outgoing' },
+)
+
+export type TokenReceivedArgs = {
   id: string
   amount?: string
   token?: Address32
   $srcChain: string
-}>('relay.TokenReceived', { direction: 'incoming' })
+}
+
+export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
+  'relay.TokenReceived',
+  { direction: 'incoming' },
+)
 
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
+  private readonly fallbackNetworks: RelayNetwork[]
 
   constructor(
-    private chains: { id: number; name: string }[],
+    chains: { id: number; name: string }[],
+    oneSidedChains: string[],
+    private configs: InteropConfigStore,
     private trackedChains: string[],
     private relayApiClient: RelayApiClient,
     private db: Database,
@@ -58,6 +77,8 @@ export class RelayIndexer extends ManagedChildIndexer {
       },
       logger,
     )
+
+    this.fallbackNetworks = buildRelayFallbackNetworks(chains, oneSidedChains)
   }
 
   override async start(): Promise<void> {
@@ -74,13 +95,15 @@ export class RelayIndexer extends ManagedChildIndexer {
     await super.start()
   }
 
+  private getNetworks() {
+    return this.configs.get(RelayConfig) ?? this.fallbackNetworks
+  }
+
   private getChainName(chainId: number | undefined) {
     if (chainId === undefined) {
       return 'Unknown'
     }
-    return (
-      this.chains.find((c) => c.id === chainId)?.name ?? `Unknown_${chainId}`
-    )
+    return findChain(this.getNetworks(), (network) => network.chainId, chainId)
   }
 
   async update(from: number, to: number): Promise<number> {

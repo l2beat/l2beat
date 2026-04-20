@@ -5,20 +5,50 @@ import {
   type MatchResult,
   Result,
 } from '../types'
-import { TokenReceived, TokenSent } from './relay.indexer'
+import {
+  TokenReceived,
+  type TokenReceivedArgs,
+  TokenSent,
+  type TokenSentArgs,
+} from './relay.indexer'
 
 export class RelayPlugin implements InteropPlugin {
   readonly name = 'relay'
 
-  matchTypes = [TokenReceived]
-  match(
-    tokenReceived: InteropEvent,
+  constructor(private oneSidedChains: string[] = []) {}
+
+  matchTypes = [TokenReceived, TokenSent]
+  match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (TokenReceived.checkType(event)) {
+      return this.matchReceived(event, db)
+    }
+
+    if (TokenSent.checkType(event)) {
+      return this.matchSent(event, db)
+    }
+  }
+
+  private matchReceived(
+    tokenReceived: InteropEvent<TokenReceivedArgs>,
     db: InteropEventDb,
   ): MatchResult | undefined {
-    if (!TokenReceived.checkType(tokenReceived)) return
-
     const tokenSent = db.find(TokenSent, { id: tokenReceived.args.id })
-    if (!tokenSent) return
+    if (!tokenSent) {
+      const srcChain = this.normalizeOneSidedChain(tokenReceived.args.$srcChain)
+      if (!srcChain) return
+
+      return [
+        Result.Transfer('relay.Transfer', {
+          srcChain,
+          dstEvent: tokenReceived,
+          dstAmount: tokenReceived.args.amount
+            ? BigInt(tokenReceived.args.amount)
+            : undefined,
+          dstTokenAddress: tokenReceived.args.token,
+          dstWasMinted: false,
+        }),
+      ]
+    }
 
     return [
       Result.Message('relay.Message', {
@@ -41,5 +71,36 @@ export class RelayPlugin implements InteropPlugin {
         dstWasMinted: false,
       }),
     ]
+  }
+
+  private matchSent(
+    tokenSent: InteropEvent<TokenSentArgs>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const dstChain = this.normalizeOneSidedChain(tokenSent.args.$dstChain)
+    if (!dstChain) return
+
+    const hasCounterpart = db.find(TokenReceived, { id: tokenSent.args.id })
+    if (hasCounterpart) return
+
+    return [
+      Result.Transfer('relay.Transfer', {
+        srcEvent: tokenSent,
+        dstChain,
+        srcAmount: tokenSent.args.amount
+          ? BigInt(tokenSent.args.amount)
+          : undefined,
+        srcTokenAddress: tokenSent.args.token,
+        srcWasBurned: false,
+      }),
+    ]
+  }
+
+  private normalizeOneSidedChain(chain: string | undefined) {
+    if (!chain || !this.oneSidedChains.includes(chain)) {
+      return
+    }
+
+    return chain
   }
 }

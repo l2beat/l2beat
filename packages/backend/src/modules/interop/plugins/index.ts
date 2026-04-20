@@ -54,6 +54,7 @@ import { OrbitStackStandardGatewayPlugin } from './orbitstack/orbitstack-standar
 import { OrbitStackWethGatewayPlugin } from './orbitstack/orbitstack-wethgateway'
 import { PolygonConfigPlugin } from './polygon/polygon.config'
 import { PolygonPlugin } from './polygon/polygon.plugin'
+import { RelayConfigPlugin } from './relay/relay.config'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
@@ -143,6 +144,14 @@ export function createInteropPlugins(
         deps.logger,
         rpcs,
         deps.tokenDbClient,
+        deps.configIntervalMs,
+      ),
+      new RelayConfigPlugin(
+        deps.chains,
+        deps.oneSidedChains,
+        deps.configs,
+        deps.logger,
+        deps.httpClient,
         deps.configIntervalMs,
       ),
       new PolygonConfigPlugin(
@@ -237,7 +246,7 @@ export function createInteropPlugins(
         ],
       },
       new OneinchFusionPlusPlugin(),
-      new RelayPlugin(),
+      new RelayPlugin(deps.oneSidedChains),
       new GasZipPlugin(deps.logger),
       new PolygonPlugin(deps.configs),
       new ZkStackPlugin(deps.configs),
