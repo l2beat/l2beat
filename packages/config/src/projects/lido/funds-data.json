@@ -36,7 +36,7 @@
             "name": "Trump Hat",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000004735826180427636
+            "usdValue": 4.735826180427636e-06
           },
           {
             "assetAddress": "0x190d2a4d4d24e54f103f14882c97703ce75421ea",
@@ -68,7 +68,7 @@
             "name": "Trump Fort",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000029452188277559566
+            "usdValue": 2.9452188277559566e-06
           },
           {
             "assetAddress": "0x290b3b9f7661a6834135be44c3475aef987fa3b2",
@@ -76,7 +76,7 @@
             "name": "Trump Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000014569394720866758
+            "usdValue": 1.4569394720866758e-05
           },
           {
             "assetAddress": "0x2b591e99afe9f32eaa6214f7b7629768c40eeb39",
@@ -92,7 +92,7 @@
             "name": "Little Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000027056317817093884
+            "usdValue": 2.7056317817093884e-05
           },
           {
             "assetAddress": "0x3bb4a7220687c65c257d377a998fcb90bdf87939",
@@ -108,7 +108,7 @@
             "name": "Trump Rekt",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000004609341170983886
+            "usdValue": 4.609341170983886e-06
           },
           {
             "assetAddress": "0x50658e31ec229f6e2df5ba3135982ab2f0d80ad5",
@@ -124,12 +124,12 @@
             "name": "Trump Cat",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000040973764483187335
+            "usdValue": 4.0973764483187335e-06
           },
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "100",
             "decimals": 6,
             "usdValue": 0
@@ -140,7 +140,7 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000034378508410107635
+            "usdValue": 3.4378508410107635e-05
           },
           {
             "assetAddress": "0x60597bff98bfb335f57d08bd2d23f96ee0015bdc",
@@ -148,7 +148,7 @@
             "name": "Trump Star",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000003453230606218534
+            "usdValue": 3.453230606218534e-06
           },
           {
             "assetAddress": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
@@ -236,7 +236,7 @@
             "name": "USDtb",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 0.00009999930000000001
+            "usdValue": 9.999930000000001e-05
           },
           {
             "assetAddress": "0xc6dddb5bc6e61e0841c54f3e723ae1f3a807260b",
@@ -244,7 +244,7 @@
             "name": "Aurox Token",
             "balance": "10000000000000",
             "decimals": 18,
-            "usdValue": 9.920304631288621e-7
+            "usdValue": 9.920304631288621e-07
           },
           {
             "assetAddress": "0xd3d6bddcae7e4efee3b952bcb10d6163b3f4c687",
@@ -342,7 +342,7 @@
                   {
                     "symbol": "ETH",
                     "name": "ETH",
-                    "amount": 0.000001049852218913,
+                    "amount": 1.049852218913e-06,
                     "price": 2304.82
                   }
                 ]
@@ -1078,7 +1078,7 @@
             "name": "Lil Manyu",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000051727010584143345
+            "usdValue": 5.1727010584143345e-06
           },
           {
             "assetAddress": "0x3401a451a5912c0a8bf4e70fcf4932c2d5c525ea",
@@ -1646,7 +1646,7 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000034378508410107635
+            "usdValue": 3.4378508410107635e-05
           },
           {
             "assetAddress": "0x596e8d813ac05cf3a957aa3be1ffb5fb5674e78f",
@@ -3082,8 +3082,8 @@
           },
           {
             "assetAddress": "0xc1789999e3a80f71cdaad44aa8521a0f5829d55b",
-            "symbol": "以太AI",
-            "name": "以太AI",
+            "symbol": "\u4ee5\u592aAI",
+            "name": "\u4ee5\u592aAI",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -5030,7 +5030,7 @@
             "name": "Little Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000027056317817093884
+            "usdValue": 2.7056317817093884e-05
           },
           {
             "assetAddress": "0x387525dfaf4b96941ece110bbcf7c18a82524200",
@@ -5563,7 +5563,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "3130000",
             "decimals": 6,
             "usdValue": 0
@@ -7110,7 +7110,7 @@
             "name": "USDtb",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 0.00009999930000000001
+            "usdValue": 9.999930000000001e-05
           },
           {
             "assetAddress": "0xc148ed116b59d02a0d18fb741ac12ab9104d0a54",
@@ -8378,8 +8378,8 @@
           },
           {
             "assetAddress": "0x26ca7aefbc73cb20364df9bba4fdf642c52a60e4",
-            "symbol": "以太人生",
-            "name": "以太人生",
+            "symbol": "\u4ee5\u592a\u4eba\u751f",
+            "name": "\u4ee5\u592a\u4eba\u751f",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -10087,7 +10087,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "1000",
             "decimals": 6,
             "usdValue": 0
@@ -10116,16 +10116,16 @@
               {
                 "name": "Staked",
                 "stats": {
-                  "assetUsdValue": 0.000028622054652927554,
+                  "assetUsdValue": 2.8622054652927554e-05,
                   "debtUsdValue": 0,
-                  "netUsdValue": 0.000028622054652927554
+                  "netUsdValue": 2.8622054652927554e-05
                 },
                 "tokens": [
                   {
                     "symbol": "VERSE",
                     "name": "Verse",
                     "amount": 1,
-                    "price": 0.000027408127021470056
+                    "price": 2.7408127021470056e-05
                   },
                   {
                     "symbol": "tBTC",
@@ -10136,10 +10136,10 @@
                 ]
               }
             ],
-            "totalUsdValue": 0.000028622054652927554
+            "totalUsdValue": 2.8622054652927554e-05
           }
         ],
-        "totalUsdValue": 0.000028622054652927554,
+        "totalUsdValue": 2.8622054652927554e-05,
         "timestamp": "2026-04-20T09:20:41.725Z",
         "source": "debank"
       }
@@ -10218,7 +10218,7 @@
             "name": "BigMouthFrog",
             "balance": "152504000000000000000",
             "decimals": 18,
-            "usdValue": 6.9238761001415255e-9
+            "usdValue": 6.9238761001415255e-09
           },
           {
             "assetAddress": "0x544ef97f70a50887c277e9a0eca06652187f64bf",
@@ -10231,7 +10231,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "1000000",
             "decimals": 6,
             "usdValue": 0
@@ -10242,7 +10242,7 @@
             "name": "World Liberty Financial",
             "balance": "78202500000",
             "decimals": 9,
-            "usdValue": 1.164831504216178e-9
+            "usdValue": 1.164831504216178e-09
           },
           {
             "assetAddress": "0x78a25f62c52973abdb2f467116df97a1f57fe211",
@@ -10270,8 +10270,8 @@
           },
           {
             "assetAddress": "0x8066553eb0228f33581997e3e6b44b0019b8a48b",
-            "symbol": "⚠️ URGENT WHATSAPP MODERATOR +31684797985",
-            "name": "⚠️ YOUR PRIVATE KEY ...f... IS LEAKED",
+            "symbol": "\u26a0\ufe0f URGENT WHATSAPP MODERATOR +31684797985",
+            "name": "\u26a0\ufe0f YOUR PRIVATE KEY ...f... IS LEAKED",
             "balance": "1000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -10290,7 +10290,7 @@
             "name": "IRYNA",
             "balance": "912726000000",
             "decimals": 9,
-            "usdValue": 3.443482616777565e-7
+            "usdValue": 3.443482616777565e-07
           },
           {
             "assetAddress": "0x960fce8724aa127184b6d13af41a711755236c77",
@@ -10402,7 +10402,7 @@
             "name": "American Bitcoin",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 3.122726225683443e-7
+            "usdValue": 3.122726225683443e-07
           },
           {
             "assetAddress": "0xe40cbbf20fce535404c1266583da12d1f358e9d8",
@@ -10442,7 +10442,7 @@
             "name": "Charlie Kirk",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 4.2368781421649745e-7
+            "usdValue": 4.2368781421649745e-07
           },
           {
             "assetAddress": "0xf9b09a5f1b34b42a484050ddcf052bec00c5acec",
@@ -10560,8 +10560,8 @@
           },
           {
             "assetAddress": "0x038c9d0674dd49f183835084ac54342592e525b7",
-            "symbol": "POΞ Lympo",
-            "name": "POΞ Lympo",
+            "symbol": "PO\u039e Lympo",
+            "name": "PO\u039e Lympo",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -11180,7 +11180,7 @@
             "name": "Trump Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000014569394720866758
+            "usdValue": 1.4569394720866758e-05
           },
           {
             "assetAddress": "0x299fd689a83d740efe77ed07b3b4e3ccd5167a1d",
@@ -11404,7 +11404,7 @@
             "name": "Little Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000027056317817093884
+            "usdValue": 2.7056317817093884e-05
           },
           {
             "assetAddress": "0x38e67bee4d4a72ea2a63e30bd64b5d78ae78b39c",
@@ -11440,8 +11440,8 @@
           },
           {
             "assetAddress": "0x3b8a80ac8241750362fe533ca6cad77bad4ee322",
-            "symbol": "ℓUSD Harold",
-            "name": "ℓUSD Harold",
+            "symbol": "\u2113USD Harold",
+            "name": "\u2113USD Harold",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -11560,8 +11560,8 @@
           },
           {
             "assetAddress": "0x41ea76e6832ed60b67ebe808011ceaa7a02a96c4",
-            "symbol": "canwifhat²",
-            "name": "canwifhat²",
+            "symbol": "canwifhat\u00b2",
+            "name": "canwifhat\u00b2",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -13864,8 +13864,8 @@
           },
           {
             "assetAddress": "0xda8419f6ca8bdc5ee183c6140d1c155c5a2cb62a",
-            "symbol": "佩佩",
-            "name": "佩佩",
+            "symbol": "\u4f69\u4f69",
+            "name": "\u4f69\u4f69",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -14532,7 +14532,7 @@
             "name": "Royal Doge",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000021644363613943837
+            "usdValue": 2.1644363613943837e-06
           },
           {
             "assetAddress": "0x06243384dde409ab722fbde7a7563c17e58f66d2",
@@ -16792,8 +16792,8 @@
           },
           {
             "assetAddress": "0x8e3921dca3fd02192e5d8557a378417d4368eadb",
-            "symbol": "我踏马来了",
-            "name": "我踏马来了",
+            "symbol": "\u6211\u8e0f\u9a6c\u6765\u4e86",
+            "name": "\u6211\u8e0f\u9a6c\u6765\u4e86",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -17344,8 +17344,8 @@
           },
           {
             "assetAddress": "0xb87e0e20a7765093f5e5618d471080ab65057bc6",
-            "symbol": "Ÿ Navigate",
-            "name": "Ÿ Navigate",
+            "symbol": "\u0178 Navigate",
+            "name": "\u0178 Navigate",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -18224,8 +18224,8 @@
           },
           {
             "assetAddress": "0xf48bb5e65029677eade6bd49d54553145e621089",
-            "symbol": "我踏马来了",
-            "name": "我踏马来了",
+            "symbol": "\u6211\u8e0f\u9a6c\u6765\u4e86",
+            "name": "\u6211\u8e0f\u9a6c\u6765\u4e86",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -18936,8 +18936,8 @@
           },
           {
             "assetAddress": "0x1da91c13a6e44a7344d26836720f0a156dc3b3ca",
-            "symbol": "You’ll own nothing & be happy",
-            "name": "You’ll own nothing & be happy",
+            "symbol": "You\u2019ll own nothing & be happy",
+            "name": "You\u2019ll own nothing & be happy",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -19048,8 +19048,8 @@
           },
           {
             "assetAddress": "0x22af3be83b5c7d6f5501b89942d65f3ade46d4e4",
-            "symbol": "TYBG²",
-            "name": "TYBG²",
+            "symbol": "TYBG\u00b2",
+            "name": "TYBG\u00b2",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -19212,7 +19212,7 @@
             "name": "Trump Fort",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000029452188277559566
+            "usdValue": 2.9452188277559566e-06
           },
           {
             "assetAddress": "0x2770d6f9a4bf016e630a533299ac31257fd2be76",
@@ -19372,7 +19372,7 @@
             "name": "Lil Manyu",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000051727010584143345
+            "usdValue": 5.1727010584143345e-06
           },
           {
             "assetAddress": "0x34056958738a4a3e8c8e277019b7c33e86699ef5",
@@ -20104,8 +20104,8 @@
           },
           {
             "assetAddress": "0x5db162246bc373d1c67c7d03b6b26a233fa829eb",
-            "symbol": "財務自由",
-            "name": "財務自由",
+            "symbol": "\u8ca1\u52d9\u81ea\u7531",
+            "name": "\u8ca1\u52d9\u81ea\u7531",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -20140,7 +20140,7 @@
             "name": "Trump Star",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000003453230606218534
+            "usdValue": 3.453230606218534e-06
           },
           {
             "assetAddress": "0x607808208f963b25ebd7bf35ca6a49042fbf7fd2",
@@ -20496,8 +20496,8 @@
           },
           {
             "assetAddress": "0x74a2129803c37fbc84cdd9819b2488e2674bad45",
-            "symbol": "提币就涨诅咒",
-            "name": "提币就涨诅咒",
+            "symbol": "\u63d0\u5e01\u5c31\u6da8\u8bc5\u5492",
+            "name": "\u63d0\u5e01\u5c31\u6da8\u8bc5\u5492",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -21696,8 +21696,8 @@
           },
           {
             "assetAddress": "0xc89d840da3d4f6608f37e12fd57411f17174494e",
-            "symbol": "我踏马来了",
-            "name": "我踏马来了",
+            "symbol": "\u6211\u8e0f\u9a6c\u6765\u4e86",
+            "name": "\u6211\u8e0f\u9a6c\u6765\u4e86",
             "balance": "6e+26",
             "decimals": 18,
             "usdValue": 0
@@ -22596,7 +22596,7 @@
             "name": "Trump Hat",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000004735826180427636
+            "usdValue": 4.735826180427636e-06
           },
           {
             "assetAddress": "0x15915d1f13ab2200a8825b38aff53c3b09a47899",
@@ -23248,8 +23248,8 @@
           },
           {
             "assetAddress": "0x40a7071f79550fc7a0ae60f47ad82ebc5b5cad0a",
-            "symbol": "Laïka POOH",
-            "name": "Laïka POOH",
+            "symbol": "La\u00efka POOH",
+            "name": "La\u00efka POOH",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -24448,8 +24448,8 @@
           },
           {
             "assetAddress": "0x87aca7acda1c7f637df96d624f9004f97d3afd64",
-            "symbol": "POM Laïka",
-            "name": "POM Laïka",
+            "symbol": "POM La\u00efka",
+            "name": "POM La\u00efka",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -24736,8 +24736,8 @@
           },
           {
             "assetAddress": "0x9d609c39fe53888f02cd97622d2e1859d33b17a1",
-            "symbol": "Ÿ ELYSIA",
-            "name": "Ÿ ELYSIA",
+            "symbol": "\u0178 ELYSIA",
+            "name": "\u0178 ELYSIA",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -25816,8 +25816,8 @@
           },
           {
             "assetAddress": "0xdd880b80243af65c65793430af084a4857e18063",
-            "symbol": "MetalCore Ÿ",
-            "name": "MetalCore Ÿ",
+            "symbol": "MetalCore \u0178",
+            "name": "MetalCore \u0178",
             "balance": "9.99e+28",
             "decimals": 18,
             "usdValue": 0
@@ -26308,7 +26308,7 @@
             "name": "BigMouthFrog",
             "balance": "1.006619e+21",
             "decimals": 18,
-            "usdValue": 4.5701786419034014e-8
+            "usdValue": 4.5701786419034014e-08
           }
         ],
         "totalUsdValue": 10181169028.783287,
@@ -26454,7 +26454,7 @@
             "name": "BigMouthFrog",
             "balance": "152504000000000000000",
             "decimals": 18,
-            "usdValue": 6.087781956760859e-9
+            "usdValue": 6.087781956760859e-09
           },
           {
             "assetAddress": "0x544ef97f70a50887c277e9a0eca06652187f64bf",
@@ -26467,7 +26467,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "1000000",
             "decimals": 6,
             "usdValue": 0
@@ -26478,7 +26478,7 @@
             "name": "World Liberty Financial",
             "balance": "78202500000",
             "decimals": 9,
-            "usdValue": 5.7307496219218295e-9
+            "usdValue": 5.7307496219218295e-09
           },
           {
             "assetAddress": "0x78a25f62c52973abdb2f467116df97a1f57fe211",
@@ -26498,8 +26498,8 @@
           },
           {
             "assetAddress": "0x8066553eb0228f33581997e3e6b44b0019b8a48b",
-            "symbol": "⚠️ URGENT WHATSAPP MODERATOR +31684797985",
-            "name": "⚠️ YOUR PRIVATE KEY ...f... IS LEAKED",
+            "symbol": "\u26a0\ufe0f URGENT WHATSAPP MODERATOR +31684797985",
+            "name": "\u26a0\ufe0f YOUR PRIVATE KEY ...f... IS LEAKED",
             "balance": "1000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -26510,7 +26510,7 @@
             "name": "IRYNA",
             "balance": "912726000000",
             "decimals": 9,
-            "usdValue": 9.747683725107524e-7
+            "usdValue": 9.747683725107524e-07
           },
           {
             "assetAddress": "0x960fce8724aa127184b6d13af41a711755236c77",
@@ -26614,7 +26614,7 @@
             "name": "American Bitcoin",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 3.187724052582536e-7
+            "usdValue": 3.187724052582536e-07
           },
           {
             "assetAddress": "0xe40cbbf20fce535404c1266583da12d1f358e9d8",
@@ -26654,7 +26654,7 @@
             "name": "Charlie Kirk",
             "balance": "419000000000",
             "decimals": 9,
-            "usdValue": 0.0000013867595636412452
+            "usdValue": 1.3867595636412452e-06
           },
           {
             "assetAddress": "0xf9b09a5f1b34b42a484050ddcf052bec00c5acec",
@@ -27261,8 +27261,8 @@
           },
           {
             "assetAddress": "0x26ca7aefbc73cb20364df9bba4fdf642c52a60e4",
-            "symbol": "以太人生",
-            "name": "以太人生",
+            "symbol": "\u4ee5\u592a\u4eba\u751f",
+            "name": "\u4ee5\u592a\u4eba\u751f",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -27449,7 +27449,7 @@
             "name": "Lil Manyu",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000004494273977911942
+            "usdValue": 4.494273977911942e-06
           },
           {
             "assetAddress": "0x3449f6b09f8027258583b6565489d8e7d3a61f79",
@@ -29549,8 +29549,8 @@
           },
           {
             "assetAddress": "0xc1789999e3a80f71cdaad44aa8521a0f5829d55b",
-            "symbol": "以太AI",
-            "name": "以太AI",
+            "symbol": "\u4ee5\u592aAI",
+            "name": "\u4ee5\u592aAI",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -30649,7 +30649,7 @@
             "name": "Royal Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000019446955481176208
+            "usdValue": 1.9446955481176208e-05
           },
           {
             "assetAddress": "0x01a1062a0038f5e46221bdbabab8f13a90517a9d",
@@ -31942,7 +31942,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "3130000",
             "decimals": 6,
             "usdValue": 0
@@ -31969,7 +31969,7 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000299785137266489
+            "usdValue": 2.99785137266489e-05
           },
           {
             "assetAddress": "0x598ac3c0d3350618eec53c02704072c8505e1ff8",
@@ -33481,7 +33481,7 @@
             "name": "USDtb",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 0.0000999182
+            "usdValue": 9.99182e-05
           },
           {
             "assetAddress": "0xc1735a81784ed212457a76acb8526a49d48f13b2",
@@ -36515,7 +36515,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "1000",
             "decimals": 6,
             "usdValue": 0
@@ -36544,16 +36544,16 @@
               {
                 "name": "Staked",
                 "stats": {
-                  "assetUsdValue": 0.00002161024242906165,
+                  "assetUsdValue": 2.161024242906165e-05,
                   "debtUsdValue": 0,
-                  "netUsdValue": 0.00002161024242906165
+                  "netUsdValue": 2.161024242906165e-05
                 },
                 "tokens": [
                   {
                     "symbol": "VERSE",
                     "name": "Verse",
                     "amount": 1,
-                    "price": 0.00002143733699606453
+                    "price": 2.143733699606453e-05
                   },
                   {
                     "symbol": "tBTC",
@@ -36564,10 +36564,10 @@
                 ]
               }
             ],
-            "totalUsdValue": 0.00002161024242906165
+            "totalUsdValue": 2.161024242906165e-05
           }
         ],
-        "totalUsdValue": 0.00002161024242906165,
+        "totalUsdValue": 2.161024242906165e-05,
         "timestamp": "2026-03-04T07:51:26.518Z",
         "source": "debank"
       },
@@ -37927,7 +37927,7 @@
             "name": "Apu Apustaja",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000029822110442087523
+            "usdValue": 2.9822110442087523e-05
           },
           {
             "assetAddress": "0x596e8d813ac05cf3a957aa3be1ffb5fb5674e78f",
@@ -41075,8 +41075,8 @@
           },
           {
             "assetAddress": "0x26ca7aefbc73cb20364df9bba4fdf642c52a60e4",
-            "symbol": "以太人生",
-            "name": "以太人生",
+            "symbol": "\u4ee5\u592a\u4eba\u751f",
+            "name": "\u4ee5\u592a\u4eba\u751f",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -41231,7 +41231,7 @@
             "name": "Lil Manyu",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.0000049110616998812
+            "usdValue": 4.9110616998812e-06
           },
           {
             "assetAddress": "0x34c1659f8646b056e776f04908f24a31fe998f42",
@@ -41303,7 +41303,7 @@
             "name": "Little Dog",
             "balance": "1000000000000000000",
             "decimals": 18,
-            "usdValue": 0.000020487284560887978
+            "usdValue": 2.0487284560887978e-05
           },
           {
             "assetAddress": "0x387525dfaf4b96941ece110bbcf7c18a82524200",
@@ -43247,12 +43247,12 @@
             "name": "USDtb",
             "balance": "100000000000000",
             "decimals": 18,
-            "usdValue": 0.0000999238
+            "usdValue": 9.99238e-05
           },
           {
             "assetAddress": "0xc1789999e3a80f71cdaad44aa8521a0f5829d55b",
-            "symbol": "以太AI",
-            "name": "以太AI",
+            "symbol": "\u4ee5\u592aAI",
+            "name": "\u4ee5\u592aAI",
             "balance": "5000000000000000000",
             "decimals": 18,
             "usdValue": 0
@@ -44988,7 +44988,7 @@
           {
             "assetAddress": "0x57b9d10157f66d8c00a815b5e289a152dedbe7ed",
             "symbol": "HQG",
-            "name": "环球股",
+            "name": "\u73af\u7403\u80a1",
             "balance": "3130000",
             "decimals": 6,
             "usdValue": 0

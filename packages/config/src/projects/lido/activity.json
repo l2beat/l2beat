@@ -99,14 +99,6 @@
           }
         },
         {
-          "field": "receivedPermissions.4",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-            "role": "admin"
-          }
-        },
-        {
           "field": "receivedPermissions.7",
           "after": {
             "permission": "upgrade",
@@ -115,34 +107,10 @@
           }
         },
         {
-          "field": "receivedPermissions.8",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-            "role": "admin"
-          }
-        },
-        {
           "field": "receivedPermissions.16",
           "after": {
             "permission": "upgrade",
             "from": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-            "role": "admin"
-          }
-        },
-        {
-          "field": "receivedPermissions.17",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-            "role": "admin"
-          }
-        },
-        {
-          "field": "receivedPermissions.20",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
             "role": "admin"
           }
         },
@@ -1095,15 +1063,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 4,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
@@ -1117,15 +1076,6 @@
       "contractName": "UpgradeableBeacon",
       "entity": null,
       "id": "4:eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:contract-added",
       "type": "contract-added"
     },
     {
@@ -1162,24 +1112,6 @@
       "contractName": "OperatorGrid",
       "entity": null,
       "id": "4:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:contract-added",
       "type": "contract-added"
     },
     {
@@ -1365,21 +1297,6 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 53,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
@@ -1389,21 +1306,6 @@
         {
           "field": "template",
           "after": "tokens/Lido/LazyOracle"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
         }
       ]
     },
@@ -1539,36 +1441,6 @@
         {
           "field": "template",
           "after": "tokens/Lido/OperatorGrid"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
         }
       ]
     },
@@ -1739,22 +1611,6 @@
         {
           "field": "implementationNames.eth:0x96c9a897D116ef660086d3aA67b3af653324aB37",
           "after": "LazyOracle"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-18T08:02:22.000Z",
-      "updateNotifierId": 107,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "107:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.stagedBalance",
-          "before": "62000000000000000000",
-          "after": 0
         }
       ]
     },

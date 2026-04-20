@@ -10,7 +10,24 @@
     "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
   ],
   "defidisco": { "scanPermissions": false },
+  "maxAddresses": 400,
   "overrides": {
+    // === External protocol contamination (EasyTrack-allowed treasury payout tokens) ===
+    // DAI, USDT, USDC, sUSDS are allowed payment tokens for the DAO — not Lido contracts.
+    // sUSDS pulls in the whole Sky/Maker dependency chain (UsdsJoin → Vat/Vow/USDS) so we cut all four.
+    "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": { "ignoreDiscovery": true },
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": { "ignoreDiscovery": true },
+    "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": { "ignoreDiscovery": true },
+    "eth:0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD": { "ignoreDiscovery": true },
+    // Sentinel used by the Dashboard template (0x146106... is a deterministic placeholder, not a real contract)
+    "eth:0x1461062c578063068f7801146106275780630a30": { "ignoreDiscovery": true },
+    // Ethereum consensus-layer precompiles (EIP-4788 BEACON_ROOTS, EIP-7002 WITHDRAWAL_REQUEST)
+    "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02": { "ignoreDiscovery": true },
+    "eth:0x00000961Ef480Eb55e80D19ad83579A64c007002": { "ignoreDiscovery": true },
+    // Stop AllowedTokensRegistry from expanding its curated token list as relatives
+    "eth:0x4AC40c34f8992bb1e5E856A448792158022551ca": {
+      "ignoreRelatives": ["allowedTokens", "getAllowedTokens"]
+    },
     "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": {
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
@@ -149,6 +166,60 @@
           "handler": { "type": "accessControl" }
         }
       }
-    }
+    },
+    // === V3 StVaults: AccessControl + volatility handling ===
+    "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709": {
+      // VaultHub
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x8d0e4ae4847b49935b55c99f9c3ce025c87e7c4604c35b7ae56929bd32fa5a78": "PAUSE_ROLE",
+              "0xa79a6aede309e0d48bf2ef0f71355c06ad317956d4c0da2deb0dc47cc34f826c": "RESUME_ROLE",
+              "0x2159c5943234d9f3a7225b9a743ea06e4a0d0ba5ed82889e867759a8a9eb7883": "VALIDATOR_EXIT_ROLE",
+              "0xa85bab4b576ca359fa6ae02ab8744b5c85c7e7ed4d7e0bca7b5b64580ac5d17d": "BAD_DEBT_MASTER_ROLE",
+              "0x479bc4a51d27fbdc8e51b5b1ebd3dcd58bd229090980bff226f8930587e69ce3": "VAULT_MASTER_ROLE",
+              "0x44f007e8cc2a08047a03d8d9c295057454942eb49ee3ced9c87e9b9406f21174": "REDEMPTION_MASTER_ROLE"
+            }
+          }
+        }
+      },
+      "ignoreInWatchMode": [
+        "badDebtToInternalize",
+        "badDebtToInternalizeForLastRefSlot",
+        "vaultsCount",
+        "vaultByIndex"
+      ],
+      "ignoreRelatives": ["vaultByIndex"]
+    },
+    "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d": {
+      // OperatorGrid
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } },
+      "ignoreInWatchMode": ["nodeOperatorCount", "tiersCount"]
+    },
+    "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3": {
+      // Dashboard (immutable template used by VaultFactory to clone per-vault dashboards)
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } },
+      "ignoreRelatives": ["stakingVault"]
+    },
+    "eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3": {
+      // PredepositGuarantee
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x8d0e4ae4847b49935b55c99f9c3ce025c87e7c4604c35b7ae56929bd32fa5a78": "PAUSE_ROLE",
+              "0xa79a6aede309e0d48bf2ef0f71355c06ad317956d4c0da2deb0dc47cc34f826c": "RESUME_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "eth:0x23ED611be0e1a820978875C0122F92260804cdDf": {
+      // Accounting (V3)
+      "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
+    },
   }
 }

@@ -2027,7 +2027,7 @@
             {
               "type": "other",
               "label": "excess only",
-              "description": "Can only recover stETH shares in excess of totalBondShares() — node operator bond funds are protected from recovery."
+              "description": "Can only recover stETH shares in excess of totalBondShares() \u2014 node operator bond funds are protected from recovery."
             }
           ],
           "timestamp": "2026-03-30T14:54:26.424Z",

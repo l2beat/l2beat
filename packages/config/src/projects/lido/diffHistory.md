@@ -1,3 +1,831 @@
+Generated with discovered.json: 0xb16742593002bad62a5586b06d42d4631fb1febd
+
+# Diff at Mon, 20 Apr 2026 13:35:16 GMT:
+
+- author: emduc (<emilien.duc@gmail.com>)
+- comparing to: main@a14df118894458394dc019062a6b3ca2375de4d3 block: 1776676610
+- current timestamp: 1776676610
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1776676610 (main branch discovery), not current.
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"PAUSE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x881dAd714679A6FeaA636446A0499101375A365c","eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]},"RESUME_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]},"VALIDATOR_EXIT_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27"]},"BAD_DEBT_MASTER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27"]}}
+    }
+```
+
+```diff
+    contract Accounting (eth:0x23ED611be0e1a820978875C0122F92260804cdDf) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract Dashboard (eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"0xa495a3428837724c7f7648cda02eb83c9c4c778c8688d6f254c7f3f80c154d55":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977","eth:0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27"]}}
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]},"PAUSE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x881dAd714679A6FeaA636446A0499101375A365c","eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]},"RESUME_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x7914b5a1539b97Bd0bbd155757F25FD79A522d24"]}}
+      values.BEACON_ROOTS:
++        "eth:0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AddMEVBoostRelays (eth:0x00A3D6260f70b1660c8646Ef25D0820EFFd7bE60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x00caAeF11EC545B192f16313F53912E453c91458)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x08637515E85A4633E23dfc7861e2A9f53af640f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x0a6a0b60fFeF196113b3530781df6e747DdC565e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x0d2aefA542aFa8d9D1Ec35376068B88042FEF5f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x12a43b049A7D330cB8aEAB5113032D18AE9a9030)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AmountConverter (eth:0x12cc60eea45F705f069B43095FbF2Fb3c7f874c1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpdateTargetValidatorLimits (eth:0x161a4552A625844c822954C5AcBac928ee0f399B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Escrow (eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0x16Dbd4B85a448bE564f1742d5c8cCdD2bB3185D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterGroupsInOperatorGrid (eth:0x17305dB55c908e84C58BbDCa57258A7D1f7eEa7c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerCoreCommittee (eth:0x175742c3DDD88B0192df3EcF98f180A79cb259D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x18A1065c81b0Cc356F1b1C843ddd5E14e4AefffF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x19f58BA5ffdc8e556A9b97e5866f08425689b9a1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x1a7cFA9EFB4D5BfFDE87B0FaEb1fC65d653868C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x1F2b79FE297B7098875930bBA6dd17068103897E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddAllowedRecipient (eth:0x1F809D2cb72a5Ab13778811742050eDa876129b6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x200dA0b6a9905A377CF8D469664C65dB267009d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RemoveAllowedRecipient (eth:0x22010d1747CaFc370b1f1FBBa61022A313c5693b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x231Ac69A1A37649C6B06a71Ab32DdD92158C80b8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Executor (eth:0x23E0B465633FF5178808F4A75186E2F2F9537021)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x278f7B6CBB3Cc37374e6a40bDFEBfff08f65A5C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x281e6BB6F26A94250aCEb24396a8E4190726C97e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VaultsAdapter (eth:0x28F9Ac198C4E0FA6A9Ad2c2f97CB38F1A3120f27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimeConstraints (eth:0x2a30F5aC03187674553024296bed35Aa49749DDa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x2B5a3944A654439379B206DE999639508bA2e850)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Order (eth:0x2cB20C0223a159DD861c76eCEB419C6030a4c9c2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DGRolesValidatorMainnet (eth:0x31534e3aFE219B609da3715a00a1479D2A2d7981)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AlterTiersInOperatorGrid (eth:0x37d9B09EDA477a84E3913fCB4d032EFb0BF9B62E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x3B525F4c059F246Ca4aa995D21087204F30c9E2F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x3bF3A9260fE18A1239767aC6F0F0bc7c1E5d1cBC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0x3D3ba54D54bbFF40F2Dfa2A8e27bD4dE3dab2951)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x3e2D251275A92a8169A3B17A2C49016e2de492a7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x3f0534CCcFb952470775C516DC2eff8396B8A368)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DGUpgradeStateVerifierMainnet (eth:0x487b764a2085ffd595D9141BAec0A766B7904786)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddAllowedRecipient (eth:0x48c135Ff690C2Aa7F5B11C539104B5855A4f9252)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x48c4929630099b217136b64089E8543dB0E5163a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x49d1363016aA899bba09ae972a1BF200dDf8C55F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedTokensRegistry (eth:0x4AC40c34f8992bb1e5E856A448792158022551ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x4C3Acd9E54c4aDFaC007cF41cc8222418638759f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CuratedSubmitExitRequestHashes (eth:0x4F716AD3Cc7A3A5cdA2359e5B2c84335c171dCde)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x5181d5D56Af4f823b96FE05f062D7a09761a5a53)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockedGovernance (eth:0x553337946F2FAb8911774b20025fa776B76a7CcE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x55897893c19e4B0c52731a3b7C689eC417005Ad6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetNodeOperatorRewardAddresses (eth:0x589e298964b9181D9938B84bB034C3BB9024E2C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SDVTSubmitExitRequestHashes (eth:0x58A59dDC6Aea9b1D5743D024E15DfA4badB56E37)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x5a8B929EDBf3CE44526465DD2087EC7EFB59A561)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x5Bc5ec5130f66f13d5C21ac6811A7e624ED3C7c6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CallsScript (eth:0x5cEb19e1890f677c3676d5ecDF7c501eBA01A054)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x606f77BF3dd6Ed9790D9771C7003f269a385D942)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x64B6aF9A108dCdF470E48e4c0147127F26221A7C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x68267f3D310E9f0FF53a37c141c90B738E1133c2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetJailStatusInOperatorGrid (eth:0x6a4f33F05E7412A11100353724Bb6a152Cf0D305)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x6AB39a8Be67D9305799c3F8FdFc95Caf3150d17c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterTiersInOperatorGrid (eth:0x6b535F441F95046562406F4E2518D9AD7Db2dc0D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EditMEVBoostRelays (eth:0x6b7863f2c7dEE99D3b744fDAEDbEB1aeCC025535)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x6baAd6D39673CEd726Ef9Da4dEd03dDc2C42ba95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0x6e04aED774B7c89BB43721AcDD7D03C872a51B69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForceValidatorExitsInVaultHub (eth:0x6F5c0A5a824773E8f8285bC5aA59ea0Aab2A6400)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0x74836470337Ba5d2a92fe16E44AD862E28fcf9B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BokkyPooBahsDateTimeContract (eth:0x75100bd564415731B5936A4A94D0dC29DdE5dB3C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x77d2CF58aa4da90b3AFCd283646568e4383193BF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x78605Df79524164911C144801f41e9811B7DB73D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x79f5E20996abE9f6a48AF6f9b13f1E55AED6f06D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x7C2a1E25cA6D778eCaEBC8549371062487846aAF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetNodeOperatorNames (eth:0x7d509BFF310d9460b1F613e4e40d342201a83Ae4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0x7dAdae4e1a0DB43F6bcfA75295666fc044605679)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RemoveAllowedRecipient (eth:0x7E8eFfAb3083fB26aCE6832bFcA4C377905F97d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x834560F580764Bc2e0B16925F8bF229bb00cB759)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x8772E3a2D86B9347A2688f9bc1808A6d8917760C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x87D93d9B2C672bf9c9642d853a8682546a5012B5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0x881dAd714679A6FeaA636446A0499101375A365c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InsuranceFund (eth:0x8B3f33234ABD88493c0Cd28De33D583B70beDe35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x8B7854488Fde088d686Ea672B6ba1A5242515f45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeactivateNodeOperators (eth:0x8B82C1546D47330335a48406cc3a50Da732672E7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0x8Ba6D367D15Ebc52f3eBBdb4a8710948C0918d42)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x8ed4dfd3A610CCF1FB45e797bf5D8e0f93084F22)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddAllowedRecipient (eth:0x935cb3366Faf2cFC415B2099d1F974Fd27202b77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0x95B521B4F55a447DB89f6a27f951713fC2035f3F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RemoveMEVBoostRelays (eth:0x9721c0f77E3Ea40eD592B9DCf3032DaF269c0306)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0x97615f72c3428A393d65A84A3ea6BBD9ad6C0D74)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0x98be4a407Bff0c125e25fBE9Eb1165504349c37d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ImmutableDualGovernanceConfigProvider (eth:0xa1692Af6FDfdD1030E4E9c4Bc429986FA64CB5EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Escrow (eth:0xA8F14D033f377779274Ae016584a05bF14Dccaf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (eth:0xAc20CD734C65Baf48a1476447af7D3E3165DC739)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SocializeBadDebtInVaultHub (eth:0xaf35A63a4114B7481589fDD9FDB3e35Fd65fAed7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0xb0FE4D300334461523D9d61AaD90D0494e1Abb43)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0xb9d82E1A49f6a66E8a07260BA05Cf9Ac8a938B1C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Finance (eth:0xB9E5CBB9CA5b0d659238807E84D0176930753d86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSMSetVettedGateTree (eth:0xBc5642bDD6F2a54b01A75605aAe9143525D97308)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0xbD08f9D6BF1D25Cc7407E4855dF1d46C2043B3Ea)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0xBd2b6dC189EefD51B273F5cb2d99BA1ce565fb8C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0xBF048f2111497B6Df5E062811f5fC422804D4baE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualGovernance (eth:0xC1db28B3301331277e307FDCfF8DE28242A4486E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xC7792b3F2B399bB0EdF53fECDceCeB97FBEB18AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ImmutableDualGovernanceConfigProvider (eth:0xc934E90E76449F09f2369BB85DCEa056567A327a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddNodeOperators (eth:0xcAa3AF7460E83E665EEFeC73a7a542E5005C9639)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ActivateNodeOperators (eth:0xCBb418F6f9BFd3525CE6aADe8F74ECFEfe2DB5C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xcd51df5142156BD92E7A9494Dd2b9362f5078D64)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualGovernance (eth:0xcdF49b058D606AD34c5789FD8c3BF8B3E54bA2db)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RemoveAllowedRecipient (eth:0xd30Dc38EdEfc21875257e8A3123503075226E14B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SetVettedValidatorsLimits (eth:0xD75778b855886Fc5e1eA7D6bFADA9EB68b35C19D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0xDAdC4C36cD8F468A398C25d0D8aaf6A928B47Ab4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xdBdfd5b04fc3a19C40f2B12F6Ca29Bd772CCB822)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerSubCommittee (eth:0xDBfa0B8A15a503f25224fcA5F84a3853230A715C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowedRecipientsRegistry (eth:0xdc7300622948a7AdaF339783F6991F9cdDD79776)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpdateVaultsFeesInOperatorGrid (eth:0xDfA0bc38113B6d53c2881573FD764CEEFf468610)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0xE1f6BaBb445F809B97e3505Ea91749461050F780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xe2A682A9722354D825d1BbDF372cC86B2ea82c8C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChangeNodeOperatorManagers (eth:0xE31A0599A6772BCf9b2bFc9e25cf941e793c9a7D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xE556Da28015c04F35A52B3111B9F4120E908056e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0xe5656eEe7eeD02bdE009d77C88247BC8271e26Eb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EasyTrack (eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpdateGroupsShareLimitInOperatorGrid (eth:0xf23559De8ab37fF7a154384B0822dA867Cfa7Eac)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TopUpAllowedRecipients (eth:0xf2476f967C826722F5505eDfc4b2561A34033477)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xf40bcc0845528873784F36e5C105E62a93ff7021)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stonks (eth:0xf4F6A03E3dbf0aA22083be80fDD340943d275Ea5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TiebreakerCoreCommittee (eth:0xf65614d73952Be91ce0aE7Dd9cFf25Ba15bEE2f5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CSMSettleElStealingPenalty (eth:0xF6B6E7997338C48Ea3a8BCfa4BB64a315fDa76f4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xf8Bfa395744Cb25fa4368Ffe2344Dc35546092d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Vyper_contract (eth:0xF95f069F9AD107938F6ba802a3da87892298610E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GateSeal (eth:0xf9C9fDB4A5D2AA1D836D5370AB9b28BC1847e178)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (eth:0xfa4cEA78b314A0f95Bd4dBEE9CCc76Cb9fA8AB1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVMScriptExecutor (eth:0xFE5986E06210aC1eCC1aDCafc0cc7f8D63B3F977)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract IncreaseNodeOperatorStakingLimit (eth:0xFeBd8FAC16De88206d4b18764e826AF38546AfE0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (eth:0xfeef177E6168F9b7fd59e6C5b6c2d87FF398c6FD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (eth:0xFFe21561251c49AdccFad065C94Fb4931dF49081)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd43cab372f43419453fde6e80b997fdbb99849c3
 
 # Diff at Mon, 20 Apr 2026 07:19:37 GMT:

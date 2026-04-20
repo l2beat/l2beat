@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-16T07:20:32.123Z",
+  "lastModified": "2026-04-20T00:00:00.000Z",
   "compiledAt": "2026-04-20T09:16:50.000Z",
   "project": "lido",
   "metadata": {
@@ -10,10 +10,10 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "stETH",
-    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $21.46B in capital across 17 upgradeable contracts, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. Key external dependency is the Ethereum Beacon Chain DepositContract."
+    "description": "Lido is a liquid staking protocol that allows users to stake ETH and receive stETH, a rebasing liquid staking token representing their staked position. Governance operates through an Aragon-based DAO (LDO token voting) with a Dual Governance module that gives stETH holders veto power over DAO proposals via an EmergencyProtectedTimelock. The protocol manages $21.46B in capital, with oracle committees reporting validator balances and a guardian committee securing the deposit flow against front-running attacks. The Lido V3 (stVaults) upgrade adds a customizable staking layer where node operators and institutional users deploy individual StakingVaults coordinated by a central VaultHub, with per-vault Dashboards, an OperatorGrid for tiered collateralization, a PredepositGuarantee for validator security, and a LazyOracle that reconciles vault state via merkle proofs against the AccountingOracle. Key external dependency is the Ethereum Beacon Chain DepositContract."
   },
   "totals": {
-    "contractCount": 60,
+    "contractCount": 56,
     "permissionedFunctionCount": 493,
     "scoredFunctionCount": 214,
     "adminCount": 41,
@@ -21,8 +21,8 @@
     "totalCapitalAtRisk": 21463155283.194496,
     "totalTokenValueAtRisk": 21616811032.080956,
     "totalTokenValue": 21616811032.080956,
-    "linesOfCode": 39097,
-    "verifiedContractCount": 60,
+    "linesOfCode": 38231,
+    "verifiedContractCount": 56,
     "coverage": 100
   },
   "admins": [
@@ -8242,7 +8242,7 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
+              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
               "name": "StakingVault",
               "viewOnlyPath": false,
               "calledFunctions": [
@@ -8422,7 +8422,7 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
+              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
               "name": "StakingVault",
               "viewOnlyPath": false,
               "calledFunctions": [
@@ -9081,7 +9081,7 @@
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
-              "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
+              "address": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
               "name": "StakingVault",
               "viewOnlyPath": false,
               "calledFunctions": [
@@ -11739,7 +11739,7 @@
     {
       "address": "eth:0x23ED611be0e1a820978875C0122F92260804cdDf",
       "name": "Accounting",
-      "description": "",
+      "description": "Upgradeable V3 Accounting contract that routes oracle reports into the stETH token contract and coordinates vault share accounting with VaultHub and LazyOracle. Proxy admin is the Lido DAO Agent; governance can upgrade the implementation.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -11979,7 +11979,7 @@
     {
       "address": "eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709",
       "name": "VaultHub",
-      "description": "",
+      "description": "Upgradeable central coordinator for all Lido V3 StakingVaults. Connects individual vaults to the core stETH accounting, enforces reserve ratios and force-rebalance thresholds, mints/burns stETH liabilities against vault collateral, and socializes bad debt. Lido DAO Agent holds DEFAULT_ADMIN_ROLE and the proxy admin role. PAUSE_ROLE is held by the Vaults GateSeal and ResealManager; VALIDATOR_EXIT_ROLE and BAD_DEBT_MASTER_ROLE are held by the VaultsAdapter (EasyTrack-gated).",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -12100,7 +12100,7 @@
     {
       "address": "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa",
       "name": "Ethereum Beacon Chain DepositContract",
-      "description": "The canonical Ethereum 2.0 deposit contract used by Lido to stake ETH with validators. The DepositSecurityModule calls deposit() to stake buffered ETH and reads get_deposit_root() to verify deposit data integrity. This is an immutable Ethereum protocol contract — if it fails or is compromised, Lido cannot process new deposits.",
+      "description": "The canonical Ethereum 2.0 deposit contract used by Lido to stake ETH with validators. The DepositSecurityModule and each Lido V3 StakingVault call deposit() to stake ETH; DepositSecurityModule also reads get_deposit_root() to verify deposit data integrity. This is an immutable Ethereum protocol contract — if it fails or is compromised, Lido cannot process new deposits.",
       "entity": "Ethereum Deposit Contract",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -12184,42 +12184,6 @@
           ]
         },
         {
-          "contractAddress": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-          "contractName": "StakingVault",
-          "functionName": "depositFromStaged",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-          "contractName": "StakingVault",
-          "functionName": "depositToBeaconChain",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-          "contractName": "StakingVault",
-          "functionName": "depositFromStaged",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-          "contractName": "StakingVault",
-          "functionName": "depositToBeaconChain",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
           "contractAddress": "eth:0xAE6A126cBb5128996433350E40dB62E68B9E58d6",
           "contractName": "3/5 60% Safe",
           "functionName": "setGuard",
@@ -12267,42 +12231,6 @@
           "contractName": "2/3 67% Safe",
           "functionName": "setGuard",
           "viewOnlyPath": true,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-          "contractName": "StakingVault",
-          "functionName": "depositFromStaged",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-          "contractName": "StakingVault",
-          "functionName": "depositToBeaconChain",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-          "contractName": "StakingVault",
-          "functionName": "depositFromStaged",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-          "contractName": "StakingVault",
-          "functionName": "depositToBeaconChain",
-          "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
           "reachableContracts": []
@@ -13592,7 +13520,7 @@
     },
     {
       "address": "eth:0x294825c2764c7D412dc32d87E2242c4f1D989AF3",
-      "name": "Dashboard",
+      "name": "Dashboard (template)",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -13767,38 +13695,6 @@
       "proxyType": "immutable"
     },
     {
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "name": "StakingVault",
-      "isExternal": false,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": "Beacon proxy"
-    },
-    {
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "name": "StakingVault",
-      "isExternal": false,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": "Beacon proxy"
-    },
-    {
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "name": "StakingVault",
-      "isExternal": false,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": "Beacon proxy"
-    },
-    {
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "name": "StakingVault",
-      "isExternal": false,
-      "isGovernance": false,
-      "entity": null,
-      "proxyType": "Beacon proxy"
-    },
-    {
       "address": "eth:0xf73a1260d222f447210581DDf212D915c09a3249",
       "name": "TokenManager",
       "isExternal": false,
@@ -13824,7 +13720,7 @@
     },
     {
       "address": "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789",
-      "name": "UpgradeableBeacon",
+      "name": "StakingVault UpgradeableBeacon",
       "isExternal": false,
       "isGovernance": false,
       "entity": null,
@@ -14464,22 +14360,6 @@
     {
       "timestamp": "2026-04-18T08:02:22.000Z",
       "updateNotifierId": 107,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "107:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "values.stagedBalance",
-          "before": "62000000000000000000",
-          "after": 0
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-04-18T08:02:22.000Z",
-      "updateNotifierId": 107,
       "address": "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD",
       "contractName": "DepositSecurityModule",
       "entity": null,
@@ -14612,21 +14492,6 @@
     {
       "timestamp": "2026-03-03T13:51:02.000Z",
       "updateNotifierId": 53,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
@@ -14636,21 +14501,6 @@
         {
           "field": "template",
           "after": "tokens/Lido/LazyOracle"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
         }
       ]
     },
@@ -14786,36 +14636,6 @@
         {
           "field": "template",
           "after": "tokens/Lido/OperatorGrid"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
-        }
-      ]
-    },
-    {
-      "timestamp": "2026-03-03T13:51:02.000Z",
-      "updateNotifierId": 53,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "53:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:data-change",
-      "type": "data-change",
-      "changes": [
-        {
-          "field": "template",
-          "after": "tokens/Lido/StakingVault"
         }
       ]
     },
@@ -15035,14 +14855,6 @@
           }
         },
         {
-          "field": "receivedPermissions.4",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-            "role": "admin"
-          }
-        },
-        {
           "field": "receivedPermissions.7",
           "after": {
             "permission": "upgrade",
@@ -15051,34 +14863,10 @@
           }
         },
         {
-          "field": "receivedPermissions.8",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-            "role": "admin"
-          }
-        },
-        {
           "field": "receivedPermissions.16",
           "after": {
             "permission": "upgrade",
             "from": "eth:0xC69685E89Cefc327b43B7234AC646451B27c544d",
-            "role": "admin"
-          }
-        },
-        {
-          "field": "receivedPermissions.17",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-            "role": "admin"
-          }
-        },
-        {
-          "field": "receivedPermissions.20",
-          "after": {
-            "permission": "upgrade",
-            "from": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
             "role": "admin"
           }
         },
@@ -16031,15 +15819,6 @@
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
       "updateNotifierId": 4,
-      "address": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
       "address": "eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c",
       "contractName": "LazyOracle",
       "entity": null,
@@ -16053,15 +15832,6 @@
       "contractName": "UpgradeableBeacon",
       "entity": null,
       "id": "4:eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428:contract-added",
       "type": "contract-added"
     },
     {
@@ -16098,24 +15868,6 @@
       "contractName": "OperatorGrid",
       "entity": null,
       "id": "4:eth:0xC69685E89Cefc327b43B7234AC646451B27c544d:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711:contract-added",
-      "type": "contract-added"
-    },
-    {
-      "timestamp": "2026-03-02T13:49:30.000Z",
-      "updateNotifierId": 4,
-      "address": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "entity": null,
-      "id": "4:eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37:contract-added",
       "type": "contract-added"
     },
     {
@@ -16213,54 +15965,6 @@
       "txHash": "0x982025c6295107b4a32e9512b84a826a9868fc653e0d1499067ee43d604ff234",
       "implementations": [
         "eth:0x7c7d957D0752AB732E73400624C4a1eb1cb6CF50"
-      ],
-      "isDependency": false,
-      "entity": null
-    },
-    {
-      "type": "upgrade",
-      "timestamp": "2025-12-03T12:52:47.000Z",
-      "contractAddress": "eth:0x3eda1e756Ba9aC0217Ac8fc5db4C5E9a8486d9c4",
-      "contractName": "StakingVault",
-      "txHash": "0xc1b1edfb9449fe7544219c94a0097c95521a4938cbda114f97f7e7b1c2d1e975",
-      "implementations": [
-        "eth:0x06A56487494aa080deC7Bf69128EdA9225784553"
-      ],
-      "isDependency": false,
-      "entity": null
-    },
-    {
-      "type": "upgrade",
-      "timestamp": "2025-12-03T12:52:47.000Z",
-      "contractAddress": "eth:0x62e0D92cf7B8752b5292B9BCbbacE4cFa1633428",
-      "contractName": "StakingVault",
-      "txHash": "0xc1b1edfb9449fe7544219c94a0097c95521a4938cbda114f97f7e7b1c2d1e975",
-      "implementations": [
-        "eth:0x06A56487494aa080deC7Bf69128EdA9225784553"
-      ],
-      "isDependency": false,
-      "entity": null
-    },
-    {
-      "type": "upgrade",
-      "timestamp": "2025-12-03T12:52:47.000Z",
-      "contractAddress": "eth:0xd402937b3Ff3c187f727C1146a9E846275E9F711",
-      "contractName": "StakingVault",
-      "txHash": "0xc1b1edfb9449fe7544219c94a0097c95521a4938cbda114f97f7e7b1c2d1e975",
-      "implementations": [
-        "eth:0x06A56487494aa080deC7Bf69128EdA9225784553"
-      ],
-      "isDependency": false,
-      "entity": null
-    },
-    {
-      "type": "upgrade",
-      "timestamp": "2025-12-03T12:52:47.000Z",
-      "contractAddress": "eth:0xE2cC063DEc5685718Bd57aAC6AEE9941b25b7c37",
-      "contractName": "StakingVault",
-      "txHash": "0xc1b1edfb9449fe7544219c94a0097c95521a4938cbda114f97f7e7b1c2d1e975",
-      "implementations": [
-        "eth:0x06A56487494aa080deC7Bf69128EdA9225784553"
       ],
       "isDependency": false,
       "entity": null
