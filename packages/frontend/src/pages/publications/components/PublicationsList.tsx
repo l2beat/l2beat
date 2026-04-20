@@ -24,7 +24,10 @@ export function PublicationsList({
 
   return (
     <>
-      <TableFilters entries={publications} />
+      <TableFilters
+        entries={publications}
+        className="max-md:mt-4 max-md:px-4"
+      />
       <PrimaryCard className="mt-4 grid grid-cols-1 gap-x-4 gap-y-12 md:grid-cols-2 md:p-8 lg:grid-cols-3">
         <div
           className="col-span-full row-start-2 flex w-full items-center justify-center gap-6 rounded-lg bg-center bg-cover py-5 pr-8 pl-6 text-white max-md:flex-col"

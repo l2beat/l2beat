@@ -40,6 +40,40 @@ export const ink: ScalingProject = opStackL2({
       other: ['https://rollup.codes/ink', 'https://growthepie.com/chains/ink'],
     },
   },
+  interopConfig: {
+    name: 'Ink Canonical',
+    durationSplit: {
+      lockAndMint: [
+        {
+          label: 'L1 -> L2',
+          transferTypes: [
+            'opstack.L1ToL2Transfer',
+            'opstack-standardbridge.L1ToL2Transfer',
+          ],
+        },
+        {
+          label: 'L2 -> L1',
+          transferTypes: [
+            'opstack.L2ToL1Transfer',
+            'opstack-standardbridge.L2ToL1Transfer',
+          ],
+        },
+      ],
+    },
+    plugins: [
+      {
+        chain: 'ink',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+      },
+      {
+        chain: 'ink',
+        plugin: 'opstack-standardbridge',
+        bridgeType: 'lockAndMint',
+      },
+    ],
+    type: 'canonical',
+  },
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('INK'),
   isNodeAvailable: true,

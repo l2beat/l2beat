@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { TvsAmountRepository } from './TvsAmountRepository'
 
 describeDatabase(TvsAmountRepository.name, (db) => {
@@ -130,6 +131,18 @@ describeDatabase(TvsAmountRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('returns empty array when configurationIds is empty', async () => {
+      await repository.upsertMany([tvsAmount('a', UnixTime(100), 1n)])
+
+      const result = await repository.getAmountsInRange(
+        [],
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
   })
 
   describe(TvsAmountRepository.prototype.getLatestAmountBefore.name, () => {
@@ -249,6 +262,20 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       const deleted = await repository.deleteByConfigs([])
       expect(deleted).toEqual(0)
     })
+  })
+
+  describe('archived cleaning methods', () => {
+    testDeletingArchivedRecords(
+      {
+        deleteHourlyUntil: (dateRange) =>
+          repository.deleteHourlyUntil(dateRange),
+        deleteSixHourlyUntil: (dateRange) =>
+          repository.deleteSixHourlyUntil(dateRange),
+        insertMany: (records) => repository.upsertMany(records),
+        getAll: () => repository.getAll(),
+      },
+      (timestamp) => tvsAmount('a', timestamp, 1n),
+    )
   })
 
   afterEach(async () => {

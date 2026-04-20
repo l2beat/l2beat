@@ -7,6 +7,7 @@ type AggregatedInteropTransferIdSeriesRecord = {
   timestamp: UnixTime
   id: string
   transferCount: number
+  transfersWithDurationCount: number
   totalDurationSum: number
   totalSrcValueUsd: number
   totalDstValueUsd: number
@@ -19,8 +20,8 @@ function TransferIdPageLayout(props: {
   const labels = props.series.map((row) => UnixTime.toYYYYMMDD(row.timestamp))
   const count = props.series.map((row) => row.transferCount)
   const avgDuration = props.series.map((row) =>
-    row.transferCount > 0
-      ? row.totalDurationSum / row.transferCount
+    row.transfersWithDurationCount > 0
+      ? row.totalDurationSum / row.transfersWithDurationCount
       : undefined,
   )
   const srcValue = props.series.map((row) => row.totalSrcValueUsd)

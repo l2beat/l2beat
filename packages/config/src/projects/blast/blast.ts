@@ -114,7 +114,7 @@ export const blast: ScalingProject = opStackL2({
       description:
         'Pre-launch Blast Vault that keeps stETH. Funds from this Vault can be migrated to Blast bridge.',
       tokens: ['stETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
     }),
     discovery.getEscrowDetails({
       address: ChainSpecificAddress(
@@ -122,7 +122,7 @@ export const blast: ScalingProject = opStackL2({
       ),
       name: 'Interest-bearing ETH Vault',
       tokens: ['ETH', 'stETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       description:
         'Escrow for ETH that is invested into yield-bearing contracts such as stETH.',
     }),

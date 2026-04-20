@@ -5,9 +5,15 @@
     "getCrossDomainMessage",
     "isMessageDropped",
     "isMessageSkipped",
-    "messageQueue"
+    "messageQueue",
+    "getMessageEnqueueTimestamp",
+    "messageEnqueueTime"
   ],
-  "ignoreInWatchMode": ["pendingQueueIndex", "nextCrossDomainMessageIndex"],
+  "ignoreInWatchMode": [
+    "pendingQueueIndex",
+    "nextCrossDomainMessageIndex",
+    "getFirstUnfinalizedMessageEnqueueTime"
+  ],
   "owner": {
     "permissions": [
       {

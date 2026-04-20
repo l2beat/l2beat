@@ -83,11 +83,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     from: number,
     to: number,
   ): Promise<DataAvailabilityRecord> {
-    const [throughputV1, totalSizeV2] = await Promise.all([
-      this.$.eigenClient.getMetricsV1(from, to - 1),
-      this.$.eigenClient.getMetricsV2(from, to - 1),
-    ])
-    const totalSizeV1 = Math.round(throughputV1 * (to - 1 - from))
+    const metrics = await this.$.eigenClient.getMetrics(from, to - 1)
     const configurationId = this.$.configurations.find(
       (c) => c.properties.projectId === this.daLayer,
     )?.id
@@ -96,7 +92,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
 
     return {
       timestamp: UnixTime.toStartOf(from, 'hour'),
-      totalSize: BigInt(totalSizeV1 + totalSizeV2),
+      totalSize: BigInt(metrics.total_bytes_posted),
       projectId: 'eigenda',
       daLayer: this.daLayer,
       configurationId,

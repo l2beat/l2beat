@@ -1,7 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import {
   getScalingLivenessEntries,
   type ScalingLivenessEntry,
@@ -15,7 +14,7 @@ import type { TabbedScalingEntries } from '../utils/groupByScalingTabs'
 export async function getScalingLivenessData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
@@ -36,8 +35,8 @@ export async function getScalingLivenessData(
         title: 'Liveness - L2BEAT',
         description:
           'Monitor liveness metrics of Ethereum scaling projects and recent anomalies.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/liveness/opengraph-image.png',
         },
       }),

@@ -10,10 +10,9 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { ChartRange } from '~/utils/range/range'
+import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isLivenessSynced } from './utils/isLivenessSynced'
-import { rangeToResolution } from './utils/range'
 
 export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams

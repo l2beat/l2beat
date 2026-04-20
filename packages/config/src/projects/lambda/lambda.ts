@@ -16,8 +16,10 @@ export const lambda: ScalingProject = opStackL2({
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     description:
       'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
     links: {

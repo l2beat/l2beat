@@ -60,6 +60,13 @@ const parseLockedEvent = createEventParser(lockedLog)
 const burnedLog = 'event Burned(address indexed sender, uint256 amount)'
 const parseBurnedEvent = createEventParser(burnedLog)
 
+// Non-standard: emitted by custom XERC20LockboxTokenPool (e.g. USDT on Celo).
+// The pool deposits native ERC20 into a lockbox, then burns the minted XERC20.
+// Same shape as Locked; the user's tokens are locked in the lockbox (wasBurned = false).
+const depositedAndBurnedLog =
+  'event DepositedAndBurned(address indexed sender, uint256 amount)'
+const parseDepositedAndBurned = createEventParser(depositedAndBurnedLog)
+
 // v1.6.1+ (token address in event data)
 const lockedOrBurnedLog =
   'event LockedOrBurned(uint64 indexed remoteChainSelector, address token, address sender, uint256 amount)'
@@ -75,6 +82,13 @@ const parseReleased = createEventParser(releasedLog)
 const mintedLog =
   'event Minted(address indexed sender, address indexed recipient, uint256 amount)'
 const parseMinted = createEventParser(mintedLog)
+
+// Non-standard: emitted by custom XERC20LockboxTokenPool (e.g. USDT on Celo).
+// The pool mints XERC20 tokens, then burns them via a lockbox to release native ERC20
+// to the receiver. MintedAndWithdrawn is emitted instead of the standard Minted event.
+const mintedAndWithdrawnLog =
+  'event MintedAndWithdrawn(address indexed sender, address indexed recipient, uint256 amount)'
+const parseMintedAndWithdrawn = createEventParser(mintedAndWithdrawnLog)
 
 // v1.6.1+ (token address in event data)
 const releasedOrMintedLog =
@@ -169,6 +183,7 @@ function findPrecedingTransferForToken(
 const SOURCE_TOKEN_POOL_EVENTS = [
   lockedLog,
   burnedLog,
+  depositedAndBurnedLog,
   lockedOrBurnedLog,
   transferLog,
   depositForBurnLog,
@@ -177,13 +192,17 @@ const DEST_TOKEN_POOL_EVENTS = [
   releasedOrMintedLog,
   releasedLog,
   mintedLog,
+  mintedAndWithdrawnLog,
   transferLog,
 ]
 
 export class CCIPPlugin implements InteropPluginResyncable {
   readonly name = 'ccip'
 
-  constructor(private configs: InteropConfigStore) {}
+  constructor(
+    private configs: InteropConfigStore,
+    private oneSidedChains: string[] = [],
+  ) {}
 
   getDataRequests(): DataRequest[] {
     const networks = this.configs.get(CCIPConfig)?.networks ?? []
@@ -465,6 +484,28 @@ export class CCIPPlugin implements InteropPluginResyncable {
         continue
       }
 
+      // Non-standard: XERC20LockboxTokenPool deposits native ERC20 into lockbox and burns XERC20.
+      // The user's tokens are locked in the lockbox, so wasBurned = false.
+      const depositedAndBurned = parseDepositedAndBurned(log, null)
+      if (depositedAndBurned) {
+        const transfer = findPrecedingTransfer(
+          logsBeforeSend,
+          i,
+          depositedAndBurned.amount,
+        )
+        if (
+          transfer &&
+          !processedTokens.has(transfer.tokenAddress.toLowerCase())
+        ) {
+          processedTokens.add(transfer.tokenAddress.toLowerCase())
+          result.push({
+            wasBurned: false,
+            tokenAddress: transfer.tokenAddress,
+          })
+        }
+        continue
+      }
+
       // v1.5 Burned (burn & mint pattern — wasBurned = true)
       const burned = parseBurnedEvent(log, null)
       if (burned) {
@@ -587,32 +628,88 @@ export class CCIPPlugin implements InteropPluginResyncable {
             wasMinted: true,
           })
         }
+        continue
+      }
+
+      // Non-standard: XERC20LockboxTokenPool emits MintedAndWithdrawn instead of Minted.
+      // The pool mints XERC20, then burns it via a lockbox to release native ERC20.
+      // The preceding Transfer is the lockbox sending native ERC20 to the receiver.
+      // Marked as wasMinted: false because the receiver gets released (not minted) tokens.
+      const mintedAndWithdrawn = parseMintedAndWithdrawn(log, null)
+      if (mintedAndWithdrawn) {
+        const transfer = findPrecedingTransfer(
+          logsBetween,
+          i,
+          mintedAndWithdrawn.amount,
+        )
+        if (transfer) {
+          result.push({
+            address: Address32.from(transfer.tokenAddress),
+            amount: mintedAndWithdrawn.amount,
+            wasMinted: false,
+          })
+        }
       }
     }
 
     return result
   }
 
-  matchTypes = [ExecutionStateChanged]
+  private normalizeOneSidedChain(chain: string): string | undefined {
+    const normalized = chain.replace(/^Unknown_/, '')
+    return this.oneSidedChains.includes(normalized) ? normalized : undefined
+  }
+
+  matchTypes = [ExecutionStateChanged, CCIPSendRequested]
 
   match(delivery: InteropEvent, db: InteropEventDb): MatchResult | undefined {
+    if (ExecutionStateChanged.checkType(delivery)) {
+      return this.matchExecution(delivery, db)
+    }
+
+    if (CCIPSendRequested.checkType(delivery)) {
+      return this.matchSend(delivery, db)
+    }
+  }
+
+  private matchExecution(
+    delivery: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
     if (!ExecutionStateChanged.checkType(delivery)) return
 
     const sendRequests = db.findAll(CCIPSendRequested, {
       messageId: delivery.args.messageId,
     })
-    if (sendRequests.length === 0) return
+
+    if (sendRequests.length === 0) {
+      const rawSrcChain = delivery.args.$srcChain
+      const srcChain = rawSrcChain && this.normalizeOneSidedChain(rawSrcChain)
+      if (!srcChain) return
+
+      const result: MatchResult = []
+      const dstTokens = delivery.args.dstTokens ?? []
+      for (const dstToken of dstTokens) {
+        result.push(
+          Result.Transfer('ccip.Transfer', {
+            srcChain,
+            dstEvent: delivery,
+            dstTokenAddress: dstToken.address,
+            dstAmount: dstToken.amount,
+            dstWasMinted: dstToken.wasMinted,
+          }),
+        )
+      }
+      return result
+    }
 
     const result: MatchResult = []
     const dstTokens = delivery.args.dstTokens ?? []
 
-    // Match transfers by index — tokenAmounts[] and TokenPool events
-    // are emitted in the same order on both source and destination
     for (let i = 0; i < dstTokens.length; i++) {
       const dstToken = dstTokens[i]
       const matched = sendRequests.find((req) => req.args.index === i)
       if (!matched) continue
-      // CCTP-backed tokens (e.g. USDC) are handled by the CCTP plugin
       if (matched.args.isCctpBacked) continue
       result.push(
         Result.Transfer('ccip.Transfer', {
@@ -639,5 +736,34 @@ export class CCIPPlugin implements InteropPluginResyncable {
       }),
     )
     return result
+  }
+
+  private matchSend(
+    delivery: InteropEvent,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    if (!CCIPSendRequested.checkType(delivery)) return
+
+    const rawDstChain = delivery.args.$dstChain
+    const dstChain = rawDstChain && this.normalizeOneSidedChain(rawDstChain)
+    if (!dstChain) return
+
+    const hasCounterpart = db.find(ExecutionStateChanged, {
+      messageId: delivery.args.messageId,
+    })
+    if (hasCounterpart) return
+
+    if (delivery.args.token === undefined) return
+    if (delivery.args.isCctpBacked) return
+
+    return [
+      Result.Transfer('ccip.Transfer', {
+        srcEvent: delivery,
+        dstChain,
+        srcTokenAddress: delivery.args.token,
+        srcAmount: delivery.args.amount,
+        srcWasBurned: delivery.args.wasBurned,
+      }),
+    ]
   }
 }

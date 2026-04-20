@@ -4,6 +4,28 @@ L2BEAT (Layer 2 Beat) is a website dedicated to providing research and statistic
 
 You can visit the site yourself at https://www.l2beat.com/.
 
+## Scripts
+
+### Coolify: check environment variables
+
+[`scripts/coolify/check-env.ts`](scripts/coolify/check-env.ts) lists every application on your [Coolify](https://coolify.io/) instance (via the HTTP API) and checks whether each one defines a given environment variable **by key** (exact match). Output uses `project/environment/application` labels when project and environment metadata are available.
+
+It is especially handy when you are changing, rotating, or cleaning up a variable and you are not sure which application still uses it—before you had to click through Coolify apps by hand; this script checks all of them in one run.
+
+From the repository root:
+
+```bash
+pnpm coolify:check-env SOME_ENV_VAR
+```
+
+**Configuration**
+
+- Loads [dotenv](https://github.com/motdotla/dotenv) from the **repo root** `.env` if present.
+- **`COOLIFY_API_KEY`** (required): Coolify API token (Keys & Tokens → API tokens). Pass with `--api-key` or set in `.env` / the environment.
+- **`COOLIFY_SERVER`** (optional): Coolify base URL. Defaults to `https://coolify.l2beat.com`; override with `--server` / `-s` or `COOLIFY_SERVER`.
+
+Run `pnpm coolify:check-env --help` for full CLI options.
+
 ## Contributing
 
 We welcome and encourage contributions. To learn about the project structure and contributions please read [`CONTRIBUTING.md`](https://github.com/l2beat/l2beat/blob/main/CONTRIBUTING.md).

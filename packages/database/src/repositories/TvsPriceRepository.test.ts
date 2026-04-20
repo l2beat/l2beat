@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { TvsPriceRepository } from './TvsPriceRepository'
 
 describeDatabase(TvsPriceRepository.name, (db) => {
@@ -129,6 +130,18 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       const result = await repository.getPricesInRange(
         configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when configurationIds is empty', async () => {
+      await repository.upsertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+
+      const result = await repository.getPricesInRange(
+        [],
         UnixTime(100),
         UnixTime(200),
       )
@@ -295,6 +308,20 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       const deleted = await repository.deleteByConfigs([])
       expect(deleted).toEqual(0)
     })
+  })
+
+  describe('archived cleaning methods', () => {
+    testDeletingArchivedRecords(
+      {
+        deleteHourlyUntil: (dateRange) =>
+          repository.deleteHourlyUntil(dateRange),
+        deleteSixHourlyUntil: (dateRange) =>
+          repository.deleteSixHourlyUntil(dateRange),
+        insertMany: (records) => repository.upsertMany(records),
+        getAll: () => repository.getAll(),
+      },
+      (timestamp) => tvsPrice('a', 'eth', timestamp, 1),
+    )
   })
 
   afterEach(async () => {

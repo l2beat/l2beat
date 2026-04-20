@@ -1,7 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -17,7 +17,7 @@ export async function getScalingTvsData(
     { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
   >,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps(),
@@ -38,8 +38,8 @@ export async function getScalingTvsData(
         title: 'Total Value Secured - L2BEAT',
         description:
           'Track total value secured across Ethereum scaling solutions.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/value-secured/opengraph-image.png',
         },
       }),
@@ -56,20 +56,19 @@ export async function getScalingTvsData(
 }
 
 async function getCachedData(
-  cache: ICache,
+  cache: InMemoryCache,
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
-  const [entries, queryState] = await Promise.all([
-    getScalingTvsEntries(),
-    cache.get(
-      {
-        key: ['scaling', 'tvs', 'data', 'query-state', tab],
-        ttl: 5 * 60,
-        staleWhileRevalidate: 25 * 60,
-      },
-      () => getQueryState(tab),
-    ),
-  ])
+  const entries = await getScalingTvsEntries()
+
+  const queryState = await cache.get(
+    {
+      key: ['scaling', 'tvs', 'data', 'query-state', tab],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    () => getQueryState(tab, entries),
+  )
 
   return {
     entries,
@@ -79,6 +78,7 @@ async function getCachedData(
 
 async function getQueryState(
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
+  entries: Awaited<ReturnType<typeof getScalingTvsEntries>>,
 ) {
   const helpers = getSsrHelpers()
 
@@ -98,6 +98,18 @@ async function getQueryState(
     }),
     helpers.tvs.table.prefetch({
       type: tab,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }),
+    helpers.tvs.chartStats.prefetch({
+      filter: {
+        type: 'projects',
+        projectIds: [
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
+        ].map((entry) => entry.id),
+      },
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     }),

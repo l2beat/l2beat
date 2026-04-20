@@ -8,5 +8,11 @@
     "hash": "0x623df54827648dd7289a821d9020c19faccf1c24e7cea82e7157f2dc2c548511",
     "address": "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5",
     "blockNumber": 22565516
+  },
+  "SgxVerifier.sol_postshasta": {
+    "hash": "0xb3da82b2279d9cbede69cfe56ede3576d07b60acb34790a02463ea2f64e60ad7",
+    "address": "eth:0x08568Df252ecf37D6C3eFD24f6ca3688118697F1",
+    "chain": "ethereum",
+    "blockNumber": 24840827
   }
 }

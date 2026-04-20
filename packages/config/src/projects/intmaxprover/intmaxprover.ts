@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
@@ -76,13 +76,15 @@ export const intmaxprover: BaseProject = {
     verifierHashes: [
       {
         hash: '0x664dceea25b57766a5b550cf25cca24a7305f36fd60a5835f9e0505bec14ce8e',
+        name: 'Intmax verifier',
+        sourceLink: 'https://github.com/InternetMaximalism/intmax2-zkp',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
-            address: EthereumAddress(
+            address: ChainSpecificAddress.fromLong(
+              'scroll',
               '0x1d38545a33740Ab3480d9035bB3126914404423d',
             ),
-            chain: 'scroll',
           },
         ],
         verificationStatus: 'notVerified',

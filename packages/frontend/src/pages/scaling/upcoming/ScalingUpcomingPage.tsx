@@ -18,7 +18,7 @@ export function ScalingUpcomingPage({ entries, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Upcoming</MainPageHeader>
         <TableFilterContextProvider>
-          <TableFilters entries={entries} />
+          <TableFilters entries={entries} className="max-md:mt-4 max-md:px-4" />
           <PrimaryCard className="mt-4">
             <ScalingUpcomingTable entries={entries} />
           </PrimaryCard>

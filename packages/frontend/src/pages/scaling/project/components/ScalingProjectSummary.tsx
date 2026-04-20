@@ -1,5 +1,9 @@
 import type { HTMLAttributes } from 'react'
 import {
+  AdditionalTrustAssumptionsBanner,
+  AdditionalTrustAssumptionsText,
+} from '~/components/breakdown/AdditionalTrustAssumptions'
+import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
 } from '~/components/breakdown/TokenBreakdown'
@@ -147,24 +151,47 @@ export function ProjectScalingSummary({ project }: Props) {
                         : undefined
                     }
                   >
-                    <ValueSecuredBreakdown
-                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                      external={project.header.tvs?.breakdown?.external ?? 0}
-                      native={project.header.tvs?.breakdown?.native ?? 0}
-                      className="h-1.5 w-full"
-                    />
+                    <div className="flex w-full flex-col items-end gap-1">
+                      <ValueSecuredBreakdown
+                        canonical={
+                          project.header.tvs?.breakdown?.canonical ?? 0
+                        }
+                        external={project.header.tvs?.breakdown?.external ?? 0}
+                        native={project.header.tvs?.breakdown?.native ?? 0}
+                        className="h-1.5 w-full"
+                      />
+                      {project.header.tvs
+                        ?.additionalTrustAssumptionsPercentage !==
+                        undefined && (
+                        <AdditionalTrustAssumptionsText
+                          percentage={
+                            project.header.tvs
+                              .additionalTrustAssumptionsPercentage
+                          }
+                        />
+                      )}
+                    </div>
                   </ConditionalLink>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="flex flex-col gap-2">
                   <ValueSecuredBreakdownTooltipContent
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     external={project.header.tvs?.breakdown?.external ?? 0}
                     native={project.header.tvs?.breakdown?.native ?? 0}
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
+                    syncWarning={undefined}
                     tvsWarnings={[]}
                   />
+                  {project.header.tvs?.additionalTrustAssumptionsPercentage !==
+                    undefined && (
+                    <AdditionalTrustAssumptionsBanner
+                      percentage={
+                        project.header.tvs.additionalTrustAssumptionsPercentage
+                      }
+                    />
+                  )}
                   {project.header.tvs && (
-                    <p className="mt-2 text-label-value-13 text-secondary max-md:hidden">
+                    <p className="text-label-value-13 text-secondary max-md:hidden">
                       Click to view TVS breakdown
                     </p>
                   )}
@@ -206,7 +233,7 @@ export function ProjectScalingSummary({ project }: Props) {
       <div className="max-md:hidden">
         <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
           {project.header.badges && project.header.badges.length > 0 && (
-            <BadgesSection badges={project.header.badges} />
+            <BadgesSection badges={project.header.badges} withDialog />
           )}
           {project.header.description && (
             <AboutSection description={project.header.description} />

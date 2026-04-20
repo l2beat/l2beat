@@ -1,4 +1,8 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  Project,
+  ProjectRedWarning,
+  ProjectZkCatalogInfo,
+} from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -31,7 +35,7 @@ export interface ProjectZkCatalogEntry {
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
-    redWarning?: string
+    redWarning?: ProjectRedWarning
     emergencyWarning?: string
     description?: string
     links: ProjectLink[]

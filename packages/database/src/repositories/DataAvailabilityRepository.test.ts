@@ -329,6 +329,19 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id', START, 100n),
         ])
       })
+
+      it('returns empty array when projectIds is empty', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id', START, 100n),
+        ])
+
+        const results = await repository.getByProjectIdsAndTimeRange(
+          [],
+          [START, START + 1 * UnixTime.DAY],
+        )
+
+        expect(results).toEqual([])
+      })
     },
   )
 
@@ -437,6 +450,19 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           ),
         ])
       })
+
+      it('returns empty array when daLayers is empty', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id', START, 100n),
+        ])
+
+        const results = await repository.getByDaLayersAndTimeRange(
+          [],
+          [START, START + 1 * UnixTime.DAY],
+        )
+
+        expect(results).toEqual([])
+      })
     },
   )
 
@@ -500,6 +526,20 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             totalSize: 3_000n,
           },
         ])
+      })
+
+      it('returns empty array when daLayers is empty', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id', START, 100n),
+        ])
+
+        const results =
+          await repository.getSummedProjectsByDaLayersAndTimeRange(
+            [],
+            [START, START + 1 * UnixTime.DAY],
+          )
+
+        expect(results).toEqual([])
       })
     },
   )

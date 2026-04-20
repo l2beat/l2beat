@@ -113,9 +113,7 @@ export function EIGENDA_DA_PROVIDER(
             value: 'DACert Verifier',
             sentiment: 'warning' as const,
             description: `EigenDA ${eigenDACertVersion.toUpperCase()} certificates are verified by the proof system through the DACert Verifier contract, which validates certificates against operator signatures and stake thresholds.`,
-            projectId: ProjectId(
-              eigenDACertVersion === 'v2' ? 'eigenda-v2' : 'eigenda-v3',
-            ),
+            projectId: ProjectId('eigenda-v2'),
           }
         : DA_BRIDGES.NONE
 
@@ -213,6 +211,7 @@ interface OpStackConfigCommon {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   nonTemplateContractRisks?: ProjectRisk
   nonTemplateProgramHashes?: ProjectScalingContractsProgramHash[]
+  nonTemplateZkVerifiers?: ChainSpecificAddress[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -395,7 +394,7 @@ function opStackCommon(
           : fraudProofType === 'OpSuccinctFDP'
             ? {
                 type: 'Optimistic',
-                zkCatalogId: ProjectId('sp1'),
+                zkCatalogId: ProjectId('sp1hypercube'),
                 challengeProtocol: 'Single-step',
               }
             : {
@@ -458,6 +457,9 @@ function opStackCommon(
       risks: nativeContractRisks,
       programHashes:
         templateVars.nonTemplateProgramHashes ?? getProgramHashes(templateVars),
+      zkVerifiers:
+        templateVars.nonTemplateZkVerifiers ??
+        getOPStackVerifiers(templateVars.discovery),
     },
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
@@ -2428,4 +2430,24 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     technology: hostDaTech,
     badge: DABadge,
   }
+}
+
+// returns addresses of all active verifiers on SP1VerifierGateway in a given discovery
+export function getSP1Verifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGateway', 'activeVerifiers')
+  return activeVerifiers.map((el) => el.verifier)
+}
+
+function getOPStackVerifiers(
+  discovery: ProjectDiscovery,
+): ChainSpecificAddress[] {
+  if (discovery.hasContract('SP1VerifierGateway')) {
+    return getSP1Verifiers(discovery)
+  }
+  // kailua cases look more diverse and challenging to automate. Use nonTemplateZkVerifiers
+  return []
 }

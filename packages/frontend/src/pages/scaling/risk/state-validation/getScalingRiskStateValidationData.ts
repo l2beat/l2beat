@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getScalingRiskStateValidationEntries } from '~/server/features/scaling/risks/state-validation/getScalingRiskStateValidationEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,7 +9,7 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getScalingRiskStateValidationData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
@@ -30,8 +30,8 @@ export async function getScalingRiskStateValidationData(
         title: 'Risk Analysis - L2BEAT',
         description:
           'Understand the risks of Ethereum scaling solutions using L2BEAT’s assessments.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/risk-analysis/opengraph-image.png',
         },
       }),

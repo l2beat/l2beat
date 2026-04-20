@@ -5,9 +5,11 @@ import { avalanche } from '../projects/avalanche/avalanche'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
+import { barretenberg } from '../projects/barretenberg/barretenberg'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
+import { cbridge } from '../projects/cbridge/cbridge'
 import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
@@ -20,10 +22,12 @@ import { eigendaV2 } from '../projects/eigenda-v2/eigenda-v2'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
 import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
+import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
@@ -33,25 +37,20 @@ import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
 import { memo } from '../projects/memo/memo'
 import { meson } from '../projects/meson/meson'
+import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
-import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
-import { payy } from '../projects/payy/payy-zk-catalog'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
-import { risczero } from '../projects/risczero/risczero'
-import { soulwallet } from '../projects/soulwallet/soulwallet'
-import { sp1 } from '../projects/sp1/sp1'
-import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
-import { sp1vector } from '../projects/sp1vector/sp1vector'
+import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
+import { sp1turbo } from '../projects/sp1turbo/sp1turbo'
 import { squid } from '../projects/squid/squid'
 import { stargate } from '../projects/stargate/stargate'
 import { stone } from '../projects/stone/stone'
 import { stwo } from '../projects/stwo/stwo'
 import { teeBridge } from '../projects/tee-bridge/tee-bridge'
+import { tempo } from '../projects/tempo/tempo'
 import { vector } from '../projects/vector/vector'
-import { worldcoinsemaphore } from '../projects/worldcoinsemaphore/worldcoinsemaphore'
-import { worldcoinsmtb } from '../projects/worldcoinsmtb/worldcoinsmtb'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zkprover } from '../projects/zkprover/zkprover'
@@ -61,16 +60,8 @@ import type { BaseProject } from '../types'
 // TODO: Once all projects are refactored this will simply become `projects`
 export const refactored: BaseProject[] = [
   // zk catalog
-  nebraupa,
-  payy,
-  risczero,
-  soulwallet,
-  sp1blobstream,
-  sp1vector,
-  worldcoinsemaphore,
-  worldcoinsmtb,
-  // zk catalog v2
-  sp1,
+  sp1turbo,
+  sp1hypercube,
   boojum,
   airbender,
   zkprover,
@@ -85,6 +76,7 @@ export const refactored: BaseProject[] = [
   espressoprover,
   lighterprover,
   stwo,
+  barretenberg,
   // da-beat
   ethereum,
   avail,
@@ -102,6 +94,8 @@ export const refactored: BaseProject[] = [
   gnosis,
   gateway,
   avalanche,
+  monad,
+  tempo,
   // interop protocols
   debridgeDln,
   hyperlaneHwr,
@@ -123,4 +117,7 @@ export const refactored: BaseProject[] = [
   across,
   debridge,
   stargate,
+  cbridge,
+  hyperevm,
+  freetunnel,
 ]

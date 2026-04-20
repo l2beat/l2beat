@@ -23,5 +23,23 @@
     "hash": "0x14594f4ec76a9468af01b5bd9b65a895ce8eeaec7e303d2c2953abbb6eb37fe2",
     "address": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
     "blockNumber": 38804
+  },
+  "ActionHandler_v2.sol": {
+    "hash": "0xad7e7fd7b43fd83e9a1b0fb841090fe2c1a4244dbc6b2a9a64780714e1cdf93a",
+    "address": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+    "chain": "ethereal",
+    "blockNumber": 4259455
+  },
+  "Liquidation_v2.sol": {
+    "hash": "0x6aac002e19307973aae2c7f4e38a5804b35dff1da8b348242101dc26b8f6b5b3",
+    "address": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
+    "chain": "ethereal",
+    "blockNumber": 4259455
+  },
+  "Deleverage.sol": {
+    "hash": "0xcf06ecba5335035199e65edcc6e047920089cd2ef278275008a53a8c4af61045",
+    "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
+    "chain": "ethereal",
+    "blockNumber": 4259455
   }
 }

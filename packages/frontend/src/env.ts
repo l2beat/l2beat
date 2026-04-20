@@ -24,6 +24,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
   CLIENT_SIDE_INTEROP_ENABLED: featureFlag.default(false),
+  CLIENT_SIDE_INTEROP_DETAILED_PAGES: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -41,7 +42,6 @@ const SERVER_CONFIG = {
   TOKENS_DATABASE_LOG_ENABLED: coerceBoolean.default(false),
   DISABLE_CACHE: coerceBoolean.default(false),
   MOCK: coerceBoolean.default(false),
-  REDIS_URL: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   COOLIFY_URL: z.string().optional(),
@@ -59,6 +59,10 @@ const SERVER_CONFIG = {
     .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
+  ES_BUFFER_ALERT_BYTES: z
+    .unknown()
+    .transform((v) => Number(v))
+    .optional(),
   ES_FLUSH_INTERVAL: z
     .unknown()
     .transform((v) => Number(v))
@@ -120,13 +124,13 @@ function getRawEnv(): Record<
     COOLIFY_URL: process.env.COOLIFY_URL,
     COOLIFY_RESOURCE_UUID: process.env.COOLIFY_RESOURCE_UUID,
     DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
-    REDIS_URL: process.env.REDIS_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,
     ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
+    ES_BUFFER_ALERT_BYTES: process.env.ES_BUFFER_ALERT_BYTES,
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_DISABLED_CHAINS: process.env.INTEROP_DISABLED_CHAINS,
@@ -140,5 +144,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
     CLIENT_SIDE_INTEROP_ENABLED: process.env.CLIENT_SIDE_INTEROP_ENABLED,
+    CLIENT_SIDE_INTEROP_DETAILED_PAGES:
+      process.env.CLIENT_SIDE_INTEROP_DETAILED_PAGES,
   }
 }

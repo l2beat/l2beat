@@ -1,10 +1,15 @@
 {
   "name": "degen",
-  "timestamp": 1760090951,
+  "timestamp": 1772656918,
   "configHash": "0xac73565451bcb6b0375c7e4462f03490c93c8ae43dfea55b7a6d5232c8eade01",
   "entries": [
     {
       "address": "base:0x001271c57AeC639952B5201D052767c316755512",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "base:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -225,7 +230,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 39195,
+        "batchCount": 42585,
         "batchPosterManager": "base:0x0000000000000000000000000000000000000000",
         "batchPosters": ["base:0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "base:0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -257,7 +262,7 @@
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 148852,
+        "totalDelayedMessagesRead": 148910,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -474,7 +479,7 @@
           "base:0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
           "base:0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
           "base:0x001271c57AeC639952B5201D052767c316755512",
-          "base:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
+          "base:0x04a25F65200E56EAd142652b7E5eF372E169F2Bd",
           "base:0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
           "base:0xeD9919D57162D518014C391a687AA8fb9DB55654"
         ],
@@ -483,7 +488,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -510,11 +515,6 @@
     },
     {
       "address": "base:0xa3353Ae4458F663f1F888705b044269bd30cd110",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "base:0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -639,7 +639,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 6111,
+        "nonce": 9510,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -719,13 +719,13 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 8807,
+        "firstUnresolvedNode": 12206,
         "inbox": "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 8806,
-        "latestNodeCreated": 8806,
+        "latestConfirmed": 12205,
+        "latestNodeCreated": 12205,
         "loserStakeEscrow": "base:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -949,7 +949,7 @@
           "base:0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "base:0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148852,
+        "delayedMessageCount": 148910,
         "inboxHistory": [
           "base:0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
           "base:0x766DD3A13d17C6D175975C89225bde89F052dBc4",
@@ -963,8 +963,8 @@
         ],
         "rollup": "base:0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "base:0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 39195,
-        "sequencerReportedSubMessageCount": 26299684
+        "sequencerMessageCount": 42585,
+        "sequencerReportedSubMessageCount": 26702471
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1831,6 +1831,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "base": 36650802 },
-  "permissionsConfigHash": "0xd45120059495bcc344bad40906c7f558b4443a1b2c1ea538102a8d740fafebd0"
+  "usedBlockNumbers": { "base": 42933785 },
+  "permissionsConfigHash": "0x65b4bb228c49c5fd6c5086bb9bae3b6cd299845876188c320bd6ea8e4ee414ae"
 }

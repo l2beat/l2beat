@@ -203,9 +203,12 @@ export class LineaPlugin implements InteropPluginResyncable {
     const ethSrcWasBurned = srcChain === 'linea'
     const ethDstWasMinted = srcChain === 'ethereum'
 
+    const transferType =
+      srcChain === 'ethereum' ? 'linea.L1ToL2Transfer' : 'linea.L2ToL1Transfer'
+
     if (messageSent.args.value > 0n) {
       messageApp = 'canonical-eth'
-      transfer = Result.Transfer('linea.Transfer', {
+      transfer = Result.Transfer(transferType, {
         srcEvent: messageSent,
         srcTokenAddress: Address32.NATIVE,
         srcAmount: messageSent.args.value,
@@ -221,18 +224,19 @@ export class LineaPlugin implements InteropPluginResyncable {
       })
       if (bridgingInitiated) {
         const tokenDstWasMinted =
-          bridgingFinalized.args.nativeToken ===
-          bridgingFinalized.args.bridgedToken
+          bridgingFinalized.args.bridgedToken !== Address32.ZERO
         const tokenSrcWasBurned = !tokenDstWasMinted
 
         messageApp = 'canonical-token'
-        transfer = Result.Transfer('linea.Transfer', {
+        transfer = Result.Transfer(transferType, {
           srcEvent: bridgingInitiated,
           srcTokenAddress: bridgingInitiated.args.token,
           srcAmount: bridgingInitiated.args.amount,
           srcWasBurned: tokenSrcWasBurned,
           dstEvent: bridgingFinalized,
-          dstTokenAddress: bridgingFinalized.args.nativeToken,
+          dstTokenAddress: tokenDstWasMinted
+            ? bridgingFinalized.args.bridgedToken
+            : bridgingFinalized.args.nativeToken,
           dstAmount: bridgingFinalized.args.amount,
           dstWasMinted: tokenDstWasMinted,
         })

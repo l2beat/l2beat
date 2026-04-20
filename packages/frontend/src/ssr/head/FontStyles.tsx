@@ -28,16 +28,18 @@ export function FontStyles({
   return (
     <>
       {fonts.map((font) =>
-        font.src.map((source) => (
-          <link
-            key={source.path}
-            rel="preload"
-            href={manifest.getUrl(source.path)}
-            as="font"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-        )),
+        font.src
+          .filter((source) => source.preload)
+          .map((source) => (
+            <link
+              key={source.path}
+              rel="preload"
+              href={manifest.getUrl(source.path)}
+              as="font"
+              type="font/woff2"
+              crossOrigin="anonymous"
+            />
+          )),
       )}
       <style dangerouslySetInnerHTML={{ __html: fontStyles }} />
     </>

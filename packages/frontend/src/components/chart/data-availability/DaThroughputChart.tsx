@@ -2,17 +2,18 @@ import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import {
-  DaThroughputTimeRangeValues,
-  rangeToResolution,
-} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import {
+  type ChartRange,
+  optionToRange,
+  rangeToResolution,
+} from '~/utils/range/range'
 import { ChartRangeControls } from '../../core/chart/ChartRangeControls'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '../../core/chart/utils/getChartTimeRangeFromData'
 import { DaAbsoluteThroughputChart } from './DaAbsoluteThroughputChart'
 import { DaPercentageThroughputChart } from './DaPercentageThroughputChart'
+import { DaThroughputTimeRangeValues } from './timeRangeValues'
 
 export function DaThroughputChart() {
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
@@ -37,11 +38,11 @@ export function DaThroughputChart() {
   return (
     <div>
       <div className="mb-4">
-        <h1 className="whitespace-nowrap font-bold text-xl md:text-2xl">
+        <h2 className="whitespace-nowrap font-bold text-xl md:text-2xl">
           {metric === 'percentage'
             ? 'Share of total data posted'
             : 'Total data posted'}
-        </h1>
+        </h2>
         <ChartTimeRange timeRange={timeRange} />
       </div>
       {metric === 'percentage' ? (

@@ -1,12 +1,14 @@
+import { InMemoryCache } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
-import { InMemoryCache } from '../server/cache/InMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
 import { createAboutUsRouter } from './about/AboutUsRouter'
+import { createBrandKitRouter } from './brand-kit/BrandKitRouter'
 import { createChangelogRouter } from './changelog/ChangelogRouter'
 import { createDaRiskFrameworkRouter } from './da-risk-framework/DaRiskFrameworkRouter'
 import { createDataAvailabilityRouter } from './data-availability/DataAvailabilityRouter'
+import { createDevRouter } from './dev/DevRouter'
 import { createDonateRouter } from './donate/DonateRouter'
 import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
@@ -25,7 +27,12 @@ export function createServerPageRouter(
   render: RenderFunction,
 ) {
   const router = express.Router()
-  const cache = new InMemoryCache()
+
+  const cache = new InMemoryCache({
+    enabled:
+      !env.DISABLE_CACHE &&
+      (env.DEPLOYMENT_ENV === 'production' || env.DEPLOYMENT_ENV === 'staging'),
+  })
 
   router.use('/', (_, res, next) => {
     const headers = new Headers({
@@ -41,7 +48,7 @@ export function createServerPageRouter(
   })
 
   router.get('/', (_req, res) => {
-    res.redirect('/scaling/summary')
+    res.redirect(301, '/scaling/summary')
   })
 
   const routers = [
@@ -53,6 +60,7 @@ export function createServerPageRouter(
     createGovernanceRouter,
     createFaqRouter,
     createAboutUsRouter,
+    createBrandKitRouter,
     createChangelogRouter,
     createDonateRouter,
     createGlossaryRouter,
@@ -61,6 +69,7 @@ export function createServerPageRouter(
     createTermsOfServiceRouter,
     createStagesRouter,
     createPublicationsRouter,
+    createDevRouter,
   ]
 
   for (const createRouter of routers) {

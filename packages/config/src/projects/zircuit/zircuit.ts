@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import {
   explorerReferences,
   safeGetImplementation,
@@ -196,7 +197,7 @@ export const zircuit: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1'),
+    zkCatalogId: ProjectId('sp1turbo'),
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -371,6 +372,7 @@ export const zircuit: ScalingProject = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    zkVerifiers: getVerifiers(),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {
@@ -511,4 +513,11 @@ export const zircuit: ScalingProject = {
       type: 'general',
     },
   ],
+}
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const sp1Verifiers = getSP1Verifiers(discovery)
+  // mock verifier is not an actual sp1 verifier and needs to be removed
+  const mockVerifier = discovery.getContract('SP1MockVerifierWithHash').address
+  return sp1Verifiers.filter((item) => item !== mockVerifier)
 }

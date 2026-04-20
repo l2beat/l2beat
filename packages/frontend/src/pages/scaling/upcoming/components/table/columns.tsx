@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
-import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
+import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { MissingIcon } from '~/icons/Missing'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'

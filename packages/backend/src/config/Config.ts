@@ -1,17 +1,22 @@
 import type {
   BlockDaTrackingConfig,
-  ChainConfig,
-  OnchainVerifier,
   ProjectActivityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
+import type { CleanableRepoName } from '@l2beat/database'
 import type {
   ConfigReader,
   DiscoveryChainConfig,
   DiscoveryPaths,
 } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type { CoingeckoId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  CoingeckoId,
+  Configuration,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { createRemoteJWKSet } from 'jose'
 import type { MulticallConfigEntry } from '../modules/tvs/tools/sharedEscrows/multicall/types'
 import type {
   AmountConfig,
@@ -28,6 +33,7 @@ export interface Config {
   readonly isReadonly: boolean
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
+  readonly notifications: NotificationsConfig | false
   readonly database: DatabaseConfig
   readonly coingeckoApiKey: string
   readonly api: ApiConfig
@@ -41,7 +47,6 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: number | undefined }[]
-  readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly ecosystems: EcosystemsConfig | false
   readonly chainConfig: ChainApi[]
@@ -64,7 +69,6 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvs: boolean
     readonly liveness: boolean
-    readonly verifiers: boolean
   }
 }
 
@@ -88,8 +92,6 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
-  readonly hourlyCutoffDays: number
-  readonly sixHourlyCutoffDays: number
 }
 
 export interface TvsConfig {
@@ -98,6 +100,11 @@ export interface TvsConfig {
   readonly prices: PriceConfig[]
   readonly chains: string[]
   readonly blockTimestamps: BlockTimestampConfig[]
+  readonly cleaner: false | Configuration<TvsCleanerConfig>[]
+}
+
+export type TvsCleanerConfig = {
+  name: CleanableRepoName
 }
 
 export interface TrackedTxProject {
@@ -181,7 +188,6 @@ export interface UpdateMonitorConfig {
   readonly chains: DiscoveryChainConfig[]
   readonly disabledChains: string[]
   readonly disabledProjects: string[]
-  readonly discord: DiscordConfig | false
   readonly updateMessagesRetentionPeriodDays: number
   readonly workerPool: {
     readonly workerCount: number
@@ -190,20 +196,30 @@ export interface UpdateMonitorConfig {
   }
 }
 
-export interface VerifiersConfig {
-  readonly verifiers: OnchainVerifier[]
-  readonly chains: ChainConfig[]
-}
-
-export interface DiscordConfig {
-  readonly token: string
-  readonly publicChannelId?: string
-  readonly internalChannelId: string
-  readonly callsPerMinute: number
+export interface NotificationsConfig {
+  readonly updateMonitor:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly anomalies:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly interop:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
+  readonly ethereumBlobs:
+    | {
+        discordWebhookUrl: string
+      }
+    | false
 }
 
 export interface AnomaliesConfig {
-  readonly anomaliesWebhookUrl?: string
   readonly anomaliesMinDuration: number
 }
 
@@ -222,9 +238,11 @@ export interface InteropFeatureConfig {
   }
   matching: boolean
   cleaner: boolean
+  dangerousOperationsEnabled: boolean
   dashboard: {
     enabled: boolean
     getExplorerUrl: (chain: string) => string | undefined
+    auth: InteropDashboardAuthConfig | false
   }
   compare: {
     enabled: boolean
@@ -240,6 +258,13 @@ export interface InteropFeatureConfig {
     configIntervalMs: number
   }
   inMemoryEventCap: number
+  oneSidedChains: string[]
+}
+
+export interface InteropDashboardAuthConfig {
+  JWKS: ReturnType<typeof createRemoteJWKSet>
+  aud: string
+  teamDomain: string
 }
 
 export interface DaBeatConfig {
@@ -250,6 +275,7 @@ export interface DaBeatConfig {
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
   readonly availWsUrl: string
+  readonly espressoApiUrl: string
 }
 
 export interface EcosystemTokenConfig {

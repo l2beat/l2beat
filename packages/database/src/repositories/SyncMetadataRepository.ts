@@ -102,6 +102,15 @@ export class SyncMetadataRepository extends BaseRepository {
       .execute()
   }
 
+  async getByFeature(feature: SyncMetadataRecord['feature']) {
+    const rows = await this.db
+      .selectFrom('SyncMetadata')
+      .selectAll()
+      .where('feature', '=', feature)
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getByFeatureAndId(
     feature: SyncMetadataRecord['feature'],
     id: string,

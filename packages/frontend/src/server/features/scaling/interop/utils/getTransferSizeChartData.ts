@@ -109,8 +109,9 @@ export function getTransferSizeChartData(
   }
 
   return Array.from(data.values())
-    .sort((a, b) => b.percentageUnder100 - a.percentageUnder100)
+    .sort((a, b) => b.totalValueUsd - a.totalValueUsd)
     .slice(0, 15)
+    .sort((a, b) => b.percentageUnder100 - a.percentageUnder100)
     .map((value) => ({
       name: value.name,
       iconUrl: value.iconUrl,

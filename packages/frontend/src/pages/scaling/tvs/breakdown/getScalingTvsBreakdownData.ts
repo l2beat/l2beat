@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getAllTokensEntries } from '~/server/features/scaling/tvs/breakdown/getAllTokenEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,7 +9,7 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getScalingTvsBreakdownData(
   req: Request,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
@@ -30,8 +30,8 @@ export async function getScalingTvsBreakdownData(
         title: 'Global TVS Breakdown - L2BEAT',
         description:
           'Track total value secured across Ethereum scaling solutions.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/scaling/value-secured/opengraph-image.png',
         },
         excludeFromSearchEngines: true,

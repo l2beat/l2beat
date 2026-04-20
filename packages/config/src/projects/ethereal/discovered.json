@@ -1,6 +1,6 @@
 {
   "name": "ethereal",
-  "timestamp": 1770823999,
+  "timestamp": 1776375286,
   "configHash": "0x50a2cd9246c5bdd111a9aedd4dd511ed1ae59cf76c2a57aff7bdd2a0e62ce1f1",
   "entries": [
     {
@@ -38,7 +38,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3269,
+        "batchCount": 4806,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3"],
         "bridge": "arb1:0xd86f5ad3fa5becbB07e565DbD4b70DBd817A43A8",
@@ -78,7 +78,7 @@
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 93,
+        "totalDelayedMessagesRead": 133,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -404,7 +404,7 @@
         "getValidators": ["arb1:0x80e046764185e776100A4f59079C2B00327f279A"],
         "inbox": "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
         "isPostBoLD": true,
-        "latestConfirmed": "0x90f81c6ab121edfd94bba255c124c873705b87fe3f5bfa80e90716ff7c39274c",
+        "latestConfirmed": "0xdd26c23b114bb02abe06d660eb4b9e5fb187b88d6c79a2007a0ce95f3a1df721",
         "loserStakeEscrow": "arb1:0x80e046764185e776100A4f59079C2B00327f279A",
         "minimumAssertionPeriod": 75,
         "outbox": "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
@@ -619,7 +619,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 12 (33%)",
-        "nonce": 126,
+        "nonce": 129,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -878,7 +878,7 @@
           "arb1:0xA2A5DCA414e3AaBD48B9CA97426f7e3Fba967492",
           "arb1:0x3515ad5D3D904Cb2731A7d6E5DB9f35D6CAFEB14"
         ],
-        "delayedMessageCount": 93,
+        "delayedMessageCount": 133,
         "inboxHistory": [
           "arb1:0x574b121c469583c3a46cd88bBCC9Ac5c8C907d06",
           "arb1:0x5D6bec85F093Eb49bD6913aCe7e9A081c41aed8F"
@@ -891,8 +891,8 @@
         ],
         "rollup": "arb1:0x75c070fe237817Bd027d402327069e9cd07De078",
         "sequencerInbox": "arb1:0x0E2480384E3703FDf84c7A0448658E8C7543b3a8",
-        "sequencerMessageCount": 3269,
-        "sequencerReportedSubMessageCount": 2823564
+        "sequencerMessageCount": 4806,
+        "sequencerReportedSubMessageCount": 4266845
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1067,7 +1067,7 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 11 (45%)",
-        "nonce": 3,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1119,12 +1119,29 @@
         "getChainId": 5064014,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 38,
+        "nonce": 81,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
         "ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8": "SafeProxy",
         "ethereal:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "name": "Liquidation",
+      "address": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
+      "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
+      "sourceHashes": [
+        "0x6aac002e19307973aae2c7f4e38a5804b35dff1da8b348242101dc26b8f6b5b3"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
+      "sinceTimestamp": 1776326201,
+      "sinceBlock": 4258775,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1": "Liquidation"
       }
     },
     {
@@ -1153,6 +1170,34 @@
       "address": "ethereal:0x690d1E0fac0599874b849EE88AeA27F7b348e1f2",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "ActionHandler",
+      "address": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+      "type": "Contract",
+      "template": "ethereal/ExchangeGatewayRegistryContracts",
+      "sourceHashes": [
+        "0xad7e7fd7b43fd83e9a1b0fb841090fe2c1a4244dbc6b2a9a64780714e1cdf93a"
+      ],
+      "proxyType": "immutable",
+      "description": "Auxiliary contract of the ExchangeGateway.",
+      "sinceTimestamp": 1776326201,
+      "sinceBlock": 4258774,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Ethereal",
+          "version": "1",
+          "chainId": 5064014,
+          "verifyingContract": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        }
+      },
+      "implementationNames": {
+        "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96": "ActionHandler"
+      }
     },
     {
       "name": "OrbitNativeOFTAdapter",
@@ -1231,34 +1276,6 @@
       ]
     },
     {
-      "name": "ActionHandler",
-      "address": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
-      "type": "Contract",
-      "template": "ethereal/ExchangeGatewayRegistryContracts",
-      "sourceHashes": [
-        "0x14594f4ec76a9468af01b5bd9b65a895ce8eeaec7e303d2c2953abbb6eb37fe2"
-      ],
-      "proxyType": "immutable",
-      "description": "Auxiliary contract of the ExchangeGateway.",
-      "sinceTimestamp": 1760534426,
-      "sinceBlock": 18534,
-      "values": {
-        "$immutable": true,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Ethereal",
-          "version": "1",
-          "chainId": 5064014,
-          "verifyingContract": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        }
-      },
-      "implementationNames": {
-        "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a": "ActionHandler"
-      }
-    },
-    {
       "name": "PythLazer",
       "address": "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481",
       "type": "Contract",
@@ -1318,7 +1335,7 @@
       "template": "ethereal/ExchangeGateway",
       "sourceHashes": [
         "0x824c9fa3c6d16c698f949d86f6b383cee854f6ab6073b6356acadc9f7e88d705",
-        "0x4e74883670a055318a8d4bdb7d266c2d62a87f06d7ebac1e09659053810ddd70"
+        "0x86b45155220c874371724e1491434de1633d3c9ec81f0e45455e5621da661872"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.",
@@ -1326,15 +1343,20 @@
       "sinceBlock": 18533,
       "values": {
         "$admin": "ethereal:0xae703b505f9284cf0eC2E9A907637238EF5d9b11",
-        "$implementation": "ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d",
+        "$implementation": "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db",
         "$pastUpgrades": [
           [
             "2025-10-15T13:20:26.000Z",
             "0x04a67ea928eab86c5df00ab440dbc47745f199286b8478ef520c8f6fc6b804d0",
             ["ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d"]
+          ],
+          [
+            "2026-04-16T07:56:41.000Z",
+            "0x5af5474916ab2d51c82b367a4de90b08e07eb9dd8bc452788c9856ff70cabad2",
+            ["ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Ethereal",
@@ -1369,11 +1391,12 @@
           "ethereal:0xFD65878abf4cc5D4219bBBa10009885511626cad"
         ],
         "registry": {
-          "0x414354494f4e5f48414e444c4552000000000000000000000000000000000000": "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a",
+          "0x414354494f4e5f48414e444c4552000000000000000000000000000000000000": "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96",
           "0x434f4c4c41544552414c5f4d414e414745520000000000000000000000000000": "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA",
           "0x45584348414e47455f434f4e4649470000000000000000000000000000000000": "ethereal:0xC199cC890F61B847bec9cec4212C35b759A9fD38",
-          "0x4c49515549444154494f4e000000000000000000000000000000000000000000": "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0",
-          "0x504552505f454e47494e45000000000000000000000000000000000000000000": "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37"
+          "0x4c49515549444154494f4e000000000000000000000000000000000000000000": "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1",
+          "0x504552505f454e47494e45000000000000000000000000000000000000000000": "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37",
+          "0x44454c4556455241474500000000000000000000000000000000000000000000": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B"
         },
         "REVOKE_LINKED_SIGNER_ABI_PARAM": "0x5265766f6b654c696e6b65645369676e657228616464726573732073656e6465722c61646472657373207369676e65722c62797465733332207375626163636f756e742c75696e743634206e6f6e63652c75696e743634207369676e6564417429",
         "TRADE_ORDER_ABI_PARAM": "0x54726164654f7264657228616464726573732073656e6465722c62797465733332207375626163636f756e742c75696e74313238207175616e746974792c75696e743132382070726963652c626f6f6c207265647563654f6e6c792c75696e743820736964652c75696e743820656e67696e65547970652c75696e7433322070726f6475637449642c75696e743634206e6f6e63652c75696e743634207369676e6564417429"
@@ -1381,7 +1404,7 @@
       "fieldMeta": { "isEmergencyPaused": { "severity": "HIGH" } },
       "implementationNames": {
         "ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc": "EtherealProxy",
-        "ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d": "ExchangeGateway"
+        "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db": "ExchangeGateway"
       }
     },
     {
@@ -1444,26 +1467,26 @@
       "proxyType": "EOA"
     },
     {
-      "address": "ethereal:0xF3D11F9829Fdb9F61a7d987CCAa858054E80Eb33",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Liquidation",
-      "address": "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0",
+      "name": "Deleverage",
+      "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
       "type": "Contract",
       "template": "ethereal/ExchangeGatewayRegistryContracts",
       "sourceHashes": [
-        "0x9882e7baf79921bbc376de21ba5de774ccd2b47186ed8ba389a8ca85f3e94316"
+        "0xcf06ecba5335035199e65edcc6e047920089cd2ef278275008a53a8c4af61045"
       ],
       "proxyType": "immutable",
       "description": "Auxiliary contract of the ExchangeGateway.",
-      "sinceTimestamp": 1760534426,
-      "sinceBlock": 18535,
+      "sinceTimestamp": 1776326201,
+      "sinceBlock": 4258776,
       "values": { "$immutable": true },
       "implementationNames": {
-        "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0": "Liquidation"
+        "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B": "Deleverage"
       }
+    },
+    {
+      "address": "ethereal:0xF3D11F9829Fdb9F61a7d987CCAa858054E80Eb33",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "ethereal:0xFBE49A82CB2BFF6Fa4C2B1F0d165A5E1175Aac83",
@@ -2321,6 +2344,32 @@
     "ethereal:0x58a16791037dF85CCbc3A65DE5a8401Fd04C8aC8": [
       "constructor(address _singleton)"
     ],
+    "ethereal:0x636DE0449C4175C8AA66989ab34fab5373e044f1": [
+      "error InvalidCost(uint64 id, uint128 cost)",
+      "error InvalidEngineType(uint64 id, uint8 engineType)",
+      "error InvalidLiquidationBalanceTransfer(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
+      "error InvalidLiquidatorCounterparty(uint64 id, address account, bytes32 subaccount)",
+      "error InvalidRealizedPnl(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
+      "error LiquidateAboveMaintenanceMargin(uint64 id, address account, bytes32 subaccount, int256 remainingMargin, uint256 requiredMaintenanceMargin)",
+      "error LiquidateEmptyProducts(uint64 id, address account, bytes32 subaccount)",
+      "error LiquidateProductsMismatch(uint64 id, uint128 openPositions, uint128 products)",
+      "error LiquidateSizeNotNetZero(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 sizeDelta, int128 netSize)",
+      "error LiquidateZeroAccount(uint64 id)",
+      "error LiquidateZeroSubaccount(uint64 id, address account)",
+      "error LiquidatorInsufficientBalance(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, address token, uint256 balance, int256 delta)",
+      "error LiquidatorIsDeleveraging(uint64 id)",
+      "error PriceFeedInvalidProperty(uint64 id, uint8 property)",
+      "error PriceFeedsTooMany(uint64 id, uint256 length)",
+      "error PriceInvalidExponent(uint64 id, int16 exponent)",
+      "error PriceInvalidFeedId(uint64 id, uint32 priceFeedId, uint32 productFeedId)",
+      "error PriceTooOld(uint64 id, uint64 priceTimestamp, uint64 timestamp)",
+      "error ProductStatusViolation(uint64 id, uint32 productId, uint8 engineType, uint8 status)",
+      "event LiquidationBalanceTransferMismatch(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
+      "event LiquidationMarginCheckMismatch(uint64 id, uint256 maintenanceMargin, int256 equity, uint256 tolerance)",
+      "event LiquidatorRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
+      "event PositionLiquidated(uint32 indexed productId, address indexed liquidatedAccount, bytes32 indexed liquidatedSubaccount, uint8 engineType, int128 size, uint64 messageIdx)",
+      "function liquidateSubaccount(uint64 id, bytes actionData) payable"
+    ],
     "ethereal:0x638D6DaC0550f30f37aC5784260309Ac89302faA": [
       "error DepositCapacityExceeded(uint256 capacity, uint256 amount)",
       "error DepositInsufficient(uint256 amount)",
@@ -2353,65 +2402,7 @@
       "function finalizeWithdraw(address account, bytes32 withdrawDigest) payable",
       "function rescueFunds(address account, bytes32 withdrawDigest) payable"
     ],
-    "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3": [
-      "constructor(uint8 _localDecimals, address _lzEndpoint, address _delegate)",
-      "error CreditFailed(address to, uint256 amountLD, bytes revertData)",
-      "error IncorrectMessageValue(uint256 provided, uint256 required)",
-      "error InvalidDelegate()",
-      "error InvalidEndpointCall()",
-      "error InvalidLocalDecimals()",
-      "error InvalidOptions(bytes options)",
-      "error LzTokenUnavailable()",
-      "error NoPeer(uint32 eid)",
-      "error NotEnoughNative(uint256 msgValue)",
-      "error OnlyEndpoint(address addr)",
-      "error OnlyPeer(uint32 eid, bytes32 sender)",
-      "error OnlySelf()",
-      "error SimulationResult(bytes result)",
-      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
-      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
-      "event MsgInspectorSet(address inspector)",
-      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
-      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PeerSet(uint32 eid, bytes32 peer)",
-      "event PreCrimeSet(address preCrimeAddress)",
-      "function SEND() view returns (uint16)",
-      "function SEND_AND_CALL() view returns (uint16)",
-      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
-      "function approvalRequired() pure returns (bool)",
-      "function arbNativeTokenManager() view returns (address)",
-      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
-      "function composeMsgSender() view returns (address sender)",
-      "function decimalConversionRate() view returns (uint256)",
-      "function endpoint() view returns (address)",
-      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
-      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
-      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
-      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
-      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
-      "function msgInspector() view returns (address)",
-      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
-      "function oApp() view returns (address)",
-      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
-      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
-      "function owner() view returns (address)",
-      "function peers(uint32 eid) view returns (bytes32 peer)",
-      "function preCrime() view returns (address)",
-      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
-      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
-      "function renounceOwnership()",
-      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
-      "function setDelegate(address _delegate)",
-      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
-      "function setMsgInspector(address _msgInspector)",
-      "function setPeer(uint32 _eid, bytes32 _peer)",
-      "function setPreCrime(address _preCrime)",
-      "function sharedDecimals() pure returns (uint8)",
-      "function token() pure returns (address)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "ethereal:0x922Eb912285225c25428bC4Aaf4C31Eb73C07f6d": [
+    "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db": [
       "constructor()",
       "error AlreadyInitialized()",
       "error DelegationFailed()",
@@ -2518,6 +2509,7 @@
       "function isEmergencyPaused() view returns (bool)",
       "function isEmergencyPauser(address account) view returns (bool)",
       "function isSequencerApproved(address sequencer) view returns (bool)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
       "function owner() view returns (address result)",
       "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
       "function processActions(bytes[] actions) payable",
@@ -2547,7 +2539,7 @@
       "function updateToken(tuple(bytes32 tokenName, uint256 depositCapacity, uint256 minDeposit, uint128 depositFee, uint128 withdrawFee, bool depositEnabled, bool withdrawEnabled) params)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "ethereal:0xA2308112941f9bc2843C41a971F56B3Ac6E2167a": [
+    "ethereal:0x70702e58005f3b91f9c8dFBe3A170051Ee61cf96": [
       "error ActionAlreadyProcessed(uint64 id, uint64 previousId, uint64 lastCompleteId)",
       "error ActionExpired(uint64 id, uint256 blockTime, uint64 signedAt, uint64 buffer)",
       "error DelegationFailed()",
@@ -2579,6 +2571,64 @@
       "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
       "function finalizeRevokeLinkedSigner(tuple(address sender, address signer, bytes32 subaccount, uint64 nonce, uint64 signedAt) message)",
       "function processActions(bytes[] actions) payable"
+    ],
+    "ethereal:0x80F981abC18A48CfdbDe5556F9B72e6a726F0FF3": [
+      "constructor(uint8 _localDecimals, address _lzEndpoint, address _delegate)",
+      "error CreditFailed(address to, uint256 amountLD, bytes revertData)",
+      "error IncorrectMessageValue(uint256 provided, uint256 required)",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error InvalidLocalDecimals()",
+      "error InvalidOptions(bytes options)",
+      "error LzTokenUnavailable()",
+      "error NoPeer(uint32 eid)",
+      "error NotEnoughNative(uint256 msgValue)",
+      "error OnlyEndpoint(address addr)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error OnlySelf()",
+      "error SimulationResult(bytes result)",
+      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
+      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "event MsgInspectorSet(address inspector)",
+      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
+      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event PreCrimeSet(address preCrimeAddress)",
+      "function SEND() view returns (uint16)",
+      "function SEND_AND_CALL() view returns (uint16)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function approvalRequired() pure returns (bool)",
+      "function arbNativeTokenManager() view returns (address)",
+      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
+      "function composeMsgSender() view returns (address sender)",
+      "function decimalConversionRate() view returns (uint256)",
+      "function endpoint() view returns (address)",
+      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
+      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
+      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function msgInspector() view returns (address)",
+      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
+      "function oApp() view returns (address)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function preCrime() view returns (address)",
+      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function setDelegate(address _delegate)",
+      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "function setMsgInspector(address _msgInspector)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setPreCrime(address _preCrime)",
+      "function sharedDecimals() pure returns (uint8)",
+      "function token() pure returns (address)",
+      "function transferOwnership(address newOwner)"
     ],
     "ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481": [
       "constructor(address implementation, bytes _data) payable",
@@ -2684,19 +2734,20 @@
       "function update(tuple(uint32 id, uint8 status, uint16 maxLeverage, uint128 maxQuantity, uint128 maxOpenInterestUsd, uint128 maxPositionNotionalUsd) params)",
       "function updateFunding(uint64 id, uint32 productId, int128 fundingDeltaUsd, uint64 messageIdx) payable"
     ],
-    "ethereal:0xF925Bf7d50abe2Abb21E832c81a6454D791Ad5c0": [
-      "error InvalidCost(uint64 id, uint128 cost)",
-      "error InvalidEngineType(uint64 id, uint8 engineType)",
-      "error InvalidLiquidationBalanceTransfer(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
+    "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B": [
+      "error DeleverageEmptyProducts(uint64 id)",
+      "error DeleverageInconsistentPrices(uint64 id, uint32 productId, uint128 previousPrice, uint128 currentPrice, uint32 tolerance)",
+      "error DeleverageInvalidProductIndex(uint64 id, address account, bytes32 subaccount, uint32 productIndex, uint32 numProducts)",
+      "error DeleverageLiquidatorNotBankrupt(uint64 id, int256 equity)",
+      "error DeleverageLiquidatorPositionsMismatch(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, uint128 openPositions, uint128 products)",
+      "error DeleverageMessageIndexMismatch(uint64 id, uint64 expected, uint64 actual)",
+      "error DeleverageNotReducing(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 oldSize, int128 newSize)",
+      "error DeleveragePythUpdateCountMismatch(uint64 id, uint256 provided, uint256 expected)",
+      "error DeleverageUnexpectedMatches(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, uint32 productId)",
+      "error InvalidLiquidatorCounterparty(uint64 id, address account, bytes32 subaccount)",
+      "error InvalidNonIncreasingId(uint64 id, uint32 currentId, uint32 lastId)",
       "error InvalidParameter(bytes32 parameter, bytes32 reason)",
       "error InvalidRealizedPnl(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "error LiquidateAboveMaintenanceMargin(uint64 id, address account, bytes32 subaccount, int256 remainingMargin, uint256 requiredMaintenanceMargin)",
-      "error LiquidateEmptyProducts(uint64 id, address account, bytes32 subaccount)",
-      "error LiquidateProductsMismatch(uint64 id, uint128 openPositions, uint128 products)",
-      "error LiquidateSizeNotNetZero(uint64 id, address account, bytes32 subaccount, uint32 productId, int128 sizeDelta, int128 netSize)",
-      "error LiquidateZeroAccount(uint64 id)",
-      "error LiquidateZeroMargin(uint64 id, address account, bytes32 subaccount)",
-      "error LiquidateZeroSubaccount(uint64 id, address account)",
       "error LiquidatorInsufficientBalance(uint64 id, address liquidatorAccount, bytes32 liquidatorSubaccount, address token, uint256 balance, int256 delta)",
       "error PriceFeedInvalidProperty(uint64 id, uint8 property)",
       "error PriceFeedsTooMany(uint64 id, uint256 length)",
@@ -2704,11 +2755,12 @@
       "error PriceInvalidFeedId(uint64 id, uint32 priceFeedId, uint32 productFeedId)",
       "error PriceTooOld(uint64 id, uint64 priceTimestamp, uint64 timestamp)",
       "error ProductStatusViolation(uint64 id, uint32 productId, uint8 engineType, uint8 status)",
-      "event LiquidationBalanceTransferMismatch(uint64 id, int128 externalValue, int256 internalValue, uint256 tolerance)",
-      "event LiquidationMarginCheckMismatch(uint64 id, uint256 maintenanceMargin, int256 equity, uint256 tolerance)",
+      "event DeleverageLiquidatorBankruptcyCheckMismatch(uint64 id, int256 equity, uint256 tolerance)",
+      "event DeleveragePriceInconsistency(uint64 id, uint32 productId, uint128 previousPrice, uint128 currentPrice, uint256 tolerance)",
+      "event DeleverageUserRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
       "event LiquidatorRealizedPnlMismatch(uint64 id, int128 externalValue, int128 internalValue, uint128 tolerance)",
-      "event PositionLiquidated(uint32 indexed productId, address indexed liquidatedAccount, bytes32 indexed liquidatedSubaccount, uint8 engineType, int128 size, uint64 messageIdx)",
-      "function liquidateSubaccount(uint64 id, bytes actionData) payable"
+      "event PositionDeleveraged(uint32 indexed productId, address indexed account, bytes32 indexed subaccount, int128 sizeDelta, int128 realizedPnl, uint64 messageIdx)",
+      "function deleverageLiquidator(uint64 id, bytes actionData) payable"
     ]
   },
   "usedTemplates": {
@@ -2733,6 +2785,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 431010860, "ethereal": 2824010 },
-  "permissionsConfigHash": "0x5ba7cf14e88801fe30fd8f21fda9b7bd78dd1053d0aeadd5cbe30373cd12e831"
+  "usedBlockNumbers": { "arbitrum": 453225640, "ethereal": 4267057 },
+  "permissionsConfigHash": "0xc484e12eacef04cf8d9120b5e2072d35c3e691536e055a07952ab82314811cd9"
 }

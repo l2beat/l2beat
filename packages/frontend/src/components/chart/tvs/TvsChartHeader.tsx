@@ -31,10 +31,10 @@ export function TvsChartHeader({
   return (
     <header className="flex justify-between text-base">
       <div>
-        <h1 className="font-bold text-xl md:text-2xl">
+        <h2 className="font-bold text-xl md:text-2xl">
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
-        </h1>
+        </h2>
         <ChartTimeRange timeRange={timeRange} />
       </div>
       <div className="flex flex-col items-end">

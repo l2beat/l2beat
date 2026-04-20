@@ -6,9 +6,9 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
-  DiscordClient,
   DuneClient,
   EigenApiClient,
+  EspressoClient,
   FuelClient,
   HttpClient,
   type IRpcClient,
@@ -54,13 +54,12 @@ export interface Clients {
   rpcClients: IRpcClient[]
   starknetClients: StarknetClient[]
   near: NearClient | undefined
+  espresso: EspressoClient | undefined
   dune: DuneClient | undefined
-  discord: DiscordClient | undefined
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
   const http = new HttpClient()
-
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
   let loopringClient: LoopringClient | undefined
@@ -72,9 +71,9 @@ export function initClients(config: Config, logger: Logger): Clients {
   let avail: PolkadotRpcClient | undefined
   let availWs: AvailWsClient | undefined
   let near: NearClient | undefined
+  let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
   let dune: DuneClient | undefined
-  let discord: DiscordClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -345,6 +344,14 @@ export function initClients(config: Config, logger: Logger): Clients {
       http,
     })
     availWs = new AvailWsClient(config.daBeat.availWsUrl)
+    espresso = new EspressoClient({
+      sourceName: 'espresso',
+      apiUrl: config.daBeat.espressoApiUrl,
+      http,
+      retryStrategy: 'RELIABLE',
+      logger,
+      callsPerMinute: 100,
+    })
   }
 
   const getRpcClient = (chain: string) => {
@@ -357,10 +364,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     const client = starknetClients.find((r) => r.chain === chain)
     assert(client, `${chain}: Starknet client not found`)
     return client
-  }
-
-  if (config.updateMonitor && config.updateMonitor.discord) {
-    discord = new DiscordClient(http, config.updateMonitor.discord)
   }
 
   return {
@@ -379,6 +382,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     avail,
     availWs,
     near,
+    espresso,
     getStarknetClient,
     getRpcClient,
     rpcClients,
@@ -386,6 +390,5 @@ export function initClients(config: Config, logger: Logger): Clients {
     voyager: voyagerClient,
     lighter: lighterClient,
     dune,
-    discord,
   }
 }

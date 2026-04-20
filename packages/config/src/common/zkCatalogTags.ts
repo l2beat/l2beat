@@ -82,11 +82,18 @@ export const zkCatalogTags = [
     description: 'Instruction language for ZKsync Era virtual machine.',
   },
   {
-    id: 'RISCV',
+    id: 'RISCV32',
     type: ZkCatalogTagType.ISA,
-    name: 'RISC-V',
+    name: 'RISC-V 32bit',
     description:
       'Free and open-source universal 32-bit ISA used across a variety of hardware and software.',
+  },
+  {
+    id: 'RISCV64',
+    type: ZkCatalogTagType.ISA,
+    name: 'RISC-V 64bit',
+    description:
+      'Free and open-source universal 64-bit ISA used across a variety of hardware and software.',
   },
   {
     id: 'ZkASM',
@@ -112,6 +119,13 @@ export const zkCatalogTags = [
     name: 'OpenVM',
     description:
       'Extensible instruction set for OpenVM zkVM developed by Axiom.',
+  },
+  {
+    id: 'AVM',
+    type: ZkCatalogTagType.ISA,
+    name: 'AVM',
+    description:
+      'VM that executes the public part of Aztec L2 transactions, conceptually similar to EVM.',
   },
   // Plonk
   {
@@ -169,6 +183,20 @@ export const zkCatalogTags = [
     name: 'Jellyfish',
     description:
       'Open-source toolkit of various cryptographic primitives, including an implementation of Plonk SNARK, developed in Rust by Espresso Systems.',
+  },
+  {
+    id: 'UltraHonk',
+    type: ZkCatalogTagType.Plonk,
+    name: 'UltraHonk',
+    description:
+      'A KZG-based PLONKish proving system featuring many optimizations, including a sumcheck argument over a boolean hypercube. Developed by Aztec as a part of Barretenberg library.',
+  },
+  {
+    id: 'CHONK',
+    type: ZkCatalogTagType.Plonk,
+    name: 'CHONK',
+    description:
+      'PLONKish proving system, designed for client-side proving. Includes sumcheck argument over a hypercube, HyperNova-like folding schemes and GoblinPlonk EC operation optimization over Grumpkin curve. Developed by Aztec as a part of Barretenberg library.',
   },
   // Fflonk
   {
@@ -229,6 +257,13 @@ export const zkCatalogTags = [
     description:
       'Pairing-friendly 377-bit prime field Weierstrass elliptic curve.',
   },
+  {
+    id: 'Grumpkin',
+    type: ZkCatalogTagType.curve,
+    name: 'Grumpkin',
+    description:
+      'Curve that forms a curve cycle together with BN254, which allows highly efficient recursive proof composition by switching between these two curves.',
+  },
   // Field
   {
     id: 'Mersenne31',
@@ -240,13 +275,19 @@ export const zkCatalogTags = [
     id: 'Goldilocks',
     type: ZkCatalogTagType.Field,
     name: 'Goldilocks',
-    description: 'Prime field of order p = 2**64 - 2**32  + 1.',
+    description: 'Prime field of order p = 2**64 - 2**32 + 1.',
   },
   {
     id: 'BabyBear',
     type: ZkCatalogTagType.Field,
     name: 'Baby Bear',
     description: 'Prime field of order p = 15 * 2**27 + 1.',
+  },
+  {
+    id: 'KoalaBear',
+    type: ZkCatalogTagType.Field,
+    name: 'Koala Bear',
+    description: 'Prime field of order p = 2**31 - 2**24 + 1.',
   },
   {
     id: 'felt252',

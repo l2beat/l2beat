@@ -4,5 +4,11 @@
     "address": "eth:0x82c592b4Bb7E1f50f68E75d86743c3330beAaba4",
     "chain": "ethereum",
     "blockNumber": 23834069
+  },
+  "SlashPayloadCloneable_alpha.sol": {
+    "hash": "0xfbadea8713d96309e9bd97fddd93c7a26deaa423e3bc6380fea3583b1479c3ef",
+    "address": "eth:0xAA43220b7eb7c8Ffe75bc9C483f3C07b0a55B445",
+    "chain": "ethereum",
+    "blockNumber": 24590324
   }
 }

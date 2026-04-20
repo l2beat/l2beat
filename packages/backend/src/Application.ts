@@ -14,7 +14,6 @@ import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import type { ApplicationModule, ModuleDependencies } from './modules/types'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
-import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Providers } from './providers/Providers'
 import { Clock } from './tools/Clock'
 
@@ -36,8 +35,6 @@ export class Application {
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
-      config.clock.hourlyCutoffDays,
-      config.clock.sixHourlyCutoffDays,
     )
     const providers = new Providers(config, logger)
     const deps: ModuleDependencies = {
@@ -56,7 +53,6 @@ export class Application {
       createFlatSourcesModule(deps),
       createTrackedTxsModule(deps),
       initTvsModule(deps),
-      createVerifiersModule(deps),
       createDaBeatModule(deps),
       createEcosystemsModule(deps),
       createAnomaliesModule(deps),

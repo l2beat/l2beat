@@ -5,10 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
-  FailedRelayedMessage,
   MessagePassed,
-  RelayedMessage,
-  SentMessage,
+  PortalDepositFinalized,
+  TransactionDeposited,
   WithdrawalFinalized,
 } from './opstack/opstack'
 import {
@@ -222,32 +221,25 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
     }
   }
 
-  matchTypes = [
-    DepositFinalized,
-    ERC20WithdrawalFinalized,
-    FailedRelayedMessage,
-  ]
+  matchTypes = [DepositFinalized, ERC20WithdrawalFinalized]
 
   match(event: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     // L1 → L2 deposit matching
     if (DepositFinalized.checkType(event)) {
-      // L2: DepositFinalized → RelayedMessage (offset +1)
-      const relayedMessage = db.find(RelayedMessage, {
-        sameTxAtOffset: { event, offset: 1 },
+      const portalDepositFinalized = db.find(PortalDepositFinalized, {
+        ctx: { txHash: event.ctx.txHash },
         chain: event.args.chain,
       })
-      if (!relayedMessage) return
+      if (!portalDepositFinalized) return
 
-      // L1: Find SentMessage by msgHash
-      const sentMessage = db.find(SentMessage, {
-        msgHash: relayedMessage.args.msgHash,
+      const transactionDeposited = db.find(TransactionDeposited, {
+        sourceHash: portalDepositFinalized.args.sourceHash,
         chain: event.args.chain,
       })
-      if (!sentMessage) return
+      if (!transactionDeposited) return
 
-      // L1: SentMessage (N) → SentMessageExtension1 (N+1) → DepositInitiated (N+2)
       const depositInitiated = db.find(DepositInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
+        sameTxAtOffset: { event: transactionDeposited, offset: 3 },
         chain: event.args.chain,
       })
       if (!depositInitiated) return
@@ -255,8 +247,8 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
       return [
         Result.Message('opstack.L1ToL2Message', {
           app: 'maker-bridge',
-          srcEvent: sentMessage,
-          dstEvent: relayedMessage,
+          srcEvent: transactionDeposited,
+          dstEvent: portalDepositFinalized,
           extraEvents: [depositInitiated, event],
         }),
         Result.Transfer('maker-bridge.L1ToL2Transfer', {
@@ -311,34 +303,6 @@ export class MakerBridgePlugin implements InteropPluginResyncable {
           dstAmount: event.args.amount,
           dstTokenAddress: event.args.l1Token,
           dstWasMinted: false,
-        }),
-      ]
-    }
-
-    if (FailedRelayedMessage.checkType(event)) {
-      const network = MAKER_BRIDGE_NETWORKS.find(
-        (n) => n.chain === event.args.chain,
-      )
-      if (!network) return
-
-      const sentMessage = db.find(SentMessage, {
-        msgHash: event.args.msgHash,
-        chain: event.args.chain,
-      })
-      if (!sentMessage) return
-
-      const depositInitiated = db.find(DepositInitiated, {
-        sameTxAtOffset: { event: sentMessage, offset: 2 },
-        chain: event.args.chain,
-      })
-      if (!depositInitiated) return
-
-      return [
-        Result.Message('opstack.L1ToL2MessageFailed', {
-          app: 'maker-bridge',
-          srcEvent: sentMessage,
-          dstEvent: event,
-          extraEvents: [depositInitiated],
         }),
       ]
     }

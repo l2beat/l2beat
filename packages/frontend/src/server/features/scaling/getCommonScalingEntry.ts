@@ -1,12 +1,17 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectScalingProofSystem } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { getRowBackgroundColor } from '~/components/table/utils/rowType'
 import { manifest } from '~/utils/Manifest'
-import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
+import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getProjectVerificationWarnings } from '../utils/getIsProjectVerified'
+
+const proofSystemLabel: Record<ProjectScalingProofSystem['type'], string> = {
+  Optimistic: 'Optimistic',
+  Validity: 'Validity',
+}
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -93,6 +98,12 @@ export function getCommonScalingEntry({
         id: 'vm' as const,
         value: vm,
       })),
+      {
+        id: 'ProofSystem' as const,
+        value: project.scalingInfo.proofSystem
+          ? proofSystemLabel[project.scalingInfo.proofSystem.type]
+          : 'No proofs',
+      },
       ...project.display.badges
         .filter((badge) => badge.type === 'Other')
         .map((badge) => ({
@@ -102,7 +113,7 @@ export function getCommonScalingEntry({
     ],
     description: project.display?.description,
     badges: project.display.badges
-      .map((badge) => getBadgeWithParams(badge))
+      .map((badge) => getBadgeWithParamsAndLink(badge, project))
       .filter((b) => b !== undefined),
   }
 }

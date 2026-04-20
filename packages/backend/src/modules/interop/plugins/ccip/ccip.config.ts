@@ -65,6 +65,8 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'gnosis-mainnet': 'gnosis',
   'metis-mainnet': 'metis',
   'soneium-mainnet': 'soneium',
+  'hyperliquid-mainnet': 'hyperevm',
+  'monad-mainnet': 'monad',
 }
 
 // Maps a Chainlink chain name to an L2Beat chain name, or derives a readable
@@ -122,7 +124,7 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
     const reconciled = reconcileNetworks(previous, latest.networks)
 
     if (reconciled.removed.length > 0) {
-      this.logger.error('Networks removed', {
+      this.logger.info('Upstream networks removed', {
         plugin: CCIPConfig.key,
         removed: reconciled.removed,
       })

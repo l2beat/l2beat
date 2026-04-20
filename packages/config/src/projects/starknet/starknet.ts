@@ -1,5 +1,4 @@
 import {
-  ChainId,
   ChainSpecificAddress,
   EthereumAddress,
   formatLargeNumber,
@@ -11,6 +10,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -20,7 +20,6 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierUpgradeDelay } from '../../discovery/starkware'
@@ -379,60 +378,14 @@ export const starknet: ScalingProject = {
         ],
       },
     ],
-    proofVerification: {
-      shortDescription: 'Starknet is a ZK-CairoVM rollup on Ethereum.',
-      aggregation: true,
-      requiredTools: [],
-      verifiers: [
-        {
-          name: 'SHARPVerifier',
-          description:
-            'Starknet utilizes STARKs for their system. The protocol makes use of recursive aggregation across multiple projects that share the same onchain verifier. SHARP stands for SHARed Prover. Different programs are represented onchain with different program hashes.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
-            {
-              name: 'Main bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
-            },
-            {
-              name: 'Simple bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/simple_bootloader/simple_bootloader.cairo',
-            },
-            {
-              name: 'Applicative bootloader',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.2a0/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo',
-            },
-            {
-              name: 'Recursive Cairo verifier',
-              proofSystem: 'STARK',
-              mainArithmetization: 'AIR',
-              mainPCS: 'FRI',
-              trustedSetup: 'None',
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo',
-            },
-            {
-              name: 'StarknetOS',
-              ...PROOFS.PROGRAM,
-              link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/starknet/core/os',
-            },
-          ],
-        },
-      ],
-    },
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
     programHashes: starknetProgramHashes.map((el) => PROGRAM_HASHES(el)),
+    // stwo verifier address, could be deduced from analyzing trx traces
+    zkVerifiers: [discovery.getContract('SHARPVerifier_2025_11').address],
   },
   upgradesAndGovernance: `
 The Starknet zk Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the main Starknet rollup contract and its core bridge escrows (ETHBridge, STRKBridge) is currently split between the ${scThreshold} Security Council with instant upgrade capability and the ${discovery.getMultisigStats('Starkware Multisig 2')} Starkware Multisig 2 who can upgrade with a ${discovery.getContractValue('DelayedExecutor', 'executionDelayFmt')} delay. The former Multisig also governs most other bridge escrows with instant upgradeability. The shared SHARP verifier used for state validation can be changed by the ${sharpMsThreshold} SHARP Multisig with and a ${discovery.getContractValue('SHARPVerifierCallProxy', 'upgradeActivationDelayFmt')} delay, affecting all rollups like Starknet that are sharing it. 
@@ -547,6 +500,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         sinceTimestamp: UnixTime(1657137600),
         untilTimestamp: UnixTime(1768848455),
         tokens: ['WBTC'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for WBTC. The bridge is halted and WBTC migrated to external OFT bridging.',
       }),
@@ -561,6 +515,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_USDT_ADDRESS),
         sinceTimestamp: UnixTime(1657137615),
         tokens: ['USDT'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
       }),
@@ -568,6 +523,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_WSTETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['wstETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for wstETH.' +
           ' ' +
@@ -577,24 +533,28 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         address: ChainSpecificAddress(ESCROW_RETH_ADDRESS),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['rETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_UNI_ADDRESS),
         tokens: ['UNI'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_FRAX_ADDRESS),
         tokens: ['FRAX.legacy'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FRAX'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for FRAX (prev. FXS).' +
           ' ' +
@@ -603,6 +563,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
         tokens: ['sfrxETH'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for sfrxETH.' +
           ' ' +
@@ -611,6 +572,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_LUSD_ADDRESS),
         tokens: ['LUSD'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
       }),
@@ -628,6 +590,7 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       discovery.getEscrowDetails({
         address: ChainSpecificAddress(ESCROW_MULTIBRIDGE_ADDRESS),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
+        ...ESCROW.CANONICAL_ADD_TA,
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
       }),

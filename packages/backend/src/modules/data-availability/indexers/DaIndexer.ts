@@ -124,15 +124,18 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
-    const from = UnixTime.toStartOf(
-      Math.min(...blobs.map((b) => b.blockTimestamp)),
-      'hour',
-    )
+    let minTimestamp = blobs[0]?.blockTimestamp
+    let maxTimestamp = blobs[0]?.blockTimestamp
 
-    const to = UnixTime.toEndOf(
-      Math.max(...blobs.map((b) => b.blockTimestamp)),
-      'hour',
-    )
+    assert(minTimestamp !== undefined && maxTimestamp !== undefined)
+
+    for (const blob of blobs) {
+      minTimestamp = Math.min(minTimestamp, blob.blockTimestamp)
+      maxTimestamp = Math.max(maxTimestamp, blob.blockTimestamp)
+    }
+
+    const from = UnixTime.toStartOf(minTimestamp, 'hour')
+    const to = UnixTime.toEndOf(maxTimestamp, 'hour')
 
     return await this.$.db.dataAvailability.getForDaLayerInTimeRange(
       this.$.daLayer,

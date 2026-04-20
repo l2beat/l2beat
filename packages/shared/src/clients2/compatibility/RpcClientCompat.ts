@@ -264,12 +264,17 @@ export class RpcClientCompat implements IRpcClient {
 
 function toTx(tx: RpcTransaction): EVMTransaction {
   return {
+    hash: tx.hash,
     from: tx.from,
     to: tx.to ?? undefined,
     data: tx.input,
-    hash: tx.hash,
     type: tx.type?.toString(),
     value: tx.value,
+    calls: tx.calls?.map((call) => ({
+      to: call.to?.toString(),
+      data: call.input ?? call.data,
+      value: call.value,
+    })),
     blobVersionedHashes: tx.blobVersionedHashes ?? undefined,
     blockNumber: tx.blockNumber !== null ? Number(tx.blockNumber) : null,
   }

@@ -23,6 +23,44 @@
     },
     {
       "mode": "auto",
+      "id": "celo-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+        "chain": "ethereum",
+        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "decimals": 18,
+        "sinceTimestamp": 1741879559,
+        "untilTimestamp": 1747440000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-BRLA",
+      "priceId": "brla-digital-brla",
+      "symbol": "BRLA",
+      "name": "BRLA Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40062/large/IconGreen400.png?1725459580",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFECB3F7c54E2CAAE9dC6Ac9060A822D47E053760",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "celo-CELO-1",
       "priceId": "celo",
       "symbol": "CELO",
@@ -159,6 +197,44 @@
     },
     {
       "mode": "auto",
+      "id": "celo-FORE",
+      "priceId": "fore-protocol",
+      "symbol": "FORE",
+      "name": "FORE Protocol",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+        "chain": "ethereum",
+        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "decimals": 18,
+        "sinceTimestamp": 1741879559,
+        "untilTimestamp": 1742428800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-GBPm",
+      "priceId": "celo-british-pound",
+      "symbol": "GBPm",
+      "name": "Mento British Pound",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55374/large/GBPm__%28Mento_British_Pound%29.png?1769111439",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCCF663b1fF11028f0b19058d0f7B674004a40746",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1745798400
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "celo-GTC",
       "priceId": "gitcoin",
       "symbol": "GTC",
@@ -212,6 +288,26 @@
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-TRESTLE",
+      "priceId": "trestle",
+      "symbol": "TRESTLE",
+      "name": "Trestle",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
+        "chain": "ethereum",
+        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
+        "decimals": 18,
+        "sinceTimestamp": 1741879559,
+        "untilTimestamp": 1742169600
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {

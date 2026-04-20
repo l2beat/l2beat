@@ -1,6 +1,7 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -16,8 +17,10 @@ export const molten: ScalingProject = orbitStackL3({
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     name: 'Molten Network',
     shortName: 'Molten',
     slug: 'molten',
@@ -40,6 +43,7 @@ export const molten: ScalingProject = orbitStackL3({
     },
   },
   isNodeAvailable: true,
+  nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
   celestiaDa: {
     sinceBlock: 5305699,
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA=',
@@ -100,4 +104,38 @@ export const molten: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
+  nonTemplateZkVerifiers: getVerifiers(),
+  nonTemplateProgramHashes: getProgramHashes().map((el) => PROGRAM_HASHES(el)),
 })
+
+function getVerifiers(): ChainSpecificAddress[] {
+  const activeVerifiers = discovery.getContractValue<
+    { selector: string; verifier: ChainSpecificAddress }[]
+  >('SP1VerifierGatewayArb', 'activeVerifiers')
+  const succinctConfig = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: ChainSpecificAddress
+  }>('NitroEnclaveVerifier', 'succintZkConfig')
+  return activeVerifiers
+    .map((el) => el.verifier)
+    .concat(succinctConfig.zkVerifier)
+}
+
+function getProgramHashes(): string[] {
+  const result = []
+  result.push(
+    discovery.getContractValue<string>(
+      'ArbitrumBlobstream',
+      'blobstreamProgramVkey',
+    ),
+  )
+  const succinctConfig = discovery.getContractValue<{
+    verifierId: string
+    aggregatorId: string
+    zkVerifier: ChainSpecificAddress
+  }>('NitroEnclaveVerifier', 'succintZkConfig')
+  result.push(succinctConfig.verifierId)
+  result.push(succinctConfig.aggregatorId)
+  return result
+}

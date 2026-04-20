@@ -2,5 +2,16 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Central staking manager independent of Rollup implementations. Sequencers deposit stake here through their chosen Rollup contract. Their stake is then transfered to the Governance contract and activated for voting. The GSE tracks which rollup instance validators are securing, and gives them an option to automatically move to the latest Rollup version.",
   "ignoreMethods": ["getLatestRollupAt"],
-  "ignoreInWatchMode": ["totalSupply"]
+  "ignoreInWatchMode": ["totalSupply"],
+  "category": "gov",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add a new rollup address, which automatically triggers all sequencers staked in the bonus address to be migrated to the new rollup."
+        }
+      ]
+    }
+  }
 }

@@ -86,6 +86,30 @@ export const searchBarPages = withIndex([
     href: '/data-availability/archived',
   },
   {
+    category: 'interop',
+    name: 'Summary',
+    tags: ['pages', 'interop', 'interoperability'],
+    href: '/interop/summary',
+  },
+  {
+    category: 'interop',
+    name: 'Non-minting',
+    tags: ['pages', 'interop', 'interoperability', 'non-minting'],
+    href: '/interop/non-minting',
+  },
+  {
+    category: 'interop',
+    name: 'Lock & Mint',
+    tags: ['pages', 'interop', 'interoperability', 'lock-and-mint'],
+    href: '/interop/lock-and-mint',
+  },
+  {
+    category: 'interop',
+    name: 'Burn & Mint',
+    tags: ['pages', 'interop', 'interoperability', 'burn-and-mint'],
+    href: '/interop/burn-and-mint',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',

@@ -8,7 +8,6 @@ import { governancePublicationsCollection } from './governance-publications'
 import { monthlyUpdatesCollection } from './monthly-updates'
 import { pagesCollection } from './pages'
 import { partnersCollection } from './partners'
-import { zkCatalogDescriptionsCollection } from './zk-catalog-descriptions'
 
 export const collections = {
   'governance-publications': governancePublicationsCollection,
@@ -17,7 +16,6 @@ export const collections = {
   authors: authorsCollection,
   glossary: glossaryCollection,
   changelog: changelogCollection,
-  'zk-catalog-descriptions': zkCatalogDescriptionsCollection,
   pages: pagesCollection,
   partners: partnersCollection,
   'monthly-updates': monthlyUpdatesCollection,

@@ -24,8 +24,10 @@ export const l3x: ScalingProject = orbitStackL3({
     REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+    redWarning: {
+      text: 'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
+      detailAnchor: 'permissions',
+    },
     name: 'L3X',
     slug: 'l3x',
     description:
@@ -72,7 +74,7 @@ export const l3x: ScalingProject = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       tokens: '*',
       chain: 'arbitrum',
     },
@@ -80,7 +82,7 @@ export const l3x: ScalingProject = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       tokens: '*',
       chain: 'linea',
     },
@@ -88,7 +90,7 @@ export const l3x: ScalingProject = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       tokens: '*',
       chain: 'mode',
     },
@@ -96,7 +98,7 @@ export const l3x: ScalingProject = orbitStackL3({
       address: EthereumAddress('0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7'),
       sinceTimestamp: UnixTime(1713781465),
       includeInTotal: false,
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       tokens: '*',
       chain: 'blast',
     },

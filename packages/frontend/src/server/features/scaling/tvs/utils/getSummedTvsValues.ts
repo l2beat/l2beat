@@ -1,11 +1,9 @@
-import type { SummedByTimestampTvsValuesRecord } from '@l2beat/dal'
 import type { ProjectId } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { queryExecutor } from '~/server/queryExecutor'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
-import { rangeToResolution } from './range'
 
 export type SummedTvsValues = {
   timestamp: number
@@ -34,29 +32,28 @@ export async function getSummedTvsValues(
     excludeRwaRestrictedTokens: boolean
   },
 ): Promise<SummedTvsValues[]> {
+  const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const records = await queryExecutor.execute({
-    name: 'getSummedByTimestampTvsValuesQuery',
-    args: [
-      projects,
-      range,
+  const records = await db.tvsTokenValue.getSummedByTimestampByProjects(
+    projects,
+    range[0],
+    range[1],
+    {
       forSummary,
       excludeAssociatedTokens,
       excludeRwaRestrictedTokens,
-    ],
-  })
+    },
+  )
 
-  const valueRecords = records.map(mapArrayToObject)
-
-  if (valueRecords.length === 0) {
+  if (records.length === 0) {
     return []
   }
 
-  const timestamps = valueRecords.map((v) => v.timestamp)
+  const timestamps = records.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
   const maxTimestamp = Math.max(...timestamps)
-  const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
+  const groupedByTimestamp = keyBy(records, (v) => v.timestamp)
 
   const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : range[1]
 
@@ -80,34 +77,11 @@ export async function getSummedTvsValues(
         rwaPublic: null,
       }
     }
-    return record
-  })
-}
 
-function mapArrayToObject([
-  timestamp,
-  value,
-  canonical,
-  external,
-  native,
-  ether,
-  stablecoin,
-  btc,
-  rwaRestricted,
-  rwaPublic,
-  other,
-]: SummedByTimestampTvsValuesRecord) {
-  return {
-    timestamp,
-    value,
-    canonical,
-    external,
-    native,
-    ether,
-    stablecoin,
-    btc,
-    rwaRestricted,
-    rwaPublic,
-    other,
-  }
+    const { canonical, customCanonical, ...rest } = record
+    return {
+      ...rest,
+      canonical: canonical + customCanonical,
+    }
+  })
 }

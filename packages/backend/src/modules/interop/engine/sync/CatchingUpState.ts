@@ -4,13 +4,16 @@ import {
   getBlockNumberAtOrBefore,
   isLimitExceededError,
   type RpcLog,
-  type RpcTransaction,
   toEVMLog,
   UpsertMap,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
+import {
+  type InteropTransaction,
+  toInteropTransaction,
+} from '../../dto/interopTransaction'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { logToViemLog } from '../capture/getItemsToCapture'
 import { FollowingState } from './FollowingState'
@@ -36,7 +39,11 @@ interface RangeData {
 export class CatchingUpState implements TimeloopState {
   type = 'timeLoop' as const
   name = 'catchingUp'
-  status = 'starting'
+  private currentStatus = 'starting'
+
+  get status() {
+    return this.currentStatus
+  }
 
   constructor(
     private readonly syncer: InteropEventSyncer,
@@ -52,31 +59,31 @@ export class CatchingUpState implements TimeloopState {
 
   async catchUp(): Promise<SyncerState> {
     while (true) {
-      if (this.syncer.latestBlockNumber === undefined) {
-        this.status = 'waiting for block number'
-        return this
-      }
-
       const { resyncFrom, wipeRequired } = await this.syncer.getResyncState()
-      if (resyncFrom !== undefined && wipeRequired) {
+      if (wipeRequired) {
         this.syncer.waitingForWipe = true
-        this.status = 'waiting for wipe'
+        this.setStatus('waiting for wipe')
         return this
       }
       if (this.syncer.waitingForWipe && !wipeRequired) {
         this.syncer.waitingForWipe = false
       }
 
-      this.status = 'syncing'
+      if (this.syncer.latestBlockNumber === undefined) {
+        this.setStatus('waiting for block number')
+        return this
+      }
+
       const rangeData = await this.calculateNextRange(
         this.syncer.latestBlockNumber,
         resyncFrom,
       )
       if (rangeData) {
+        this.setStatus('preparing range', rangeData)
         const logQuery = this.syncer.buildLogQuery()
         const syncResult = await this.syncRange(logQuery, rangeData)
         if (syncResult === 'retrySmallerRange') {
-          this.status = 'waiting for smaller range'
+          this.setStatus('retrying smaller range')
           return this
         }
 
@@ -84,7 +91,7 @@ export class CatchingUpState implements TimeloopState {
           await this.clearResyncRequestFlagUnlessWipePending()
         }
       } else {
-        this.status = 'idle'
+        this.setStatus('idle')
         return new FollowingState(this.syncer, this.logger)
       }
 
@@ -93,7 +100,7 @@ export class CatchingUpState implements TimeloopState {
         rangeData.fullRange.toBlock === rangeData.latestBlockNumber
       ) {
         // we're at tip, start following
-        this.status = 'idle'
+        this.setStatus('idle')
         return new FollowingState(this.syncer, this.logger)
       }
     }
@@ -106,7 +113,7 @@ export class CatchingUpState implements TimeloopState {
     let interopEvents: InteropEvent[] = []
     if (!logQuery.isEmpty()) {
       try {
-        interopEvents = await this.captureRange(rangeData.nextRange, logQuery)
+        interopEvents = await this.captureRange(rangeData, logQuery)
       } catch (error) {
         if (error instanceof Error && isLimitExceededError(error)) {
           this.increaseLogRangeDivider()
@@ -116,12 +123,13 @@ export class CatchingUpState implements TimeloopState {
       }
     }
 
+    this.setStatus('saving events', rangeData, `${interopEvents.length} events`)
     await this.syncer.saveProducedInteropEvents(
       interopEvents,
       rangeData.fullRange,
     )
 
-    this.logger.info('New range synced', {
+    this.logger.debug('New range synced', {
       chain: this.syncer.chain,
       pluginName: this.syncer.cluster.name,
       range: rangeData.nextRange,
@@ -137,12 +145,13 @@ export class CatchingUpState implements TimeloopState {
   ): Promise<RpcLog[]> {
     const addresses =
       logQuery.addresses === '*' ? undefined : Array.from(logQuery.addresses)
-    this.logger.info('Getting logs', {
+    this.logger.debug('Getting logs', {
       chain,
       from: range.from,
       to: range.to,
-      addresses: logQuery.addresses === '*' ? 'all' : addresses,
-      topics: [logQuery.topic0s],
+      addressCount:
+        logQuery.addresses === '*' ? 'all' : (addresses?.length ?? 0),
+      topic0Count: logQuery.topic0s.size,
     })
 
     const filter: Parameters<InteropEventSyncer['getLogs']>[0] = {
@@ -160,13 +169,14 @@ export class CatchingUpState implements TimeloopState {
   }
 
   private async captureRange(
-    range: { from: bigint; to: bigint },
+    rangeData: RangeData,
     logQueryForChain: LogQuery,
   ): Promise<InteropEvent[]> {
+    this.setStatus('fetching logs', rangeData)
     const logs = await this.fetchLogsForRange(
       this.syncer.chain,
       logQueryForChain,
-      range,
+      rangeData.nextRange,
     )
 
     const logsPerTx = new UpsertMap<string, ViemLog[]>()
@@ -186,6 +196,13 @@ export class CatchingUpState implements TimeloopState {
       }
     }
 
+    if (txsWithIncludedEvents.size > 0) {
+      this.setStatus(
+        'loading receipts',
+        rangeData,
+        `${txsWithIncludedEvents.size} txs`,
+      )
+    }
     for (const txHash of txsWithIncludedEvents) {
       const receipt = await this.syncer.getTransactionReceipt(txHash)
       if (!receipt) {
@@ -200,14 +217,18 @@ export class CatchingUpState implements TimeloopState {
     }
 
     const txsByHash = new Map<string, LogToCapture['tx']>()
+    if (txsWithFullData.size > 0) {
+      this.setStatus('loading txs', rangeData, `${txsWithFullData.size} txs`)
+    }
     for (const txHash of txsWithFullData) {
       const transaction = await this.syncer.getTransactionByHash(txHash)
       if (!transaction) {
         continue
       }
-      txsByHash.set(txHash, toTransaction(transaction))
+      txsByHash.set(txHash, toInteropTransaction(transaction))
     }
 
+    this.setStatus('capturing logs', rangeData, `${logs.length} logs`)
     const interopEvents = []
     for (const log of logs) {
       assert(log.transactionHash)
@@ -220,7 +241,10 @@ export class CatchingUpState implements TimeloopState {
       const logToCapture: LogToCapture = {
         log: logToViemLog(toEVMLog(log)),
         txLogs: logsPerTx.get(log.transactionHash) ?? [],
-        tx: txsByHash.get(log.transactionHash) ?? { hash: log.transactionHash },
+        tx:
+          txsByHash.get(log.transactionHash) ??
+          // FIXME: risky?
+          ({ hash: log.transactionHash } as InteropTransaction),
         chain: this.syncer.chain,
         block: {
           number: Number(log.blockNumber),
@@ -281,9 +305,9 @@ export class CatchingUpState implements TimeloopState {
       fullFromTimestamp = syncedRange.fromTimestamp
       nextFrom = syncedRange.toBlock + 1n
     } else {
-      throw new Error(
-        `Can't resync ${this.syncer.cluster.name} cluster without "from" timestamp`,
-      )
+      // No synced range and no forced start — transition to FollowingState
+      // (happens after restart-from-now clears all synced state)
+      return undefined
     }
 
     let nextTo: bigint
@@ -350,15 +374,22 @@ export class CatchingUpState implements TimeloopState {
       ),
     )
   }
-}
 
-function toTransaction(tx: RpcTransaction): LogToCapture['tx'] {
-  return {
-    hash: tx.hash,
-    from: tx.from,
-    to: tx.to ?? undefined,
-    data: tx.input,
-    type: tx.type?.toString(),
-    value: tx.value,
+  private setStatus(status: string, rangeData?: RangeData, detail?: string) {
+    const divider = this.syncer.logRangeDivider ?? 0
+    const dividerInfo = divider === 0 ? '' : ` [/${2 ** divider}]`
+
+    if (!rangeData) {
+      this.currentStatus = `${status}${dividerInfo}`
+      return
+    }
+
+    const { from, to } = rangeData.nextRange
+    const parts = [`${status} ${from}-${to}`]
+    const progress = [`${rangeData.latestBlockNumber - to} behind tip`]
+    if (detail) {
+      progress.push(detail)
+    }
+    this.currentStatus = `${parts.join(' ')} (${progress.join(', ')})${dividerInfo}`
   }
 }

@@ -15,9 +15,9 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
-import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
+import { rangeToResolution } from '~/utils/range/range'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({

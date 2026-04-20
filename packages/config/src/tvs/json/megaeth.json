@@ -23,6 +23,32 @@
     },
     {
       "mode": "auto",
+      "id": "megaeth-cUSD",
+      "priceId": "cap-usd",
+      "symbol": "cUSD",
+      "name": "Cap USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/68272/large/cUSD_ab_500%C3%97500.png?1755232868",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcCcc62962d17b8914c62D74FfB843d73B2a3cccC",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1767034034
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "megaeth-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -96,6 +122,32 @@
     },
     {
       "mode": "auto",
+      "id": "megaeth-USDm",
+      "priceId": "megausd",
+      "symbol": "USDm",
+      "name": "MegaUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69955/large/USDm.png?1760170136",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+        "chain": "megaeth",
+        "decimals": 18,
+        "sinceTimestamp": 1770249600
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "megaeth-USDT",
       "priceId": "tether",
       "symbol": "USDT",
@@ -112,6 +164,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "megaeth-USDT0",
+      "priceId": "usdt0",
+      "symbol": "USDT0",
+      "name": "USDT0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB8CE59FC3717ada4C02eaDF9682A9e934F625ebb",
+        "chain": "megaeth",
+        "decimals": 6,
+        "sinceTimestamp": 1767074275
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

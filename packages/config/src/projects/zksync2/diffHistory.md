@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xfa8c6eb0cb5950c39bdec261ea694673ed6ab72e
+
+# Diff at Wed, 04 Mar 2026 14:39:05 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1f1cf4fcbeb4c2ad86765920452b33a7c90a15a5 block: 1770639008
+- current timestamp: 1772635080
+
+## Description
+
+wstETH bridge paused deposits due to a potential vulnerability: https://x.com/lidofinance/status/2028803376306336068?s=46&t=q4Q232TdEyWIiMZPfDpI4A.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge_wstETH (eth:0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      values.isDepositsEnabled:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x0c7bc824ed9a6da8c754e77584ce60011165fc2e
 
 # Diff at Mon, 09 Feb 2026 12:14:21 GMT:

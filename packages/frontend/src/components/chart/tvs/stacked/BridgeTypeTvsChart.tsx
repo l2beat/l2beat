@@ -83,7 +83,8 @@ export function BridgeTypeTvsChart({
       }}
       project={project}
     >
-      <AreaChart responsive data={data} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={data} margin={{ top: 20, right: 1 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <ChartCommonComponents
           data={data}
@@ -205,7 +206,7 @@ function CustomTooltip({
                     entry.value !== undefined &&
                     total !== null && (
                       <span className="font-medium text-label-value-13 text-secondary sm:text-label-value-15">
-                        ({formatPercent(entry.value / total)})
+                        ({formatPercent(total !== 0 ? entry.value / total : 0)})
                       </span>
                     )}
                 </div>

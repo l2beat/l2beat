@@ -15,6 +15,7 @@ import {
 } from './types'
 
 // https://docs.aori.io/protocol/deployments
+// chainconfeeg
 const AORI_NETWORKS = defineNetworks('aori', [
   {
     chainId: 1,
@@ -46,6 +47,13 @@ const AORI_NETWORKS = defineNetworks('aori', [
     chain: 'bsc',
     address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
   },
+  {
+    chainId: 143,
+    eid: 30390,
+    chain: 'monad',
+    address: EthereumAddress('0xFfe691A6dDb5D2645321e0a920C2e7Bdd00dD3D8'),
+  },
+  // tempo unsupported
 ])
 
 const parseSettleSent = createEventParser(

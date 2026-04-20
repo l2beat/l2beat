@@ -7,10 +7,9 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { LivenessChartRangeControls } from '~/pages/scaling/liveness/components/LivenessChartRangeControls'
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import { rangeToResolution } from '~/server/features/scaling/liveness/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import type { ChartRange } from '~/utils/range/range'
+import { type ChartRange, rangeToResolution } from '~/utils/range/range'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
@@ -20,7 +19,6 @@ interface Props {
   project: ChartProject
   configuredSubtypes: TrackedTxsConfigSubtype[]
   anomalies: LivenessAnomaly[]
-  hasTrackedContractsChanged: boolean
   milestones: Milestone[]
   defaultRange: ChartRange
   isArchived: boolean
@@ -31,7 +29,6 @@ export function ProjectLivenessChart({
   project,
   configuredSubtypes,
   anomalies,
-  hasTrackedContractsChanged,
   milestones,
   isArchived,
   defaultRange,
@@ -112,7 +109,6 @@ export function ProjectLivenessChart({
         stats={chart?.stats}
         anomalies={anomalies}
         configuredSubtypes={configuredSubtypes}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
         isArchived={isArchived}
       />
     </div>

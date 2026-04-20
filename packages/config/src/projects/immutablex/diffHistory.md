@@ -1,3 +1,446 @@
+Generated with discovered.json: 0xaa71388163d734a1da4ef7a00d8542edd278e016
+
+# Diff at Fri, 06 Mar 2026 08:30:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772703009
+- current timestamp: 1772785651
+
+## Description
+
+Removed tokens from the discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772703009 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Immutable X Token (eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xe0e70921fea126bc98e487c8b6d76da3309c2f41
+
+# Diff at Thu, 05 Mar 2026 12:02:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@41a33adcc440488dfedcd98e8ddd5ba2e5c0d189 block: 1772450911
+- current timestamp: 1772703009
+
+## Description
+
+Immutable X migrates assets and the state root to immutable zkevm. Immutable X is deprecated now: https://x.com/Immutable/status/2016389261575258446?s=20.
+
+State root is injected into a specific contract (`zkEVMWithdrawalProcessor`) on immutable zkevm via Axelar message (`sendVaultRoot()` funtion on `VaultRootSenderAdapter`). Tokens are migrated manually by migration manager (`migrateHoldings()` function on `StarkExchangeMigration`), data for each token must be given as `TokenMigrationDetails`.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DACommittee (eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5.
+```
+
+```diff
+-   Status: DELETED
+    reference SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OrderRegistry (eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
+    contract StarkExchange (eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      template:
+-        "starkex/StarkExchange"
+      sourceHashes.1:
+-        "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1"
++        "0x2e7cc0661a38ee126a3b09ecb461b7b1d7e0301c2f7b4245c5334553d16f9848"
+      proxyType:
+-        "StarkWare diamond"
++        "StarkWare proxy"
+      description:
+-        "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles."
+      values.$implementation:
+-        ["eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B","eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379","eth:0x8536850750956c2FEebeCAB786d82271a5467687","eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2","eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1","eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339","eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"]
++        "eth:0x58b5484F489f7858DC83a5a677338074b57de806"
+      values.$pastUpgrades.0:
++        ["2021-03-10T15:13:08.000Z","0x9b57c19aa91cc17c9487085b68532cd65d1e4c263b5928f14c03a9d36c9097df",["eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"]]
+      values.$pastUpgrades.0.2.1:
+-        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.0.2.2:
+-        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.0.2.3:
+-        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.0.1:
+-        "0x9b57c19aa91cc17c9487085b68532cd65d1e4c263b5928f14c03a9d36c9097df"
++        "0xf42d8fc579401fc76769bf63ba72f7277aac976aeb2a4cd3eca899ca08de7c20"
+      values.$pastUpgrades.0.0:
+-        "2021-03-10T15:13:08.000Z"
++        "2021-03-16T18:04:39.000Z"
+      values.$pastUpgrades.1.2.1:
+-        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.1.2.2:
+-        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.1.2.3:
+-        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.1.1:
+-        "0xf42d8fc579401fc76769bf63ba72f7277aac976aeb2a4cd3eca899ca08de7c20"
++        "0x79f72bef0984e3ae76ab638c078f92f1a0d4ad2a289b8a91e072d81f77d505ce"
+      values.$pastUpgrades.1.0:
+-        "2021-03-16T18:04:39.000Z"
++        "2021-03-25T11:24:15.000Z"
+      values.$pastUpgrades.2.2.1:
+-        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.2.2.2:
+-        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.2.2.3:
+-        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.2.1:
+-        "0x79f72bef0984e3ae76ab638c078f92f1a0d4ad2a289b8a91e072d81f77d505ce"
++        "0x9e8cc538b40a70723a287ece3ecb4e6aafbbde0e04f621124df6e4c2d7995dc7"
+      values.$pastUpgrades.2.0:
+-        "2021-03-25T11:24:15.000Z"
++        "2021-03-26T08:01:31.000Z"
+      values.$pastUpgrades.3.2.0:
+-        "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
+      values.$pastUpgrades.3.2.1:
+-        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.3.2.2:
+-        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.3.2.3:
+-        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
++        "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
+      values.$pastUpgrades.3.1:
+-        "0x9e8cc538b40a70723a287ece3ecb4e6aafbbde0e04f621124df6e4c2d7995dc7"
++        "0x26fb60bb6b5ff3ef22cd959d007588f7410586499870411cfddc2759b97d44d6"
+      values.$pastUpgrades.3.0:
+-        "2021-03-26T08:01:31.000Z"
++        "2021-08-31T08:15:29.000Z"
+      values.$pastUpgrades.4.2.1:
+-        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.4.2.2:
+-        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.4.2.3:
+-        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.4.2.4:
+-        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.4.2.5:
+-        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.4.2.6:
+-        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      values.$pastUpgrades.4.1:
+-        "0x26fb60bb6b5ff3ef22cd959d007588f7410586499870411cfddc2759b97d44d6"
++        "0xeaa0efb3937eee43c1083cc776d5033b131e6ef12ba0d0646db1b34e600847cd"
+      values.$pastUpgrades.4.0:
+-        "2021-08-31T08:15:29.000Z"
++        "2021-09-09T16:30:02.000Z"
+      values.$pastUpgrades.5.2.1:
+-        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.5.2.2:
+-        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.5.2.3:
+-        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.5.2.4:
+-        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.5.2.5:
+-        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.5.2.6:
+-        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      values.$pastUpgrades.5.1:
+-        "0xeaa0efb3937eee43c1083cc776d5033b131e6ef12ba0d0646db1b34e600847cd"
++        "0x658a93571ca9733ba346bd746790a6d07821d86c89fd90809e85bf7f2f8d9797"
+      values.$pastUpgrades.5.0:
+-        "2021-09-09T16:30:02.000Z"
++        "2022-01-13T08:08:51.000Z"
+      values.$pastUpgrades.6.2.0:
+-        "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
+      values.$pastUpgrades.6.2.1:
+-        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.6.2.2:
+-        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.6.2.3:
+-        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.6.2.4:
+-        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.6.2.5:
+-        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.6.2.6:
+-        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.$pastUpgrades.6.1:
+-        "0x658a93571ca9733ba346bd746790a6d07821d86c89fd90809e85bf7f2f8d9797"
++        "0x3425fd24435e4aefdb08f3970e61e446eb5d21a1e0c916d1ba9331b060b72192"
+      values.$pastUpgrades.6.0:
+-        "2022-01-13T08:08:51.000Z"
++        "2024-05-20T06:39:35.000Z"
+      values.$pastUpgrades.7.2.0:
+-        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.$pastUpgrades.7.2.1:
+-        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379"
+      values.$pastUpgrades.7.2.2:
+-        "eth:0x8536850750956c2FEebeCAB786d82271a5467687"
+      values.$pastUpgrades.7.2.3:
+-        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
+      values.$pastUpgrades.7.2.4:
+-        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
+      values.$pastUpgrades.7.2.5:
+-        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
+      values.$pastUpgrades.7.2.6:
+-        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
++        "eth:0x58b5484F489f7858DC83a5a677338074b57de806"
+      values.$pastUpgrades.7.1:
+-        "0x3425fd24435e4aefdb08f3970e61e446eb5d21a1e0c916d1ba9331b060b72192"
++        "0x07ac699d0dc30804af73843cc1cba5f50780135e25932cf78be69a3e6c11b194"
+      values.$pastUpgrades.7.0:
+-        "2024-05-20T06:39:35.000Z"
++        "2026-03-05T01:07:11.000Z"
+      values.$upgradeCount:
+-        8
++        9
+      values.defaultVaultWithdrawalLock:
+-        0
+      values.DEPOSIT_CANCEL_DELAY:
+-        172800
+      values.FREEZE_GRACE_PERIOD:
+-        604800
+      values.getLastBatchId:
+-        37990
+      values.getOrderRoot:
+-        "168353765887718686397671181439168594225139531838374564195072013673941816314"
+      values.getOrderTreeHeight:
+-        63
+      values.getRegisteredAvailabilityVerifiers:
+-        ["eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"]
+      values.getRegisteredVerifiers:
+-        ["eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"]
+      values.getSequenceNumber:
+-        37802
+      values.getVaultRoot:
+-        "543280986076401044787518957175086881219650536676907070252569311042264623146"
+      values.getVaultTreeHeight:
+-        31
+      values.implementation:
+-        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
++        "eth:0x58b5484F489f7858DC83a5a677338074b57de806"
+      values.isStrictVaultBalancePolicy:
+-        false
+      values.MAIN_GOVERNANCE_INFO_TAG:
+-        "StarkEx.Main.2019.GovernorsInformation"
+      values.MAX_FORCED_ACTIONS_REQS_PER_BLOCK:
+-        10
+      values.MAX_VERIFIER_COUNT:
+-        64
+      values.operators:
+-        ["eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"]
+      values.orderRegistryAddress:
+-        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
+      values.STARKEX_MAX_DEFAULT_VAULT_LOCK:
+-        604800
+      values.StarkWareDiamond_upgradeDelay:
+-        1209600
+      values.tokenAdmins:
+-        ["eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A","eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"]
+      values.UNFREEZE_DELAY:
+-        31536000
+      values.VERIFIER_REMOVAL_DELAY:
+-        2419200
+      values.VERSION:
+-        "4.0.1"
++        "StarkEx-IMX-Migration-1.0.0"
+      values.getAssetInfo:
++        []
+      values.migrationManager:
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.NATIVE_ETH:
++        "eth:0x0000000000000000000000000000000000000Eee"
+      values.rootSenderAdapter:
++        "eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32"
+      values.StarkWareProxy_upgradeDelay:
++        1209600
+      values.vaultRoot:
++        "543280986076401044787518957175086881219650536676907070252569311042264623146"
+      values.zkEVMBridge:
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      values.zkEVMWithdrawalProcessor:
++        "eth:0xCeA34C706C4A18E103575832Dd21fD3656026D1E"
+      fieldMeta:
+-        {"$admin":{"severity":"HIGH","description":"Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts."},"isFinalized":{"severity":"HIGH","description":"Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."},"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+      implementationNames.eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B:
+-        "StarkExchange"
+      implementationNames.eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379:
+-        "AllVerifiers"
+      implementationNames.eth:0x8536850750956c2FEebeCAB786d82271a5467687:
+-        "TokensAndRamping"
+      implementationNames.eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2:
+-        "StarkExState"
+      implementationNames.eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1:
+-        "ForcedActions"
+      implementationNames.eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339:
+-        "OnchainVaults"
+      implementationNames.eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6:
+-        "ProxyUtils"
+      implementationNames.eth:0x58b5484F489f7858DC83a5a677338074b57de806:
++        "StarkExchangeMigration"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GpsFactRegistryAdapter (eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+```
+
+```diff
+    contract IMXAdminMultisig (eth:0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.0.via:
++        [{"address":"eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]
+      receivedPermissions.0.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.0.from:
+-        "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "upgrade"
+      receivedPermissions.1.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.1.description:
+-        "manage the token admin role."
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.via:
++        [{"address":"eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"}]
+      receivedPermissions.2.role:
+-        ".$admin"
++        "admin"
+      receivedPermissions.2.delay:
+-        1209600
+      receivedPermissions.2.from:
+-        "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8","role":".owner"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGatewayProxyMultisig (eth:0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootAxelarBridgeAdaptor (eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkExchangeMigration (eth:0x58b5484F489f7858DC83a5a677338074b57de806)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Operators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChildERC20 (eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VaultRootSenderAdapter (eth:0x9Fabd9Cc71f15b9Cfd717E117FBb9cfD9fC7cd32)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Immutable X Token (eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/AxelarGasService/AxelarGasService.sol    | 1542 ++++++++++
+ .../AxelarGasService/AxelarGasServiceProxy.p.sol   |   92 +
+ .../.flat/AxelarGatewayProxyMultisig.sol           |  130 +
+ .../src/projects/immutablex/.flat/ChildERC20.sol   | 1772 +++++++++++
+ .../.flat@1772450911/DACommittee.sol => /dev/null  |  176 --
+ .../GpsFactRegistryAdapter.sol => /dev/null        |   52 -
+ .../immutablex/.flat/Immutable X Token.sol         |  593 ++++
+ .../src/projects/immutablex/.flat/Operators.sol    |  284 ++
+ .../OrderRegistry.sol => /dev/null                 |  226 --
+ .../src/projects/immutablex/.flat/ProxyAdmin.sol   |  147 +
+ .../RootAxelarBridgeAdaptor.sol                    | 2024 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++
+ .../RootERC20BridgeFlowRate.sol                    | 3140 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++
+ .../StarkExchange/AllVerifiers.2.sol => /dev/null  |  691 -----
+ .../StarkExchange/ForcedActions.5.sol => /dev/null |  662 -----
+ .../StarkExchange/OnchainVaults.6.sol => /dev/null | 1018 -------
+ .../StarkExchange/ProxyUtils.7.sol => /dev/null    |  277 --
+ .../StarkExchange/StarkExState.4.sol => /dev/null  | 1424 ---------
+ .../StarkExchange/StarkExchange.1.sol => /dev/null |  543 ----
+ .../.flat/StarkExchange/StarkExchangeMigration.sol | 1104 +++++++
+ .../TokensAndRamping.3.sol => /dev/null            | 2195 --------------
+ .../immutablex/.flat/StarkExchangeMigration.sol    | 1104 +++++++
+ .../immutablex/.flat/VaultRootSenderAdapter.sol    |  194 ++
+ .../immutablex/.flat/Wrapped Ether Token.sol       |   63 +
+ 25 files changed, 13647 insertions(+), 7264 deletions(-)
+```
+
 Generated with discovered.json: 0x92f551c2b9184180faf9259206f16209a4558dc8
 
 # Diff at Mon, 02 Mar 2026 11:29:35 GMT:

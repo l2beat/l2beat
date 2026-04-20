@@ -1,6 +1,6 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import type { ICache } from '~/server/cache/ICache'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -20,7 +20,7 @@ interface GetInteropSummaryDataOptions {
 export async function getInteropSummaryData(
   req: Request<unknown, unknown, unknown, InteropQuery>,
   manifest: Manifest,
-  cache: ICache,
+  cache: InMemoryCache,
   options?: GetInteropSummaryDataOptions,
 ): Promise<RenderData> {
   const mode = options?.mode ?? 'public'
@@ -61,8 +61,11 @@ export async function getInteropSummaryData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        title: 'Interoperability - L2BEAT',
+        description:
+          'Compare interoperability protocols across the Ethereum ecosystem. Track bridge volumes, transfer times & sizes, and explore how Non-minting, Lock & Mint, and Burn & Mint mechanisms affect cross-chain risk.',
+        url: req.originalUrl,
         openGraph: {
-          url: req.originalUrl,
           image: '/meta-images/interop/summary/opengraph-image.png',
         },
         excludeFromSearchEngines: mode === 'internal',

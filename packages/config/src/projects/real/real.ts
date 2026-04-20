@@ -25,8 +25,9 @@ export const real: ScalingProject = orbitStackL2({
   display: {
     name: 'Re.al',
     slug: 'real',
-    redWarning:
-      "re.al halted block production and state updates on June 20, 2025 without prior notice. If state updates are not resumed, the state proposer whitelist gets dropped and anyone can propose state updates. If this happens, but the DAC doesn't serve the necessary data, funds can be compromised as there is no way to challenge invalid state roots.",
+    redWarning: {
+      text: "re.al halted block production and state updates on June 20, 2025 without prior notice. If state updates are not resumed, the state proposer whitelist gets dropped and anyone can propose state updates. If this happens, but the DAC doesn't serve the necessary data, funds can be compromised as there is no way to challenge invalid state roots.",
+    },
     description:
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     links: {
@@ -85,7 +86,7 @@ export const real: ScalingProject = orbitStackL2({
         'eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6',
       ),
       tokens: ['stETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
+      ...ESCROW.CANONICAL_ADD_TA,
       description:
         'This contract escrows the stETH that was deposited to mint reETH.',
     }),

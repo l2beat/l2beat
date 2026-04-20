@@ -1,9 +1,14 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { ExpressionBuilder, Insertable, Selectable } from 'kysely'
 import { sql } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { DB } from '../kysely'
 import type { TokenValue } from '../kysely/generated/types'
+import {
+  type CleanDateRange,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from '../utils/deleteArchivedRecords'
 import type { TokenCategory, TokenSource } from './TokenMetadataRepository'
 
 export interface TokenValueRecord {
@@ -18,10 +23,11 @@ export interface TokenValueRecord {
   priceUsd: number
 }
 
-interface SummedByTimestampTokenValueRecord {
+export interface SummedByTimestampTokenValueRecord {
   timestamp: UnixTime
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -32,11 +38,12 @@ interface SummedByTimestampTokenValueRecord {
   other: number
 }
 
-interface SummedByTimestampTokenValuePerProjectRecord {
+export interface SummedByTimestampTokenValuePerProjectRecord {
   projectId: string
   timestamp: UnixTime
   value: number
   canonical: number
+  customCanonical: number
   external: number
   native: number
   ether: number
@@ -225,6 +232,14 @@ export class TokenValueRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteHourlyUntil(this.db, 'TokenValue', dateRange)
+  }
+
+  async deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
+    return await deleteSixHourlyUntil(this.db, 'TokenValue', dateRange)
+  }
+
   async getAll(): Promise<TokenValueRecord[]> {
     const rows = await this.db.selectFrom('TokenValue').selectAll().execute()
     return rows.map(toRecord)
@@ -241,10 +256,13 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     opts: {
       forSummary: boolean
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
     const valueField = opts.forSummary ? 'valueForSummary' : 'valueForProject'
 
     let query = this.db
@@ -255,6 +273,7 @@ export class TokenValueRepository extends BaseRepository {
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
         sumBySource(eb, valueField, 'external'),
         sumBySource(eb, valueField, 'native'),
         // Category breakdown
@@ -276,7 +295,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -290,6 +309,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -311,7 +331,7 @@ export class TokenValueRepository extends BaseRepository {
     toInclusive: UnixTime | null,
     opts: {
       forSummary: boolean
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
     },
   ): Promise<SummedByTimestampTokenValuePerProjectRecord[]> {
@@ -330,6 +350,7 @@ export class TokenValueRepository extends BaseRepository {
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
         sumBySource(eb, valueField, 'external'),
         sumBySource(eb, valueField, 'native'),
         // Category breakdown
@@ -366,7 +387,7 @@ export class TokenValueRepository extends BaseRepository {
       query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
     }
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -381,6 +402,7 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -396,7 +418,7 @@ export class TokenValueRepository extends BaseRepository {
     oldestTimestamp: number,
     latestTimestamp: number,
     opts: {
-      excludeAssociated: boolean
+      excludeAssociatedTokens: boolean
       excludeRwaRestrictedTokens: boolean
       cutOffTimestamp?: number
     },
@@ -406,6 +428,7 @@ export class TokenValueRepository extends BaseRepository {
       project: string
       value: number
       canonical: number
+      customCanonical: number
       external: number
       native: number
       ether: number
@@ -428,6 +451,7 @@ export class TokenValueRepository extends BaseRepository {
         eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
         // Source breakdown
         sumBySource(eb, valueField, 'canonical'),
+        sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
         sumBySource(eb, valueField, 'external'),
         sumBySource(eb, valueField, 'native'),
         // Category breakdown
@@ -461,7 +485,7 @@ export class TokenValueRepository extends BaseRepository {
       )
       .groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
 
-    if (opts.excludeAssociated) {
+    if (opts.excludeAssociatedTokens) {
       query = query.where('TokenMetadata.isAssociated', '=', false)
     }
 
@@ -476,6 +500,123 @@ export class TokenValueRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
       value: Number(row.value),
       canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
+      external: Number(row.external),
+      native: Number(row.native),
+      ether: Number(row.ether),
+      stablecoin: Number(row.stablecoin),
+      btc: Number(row.btc),
+      rwaRestricted: Number(row.rwaRestricted),
+      rwaPublic: Number(row.rwaPublic),
+      other: Number(row.other),
+      associated: Number(row.associated),
+    }))
+  }
+
+  /**
+   * Hot path — called on every TVS table/chart render.
+   * Typically receives only 2 ranges so UNION ALL is ideal.
+   * Each branch gets its own index range scan with minimal planning overhead.
+   * If range count ever grows significantly (50+), consider batching into separate queries.
+   */
+  async getSummedByProjectForRanges(
+    projectIds: string[],
+    ranges: [UnixTime | null, UnixTime][],
+    opts: {
+      excludeAssociatedTokens: boolean
+      excludeRwaRestrictedTokens: boolean
+      cutOffTimestamp?: number
+    },
+  ): Promise<
+    {
+      timestamp: UnixTime
+      project: string
+      value: number
+      canonical: number
+      customCanonical: number
+      external: number
+      native: number
+      ether: number
+      stablecoin: number
+      btc: number
+      rwaRestricted: number
+      rwaPublic: number
+      other: number
+      associated: number
+    }[]
+  > {
+    if (projectIds.length === 0 || ranges.length === 0) {
+      return []
+    }
+
+    const valueField = 'valueForProject'
+
+    const rangeQueries = ranges.map(([from, to]) => {
+      let query = this.db
+        .selectFrom('TokenValue')
+        .innerJoin(
+          'TokenMetadata',
+          'TokenValue.tokenId',
+          'TokenMetadata.tokenId',
+        )
+        .select((eb) => [
+          'TokenValue.projectId',
+          'TokenValue.timestamp',
+          eb.cast(eb.fn.sum(valueField), 'double precision').as('value'),
+          sumBySource(eb, valueField, 'canonical'),
+          sumBySource(eb, valueField, 'custom-canonical', 'customCanonical'),
+          sumBySource(eb, valueField, 'external'),
+          sumBySource(eb, valueField, 'native'),
+          sumByCategory(eb, valueField, 'ether'),
+          sumByCategory(eb, valueField, 'stablecoin'),
+          sumByCategory(eb, valueField, 'btc'),
+          sumByCategory(eb, valueField, 'rwaRestricted'),
+          sumByCategory(eb, valueField, 'rwaPublic'),
+          sumByCategory(eb, valueField, 'other'),
+          eb.fn
+            .sum(
+              eb
+                .case()
+                .when('TokenMetadata.isAssociated', '=', true)
+                .then(eb.ref(valueField))
+                .else(eb.cast(eb.val(0), 'double precision'))
+                .end(),
+            )
+            .as('associated'),
+        ])
+        .where('TokenValue.projectId', 'in', projectIds)
+        .where('TokenValue.timestamp', '<=', UnixTime.toDate(to))
+
+      if (from) {
+        query = query.where('TokenValue.timestamp', '>=', UnixTime.toDate(from))
+      }
+
+      if (opts.excludeAssociatedTokens) {
+        query = query.where('TokenMetadata.isAssociated', '=', false)
+      }
+
+      if (opts.excludeRwaRestrictedTokens) {
+        query = query.where('TokenMetadata.category', '!=', 'rwaRestricted')
+      }
+
+      return query.groupBy(['TokenValue.timestamp', 'TokenValue.projectId'])
+    })
+
+    const [first, ...rest] = rangeQueries
+    assert(first, 'rangeQueries is empty')
+    let combined = first
+    for (const query of rest) {
+      combined = combined.unionAll(query)
+    }
+
+    const rows = await combined.orderBy('timestamp').execute()
+
+    return rows.map((row) => ({
+      project: row.projectId,
+      timestamp: UnixTime.fromDate(row.timestamp),
+      value: Number(row.value),
+      canonical: Number(row.canonical),
+      customCanonical: Number(row.customCanonical),
       external: Number(row.external),
       native: Number(row.native),
       ether: Number(row.ether),
@@ -528,6 +669,7 @@ function sumBySource(
   eb: ExpressionBuilder<DB, 'TokenValue' | 'TokenMetadata'>,
   valueField: 'valueForProject' | 'valueForSummary',
   source: TokenSource,
+  alias?: string,
 ) {
   return eb.fn
     .sum(
@@ -538,5 +680,5 @@ function sumBySource(
         .else(eb.cast(eb.val(0), 'double precision'))
         .end(),
     )
-    .as(source)
+    .as(alias ?? source)
 }

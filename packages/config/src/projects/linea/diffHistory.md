@@ -1,3 +1,811 @@
+Generated with discovered.json: 0x506dc6dc6e784aeda0696c193e708085ac60a85a
+
+# Diff at Tue, 07 Apr 2026 11:27:14 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6939c1061ac26e2572f4c6c6aafc9329a8ef2113 block: 1775037483
+- current timestamp: 1775561168
+
+## Description
+
+Updated Type 1 verifier to a new version. Chain config is the same as the previous verifier.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (eth:0x1442833180e253844897339aFb5800c797547987)
+    +++ description: None
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x1442833180e253844897339aFb5800c797547987"
++        "eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/{.flat@1775037483 => .flat}/PlonkVerifierFull.sol       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+Generated with discovered.json: 0x495e92b69516d7f7ce306b27fbc4565c1972eaeb
+
+# Diff at Thu, 02 Apr 2026 11:09:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@5445bef09c974966a397a84d1af27e8a50f5ae3e block: 1774434780
+- current timestamp: 1775037483
+
+## Description
+
+Upgraded Rollup contract: https://disco.l2beat.com/diff/eth:0x04728BF704a716C26F9EF4085013b760AC885631/eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332. Changes:
+
+- SC can pause indefinitely now, other entities for 48 hours with a 48 hour cooldown afterwards.
+- Refactored Fallback Operator to Liveness Recovery Operator address that gets OPERATOR_ROLE after 6 months of non-finalization.
+- Refactored querying shnarf (blob commitment) existence into a separate interface.
+- Added chain configuration to verifier smart contract.
+- Refactored transient storage and calling keccak.
+
+Also upgraded TokenBridge contract (on L1 and L2): https://disco.l2beat.com/diff/eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34/eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff and L2MessageService on L2 (https://disco.l2beat.com/diff/linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd/linea:0x9976fD7edDb78156a002DE74c9158E884702273d) They have similar changes:
+
+- SC can pause indefinitely now, other entities for 48 hours with a 48 hour cooldown afterwards.
+- Refactored transient storage and calling keccak.
+
+## Watched changes
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      template:
+-        "linea/L1TokenBridge"
++        "linea/L1TokenBridge_v1_1"
+      sourceHashes.1:
+-        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
++        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
+      values.$implementation:
+-        "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
++        "eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff"
+      values.$pastUpgrades.3:
++        ["2026-03-31T15:26:47.000Z","0x2956910285297bc330ad8b1e31f6dd7866e58c26164fe126f09a44df6a65ce9b",["eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.accessControl.PAUSE_ALL_ROLE.members.1:
++        "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SECURITY_COUNCIL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.allPausers.1:
++        "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.CONTRACT_VERSION:
+-        "1.0"
++        "1.1"
+      values.isPaused_BLOB_SUBMISSION:
+-        false
+      values.isPaused_CALLDATA_SUBMISSION:
+-        false
+      values.remoteTokenBridgeSetters:
+-        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      values.SET_REMOTE_TOKENBRIDGE_ROLE:
+-        "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24"
+      values.COOLDOWN_DURATION:
++        172800
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_REPORTING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_STAKING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_UNSTAKING:
++        false
++++ severity: HIGH
+      values.isPaused_STATE_DATA_SUBMISSION:
++        false
++++ description: Timestamp until which non security council entities can't pause the rollup.
++++ severity: HIGH
+      values.nonSecurityCouncilCooldownEnd:
++        0
+      values.PAUSE_DURATION:
++        172800
+      values.SECURITY_COUNCIL_ROLE:
++        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      errors:
+-        {"@template":"Processing error occurred."}
+      fieldMeta.isPaused_BLOB_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.isPaused_CALLDATA_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.nonSecurityCouncilCooldownEnd:
++        {"severity":"HIGH","description":"Timestamp until which non security council entities can't pause the rollup."}
+      implementationNames.eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34:
+-        "TokenBridge"
+      implementationNames.eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff:
++        "TokenBridge"
+    }
+```
+
+```diff
+    contract CallForwardingProxy (eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      receivedPermissions.0.role:
+-        ".fallbackOperator"
++        ".livenessRecoveryOperator"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x66355689a9f067eeb9dc9d899E4192676988279C)
+    +++ description: None
+```
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"interact","from":"eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","description":"can set the contract that is recognized to be the token bridge contract on the other side.","role":".remoteTokenBridgeSetters"}
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.","role":".pauseAllAC"}
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"pause the rollup indefinitely.","role":".securityCouncilAC"}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      template:
+-        "linea/LineaRollup_NativeYield"
++        "linea/LineaRollup_NativeYield_v7_1"
+      sourceHashes.1:
+-        "0x7f1b1a08526c142b2843c2e0d1fb7d8511f9fe0da9001aa980e58eea6ddd3fb1"
++        "0xc79888514ff3b0780c3947bdc52c7fb27664029407ec70360023b494f725f7b3"
+      values.$implementation:
+-        "eth:0x04728BF704a716C26F9EF4085013b760AC885631"
++        "eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332"
+      values.$pastUpgrades.10:
++        ["2026-03-31T15:26:47.000Z","0x2956910285297bc330ad8b1e31f6dd7866e58c26164fe126f09a44df6a65ce9b",["eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.accessControl.PAUSE_ALL_ROLE.members.1:
++        "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.accessControl.PAUSE_BLOB_SUBMISSION_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_BLOB_SUBMISSION_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.SECURITY_COUNCIL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.PAUSE_STATE_DATA_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_STATE_DATA_SUBMISSION_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.CONTRACT_VERSION:
+-        "7.0"
++        "7.1"
+      values.fallbackOperator:
+-        "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D"
+      values.isPaused_BLOB_SUBMISSION:
+-        false
+      values.isPaused_CALLDATA_SUBMISSION:
+-        false
+      values.PAUSE_BLOB_SUBMISSION_ROLE:
+-        "0x67c2dca7476ee0fe1dd3cba13428c6760bfe2599a6dfe26a9ad7ef27317c6e77"
+      values.UNPAUSE_BLOB_SUBMISSION_ROLE:
+-        "0xe4831f9e4316ac2c65117d1f602fbf56d38128a9973d5e3fdbc5b77265c18d40"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
+-        "eth:0x66355689a9f067eeb9dc9d899E4192676988279C"
++        "eth:0x1442833180e253844897339aFb5800c797547987"
+      values.COOLDOWN_DURATION:
++        172800
++++ description: The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely.
+      values.COOLDOWN_DURATION_fmt:
++        "2d"
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_REPORTING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_STAKING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_UNSTAKING:
++        false
++++ severity: HIGH
+      values.isPaused_STATE_DATA_SUBMISSION:
++        false
++++ severity: HIGH
+      values.livenessRecoveryOperator:
++        "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D"
++++ description: Timestamp until which non security council entities can't pause the rollup.
++++ severity: HIGH
+      values.nonSecurityCouncilCooldownEnd:
++        0
+      values.PAUSE_DURATION:
++        172800
+      values.PAUSE_STATE_DATA_SUBMISSION_ROLE:
++        "0x21aba2dd4535739d4ca4cddb3c024036bfcc88cfce067cb0847e7ad0f9cfaa55"
+      values.pauseAllAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"]
++++ description: The duration of the rate limit window over which the withdrawal amounts are accumulated.
+      values.pauseDuration_fmt:
++        "2d"
+      values.SECURITY_COUNCIL_ROLE:
++        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      values.securityCouncilAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ description: Smart contract that attests existence of blob commitments (shnarfs).
++++ severity: HIGH
+      values.shnarfProvider:
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      values.UNPAUSE_STATE_DATA_SUBMISSION_ROLE:
++        "0x4df33217c89b6f12af38ba46035cb312b5e88de78d22279286830fe079b642cd"
+      fieldMeta.isPaused_BLOB_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.isPaused_CALLDATA_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.periodInSeconds:
+-        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
+      fieldMeta.livenessRecoveryOperator:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.pauseDuration_fmt:
++        {"description":"The duration of the rate limit window over which the withdrawal amounts are accumulated."}
+      fieldMeta.COOLDOWN_DURATION_fmt:
++        {"description":"The duration of pausing cooldown period, for which rollup could not be paused after a previous pause. SC can always pause indefinitely."}
+      fieldMeta.shnarfProvider:
++        {"severity":"HIGH","description":"Smart contract that attests existence of blob commitments (shnarfs)."}
+      fieldMeta.nonSecurityCouncilCooldownEnd:
++        {"severity":"HIGH","description":"Timestamp until which non security council entities can't pause the rollup."}
+      implementationNames.eth:0x04728BF704a716C26F9EF4085013b760AC885631:
+-        "LineaRollup"
+      implementationNames.eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332:
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      template:
+-        "linea/L1TokenBridge"
++        "linea/L1TokenBridge_v1_1"
+      sourceHashes.1:
+-        "0x49bdbe79d2cc9cefee03245e4b48260f4a71e7976af51741005758e7236d687d"
++        "0x9ef484e431e7c68a8c882205b5bfa7b266f67c9c5423cf7ac480938a86c78c23"
+      values.$implementation:
+-        "linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137"
++        "linea:0x4a496167F187A97379e763f693A499cE1182848b"
+      values.$pastUpgrades.3:
++        ["2026-03-31T15:28:55.000Z","0xee1773eabf52589c20884aceed118949ea8e03afc7bfd1df008206d2d69e1b01",["linea:0x4a496167F187A97379e763f693A499cE1182848b"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.accessControl.PAUSE_ALL_ROLE.members.1:
++        "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]}
+      values.accessControl.0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]}
+      values.accessControl.SECURITY_COUNCIL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]}
+      values.allPausers.1:
++        "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.CONTRACT_VERSION:
+-        "1.0"
++        "1.1"
+      values.isPaused_BLOB_SUBMISSION:
+-        false
+      values.isPaused_CALLDATA_SUBMISSION:
+-        false
+      values.remoteTokenBridgeSetters:
+-        ["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]
+      values.SET_REMOTE_TOKENBRIDGE_ROLE:
+-        "0xbf094fe3c005c553ff0d33c7dff9d1273add12fb3f258b992f8d36224dd35b24"
+      values.COOLDOWN_DURATION:
++        172800
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_REPORTING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_STAKING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_UNSTAKING:
++        false
++++ severity: HIGH
+      values.isPaused_STATE_DATA_SUBMISSION:
++        false
++++ description: Timestamp until which non security council entities can't pause the rollup.
++++ severity: HIGH
+      values.nonSecurityCouncilCooldownEnd:
++        0
+      values.PAUSE_DURATION:
++        172800
+      values.SECURITY_COUNCIL_ROLE:
++        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      errors:
+-        {"@template":"Processing error occurred."}
+      fieldMeta.isPaused_BLOB_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.isPaused_CALLDATA_SUBMISSION:
+-        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.nonSecurityCouncilCooldownEnd:
++        {"severity":"HIGH","description":"Timestamp until which non security council entities can't pause the rollup."}
+      implementationNames.linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137:
+-        "TokenBridge"
+      implementationNames.linea:0x4a496167F187A97379e763f693A499cE1182848b:
++        "TokenBridge"
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      template:
+-        "linea/L2MessageService"
++        "linea/L2MessageService_v1_0"
+      sourceHashes.1:
+-        "0x9436ff273e587ee919293672a7a5ba7bf371053a92565ee236a004932a5dda66"
++        "0x6239c25539f3ab00e89f637a6f0c8c125ada5ac83bb623a815236dfa315e293c"
+      values.$implementation:
+-        "linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd"
++        "linea:0x9976fD7edDb78156a002DE74c9158E884702273d"
+      values.$pastUpgrades.6:
++        ["2026-03-31T15:28:55.000Z","0xee1773eabf52589c20884aceed118949ea8e03afc7bfd1df008206d2d69e1b01",["linea:0x9976fD7edDb78156a002DE74c9158E884702273d"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.accessControl.PAUSE_ALL_ROLE.members.1:
++        "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0"
+      values.accessControl.SECURITY_COUNCIL_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"]}
++++ description: Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls.
+      values.sender:
+-        "linea:0x00000000000000000000000000000000075BCd15"
++        "linea:0x0000000000000000000000000000000000000000"
+      values.COOLDOWN_DURATION:
++        172800
++++ severity: HIGH
+      values.isPaused_COMPLETE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_FINALIZATION:
++        false
++++ severity: HIGH
+      values.isPaused_GENERAL:
++        false
++++ severity: HIGH
+      values.isPaused_INITIATE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_L1_L2:
++        false
++++ severity: HIGH
+      values.isPaused_L2_L1:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_REPORTING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_STAKING:
++        false
++++ severity: HIGH
+      values.isPaused_NATIVE_YIELD_UNSTAKING:
++        false
++++ severity: HIGH
+      values.isPaused_STATE_DATA_SUBMISSION:
++        false
++++ description: Timestamp until which non security council entities can't pause the rollup.
++++ severity: HIGH
+      values.nonSecurityCouncilCooldownEnd:
++        0
+      values.PAUSE_DURATION:
++        172800
+      values.SECURITY_COUNCIL_ROLE:
++        "0x1453a531db80c85f2d944d498709d84959bc5bf839eefe9acb784571e5a32118"
+      fieldMeta.isPaused_GENERAL:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L1_L2:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L2_L1:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_FINALIZATION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.nonSecurityCouncilCooldownEnd:
++        {"severity":"HIGH","description":"Timestamp until which non security council entities can't pause the rollup."}
+      implementationNames.linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd:
+-        "L2MessageService"
+      implementationNames.linea:0x9976fD7edDb78156a002DE74c9158E884702273d:
++        "L2MessageService"
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) {
+    +++ description: None
+      receivedPermissions.7:
+-        {"permission":"interact","from":"linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9","description":"can set the contract that is recognized to be the token bridge contract on the other side.","role":".remoteTokenBridgeSetters"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierFull (eth:0x1442833180e253844897339aFb5800c797547987)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L2MessageService/L2MessageService.sol          | 3300 +++++-----
+ .../LineaRollup/LineaRollup.sol                    | 6309 ++++++++++----------
+ .../PlonkVerifierFull.sol}                         |  812 ++-
+ .../PlonkVerifierMainnetFull.sol}                  |    0
+ .../TokenBridge.sol                                | 4048 +++++++------
+ .../TokenBridge.sol                                | 4048 +++++++------
+ 6 files changed, 10201 insertions(+), 8316 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774434780 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "Linea Multisig 1"
++        "Linea Security Council"
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      template:
+-        "linea/L2TokenBridge"
++        "linea/L1TokenBridge"
+      values.remoteSender:
+-        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "linea:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      usedTypes.0.arg.prefix:
+-        "eth"
++        "linea"
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+Generated with discovered.json: 0x817d94eae8ec263e258c9a10be21699d997f9cc0
+
+# Diff at Wed, 25 Mar 2026 10:34:04 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@987d24ffeda681f8398eee54cc913598017a3226 block: 1774257638
+- current timestamp: 1774434780
+
+## Description
+
+Updated the verifier (disabled old, added new).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.1:
++        "eth:0x66355689a9f067eeb9dc9d899E4192676988279C"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.4:
+-        "eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0x66355689a9f067eeb9dc9d899E4192676988279C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0x66355689a9f067eeb9dc9d899E4192676988279C.sol} | 368 +++++++++++----------
+ 1 file changed, 188 insertions(+), 180 deletions(-)
+```
+
+Generated with discovered.json: 0x3b9ccf6c03d08728a84fc2e798e0a72c008af0d2
+
+# Diff at Mon, 23 Mar 2026 09:21:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1772786430
+- current timestamp: 1774257638
+
+## Description
+
+Updated the verifier (disabled old, added new).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.0:
++        "eth:0xC83ed08E2262fBa264D528C749c051f8fC526897"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
+      values.verifiers.3:
+-        "eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (eth:0xC83ed08E2262fBa264D528C749c051f8fC526897)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xC83ed08E2262fBa264D528C749c051f8fC526897.sol} | 53 +++++++++++-----------
+ 1 file changed, 26 insertions(+), 27 deletions(-)
+```
+
+Generated with discovered.json: 0xe547286be9afb53810d664f1fc9defc8b98128c1
+
+# Diff at Fri, 06 Mar 2026 08:41:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1772533779
+- current timestamp: 1772786430
+
+## Description
+
+Rotated L1 to L2 message settler (role on Linea L2).
+
+## Watched changes
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) {
+    +++ description: None
+      values.accessControl.L1_L2_MESSAGE_SETTER_ROLE.members.0:
+-        "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
++        "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
+      values.l1l2MessageSetter.0:
+-        "linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67"
++        "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
+    }
+```
+
+Generated with discovered.json: 0xba51707d98600208cf93084f406a51f922540191
+
+# Diff at Wed, 04 Mar 2026 12:04:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1f1cf4fcbeb4c2ad86765920452b33a7c90a15a5 block: 1765276326
+- current timestamp: 1772533779
+
+## Description
+
+Upgraded LineaRollup contract to version 7 to add native ETH yield. 
+
+Permissioned entities can now move ETH from the rollup contract into yield providers via YieldManager. Accrued interest is paid to users on L2. YieldManager sets minimal and target reserve values. If ETH reserves are below the minimal value, users can permissionlessly replenish the reserve up to target by unstaking. 
+
+Diff for LineaRollup: https://disco.l2beat.com/diff/eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0/eth:0x04728BF704a716C26F9EF4085013b760AC885631.
+
+Also, removed Safe Zodiac roles on L1.
+
+## Watched changes
+
+```diff
+    contract Linea Multisig 1 (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"send ETH from the rollup bridge to the YieldManager.","role":".ethStakerAC"}
+      receivedPermissions.19:
++        {"permission":"interact","from":"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F","description":"set the address of the yield manager contract that receives ETH from rollup bridge.","role":".yieldManagerSetterAC"}
+      receivedPermissions.25:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.","role":".yieldStakingManagerAC"}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","description":"operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.","role":".yieldStakingOperatorAC"}
+      receivedPermissions.30:
++        {"permission":"upgrade","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","role":"admin","via":[{"address":"eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"eth:0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      template:
+-        "linea/LineaRollup"
++        "linea/LineaRollup_NativeYield"
+      sourceHashes.1:
+-        "0xd9038151917d14b4d25257789abe9a10cecf3a5b4c0c2520860ce1338757ceff"
++        "0x7f1b1a08526c142b2843c2e0d1fb7d8511f9fe0da9001aa980e58eea6ddd3fb1"
+      description:
+-        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2."
++        "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol."
+      values.$implementation:
+-        "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
++        "eth:0x04728BF704a716C26F9EF4085013b760AC885631"
+      values.$pastUpgrades.9:
++        ["2026-03-01T14:25:35.000Z","0xac24732952f9eea514ba28030218267575bb42dd5f713dab7c29f3d330086d8f",["eth:0x04728BF704a716C26F9EF4085013b760AC885631"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.accessControl.SET_YIELD_MANAGER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.YIELD_PROVIDER_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]}
+      values.accessControl.PAUSE_NATIVE_YIELD_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.accessControl.UNPAUSE_NATIVE_YIELD_STAKING_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]}
+      values.CONTRACT_VERSION:
+-        "6.0"
++        "7.0"
+      values.GENESIS_SHNARF:
+-        "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f"
+      values.ethStakerAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3","eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448"]
+      values.isWithdrawLSTAllowed:
++        false
+      values.PAUSE_NATIVE_YIELD_STAKING_ROLE:
++        "0xcc10d6eec3c757d645e27b3f3001a3ba52f692da0bce25fabf58c6ecaf376450"
+      values.SET_YIELD_MANAGER_ROLE:
++        "0x76ef52a5344b10ed112c1d48c7c06f51e919518ea6fb005f9b25b359b955e3be"
+      values.UNPAUSE_NATIVE_YIELD_STAKING_ROLE:
++        "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858"
+      values.YIELD_PROVIDER_STAKING_ROLE:
++        "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258"
++++ severity: HIGH
+      values.yieldManager:
++        "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94"
+      values.yieldManagerSetterAC:
++        ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      fieldMeta.yieldManager:
++        {"severity":"HIGH"}
+      implementationNames.eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0:
+-        "LineaRollup"
+      implementationNames.eth:0x04728BF704a716C26F9EF4085013b760AC885631:
++        "LineaRollup"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Roles (eth:0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94)
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+```
+
+## Source code changes
+
+```diff
+.../LineaRollup/LineaRollup.sol                    | 4114 +++++++++++---------
+ .../linea/.flat@1765276326/Roles.sol => /dev/null  | 1753 ---------
+ .../YieldManager/TransparentUpgradeableProxy.p.sol |  695 ++++
+ .../linea/.flat/YieldManager/YieldManager.sol      | 3719 ++++++++++++++++++
+ 4 files changed, 6683 insertions(+), 3598 deletions(-)
+```
+
 Generated with discovered.json: 0x2539feb622b1cabeebee8f8f33dd1080acca93c3
 
 # Diff at Tue, 09 Dec 2025 10:38:14 GMT:

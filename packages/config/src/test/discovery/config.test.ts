@@ -37,7 +37,7 @@ export const onChainProjects: string[] = [
   'tokens',
   'gateway',
   'opcm16',
-  'aztecnetwork',
+  'debridge',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 
@@ -60,12 +60,7 @@ describe('discovery config.jsonc', () => {
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
-        .filter(
-          (c) =>
-            c.name !== 'cbridge' &&
-            c.name !== 'everclearbridge' &&
-            c.name !== 'hop',
-        )
+        .filter((c) => c.name !== 'everclearbridge' && c.name !== 'hop')
         .map((c) => c.name) ?? []
 
     expect(notCorresponding).toBeEmpty()

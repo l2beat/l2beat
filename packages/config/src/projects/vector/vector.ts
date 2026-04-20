@@ -8,6 +8,7 @@ import { linkByDA } from '../../common/linkByDA'
 import { PROGRAM_HASHES } from '../../common/programHashes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { getSP1Verifiers } from '../../templates/opStack'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
@@ -81,7 +82,7 @@ export const vector: BaseProject = {
       value: 'Validity Proof',
       description:
         'The DA attestation requires onchain SNARK proof verification to be accepted by the bridge. Operators signatures and their corresponding stake are verified as part of the proof.',
-      zkCatalogId: ProjectId('sp1'),
+      zkCatalogId: ProjectId('sp1hypercube'),
     },
     technology: {
       description: `
@@ -141,6 +142,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
       },
     ],
     programHashes: [PROGRAM_HASHES(vectorProgramHash)],
+    zkVerifiers: getSP1Verifiers(discovery),
   },
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [

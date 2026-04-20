@@ -1039,6 +1039,8 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `shape`, creates a new object from input values using specified keys.
 - `to_entries`, converts an object to an array of key-value pairs.
 - `length`, returns the number of elements in arrays, objects, or strings.
+- `map_values`, applies a filter to each value of an object.
+- `map_keys`, applies a filter to each key of an object.
 
 #### `pipe`
 
@@ -1223,6 +1225,31 @@ For strings, returns the string length.
 - Input: `"hello"`
 - Program: `["length"]`
 - Output: `5`
+
+### `map_values`
+
+Applies a filter to each value of an object producing a new object with the same keys.
+The input must be an object, the produced value is always an object.
+The second argument is the filter to be applied to each value.
+
+- Input: `{ a: 1, b: 2, c: 3 }`
+- Program: `["map_values", ["=", 2]]`
+- Output: `{ a: false, b: true, c: false }`
+
+- Input: `{ x: { n: 1 }, y: { n: 2 } }`
+- Program: `["map_values", ["get", "n"]]`
+- Output: `{ x: 1, y: 2 }`
+
+### `map_keys`
+
+Applies a filter to each key of an object producing a new object with transformed keys and the original values.
+The input must be an object, the produced value is always an object.
+The second argument is the filter to be applied to each key (which is a string).
+The filter must return a string.
+
+- Input: `{ a: 1, b: 2 }`
+- Program: `["map_keys", ["if", ["=", "a"], "first", "second"]]`
+- Output: `{ first: 1, second: 2 }`
 
 ### Copy feature
 

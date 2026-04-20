@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
@@ -117,13 +118,21 @@ export function EthereumActivityChart({
         <ChartStatsItem
           label={`Past Day ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
           className="max-md:h-7"
-          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day.`}
+          tooltip={`${metric === 'uops' ? 'User operations' : 'Transactions'} per second averaged over the past day, shown together with a percentage change compared to 7D ago.`}
           isLoading={isLoading}
         >
           {chart?.stats?.[metric].pastDayCount !== undefined &&
-          chart?.stats?.[metric].pastDayCount !== null
-            ? formatActivityCount(chart?.stats?.[metric].pastDayCount)
-            : 'No data'}
+          chart?.stats?.[metric].pastDayCount !== null ? (
+            <ValueWithPercentageChange
+              change={chart.stats[metric].pastDayChange}
+              className="text-sm xs:text-lg md:text-lg"
+              changeClassName="text-xs"
+            >
+              {formatActivityCount(chart?.stats?.[metric].pastDayCount)}
+            </ValueWithPercentageChange>
+          ) : (
+            'No data'
+          )}
         </ChartStatsItem>
         <ChartStatsItem
           label={`Past Day ${metric === 'tps' ? 'Txs' : 'Ops'} count`}
@@ -135,6 +144,25 @@ export function EthereumActivityChart({
             ? formatInteger(chart?.stats?.[metric].pastDaySum)
             : 'No data'}
         </ChartStatsItem>
+        {metric === 'tps' && (
+          <ChartStatsItem
+            label="Total Txs"
+            className="max-md:h-7"
+            isLoading={isLoading}
+          >
+            {chart?.stats?.tps.totalCount ? (
+              <div className="flex gap-1 max-md:flex-row-reverse max-md:items-baseline md:flex-col">
+                <div>{formatInteger(chart?.stats?.tps.totalCount.value)}</div>
+                <div className="font-medium text-label-value-14 text-secondary">
+                  since{' '}
+                  {formatTimestamp(chart?.stats?.tps.totalCount.sinceTimestamp)}
+                </div>
+              </div>
+            ) : (
+              'No data'
+            )}
+          </ChartStatsItem>
+        )}
         <ChartStatsItem
           label={`Max. ${metric === 'tps' ? 'TPS' : 'UOPS'}`}
           tooltip={`Shows the maximum sustained ${metric === 'uops' ? 'UOPS' : 'TPS'}, calculated as an average over the count for a day.`}

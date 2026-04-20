@@ -4,9 +4,9 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
-import { getSearchBarProjectKind } from './getSearchBarProjectKind'
 
 function extractProjectAddresses(
   contracts: ProjectContracts | undefined,
@@ -25,12 +25,17 @@ function extractProjectAddresses(
   return [...contractAddresses, ...permissionAddresses]
 }
 
+function dedupeTags(tags: Array<string | undefined>): string[] {
+  return [...new Set(tags.filter((tag): tag is string => !!tag))]
+}
+
 export function getSearchBarProjectEntries<
   T extends Project<
     never,
     | 'scalingInfo'
     | 'daLayer'
     | 'daBridge'
+    | 'interopConfig'
     | 'isScaling'
     | 'isDaLayer'
     | 'ecosystemConfig'
@@ -45,23 +50,25 @@ export function getSearchBarProjectEntries<
     !project.daLayer &&
     !project.daBridge &&
     !project.ecosystemConfig &&
+    !project.interopConfig &&
     !project.zkCatalogInfo
   ) {
     return []
   }
+
+  const commonTags = dedupeTags([project.slug, project.name, project.shortName])
 
   const common = {
     type: 'project',
     id: project.id,
     name: project.name,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-    kind: getSearchBarProjectKind(project),
     isUpcoming: false,
     projectAddresses: extractProjectAddresses(
       project.contracts,
       project.permissions,
     ),
-    tags: [project.slug],
+    tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
 
   if (project.isScaling) {
@@ -69,6 +76,7 @@ export function getSearchBarProjectEntries<
       ...common,
       href: `/scaling/projects/${project.slug}`,
       category: 'scaling',
+      kind: project.scalingInfo?.layer ?? 'layer2',
       scalingCategory: project.scalingInfo?.type,
     })
   }
@@ -81,7 +89,8 @@ export function getSearchBarProjectEntries<
         name: `${project.name} without a DA bridge`,
         href: `/data-availability/projects/${project.slug}/no-bridge`,
         category: 'da',
-        tags: [project.slug, 'no-bridge'],
+        kind: 'da',
+        tags: dedupeTags([...commonTags, 'no-bridge']),
       })
     }
   }
@@ -95,7 +104,8 @@ export function getSearchBarProjectEntries<
         name: `${layer.name} with ${project.daBridge.name}`,
         href: `/data-availability/projects/${layer.slug}/${project.slug}`,
         category: 'da',
-        tags: [layer.slug, project.slug],
+        kind: 'da',
+        tags: dedupeTags([layer.slug, layer.name, ...commonTags]),
       })
     }
   }
@@ -105,6 +115,23 @@ export function getSearchBarProjectEntries<
       ...common,
       href: `/ecosystems/${project.slug}`,
       category: 'ecosystems',
+      kind: 'ecosystem',
+    })
+  }
+
+  if (project.interopConfig && env.CLIENT_SIDE_INTEROP_DETAILED_PAGES) {
+    results.push({
+      ...common,
+      name: project.interopConfig.name ?? project.name,
+      href: `/interop/protocols/${project.slug}`,
+      category: 'interop',
+      kind: 'interop',
+      tags: dedupeTags([
+        ...commonTags,
+        project.interopConfig.name,
+        project.interopConfig.shortName,
+        'interop',
+      ]),
     })
   }
 
@@ -113,6 +140,7 @@ export function getSearchBarProjectEntries<
       ...common,
       href: `/zk-catalog/${project.slug}`,
       category: 'zkCatalog',
+      kind: 'zkCatalog',
     })
   }
 

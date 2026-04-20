@@ -1,72 +1,113 @@
 import type { InteropDurationSplit, Project } from '@l2beat/config'
+import type { InteropTransferTypeStatsMap } from '@l2beat/database'
 import type { KnownInteropBridgeType } from '@l2beat/shared-pure'
+import isEqual from 'lodash/isEqual'
 import type {
   AverageDuration,
   CommonInteropData,
-  DurationSplitMap,
   UnknownAverageDuration,
 } from '../types'
 
 export function getAverageDuration(
-  projectId: string,
-  bridgeType: KnownInteropBridgeType | undefined,
   data: CommonInteropData,
-  durationSplitMap: DurationSplitMap | undefined,
+  durationSplit: InteropDurationSplit | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
-  const durationSplit =
-    bridgeType !== undefined
-      ? durationSplitMap?.get(projectId)?.get(bridgeType)
-      : undefined
+  if (data.transfersWithDurationCount <= 0) return null
 
-  if (durationSplit) {
+  if (
+    durationSplit &&
+    durationSplit.some((split) => split.transferTypes.length > 0)
+  ) {
     return {
       type: 'split',
-      in: {
-        label: durationSplit.in.label,
-        duration:
-          data.inTransferCount > 0
-            ? Math.floor(data.inDurationSum / data.inTransferCount)
-            : null,
-      },
-      out: {
-        label: durationSplit.out.label,
-        duration:
-          data.outTransferCount > 0
-            ? Math.floor(data.outDurationSum / data.outTransferCount)
-            : null,
-      },
+      splits: durationSplit.map((split) => ({
+        label: split.label,
+        duration: getSplitDuration(split.transferTypes, data.transferTypeStats),
+      })),
     }
   }
 
-  if (data.transferCount <= 0) return null
   return {
     type: 'single',
-    duration: Math.floor(data.totalDurationSum / data.transferCount),
+    duration: Math.floor(
+      data.totalDurationSum / data.transfersWithDurationCount,
+    ),
   }
 }
 
-export function buildDurationSplitMap(
-  interopProjects: Project<'interopConfig'>[],
-): DurationSplitMap {
-  const durationSplitMap: DurationSplitMap = new Map()
+export function getDurationSplit(
+  project: Project<'interopConfig'>,
+  bridgeTypes: KnownInteropBridgeType[],
+): InteropDurationSplit | undefined {
+  const projectDurationSplits = project.interopConfig.durationSplit
+  if (!projectDurationSplits) return undefined
 
-  for (const project of interopProjects) {
-    const projectDurationSplits = project.interopConfig.durationSplit
-    if (!projectDurationSplits) continue
+  const bridgeTypeMap = new Map<
+    KnownInteropBridgeType,
+    NonNullable<InteropDurationSplit>
+  >()
 
-    const bridgeTypeMap = new Map<
-      KnownInteropBridgeType,
-      NonNullable<InteropDurationSplit>
-    >()
-
-    for (const [bridgeType, durationSplit] of Object.entries(
-      projectDurationSplits,
-    )) {
-      bridgeTypeMap.set(bridgeType as KnownInteropBridgeType, durationSplit)
-    }
-
-    durationSplitMap.set(project.id, bridgeTypeMap)
+  for (const [bridgeType, durationSplit] of Object.entries(
+    projectDurationSplits,
+  )) {
+    bridgeTypeMap.set(bridgeType as KnownInteropBridgeType, durationSplit)
   }
 
-  return durationSplitMap
+  const [firstBridgeType, ...restBridgeTypes] = bridgeTypes
+  if (!firstBridgeType) return undefined
+
+  const firstDurationSplit = bridgeTypeMap.get(firstBridgeType)
+  if (!firstDurationSplit) return undefined
+
+  const normalizedFirstDurationSplit =
+    normalizeDurationSplit(firstDurationSplit)
+  const hasSameDurationSplit = restBridgeTypes.every((bridgeType) => {
+    const durationSplit = bridgeTypeMap.get(bridgeType)
+    return durationSplit !== undefined
+      ? isEqual(
+          normalizedFirstDurationSplit,
+          normalizeDurationSplit(durationSplit),
+        )
+      : false
+  })
+
+  return hasSameDurationSplit ? firstDurationSplit : undefined
+}
+
+function normalizeDurationSplit(
+  durationSplit: InteropDurationSplit,
+): InteropDurationSplit {
+  return durationSplit
+    .map((split) => ({
+      label: split.label,
+      transferTypes: [...split.transferTypes].sort(),
+    }))
+    .toSorted(
+      (a, b) =>
+        a.label.localeCompare(b.label) ||
+        a.transferTypes.join(',').localeCompare(b.transferTypes.join(',')),
+    )
+}
+
+function getSplitDuration(
+  transferTypes: string[],
+  transferTypeStats: InteropTransferTypeStatsMap | undefined,
+): number | null {
+  const matchedStats = [...new Set(transferTypes)]
+    .map((transferType) => transferTypeStats?.[transferType])
+    .filter((stats) => stats !== undefined)
+
+  const transfersWithDurationCount = matchedStats.reduce(
+    (acc, stats) => acc + stats.transferCount,
+    0,
+  )
+
+  if (transfersWithDurationCount <= 0) return null
+
+  const totalDurationSum = matchedStats.reduce(
+    (acc, stats) => acc + stats.totalDurationSum,
+    0,
+  )
+
+  return Math.floor(totalDurationSum / transfersWithDurationCount)
 }

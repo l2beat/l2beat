@@ -583,7 +583,8 @@
       "implementationNames": {
         "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2": "TransparentUpgradeableProxy",
         "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E": "ServiceManager"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0xFb37A6BC0DC1c52900a8E50A2D6d1b7a59CEa02c",

@@ -16,11 +16,11 @@ pnpm build
 
 ### Database
 
-After the nodejs dependencies have been installed you should also install a Postgres database (v15).
+After the nodejs dependencies have been installed you should also install a Postgres database (v17).
 The recommended way is through docker using the commands below.
 
 ```
-docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:15
+docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:17
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
 docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
 ```
@@ -155,7 +155,6 @@ The updateMonitor feature is configured via the following environment variables:
 - `UPDATE_MONITOR_RUN_ON_START` - Optional. Defaults to true
 - `DISCORD_TOKEN` - Optional. Discord bot token
 - `INTERNAL_DISCORD_CHANNEL_ID` - Optional. Discord channel id for internal messages
-- `PUBLIC_DISCORD_CHANNEL_ID` - Optional. Discord channel id for public messages
 
 **Feature flags:**
 

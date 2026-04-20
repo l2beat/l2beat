@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x7ea035dbea964d147cd43d099123d77d04bdfe33
+
+# Diff at Mon, 13 Apr 2026 09:14:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c3a2f0d255f241d65a403d105d2fa770f7305170 block: 1774353602
+- current timestamp: 1776070910
+
+## Description
+
+add adapter for Tron.
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.Adapters.728126428:
++        "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db"
+      values.CrossChainContracts.728126428:
++        "eth:0x284352bb448C65b75EbE004862e4f4531042d628"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db)
+    +++ description: This adapter can be used to send messages / root bundles to Tron. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+```
+
+## Source code changes
+
+```diff
+...:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db.sol | 782 +++++++++++++++++++++
+ 1 file changed, 782 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774353602 (main branch discovery), not current.
+
+```diff
+    contract Universal_Adapter (eth:0x0ec70777Ac388774041dD5A1778Cdf3AF3134D2B) {
+    +++ description: This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      description:
+-        "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero."
++        "This adapter can be used to send messages / root bundles to Hyperliquid. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+    }
+```
+
+```diff
+    contract Universal_Adapter (eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c) {
+    +++ description: This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP.
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
++        "This adapter can be used to send messages / root bundles to Tempo. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain. This adapter also supports bridging OFTs via LayerZero and USDC via CCTP."
+    }
+```
+
+Generated with discovered.json: 0xfba62f657bf4fd24567581b1256cc9523f0cd1e3
+
+# Diff at Tue, 24 Mar 2026 12:01:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@eea8d762719901a50aabccb689d291326ce8830c block: 1772441911
+- current timestamp: 1774353602
+
+## Description
+
+7702 delegation.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0x3818b9766109877e09a9c427e7b310cde355550731129529095a7e6b02cf55ab","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0x59d262f19545be70dc998bae3b0b5e32063c7574
 
 # Diff at Mon, 02 Mar 2026 08:59:50 GMT:

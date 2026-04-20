@@ -80,6 +80,26 @@ function EventsTable(props: { events: InteropEventStatsRecord[] }) {
 
 const NETWORKS = generateNetworkPairs(INTEROP_CHAINS)
 
+function buildMessagesUrl(options: {
+  plugin: string
+  type: string
+  srcChain?: string
+  dstChain?: string
+}) {
+  const params = new URLSearchParams({
+    plugin: options.plugin,
+  })
+
+  if (options.srcChain) {
+    params.set('srcChain', options.srcChain)
+  }
+  if (options.dstChain) {
+    params.set('dstChain', options.dstChain)
+  }
+
+  return `/interop/messages/${options.type}?${params.toString()}`
+}
+
 function MessagesTable(props: { items: MessageStats[]; id: string }) {
   return (
     <table id={props.id} className="display">
@@ -119,7 +139,9 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
               <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
-                <a href={`/interop/messages/${t.type}`}>{t.count}</a>
+                <a href={buildMessagesUrl({ plugin: t.plugin, type: t.type })}>
+                  {t.count}
+                </a>
               </td>
               <td data-order={t.avgDuration} data-sort={t.avgDuration}>
                 {formatSeconds(t.avgDuration)}
@@ -149,7 +171,12 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {srcDstCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
+                          href={buildMessagesUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[0].id,
+                            dstChain: n[1].id,
+                          })}
                         >
                           {srcDstCount}
                         </a>
@@ -164,7 +191,12 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
                     <td>
                       {dstSrcCount && (
                         <a
-                          href={`/interop/messages/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
+                          href={buildMessagesUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[1].id,
+                            dstChain: n[0].id,
+                          })}
                         >
                           {dstSrcCount}
                         </a>
@@ -188,6 +220,26 @@ function MessagesTable(props: { items: MessageStats[]; id: string }) {
 }
 
 function TransfersTable(props: { items: TransferStats[]; id: string }) {
+  const buildTransfersUrl = (options: {
+    plugin: string
+    type: string
+    srcChain?: string
+    dstChain?: string
+  }) => {
+    const params = new URLSearchParams({
+      plugin: options.plugin,
+    })
+
+    if (options.srcChain) {
+      params.set('srcChain', options.srcChain)
+    }
+    if (options.dstChain) {
+      params.set('dstChain', options.dstChain)
+    }
+
+    return `/interop/transfers/${options.type}?${params.toString()}`
+  }
+
   return (
     <table id={props.id} className="display">
       <thead>
@@ -234,7 +286,9 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
               <td>{t.plugin}</td>
               <td>{t.type}</td>
               <td>
-                <a href={`/interop/transfers/${t.type}`}>{t.count}</a>
+                <a href={buildTransfersUrl({ plugin: t.plugin, type: t.type })}>
+                  {t.count}
+                </a>
               </td>
               <td data-order={t.avgDuration} data-sort={t.avgDuration}>
                 {formatSeconds(t.avgDuration)}
@@ -266,7 +320,12 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[0].id}&dstChain=${n[1].id}`}
+                          href={buildTransfersUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[0].id,
+                            dstChain: n[1].id,
+                          })}
                         >
                           {forwardCount}
                         </a>
@@ -293,7 +352,12 @@ function TransfersTable(props: { items: TransferStats[]; id: string }) {
                     <td>
                       {
                         <a
-                          href={`/interop/transfers/${t.type}?srcChain=${n[1].id}&dstChain=${n[0].id}`}
+                          href={buildTransfersUrl({
+                            plugin: t.plugin,
+                            type: t.type,
+                            srcChain: n[1].id,
+                            dstChain: n[0].id,
+                          })}
                         >
                           {backwardCount}
                         </a>
@@ -417,6 +481,53 @@ function MainPageLayout(props: {
       <a href="/interop/aggregates">Aggregates dashboard</a>
       {' | '}
       <a href="/interop/coverage-pies">Coverage pies</a>
+      {' | '}
+      <a href="/interop/status">Sync status</a>
+      {' | '}
+      <button id="interop-refresh-financials-button" type="button">
+        refresh financials
+      </button>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              var button = document.getElementById('interop-refresh-financials-button');
+              if (!button) return;
+
+              button.addEventListener('click', function() {
+                if (button.disabled) return;
+                var originalText = button.textContent;
+                button.disabled = true;
+                button.textContent = 'refreshing financials...';
+
+                fetch('/interop/refresh-financials', {
+                  method: 'POST'
+                })
+                  .then(function(response) {
+                    if (!response.ok) {
+                      throw new Error('Request failed');
+                    }
+                    return response.json();
+                  })
+                  .then(function(data) {
+                    var updatedTransfers = typeof data.updatedTransfers === 'number'
+                      ? data.updatedTransfers
+                      : 0;
+                    button.textContent = 'refresh requested (' + updatedTransfers + ')';
+                  })
+                  .catch(function() {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                  });
+              });
+            })();
+          `,
+        }}
+      />
+      {' | '}
+      <a href="/interop/anomalies">Anomalies dashboard</a>
+      {' | '}
+      <a href="/interop/block-stats">Block processing stats</a>
       <DataTablePage
         showHome={false}
         tables={[

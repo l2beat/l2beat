@@ -9,44 +9,60 @@ import { Address32 } from '@l2beat/shared-pure'
 import type { TokenMap } from '../engine/match/TokenMap'
 import {
   Dispatch,
+  dispatchIdLog,
+  dispatchLog,
   HYPERLANE_NETWORKS,
   Process,
   parseDispatch,
   parseDispatchId,
   parseProcess,
   parseProcessId,
+  processIdLog,
+  processLog,
 } from './hyperlane'
 import { getBridgeType } from './layerzero/layerzero-v2-ofts.plugin'
+import { findParsedAround, type ParsedTransferLog } from './logScan'
 import {
   createEventParser,
   createInteropEventType,
+  type DataRequest,
   findChain,
   type InteropEvent,
   type InteropEventDb,
-  type InteropPlugin,
+  type InteropPluginResyncable,
   type LogToCapture,
   type MatchResult,
   Result,
 } from './types'
 
-export const parseSentTransferRemote = createEventParser(
-  'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
-)
+export const sentTransferRemoteLog =
+  'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)'
+export const parseSentTransferRemote = createEventParser(sentTransferRemoteLog)
 
-const parseReceivedTransferRemote = createEventParser(
-  'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
-)
+const receivedTransferRemoteLog =
+  'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)'
+const parseReceivedTransferRemote = createEventParser(receivedTransferRemoteLog)
 
-export const parseTransfer = createEventParser(
-  'event Transfer(address indexed from, address indexed to, uint256 value)',
-)
+const transferLog =
+  'event Transfer(address indexed from, address indexed to, uint256 value)'
+export const parseTransfer = createEventParser(transferLog)
 
-const parseDepositForBurnCCTPv1 = createEventParser(
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
-)
-const parseDepositForBurnCCTPv2 = createEventParser(
-  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)',
-)
+const depositForBurnCCTPv1Log =
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)'
+const parseDepositForBurnCCTPv1 = createEventParser(depositForBurnCCTPv1Log)
+const depositForBurnCCTPv2Log =
+  'event DepositForBurn(address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller, uint256 maxFee, uint32 indexed minFinalityThreshold, bytes hookData)'
+const parseDepositForBurnCCTPv2 = createEventParser(depositForBurnCCTPv2Log)
+
+const hwrTxEventSignatures = [
+  dispatchLog,
+  dispatchIdLog,
+  processLog,
+  processIdLog,
+  transferLog,
+  depositForBurnCCTPv1Log,
+  depositForBurnCCTPv2Log,
+]
 
 const HwrTransferSent = createInteropEventType<{
   messageId: `0x${string}`
@@ -69,10 +85,33 @@ const HwrTransferReceived = createInteropEventType<{
   minted: boolean
 }>('hyperlane-hwr.TransferReceived')
 
-export class HyperlaneHwrPlugin implements InteropPlugin {
+export class HyperlaneHwrPlugin implements InteropPluginResyncable {
   readonly name = 'hyperlane-hwr'
 
+  getDataRequests(): DataRequest[] {
+    return [
+      {
+        type: 'event',
+        signature: sentTransferRemoteLog,
+        includeTxEvents: hwrTxEventSignatures,
+        includeTx: true,
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: receivedTransferRemoteLog,
+        includeTxEvents: hwrTxEventSignatures,
+        includeTx: true,
+        addresses: '*',
+      },
+    ]
+  }
+
   capture(input: LogToCapture) {
+    if (input.tx.kind !== 'canonical') {
+      return
+    }
+
     const sentTransferRemote = parseSentTransferRemote(input.log, null)
     if (sentTransferRemote) {
       const senderAddress = input.log.address.toLowerCase()
@@ -290,86 +329,102 @@ export class HyperlaneHwrPlugin implements InteropPlugin {
   }
 }
 
-export function findParsedAround<T>(
-  logs: LogToCapture['txLogs'],
-  startLogIndex: number,
-  transform: (
-    log: LogToCapture['txLogs'][number],
-    index: number,
-  ) => T | undefined,
-): T | undefined {
-  const startPos = logs.findIndex((log) => log.logIndex === startLogIndex)
-  if (startPos === -1) return
-
-  for (let offset = 0; offset < logs.length; offset++) {
-    const forward = startPos + offset
-    if (forward < logs.length) {
-      const transformed = transform(logs[forward], forward)
-      if (transformed) return transformed
-    }
-
-    if (offset === 0) continue
-    const backward = startPos - offset
-    if (backward >= 0) {
-      const transformed = transform(logs[backward], backward)
-      if (transformed) return transformed
-    }
-  }
-}
-
-export type ParsedTransferLog = {
-  logAddress: Address32
-  from: Address32
-  to: Address32
-  value: bigint
-}
-
 // meson has a different version of this that normalizes amounts (for unknown decimal situations)
+// 1. exclude xERC20 lockbox mint+burn pairs (same token, same amount)
+// 2. smallest amount delta, then zero-address mint/burn among same-value matches, then log index distance
 export function findBestTransferLog(
   logs: LogToCapture['txLogs'],
   targetAmount: bigint,
   startLogIndex: number,
 ): { transfer?: ParsedTransferLog; hasTransfer: boolean } {
-  let closestMatch: ParsedTransferLog | undefined
-  let closestDelta: bigint | undefined
-  let closestDistance: number | undefined
-  let hasTransfer = false
-
+  const transfers: { parsed: ParsedTransferLog; logIndex: number | null }[] = []
   for (const log of logs) {
     const transfer = parseTransfer(log, null)
     if (!transfer) continue
+    transfers.push({
+      parsed: {
+        logAddress: Address32.from(log.address),
+        from: Address32.from(transfer.from),
+        to: Address32.from(transfer.to),
+        value: transfer.value,
+      },
+      logIndex: log.logIndex,
+    })
+  }
 
-    hasTransfer = true
-    const parsed: ParsedTransferLog = {
-      logAddress: Address32.from(log.address),
-      from: Address32.from(transfer.from),
-      to: Address32.from(transfer.to),
-      value: transfer.value,
+  // Exclude mint+burn pairs of the same token and amount (xERC20 lockbox pattern).
+  // When a token is minted from 0x0 then immediately burned to 0x0, the pair is
+  // intermediary and should not be picked over the real transfer.
+  const cancelled = new Set<number>()
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const a = transfers[i].parsed
+    if (a.from !== Address32.ZERO) continue
+    for (let j = i + 1; j < transfers.length; j++) {
+      if (cancelled.has(j)) continue
+      const b = transfers[j].parsed
+      if (
+        b.to === Address32.ZERO &&
+        b.logAddress === a.logAddress &&
+        b.value === a.value
+      ) {
+        cancelled.add(i)
+        cancelled.add(j)
+        break
+      }
+    }
+  }
+
+  let closestMatch: ParsedTransferLog | undefined
+  let closestDelta: bigint | undefined
+  let closestDistance: number | undefined
+
+  for (let i = 0; i < transfers.length; i++) {
+    if (cancelled.has(i)) continue
+    const { parsed, logIndex } = transfers[i]
+
+    const delta = absDiff(parsed.value, targetAmount)
+    const distance =
+      logIndex === null
+        ? Number.POSITIVE_INFINITY
+        : Math.abs(logIndex - startLogIndex)
+
+    if (closestDelta === undefined || delta < closestDelta) {
+      closestDelta = delta
+      closestDistance = distance
+      closestMatch = parsed
+      continue
     }
 
-    const delta = absDiff(transfer.value, targetAmount)
-    const distance =
-      log.logIndex === null
-        ? Number.POSITIVE_INFINITY
-        : Math.abs(log.logIndex - startLogIndex)
+    if (delta > closestDelta) continue
 
     if (
-      closestDelta === undefined ||
-      delta < closestDelta ||
-      (delta === closestDelta &&
-        (closestDistance === undefined || distance < closestDistance))
+      closestMatch &&
+      parsed.value === closestMatch.value &&
+      isMintOrBurnTransfer(parsed) !== isMintOrBurnTransfer(closestMatch)
     ) {
-      closestDelta = delta
+      if (isMintOrBurnTransfer(parsed)) {
+        closestDistance = distance
+        closestMatch = parsed
+      }
+      continue
+    }
+
+    if (closestDistance === undefined || distance < closestDistance) {
       closestDistance = distance
       closestMatch = parsed
     }
   }
 
-  return { transfer: closestMatch, hasTransfer }
+  return { transfer: closestMatch, hasTransfer: transfers.length > 0 }
 }
 
 function absDiff(value: bigint, target: bigint): bigint {
   return value >= target ? value - target : target - value
+}
+
+function isMintOrBurnTransfer(transfer: ParsedTransferLog): boolean {
+  return transfer.from === Address32.ZERO || transfer.to === Address32.ZERO
 }
 
 function pickTransferAmount(

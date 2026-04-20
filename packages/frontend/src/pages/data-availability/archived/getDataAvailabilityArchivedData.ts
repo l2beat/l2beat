@@ -17,8 +17,8 @@ export async function getDataAvailabilityArchivedData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
+        url,
         openGraph: {
-          url,
           image: '/meta-images/data-availability/archived/opengraph-image.png',
         },
       }),

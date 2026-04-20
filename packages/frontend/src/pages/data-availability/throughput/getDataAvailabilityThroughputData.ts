@@ -27,8 +27,8 @@ export async function getDataAvailabilityThroughputData(
         title: 'Data Availability Throughput - L2BEAT',
         description:
           'Explore metrics related to the data posted to data availability solutions.',
+        url,
         openGraph: {
-          url,
           image:
             '/meta-images/data-availability/throughput/opengraph-image.png',
         },

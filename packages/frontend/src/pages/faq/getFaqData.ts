@@ -16,8 +16,8 @@ export async function getFaqData(
         title: 'FAQ - L2BEAT',
         description:
           'Frequently Asked Questions about L2BEAT - an analytics and research website about Ethereum layer 2 scaling.',
+        url,
         openGraph: {
-          url,
           image: '/meta-images/faq/opengraph-image.png',
         },
       }),

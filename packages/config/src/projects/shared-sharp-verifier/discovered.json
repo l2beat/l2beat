@@ -1,6 +1,6 @@
 {
   "name": "shared-sharp-verifier",
-  "timestamp": 1770030445,
+  "timestamp": 1775810150,
   "configHash": "0x265fb8f2732803d362c9a17deb5b3cd671f7ab4368644157cc5a8db89ca42b70",
   "entries": [
     {
@@ -1596,7 +1596,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3269,12 +3269,15 @@
           "eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284",
           "eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526",
           "eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C",
-          "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A"
+          "eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A",
+          "eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426",
+          "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE"
         ],
         "customProxyImplementations": [
           "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
           "eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934",
-          "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066"
+          "eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066",
+          "eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe"
         ],
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "getUpgradeActivationDelay": 691200,
@@ -4682,6 +4685,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CpuOods",
       "address": "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775",
       "type": "Contract",
@@ -4697,6 +4705,11 @@
         "eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775": "CpuOods"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
@@ -8442,6 +8455,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x9f442d61eda2d5aabf1141b1f7769fd6c3100f2fae6777f87260eb27a9903db4",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xcbc3662577ca6bc2de4ebf8583008543e01742f079dd46e757b4abe24d694805"
   },
-  "usedBlockNumbers": { "ethereum": 24368772 },
-  "permissionsConfigHash": "0xee434c7108e3a30cf0e5451594179d2368f4b780863b770d8df0e77dd753a72e"
+  "usedBlockNumbers": { "ethereum": 24848168 },
+  "permissionsConfigHash": "0xf6124385b6895901bf84f2a32771c9bbaad2cba5329ff8808c870791a3cb658e"
 }

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x66b83643b4b88d0f58a18269cb5ff30b844e1fcc
+
+# Diff at Thu, 12 Mar 2026 12:44:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7821558a34509d47e2b343e48879506088be050d block: 1767971446
+- current timestamp: 1773319393
+
+## Description
+
+FuelChainState contract unpaused (bridge maintenance complete). New COMMITTER_ROLE member added (0x32da601374b38154f05904B16F44A1911Aa6f314), which is the Fuel Security Council multisig.
+
+## Watched changes
+
+```diff
+    contract FuelChainState (eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      values.paused:
+-        true
++        false
+      values.accessControl.COMMITTER_ROLE.members.1:
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+    }
+```
+
 Generated with discovered.json: 0x0216b08c27dde8dfd308491a9017f4d96b304287
 
 # Diff at Fri, 09 Jan 2026 15:11:53 GMT:

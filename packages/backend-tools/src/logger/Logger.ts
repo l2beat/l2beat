@@ -157,6 +157,7 @@ function resolveError(error: Error, cwd: string) {
   return {
     name: error.name,
     error: error.message,
+    cause: error.cause,
     stack: ErrorStackParser.parse(error).map((frame) =>
       formatFrame(frame, cwd),
     ),

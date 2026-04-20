@@ -10,6 +10,16 @@ import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropDataCleaner } from './InteropDataCleaner'
 import { InteropEventSyncer } from './InteropEventSyncer'
 
+export type BlockProcessingStat = {
+  cluster: string
+  chain: string
+  totalMs: number
+  cpuMs: number
+  count: number
+  avgMs: number
+  avgCpuMs: number
+}
+
 export type PluginSyncStatus = {
   pluginName: string
   chain: string
@@ -95,6 +105,21 @@ export class InteropSyncersManager {
     }
   }
 
+  areAllSyncersFollowing(): boolean {
+    for (const byChain of this.syncers.values()) {
+      for (const syncer of byChain.values()) {
+        if (
+          syncer.state.name !== 'following' ||
+          syncer.state.status === 'starting' ||
+          syncer.hasError
+        ) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   getSyncer(
     plugin: string,
     chain: LongChainName,
@@ -102,12 +127,23 @@ export class InteropSyncersManager {
     return this.syncers.get(plugin)?.get(chain)
   }
 
+  getChainsForPlugin(pluginName: string): LongChainName[] {
+    const chainMap = this.syncers.get(pluginName)
+    if (!chainMap) return []
+    return Array.from(chainMap.keys())
+  }
+
   async processNewestBlock(chain: LongChainName, block: Block, logs: Log[]) {
-    for (const v of this.syncers.values()) {
-      const syncer = v.get(chain)
-      if (syncer) {
-        await syncer.processNewestBlock(block, logs)
-      }
+    const results = await Promise.allSettled(
+      Array.from(this.syncers.values())
+        .map((syncersByChain) => syncersByChain.get(chain))
+        .filter((syncer): syncer is InteropEventSyncer => syncer !== undefined)
+        .map((syncer) => syncer.processNewestBlock(block, logs)),
+    )
+
+    const rejected = results.find((result) => result.status === 'rejected')
+    if (rejected?.status === 'rejected') {
+      throw rejected.reason
     }
   }
 
@@ -146,6 +182,21 @@ export class InteropSyncersManager {
     return client
   }
 
+  getBlockProcessingStats() {
+    const result: BlockProcessingStat[] = []
+    for (const chainMap of this.syncers.values()) {
+      for (const syncer of chainMap.values()) {
+        const stats = syncer.blockProcessingStats.get()
+        result.push({
+          cluster: syncer.cluster.name,
+          chain: syncer.chain,
+          ...stats,
+        })
+      }
+    }
+    return result
+  }
+
   async getPluginSyncStatuses(): Promise<PluginSyncStatus[]> {
     const syncedRanges = await this.db.interopPluginSyncedRange.getAll()
     const syncStates = await this.db.interopPluginSyncState.getAll()
@@ -163,14 +214,10 @@ export class InteropSyncersManager {
       )
       const state = stateByKey.get(key)
       seen.add(key)
-      let syncMode = `${syncer?.state.name}-${syncer?.state.status}`
-      if (syncer?.logRangeDivider !== undefined) {
-        syncMode += ` (log div: ${syncer.logRangeDivider})`
-      }
       rows.push({
         pluginName: range.pluginName,
         chain: range.chain,
-        syncMode,
+        syncMode: `${syncer?.state.name}-${syncer?.state.status}`,
         toBlock: range.toBlock,
         toTimestamp: range.toTimestamp,
         lastError: state?.lastError ?? undefined,

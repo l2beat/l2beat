@@ -27,11 +27,10 @@ export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
   const tableEntries = useMemo(
     () =>
       toTableRows({
-        projects: entries,
-        sevenDayBreakdown: data,
-        excludeAssociatedTokens: display.excludeAssociatedTokens,
+        entries,
+        data: data?.projects,
       }),
-    [entries, display, data],
+    [entries, data],
   )
 
   const columns = useMemo(

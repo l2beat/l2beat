@@ -1,5 +1,7 @@
 import type { ProjectService } from '@l2beat/config'
-import { assert, notUndefined } from '@l2beat/shared-pure'
+import type { CleanableRepoName } from '@l2beat/database'
+import { assert, type Configuration, notUndefined } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,
@@ -7,7 +9,7 @@ import {
 } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import { isOnchainAmountConfig } from '../../modules/tvs/types'
-import type { TvsConfig } from '../Config'
+import type { TvsCleanerConfig, TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getTvsConfig(
@@ -15,9 +17,12 @@ export async function getTvsConfig(
   flags: FeatureFlags,
   sinceTimestamp?: number,
 ): Promise<TvsConfig> {
-  const projectsWithTvs = await ps.getProjects({
-    select: ['tvsConfig'],
-  })
+  const [projectsWithTvs, projectsWithChains] = await Promise.all([
+    ps.getProjects({
+      select: ['tvsConfig'],
+    }),
+    ps.getProjects({ select: ['chainConfig'] }),
+  ])
 
   // filter our projects disabled by flag
   const enabledProjects = projectsWithTvs.filter((p) =>
@@ -37,15 +42,29 @@ export async function getTvsConfig(
     }))
   }
 
+  const chainRanges = new Map(
+    projectsWithChains.map((p) => [
+      p.chainConfig.name,
+      {
+        sinceTimestamp: p.chainConfig.sinceTimestamp,
+        untilTimestamp: p.chainConfig.untilTimestamp,
+      },
+    ]),
+  )
+
   // It is very important to pass ALL PROJECTS tokens here
   // this allows us to deduplicate amounts and extractPricesAndAmounts
   // and set since and untilTimestamp properly
   const { amounts, prices } = extractPricesAndAmounts(
     projects.flatMap((p) => p.tokens),
+    chainRanges,
   )
 
   const projectsWithSources = projects.map((p) => {
-    const { amounts: projectAmounts } = extractPricesAndAmounts(p.tokens)
+    const { amounts: projectAmounts } = extractPricesAndAmounts(
+      p.tokens,
+      chainRanges,
+    )
     const amountChains = projectAmounts
       .map((a) => {
         switch (a.type) {
@@ -73,12 +92,8 @@ export async function getTvsConfig(
     ),
   )
 
-  const allProjects = await ps.getProjects({
-    select: ['chainConfig'],
-  })
-
   const blockTimestamps = Array.from(new Set(chains).values()).map((c) => {
-    const project = allProjects.find((p) => p.chainConfig.name === c)
+    const project = projectsWithChains.find((p) => p.chainConfig.name === c)
     assert(project, `${c}: chainConfig not configured`)
     assert(project.chainConfig.sinceTimestamp)
 
@@ -90,11 +105,36 @@ export async function getTvsConfig(
     }
   })
 
+  const cleaner =
+    flags.isEnabled('tvs', 'cleaner') &&
+    createTvsCleanerConfigurations([
+      'tvsTokenValue',
+      'tvsBlockTimestamp',
+      'tvsAmount',
+      'tvsPrice',
+    ])
+
   return {
     projects: projectsWithSources,
     amounts,
     prices,
     chains,
     blockTimestamps,
+    cleaner,
   }
+}
+
+export function createTvsCleanerConfigurations(
+  repositories: readonly CleanableRepoName[],
+): Configuration<TvsCleanerConfig>[] {
+  return repositories.map((name) => ({
+    id: repoNameToConfigId(name),
+    minHeight: 0,
+    maxHeight: null,
+    properties: { name },
+  }))
+}
+
+function repoNameToConfigId(name: CleanableRepoName): string {
+  return createHash('sha1').update(name).digest('hex').slice(0, 12)
 }

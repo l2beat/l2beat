@@ -1,31 +1,22 @@
+import { cn } from '~/utils/cn'
 import type { SvgIconProps } from '../SvgIcon'
 import { SvgIcon } from '../SvgIcon'
 
-export function CartesiIcon(props: SvgIconProps) {
+export function CartesiIcon({ className, ...props }: SvgIconProps) {
   return (
     <SvgIcon
       width="24"
       height="24"
-      viewBox="0 0 24 24"
+      viewBox="0 0 128 128"
+      fill="none"
       aria-label="Cartesi icon"
+      className={cn('fill-[#0090A8] dark:fill-[#00F6FF]', className)}
       {...props}
     >
-      <polygon
-        fill="#00f6ff"
-        points="123.9 237.9 167.4 344 264.2 245.2 190.8 245.2 171.2 189.6 123.9 237.9"
-      />
-      <polygon
-        fill="#00f6ff"
-        points="241.5 117.9 186 174.5 204.2 226.1 350.2 226.1 312.1 117.9 241.5 117.9"
-      />
-      <polygon
-        fill="#00f6ff"
-        points="0 117.9 38.1 226.1 108.7 226.1 164.1 169.6 145.9 117.9 0 117.9"
-      />
-      <polygon
-        fill="#00f6ff"
-        points="182.8 0 86 98.8 159.4 98.8 179 154.4 226.3 106.2 182.8 0"
-      />
+      <path d="M45.2861 88.1378L61.1856 127L96.5666 90.8116H69.7384L62.5745 70.4465L45.2861 88.1378Z" />
+      <path d="M88.2694 44.1843L67.9839 64.9157L74.6361 83.8157H128L114.074 44.1843H88.2694Z" />
+      <path d="M0 44.1843L13.9258 83.8157H39.7304L59.9794 63.1209L53.3272 44.1843H0Z" />
+      <path d="M66.8143 1L31.4333 37.1884H58.2614L65.4254 57.5535L82.7138 39.8988L66.8143 1Z" />
     </SvgIcon>
   )
 }

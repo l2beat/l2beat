@@ -10,60 +10,80 @@ import {
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
+import { env } from '~/env'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { TopTokensCell } from '../top-items/TopTokensCell'
+import { TopTokensCell } from '../tokens/TopTokensCell'
 import { AvgDurationCell } from './AvgDurationCell'
 import { BridgeTypeBadge } from './BridgeTypeBadge'
 import { SubgroupTooltip } from './SubgroupTooltip'
+import { TransferCountCell } from './transfer-count-cell/TransferCountCell'
 
 export type ProtocolRow = ProtocolEntry & BasicTableRow
 
 const columnHelper = createColumnHelper<ProtocolEntry>()
 
-const commonColumns = [
-  columnHelper.display({
-    id: 'logo',
-    cell: (ctx) => (
-      <img
-        className="min-h-[20px] min-w-[20px]"
-        src={ctx.row.original.iconUrl}
-        width={20}
-        height={20}
-        alt={`${ctx.row.original.name} logo`}
-      />
-    ),
-    meta: {
-      headClassName: 'w-0',
-      cellClassName: 'lg:pr-1.5!',
-    },
-    size: 28,
-    enableHiding: false,
-  }),
-  columnHelper.accessor('name', {
-    header: 'Name',
-    cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
-          <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
-            {ctx.row.original.name}
-          </div>
-          {ctx.row.original.subgroup && (
-            <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
-          )}
-        </TwoRowCell.First>
-        <TwoRowCell.Second>
-          {ctx.row.original.isAggregate && 'Aggregate'}
-        </TwoRowCell.Second>
-      </TwoRowCell>
-    ),
-    meta: {
-      cellClassName: 'whitespace-normal py-1',
-      headClassName: 'text-2xs',
-    },
-  }),
-]
+function getCommonColumns(getProtocolHref?: (slug: string) => string) {
+  return [
+    columnHelper.display({
+      id: 'logo',
+      cell: (ctx) => (
+        <img
+          className="min-h-[20px] min-w-[20px]"
+          src={ctx.row.original.iconUrl}
+          width={20}
+          height={20}
+          alt={`${ctx.row.original.name} logo`}
+        />
+      ),
+      meta: {
+        headClassName: 'w-0',
+        cellClassName: 'lg:pr-1.5!',
+      },
+      size: 28,
+      enableHiding: false,
+    }),
+    columnHelper.accessor('name', {
+      header: 'Name',
+      cell: (ctx) => {
+        const nameCell = (
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center gap-2 pr-1 leading-none!">
+              <div className="w-fit max-w-[76px] break-words font-bold text-label-value-15 md:leading-none">
+                {ctx.row.original.name}
+              </div>
+              {ctx.row.original.subgroup && (
+                <SubgroupTooltip subgroup={ctx.row.original.subgroup} />
+              )}
+            </TwoRowCell.First>
+            <TwoRowCell.Second>
+              {ctx.row.original.isAggregate && 'Aggregate'}
+            </TwoRowCell.Second>
+          </TwoRowCell>
+        )
+
+        return env.CLIENT_SIDE_INTEROP_DETAILED_PAGES ? (
+          <TableLink
+            href={
+              getProtocolHref?.(ctx.row.original.slug) ??
+              `/interop/protocols/${ctx.row.original.slug}`
+            }
+          >
+            {nameCell}
+          </TableLink>
+        ) : (
+          nameCell
+        )
+      },
+      meta: {
+        cellClassName: 'whitespace-normal',
+        headClassName: 'text-2xs',
+      },
+    }),
+  ]
+}
 
 const last24hVolumeColumn = columnHelper.accessor('volume', {
   header: 'Last 24h\nVolume',
@@ -107,6 +127,7 @@ export function getAllProtocolsColumns(
   hideTypeColumn?: boolean,
   showAverageInFlightValueColumn?: boolean,
   showNetMintedValueColumn?: boolean,
+  getProtocolHref?: (slug: string) => string,
 ) {
   return compact([
     columnHelper.accessor((_, index) => index + 1, {
@@ -119,7 +140,7 @@ export function getAllProtocolsColumns(
       },
       size: 44,
     }),
-    ...commonColumns,
+    ...getCommonColumns(getProtocolHref),
     !hideTypeColumn &&
       columnHelper.accessor('bridgeTypes', {
         header: 'Type',
@@ -128,7 +149,11 @@ export function getAllProtocolsColumns(
           return (
             <div className="flex items-center gap-1" key={ctx.row.original.id}>
               {ctx.row.original.bridgeTypes.map((bridgeType) => (
-                <BridgeTypeBadge key={bridgeType} bridgeType={bridgeType} />
+                <BridgeTypeBadge
+                  size="extraSmall"
+                  key={bridgeType}
+                  bridgeType={bridgeType}
+                />
               ))}
             </div>
           )
@@ -141,9 +166,18 @@ export function getAllProtocolsColumns(
     columnHelper.accessor((row) => row.transferCount, {
       header: 'Last 24h\ntransfer count',
       cell: (ctx) => (
-        <div className="font-medium text-label-value-15">
-          {ctx.row.original.transferCount}
-        </div>
+        <TransferCountCell
+          transferCount={ctx.row.original.transferCount}
+          expectedTransferCount={ctx.row.original.transferCount}
+          expectedVolume={ctx.row.original.volume}
+          snapshotTimestamp={ctx.row.original.snapshotTimestamp}
+          type={type}
+          protocol={{
+            id: ctx.row.original.id,
+            name: ctx.row.original.name,
+            iconUrl: ctx.row.original.iconUrl,
+          }}
+        />
       ),
       meta: {
         align: 'right',
@@ -158,9 +192,11 @@ export function getAllProtocolsColumns(
           ? undefined
           : row.averageDuration.type === 'single'
             ? row.averageDuration.duration
-            : (row.averageDuration.in.duration ??
-              row.averageDuration.out.duration ??
-              Number.POSITIVE_INFINITY),
+            : Math.min(
+                ...row.averageDuration.splits
+                  .filter((split) => split.duration !== null)
+                  .map((split) => split.duration ?? Number.POSITIVE_INFINITY),
+              ),
       {
         header: 'Last 24h avg.\ntransfer time',
         invertSorting: true,

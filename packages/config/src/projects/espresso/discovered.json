@@ -1,10 +1,40 @@
 {
   "name": "espresso",
-  "timestamp": 1770736062,
-  "configHash": "0xbc54f4e990277e1a7e9850dc4be8d4c97975b9416b09258ad4e2a97d28b34b96",
+  "timestamp": 1776179280,
+  "configHash": "0xf2ae7808c1822342d3f165d68b1fdb46d92a6c735482b1350edc2512208f0db4",
   "entries": [
     {
+      "name": "PlonkVerifierV3",
+      "address": "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc852aaf012ec426ab5adb8c1e35617f1181de9fc529b6a1dfec99620c24d0dc4"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1772484815,
+      "sinceBlock": 24572275,
+      "values": {
+        "$immutable": true,
+        "BETA_H_X0": "17212635814319756364507010169094758005397460366678210664966334781961899574209",
+        "BETA_H_X1": "496075682290949347282619629729389528669750910289829251317610107342504362928",
+        "BETA_H_Y0": "2255182984359105691812395885056400739448730162863181907784180250290003009508",
+        "BETA_H_Y1": "15828724851114720558251891430452666121603726704878231219287131634746610441813",
+        "COSET_K1": "21509278299504349099462204191118037118107610078220221266349290695035863440714",
+        "COSET_K2": "13976592813031577188125521927972899479470463550363151269753910432073024188453",
+        "COSET_K3": "14591765506482671446560885548197471556272316625185371414625730123191650159626",
+        "COSET_K4": "20883368082289025076967387451686443472842943894869136517205989827531572897921"
+      },
+      "implementationNames": {
+        "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c": "PlonkVerifierV3"
+      }
+    },
+    {
       "address": "eth:0x1584F9D22Ba5C56AC0bB6496c447a95a721Eb709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -21,14 +51,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "role": ".owner"
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
-          "permission": "upgrade",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "role": "admin"
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -49,7 +80,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -76,6 +107,205 @@
       ]
     },
     {
+      "address": "eth:0x5aF3Cda1bcB6105c3F714fd1746490E25a171490",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EspressoOpsMultisig",
+      "address": "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "delay": 172800,
+          "role": ".Executor"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1769188523,
+      "sinceBlock": 24298911,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608",
+          "eth:0x702bbBB423FB969f90031A866a9eCEF013E4734D",
+          "eth:0x5aF3Cda1bcB6105c3F714fd1746490E25a171490",
+          "eth:0x1584F9D22Ba5C56AC0bB6496c447a95a721Eb709",
+          "eth:0x745948f86C228f11F970d11E8e281c68837dCC55"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x0e8f72b7337146e04cdbfd6eb211f3e8b0509a775e164825a2d1cd0c659b4dc5",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 80,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "OpsTimelock",
+      "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+      "type": "Contract",
+      "template": "global/TimelockController",
+      "sourceHashes": [
+        "0x4a9800f2ac03b7f5b2603826eaf3ef1bc41bd1d62eb5470a2b60eba4a9575e8f"
+      ],
+      "proxyType": "immutable",
+      "description": "A timelock with access control. The current minimum delay is 2d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1769784107,
+      "sinceBlock": 24348349,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+              "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+            ]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+              "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"]
+          }
+        },
+        "Canceller": [
+          "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": [
+          "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
+        "Executor": ["eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"],
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "getMinDelay": 172800,
+        "getMinDelayFormatted": "2d",
+        "Proposer": [
+          "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+          "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB"
+        ],
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "implementationNames": {
+        "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
+      }
+    },
+    {
+      "address": "eth:0x702bbBB423FB969f90031A866a9eCEF013E4734D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x745948f86C228f11F970d11E8e281c68837dCC55",
       "type": "EOA",
       "proxyType": "EOA"
@@ -91,7 +321,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x6c8c2f6bb51ae2ffefb868f088dc9db0c6c7b920bc8fe97de669ee0d91e43090"
+        "0xcd6859a33f4bb591c2c5303ca74047fbdd842f543c98e518219c727c33d864ba"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
@@ -99,16 +329,19 @@
         "stateHistoryFirstIndex",
         "getStateHistoryCount",
         "finalizedState",
-        "currentBlockNumber"
+        "currentBlockNumber",
+        "authRoot",
+        "currentEpoch",
+        "votingStakeTableState"
       ],
       "sinceTimestamp": 1730830835,
       "sinceBlock": 21123201,
       "values": {
-        "$admin": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
-        "$implementation": "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B",
+        "$admin": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+        "$implementation": "eth:0x0177b586A949088309227f1A91951571CF770D8C",
         "$libraries": [
           "eth:0x9760fb6F48c15f37304bCb5B502F00512032A3Bb",
-          "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f"
+          "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c"
         ],
         "$pastUpgrades": [
           [
@@ -120,14 +353,28 @@
             "2025-05-01T16:57:23.000Z",
             "0x61a3f76709191c8149c61f1aed15846ac8debd71a50540f71d94f21882323e41",
             ["eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"]
+          ],
+          [
+            "2026-03-02T20:35:59.000Z",
+            "0x6add50bc3075d1f66a1c9f57a5c38792140f5c757978ffce813da4c193ab2232",
+            ["eth:0x4DF3515bB525787e9eae08B8f9647C30F6FA7d93"]
+          ],
+          [
+            "2026-03-02T22:20:59.000Z",
+            "0xce95265e02f16c8f7d227474167c4ce8dea8b540696748c8fad1676a6cc44269",
+            ["eth:0x0177b586A949088309227f1A91951571CF770D8C"]
           ]
         ],
-        "$upgradeCount": 2,
-        "currentBlockNumber": 24427167,
+        "$upgradeCount": 4,
+        "authRoot": "105536170668224554493646379345496710910560640138524839020275376698968168012830",
+        "blocksPerEpoch": 40000,
+        "currentBlockNumber": 24878828,
+        "currentEpoch": 331,
+        "epochStartBlock": 10960201,
         "finalizedState": {
-          "viewNum": 10790125,
-          "blockHeight": 10164815,
-          "blockCommRoot": "9414599225685746422076349429315440552486122586944036736382372604242756484283"
+          "viewNum": 13916186,
+          "blockHeight": 13200170,
+          "blockCommRoot": "7570917876722278345101624053220692755390880365008011443517193122697207861352"
         },
         "genesisStakeTableState": {
           "threshold": 34,
@@ -136,22 +383,28 @@
           "amountComm": "349594070000690608819508126396071528924936277306125447047023081215269308099"
         },
         "genesisState": { "viewNum": 0, "blockHeight": 0, "blockCommRoot": 0 },
-        "getStateHistoryCount": 1167,
+        "getStateHistoryCount": 1379,
         "getVersion": {
-          "majorVersion": 1,
+          "majorVersion": 3,
           "minorVersion": 0,
           "patchVersion": 0
         },
         "isPermissionedProverEnabled": true,
-        "owner": "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
+        "owner": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
         "permissionedProver": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-        "stateHistoryFirstIndex": 938,
+        "stateHistoryFirstIndex": 1150,
         "stateHistoryRetentionPeriod": 864000,
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "votingStakeTableState": {
+          "threshold": "301096310882465629111066907",
+          "blsKeyComm": "686376985227564869994633355856504504392140986012446048007080762084925738934",
+          "schnorrKeyComm": "531826520784573669855982894521731718705343669769237096974029748494589780586",
+          "amountComm": "16723002627278363553071360693682197908791835521727357317177113675942130450522"
+        }
       },
       "implementationNames": {
         "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": "ERC1967Proxy",
-        "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": "LightClient"
+        "eth:0x0177b586A949088309227f1A91951571CF770D8C": "LightClientV3"
       }
     },
     {
@@ -174,27 +427,106 @@
       }
     },
     {
-      "name": "PlonkVerifier",
-      "address": "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x66c2dfbbce4205be42d0caa868ec62ca5ac92b17540adf55d632bc3d66de907c"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1730830799,
-      "sinceBlock": 21123198,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f": "PlonkVerifier"
-      }
-    },
-    {
       "address": "eth:0xf4b7676d9EC86D2011aB87855424219a97DEB40c",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
+    "eth:0x0177b586A949088309227f1A91951571CF770D8C": [
+      "error AddressEmptyCode(address target)",
+      "error DeprecatedApi()",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InsufficientSnapshotHistory()",
+      "error InvalidAddress()",
+      "error InvalidArgs()",
+      "error InvalidHotShotBlockForCommitmentCheck()",
+      "error InvalidInitialization()",
+      "error InvalidMaxStateHistory()",
+      "error InvalidProof()",
+      "error InvalidScalar()",
+      "error MissingEpochRootUpdate()",
+      "error NoChangeRequired()",
+      "error NotInitializing()",
+      "error OutdatedState()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error OwnershipCannotBeRenounced()",
+      "error ProverNotPermissioned()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error WrongStakeTableUsed()",
+      "event Initialized(uint64 version)",
+      "event NewEpoch(uint64 epoch)",
+      "event NewState(uint64 indexed viewNum, uint64 indexed blockHeight, uint256 blockCommRoot)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PermissionedProverNotRequired()",
+      "event PermissionedProverRequired(address permissionedProver)",
+      "event Upgrade(address implementation)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function _getVk() pure returns (tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) vk)",
+      "function authRoot() view returns (uint256)",
+      "function blocksPerEpoch() view returns (uint64)",
+      "function currentBlockNumber() view returns (uint256)",
+      "function currentEpoch() view returns (uint64)",
+      "function disablePermissionedProverMode()",
+      "function epochFromBlockNumber(uint64 _blockNum, uint64 _blocksPerEpoch) pure returns (uint64)",
+      "function epochStartBlock() view returns (uint64)",
+      "function finalizedState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function genesisStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)",
+      "function genesisState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
+      "function getHotShotCommitment(uint256 hotShotBlockHeight) view returns (uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)",
+      "function getStateHistoryCount() view returns (uint256)",
+      "function getVersion() pure returns (uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)",
+      "function initialize(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) _genesis, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner)",
+      "function initializeV2(uint64 _blocksPerEpoch, uint64 _epochStartBlock)",
+      "function initializeV3()",
+      "function isEpochRoot(uint64 blockHeight) view returns (bool)",
+      "function isGtEpochRoot(uint64 blockHeight) view returns (bool)",
+      "function isPermissionedProverEnabled() view returns (bool)",
+      "function lagOverEscapeHatchThreshold(uint256 blockNumber, uint256 blockThreshold) view returns (bool)",
+      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot), tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval)) pure",
+      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot), tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm), tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval)) pure",
+      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) newState, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) nextStakeTable, uint256 newAuthRoot, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof)",
+      "function owner() view returns (address)",
+      "function permissionedProver() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setPermissionedProver(address prover)",
+      "function setStateHistoryRetentionPeriod(uint32 historySeconds)",
+      "function setstateHistoryRetentionPeriod(uint32 historySeconds)",
+      "function stateHistoryCommitments(uint256) view returns (uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)",
+      "function stateHistoryFirstIndex() view returns (uint64)",
+      "function stateHistoryRetentionPeriod() view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function updateEpochStartBlock(uint64 newEpochStartBlock)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function votingStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)"
+    ],
+    "eth:0x098C593361d12DD638Ce7dBf34c8C6a655f8274c": [
+      "error BN254G1AddFailed()",
+      "error BN254PairingProdFailed()",
+      "error BN254ScalarInvZero()",
+      "error BN254ScalarMulFailed()",
+      "error InvalidG1()",
+      "error InvalidPlonkArgs()",
+      "error InvalidScalar()",
+      "error PowPrecompileFailed()",
+      "error UnsupportedDegree()",
+      "error WrongPlonkVK()",
+      "function BETA_H_X0() view returns (uint256)",
+      "function BETA_H_X1() view returns (uint256)",
+      "function BETA_H_Y0() view returns (uint256)",
+      "function BETA_H_Y1() view returns (uint256)",
+      "function COSET_K1() view returns (uint256)",
+      "function COSET_K2() view returns (uint256)",
+      "function COSET_K3() view returns (uint256)",
+      "function COSET_K4() view returns (uint256)",
+      "function verify(tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) verifyingKey, uint256[5] publicInput, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof) view returns (bool)"
+    ],
     "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": [
       "constructor(address _singleton)"
     ],
@@ -246,6 +578,56 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": [
+      "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error FailedInnerCall()",
+      "error TimelockInsufficientDelay(uint256 delay, uint256 minDelay)",
+      "error TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)",
+      "error TimelockUnauthorizedCaller(address caller)",
+      "error TimelockUnexecutedPredecessor(bytes32 predecessorId)",
+      "error TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallSalt(bytes32 indexed id, bytes32 salt)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256)",
+      "function getOperationState(bytes32 id) view returns (uint8)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32)",
+      "function isOperation(bytes32 id) view returns (bool)",
+      "function isOperationDone(bytes32 id) view returns (bool)",
+      "function isOperationPending(bytes32 id) view returns (bool)",
+      "function isOperationReady(bytes32 id) view returns (bool)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
+    ],
     "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -281,72 +663,12 @@
       "event ValidatorKeyReviewPeriodSet(uint24 validatorKeyReviewPeriod)",
       "function MAX_ACTIVE_OPERATOR_COUNT() view returns (uint8)",
       "function MAX_OPERATOR_COUNT() view returns (uint8)"
-    ],
-    "eth:0xa239397D05516d3e44bED853E7BA1E672dDD958f": [
-      "error InvalidPlonkArgs()",
-      "error UnsupportedDegree()",
-      "error WrongPlonkVK()",
-      "function verify(tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) verifyingKey, uint256[7] publicInput, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof) view returns (bool)"
-    ],
-    "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error InsufficientSnapshotHistory()",
-      "error InvalidAddress()",
-      "error InvalidArgs()",
-      "error InvalidHotShotBlockForCommitmentCheck()",
-      "error InvalidInitialization()",
-      "error InvalidMaxStateHistory()",
-      "error InvalidProof()",
-      "error NoChangeRequired()",
-      "error NotInitializing()",
-      "error OutdatedState()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error ProverNotPermissioned()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error WrongStakeTableUsed()",
-      "event Initialized(uint64 version)",
-      "event NewState(uint64 indexed viewNum, uint64 indexed blockHeight, uint256 blockCommRoot)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PermissionedProverNotRequired()",
-      "event PermissionedProverRequired(address permissionedProver)",
-      "event Upgrade(address implementation)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function _getVk() pure returns (tuple(uint256 domainSize, uint256 numInputs, tuple(uint256 x, uint256 y) sigma0, tuple(uint256 x, uint256 y) sigma1, tuple(uint256 x, uint256 y) sigma2, tuple(uint256 x, uint256 y) sigma3, tuple(uint256 x, uint256 y) sigma4, tuple(uint256 x, uint256 y) q1, tuple(uint256 x, uint256 y) q2, tuple(uint256 x, uint256 y) q3, tuple(uint256 x, uint256 y) q4, tuple(uint256 x, uint256 y) qM12, tuple(uint256 x, uint256 y) qM34, tuple(uint256 x, uint256 y) qO, tuple(uint256 x, uint256 y) qC, tuple(uint256 x, uint256 y) qH1, tuple(uint256 x, uint256 y) qH2, tuple(uint256 x, uint256 y) qH3, tuple(uint256 x, uint256 y) qH4, tuple(uint256 x, uint256 y) qEcc, bytes32 g2LSB, bytes32 g2MSB) vk)",
-      "function currentBlockNumber() view returns (uint256)",
-      "function disablePermissionedProverMode()",
-      "function finalizedState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
-      "function genesisStakeTableState() view returns (uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)",
-      "function genesisState() view returns (uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)",
-      "function getHotShotCommitment(uint256 hotShotBlockHeight) view returns (uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)",
-      "function getStateHistoryCount() view returns (uint256)",
-      "function getVersion() pure returns (uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)",
-      "function initialize(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) _genesis, tuple(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner)",
-      "function isPermissionedProverEnabled() view returns (bool)",
-      "function lagOverEscapeHatchThreshold(uint256 blockNumber, uint256 blockThreshold) view returns (bool)",
-      "function newFinalizedState(tuple(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot) newState, tuple(tuple(uint256 x, uint256 y) wire0, tuple(uint256 x, uint256 y) wire1, tuple(uint256 x, uint256 y) wire2, tuple(uint256 x, uint256 y) wire3, tuple(uint256 x, uint256 y) wire4, tuple(uint256 x, uint256 y) prodPerm, tuple(uint256 x, uint256 y) split0, tuple(uint256 x, uint256 y) split1, tuple(uint256 x, uint256 y) split2, tuple(uint256 x, uint256 y) split3, tuple(uint256 x, uint256 y) split4, tuple(uint256 x, uint256 y) zeta, tuple(uint256 x, uint256 y) zetaOmega, uint256 wireEval0, uint256 wireEval1, uint256 wireEval2, uint256 wireEval3, uint256 wireEval4, uint256 sigmaEval0, uint256 sigmaEval1, uint256 sigmaEval2, uint256 sigmaEval3, uint256 prodPermZetaOmegaEval) proof)",
-      "function owner() view returns (address)",
-      "function permissionedProver() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function setPermissionedProver(address prover)",
-      "function setstateHistoryRetentionPeriod(uint32 historySeconds)",
-      "function stateHistoryCommitments(uint256) view returns (uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)",
-      "function stateHistoryFirstIndex() view returns (uint64)",
-      "function stateHistoryRetentionPeriod() view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
+    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24427167 },
-  "permissionsConfigHash": "0x806a21c36b07c1c1873b1159145b113d4c0925f129cebcef0f9ec4c3c394efc4"
+  "usedBlockNumbers": { "ethereum": 24878828 },
+  "permissionsConfigHash": "0x78c5515414cb9b51a4b709b6dbffac48622e753a304306ed85173b95aa917429"
 }

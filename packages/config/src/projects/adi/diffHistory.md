@@ -1,3 +1,182 @@
+Generated with discovered.json: 0xe2160e92e1c3342c09b63c7e8a1a757ce706fea4
+
+# Diff at Fri, 10 Apr 2026 08:26:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cab23b784a70bbaea251f1f4559cea26a4d51f77 block: 1774022071
+- current timestamp: 1775809516
+
+## Description
+
+Upgraded executor facet on ADI Diamond to a new version, then upgraded back. Upgrade params stay the same, the only diff in the contracts is `MAINNET_COMMIT_TIMESTAMP_NOT_OLDER` change from 3 days to 10 days: 
+https://disco.l2beat.com/diff/eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81/eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c.
+
+Probably they did that to post old batches (>3 days) from when the chain was down.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.5:
++        ["2026-04-08T18:36:47.000Z","0x4428eb3c0a1be76b850c3a1cd744087320aa49dfa2304311ed0579c10ec1e568",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x8991bF7Ed45ad2B8352efbaB83aD6e00c056a61c"]]
+      values.$pastUpgrades.6:
++        ["2026-04-09T13:05:35.000Z","0x08471063fd03e8dacd215a9c030f4c54a0f002c778a9a8283bc5161efae20e39",["eth:0xf9DD56364E3878056654C756cEBA692e577f8466","eth:0xB0D33d94aD4048070f510eF0086F12d20595dd07","eth:0xFA565846c217Bc0bA0f75027D4eECccdD68a9708","eth:0x56767eB2E3197A1dfa030faaD4A65cF38E807c81"]]
+      values.$upgradeCount:
+-        5
++        7
+    }
+```
+
+```diff
+    contract Governance (eth:0x8253F33026c49A430963FE3991441c02175bda95) {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        8
++        10
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        8
++        10
+    }
+```
+
+Generated with discovered.json: 0xe046aa4210694b96ecaa1e32858ca44579e0333d
+
+# Diff at Tue, 24 Mar 2026 10:43:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@0f2989bd93540d1da7b1b07eb7ab704c5a9355e8 block: 1774022071
+- current timestamp: 1774022071
+
+## Description
+
+Removed custom Plonk verifier name from config.jsonc since now the contract is verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1774022071 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncOSVerifierPlonk (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) {
+    +++ description: None
+      name:
+-        "ADI PlonkVerifier"
++        "ZKsyncOSVerifierPlonk"
+    }
+```
+
+Generated with discovered.json: 0x94a7f197b9094036a5bf152ba0e4a34d2b78330e
+
+# Diff at Fri, 20 Mar 2026 15:55:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6e8ea0b2bd2cedfd977918617d444e8201fbb4ac block: 1772795190
+- current timestamp: 1774022071
+
+## Description
+
+Plonk verifier is verified on etherscan.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772795190 (main branch discovery), not current.
+
+```diff
+    contract ADI PlonkVerifier (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F) {
+    +++ description: None
+      unverified:
+-        true
+      values.verificationKeyHash:
++        "0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337"
+      implementationNames.eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F:
+-        ""
++        "ZKsyncOSVerifierPlonk"
+      sourceHashes:
++        ["0x99ad2513d609d837d3fb8bd7fa2df0a4f37aea1065e9036c5796772f248f8d30"]
+    }
+```
+
+Generated with discovered.json: 0x610c8507a9d070b42c521cedcd0c2a858fcc384e
+
+# Diff at Fri, 06 Mar 2026 11:43:02 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@464f5fa94dac665b855f973e6cbee143f2fbb4bd block: 1770376622
+- current timestamp: 1772795190
+
+## Description
+
+Verified DualVerifier and FflonkVerifier smart contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770376622 (main branch discovery), not current.
+
+```diff
+    contract ZKsyncOSDualVerifier (eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE) {
+    +++ description: A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version.
+      name:
+-        "ADI DialVerifier"
++        "ZKsyncOSDualVerifier"
+      unverified:
+-        true
++++ description: Fflonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array.
++++ severity: HIGH
+      values.fflonkVerifier0:
++        "eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A"
++++ description: Fflonk verifier with version 1. !MUST BE ZERO, IF NON-ZERO THEN ADD fflonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array. This value serves as an indicator of a new verifier.
++++ severity: HIGH
+      values.fflonkVerifier1:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
++        "eth:0x8253F33026c49A430963FE3991441c02175bda95"
+      values.pendingOwner:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Plonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array.
++++ severity: HIGH
+      values.plonkVerifier0:
++        "eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F"
++++ description: Plonk verifier with version 1. This value serves as an indicator of a new verifier. !MUST BE ZERO, IF NON-ZERO THEN ADD plonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array.
++++ severity: HIGH
+      values.plonkVerifier1:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Verification key hash for the PLONK verifier ONLY (backwards compatibility).
+      values.verificationKeyHash:
++        "0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337"
+      implementationNames.eth:0x5E7cF1C310F9E0BF8DbFe70D5cC8021a2109D0AE:
+-        ""
++        "ZKsyncOSDualVerifier"
+      template:
++        "adi/ZKsyncOSDualVerifier_post_v30"
+      sourceHashes:
++        ["0x611d6c62506d4eb15d6b10346b737f49651ba4c3ee1231744069ece1b5ce7443"]
+      description:
++        "A router contract for verifiers. Routes verification requests to THE PLONK VERIFIER ONLY depending on the supplied proof version."
+      fieldMeta:
++        {"verificationKeyHash":{"description":"Verification key hash for the PLONK verifier ONLY (backwards compatibility)."},"ctmOwner":{"severity":"HIGH","description":"Contract owner that can add and remove verifiers."},"fflonkVerifier0":{"severity":"HIGH","description":"Fflonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array."},"fflonkVerifier1":{"severity":"HIGH","description":"Fflonk verifier with version 1. !MUST BE ZERO, IF NON-ZERO THEN ADD fflonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array. This value serves as an indicator of a new verifier."},"plonkVerifier0":{"severity":"HIGH","description":"Plonk verifier with version 0. Verifiers are read from mapping so they are not displayed in an array."},"plonkVerifier1":{"severity":"HIGH","description":"Plonk verifier with version 1. This value serves as an indicator of a new verifier. !MUST BE ZERO, IF NON-ZERO THEN ADD plonkVerifier2 IN CONFIG! Verifiers are read from mapping so they are not displayed in an array."}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ADI PlonkVerifier (eth:0x08513A4646d1Bc8c348C67A3680bb19626E7F13F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKsyncOSVerifierFflonk (eth:0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0x962292c57ef2125a0b9e511b8eb8d3f0d5143f10
 
 # Diff at Fri, 06 Feb 2026 11:34:34 GMT:

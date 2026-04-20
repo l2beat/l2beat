@@ -56,7 +56,9 @@ export const ChainSchema = v.object({
       v.null(),
     ])
     .optional(),
-  aliases: v.array(v.string()).optional(),
+  aliases: v
+    .array(v.object({ value: v.string().check(minLengthCheck(1)) }))
+    .optional(),
   apis: v.array(ChainApiSchema).optional(),
 })
 
@@ -74,6 +76,14 @@ export function ChainForm({
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: 'apis',
+  })
+  const {
+    fields: aliasFields,
+    append: appendAlias,
+    remove: removeAlias,
+  } = useFieldArray({
+    control: form.control,
+    name: 'aliases',
   })
 
   return (
@@ -138,6 +148,46 @@ export function ChainForm({
               </FormItem>
             )}
           />
+
+          <FormItem>
+            <FormLabel>Aliases</FormLabel>
+            <div className="space-y-2">
+              {aliasFields.map((aliasField, index) => (
+                <div key={aliasField.id} className="flex gap-2">
+                  <FormField
+                    control={form.control}
+                    name={`aliases.${index}.value`}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="shrink-0 text-white"
+                    onClick={() => removeAlias(index)}
+                  >
+                    <TrashIcon className="size-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => appendAlias({ value: '' })}
+              >
+                <PlusIcon className="size-4" />
+                Add alias
+              </Button>
+            </div>
+          </FormItem>
 
           <div className="space-y-4">
             <div className="flex items-center justify-between">

@@ -28,6 +28,7 @@ import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/ut
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
 interface Props {
   data: TransferSizeDataPoint[]
@@ -36,28 +37,28 @@ interface Props {
 
 const chartMeta = {
   percentageUnder100: {
-    label: 'Under $100',
-    color: '#567FFF',
+    label: transferSizeBuckets.under100.label,
+    color: transferSizeBuckets.under100.color,
     indicatorType: { shape: 'square' },
   },
   percentage100To1K: {
-    label: '$100-$1K',
-    color: '#7AE7C7',
+    label: transferSizeBuckets.from100To1K.label,
+    color: transferSizeBuckets.from100To1K.color,
     indicatorType: { shape: 'square' },
   },
   percentage1KTo10K: {
-    label: '$1K-$10K',
-    color: '#F7CB15',
+    label: transferSizeBuckets.from1KTo10K.label,
+    color: transferSizeBuckets.from1KTo10K.color,
     indicatorType: { shape: 'square' },
   },
   percentage10KTo100K: {
-    label: '$10K-$100K',
-    color: '#503047',
+    label: transferSizeBuckets.from10KTo100K.label,
+    color: transferSizeBuckets.from10KTo100K.color,
     indicatorType: { shape: 'square' },
   },
   percentageOver100K: {
-    label: 'Over $100K',
-    color: '#F55D3E',
+    label: transferSizeBuckets.over100K.label,
+    color: transferSizeBuckets.over100K.color,
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
