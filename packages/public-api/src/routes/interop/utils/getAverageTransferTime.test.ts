@@ -127,7 +127,7 @@ describe('getProtocolAverageTransferTime', () => {
           },
           plugins: [
             { plugin: 'relay', bridgeType: 'nonMinting' },
-            { plugin: 'socket', bridgeType: 'lockAndMint' },
+            { plugin: 'across', bridgeType: 'lockAndMint' },
           ],
         }),
       }),
@@ -161,7 +161,7 @@ describe('getProtocolAverageTransferTime', () => {
           },
           plugins: [
             { plugin: 'relay', bridgeType: 'nonMinting' },
-            { plugin: 'socket', bridgeType: 'lockAndMint' },
+            { plugin: 'across', bridgeType: 'lockAndMint' },
           ],
         }),
       }),
