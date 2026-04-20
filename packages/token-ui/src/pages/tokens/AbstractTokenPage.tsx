@@ -1,4 +1,3 @@
-import { INTEROP_CHAINS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
 import { ArrowRightIcon, CoinsIcon, PlusIcon, TrashIcon } from 'lucide-react'
@@ -33,8 +32,6 @@ import type { AbstractTokenWithDeployedTokens } from '~/mock/types'
 import { api } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { validateResolver } from '~/utils/validateResolver'
-
-const INTEROP_CHAIN_IDS = new Set(INTEROP_CHAINS.map((chain) => chain.id))
 
 export function AbstractTokenPage() {
   const { id } = useParams()
@@ -97,12 +94,9 @@ function AbstractTokenView({
       },
     )
 
-  const sortedSuggestions = (suggestions ?? [])
-    .map((suggestion) => ({
-      ...suggestion,
-      isInterop: INTEROP_CHAIN_IDS.has(suggestion.chain),
-    }))
-    .sort((a, b) => Number(b.isInterop) - Number(a.isInterop))
+  const sortedSuggestions = [...(suggestions ?? [])].sort(
+    (a, b) => Number(b.isInterop) - Number(a.isInterop),
+  )
 
   return (
     <>
