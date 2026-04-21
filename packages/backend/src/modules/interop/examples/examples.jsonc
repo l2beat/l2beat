@@ -805,6 +805,66 @@
       }
     ]
   },
+  "cctponesided": {
+    "loadConfigs": ["cctp-v1", "cctp-v2"],
+    "txs": [
+      // CCTP v1: Ethereum -> Solana source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x8ab8015b7a22494783aa9283fe88d415f0b196d71f075e99e8687adf306d16d0"
+      },
+      // CCTP v1: Solana -> Base destination-side only
+      {
+        "chain": "base",
+        "tx": "0x391fcacf7f8d4e7bef2fdaf5bdf0b6cd91be05a60e8455a1bb343b71aeb2360c"
+      },
+      // CCTP v2: Ethereum -> Solana source-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x3c5f901d77119beef867b749b80beafa2fead393c5d4248dfdd1f263b20319b6"
+      },
+      // CCTP v2: Solana -> Ethereum destination-side only
+      {
+        "chain": "ethereum",
+        "tx": "0x6cd6000cb5a329372ac7ce3e56f3de6bbd25fd2b52d84e2732faf7f361f47e37"
+      }
+    ],
+    "expects": {
+      "events": [
+        "cctp-v1.MessageSent",
+        "cctp-v1.MessageReceived",
+        "cctp-v2.MessageSent",
+        "cctp-v2.MessageReceived"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "cctp-v1.Transfer",
+          "plugin": "cctp-v1",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "cctp-v1.Transfer",
+          "plugin": "cctp-v1",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "base" } } }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        }
+      ]
+    }
+  },
   "wormhole-tokenbridge-to-bsc": {
     "loadConfigs": ["wormhole"],
     "txs": [

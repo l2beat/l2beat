@@ -192,8 +192,8 @@ export function createInteropPlugins(
           new WormholeTokenBridgePlugin(deps.configs, deps.oneSidedChains), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
           // CCTP plugins (Circle's cross-chain USDC)
-          new CCTPV1Plugin(deps.configs),
-          new CCTPV2Plugin(deps.configs),
+          new CCTPV1Plugin(deps.configs, deps.oneSidedChains),
+          new CCTPV2Plugin(deps.configs, deps.oneSidedChains),
           // Core Wormhole messaging (most generic, runs last)
           new WormholePlugin(deps.configs),
         ],
