@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x765373efc5de4d6f58568e049e4de038d6844f98
+
+# Diff at Tue, 21 Apr 2026 09:15:38 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1769510717
+- current timestamp: 1776761835
+
+## Description
+
+Starknet v0.14.2 upgrade: https://x.com/StarkWareLtd/status/2046232501887062448.
+
+Upgraded Rollup contract with minimal diff: https://disco.l2beat.com/diff/eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04/eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A (mainly added safety checks on L1 -> L2 msg hash computation).
+
+Also upgraded aggregation and starknet os programs: sources are here https://github.com/starkware-libs/sequencer/tree/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core.
+
+## Watched changes
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
++        "0x4ebd3e71fba7928b1daa4cdd93a1081aa0b578578cc8e6aada6a3b86b057fcb5"
+      values.$implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
+      values.$pastUpgrades.10:
++        ["2026-04-20T11:53:35.000Z","0xb2fd817ea47d39435e0b08825964bcb0b2ae08ebc4c5a47954f9b169235ed1c1",["eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.aggregatorHashMapped:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.aggregatorProgramHash:
+-        "1701025211190912681772481128523426351562426117847395998223683709327746845867"
++        "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+      values.identify:
+-        "StarkWare_Starknet_2025_10"
++        "StarkWare_Starknet_2026_11"
+      values.implementation:
+-        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      values.programHashHistory.13:
++        "918745833886511857768061986591752808672496300091957204265383861063635175685"
+      values.programHashMapped:
+-        "918745833886511857768061986591752808672496300091957204265383861063635175685"
++        "2733003247060056328192560178934419513655729851806095615814023997114795707702"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A:
++        "Starknet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/Starknet.sol                          | 29 +++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x7f3a2e1fac2b6f5c35d77e1b1f0b91d087e97743
 
 # Diff at Tue, 27 Jan 2026 10:46:22 GMT:

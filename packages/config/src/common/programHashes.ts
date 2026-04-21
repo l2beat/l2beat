@@ -1781,6 +1781,20 @@ git checkout v0.13.5
       verificationSteps:
         'We were not able to identify the sources of this program.',
     },
+  '2571508110958925737463010241874806654058743535666147712534445437599630018294':
+    {
+      ...SHARP_AGG('stwo'),
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/aggregator/main.cairo#L15',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout c294a8ba263834d45cf525217d8700f5de24a260\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"aggregator_with_prefix"\` value of this file will be equivalent to dec value of the hash.
+      `,
+    },
   '1701025211190912681772481128523426351562426117847395998223683709327746845867':
     {
       ...SHARP_AGG('stwo'),
@@ -1816,6 +1830,20 @@ from starkware.python.utils import from_bytes
 program_hash = {use the value obtained in step 6}
 print(pedersen_hash(from_bytes(b"AGGREGATOR"), program_hash))\`
 The output should be the aggregation program hash in dec.
+      `,
+    },
+  '2733003247060056328192560178934419513655729851806095615814023997114795707702':
+    {
+      ...STARKNET_OS,
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/blob/c294a8ba263834d45cf525217d8700f5de24a260/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/os.cairo#L69',
+      verificationStatus: 'successful',
+      verificationSteps: `
+1. Install python and pip.
+2. Install rust: \`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh\`.
+3. Checkout the correct version of [https://github.com/starkware-libs/sequencer/tree/main](https://github.com/starkware-libs/sequencer/tree/main): \`git checkout c294a8ba263834d45cf525217d8700f5de24a260\`.
+4. Install required python dependencies: \`python3 -m venv sequencer_venv\`, then \`. sequencer_venv/bin/activate && pip install -r scripts/requirements.txt\`.
+5. Run \`UPDATE_EXPECT=1 cargo test -p apollo_starknet_os_program test_program_hashes\` to regenerate program hashes in \`crates/apollo_starknet_os_program/src/program_hash.json\`. The \`"os"\` value of this file will be equivalent to dec value of the hash.
       `,
     },
   '918745833886511857768061986591752808672496300091957204265383861063635175685':
