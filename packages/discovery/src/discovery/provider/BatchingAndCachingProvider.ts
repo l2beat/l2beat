@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BlobsInBlock } from '@l2beat/shared'
+import { type BlobsInBlock, getBlockNumberAtOrBefore } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -13,7 +13,6 @@ import type { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { CacheEntry } from './DiscoveryCache'
-import { getBlockNumberSwitching } from './getBlockNumberSwitching'
 import type { ContractDeployment, RawProviders } from './IProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
 import type { MulticallClient } from './multicall/MulticallClient'
@@ -461,14 +460,14 @@ export class BatchingAndCachingProvider {
       blockNumber =
         await this.provider.getBlockNumberAtOrBeforeExplorer(timestamp)
     } catch {
-      blockNumber = await getBlockNumberSwitching(
+      blockNumber = await getBlockNumberAtOrBefore(
         timestamp,
         1, // NOTE(radomski): We don't support discovery on block 0, but assuming it's fine
         await this.provider.getBlockNumber(),
         async (blockNumber: number) => {
           const block = await this.getBlock(blockNumber)
           assert(block !== undefined, `Could not find block ${blockNumber}`)
-          return UnixTime(block.timestamp)
+          return block
         },
       )
     }
