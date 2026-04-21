@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -239,7 +239,7 @@ export const base: ScalingProject = opStackL2({
     ],
   },
   stateDerivation: DERIVATION.OPSTACK('BASE'),
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

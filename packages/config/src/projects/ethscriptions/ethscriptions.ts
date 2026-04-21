@@ -10,7 +10,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PROGRAM_HASHES } from '../../common/programHashes'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -68,7 +68,7 @@ export const ethscriptions: ScalingProject = {
     zkCatalogId: ProjectId('sp1turbo'),
     challengeProtocol: 'Single-step',
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

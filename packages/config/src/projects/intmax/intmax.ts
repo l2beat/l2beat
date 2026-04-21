@@ -8,7 +8,7 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
+import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -173,7 +173,7 @@ export const intmax: ScalingProject = {
     sequencerFailure: scroll.riskView.sequencerFailure,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
-  stage: getStage(
+  stage: getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,

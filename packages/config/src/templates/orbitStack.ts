@@ -31,7 +31,7 @@ import { EXPLORER_URLS } from '../common/explorerUrls'
 import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { PROGRAM_HASHES } from '../common/programHashes'
-import { getStage } from '../common/stages/getStage'
+import { getRollupStage } from '../common/stages/getRollupStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
@@ -1382,7 +1382,7 @@ function computedStage(
     'RollupProxy',
     'wasmModuleRoot',
   )
-  return getStage(
+  return getRollupStage(
     {
       stage0: {
         callsItselfRollup: true,
