@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x40a5bbe5f06a78d685cd38b6db16f4450472e5c3
+
+# Diff at Mon, 20 Apr 2026 11:13:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1775747881
+- current timestamp: 1776683523
+
+## Description
+
+Taiko added SP1 6.1 verifier.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.2:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers.11:
++        {"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A.sol | 1421 ++++++++++++++++++++
+ 1 file changed, 1421 insertions(+)
+```
+
 Generated with discovered.json: 0x3b700ab586c7035947595f19d7fbd9a309486ceb
 
 # Diff at Thu, 09 Apr 2026 15:19:53 GMT:

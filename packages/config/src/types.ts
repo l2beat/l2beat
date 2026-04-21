@@ -131,7 +131,6 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
 
   // tags
-  isScaling?: true
   isUpcoming?: true
   archivedAt?: UnixTime
   hasTestnet?: true

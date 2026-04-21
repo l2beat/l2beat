@@ -568,6 +568,46 @@ Verify:
 3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release --features eigenda\` to build the SP1 programs for EigenDA features and generate and print verification key hashes.
   `,
   },
+  '0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/aggregation',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) repo:  \`git checkout v2.2.0-beta.5\` . Commit hash should be  \`c269e9b792d762889f869c4526bba1bfe016036e\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
+  '0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1turbo'),
+    verificationStatus: 'successful',
+    verificationSteps: `
+Prepare:
+
+1. Install cargo make: \`cargo install --debug --locked cargo-make\`
+2. Install sp1 toolchain: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up\`
+3. Install docker [https://docs.docker.com/get-started/get-docker/](https://docs.docker.com/get-started/get-docker/)
+
+Verify:
+
+1. Checkout the correct tag in [mantle-xyz/op-succinct](https://github.com/mantle-xyz/op-succinct/tree/v2.2.0-beta.5) repo:  \`git checkout v2.2.0-beta.5\` . Commit hash should be  \`c269e9b792d762889f869c4526bba1bfe016036e\`.
+2. Make sure docker is running by running  \`docker ps\`
+3. From the  \`op-succinct\` dir:  \`cargo run --bin config --release\` to build the SP1 programs and generate and print verification key hashes. The Arsia build removes the EigenDA code path entirely, so no feature flag is required.
+  `,
+  },
   '0x008adbf6e7ba087ac0b05572c938b7707400d7b41318efcbc1d7ffbbbed50452': {
     ...OP_SUCCINCT_AGG_BLOBS,
     proverSystemProject: ProjectId('sp1turbo'),

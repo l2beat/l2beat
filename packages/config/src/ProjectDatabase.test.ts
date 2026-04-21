@@ -8,7 +8,7 @@ import {
 import { expect } from 'earl'
 import { unlinkSync } from 'fs'
 import { ProjectDatabase } from './ProjectDatabase'
-import type { BaseProject } from './types'
+import type { BaseProject, ProjectScalingInfo } from './types'
 
 describe(ProjectDatabase.name, () => {
   let db: ProjectDatabase
@@ -60,7 +60,7 @@ describe(ProjectDatabase.name, () => {
       name: 'b',
       shortName: undefined,
       addedAt: 0,
-      isScaling: true,
+      scalingInfo: {} as ProjectScalingInfo,
     }
     const projectC: BaseProject = {
       id: ProjectId('c'),
@@ -75,8 +75,8 @@ describe(ProjectDatabase.name, () => {
     await db.saveProject(projectC)
 
     const result = await db.getProjects({
-      select: ['isScaling'],
-      whereNotNull: ['isScaling'],
+      select: ['scalingInfo'],
+      whereNotNull: ['scalingInfo'],
       whereNull: [],
     })
 

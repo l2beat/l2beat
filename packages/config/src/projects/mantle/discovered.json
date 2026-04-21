@@ -1,6 +1,6 @@
 {
   "name": "mantle",
-  "timestamp": 1769533383,
+  "timestamp": 1776375430,
   "configHash": "0x4f3ac957f4eae0e424a58d3f3f063a3d53dccb6945b04e474f65dd0c1a6cef23",
   "entries": [
     {
@@ -114,7 +114,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 140,
+        "nonce": 141,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -164,7 +164,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": [],
-        "aggregationVkey": "0x006110a295396036ad8df48c333e2b99b11624799138fbc18e10181551e29eb1",
+        "aggregationVkey": "0x00767dc6943b07bd7c57755dad9156b5e89c23d714f8475d5b7a207f74360654",
         "challenger": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "CHALLENGER": "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "FINALIZATION_PERIOD_SECONDS": 43200,
@@ -173,16 +173,16 @@
         "initialProposer": "eth:0x6667961f5e9c98a76a48767522150889703ed77d",
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 90699146,
-        "latestOutputIndex": 16403,
-        "nextBlockNumber": 90700946,
-        "nextOutputIndex": 16404,
+        "latestBlockNumber": 94119146,
+        "latestOutputIndex": 18303,
+        "nextBlockNumber": 94120946,
+        "nextOutputIndex": 18304,
         "optimisticMode": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "proposer": "eth:0x0000000000000000000000000000000000000000",
         "PROPOSER": "eth:0x0000000000000000000000000000000000000000",
-        "rangeVkeyCommitment": "0x05044f60230e1ea664a43fa92e27735e3bbc97736c2e7ab961a5115a732a6da5",
-        "rollupConfigHash": "0x7e7ac4e2e568c2b6cc18427820fa07f8d1e1bd2c360058db04b1bf4b7e775bcd",
+        "rangeVkeyCommitment": "0x47fd478c5b2111934c7a233c409f16553d0f67d5701e58fa76c77339764bfd7a",
+        "rollupConfigHash": "0x6681c11eccf96068a081bbb888fd64ce72aa83bd1ccda5bbb53b4c43368cf87f",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
         "SUBMISSION_INTERVAL": 1800,
@@ -229,7 +229,7 @@
         "nextMint": 1718777795,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "symbol": "MNT",
-        "totalSupply": "6219316794890000000000000000"
+        "totalSupply": "6219316794889999291248757829"
       },
       "implementationNames": {
         "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354": "TransparentUpgradeableProxy",
@@ -245,31 +245,45 @@
       "name": "SystemConfig",
       "address": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
       "type": "Contract",
-      "template": "opstack/SystemConfig",
+      "template": "opstack/SystemConfig_v1_4_0_mantle",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
-        "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160"
+        "0x7ccc5496582a9154f67199e39a3b2e8f330f1acf0fe0b80d8f151067e7e9fa14"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1710440051,
       "sinceBlock": 19434945,
       "values": {
         "$admin": "eth:0xca35F8338054739D138884685e08b39EE2217794",
-        "$implementation": "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3",
+        "$implementation": "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310",
         "$pastUpgrades": [
           [
             "2024-03-15T01:47:47.000Z",
             "0x667a55493b70812eedb69586be570fa87bb305ff046ebd1419cdc71163f770ac",
             ["eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"]
+          ],
+          [
+            "2026-04-16T06:58:35.000Z",
+            "0xa9f65671c6b80206db6f058626a8702cf9171dc5d5ab7e382bf124d2b0e1e55a",
+            ["eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "baseFee": 20000000,
+        "basefeeScalar": 0,
         "batcherHash": "eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
+        "blobbasefeeScalar": 0,
+        "daFootprintGasScalar": 0,
+        "eip1559Denominator": 0,
+        "eip1559Elasticity": 0,
         "gasLimit": 200000000000,
+        "maximumGasLimit": 500000000,
+        "minBaseFee": 0,
         "minimumGasLimit": 21000000,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
         "opStackDA": {
           "isSequencerSendingBlobTx": true,
           "isUsingCelestia": false,
@@ -289,13 +303,13 @@
         "sequencerInbox": "eth:0xFFEEDDCcBbAA0000000000000000000000000000",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "VERSION": 0
       },
       "fieldMeta": {
         "gasLimit": {
           "severity": "LOW",
-          "description": "Gas limit for blocks on L2."
+          "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
@@ -303,7 +317,7 @@
       },
       "implementationNames": {
         "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf": "Proxy",
-        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3": "SystemConfig"
+        "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -337,7 +351,7 @@
         {
           "permission": "interact",
           "from": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "description": "it can update the batch submitter (Sequencer) address, the unsafe block signer, the L2 gas limit (bounded by `maximumGasLimit()`), the resource metering config, and all fee/gas parameters: legacy `setGasConfig(overhead, scalar)`, Arsia `setGasConfigArsia(basefeeScalar, blobbasefeeScalar)`, `setBaseFee`, `setEIP1559Params`, `setMinBaseFee`, `setDAFootprintGasScalar` and `setOperatorFeeScalars`.",
           "role": ".owner"
         },
         {
@@ -479,7 +493,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 14 (43%)",
-        "nonce": 68,
+        "nonce": 70,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -620,7 +634,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292702268",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292703310",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -759,7 +773,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 591926,
-          "prevBlockNum": 24326995
+          "prevBlockNum": 24893563
         },
         "paused": false,
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1037,33 +1051,6 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3": [
-      "constructor(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
-      "function VERSION() view returns (uint256)",
-      "function baseFee() view returns (uint256)",
-      "function batcherHash() view returns (bytes32)",
-      "function gasLimit() view returns (uint64)",
-      "function initialize(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function minimumGasLimit() view returns (uint64)",
-      "function overhead() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
-      "function scalar() view returns (uint256)",
-      "function setBaseFee(uint256 _baseFee)",
-      "function setBatcherHash(bytes32 _batcherHash)",
-      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
-      "function setGasLimit(uint64 _gasLimit)",
-      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
-      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
-      "function transferOwnership(address newOwner)",
-      "function unsafeBlockSigner() view returns (address)",
-      "function version() view returns (string)"
-    ],
     "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -1071,6 +1058,47 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
+    ],
+    "eth:0x9CA047689261E35c9e507b1BB0B7443C2A436310": [
+      "constructor(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UNSAFE_BLOCK_SIGNER_SLOT() view returns (bytes32)",
+      "function VERSION() view returns (uint256)",
+      "function baseFee() view returns (uint256)",
+      "function basefeeScalar() view returns (uint32)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobbasefeeScalar() view returns (uint32)",
+      "function daFootprintGasScalar() view returns (uint16)",
+      "function eip1559Denominator() view returns (uint32)",
+      "function eip1559Elasticity() view returns (uint32)",
+      "function gasLimit() view returns (uint64)",
+      "function initialize(address _owner, uint32 _basefeeScalar, uint32 _blobbasefeeScalar, bytes32 _batcherHash, uint64 _gasLimit, uint256 _baseFee, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function maximumGasLimit() pure returns (uint64)",
+      "function minBaseFee() view returns (uint64)",
+      "function minimumGasLimit() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function overhead() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))",
+      "function scalar() view returns (uint256)",
+      "function setBaseFee(uint256 _baseFee)",
+      "function setBatcherHash(bytes32 _batcherHash)",
+      "function setDAFootprintGasScalar(uint16 _daFootprintGasScalar)",
+      "function setEIP1559Params(uint32 _denominator, uint32 _elasticity)",
+      "function setGasConfig(uint256 _overhead, uint256 _scalar)",
+      "function setGasConfigArsia(uint32 _basefeeScalar, uint32 _blobbasefeeScalar)",
+      "function setGasLimit(uint64 _gasLimit)",
+      "function setMinBaseFee(uint64 _minBaseFee)",
+      "function setOperatorFeeScalars(uint32 _operatorFeeScalar, uint64 _operatorFeeConstant)",
+      "function setResourceConfig(tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
+      "function setUnsafeBlockSigner(address _unsafeBlockSigner)",
+      "function transferOwnership(address newOwner)",
+      "function unsafeBlockSigner() view returns (address)",
+      "function version() view returns (string)"
     ],
     "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": [
       "constructor(address _messenger, address _l1mnt)",
@@ -1309,10 +1337,10 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
+    "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0xa79616124fab7c30287f805f0a8e9e56f748448020c9eebcebe266d1172d19e8",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 24327537 },
-  "permissionsConfigHash": "0x9a7a5139fc1184892b495118a6dca7035f2adcb82142b5b7454b508c256be750"
+  "usedBlockNumbers": { "ethereum": 24895127 },
+  "permissionsConfigHash": "0xcd2699f790bdf31d1292ab304fd22a2e023878e18d4d006a0bc3386d0b72fc62"
 }

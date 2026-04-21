@@ -37,7 +37,7 @@ export async function getScalingSummaryEntries() {
       'chainConfig',
       'contracts',
     ],
-    where: ['isScaling'],
+    where: ['scalingInfo'],
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 

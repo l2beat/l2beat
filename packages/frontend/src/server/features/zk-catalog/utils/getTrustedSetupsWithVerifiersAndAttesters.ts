@@ -69,7 +69,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'daLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   targetProject?: TargetProject,
 ): TrustedSetupsByProofSystem {
   const grouped = groupBy(
@@ -146,7 +146,7 @@ export function getTrustedSetupsWithVerifiersAndAttesters(
 
 function uniqAndSortProjectsUsedIn(
   usedIn: UsedInProjectWithIcon[] | undefined,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'daLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ) {
   if (!usedIn) return undefined
@@ -160,7 +160,7 @@ function getVerifiersWithProcessedUsedIn(
   project: Project<'zkCatalogInfo'>,
   key: string,
   contractUtils: ContractUtils,
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'daLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ) {
   return project.zkCatalogInfo.verifierHashes
     .filter((v) => key === `${v.proofSystem.type}-${v.proofSystem.id}`)
@@ -288,7 +288,7 @@ function getVerifierStatuses(
 
 export function getProjectsUsedIn(
   projectIds: ProjectId[],
-  allProjects: Project<never, 'daBridge' | 'isScaling' | 'daLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ): UsedInProjectWithIcon[] {
   return projectIds
     .map((projectId) => {
