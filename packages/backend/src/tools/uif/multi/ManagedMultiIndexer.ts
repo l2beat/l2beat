@@ -12,7 +12,8 @@ import type {
   Configuration,
   ConfigurationRange,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from './types'
 
 export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
@@ -53,11 +54,15 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       saved,
       this.options.configurations,
       this.serializeConfiguration,
-      this.options.configurationsTrimmingDisabled,
+      !this.isTrimDataImplemented(),
     )
     await this.updateSavedConfigurations(state.diff)
     this.ranges = toRanges(state.configurations)
     return { safeHeight: state.safeHeight }
+  }
+
+  private isTrimDataImplemented(): boolean {
+    return this.trimData !== ManagedMultiIndexer.prototype.trimData
   }
 
   async updateSavedConfigurations(diff: ConfigurationsDiff<T>) {
@@ -88,11 +93,11 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         }
 
         if (diff.toTrimDataAfterUpdate.length > 0) {
-          await this.removeData(diff.toTrimDataAfterUpdate)
+          await this.trimData(diff.toTrimDataAfterUpdate)
         }
 
         if (diff.toWipeDataAfterUpdate.length > 0) {
-          await this.removeData(diff.toWipeDataAfterUpdate)
+          await this.wipeData(diff.toWipeDataAfterUpdate)
         }
 
         if (diff.toDelete.length > 0) {
@@ -104,7 +109,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
 
         if (!this.options.dataWipingAfterDeleteDisabled) {
           if (diff.toWipeDataAfterDelete.length > 0) {
-            await this.removeData(diff.toWipeDataAfterDelete)
+            await this.wipeData(diff.toWipeDataAfterDelete)
           }
         }
       })
@@ -215,7 +220,11 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     configurations: Configuration<T>[],
   ): Promise<() => Promise<number>>
 
-  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
+  abstract wipeData(configurations: WipeRemovalConfiguration[]): Promise<void>
+
+  trimData(_: TrimRemovalConfiguration[]): Promise<void> {
+    throw new Error(`trimData not implemented for ${this.indexerId}`)
+  }
 
   // #endregion
 

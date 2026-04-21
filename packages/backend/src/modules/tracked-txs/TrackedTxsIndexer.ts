@@ -3,14 +3,14 @@ import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { clampRangeToDay } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import partition from 'lodash/partition'
 import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../config/Config'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { TrackedTxsClient } from './TrackedTxsClient'
 import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
@@ -95,20 +95,14 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    const [configsWithRange, configsWithoutRange] = partition(
-      configurations,
-      (c) => c.type === 'trim',
-    )
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const ids = configurations.map((c) => c.id)
+    await this.$.db.liveness.deleteByConfigIds(ids)
+    await this.$.db.l2Cost.deleteByConfigIds(ids)
+  }
 
-    await this.$.db.liveness.deleteByConfigIds(
-      configsWithoutRange.map((c) => c.id),
-    )
-    await this.$.db.l2Cost.deleteByConfigIds(
-      configsWithoutRange.map((c) => c.id),
-    )
-
-    for (const configuration of configsWithRange) {
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
+    for (const configuration of configurations) {
       const [from, to] = configuration.range
       const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
         [

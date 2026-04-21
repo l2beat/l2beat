@@ -8,7 +8,7 @@ import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 
 export interface EcosystemTokenIndexerDeps
@@ -92,8 +92,8 @@ export class EcosystemTokenIndexer extends ManagedMultiIndexer<EcosystemTokenCon
 
     return () => Promise.resolve(to)
   }
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
     if (configurations.length === 0) return
 

@@ -170,7 +170,7 @@ describe(DaIndexer.name, () => {
     })
   })
 
-  describe(DaIndexer.prototype.removeData.name, () => {
+  describe(DaIndexer.prototype.wipeData.name, () => {
     it('wipes all data saved by configuration', async () => {
       const configurations = [config('project-a'), config('project-b')]
 
@@ -178,9 +178,9 @@ describe(DaIndexer.name, () => {
         configurations,
       })
 
-      await indexer.removeData([
-        { type: 'wipe' as const, id: createId('project-a') },
-        { type: 'wipe' as const, id: createId('project-b') },
+      await indexer.wipeData([
+        { type: 'wipe', id: createId('project-a') },
+        { type: 'wipe', id: createId('project-b') },
       ])
 
       expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([

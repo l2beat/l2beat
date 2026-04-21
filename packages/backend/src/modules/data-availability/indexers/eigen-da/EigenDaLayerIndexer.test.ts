@@ -160,7 +160,7 @@ describe(EigenDaLayerIndexer.name, () => {
     })
   })
 
-  describe(EigenDaLayerIndexer.prototype.removeData.name, () => {
+  describe(EigenDaLayerIndexer.prototype.wipeData.name, () => {
     it('should delete records by configuration IDs', async () => {
       const configurations = [createConfiguration(DA_LAYER, DA_LAYER)]
 
@@ -174,7 +174,7 @@ describe(EigenDaLayerIndexer.name, () => {
         { type: 'wipe' as const, id: 'config-2' },
       ]
 
-      await indexer.removeData(removalsConfigurations)
+      await indexer.wipeData(removalsConfigurations)
 
       expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
         'config-1',
@@ -188,7 +188,6 @@ function mockIndexer($: {
   configurations: Configuration<TimestampDaIndexedConfig>[]
   daLayer: string
   throughput?: number
-  configurationsTrimmingDisabled?: boolean
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
@@ -231,7 +230,6 @@ function mockIndexer($: {
       parents: [],
       indexerService,
       db,
-      configurationsTrimmingDisabled: $.configurationsTrimmingDisabled,
       dataWipingAfterDeleteDisabled: false,
     },
     Logger.SILENT,

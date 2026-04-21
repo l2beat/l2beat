@@ -143,14 +143,14 @@ describe(ManagedMultiIndexer.name, () => {
         INDEXER_ID,
         ['d'],
       )
-      expect(indexer.removeData).toHaveBeenNthCalledWith(1, [
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
         trimRemovalWithId('b', 50, 99),
         trimRemovalWithId('b', 1001, 1500),
       ])
-      expect(indexer.removeData).toHaveBeenNthCalledWith(2, [
+      expect(indexer.wipeData).toHaveBeenNthCalledWith(1, [
         wipeRemovalWithId('c'),
       ])
-      expect(indexer.removeData).toHaveBeenNthCalledWith(3, [
+      expect(indexer.wipeData).toHaveBeenNthCalledWith(2, [
         wipeRemovalWithId('d'),
       ])
 
@@ -454,7 +454,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
         wipeRemovalWithId('d'),
       ])
     })
@@ -481,7 +481,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 50, null, null)])
 
       // remove all data
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
         wipeRemovalWithId('d'),
       ])
     })
@@ -508,7 +508,7 @@ describe(ManagedMultiIndexer.name, () => {
       expect(after).toEqualUnsorted([saved('d', 150, null, 550)])
 
       // remove part of data
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
         trimRemovalWithId('d', 100, 149),
       ])
     })
@@ -534,7 +534,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
         trimRemovalWithId('d', 100, 999),
       ])
     })
@@ -560,7 +560,8 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 100, 1000, 550)])
 
-      expect(indexer.removeData).not.toHaveBeenCalled()
+      expect(indexer.trimData).not.toHaveBeenCalled()
+      expect(indexer.wipeData).not.toHaveBeenCalled()
     })
 
     it('maxHeight changed with need to trim', async () => {
@@ -584,7 +585,7 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
 
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
         trimRemovalWithId('d', 201, 550),
       ])
     })
@@ -631,8 +632,10 @@ class TestIndexer extends ManagedMultiIndexer<string> {
   multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
-  removeData =
-    mockFn<ManagedMultiIndexer<string>['removeData']>().resolvesTo(undefined)
+  override trimData =
+    mockFn<ManagedMultiIndexer<string>['trimData']>().resolvesTo(undefined)
+  override wipeData =
+    mockFn<ManagedMultiIndexer<string>['wipeData']>().resolvesTo(undefined)
 }
 
 function actual(

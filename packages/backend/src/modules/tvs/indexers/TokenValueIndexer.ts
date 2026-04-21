@@ -3,13 +3,13 @@ import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
@@ -120,25 +120,20 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    const [configsWithRange, configsWithoutRange] = partition(
-      configurations,
-      (c) => c.type === 'trim',
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.tvsTokenValue.deleteByConfigIds(
+      configurations.map((c) => c.id),
     )
-
-    if (configsWithoutRange.length > 0) {
-      const deletedRecords = await this.$.db.tvsTokenValue.deleteByConfigIds(
-        configsWithoutRange.map((c) => c.id),
-      )
-      if (deletedRecords > 0) {
-        this.logger.info('Wiped records for configurations', {
-          configurations: configsWithoutRange.length,
-          deletedRecords,
-        })
-      }
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
     }
+  }
 
-    for (const configuration of configsWithRange) {
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
+    for (const configuration of configurations) {
       const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.tvsTokenValue.deleteByConfigInTimeRange(

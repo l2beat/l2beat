@@ -267,7 +267,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
     })
   })
 
-  describe(CirculatingSupplyAmountIndexer.prototype.removeData.name, () => {
+  describe(CirculatingSupplyAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         deleteByConfigs: mockFn().returns(5),
@@ -298,7 +298,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {

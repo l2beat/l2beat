@@ -251,7 +251,7 @@ describe(TvsPriceIndexer.name, () => {
     })
   })
 
-  describe(TvsPriceIndexer.prototype.removeData.name, () => {
+  describe(TvsPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsPriceRepository = mockObject<Database['tvsPrice']>({
         deleteByConfigs: mockFn().returns(5),
@@ -282,7 +282,7 @@ describe(TvsPriceIndexer.name, () => {
         },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(tvsPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {

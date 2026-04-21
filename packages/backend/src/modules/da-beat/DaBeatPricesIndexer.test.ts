@@ -124,7 +124,7 @@ describe(DaBeatPricesIndexer.name, () => {
     })
   })
 
-  describe(DaBeatPricesIndexer.prototype.removeData.name, () => {
+  describe(DaBeatPricesIndexer.prototype.wipeData.name, () => {
     it('deletes records by coingecko ids', async () => {
       const currentPriceRepository = mockObject<Database['currentPrice']>({
         deleteByCoingeckoIds: mockFn().resolvesTo(5),
@@ -138,7 +138,7 @@ describe(DaBeatPricesIndexer.name, () => {
 
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
-      await indexer.removeData([{ type: 'wipe' as const, id: 'config1' }])
+      await indexer.wipeData([{ type: 'wipe', id: 'config1' }])
 
       expect(
         currentPriceRepository.deleteByCoingeckoIds,
@@ -153,9 +153,9 @@ describe(DaBeatPricesIndexer.name, () => {
       const indexer = new DaBeatPricesIndexer(deps, Logger.SILENT)
 
       await expect(
-        indexer.removeData([
-          { type: 'wipe' as const, id: 'config1' },
-          { type: 'wipe' as const, id: 'config2' },
+        indexer.wipeData([
+          { type: 'wipe', id: 'config1' },
+          { type: 'wipe', id: 'config2' },
         ]),
       ).toBeRejectedWith('Assertion Error')
     })

@@ -9,7 +9,7 @@ import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiInd
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
 
 export interface Dependencies
@@ -32,7 +32,6 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
         name: 'eigenda_layer_indexer',
         tags: { tag: $.daLayer },
         updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
-        configurationsTrimmingDisabled: true,
         dataWipingAfterDeleteDisabled: false,
       },
       logger,
@@ -99,13 +98,9 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     }
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
+  override async wipeData(
+    configurations: WipeRemovalConfiguration[],
   ): Promise<void> {
-    assert(this.options.configurationsTrimmingDisabled)
-
-    if (configurations.length === 0) return
-
     const deletedRecords = await this.$.db.dataAvailability.deleteByConfigIds(
       configurations.map((c) => c.id),
     )

@@ -151,7 +151,7 @@ describe(TokenValueIndexer.name, () => {
     })
   })
 
-  describe(TokenValueIndexer.prototype.removeData.name, () => {
+  describe(TokenValueIndexer.prototype.trimData.name, () => {
     it('deletes records for configuration in time range', async () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
         deleteByConfigInTimeRange: mockFn().returns(1),
@@ -190,7 +190,7 @@ describe(TokenValueIndexer.name, () => {
         },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(
         tvsTokenValueRepository.deleteByConfigInTimeRange,

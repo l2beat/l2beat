@@ -7,7 +7,7 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
@@ -84,7 +84,7 @@ export class TvsCleaner extends ManagedMultiIndexer<TvsCleanerConfig> {
     })
   }
 
-  override removeData(_configurations: RemovalConfiguration[]): Promise<void> {
+  override wipeData(_: WipeRemovalConfiguration[]): Promise<void> {
     return Promise.resolve()
   }
 }

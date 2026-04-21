@@ -3,13 +3,13 @@ import type { TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import partition from 'lodash/partition'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import type { PriceConfig } from '../types'
@@ -125,37 +125,30 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     )
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    const [configsWithRange, configsWithoutRange] = partition(
-      configurations,
-      (c) => c.type === 'trim',
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigIds(
+      configurations.map((c) => c.id),
     )
-
-    if (configsWithoutRange.length > 0) {
-      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigIds(
-        configsWithoutRange.map((c) => c.id),
-      )
-      if (deletedRecords > 0) {
-        this.logger.info('Wiped records for configurations', {
-          configurations: configsWithoutRange.length,
-          deletedRecords,
-        })
-      }
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
     }
+  }
 
-    if (configsWithRange.length > 0) {
-      const configs = configsWithRange.map((c) => ({
-        configurationId: c.id,
-        fromInclusive: c.range[0],
-        toInclusive: c.range[1],
-      }))
-      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
-      if (deletedRecords > 0) {
-        this.logger.info('Trimmed records for configurations', {
-          configurations: configsWithRange.length,
-          deletedRecords,
-        })
-      }
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
+    const configs = configurations.map((c) => ({
+      configurationId: c.id,
+      fromInclusive: c.range[0],
+      toInclusive: c.range[1],
+    }))
+    const deletedRecords = await this.$.db.tvsPrice.deleteByConfigs(configs)
+    if (deletedRecords > 0) {
+      this.logger.info('Trimmed records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
     }
   }
 }

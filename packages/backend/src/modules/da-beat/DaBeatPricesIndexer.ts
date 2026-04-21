@@ -6,7 +6,7 @@ import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 
 interface DaBeatPricesConfig {
@@ -73,7 +73,7 @@ export class DaBeatPricesIndexer extends ManagedMultiIndexer<DaBeatPricesConfig>
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
     assert(configurations.length === 1)
 
     const coingeckoIds = this.$.configurations[0].properties.coingeckoIds

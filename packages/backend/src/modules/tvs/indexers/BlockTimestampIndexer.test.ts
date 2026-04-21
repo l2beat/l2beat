@@ -130,7 +130,7 @@ describe(BlockTimestampIndexer.name, () => {
     })
   })
 
-  describe(BlockTimestampIndexer.prototype.removeData.name, () => {
+  describe(BlockTimestampIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsBlockTimestampRepository = mockObject<
         Database['tvsBlockTimestamp']
@@ -163,7 +163,7 @@ describe(BlockTimestampIndexer.name, () => {
         },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(
         tvsBlockTimestampRepository.deleteByConfigInTimeRange,
