@@ -1,3 +1,4 @@
+import partition from 'lodash/partition'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CursorClickIcon } from '~/icons/CursorClick'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
@@ -10,10 +11,6 @@ import { FlowsGeneralStats } from './FlowsGeneralStats'
 import { FlowsProtocolsSelector } from './FlowsProtocolsSelector'
 import { FlowsGraphPanel } from './graph/FlowsGraphPanel'
 import { FlowsSelectedPathPanel } from './selection-panel/FlowsSelectedPathPanel'
-import {
-  getVisibleFlowChains,
-  getVisibleHighlightedChains,
-} from './utils/getVisibleFlowChains'
 import {
   InteropFlowsProvider,
   useInteropFlows,
@@ -46,13 +43,17 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
     },
     { enabled: hasEnoughChains && hasEnoughProtocols },
   )
-  const { activeChainIds, inactiveChainIds } = getVisibleFlowChains(
+  const activeIds = new Set<string>()
+  for (const flow of data?.flows ?? []) {
+    activeIds.add(flow.srcChain)
+    activeIds.add(flow.dstChain)
+  }
+  const [activeChainIds, inactiveChainIds] = partition(
     selectedChains,
-    data?.flows ?? [],
+    (chainId) => activeIds.has(chainId),
   )
-  const visibleHighlightedChains = getVisibleHighlightedChains(
-    highlightedChains,
-    activeChainIds,
+  const visibleHighlightedChains = highlightedChains.filter((chainId) =>
+    activeIds.has(chainId),
   )
   const hasGraphSelection = visibleHighlightedChains.length > 0
 
