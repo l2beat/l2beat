@@ -52,9 +52,12 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
     selectedChains,
     (chainId) => activeIds.has(chainId),
   )
-  const visibleHighlightedChains = highlightedChains.filter((chainId) =>
-    activeIds.has(chainId),
+  const selectedHighlightedChains = highlightedChains.filter((chainId) =>
+    selectedChains.includes(chainId),
   )
+  const visibleHighlightedChains = isLoading
+    ? selectedHighlightedChains
+    : selectedHighlightedChains.filter((chainId) => activeIds.has(chainId))
   const hasGraphSelection = visibleHighlightedChains.length > 0
 
   return (

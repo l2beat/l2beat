@@ -37,6 +37,9 @@ export function FlowsGraphPanel({
   const inactiveChains = interopChains.filter((chain) =>
     inactiveChainIds.includes(chain.id),
   )
+  const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
+  const shouldShowInactiveChainsInfo =
+    !!data && inactiveChains.length > 0 && !isLoading
 
   return (
     <div className="flex min-h-0 w-full flex-1 flex-col items-center max-lg:order-2">
@@ -69,18 +72,20 @@ export function FlowsGraphPanel({
           />
         )}
       </div>
-      {!isLoading &&
-        data &&
-        inactiveChains.length > 0 &&
-        hasEnoughChains &&
-        hasEnoughProtocols && (
-          <div className="mt-3 flex w-full items-center justify-center gap-1 pt-1">
-            <span className="font-normal text-secondary text-xs leading-none md:text-base">
-              No transfers detected for
-            </span>
-            <InactiveChainsDialog chains={inactiveChains} />
-          </div>
-        )}
+      {shouldRenderInactiveChainsInfo && (
+        <div className="mt-3 flex min-h-6 w-full items-center justify-center gap-1 pt-1">
+          {shouldShowInactiveChainsInfo ? (
+            <>
+              <span className="font-normal text-secondary text-xs leading-none md:text-base">
+                No transfers detected for
+              </span>
+              <InactiveChainsDialog chains={inactiveChains} />
+            </>
+          ) : isLoading ? (
+            <Skeleton className="h-4 w-40 md:h-5" />
+          ) : null}
+        </div>
+      )}
     </div>
   )
 }
