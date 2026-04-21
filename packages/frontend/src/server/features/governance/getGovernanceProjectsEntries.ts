@@ -1,6 +1,8 @@
 import type {
   Project,
   ProjectPermissions,
+  ProjectScalingProofSystem,
+  ProjectScalingStack,
   ProjectStageName,
   ProjectUpgradeableActor,
   TableReadyValue,
@@ -33,6 +35,9 @@ export interface GovernanceMultisigInfo {
 export interface GovernanceProjectEntry extends CommonScalingEntry {
   multisig: GovernanceMultisigInfo | undefined
   stage: ProjectStageName
+  stack: ProjectScalingStack | undefined
+  proofSystem: ProjectScalingProofSystem | undefined
+  challengePeriodSeconds: number | undefined
   censorship: TableReadyValue
   upgrade: TableReadyValue
   upgraders: ProjectUpgradeableActor[]
@@ -81,6 +86,9 @@ function getGovernanceProjectEntry(
       pickPrimaryMultisig(project.permissions),
     ),
     stage: project.scalingInfo.stage,
+    stack: project.scalingInfo.stacks?.[0],
+    proofSystem: project.scalingInfo.proofSystem,
+    challengePeriodSeconds: risks.stateValidation?.challengeDelay,
     censorship: risks.sequencerFailure,
     upgrade: risks.exitWindow,
     upgraders: collectUpgraders(project.contracts?.addresses),
