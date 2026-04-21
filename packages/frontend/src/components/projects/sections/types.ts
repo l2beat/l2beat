@@ -31,6 +31,7 @@ import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceS
 import type { VerifiersSectionProps } from './verifiers/VerifiersSection'
 
 type SectionId =
+  | 'charts'
   | 'tvs'
   | 'activity'
   | 'onchain-costs'

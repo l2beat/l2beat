@@ -824,6 +824,7 @@ export interface ZkCatalogTag {
 export interface TrustedSetup {
   id: string
   name: string
+  participantCount?: number
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
@@ -835,6 +836,7 @@ export interface TrustedSetup {
 export interface ProjectPrivacyInfo {
   trustedSetup: TrustedSetup
   assets: ProjectPrivacyAsset[]
+  upgradesAndGovernance?: string
 }
 
 export interface ProjectPrivacyAsset {
@@ -851,7 +853,8 @@ export interface ProjectPrivacyBucket {
   label: string
   address?: ChainSpecificAddress
   denomination?: string
-  deposits: PrivacyDepositMetricSource
+  deposits?: PrivacyDepositMetricSource
+  flows?: PrivacyBucketFlowsConfig
   totalValue?: PrivacyMetricSource
 }
 
@@ -859,6 +862,12 @@ export interface PrivacyDepositMetricSource {
   total?: PrivacyMetricSource
   last7d?: PrivacyMetricSource
   last30d?: PrivacyMetricSource
+}
+
+export interface PrivacyBucketFlowsConfig {
+  sinceBlock: number
+  deposit?: PrivacyFlowSource
+  withdrawal?: PrivacyFlowSource
 }
 
 export type PrivacyMetricSource =
@@ -893,6 +902,12 @@ export type PrivacyMetricSource =
       fromLastBlock?: number
     } & PrivacyMetricExtractorConfig)
 
+export type PrivacyFlowSource = {
+  chain: string
+  event: string
+  address?: ChainSpecificAddress
+} & PrivacyFlowExtractorConfig
+
 export type PrivacyMetricExtractorConfig = {
   extractor: 'railgunShieldDeposits'
   params: {
@@ -903,6 +918,33 @@ export type PrivacyMetricExtractorConfig = {
 export type PrivacyMetricExtractor = PrivacyMetricExtractorConfig['extractor']
 export type PrivacyMetricExtractorParams =
   PrivacyMetricExtractorConfig['params']
+
+export type PrivacyFlowExtractorConfig =
+  | {
+      extractor: 'fixedAmount'
+      params: {
+        amount: string
+      }
+    }
+  | {
+      extractor: 'privacyPoolsValue'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'railgunShield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+
+export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
+export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #endregion
 

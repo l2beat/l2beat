@@ -1,3 +1,5 @@
+import type { DehydratedState } from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import { Banner } from '~/components/Banner'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -18,6 +20,8 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { ChartRange } from '~/utils/range/range'
+import { PrivacyChartsSection } from './components/PrivacyChartsSection'
 import { PrivacyDepositsBreakdownTable } from './components/PrivacyDepositsBreakdownTable'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 import { PrivacyValueBreakdownTable } from './components/PrivacyValueBreakdownTable'
@@ -25,9 +29,16 @@ import type { PrivacyProjectEntry } from './getPrivacyProjectData'
 
 interface Props extends AppLayoutProps {
   entry: PrivacyProjectEntry
+  defaultChartRange: ChartRange
+  queryState: DehydratedState
 }
 
-export function PrivacyProjectPage({ entry, ...props }: Props) {
+export function PrivacyProjectPage({
+  entry,
+  defaultChartRange,
+  queryState,
+  ...props
+}: Props) {
   const navigationSections = getNavigationSections(entry)
   const bucketCount = entry.assets.reduce(
     (sum, asset) => sum + asset.bucketCount,
@@ -35,166 +46,205 @@ export function PrivacyProjectPage({ entry, ...props }: Props) {
   )
   const protocolDescription = entry.detailedDescription ?? ''
   const hasProtocolDescription = !!entry.detailedDescription
+  const hasUpgradesAndGovernance = !!entry.upgradesAndGovernance
+
+  let order = 0
+  const nextOrder = () => String(++order).padStart(2, '0')
+  const detailedDescriptionOrder = hasProtocolDescription
+    ? nextOrder()
+    : undefined
+  const upgradesAndGovernanceOrder = hasUpgradesAndGovernance
+    ? nextOrder()
+    : undefined
+  const chartsOrder = nextOrder()
+  const tvsOrder = nextOrder()
+  const activityOrder = nextOrder()
+  const trustedSetupsOrder = nextOrder()
+  const permissionsOrder = entry.permissionsSection ? nextOrder() : undefined
+  const contractsOrder = entry.contractsSection ? nextOrder() : undefined
 
   return (
     <AppLayout {...props}>
-      <SideNavLayout childrenWrapperClassName="md:pt-0">
-        <div
-          className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
-          data-project-page
-        >
-          <div className="relative z-0 max-md:bg-surface-primary">
-            <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
-              <div className="pt-6 max-md:px-4 lg:pt-4">
-                <ProjectHeader project={entry} />
-                <ProjectSummaryBars
-                  project={{
-                    underReviewStatus: entry.isUnderReview
-                      ? 'config'
-                      : undefined,
-                    header: {
-                      warning: entry.warnings.yellow,
-                      redWarning: entry.warnings.red,
-                      emergencyWarning: entry.warnings.emergency,
-                    },
-                  }}
-                />
-                <div className="mb-3 max-md:hidden">
-                  <DesktopProjectLinks
-                    projectLinks={entry.projectLinks}
-                    discoUiHref={entry.discoveryHref}
+      <HydrationBoundary state={queryState}>
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
+          <div
+            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            data-project-page
+          >
+            <div className="relative z-0 max-md:bg-surface-primary">
+              <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
+                <div className="pt-6 max-md:px-4 lg:pt-4">
+                  <ProjectHeader project={entry} />
+                  <ProjectSummaryBars
+                    project={{
+                      underReviewStatus: entry.isUnderReview
+                        ? 'config'
+                        : undefined,
+                      header: {
+                        warning: entry.warnings.yellow,
+                        redWarning: entry.warnings.red,
+                        emergencyWarning: entry.warnings.emergency,
+                      },
+                    }}
                   />
+                  <div className="mb-3 max-md:hidden">
+                    <DesktopProjectLinks
+                      projectLinks={entry.projectLinks}
+                      discoUiHref={entry.discoveryHref}
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="row-start-2 w-full">
-                <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
-                  <MobileSectionNavigation sections={navigationSections} />
-                </div>
-                <HighlightableLinkContextProvider>
-                  <PrimaryCard
-                    id="summary"
-                    data-role="nav-section"
-                    className="space-y-6 max-md:rounded-none md:mt-2"
-                  >
-                    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                      <div className="max-w-3xl space-y-3">
-                        <div>
-                          <div className="font-semibold text-secondary text-subtitle-12 uppercase">
-                            About
+                <div className="row-start-2 w-full">
+                  <div className="md:-mx-(--tablet-content-horizontal-padding) sticky top-0 z-100 lg:hidden">
+                    <MobileSectionNavigation sections={navigationSections} />
+                  </div>
+                  <HighlightableLinkContextProvider>
+                    <PrimaryCard
+                      id="summary"
+                      data-role="nav-section"
+                      className="space-y-6 max-md:rounded-none md:mt-2"
+                    >
+                      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                        <div className="max-w-3xl space-y-3">
+                          <div>
+                            <div className="font-semibold text-secondary text-subtitle-12 uppercase">
+                              About
+                            </div>
+                            <p className="mt-2 text-paragraph-15 text-primary md:text-paragraph-16">
+                              {entry.description}
+                            </p>
                           </div>
-                          <p className="mt-2 text-paragraph-15 text-primary md:text-paragraph-16">
-                            {entry.description}
-                          </p>
-                        </div>
-                        <div className="text-paragraph-14 text-secondary">
-                          {entry.assets.length} tracked assets across{' '}
-                          {formatInteger(bucketCount)} buckets.
+                          <div className="text-paragraph-14 text-secondary">
+                            {entry.assets.length} tracked assets across{' '}
+                            {formatInteger(bucketCount)} buckets.
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <PrivacyProjectStats
-                      totalValueSecuredUsd={entry.summary.totalValueSecuredUsd}
-                      deposits={entry.summary.deposits}
-                    />
-                    {entry.badges.length > 0 && (
-                      <BadgesSection
-                        badges={entry.badges}
-                        className="lg:min-w-0"
+                      <PrivacyProjectStats
+                        totalValueSecuredUsd={
+                          entry.summary.totalValueSecuredUsd
+                        }
+                        deposits={entry.summary.deposits}
+                      />
+                      {entry.badges.length > 0 && (
+                        <BadgesSection
+                          badges={entry.badges}
+                          className="lg:min-w-0"
+                        />
+                      )}
+                      {entry.unpricedAssets.length > 0 && (
+                        <Banner type="warning">
+                          {`USD totals exclude ${entry.unpricedAssets.join(', ')} because a demo price is not available.`}
+                        </Banner>
+                      )}
+                    </PrimaryCard>
+
+                    {hasProtocolDescription && detailedDescriptionOrder && (
+                      <MarkdownSection
+                        id="detailed-description"
+                        title="Protocol description"
+                        sectionOrder={detailedDescriptionOrder}
+                        content={protocolDescription}
                       />
                     )}
-                    {entry.unpricedAssets.length > 0 && (
-                      <Banner type="warning">
-                        {`USD totals exclude ${entry.unpricedAssets.join(', ')} because a demo price is not available.`}
-                      </Banner>
+
+                    {hasUpgradesAndGovernance &&
+                      entry.upgradesAndGovernance &&
+                      upgradesAndGovernanceOrder && (
+                        <MarkdownSection
+                          id="upgrades-and-governance"
+                          title="Upgrades & Governance"
+                          sectionOrder={upgradesAndGovernanceOrder}
+                          content={entry.upgradesAndGovernance}
+                        />
+                      )}
+
+                    <ProjectSection
+                      id="charts"
+                      title="Charts"
+                      sectionOrder={chartsOrder}
+                    >
+                      <PrivacyChartsSection
+                        defaultRange={defaultChartRange}
+                        project={{
+                          id: entry.id,
+                          name: entry.name,
+                          shortName: entry.shortName,
+                          iconUrl: entry.icon,
+                        }}
+                      />
+                    </ProjectSection>
+
+                    <ProjectSection
+                      id="tvs"
+                      title="Value Secured Breakdown"
+                      sectionOrder={tvsOrder}
+                    >
+                      <PrivacyValueBreakdownTable assets={entry.assets} />
+                    </ProjectSection>
+
+                    <ProjectSection
+                      id="activity"
+                      title="Deposits Breakdown"
+                      sectionOrder={activityOrder}
+                    >
+                      <PrivacyDepositsBreakdownTable assets={entry.assets} />
+                    </ProjectSection>
+
+                    <TrustedSetupSection
+                      id="trusted-setups"
+                      title="Trusted setup"
+                      sectionOrder={trustedSetupsOrder}
+                      trustedSetups={[
+                        {
+                          name: entry.trustedSetup.name,
+                          risk: entry.trustedSetup.risk,
+                          description: entry.trustedSetup.description,
+                          proofSystems: [],
+                        },
+                      ]}
+                    />
+
+                    {entry.permissionsSection && permissionsOrder && (
+                      <PermissionsSection
+                        {...entry.permissionsSection}
+                        id="permissions"
+                        title="Permissions"
+                        sectionOrder={permissionsOrder}
+                        discoUi={entry.discoUi}
+                      />
                     )}
-                  </PrimaryCard>
 
-                  {hasProtocolDescription && (
-                    <MarkdownSection
-                      id="detailed-description"
-                      title="Protocol description"
-                      sectionOrder="01"
-                      content={protocolDescription}
-                    />
-                  )}
+                    {entry.contractsSection && contractsOrder && (
+                      <ContractsSection
+                        {...entry.contractsSection}
+                        id="contracts"
+                        title="Smart contracts"
+                        sectionOrder={contractsOrder}
+                        discoUi={entry.discoUi}
+                      />
+                    )}
+                  </HighlightableLinkContextProvider>
+                </div>
 
-                  <ProjectSection
-                    id="tvs"
-                    title="Value Secured Breakdown"
-                    sectionOrder={hasProtocolDescription ? '02' : '01'}
-                  >
-                    <PrivacyValueBreakdownTable assets={entry.assets} />
-                  </ProjectSection>
-
-                  <ProjectSection
-                    id="activity"
-                    title="Deposits Breakdown"
-                    sectionOrder={hasProtocolDescription ? '03' : '02'}
-                  >
-                    <PrivacyDepositsBreakdownTable assets={entry.assets} />
-                  </ProjectSection>
-
-                  <TrustedSetupSection
-                    id="trusted-setups"
-                    title="Trusted Setup"
-                    sectionOrder={hasProtocolDescription ? '04' : '03'}
-                    trustedSetups={[
-                      {
-                        name: entry.trustedSetup.name,
-                        risk: entry.trustedSetup.risk,
-                        description: entry.trustedSetup.description,
-                        proofSystems: [],
-                      },
-                    ]}
+                <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
+                  <DesktopProjectNavigation
+                    project={{
+                      title: entry.shortName ?? entry.name,
+                      slug: entry.slug,
+                      isUnderReview: entry.isUnderReview,
+                      icon: entry.icon,
+                    }}
+                    sections={navigationSections}
                   />
-
-                  {entry.permissionsSection && (
-                    <PermissionsSection
-                      {...entry.permissionsSection}
-                      id="permissions"
-                      title="Permissions"
-                      sectionOrder={hasProtocolDescription ? '05' : '04'}
-                      discoUi={entry.discoUi}
-                    />
-                  )}
-
-                  {entry.contractsSection && (
-                    <ContractsSection
-                      {...entry.contractsSection}
-                      id="contracts"
-                      title="Smart contracts"
-                      sectionOrder={
-                        hasProtocolDescription
-                          ? entry.permissionsSection
-                            ? '06'
-                            : '05'
-                          : entry.permissionsSection
-                            ? '05'
-                            : '04'
-                      }
-                      discoUi={entry.discoUi}
-                    />
-                  )}
-                </HighlightableLinkContextProvider>
-              </div>
-
-              <div className="row-start-2 mt-2 hidden shrink-0 lg:block">
-                <DesktopProjectNavigation
-                  project={{
-                    title: entry.shortName ?? entry.name,
-                    slug: entry.slug,
-                    isUnderReview: entry.isUnderReview,
-                    icon: entry.icon,
-                  }}
-                  sections={navigationSections}
-                />
+                </div>
               </div>
             </div>
+            <ScrollToTopButton />
           </div>
-          <ScrollToTopButton />
-        </div>
-      </SideNavLayout>
+        </SideNavLayout>
+      </HydrationBoundary>
     </AppLayout>
   )
 }
@@ -215,6 +265,18 @@ function getNavigationSections(
           },
         ]
       : []),
+    ...(entry.upgradesAndGovernance
+      ? [
+          {
+            id: 'upgrades-and-governance',
+            title: 'Upgrades & Governance',
+          },
+        ]
+      : []),
+    {
+      id: 'charts',
+      title: 'Charts',
+    },
     {
       id: 'tvs',
       title: 'Value Secured',
@@ -225,7 +287,7 @@ function getNavigationSections(
     },
     {
       id: 'trusted-setups',
-      title: 'Trusted Setup',
+      title: 'Trusted setup',
     },
     ...(entry.permissionsSection
       ? [

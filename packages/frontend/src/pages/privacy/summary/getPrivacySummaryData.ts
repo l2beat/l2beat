@@ -14,10 +14,11 @@ export interface PrivacySummaryEntry {
   icon: string
   href: string
   description: string
-  totalValueSecuredUsd: number
-  ethWethDeposits7d: number
-  ethWethDeposits30d: number
-  ethWethDepositsTotal: number
+  totalValueLockedUsd: number
+  poolsTracked: number
+  totalDeposits: number
+  totalValueDeposited30dUsd: number
+  totalDeposits30d: number
   isUnderReview: boolean
   trustedSetup: TrustedSetup
 }
@@ -40,10 +41,11 @@ export async function getPrivacySummaryData(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
-    totalValueSecuredUsd: project.summary.totalValueSecuredUsd,
-    ethWethDeposits7d: project.summary.ethWethDeposits.last7d,
-    ethWethDeposits30d: project.summary.ethWethDeposits.last30d,
-    ethWethDepositsTotal: project.summary.ethWethDeposits.total,
+    totalValueLockedUsd: project.summary.totalValueSecuredUsd,
+    poolsTracked: project.summary.bucketCount,
+    totalDeposits: project.summary.deposits.total,
+    totalValueDeposited30dUsd: project.summary.depositedValueUsd.last30d,
+    totalDeposits30d: project.summary.deposits.last30d,
     isUnderReview: !!project.statuses.reviewStatus,
     trustedSetup: project.trustedSetup,
   }))

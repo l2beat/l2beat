@@ -17,6 +17,8 @@ const ETH_ASSET_KEY = 'ETH'
 const ETH_TOKEN_INFO = { ticker: 'ETH', decimals: 18 } as const
 const TORNADO_DEPOSIT_EVENT =
   '0xa945e51eec50ab98c161376f0db4cf2aeba3ec92755fe2fcd388bdbbb80ff196'
+const TORNADO_WITHDRAWAL_EVENT =
+  '0xe9e508bad6d4c3227e881ca19068f099da81b5164dd6d62b2eaf1e8bc6c34931'
 export const ETHEREUM_BLOCKS_IN_7_DAYS = (7 * 24 * 60 * 60) / 12
 export const ETHEREUM_BLOCKS_IN_30_DAYS = (30 * 24 * 60 * 60) / 12
 const MIN_RELEVANT_DEPOSITS_TORNADO = 100
@@ -154,6 +156,7 @@ The core mixer contracts are immutable and have no admin, pause, or upgrade path
     // TODO: Replace with the actual trusted setup used by the project.
     trustedSetup: TRUSTED_SETUPS.TornadoCash,
     assets: getTornadoAssets(),
+    upgradesAndGovernance: `Tornado cash has a TORN DAO, however it does not have the authority to upgrade or modify existing pools in any way. It can only add new pools to the onchain setup and the official UI, manage relayer-relevant parameters and govern the TORN token.`
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
@@ -199,10 +202,10 @@ function getTornadoAssets(): ProjectPrivacyAsset[] {
       throw new Error(`Invalid Tornado token address: ${token}`)
     }
 
-    const amount = formatDenomination(
-      BigInt(pool.values?.denomination?.toString() ?? 0),
-      tokenInfo.decimals,
+    const denominationAmount = BigInt(
+      pool.values?.denomination?.toString() ?? 0,
     )
+    const amount = formatDenomination(denominationAmount, tokenInfo.decimals)
 
     // Each asset aggregates all its fixed-denomination pools into buckets.
     const groupKey = tokenAddress ?? ETH_ASSET_KEY
@@ -257,25 +260,25 @@ function getTornadoAssets(): ProjectPrivacyAsset[] {
               : pool.address,
             holder: pool.address,
           },
-      deposits: {
-        total: {
-          type: 'discoveryValue',
-          contract: pool.address.toString(),
-          key: 'nextIndex',
-        },
-        last7d: {
-          type: 'eventCount',
+      flows: {
+        sinceBlock: pool.sinceBlock ?? 0,
+        deposit: {
           chain: 'ethereum',
           event: TORNADO_DEPOSIT_EVENT,
           address: pool.address,
-          fromLastBlock: ETHEREUM_BLOCKS_IN_7_DAYS,
+          extractor: 'fixedAmount',
+          params: {
+            amount: denominationAmount.toString(),
+          },
         },
-        last30d: {
-          type: 'eventCount',
+        withdrawal: {
           chain: 'ethereum',
-          event: TORNADO_DEPOSIT_EVENT,
+          event: TORNADO_WITHDRAWAL_EVENT,
           address: pool.address,
-          fromLastBlock: ETHEREUM_BLOCKS_IN_30_DAYS,
+          extractor: 'fixedAmount',
+          params: {
+            amount: denominationAmount.toString(),
+          },
         },
       },
     })

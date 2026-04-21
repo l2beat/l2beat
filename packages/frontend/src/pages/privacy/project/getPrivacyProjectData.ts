@@ -1,4 +1,4 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import type { InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -12,15 +12,17 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import { getProjectMetadataDescription } from '~/ssr/head/getProjectMetadataDescription'
 import type { RenderData } from '~/ssr/types'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { optionToRange } from '~/utils/range/range'
 
 export interface PrivacyProjectEntry {
-  id: string
+  id: ProjectId
   slug: string
   name: string
   shortName?: string
@@ -43,6 +45,7 @@ export interface PrivacyProjectEntry {
     risk: 'green' | 'yellow' | 'red' | 'N/A'
     description: string
   }
+  upgradesAndGovernance?: string
   permissionsSection:
     | Omit<PermissionsSectionProps, 'id' | 'title' | 'sectionOrder'>
     | undefined
@@ -89,6 +92,8 @@ export async function getPrivacyProjectData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData | undefined> {
+  const helpers = getSsrHelpers()
+  const defaultChartRange = optionToRange('1y')
   const [
     appLayoutProps,
     snapshot,
@@ -111,6 +116,11 @@ export async function getPrivacyProjectData(
   if (!project) {
     return undefined
   }
+
+  await helpers.privacy.projectChart.prefetch({
+    projectId: project.id,
+    range: defaultChartRange,
+  })
 
   const permissionsSection = getPermissionsSection(
     {
@@ -164,6 +174,7 @@ export async function getPrivacyProjectData(
       risk: project.trustedSetup.risk,
       description: project.trustedSetup.longDescription,
     },
+    upgradesAndGovernance: project.upgradesAndGovernance,
     permissionsSection,
     contractsSection,
     summary: {
@@ -201,6 +212,8 @@ export async function getPrivacyProjectData(
       props: {
         ...appLayoutProps,
         entry: projectEntry,
+        defaultChartRange,
+        queryState: helpers.dehydrate(),
       },
     },
   }

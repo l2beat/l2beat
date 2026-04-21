@@ -1,9 +1,10 @@
 import { TICKERS } from '@l2beat/config/build/projects/tornado-cash/tornado-cash'
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { type InMemoryCache, UnixTime } from '@l2beat/shared-pure'
 import {
   getAllPrivacyBucketRows,
   type PrivacyBucketRow,
 } from './db/PrivacyBucketRepo'
+import { getAllPrivacyHistoryRows } from './db/PrivacyHistoryRepo'
 import { getPrivacyProjects } from './getPrivacyProjects'
 import type {
   PrivacyAssetSnapshot,
@@ -12,8 +13,6 @@ import type {
   PrivacyProjectSnapshot,
   PrivacySnapshot,
 } from './types'
-
-const ETH_WETH_SYMBOLS = new Set(['ETH', 'WETH'])
 
 interface TokenInfo {
   ticker: string
@@ -51,10 +50,20 @@ export async function getPrivacySnapshot(
     async () => {
       const projects = await getPrivacyProjects()
       const rows = getAllPrivacyBucketRows()
+      const historyRows = getAllPrivacyHistoryRows()
       const rowIndex = indexRows(rows)
+      const depositValue30dUsdByProject = indexDepositValue30dUsdByProject(
+        projects,
+        historyRows,
+        UnixTime.now(),
+      )
 
       const snapshots = projects.map((project) =>
-        buildProjectSnapshot(project, rowIndex),
+        buildProjectSnapshot(
+          project,
+          rowIndex,
+          depositValue30dUsdByProject.get(project.id.toString()) ?? 0,
+        ),
       )
 
       const orderedProjects = snapshots.sort(
@@ -70,8 +79,8 @@ export async function getPrivacySnapshot(
           totalValueSecuredUsd: sum(
             orderedProjects.map((p) => p.summary.totalValueSecuredUsd),
           ),
-          ethWethDeposits30d: sum(
-            orderedProjects.map((p) => p.summary.ethWethDeposits.last30d),
+          deposits30d: sum(
+            orderedProjects.map((p) => p.summary.deposits.last30d),
           ),
         },
       }
@@ -96,6 +105,7 @@ function rowKey(projectId: string, assetKey: string, bucketId: string): string {
 function buildProjectSnapshot(
   project: PrivacyProjectConfig,
   rowIndex: RowIndex,
+  depositValue30dUsd: number,
 ): PrivacyProjectSnapshot {
   const projectId = project.id.toString()
 
@@ -127,15 +137,17 @@ function buildProjectSnapshot(
     permissions: project.permissions,
     statuses: project.statuses,
     trustedSetup: project.privacyInfo.trustedSetup,
+    upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     assets: orderedAssets,
     summary: {
       totalValueSecuredUsd: sum(
         orderedAssets.map((asset) => asset.totalValueUsd ?? 0),
       ),
+      bucketCount: sum(orderedAssets.map((asset) => asset.bucketCount)),
       deposits: aggregateDeposits(orderedAssets),
-      ethWethDeposits: aggregateDeposits(
-        orderedAssets.filter((asset) => ETH_WETH_SYMBOLS.has(asset.symbol)),
-      ),
+      depositedValueUsd: {
+        last30d: depositValue30dUsd,
+      },
     },
     unpricedAssets,
   }
@@ -240,8 +252,71 @@ function aggregateDeposits(
   }
 }
 
+function indexDepositValue30dUsdByProject(
+  projects: PrivacyProjectConfig[],
+  historyRows: ReturnType<typeof getAllPrivacyHistoryRows>,
+  now: number,
+): Map<string, number> {
+  const bucketInfoByKey = new Map<
+    string,
+    { decimals: number; priceUsd: number | null }
+  >()
+
+  for (const project of projects) {
+    const projectId = project.id.toString()
+    for (const asset of project.privacyInfo.assets) {
+      const tokenInfo = getTokenInfo(asset.asset.address, asset.asset.symbol)
+      const assetKey = (
+        asset.asset.address ??
+        asset.asset.symbol ??
+        tokenInfo.ticker
+      ).toLowerCase()
+
+      for (const bucket of asset.buckets) {
+        bucketInfoByKey.set(rowKey(projectId, assetKey, bucket.id), {
+          decimals: tokenInfo.decimals,
+          priceUsd: tokenInfo.price,
+        })
+      }
+    }
+  }
+
+  const result = new Map<string, number>()
+  const last30dCutoff = UnixTime.toStartOf(now, 'day') - 29 * UnixTime.DAY
+
+  for (const row of historyRows) {
+    if (row.depositAmount === '0' || row.timestamp < last30dCutoff) {
+      continue
+    }
+
+    const bucketInfo = bucketInfoByKey.get(
+      rowKey(row.projectId, row.assetKey, row.bucketId),
+    )
+    if (!bucketInfo) continue
+
+    const valueUsd = amountToUsd(
+      BigInt(row.depositAmount),
+      bucketInfo.decimals,
+      bucketInfo.priceUsd,
+    )
+
+    result.set(row.projectId, (result.get(row.projectId) ?? 0) + valueUsd)
+  }
+
+  return result
+}
+
 function sum(values: number[]): number {
   return values.reduce((acc, value) => acc + value, 0)
+}
+
+function amountToUsd(
+  amount: bigint,
+  decimals: number,
+  priceUsd: number | null,
+): number {
+  if (priceUsd === null) return 0
+  return bigintToNumber(amount, decimals) * priceUsd
 }
 
 function bigintToNumber(value: bigint, decimals: number): number {

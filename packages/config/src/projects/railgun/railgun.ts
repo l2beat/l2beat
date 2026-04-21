@@ -1,6 +1,8 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatLargeNumber,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -10,15 +12,52 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject, ProjectPrivacyAsset } from '../../types'
-import {
-  ETHEREUM_BLOCKS_IN_7_DAYS,
-  ETHEREUM_BLOCKS_IN_30_DAYS,
-  TICKERS,
-} from '../tornado-cash/tornado-cash'
+import { TICKERS } from '../tornado-cash/tornado-cash'
 
 const discovery = new ProjectDiscovery('railgun')
 const RAILGUN_SHIELD_EVENT =
   '0x3a5b9dc26075a3801a6ddccf95fec485bb7500a91b44cec1add984c21ee6db3b'
+const RAILGUN_UNSHIELD_EVENT =
+  '0xd93cf895c7d5b2cd7dc7a098b678b3089f37d91f48d9b83a0800a91cbdf05284'
+
+const stakingContractAddress = discovery.getContract('Staking').address
+const stakeLocktime = discovery.getContractValue<number>(
+  'Staking',
+  'STAKE_LOCKTIME',
+)
+const proposalSponsorThreshold = discovery.getContractValueBigInt(
+  'Voting',
+  'PROPOSAL_SPONSOR_THRESHOLD',
+)
+const sponsorWindow = discovery.getContractValue<number>(
+  'Voting',
+  'SPONSOR_WINDOW',
+)
+const votingStartOffset = discovery.getContractValue<number>(
+  'Voting',
+  'VOTING_START_OFFSET',
+)
+const votingYayEndOffset = discovery.getContractValue<number>(
+  'Voting',
+  'VOTING_YAY_END_OFFSET',
+)
+const votingNayEndOffset = discovery.getContractValue<number>(
+  'Voting',
+  'VOTING_NAY_END_OFFSET',
+)
+const executionStartOffset = discovery.getContractValue<number>(
+  'Voting',
+  'EXECUTION_START_OFFSET',
+)
+const executionEndOffset = discovery.getContractValue<number>(
+  'Voting',
+  'EXECUTION_END_OFFSET',
+)
+const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+
+function formatRailAmount(amount: bigint): string {
+  return `${formatLargeNumber(Number(amount / 10n ** 18n))} RAIL`
+}
 
 // Manually specifying all tokens that have >100K value on Railgun.
 // In future we might want to decide tokens of interest dynamically with more advanced logic.
@@ -63,6 +102,14 @@ The main tradeoff is governance and separate compliance infrastructure. Railgun'
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.Railgun,
     assets: getRailgunAssets(),
+    upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of RAIL token. DAO has the authority to change ZK circuit logic on the core Railgun contract, effectively arbitrarily changing the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
+
+## Governance flow
+
+1. Users stake RAIL token in the Staking contract ([0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20](https://etherscan.io/address/0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20)). Voting power is proportional to the staked amount and could be delegated to another address. Unstaking has ${formatSeconds(stakeLocktime)} delay.
+2. Anyone can create a new proposal with an IPFS link and onchain calldata on the Voting contract ([0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC)). It enters Sponsorship stage of ${formatSeconds(sponsorWindow)}, where it has to be supported by ${formatRailAmount(proposalSponsorThreshold)} stake.
+3. After a ${formatSeconds(votingStartOffset)} delay, actual vote starts. "Yay" votes need to be cast within ${formatSeconds(votingYayEndOffset)}, "Nay" have ${formatSeconds(votingNayEndOffset)}. Proposal needs to reach the quorum of ${formatRailAmount(quorum)}.
+4. A passed proposal (simple majority) waits for ${formatSeconds(executionStartOffset)} before execution and then must be executed within ${formatSeconds(executionEndOffset)} by anyone. Execution goes via the Delegator smart contract ([0xB6d513f6222Ee92Fff975E901bd792E2513fB53B](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)), which actually has permissions to modify the Railgun protocol values.`,
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
@@ -73,6 +120,7 @@ The main tradeoff is governance and separate compliance infrastructure. Railgun'
 
 function getRailgunAssets(): ProjectPrivacyAsset[] {
   const railgunCore = discovery.getContract('RailgunCore')
+  const sinceBlock = railgunCore.sinceBlock ?? 0
 
   const assets: ProjectPrivacyAsset[] = TRACKED_TOKENS.map((token) => {
     const tokenInfo = TICKERS[token]
@@ -98,30 +146,22 @@ function getRailgunAssets(): ProjectPrivacyAsset[] {
             tokenAddress: ChainSpecificAddress.fromLong('ethereum', token),
             holder: railgunCore.address,
           },
-          deposits: {
-            total: {
-              type: 'discoveryValue',
-              contract: railgunCore.address.toString(),
-              key: 'totalShielded',
-            },
-            last7d: {
-              type: 'eventExtract',
+          flows: {
+            sinceBlock,
+            deposit: {
               chain: 'ethereum',
               event: RAILGUN_SHIELD_EVENT,
               address: railgunCore.address,
-              fromLastBlock: ETHEREUM_BLOCKS_IN_7_DAYS,
-              extractor: 'railgunShieldDeposits',
+              extractor: 'railgunShield',
               params: {
                 tokenAddress: EthereumAddress(token),
               },
             },
-            last30d: {
-              type: 'eventExtract',
+            withdrawal: {
               chain: 'ethereum',
-              event: RAILGUN_SHIELD_EVENT,
+              event: RAILGUN_UNSHIELD_EVENT,
               address: railgunCore.address,
-              fromLastBlock: ETHEREUM_BLOCKS_IN_30_DAYS,
-              extractor: 'railgunShieldDeposits',
+              extractor: 'railgunUnshield',
               params: {
                 tokenAddress: EthereumAddress(token),
               },

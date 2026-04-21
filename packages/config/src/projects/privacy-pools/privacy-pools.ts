@@ -9,15 +9,13 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject, ProjectPrivacyAsset } from '../../types'
-import {
-  ETHEREUM_BLOCKS_IN_7_DAYS,
-  ETHEREUM_BLOCKS_IN_30_DAYS,
-  TICKERS,
-} from '../tornado-cash/tornado-cash'
+import { TICKERS } from '../tornado-cash/tornado-cash'
 
 const discovery = new ProjectDiscovery('privacy-pools')
 const DEPOSITED_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
+const WITHDRAWN_EVENT =
+  '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
 const NATIVE_ETH_ASSET = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
 const MIN_RELEVANT_DEPOSITS_PRIVACY_POOLS = 20
 
@@ -51,6 +49,11 @@ The main tradeoff is upgradeability and ASP dependence. The Entrypoint is a UUPS
   privacyInfo: {
     trustedSetup: TRUSTED_SETUPS.PrivacyPools,
     assets: getPrivacyPoolsAssets(),
+    upgradesAndGovernance: `Privacy pools Entrypoint contract is owned by a 2/4 Multisig ([0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159](https://etherscan.io/address/0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159)). 
+    
+    It is a powerful role that has the authority to upgrade the Entrypoint contract, through which all deposits go. It can also manage minimum deposit amount, deposit fee, disable deposits on pools and manage ASP postman address that manages whitelisted privacy pools deposits.
+    
+    Entrypoint owner cannot prevent private or public withdrawals from the pools.`
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
@@ -143,25 +146,21 @@ function getPrivacyPoolsAssets(): ProjectPrivacyAsset[] {
             tokenAddress: ChainSpecificAddress(asset),
             holder: pool.address,
           },
-      deposits: {
-        total: {
-          type: 'discoveryValue',
-          contract: pool.address.toString(),
-          key: 'totalDeposits',
-        },
-        last7d: {
-          type: 'eventCount',
+      flows: {
+        sinceBlock: pool.sinceBlock ?? 0,
+        deposit: {
           chain: 'ethereum',
           event: DEPOSITED_EVENT,
           address: pool.address,
-          fromLastBlock: ETHEREUM_BLOCKS_IN_7_DAYS,
+          extractor: 'privacyPoolsValue',
+          params: {},
         },
-        last30d: {
-          type: 'eventCount',
+        withdrawal: {
           chain: 'ethereum',
-          event: DEPOSITED_EVENT,
+          event: WITHDRAWN_EVENT,
           address: pool.address,
-          fromLastBlock: ETHEREUM_BLOCKS_IN_30_DAYS,
+          extractor: 'privacyPoolsValue',
+          params: {},
         },
       },
     })

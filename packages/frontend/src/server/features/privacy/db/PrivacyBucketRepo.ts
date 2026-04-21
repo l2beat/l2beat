@@ -1,4 +1,11 @@
-import { getPrivacyDb } from './PrivacyDb'
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  writeFileSync,
+} from 'node:fs'
+import { dirname, resolve } from 'node:path'
 
 export interface PrivacyBucketRow {
   projectId: string
@@ -13,70 +20,77 @@ export interface PrivacyBucketRow {
   deposits30d: number
 }
 
-interface Raw {
-  project_id: string
-  asset_key: string
-  bucket_id: string
-  timestamp: number
-  total_value_amount: string | null
-  price_usd: number | null
-  total_value_usd: number | null
-  deposits_total: number
-  deposits_7d: number
-  deposits_30d: number
+interface PrivacyBucketSnapshotFile {
+  version: 1
+  rows: PrivacyBucketRow[]
 }
 
-const UPSERT_SQL = `
-INSERT INTO privacy_bucket_snapshot (
-  project_id, asset_key, bucket_id, timestamp,
-  total_value_amount, price_usd, total_value_usd,
-  deposits_total, deposits_7d, deposits_30d
-) VALUES (
-  @projectId, @assetKey, @bucketId, @timestamp,
-  @totalValueAmount, @priceUsd, @totalValueUsd,
-  @depositsTotal, @deposits7d, @deposits30d
-)
-ON CONFLICT(project_id, asset_key, bucket_id) DO UPDATE SET
-  timestamp = excluded.timestamp,
-  total_value_amount = excluded.total_value_amount,
-  price_usd = excluded.price_usd,
-  total_value_usd = excluded.total_value_usd,
-  deposits_total = excluded.deposits_total,
-  deposits_7d = excluded.deposits_7d,
-  deposits_30d = excluded.deposits_30d
-`
+const DEFAULT_STORAGE_PATH = resolve(process.cwd(), 'data/privacy.json')
 
 export function upsertManyPrivacyBucketRows(rows: PrivacyBucketRow[]): void {
   if (rows.length === 0) return
-  const db = getPrivacyDb()
-  const stmt = db.prepare(UPSERT_SQL)
-  const tx = db.transaction((batch: PrivacyBucketRow[]) => {
-    for (const row of batch) stmt.run(row)
+
+  const snapshot = readSnapshotFile()
+  const merged = new Map(
+    snapshot.rows.map((row) => [
+      rowKey(row.projectId, row.assetKey, row.bucketId),
+      row,
+    ]),
+  )
+
+  for (const row of rows) {
+    merged.set(rowKey(row.projectId, row.assetKey, row.bucketId), row)
+  }
+
+  writeSnapshotFile({
+    version: 1,
+    rows: [...merged.values()].sort(compareRows),
   })
-  tx(rows)
 }
 
 export function getAllPrivacyBucketRows(): PrivacyBucketRow[] {
-  const db = getPrivacyDb()
-  const rows = db
-    .prepare(
-      `SELECT project_id, asset_key, bucket_id, timestamp,
-              total_value_amount, price_usd, total_value_usd,
-              deposits_total, deposits_7d, deposits_30d
-       FROM privacy_bucket_snapshot`,
-    )
-    .all() as Raw[]
+  return readSnapshotFile().rows
+}
 
-  return rows.map((r) => ({
-    projectId: r.project_id,
-    assetKey: r.asset_key,
-    bucketId: r.bucket_id,
-    timestamp: r.timestamp,
-    totalValueAmount: r.total_value_amount,
-    priceUsd: r.price_usd,
-    totalValueUsd: r.total_value_usd,
-    depositsTotal: r.deposits_total,
-    deposits7d: r.deposits_7d,
-    deposits30d: r.deposits_30d,
-  }))
+function readSnapshotFile(): PrivacyBucketSnapshotFile {
+  const path = getStoragePath()
+  if (!existsSync(path)) {
+    return { version: 1, rows: [] }
+  }
+
+  const parsed = JSON.parse(
+    readFileSync(path, 'utf8'),
+  ) as Partial<PrivacyBucketSnapshotFile>
+
+  if (parsed.version !== 1 || !Array.isArray(parsed.rows)) {
+    throw new Error(`Invalid privacy snapshot file at ${path}`)
+  }
+
+  return {
+    version: 1,
+    rows: parsed.rows,
+  }
+}
+
+function writeSnapshotFile(snapshot: PrivacyBucketSnapshotFile): void {
+  const path = getStoragePath()
+  mkdirSync(dirname(path), { recursive: true })
+
+  const tempPath = `${path}.tmp`
+  writeFileSync(tempPath, `${JSON.stringify(snapshot, null, 2)}\n`)
+  renameSync(tempPath, path)
+}
+
+function getStoragePath(): string {
+  return process.env.PRIVACY_STORAGE_PATH ?? DEFAULT_STORAGE_PATH
+}
+
+function rowKey(projectId: string, assetKey: string, bucketId: string): string {
+  return `${projectId}::${assetKey}::${bucketId}`
+}
+
+function compareRows(a: PrivacyBucketRow, b: PrivacyBucketRow): number {
+  return rowKey(a.projectId, a.assetKey, a.bucketId).localeCompare(
+    rowKey(b.projectId, b.assetKey, b.bucketId),
+  )
 }

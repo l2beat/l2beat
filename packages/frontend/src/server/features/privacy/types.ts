@@ -53,17 +53,17 @@ export interface PrivacyProjectSnapshot {
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   trustedSetup: TrustedSetup
+  upgradesAndGovernance?: string
   assets: PrivacyAssetSnapshot[]
   summary: {
     totalValueSecuredUsd: number
+    bucketCount: number
     deposits: {
       total: number
       last7d: number
       last30d: number
     }
-    ethWethDeposits: {
-      total: number
-      last7d: number
+    depositedValueUsd: {
       last30d: number
     }
   }
@@ -76,6 +76,6 @@ export interface PrivacySnapshot {
   overview: {
     projectCount: number
     totalValueSecuredUsd: number
-    ethWethDeposits30d: number
+    deposits30d: number
   }
 }
