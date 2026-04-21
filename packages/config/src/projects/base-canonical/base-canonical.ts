@@ -6,7 +6,7 @@ export const baseCanonical: BaseProject = {
   slug: 'base-canonical',
   name: 'Base Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
+  addedAt: UnixTime(1768312035), // 2026-01-13T13:47:15Z
   interopConfig: {
     name: 'Base Canonical',
     durationSplit: {

@@ -6,7 +6,7 @@ export const zksync2Canonical: BaseProject = {
   slug: 'zksync2-canonical',
   name: 'ZKsync Era Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
+  addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
     name: 'ZKsync Era Canonical',
     plugins: [

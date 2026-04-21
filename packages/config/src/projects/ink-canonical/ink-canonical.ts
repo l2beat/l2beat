@@ -6,7 +6,7 @@ export const inkCanonical: BaseProject = {
   slug: 'ink-canonical',
   name: 'Ink Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
+  addedAt: UnixTime(1772801290), // 2026-03-06T12:48:10Z
   interopConfig: {
     name: 'Ink Canonical',
     durationSplit: {

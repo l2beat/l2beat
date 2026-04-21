@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../types'
 
 export const agglayerCanonical: BaseProject = {
@@ -6,7 +6,7 @@ export const agglayerCanonical: BaseProject = {
   slug: 'agglayer-canonical',
   name: 'Agglayer Canonical',
   shortName: undefined,
-  addedAt: 1743677000,
+  addedAt: UnixTime(1770733275), // 2026-02-10T14:21:15Z
   interopConfig: {
     name: 'Agglayer Canonical',
     plugins: [

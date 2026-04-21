@@ -6,7 +6,7 @@ export const avalancheCanonical: BaseProject = {
   slug: 'avalanche-canonical',
   name: 'Avalanche Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1662628329),
+  addedAt: UnixTime(1773227777), // 2026-03-11T11:16:17Z
   interopConfig: {
     name: 'Avalanche Canonical',
     durationSplit: {

@@ -6,7 +6,7 @@ export const lineaCanonical: BaseProject = {
   slug: 'linea-canonical',
   name: 'Linea Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1772631490), // 2026-03-04T13:38:10Z
   interopConfig: {
     name: 'Linea Canonical',
     durationSplit: {

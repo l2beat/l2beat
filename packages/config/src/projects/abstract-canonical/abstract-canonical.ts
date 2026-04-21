@@ -6,7 +6,7 @@ export const abstractCanonical: BaseProject = {
   slug: 'abstract-canonical',
   name: 'Abstract Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
+  addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
     name: 'Abstract Canonical',
     plugins: [

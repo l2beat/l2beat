@@ -6,7 +6,7 @@ export const polygonPosCanonical: BaseProject = {
   slug: 'polygon-pos-canonical',
   name: 'Polygon PoS Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  addedAt: UnixTime(1769783599), // 2026-01-30T14:33:19Z
   interopConfig: {
     name: 'Polygon PoS Canonical',
     durationSplit: {

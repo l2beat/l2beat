@@ -6,7 +6,7 @@ export const arbitrumCanonical: BaseProject = {
   slug: 'arbitrum-canonical',
   name: 'Arbitrum Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1769097139), // 2026-01-22T15:52:19Z
   interopConfig: {
     name: 'Arbitrum Canonical',
     durationSplit: {

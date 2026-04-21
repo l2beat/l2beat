@@ -6,7 +6,7 @@ export const opMainnetCanonical: BaseProject = {
   slug: 'op-mainnet-canonical',
   name: 'OP Canonical',
   shortName: undefined,
-  addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
+  addedAt: UnixTime(1768312035), // 2026-01-13T13:47:15Z
   interopConfig: {
     name: 'OP Canonical',
     durationSplit: {
