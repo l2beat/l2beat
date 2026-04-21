@@ -353,7 +353,7 @@ export function ProjectNameInfoTooltip({
 
   return (
     <>
-      <div className="contents max-md:hidden">
+      <div className="flex h-full items-center max-md:hidden">
         <Tooltip disableHoverableContent={false}>
           <TooltipTrigger asChild>{children}</TooltipTrigger>
           <TooltipPortal>
@@ -369,7 +369,7 @@ export function ProjectNameInfoTooltip({
           </TooltipPortal>
         </Tooltip>
       </div>
-      <div className="contents md:hidden">{children}</div>
+      <div className="md:hidden">{children}</div>
     </>
   )
 }

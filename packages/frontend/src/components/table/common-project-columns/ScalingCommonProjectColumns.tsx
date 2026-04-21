@@ -18,7 +18,7 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     columnHelper.accessor((row) => row.name, {
       id: 'name',
       cell: (ctx) => (
-        <div className="md:contents">
+        <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>
             <TableLink href={getHref(ctx.row.original)}>
               <ProjectNameCell

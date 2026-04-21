@@ -27,7 +27,7 @@ export const zkCatalogColumns = [
         nameSecondLine: ctx.row.original.creator,
       }
       return (
-        <div className="md:contents">
+        <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={project}>
             <TableLink href={`/zk-catalog/${ctx.row.original.slug}`}>
               <ProjectNameCell project={project} withInfoTooltip />
