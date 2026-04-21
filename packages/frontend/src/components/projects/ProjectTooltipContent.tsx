@@ -26,16 +26,21 @@ export interface ProjectTooltipSectionData {
   icon: React.ReactNode
 }
 
+export const QUANTUM_RESISTANCE_SECTION: ProjectTooltipSectionData = {
+  id: 'quantum-resistance',
+  text: QUANTUM_RESISTANCE_TOOLTIP,
+  variant: 'muted',
+  icon: <QuantumResistanceIcon className="size-4" />,
+}
+
 export function ProjectTooltipContent({
   projectName,
   description,
-  quantumResistant,
   sections = [],
   badges,
 }: {
   projectName: string
   description?: string
-  quantumResistant?: boolean
   sections?: ProjectTooltipSectionData[]
   badges?: BadgeWithParams[]
 }) {
@@ -43,14 +48,6 @@ export function ProjectTooltipContent({
     <>
       <span className="text-heading-18">What is {projectName}?</span>
       {description && <p>{description}</p>}
-      {quantumResistant && (
-        <TooltipSection
-          variant="muted"
-          icon={<QuantumResistanceIcon className="size-4" />}
-        >
-          {QUANTUM_RESISTANCE_TOOLTIP}
-        </TooltipSection>
-      )}
       {sections.map((section) => (
         <TooltipSection
           key={section.id}

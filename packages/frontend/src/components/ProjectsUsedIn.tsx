@@ -5,7 +5,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ProjectTooltipContent } from '~/components/projects/ProjectTooltipContent'
+import {
+  ProjectTooltipContent,
+  QUANTUM_RESISTANCE_SECTION,
+} from '~/components/projects/ProjectTooltipContent'
 import { useRouter } from '~/hooks/useRouter'
 import { cn } from '~/utils/cn'
 import {
@@ -96,7 +99,11 @@ export function ProjectsUsedIn({
                 <ProjectTooltipContent
                   projectName={project.name}
                   description={project.description}
-                  quantumResistant={project.quantumResistant}
+                  sections={
+                    project.quantumResistant
+                      ? [QUANTUM_RESISTANCE_SECTION]
+                      : undefined
+                  }
                 />
               </TooltipContent>
             </Tooltip>

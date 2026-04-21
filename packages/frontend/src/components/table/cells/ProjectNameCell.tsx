@@ -16,6 +16,7 @@ import { Markdown } from '~/components/markdown/Markdown'
 import {
   ProjectTooltipContent,
   type ProjectTooltipSectionData,
+  QUANTUM_RESISTANCE_SECTION,
   QUANTUM_RESISTANCE_TOOLTIP,
 } from '~/components/projects/ProjectTooltipContent'
 import { ClockIcon } from '~/icons/Clock'
@@ -340,12 +341,12 @@ export function ProjectNameInfoTooltip({
   children: React.ReactElement
 }) {
   const projectName = project.shortName ?? project.name
-  const warningSections = getTooltipWarningSections(project)
+  const sections = getTooltipSections(project)
   const hasTooltipContent =
     !!project.description ||
     !!project.quantumResistant ||
     (project.badges?.length ?? 0) > 0 ||
-    warningSections.length > 0
+    sections.length > 0
 
   if (!hasTooltipContent) {
     return children
@@ -361,8 +362,7 @@ export function ProjectNameInfoTooltip({
               <ProjectTooltipContent
                 projectName={projectName}
                 description={project.description}
-                quantumResistant={project.quantumResistant}
-                sections={warningSections}
+                sections={sections}
                 badges={project.badges}
               />
             </TooltipContent>
@@ -374,8 +374,12 @@ export function ProjectNameInfoTooltip({
   )
 }
 
-function getTooltipWarningSections(project: ProjectCellProject) {
+function getTooltipSections(project: ProjectCellProject) {
   const sections: ProjectTooltipSectionData[] = []
+
+  if (project.quantumResistant) {
+    sections.push(QUANTUM_RESISTANCE_SECTION)
+  }
 
   if (project.ecosystemInfo?.isPartOfSuperchain) {
     sections.push({
