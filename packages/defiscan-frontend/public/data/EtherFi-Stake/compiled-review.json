@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "publishedAt": "2026-04-01T00:00:00.000Z",
-  "lastModified": "2026-04-20T09:10:53.661Z",
-  "compiledAt": "2026-04-20T09:16:50.000Z",
+  "lastModified": "2026-04-15T00:00:00.000Z",
+  "compiledAt": "2026-04-21T09:00:35.000Z",
   "project": "EtherFi-Stake",
   "metadata": {
     "protocolName": "EtherFi Stake",
@@ -10,7 +10,7 @@
     "chain": "Ethereum",
     "projectType": "liquid-staking",
     "tokenName": "eETH",
-    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $938.05M."
+    "description": "EtherFi is a liquid staking protocol that issues eETH (and its wrapped variant weETH) against ETH deposits. Staked ETH is restaked into EigenLayer strategies and Lido stETH positions, earning both consensus-layer and restaking rewards. The protocol is fully upgradeable: most core contracts sit behind EIP-1967 proxies controlled by a 3-day timelock, with a secondary 8-hour timelock governing operational parameters. A 3/5 multisig and a 4/7 multisig share proposer/executor roles on these timelocks, and several EOAs hold pauser or node-operator privileges. External dependencies include EigenLayer (delegation, pod management, strategy deposits), Lido (stETH minting and withdrawals), Curve (liquidity pools), Coinbase cbETH, and LayerZero (cross-chain messaging). Total capital at risk across admins is $932.44M."
   },
   "totals": {
     "contractCount": 64,
@@ -18,9 +18,9 @@
     "scoredFunctionCount": 84,
     "adminCount": 43,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 938046591.1138402,
-    "totalTokenValueAtRisk": 6326970188.080215,
-    "totalTokenValue": 6326970188.080215,
+    "totalCapitalAtRisk": 932442976.2937695,
+    "totalTokenValueAtRisk": 6359329484.175378,
+    "totalTokenValue": 6359329484.175378,
     "linesOfCode": 18031,
     "verifiedContractCount": 63,
     "coverage": 98
@@ -145,7 +145,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -204,7 +204,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -233,7 +233,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -248,7 +248,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -515,7 +515,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -574,7 +574,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -603,7 +603,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -618,7 +618,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -885,7 +885,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -944,7 +944,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -973,7 +973,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -988,7 +988,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -1255,7 +1255,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1314,7 +1314,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1343,7 +1343,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1358,7 +1358,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -1636,7 +1636,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1695,7 +1695,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1724,7 +1724,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1739,7 +1739,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -2003,13 +2003,13 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 938046591.1138402,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableCapital": 932442976.2937695,
+      "totalReachableTokenValue": 6359329484.175378
     },
     {
       "address": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
       "name": "EtherFi Main Timelock (3d)",
-      "description": "Primary governance timelock with a 3-day delay. Controls upgrades to the majority of protocol contracts (LiquidityPool, EtherFiNodesManager, StakingManager, TNFT, WithdrawRequestNFT, Liquifier, MembershipManager, and others), manages EtherFiRestaker EigenLayer operations (delegation, strategy deposits, withdrawals), and governs protocol parameters across AuctionManager, EtherFiOracle, ProtocolRevenueManager, and MembershipNFT. Holds proposer/executor roles shared with the 4/7 multisig. Controls $938.05M in direct capital exposure across 155 permissioned functions.",
+      "description": "Primary governance timelock with a 3-day delay. Controls upgrades to the majority of protocol contracts (LiquidityPool, EtherFiNodesManager, StakingManager, TNFT, WithdrawRequestNFT, Liquifier, MembershipManager, and others), manages EtherFiRestaker EigenLayer operations (delegation, strategy deposits, withdrawals), and governs protocol parameters across AuctionManager, EtherFiOracle, ProtocolRevenueManager, and MembershipNFT. Holds proposer/executor roles shared with the 4/7 multisig. Controls $932.44M in direct capital exposure across 155 permissioned functions.",
       "adminType": "Immutable",
       "isGovernance": false,
       "functions": [
@@ -2030,7 +2030,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2089,7 +2089,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2118,7 +2118,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2133,7 +2133,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -2400,7 +2400,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2459,7 +2459,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2488,7 +2488,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2503,7 +2503,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -2770,7 +2770,7 @@
                 "renounceOwnership",
                 "transferOwnership"
               ],
-              "fundsUsd": 22386.18989482656,
+              "fundsUsd": 22554.40560838957,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2829,7 +2829,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2858,7 +2858,7 @@
                 "upgradeTo",
                 "upgradeToAndCall"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -2873,7 +2873,7 @@
                 "transferOwnership"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -3128,7 +3128,7 @@
           "contractName": "Treasury",
           "functionName": "withdraw",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22554.40560838957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3137,7 +3137,7 @@
           "contractName": "Treasury",
           "functionName": "renounceOwnership",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22554.40560838957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -3146,7 +3146,7 @@
           "contractName": "Treasury",
           "functionName": "transferOwnership",
           "impact": "critical",
-          "directFundsUsd": 22386.18989482656,
+          "directFundsUsd": 22554.40560838957,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -4626,10 +4626,10 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 938046591.1138402,
-      "totalDirectTokenValue": 6326970188.080215,
-      "totalReachableCapital": 938046591.1138402,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalDirectCapital": 932442976.2937695,
+      "totalDirectTokenValue": 6359329484.175378,
+      "totalReachableCapital": 932442976.2937695,
+      "totalReachableTokenValue": 6359329484.175378
     },
     {
       "address": "eth:0xDEd1F5e7Fb71c1740AEBc09b6b0a5E24b0cB71d1",
@@ -5267,7 +5267,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5321,7 +5321,7 @@
                 "burnShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -5450,7 +5450,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -5476,7 +5476,7 @@
                 "burnShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -5597,8 +5597,8 @@
       ],
       "totalDirectCapital": 0,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableCapital": 24220272.68358201,
+      "totalReachableTokenValue": 6359329484.175378
     },
     {
       "address": "eth:0xD789870beA40D056A4d26055d0bEFcC8755DA146",
@@ -5881,9 +5881,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 938024204.9239454,
+      "totalDirectCapital": 932420421.8881611,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 938024204.9239454,
+      "totalReachableCapital": 932420421.8881611,
       "totalReachableTokenValue": 0
     },
     {
@@ -5967,14 +5967,14 @@
         }
       ],
       "totalDirectCapital": 0,
-      "totalDirectTokenValue": 6326970188.080215,
+      "totalDirectTokenValue": 6359329484.175378,
       "totalReachableCapital": 0,
-      "totalReachableTokenValue": 6326970188.080215
+      "totalReachableTokenValue": 6359329484.175378
     },
     {
       "address": "eth:0x0EF8fa4760Db8f5Cd4d993f3e3416f30f942D705",
       "name": "EtherFiAdmin Contract",
-      "description": "An upgradeable admin contract that aggregates multiple protocol operations behind a single caller. Manages validator lifecycle (approval, confirmation, funding), LiquidityPool parameters (validator size, fee recipient, restaking config), pause/unpause, and protocol fee payments. Owned by the main 3-day timelock. Controls $10.42M in direct capital.",
+      "description": "An upgradeable admin contract that aggregates multiple protocol operations behind a single caller. Manages validator lifecycle (approval, confirmation, funding), LiquidityPool parameters (validator size, fee recipient, restaking config), pause/unpause, and protocol fee payments. Owned by the main 3-day timelock. Controls $24.22M in direct capital.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -6015,9 +6015,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 24220272.68358201,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 24220272.68358201,
       "totalReachableTokenValue": 0
     },
     {
@@ -6055,9 +6055,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 24220272.68358201,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 24220272.68358201,
       "totalReachableTokenValue": 0
     },
     {
@@ -6077,9 +6077,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 24220272.68358201,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 24220272.68358201,
       "totalReachableTokenValue": 0
     },
     {
@@ -6108,9 +6108,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 24220272.68358201,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 24220272.68358201,
       "totalReachableTokenValue": 0
     },
     {
@@ -6139,9 +6139,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 10419772.872690236,
+      "totalDirectCapital": 24220272.68358201,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 10419772.872690236,
+      "totalReachableCapital": 24220272.68358201,
       "totalReachableTokenValue": 0
     },
     {
@@ -6482,7 +6482,7 @@
     {
       "address": "eth:0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
       "name": "RoleRegistry Contract",
-      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $5.80B in reachable capital through withdrawal and weETH management.",
+      "description": "An upgradeable role-based access control contract that gates operations on WithdrawRequestNFT (finalize/invalidate/validate requests, pause, handle remainders) and Wrapped eETH Token (recover assets, upgrade proxy). The RoleRegistry itself is owned by the main 3-day timelock. Controls $5.74B in reachable capital through withdrawal and weETH management.",
       "adminType": "Upgradeable",
       "isGovernance": false,
       "functions": [
@@ -6588,9 +6588,9 @@
           "reachableContracts": []
         }
       ],
-      "totalDirectCapital": 5795922451.191509,
+      "totalDirectCapital": 5742073585.233676,
       "totalDirectTokenValue": 0,
-      "totalReachableCapital": 5795922451.191509,
+      "totalReachableCapital": 5742073585.233676,
       "totalReachableTokenValue": 0
     },
     {
@@ -7371,8 +7371,8 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 938046591.1138402,
-    "totalTokenValueAtRisk": 6326970188.080215
+    "totalFundsAtRisk": 932442976.2937695,
+    "totalTokenValueAtRisk": 6359329484.175378
   },
   "dependencies": [
     {
@@ -7411,7 +7411,7 @@
               "calledFunctions": [
                 "batchApproveRegistration"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7435,7 +7435,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -7454,7 +7454,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7478,7 +7478,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -7497,7 +7497,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7553,7 +7553,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchApproveRegistration",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7562,7 +7562,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchCreateBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7571,7 +7571,7 @@
           "contractName": "LiquidityPool",
           "functionName": "confirmAndFundBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7580,7 +7580,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7596,7 +7596,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             }
           ]
@@ -7606,7 +7606,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7622,7 +7622,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             }
           ]
@@ -7637,8 +7637,8 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 24220272.68358201,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -7668,7 +7668,7 @@
               "calledFunctions": [
                 "batchApproveRegistration"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7692,7 +7692,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -7711,7 +7711,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7735,7 +7735,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -7754,7 +7754,7 @@
                 "deposit",
                 "sharesForAmount"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -7819,7 +7819,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchApproveRegistration",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7828,7 +7828,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchCreateBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7837,7 +7837,7 @@
           "contractName": "LiquidityPool",
           "functionName": "batchRegister",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7846,7 +7846,7 @@
           "contractName": "LiquidityPool",
           "functionName": "confirmAndFundBeaconValidators",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -7855,7 +7855,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7871,7 +7871,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             }
           ]
@@ -7881,7 +7881,7 @@
           "contractName": "LiquidityPool",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 10419772.872690236,
+          "directFundsUsd": 24220272.68358201,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -7897,7 +7897,7 @@
                 "balanceOf"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             }
           ]
@@ -8034,7 +8034,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8055,7 +8055,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8134,8 +8134,8 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 24220272.68358201,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -8258,7 +8258,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "completeQueuedWithdrawals",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8267,7 +8267,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "delegateTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8276,7 +8276,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "queueWithdrawals",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8285,7 +8285,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "undelegate",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8294,7 +8294,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8305,7 +8305,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8316,7 +8316,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8327,7 +8327,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8348,7 +8348,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8396,7 +8396,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8444,7 +8444,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8465,7 +8465,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8486,7 +8486,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8520,14 +8520,14 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
+      "totalFundsAtRisk": 932420421.8881611,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
     {
       "address": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
       "name": "EigenLayer StrategyManager",
-      "description": "Manages EtherFi's restaking strategy deposits into EigenLayer. EtherFiRestaker deposits stETH into EigenLayer strategies via this contract. The restaker holds $927.60M in total positions across EigenLayer and Lido combined.",
+      "description": "Manages EtherFi's restaking strategy deposits into EigenLayer. EtherFiRestaker deposits stETH into EigenLayer strategies via this contract. The restaker holds $908.20M in total positions across EigenLayer and Lido combined.",
       "entity": "EigenLayer",
       "isAutoDetected": true,
       "viewOnlyPath": false,
@@ -8540,7 +8540,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "depositIntoStrategy",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8549,7 +8549,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8560,7 +8560,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8571,7 +8571,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8582,14 +8582,14 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
+      "totalFundsAtRisk": 932420421.8881611,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -8611,7 +8611,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "depositIntoStrategy",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8620,7 +8620,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "stEthRequestWithdrawal",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8629,7 +8629,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "transferStETH",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -8638,7 +8638,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8649,7 +8649,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8660,7 +8660,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -8671,7 +8671,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8696,7 +8696,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -8706,7 +8706,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8726,7 +8726,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8752,7 +8752,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -8762,7 +8762,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8782,7 +8782,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8808,7 +8808,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -8820,7 +8820,7 @@
                 "balanceOf",
                 "unwrap"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5742073585.233676,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8831,7 +8831,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8851,7 +8851,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8877,7 +8877,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -8890,7 +8890,7 @@
                 "balanceOf",
                 "unwrap"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5742073585.233676,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8901,7 +8901,7 @@
               "calledFunctions": [
                 "transferStETH"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8921,7 +8921,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -8948,7 +8948,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -8961,7 +8961,7 @@
                 "unwrap",
                 "permit"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5742073585.233676,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8973,7 +8973,7 @@
                 "transferStETH",
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -8993,7 +8993,7 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9020,7 +9020,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9033,7 +9033,7 @@
                 "unwrap",
                 "permit"
               ],
-              "fundsUsd": 5795922451.191509,
+              "fundsUsd": 5742073585.233676,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9045,7 +9045,7 @@
                 "transferStETH",
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9065,15 +9065,15 @@
                 "burnEEthSharesForNonETHWithdrawal",
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 6733946656.115455,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 6674494007.121837,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -9092,7 +9092,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "setRewardsClaimer",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -9101,7 +9101,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9112,7 +9112,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9123,7 +9123,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9134,14 +9134,14 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
+      "totalFundsAtRisk": 932420421.8881611,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
     },
@@ -9167,7 +9167,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "stEthClaimWithdrawals",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9177,7 +9177,7 @@
               "calledFunctions": [
                 "totalValueOutOfLp"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9188,7 +9188,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "stEthRequestWithdrawal",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
@@ -9197,7 +9197,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9208,7 +9208,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9219,7 +9219,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9230,7 +9230,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9253,7 +9253,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9264,7 +9264,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9287,7 +9287,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9298,7 +9298,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9330,7 +9330,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9340,7 +9340,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9353,7 +9353,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9376,7 +9376,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9386,7 +9386,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9399,7 +9399,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9423,7 +9423,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9433,15 +9433,15 @@
               "calledFunctions": [
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -9460,7 +9460,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9471,7 +9471,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9482,7 +9482,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9493,7 +9493,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9516,7 +9516,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9527,7 +9527,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9550,7 +9550,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9561,7 +9561,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9584,7 +9584,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9594,7 +9594,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9607,7 +9607,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9630,7 +9630,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9640,7 +9640,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9653,15 +9653,15 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -9682,7 +9682,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeTo",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9693,7 +9693,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9704,7 +9704,7 @@
           "contractName": "EtherFiRestaker",
           "functionName": "upgradeToAndCall",
           "viewOnlyPath": false,
-          "directFundsUsd": 927604432.0512552,
+          "directFundsUsd": 908200149.204579,
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
@@ -9715,7 +9715,7 @@
                 "totalValueOutOfLp",
                 "proxiableUUID"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9738,7 +9738,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9749,7 +9749,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9772,7 +9772,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9783,7 +9783,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9815,7 +9815,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9825,7 +9825,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9838,7 +9838,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9861,7 +9861,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9871,7 +9871,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -9884,7 +9884,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9908,7 +9908,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9918,15 +9918,15 @@
               "calledFunctions": [
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -9957,7 +9957,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -9968,7 +9968,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -9991,7 +9991,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -10002,7 +10002,7 @@
                 "depositToRecipient",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10025,7 +10025,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -10035,7 +10035,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10048,7 +10048,7 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10071,7 +10071,7 @@
                 "totalShares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -10081,7 +10081,7 @@
               "calledFunctions": [
                 "proxiableUUID"
               ],
-              "fundsUsd": 927604432.0512552,
+              "fundsUsd": 908200149.204579,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -10094,15 +10094,15 @@
                 "totalValueOutOfLp",
                 "amountForShare"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
           ]
         }
       ],
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     },
     {
@@ -10201,7 +10201,7 @@
                 "shares"
               ],
               "fundsUsd": 0,
-              "tokenValueUsd": 6326970188.080215,
+              "tokenValueUsd": 6359329484.175378,
               "fundsAtRisk": true
             },
             {
@@ -10211,7 +10211,7 @@
               "calledFunctions": [
                 "getTotalEtherClaimOf"
               ],
-              "fundsUsd": 10419772.872690236,
+              "fundsUsd": 24220272.68358201,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -10227,59 +10227,59 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215,
+      "totalFundsAtRisk": 24220272.68358201,
+      "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     }
   ],
   "dependencyEntityGroups": [
     {
       "entity": "Ethereum",
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 24220272.68358201,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "EigenLayer",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "LayerZero",
-      "totalFundsAtRisk": 10419772.872690236,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 24220272.68358201,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "Lido stETH",
-      "totalFundsAtRisk": 6733946656.115455,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 6674494007.121837,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "Lido",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "Coinbase cbETH",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "Curve",
-      "totalFundsAtRisk": 938024204.9239454,
-      "totalTokenValueAtRisk": 6326970188.080215
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378
     }
   ],
   "dependencyTotals": {
-    "totalFundsAtRisk": 6733946656.115455,
-    "totalTokenValueAtRisk": 6326970188.080215
+    "totalFundsAtRisk": 6674494007.121837,
+    "totalTokenValueAtRisk": 6359329484.175378
   },
   "funds": [
     {
       "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
       "name": "LiquidityPool (ETH)",
-      "description": "The main liquidity pool holding user-deposited ETH awaiting validator deployment or withdrawal processing. Holds $10.42M primarily in ETH, representing the protocol's liquid reserves available for staking and redemptions.",
+      "description": "The main liquidity pool holding user-deposited ETH awaiting validator deployment or withdrawal processing. Holds $24.22M primarily in ETH, representing the protocol's liquid reserves available for staking and redemptions.",
       "balances": {
-        "totalUsdValue": 10419772.872690236
+        "totalUsdValue": 24220272.68358201
       },
       "positions": null,
       "tokenInfo": null,
@@ -10288,9 +10288,9 @@
     {
       "address": "eth:0x6329004E903B7F420245E7aF3f355186f2432466",
       "name": "Treasury (ETH)",
-      "description": "Protocol treasury holding accumulated fees and reserves. Contains $22.39K in ETH, controlled by the main 3-day timelock.",
+      "description": "Protocol treasury holding accumulated fees and reserves. Contains $22.55K in ETH, controlled by the main 3-day timelock.",
       "balances": {
-        "totalUsdValue": 22386.18989482656
+        "totalUsdValue": 22554.40560838957
       },
       "positions": null,
       "tokenInfo": null,
@@ -10299,23 +10299,23 @@
     {
       "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
       "name": "eETH Token",
-      "description": "The ether.fi ETH rebasing token contract. eETH represents staked ETH positions with a current market capitalization of $6.33B.",
+      "description": "The ether.fi ETH rebasing token contract. eETH represents staked ETH positions with a current market capitalization of $6.36B.",
       "balances": null,
       "positions": null,
       "tokenInfo": {
         "symbol": "eETH",
-        "price": 2304.95,
-        "totalSupply": "2744948.9958915445",
-        "tokenValue": 6326970188.080215
+        "price": 2322.27,
+        "totalSupply": "2738410.901478027",
+        "tokenValue": 6359329484.175378
       },
       "aggregate": null
     },
     {
       "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
       "name": "Wrapped eETH (weETH)",
-      "description": "The non-rebasing wrapped eETH token. Holds $5.80B in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging.",
+      "description": "The non-rebasing wrapped eETH token. Holds $5.74B in eETH and other tokens, representing wrapped staking positions used for DeFi integrations and cross-chain bridging.",
       "balances": {
-        "totalUsdValue": 5795922451.191509
+        "totalUsdValue": 5742073585.233676
       },
       "positions": null,
       "tokenInfo": null,
@@ -10324,10 +10324,10 @@
     {
       "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
       "name": "EtherFiRestaker (EigenLayer Positions)",
-      "description": "Holds EtherFi's restaked positions in EigenLayer and Lido. $927.60M in DeFi positions split between EigenLayer deposits/yield (stETH restaked) and Lido staked ETH. This is the largest single concentration of protocol capital.",
+      "description": "Holds EtherFi's restaked positions in EigenLayer and Lido. $908.20M in DeFi positions split between EigenLayer deposits/yield (stETH restaked) and Lido staked ETH. This is the largest single concentration of protocol capital.",
       "balances": null,
       "positions": {
-        "totalUsdValue": 927604432.0512552
+        "totalUsdValue": 908200149.204579
       },
       "tokenInfo": null,
       "aggregate": null
@@ -11566,6 +11566,22 @@
     }
   ],
   "activity": [
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 117,
+      "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+      "contractName": "EtherfiOFTAdapterUpgradeable",
+      "entity": null,
+      "id": "117:eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.paused",
+          "before": true,
+          "after": false
+        }
+      ]
+    },
     {
       "timestamp": "2026-04-19T08:15:14.000Z",
       "updateNotifierId": 112,

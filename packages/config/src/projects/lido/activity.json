@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776676851,
-  "lastConsumedUpdateNotifierId": 113,
+  "lastReconciledAt": 1776762343,
+  "lastConsumedUpdateNotifierId": 115,
   "events": [
     {
       "timestamp": "2026-03-02T13:49:30.000Z",
@@ -1634,6 +1634,282 @@
           "after": "eth:0x4B87F16B8d32cb5a859a4C48a88edB5adBe3498E"
         }
       ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c",
+      "contractName": "Escrow",
+      "entity": null,
+      "id": "115:eth:0x165813A31446a98c84E20Dda8C101BB3C8228e1c:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getRageQuitSupport",
+          "before": 1204008,
+          "after": 1203694
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x2a30F5aC03187674553024296bed35Aa49749DDa",
+      "contractName": "TimeConstraints",
+      "entity": null,
+      "id": "115:eth:0x2a30F5aC03187674553024296bed35Aa49749DDa:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getCurrentDayTime",
+          "before": 52967,
+          "after": 32411
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x2B5a3944A654439379B206DE999639508bA2e850",
+      "contractName": "Stonks",
+      "entity": null,
+      "id": "115:eth:0x2B5a3944A654439379B206DE999639508bA2e850:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.estimateTradeOutput.0",
+          "before": 996720840000,
+          "after": 996824478150
+        },
+        {
+          "field": "values.estimateTradeOutput.1",
+          "before": 1993441680000,
+          "after": 1993648956300
+        },
+        {
+          "field": "values.estimateTradeOutput.2",
+          "before": 2990162520000,
+          "after": 2990473434450
+        },
+        {
+          "field": "values.estimateTradeOutput.3",
+          "before": 3986883360000,
+          "after": 3987297912600
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x3e2D251275A92a8169A3B17A2C49016e2de492a7",
+      "contractName": "Stonks",
+      "entity": null,
+      "id": "115:eth:0x3e2D251275A92a8169A3B17A2C49016e2de492a7:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.estimateTradeOutput.0",
+          "before": 2280,
+          "after": 2285
+        },
+        {
+          "field": "values.estimateTradeOutput.1",
+          "before": 4561,
+          "after": 4572
+        },
+        {
+          "field": "values.estimateTradeOutput.2",
+          "before": 6841,
+          "after": 6858
+        },
+        {
+          "field": "values.estimateTradeOutput.3",
+          "before": 9122,
+          "after": 9145
+        },
+        {
+          "field": "values.estimateTradeOutputFromCurrentBalance",
+          "before": 2280,
+          "after": 2285
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x48c4929630099b217136b64089E8543dB0E5163a",
+      "contractName": "AllowedRecipientsRegistry",
+      "entity": null,
+      "id": "115:eth:0x48c4929630099b217136b64089E8543dB0E5163a:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.getPeriodState._alreadySpentAmount",
+          "before": "1297000000000000000000",
+          "after": "2297000000000000000000"
+        },
+        {
+          "field": "values.getPeriodState._spendableBalanceInPeriod",
+          "before": "4703000000000000000000",
+          "after": "3703000000000000000000"
+        },
+        {
+          "field": "values.spendableBalance",
+          "before": "4703000000000000000000",
+          "after": "3703000000000000000000"
+        },
+        {
+          "field": "values.allowedRecipients.1",
+          "after": "eth:0xf6F0732c1e9971497342C295141566E6F1A31e96"
+        },
+        {
+          "field": "values.getAllowedRecipients.1",
+          "after": "eth:0xf6F0732c1e9971497342C295141566E6F1A31e96"
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x64B6aF9A108dCdF470E48e4c0147127F26221A7C",
+      "contractName": "Stonks",
+      "entity": null,
+      "id": "115:eth:0x64B6aF9A108dCdF470E48e4c0147127F26221A7C:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.estimateTradeOutput.0",
+          "before": 997388830000,
+          "after": 997358920000
+        },
+        {
+          "field": "values.estimateTradeOutput.1",
+          "before": 1994777660000,
+          "after": 1994717840000
+        },
+        {
+          "field": "values.estimateTradeOutput.2",
+          "before": 2992166490000,
+          "after": 2992076760000
+        },
+        {
+          "field": "values.estimateTradeOutput.3",
+          "before": 3989555320000,
+          "after": 3989435680000
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0x75100bd564415731B5936A4A94D0dC29DdE5dB3C",
+      "contractName": "BokkyPooBahsDateTimeContract",
+      "entity": null,
+      "id": "115:eth:0x75100bd564415731B5936A4A94D0dC29DdE5dB3C:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values._now",
+          "before": 1776696167,
+          "after": 1776762011
+        },
+        {
+          "field": "values._nowDateTime.day",
+          "before": 20,
+          "after": 21
+        },
+        {
+          "field": "values._nowDateTime.hour",
+          "before": 14,
+          "after": 9
+        },
+        {
+          "field": "values._nowDateTime.minute",
+          "before": 42,
+          "after": 0
+        },
+        {
+          "field": "values._nowDateTime.second",
+          "before": 47,
+          "after": 11
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea",
+      "contractName": "EasyTrack",
+      "entity": null,
+      "id": "115:eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.motions.0",
+          "before": [
+            1018,
+            "eth:0x935cb3366Faf2cFC415B2099d1F974Fd27202b77",
+            "eth:0x87D93d9B2C672bf9c9642d853a8682546a5012B5",
+            259200,
+            1776435923,
+            24900157,
+            50,
+            0,
+            "0xde5892986b9e2bf4e51715c15fa1c54bbff1c891ce66d859cd1d6412e00dfbbd"
+          ]
+        },
+        {
+          "field": "values.motions.1",
+          "before": [
+            1017,
+            "eth:0x1F2b79FE297B7098875930bBA6dd17068103897E",
+            "eth:0x87D93d9B2C672bf9c9642d853a8682546a5012B5",
+            259200,
+            1776435347,
+            24900110,
+            50,
+            0,
+            "0xb3cbbd7b922ec29b511eeb6a631ee24dabbf2c57e9034a85f9160fe103158c90"
+          ]
+        },
+        {
+          "field": "values.getMotions.0",
+          "before": {
+            "id": 1018,
+            "creator": "eth:0x87D93d9B2C672bf9c9642d853a8682546a5012B5",
+            "duration": 259200,
+            "startDate": 1776435923,
+            "evmScriptHash": "0xde5892986b9e2bf4e51715c15fa1c54bbff1c891ce66d859cd1d6412e00dfbbd",
+            "snapshotBlock": 24900157,
+            "evmScriptFactory": "eth:0x935cb3366Faf2cFC415B2099d1F974Fd27202b77",
+            "objectionsAmount": 0,
+            "objectionsThreshold": 50
+          }
+        },
+        {
+          "field": "values.getMotions.1",
+          "before": {
+            "id": 1017,
+            "creator": "eth:0x87D93d9B2C672bf9c9642d853a8682546a5012B5",
+            "duration": 259200,
+            "startDate": 1776435347,
+            "evmScriptHash": "0xb3cbbd7b922ec29b511eeb6a631ee24dabbf2c57e9034a85f9160fe103158c90",
+            "snapshotBlock": 24900110,
+            "evmScriptFactory": "eth:0x1F2b79FE297B7098875930bBA6dd17068103897E",
+            "objectionsAmount": 0,
+            "objectionsThreshold": 50
+          }
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 115,
+      "address": "eth:0xf6F0732c1e9971497342C295141566E6F1A31e96",
+      "contractName": "Safe",
+      "entity": null,
+      "id": "115:eth:0xf6F0732c1e9971497342C295141566E6F1A31e96:contract-added",
+      "type": "contract-added"
     }
   ]
 }

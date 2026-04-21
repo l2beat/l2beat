@@ -1,7 +1,7 @@
 {
   "version": "1.1",
-  "lastReconciledAt": 1776587215,
-  "lastConsumedUpdateNotifierId": 112,
+  "lastReconciledAt": 1776762485,
+  "lastConsumedUpdateNotifierId": 117,
   "events": [
     {
       "timestamp": "2026-03-26T08:10:03.000Z",
@@ -528,6 +528,22 @@
           "field": "values.paused",
           "before": false,
           "after": true
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-04-21T09:00:35.000Z",
+      "updateNotifierId": 117,
+      "address": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
+      "contractName": "EtherfiOFTAdapterUpgradeable",
+      "entity": null,
+      "id": "117:eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63:data-change",
+      "type": "data-change",
+      "changes": [
+        {
+          "field": "values.paused",
+          "before": true,
+          "after": false
         }
       ]
     }

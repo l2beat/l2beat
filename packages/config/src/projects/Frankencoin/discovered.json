@@ -1,6 +1,6 @@
 {
   "name": "Frankencoin",
-  "timestamp": 1776711422,
+  "timestamp": 1776762035,
   "configHash": "0x189ef5fcb85c2836da50f0dcb699f1e38541d0b089dd6df924b640b3f0f1a889",
   "entries": [
     {
@@ -25,10 +25,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1467699969637273489037",
+        "price": "1467701324752233187796",
         "symbol": "FPS",
-        "totalSupply": "9274388722923145783649",
-        "totalVotes": "192411007367274605200321826818491953",
+        "totalSupply": "9274397078238713658447",
+        "totalVotes": "192903009611411867088894184428966999",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -77,7 +77,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 957701280000,
+        "currentTicks": 959472000000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -173,7 +173,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1186430220000,
+        "currentTicks": 1186936140000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -653,14 +653,14 @@
         ],
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "4537340015679524238731769",
+        "equity": "4537348292669733634536422",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
         "minterReserve": "7092184427209219915654202",
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "28032857595333386597016746"
+        "totalSupply": "28033666290293255682472645"
       },
       "implementationNames": {
         "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
@@ -679,13 +679,6 @@
         "0xf936964831cae89cfea493a3a3b42408d0f893751008015da40da8bd6d4a7691"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1626462994,
       "sinceBlock": 12839705,
       "values": {
@@ -696,7 +689,14 @@
       },
       "implementationNames": {
         "eth:0xC8bB8eDa94931cA2F20EF43eA7dBD58E68400400": "VNXProxyAdmin"
-      }
+      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+          "role": "admin"
+        }
+      ]
     },
     {
       "name": "VNXManager",
@@ -1695,6 +1695,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/TokenPool": "0x32151072569e965287f6dde9deefc6e47dbb9fdd1f404c83312c29b57c3782f3"
   },
-  "usedBlockNumbers": { "ethereum": 24923049 },
+  "usedBlockNumbers": { "ethereum": 24927256 },
   "permissionsConfigHash": "0x2bbfdfaf8ce1123e3a615553af6c8ab5813f5818053acd3d09c2f7dfaed5e119"
 }
