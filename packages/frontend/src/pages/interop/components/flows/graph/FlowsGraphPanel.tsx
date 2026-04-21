@@ -6,37 +6,32 @@ import { CursorClickIcon } from '~/icons/CursorClick'
 import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { MIN_SELECTED_CHAINS, MIN_SELECTED_PROTOCOLS } from '../consts'
-import { useInteropFlows } from '../utils/InteropFlowsContext'
 import { FlowsGraph } from './FlowsGraph'
 import { FlowsGraphSkeleton } from './FlowsGraphSkeleton'
 import { InactiveChainsDialog } from './InactiveChainsDialog'
 
 interface FlowsGraphPanelProps {
-  activeChainIds: string[]
+  activeChains: InteropChainWithIcon[]
   data: InteropFlowsData | undefined
-  inactiveChainIds: string[]
-  interopChains: InteropChainWithIcon[]
+  hasEnoughChains: boolean
+  hasEnoughProtocols: boolean
+  inactiveChains: InteropChainWithIcon[]
   isLoading: boolean
 }
 
 export function FlowsGraphPanel({
-  activeChainIds,
+  activeChains,
   data,
-  inactiveChainIds,
-  interopChains,
+  hasEnoughChains,
+  hasEnoughProtocols,
+  inactiveChains,
   isLoading,
 }: FlowsGraphPanelProps) {
-  const { selectedChains, selectedProtocols } = useInteropFlows()
-  const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
-  const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })
   const size =
     width && height ? getSteppedSize(Math.min(width, height)) : undefined
   const isSmallScreen = size ? size <= 500 : false
-  const inactiveChains = interopChains.filter((chain) =>
-    inactiveChainIds.includes(chain.id),
-  )
   const shouldRenderInactiveChainsInfo = hasEnoughChains && hasEnoughProtocols
   const shouldShowInactiveChainsInfo =
     !!data && inactiveChains.length > 0 && !isLoading
@@ -62,10 +57,8 @@ export function FlowsGraphPanel({
           <FlowsGraphSkeleton size={size} isSmallScreen={isSmallScreen} />
         ) : (
           <FlowsGraph
-            interopChains={interopChains.filter((chain) =>
-              activeChainIds.includes(chain.id),
-            )}
-            visibleChainIds={activeChainIds}
+            interopChains={activeChains}
+            visibleChainIds={activeChains.map((chain) => chain.id)}
             data={data}
             size={size}
             isSmallScreen={isSmallScreen}

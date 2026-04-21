@@ -43,21 +43,19 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
     },
     { enabled: hasEnoughChains && hasEnoughProtocols },
   )
-  const activeIds = new Set<string>()
-  for (const flow of data?.flows ?? []) {
-    activeIds.add(flow.srcChain)
-    activeIds.add(flow.dstChain)
-  }
-  const [activeChainIds, inactiveChainIds] = partition(
-    selectedChains,
-    (chainId) => activeIds.has(chainId),
+  const activeIds = new Set<string>([
+    ...(data?.chainData ?? [])
+      .filter((chain) => chain.totalVolume > 0)
+      .map((chain) => chain.chainId),
+  ])
+  const [activeChains, inactiveChains] = partition(
+    interopChains.filter((chain) => selectedChains.includes(chain.id)),
+    (chain) => activeIds.has(chain.id),
   )
-  const selectedHighlightedChains = highlightedChains.filter((chainId) =>
-    selectedChains.includes(chainId),
-  )
+
   const visibleHighlightedChains = isLoading
-    ? selectedHighlightedChains
-    : selectedHighlightedChains.filter((chainId) => activeIds.has(chainId))
+    ? highlightedChains
+    : highlightedChains.filter((chainId) => activeIds.has(chainId))
   const hasGraphSelection = visibleHighlightedChains.length > 0
 
   return (
@@ -83,10 +81,11 @@ function FlowsViewContent({ interopChains, protocols }: FlowsViewProps) {
           />
         </div>
         <FlowsGraphPanel
-          activeChainIds={activeChainIds}
+          activeChains={activeChains}
           data={data}
-          inactiveChainIds={inactiveChainIds}
-          interopChains={interopChains}
+          hasEnoughChains={hasEnoughChains}
+          hasEnoughProtocols={hasEnoughProtocols}
+          inactiveChains={inactiveChains}
           isLoading={isLoading}
         />
       </div>
