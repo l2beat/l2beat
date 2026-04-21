@@ -389,6 +389,22 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'Security Council recovers KelpDAO exploiter funds',
+      url: 'https://x.com/arbitrum/status/2046435443680346189',
+      date: '2026-04-21T00:00:00Z',
+      description:
+        'Security Council emergency action recovers ~30,766 ETH from KelpDAO exploiter on Arbitrum.',
+      type: 'general',
+    },
+    {
+      title: 'KelpDAO bridge exploit',
+      url: 'https://forum.arbitrum.foundation/t/security-council-emergency-action-21-04-2026/30803',
+      date: '2026-04-18T00:00:00Z',
+      description:
+        'KelpDAO rsETH bridge exploit drains 116,500 rsETH across 11 chains including Arbitrum.',
+      type: 'incident',
+    },
+    {
       title: 'Activate ArbOS 51 (Dia) and Gas Pricing Updates',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/53154361738756237993090798888616593723057470462495169047773178676976253908001?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2026-01-05T00:00:00Z',
