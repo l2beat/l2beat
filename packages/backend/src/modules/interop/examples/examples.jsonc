@@ -1821,32 +1821,6 @@
       }
     ]
   },
-  "across2": {
-    "loadConfigs": ["across"],
-    "txs": [
-      {
-        "chain": "bsc",
-        "tx": "0xbc7f08235557cef472ca4beef1d97a1b8279f8c7cdb424bef8394bbbae0cfa24"
-      },
-      {
-        "chain": "arbitrum",
-        "tx": "0xd4255d8ecf5fffc7702467b7f7e354c93a5c9a8be43f585eaceeeb999d141c28"
-      }
-    ]
-  },
-  "across1": {
-    "loadConfigs": ["across"],
-    "txs": [
-      {
-        "chain": "base",
-        "tx": "0xe8f56a27f37c01943c61b1cf3e596e30b2b28d3cb5e2a599033e7f5e596683c5"
-      },
-      {
-        "chain": "ethereum",
-        "tx": "0x161627cfe215e740faca19ae7c0c6161058471fb4266cb9e76667cdd38b92a0a"
-      }
-    ]
-  },
   "across": {
     "loadConfigs": ["across"],
     "txs": [
@@ -1880,6 +1854,50 @@
         "tx": "0x568625ffa55fab1293cbc321850c324da3899eb6df260283a309c2413d59ebef"
       }
     ]
+  },
+  "acrossonesided": {
+    "loadConfigs": ["across"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xabe7e838927a469343d8146b7f1f58513a6247e113ddea4b9b902262511ae131" // incoming unsupported
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x41f5be2a2417fee0860b136b18713770bb3e1b2b7ea7056433dbfd806e4870c7" // outgoing solana
+      },
+      {
+        "chain": "base",
+        "tx": "0x6c966643efa99850c8ab6c22621def512634ed7bfff7023805e18ab3389b6e1d" // inc solana
+      }
+    ],
+    "expects": {
+      "events": [
+        "across.FilledRelay",
+        "across.FundsDeposited",
+        "across.FilledRelay"
+      ],
+      "messages": [],
+      "transfers": [
+        // Ethereum -> Solana: source side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "financials": { "symbol": "USDC" } },
+          "dst": { "chain": "solana" }
+        },
+        // Solana -> Base: destination side only
+        {
+          "type": "across.Transfer",
+          "plugin": "across",
+          "src": { "chain": "solana" },
+          "dst": {
+            "wasMinted": false,
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
   },
   "opstack": {
     "tags": ["opstack"],

@@ -55,15 +55,23 @@ export class AcrossPlugin implements InteropPluginResyncable {
 
   getDataRequests(): DataRequest[] {
     const acrossNetworks = this.configs.get(AcrossConfig) ?? []
-    const spokePoolAddresses = acrossNetworks.flatMap((network) => {
+    const spokePoolAddresses: ChainSpecificAddress[] = []
+
+    for (const network of acrossNetworks) {
       // One-sided and name-only chains are referenced for matching,
       // but not captured directly.
       if (!network.spokePool || this.oneSidedChains.includes(network.chain)) {
-        return []
+        continue
       }
 
-      return [ChainSpecificAddress.fromLong(network.chain, network.spokePool)]
-    })
+      try {
+        spokePoolAddresses.push(
+          ChainSpecificAddress.fromLong(network.chain, network.spokePool),
+        )
+      } catch {
+        // Chain not supported by ChainSpecificAddress, skip capture
+      }
+    }
 
     return [
       {
