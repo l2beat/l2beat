@@ -66,16 +66,6 @@ export const abstract: ScalingProject = zkStackL2({
       },
     ],
   },
-  interopConfig: {
-    plugins: [
-      {
-        plugin: 'zkstack',
-        chain: 'abstract',
-        bridgeType: 'lockAndMint',
-      },
-    ],
-    type: 'canonical',
-  },
   discovery,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

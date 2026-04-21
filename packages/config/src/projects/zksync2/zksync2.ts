@@ -51,16 +51,6 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   },
   // zkVerifierContractsReproducible: true,   uncomment when verifier regenerated
-  interopConfig: {
-    plugins: [
-      {
-        plugin: 'zkstack',
-        chain: 'zksync2',
-        bridgeType: 'lockAndMint',
-      },
-    ],
-    type: 'canonical',
-  },
   chainConfig: {
     name: 'zksync2',
     chainId,

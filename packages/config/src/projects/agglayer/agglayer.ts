@@ -34,19 +34,6 @@ export const agglayer: BaseProject = {
       dark: '#7046EB',
     },
   },
-  interopConfig: {
-    plugins: [
-      {
-        plugin: 'agglayer',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        plugin: 'agglayer',
-        bridgeType: 'burnAndMint',
-      },
-    ],
-    type: 'canonical',
-  },
   milestones: [
     {
       title: 'Agglayer v0.3 goes live – Multichain support',

@@ -1,11 +1,16 @@
+import { abstractCanonical } from '../projects/abstract-canonical/abstract-canonical'
 import { across } from '../projects/across/across'
+import { agglayerCanonical } from '../projects/agglayer-canonical/agglayer-canonical'
 import { airbender } from '../projects/airbender/airbender'
+import { arbitrumCanonical } from '../projects/arbitrum-canonical/arbitrum-canonical'
 import { avail } from '../projects/avail/avail'
 import { avalanche } from '../projects/avalanche/avalanche'
+import { avalancheCanonical } from '../projects/avalanche-canonical/avalanche-canonical'
 import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { barretenberg } from '../projects/barretenberg/barretenberg'
+import { baseCanonical } from '../projects/base-canonical/base-canonical'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -14,6 +19,7 @@ import { ccip } from '../projects/ccip/ccip'
 import { cctpv1 } from '../projects/cctpv1/cctpv1'
 import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
+import { celoCanonical } from '../projects/celo-canonical/celo-canonical'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
@@ -29,9 +35,11 @@ import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
 import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
+import { inkCanonical } from '../projects/ink-canonical/ink-canonical'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
+import { lineaCanonical } from '../projects/linea-canonical/linea-canonical'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
 import { mayan } from '../projects/mayan/mayan'
@@ -40,6 +48,8 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { opMainnetCanonical } from '../projects/op-mainnet-canonical/op-mainnet-canonical'
+import { polygonPosCanonical } from '../projects/polygon-pos-canonical/polygon-pos-canonical'
 import { relay } from '../projects/relay/relay'
 import { risc0 } from '../projects/risc0/risc0'
 import { sp1hypercube } from '../projects/sp1hypercube/sp1hypercube'
@@ -54,6 +64,7 @@ import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
 import { zkprover } from '../projects/zkprover/zkprover'
+import { zksync2Canonical } from '../projects/zksync2-canonical/zksync2-canonical'
 import { zksyncprover } from '../projects/zksyncprover/zksyncprover'
 import type { BaseProject } from '../types'
 
@@ -97,6 +108,17 @@ export const refactored: BaseProject[] = [
   monad,
   tempo,
   // interop protocols
+  abstractCanonical,
+  agglayerCanonical,
+  arbitrumCanonical,
+  avalancheCanonical,
+  baseCanonical,
+  celoCanonical,
+  inkCanonical,
+  lineaCanonical,
+  opMainnetCanonical,
+  polygonPosCanonical,
+  zksync2Canonical,
   debridgeDln,
   hyperlaneHwr,
   ccip,

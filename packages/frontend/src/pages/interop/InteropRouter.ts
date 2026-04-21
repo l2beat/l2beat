@@ -29,6 +29,36 @@ const InteropQuery = v
   })
   .optional()
 
+const INTEROP_PROTOCOL_REDIRECTS: Record<string, string> = {
+  abstract: 'abstract-canonical',
+  agglayer: 'agglayer-canonical',
+  arbitrum: 'arbitrum-canonical',
+  avalanche: 'avalanche-canonical',
+  base: 'base-canonical',
+  celo: 'celo-canonical',
+  ink: 'ink-canonical',
+  linea: 'linea-canonical',
+  'op-mainnet': 'op-mainnet-canonical',
+  'polygon-pos': 'polygon-pos-canonical',
+  'zksync-era': 'zksync2-canonical',
+}
+
+function getCanonicalProtocolRedirectUrl(
+  slug: string,
+  originalUrl: string,
+  isInternal: boolean,
+) {
+  const redirectedSlug = INTEROP_PROTOCOL_REDIRECTS[slug]
+  if (!redirectedSlug) return
+
+  const query = originalUrl.includes('?')
+    ? originalUrl.slice(originalUrl.indexOf('?'))
+    : ''
+  const internalSuffix = isInternal ? '/internal' : ''
+
+  return `/interop/protocols/${redirectedSlug}${internalSuffix}${query}`
+}
+
 export function createInteropRouter(
   manifest: Manifest,
   render: RenderFunction,
@@ -96,6 +126,15 @@ export function createInteropRouter(
         query: InteropQuery,
       }),
       async (req, res) => {
+        const redirectUrl = getCanonicalProtocolRedirectUrl(
+          req.params.slug,
+          req.originalUrl,
+          false,
+        )
+        if (redirectUrl) {
+          res.redirect(301, redirectUrl)
+          return
+        }
         const data = await getInteropProtocolPageData(req, manifest)
         if (!data) {
           res.status(404).send('Not found')
@@ -113,6 +152,15 @@ export function createInteropRouter(
         query: InteropQuery,
       }),
       async (req, res) => {
+        const redirectUrl = getCanonicalProtocolRedirectUrl(
+          req.params.slug,
+          req.originalUrl,
+          true,
+        )
+        if (redirectUrl) {
+          res.redirect(301, redirectUrl)
+          return
+        }
         const data = await getInteropProtocolPageData(req, manifest, 'internal')
         if (!data) {
           res.status(404).send('Not found')

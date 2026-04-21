@@ -162,44 +162,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
       )} after it has been posted.`,
     },
   },
-  interopConfig: {
-    name: 'Arbitrum Canonical',
-    durationSplit: {
-      lockAndMint: [
-        {
-          label: 'L1 -> L2',
-          transferTypes: ['orbitstack.L1ToL2Transfer'],
-        },
-        {
-          label: 'L2 -> L1',
-          transferTypes: ['orbitstack.L2ToL1Transfer'],
-        },
-      ],
-    },
-    plugins: [
-      {
-        chain: 'arbitrum',
-        plugin: 'orbitstack',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'arbitrum',
-        plugin: 'orbitstack-standardgateway',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'arbitrum',
-        plugin: 'orbitstack-wethgateway',
-        bridgeType: 'lockAndMint',
-      },
-      {
-        chain: 'arbitrum',
-        plugin: 'orbitstack-customgateway',
-        bridgeType: 'lockAndMint',
-      },
-    ],
-    type: 'canonical',
-  },
   chainConfig: {
     name: 'arbitrum',
     chainId,

@@ -207,7 +207,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
   const transferSizeChartData: TransferSizeDataPoint[] = [
     {
       name: 'Arbitrum Canonical',
-      iconUrl: manifest.getUrl('/icons/arbitrum.png'),
+      iconUrl: manifest.getUrl('/icons/arbitrum-canonical.png'),
       countUnder100: 10,
       percentageUnder100: 10,
       count100To1K: 12,
@@ -223,8 +223,8 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
       averageTransferSizeUsd: 12_500,
     },
     {
-      name: 'Optimism Canonical',
-      iconUrl: manifest.getUrl('/icons/optimism.png'),
+      name: 'OP Canonical',
+      iconUrl: manifest.getUrl('/icons/op-mainnet-canonical.png'),
       countUnder100: 5,
       percentageUnder100: 5,
       count100To1K: 8,
@@ -241,7 +241,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     },
     {
       name: 'Base Canonical',
-      iconUrl: manifest.getUrl('/icons/base.png'),
+      iconUrl: manifest.getUrl('/icons/base-canonical.png'),
       countUnder100: 5,
       percentageUnder100: 5,
       count100To1K: 8,
@@ -267,7 +267,10 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     transferSizeChartData,
     entries,
     zeroTransferProtocols: [
-      { name: 'Base Canonical', iconUrl: manifest.getUrl('/icons/base.png') },
+      {
+        name: 'Base Canonical',
+        iconUrl: manifest.getUrl('/icons/base-canonical.png'),
+      },
     ],
   }
 }

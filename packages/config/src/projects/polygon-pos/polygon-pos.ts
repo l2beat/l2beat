@@ -79,27 +79,6 @@ export const polygonpos: ScalingProject = {
   stage: {
     stage: 'NotApplicable',
   },
-  interopConfig: {
-    durationSplit: {
-      lockAndMint: [
-        {
-          label: 'Deposit',
-          transferTypes: ['polygon.L1ToL2Transfer'],
-        },
-        {
-          label: 'Withdrawal',
-          transferTypes: ['polygon.L2ToL1Transfer'],
-        },
-      ],
-    },
-    plugins: [
-      {
-        plugin: 'polygon',
-        bridgeType: 'lockAndMint',
-      },
-    ],
-    type: 'canonical',
-  },
   config: {
     associatedTokens: ['POL', 'MATIC'],
     escrows: [
