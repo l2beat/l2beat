@@ -8,7 +8,7 @@ import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimes
 
 export function getZkCatalogProjectTvs(
   project: Project<'zkCatalogInfo'>,
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ) {
   const target = getTvsTargetTimestamp()
@@ -64,7 +64,7 @@ function getLiveProjectsAtTimestamp(
 
 function getProjectsForTvs(
   projectIds: ProjectId[],
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ) {
   return uniq(
     projectIds.flatMap((tp) => {

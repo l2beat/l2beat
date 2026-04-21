@@ -15,7 +15,7 @@ async function main() {
       optional: ['tvsConfig'],
     }),
     ps.getProjects({
-      where: ['isDaLayer'],
+      where: ['daLayer'],
       select: ['daLayer'],
     }),
     ps.getProjects({

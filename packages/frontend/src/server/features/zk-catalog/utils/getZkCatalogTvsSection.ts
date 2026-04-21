@@ -8,7 +8,7 @@ import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
   project: Project<'zkCatalogInfo', 'tvsInfo' | 'milestones'>,
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ): Omit<ZkCatalogTvsSectionProps, keyof ProjectSectionProps> | undefined {
   const allProjectsMap = new Map(
     allProjects.map((project) => [project.id, project]),

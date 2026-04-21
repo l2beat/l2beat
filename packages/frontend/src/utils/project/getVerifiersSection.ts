@@ -21,7 +21,7 @@ function plainDeploymentAddress(
 export async function getVerifiersSection(
   project: Project<'zkCatalogInfo'>,
   contractUtils: ContractUtils,
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
   tvs: SevenDayTvsBreakdown,
 ): Promise<Omit<VerifiersSectionProps, keyof ProjectSectionProps>> {
   const projects = await ps.getProjects({

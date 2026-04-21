@@ -21,9 +21,13 @@ export const intmax: ScalingProject = {
   type: 'layer3',
   hostChain: ProjectId('scroll'),
   id: ProjectId('intmax'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
-  badges: [BADGES.L3ParentChain.Scroll],
+  badges: [
+    BADGES.L3ParentChain.Scroll,
+    BADGES.VM.AppChain,
+    BADGES.Other.Privacy,
+  ],
   display: {
     name: 'INTMAX',
     slug: 'intmax',

@@ -51,7 +51,7 @@ export async function getScalingRiskStateValidationEntries() {
       select: ['zkCatalogInfo'],
     }),
     ps.getProjects({
-      optional: ['daBridge', 'scalingInfo', 'isDaLayer'],
+      optional: ['daBridge', 'scalingInfo', 'daLayer'],
     }),
     getContractUtils(),
     get7dTvsBreakdown({ type: 'all' }),
@@ -133,7 +133,7 @@ function getScalingRiskStateValidationValidityEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'isDaLayer'>[],
+  allProjects: Project<never, 'daBridge' | 'scalingInfo' | 'daLayer'>[],
 ): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
