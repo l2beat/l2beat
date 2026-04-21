@@ -1100,6 +1100,21 @@
         { "type": "mayan-swift.Message", "app": "mayan-swift-refund" }
       ],
       "transfers": [
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "event": { "ctx": { "chain": "arbitrum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        },
+        {
+          "type": "mayan-swift.Transfer",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        },
         "mayan-swift.Transfer",
         "mayan-swift.Transfer",
         "mayan-swift.Transfer",
@@ -1110,8 +1125,7 @@
         "mayan-swift.Transfer",
         "mayan-swift.Transfer",
         "mayan-swift.Transfer"
-      ],
-      "unsupportedEvents": ["mayan-swift.OrderFulfilled"]
+      ]
     }
   },
   "mayan-swift-settlement-non-batched": {
@@ -1587,6 +1601,43 @@
       "wormhole-ntt.Transfer"
     ]
   },
+  "wormhole-nttonesided": {
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Ethereum -> Solana: outgoing one-sided source tx
+      {
+        "chain": "ethereum",
+        "tx": "0x854b36cc8a07c96f2b44f889af77b037581523565cfaadd4c6f6f5c6caf26d77"
+      },
+      // Solana -> Polygon: incoming one-sided destination tx
+      {
+        "chain": "polygonpos",
+        "tx": "0x7a842a693bed812d5ea7599cd6fb893a4086be4dafca0517851ced7313d4d099"
+      }
+    ],
+    "expects": {
+      "events": [
+        "wormhole.LogMessagePublished",
+        "wormhole-ntt.SendTransceiverMessage",
+        "wormhole-ntt.ReceivedMessage"
+      ],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "wormhole-ntt.Transfer",
+          "plugin": "wormhole-ntt",
+          "src": { "event": { "ctx": { "chain": "ethereum" } } },
+          "dst": { "chain": "solana" }
+        },
+        {
+          "type": "wormhole-ntt.Transfer",
+          "plugin": "wormhole-ntt",
+          "src": { "chain": "solana" },
+          "dst": { "event": { "ctx": { "chain": "polygonpos" } } }
+        }
+      ]
+    }
+  },
   "wormhole-tokenbridge": {
     "loadConfigs": ["wormhole"],
     "txs": [
@@ -1688,7 +1739,7 @@
       ]
     }
   },
-  // Portal Token Bridge transfer to Solana (chain 1) - should be marked unsupported
+  // Portal Token Bridge transfer to Solana (chain 1) - should emit a one-sided transfer
   "wormhole-tokenbridge-unsupported": {
     "loadConfigs": ["wormhole"],
     "txs": [
@@ -1698,10 +1749,12 @@
       }
     ],
     "expects": {
-      "events": [
+      "events": ["wormhole.LogMessagePublished"],
+      "transfers": [
         {
-          "type": "wormhole.LogMessagePublished",
-          "unsupported": true
+          "type": "wormhole-tokenbridge.Transfer",
+          "src": { "wasBurned": false },
+          "dst": { "chain": "solana" }
         }
       ]
     }

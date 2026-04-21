@@ -184,12 +184,12 @@ export function createInteropPlugins(
         plugins: [
           // Mayan plugins (use both Wormhole messaging and CCTP for transfers)
           new MayanForwarderPlugin(deps.configs), // should be run before MayanSwift
-          new MayanSwiftPlugin(deps.configs), // should be run before CCTP
+          new MayanSwiftPlugin(deps.configs, deps.oneSidedChains), // should be run before CCTP
           new MayanSwiftSettlementPlugin(deps.configs), // should be run after MayanSwiftPlugin
           new MayanMctpFastPlugin(deps.configs), // should be run before CCTP
           // Wormhole-specific plugins
-          new WormholeNTTPlugin(deps.configs), // should be run before WormholeCore and WormholeRelayer
-          new WormholeTokenBridgePlugin(deps.configs), // should be run before Wormhole
+          new WormholeNTTPlugin(deps.configs, deps.oneSidedChains), // should be run before WormholeCore and WormholeRelayer
+          new WormholeTokenBridgePlugin(deps.configs, deps.oneSidedChains), // should be run before Wormhole
           new WormholeRelayerPlugin(deps.configs), // should be run before Wormhole
           // CCTP plugins (Circle's cross-chain USDC)
           new CCTPV1Plugin(deps.configs),
