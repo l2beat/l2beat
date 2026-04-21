@@ -39,17 +39,38 @@ function tokenName(addr: string): string {
 
 // Map hub addresses to names
 const hubNames: Record<string, string> = {}
-for (const c of contracts.filter(
-  (c) => c.template === 'aave-v4/HubInstance',
-)) {
+for (const c of contracts.filter((c) => c.template === 'aave-v4/HubInstance')) {
   hubNames[c.address.toString()] = c.name ?? c.address.toString()
 }
 
-type ReserveValue = { underlying: string; hub: string }
+type ReserveValue = { underlying: string; hub: string; assetId: number }
 type LiqConfig = {
   targetHealthFactor: string
   healthFactorForMaxBonus: string
   liquidationBonusFactor: number
+}
+
+// uint40 max = 2^40 - 1, the sentinel value meaning "unlimited" for caps.
+const MAX_ALLOWED_SPOKE_CAP = 1099511627775
+
+// Build lookup: hubAddr -> assetId -> spokeAddr -> [addCap, drawCap, riskPremiumThreshold, active, halted]
+type SpokeCfgTuple = [number, number, number, boolean, boolean]
+const hubSpokeConfigs: Record<
+  string,
+  Record<string, Record<string, SpokeCfgTuple>>
+> = {}
+for (const c of contracts.filter((c) => c.template === 'aave-v4/HubInstance')) {
+  hubSpokeConfigs[c.address.toString()] = (c.values?.spokeConfigs ??
+    {}) as Record<string, Record<string, SpokeCfgTuple>>
+}
+
+function formatCap(whole: number): string {
+  if (whole >= MAX_ALLOWED_SPOKE_CAP) return '∞'
+  if (whole === 0) return '0'
+  if (whole >= 1e9) return `${(whole / 1e9).toFixed(1)}B`
+  if (whole >= 1e6) return `${(whole / 1e6).toFixed(1)}M`
+  if (whole >= 1e3) return `${(whole / 1e3).toFixed(0)}K`
+  return whole.toString()
 }
 
 // Build per-spoke detail with per-hub reserve grouping
@@ -60,15 +81,11 @@ const spokeDetails = spokeEntries
   .map((s) => {
     const reserves = (s.values?.getReserve as ReserveValue[]) ?? []
     const liq = s.values?.getLiquidationConfig as LiqConfig | undefined
-    const thf = liq
-      ? (Number(liq.targetHealthFactor) / 1e18).toFixed(2)
-      : '?'
+    const thf = liq ? (Number(liq.targetHealthFactor) / 1e18).toFixed(2) : '?'
     const mbhf = liq
       ? (Number(liq.healthFactorForMaxBonus) / 1e18).toFixed(2)
       : '?'
-    const bf = liq
-      ? (liq.liquidationBonusFactor / 100).toFixed(0) + '%'
-      : '?'
+    const bf = liq ? (liq.liquidationBonusFactor / 100).toFixed(0) + '%' : '?'
 
     // Group reserves by hub
     const byHub: Record<string, string[]> = {}
@@ -78,28 +95,40 @@ const spokeDetails = spokeEntries
       byHub[hub].push(tokenName(r.underlying))
     }
     // Per-reserve detail with flags
-    const configs = (s.values?.getReserveConfig as {
-      borrowable: boolean
-      paused: boolean
-      frozen: boolean
-    }[]) ?? []
+    const configs =
+      (s.values?.getReserveConfig as {
+        collateralRisk: number
+        borrowable: boolean
+        paused: boolean
+        frozen: boolean
+      }[]) ?? []
 
-    const reserveLines = reserves.map((r, i) => {
-      const symbol = tokenName(r.underlying)
-      const hub = hubNames[r.hub] ?? r.hub
-      const cfg = configs[i]
-      const flags = []
-      if (cfg?.borrowable) flags.push('borrowable')
-      if (!cfg?.borrowable) flags.push('supply-only')
-      if (cfg?.paused) flags.push('PAUSED')
-      if (cfg?.frozen) flags.push('FROZEN')
-      return `- ${symbol} → ${hub} (${flags.join(', ')})`
-    }).join('\n')
+    const spokeAddr = s.address.toString()
+    const reserveRows = reserves
+      .map((r, i) => {
+        const symbol = tokenName(r.underlying)
+        const hub = hubNames[r.hub] ?? r.hub
+        const cfg = configs[i]
+        const mode = cfg?.borrowable ? 'borrowable' : 'supply-only'
+        const paused = cfg?.paused ? 'yes' : 'no'
+        const frozen = cfg?.frozen ? 'yes' : 'no'
+        const risk = cfg ? `${(cfg.collateralRisk / 100).toFixed(2)}%` : '?'
+        const spokeCfg =
+          hubSpokeConfigs[r.hub]?.[r.assetId.toString()]?.[spokeAddr]
+        const addCap = spokeCfg ? formatCap(spokeCfg[0]) : '?'
+        const drawCap = spokeCfg ? formatCap(spokeCfg[1]) : '?'
+        return `| ${symbol} | ${hub} | ${mode} | ${paused} | ${frozen} | ${risk} | ${addCap} | ${drawCap} |`
+      })
+      .join('\n')
 
-    return `**${s.name}** — ${reserves.length} reserves, target HF ${thf}, max bonus HF ${mbhf}, bonus ${bf}\n\n${reserveLines}`
+    const table =
+      '| Asset | Hub | Mode | Paused | Frozen | collateralRisk | addCap | drawCap |\n' +
+      '|---|---|---|---|---|---|---|---|\n' +
+      reserveRows
+
+    return `**${s.name}** — ${reserves.length} reserves, target HF ${thf}, max bonus HF ${mbhf}, bonus ${bf}\n\n${table}`
   })
   .join('\n\n')
-
 
 // Hub detail builder
 type AssetStruct = {
@@ -136,10 +165,19 @@ for (const c of contracts.filter(
 }
 
 function buildHubDetail(hubName: string): string {
-  const assetCount = discovery.getContractValue<number>(hubName, 'getAssetCount')
+  const assetCount = discovery.getContractValue<number>(
+    hubName,
+    'getAssetCount',
+  )
   const assets = discovery.getContractValue<AssetStruct[]>(hubName, 'getAsset')
-  const configs = discovery.getContractValue<AssetConfig[]>(hubName, 'getAssetConfig')
-  const spokeCounts = discovery.getContractValue<number[]>(hubName, 'getSpokeCount')
+  const configs = discovery.getContractValue<AssetConfig[]>(
+    hubName,
+    'getAssetConfig',
+  )
+  const spokeCounts = discovery.getContractValue<number[]>(
+    hubName,
+    'getSpokeCount',
+  )
 
   // Find the strategy for this hub
   const strategyAddr = configs[0]?.irStrategy ?? ''
@@ -147,49 +185,59 @@ function buildHubDetail(hubName: string): string {
 
   // Find the rate data from the strategy
   const strategyEntry = contracts.find(
-    (c) => c.template === 'aave-v4/AssetInterestRateStrategy' && c.address.toString() === strategyAddr,
+    (c) =>
+      c.template === 'aave-v4/AssetInterestRateStrategy' &&
+      c.address.toString() === strategyAddr,
   )
-  const rateData = strategyEntry?.values?.getInterestRateData as RateData[] | undefined
+  const rateData = strategyEntry?.values?.getInterestRateData as
+    | RateData[]
+    | undefined
 
-  const lines = []
+  const fmtAmount = (x: number): string =>
+    x > 1e6
+      ? `${(x / 1e6).toFixed(1)}M`
+      : x > 1e3
+        ? `${(x / 1e3).toFixed(0)}K`
+        : x.toFixed(2)
+
+  const rows = []
   for (let i = 0; i < assetCount; i++) {
     const a = assets[i]
     const cfg = configs[i]
     const symbol = tokenName(a.underlying)
-    const fee = cfg.liquidityFee / 100
+    const fee = (cfg.liquidityFee / 100).toFixed(2) + '%'
     const spokes = spokeCounts[i]
     const rate = rateData?.[i]
-    const optUtil = rate ? (rate.optimalUsageRatio / 100).toFixed(0) : '?'
-    const baseRate = rate ? (rate.baseDrawnRate / 100).toFixed(1) : '?'
-    const slope1 = rate ? (rate.rateGrowthBeforeOptimal / 100).toFixed(1) : '?'
-    const slope2 = rate ? (rate.rateGrowthAfterOptimal / 100).toFixed(1) : '?'
-    const hasReinvestment = cfg.reinvestmentController !== 'eth:0x0000000000000000000000000000000000000000'
-    const isCollateralOnly = rate && rate.rateGrowthBeforeOptimal === 0 && rate.rateGrowthAfterOptimal === 0
+    const optUtil = rate ? (rate.optimalUsageRatio / 100).toFixed(0) + '%' : '?'
+    const baseRate = rate ? (rate.baseDrawnRate / 100).toFixed(2) + '%' : '?'
+    const slope1 = rate
+      ? (rate.rateGrowthBeforeOptimal / 100).toFixed(2) + '%'
+      : '?'
+    const slope2 = rate
+      ? (rate.rateGrowthAfterOptimal / 100).toFixed(2) + '%'
+      : '?'
+    const reinvestment =
+      cfg.reinvestmentController !==
+      'eth:0x0000000000000000000000000000000000000000'
+        ? 'active'
+        : 'none'
 
-    // Format liquidity values
     const liq = Number(a.liquidity) / 10 ** a.decimals
-    const liqStr = liq > 1e6 ? `${(liq / 1e6).toFixed(1)}M` : liq > 1e3 ? `${(liq / 1e3).toFixed(0)}K` : liq.toFixed(2)
-    const hasDeficit = a.deficitRay > 0
+    const liqStr = fmtAmount(liq)
+    const deficit = Number(a.deficitRay) / 1e27 / 10 ** a.decimals
+    const deficitStr = deficit > 0 ? fmtAmount(deficit) : '0'
 
-    if (isCollateralOnly) {
-      lines.push(
-        `- **${symbol}**: collateral-only (not borrowable), ` +
-        `${spokes} spoke(s), ${liqStr} liquidity` +
-        (hasDeficit ? ', HAS DEFICIT' : '') +
-        (hasReinvestment ? ', has reinvestment controller' : ''),
-      )
-    } else {
-      lines.push(
-        `- **${symbol}**: ` +
-        `${fee}% protocol fee, ${spokes} spoke(s), ${liqStr} liquidity, ` +
-        `rates: ${baseRate}% base → ${slope1}%/${slope2}% slopes at ${optUtil}% optimal` +
-        (hasDeficit ? ', HAS DEFICIT' : '') +
-        (hasReinvestment ? ', has reinvestment controller' : ''),
-      )
-    }
+    rows.push(
+      `| ${symbol} | ${spokes} | ${liqStr} | ${fee} | ${baseRate} | ${slope1} | ${slope2} | ${optUtil} | ${reinvestment} | ${deficitStr} |`,
+    )
   }
 
-  return `**${hubName}** — ${assetCount} assets, strategy: ${strategyName}\n\n${lines.join('\n')}`
+  const table =
+    '| Asset | Spokes | Liquidity | Fee | Base rate | Slope 1 | Slope 2 | Optimal util | Reinvestment | Deficit |\n' +
+    '|---|---|---|---|---|---|---|---|---|---|\n' +
+    rows.join('\n')
+
+  return `**${hubName}** — ${assetCount} assets, strategy: ${strategyName}\n\n${table}`
 }
 
 const hubDetails = hubList.map(buildHubDetail).join('\n\n')
@@ -277,10 +325,10 @@ export const aavev4: BaseProject = {
 
 Aave is a lending protocol. Users come to Aave to do one of two things:
 
-- **Earn yield on assets they're not actively using.** A user deposits an asset (USDC, ETH, wstETH, ...) into a market and immediately starts accruing interest paid by borrowers of that same asset. The deposit is liquid: it can be withdrawn at any time as long as the market has spare liquidity, and the deposit can also be used as collateral for borrowing without giving up the yield.
+- **Earn yield on assets they're not actively using.** A user deposits an asset (USDC, ETH, wstETH, ...) into a market and immediately starts accruing interest paid by borrowers of that same asset. Under normal conditions the deposit is liquid (it can be withdrawn whenever the market has spare liquidity) and can also be used as collateral for borrowing without giving up the yield. Admins with emergency and risk controls can pause or freeze a reserve: a paused reserve blocks withdrawals (and all other operations) until unpaused, while a frozen reserve still allows withdrawals but blocks new supplies, borrows, and collateral-enable (see the permissions section).
 - **Borrow against collateral they want to keep.** A user posts collateral (typically ETH, an LST like wstETH/weETH/rsETH, BTC, or another supported asset) and draws a loan in a different asset (often a stable like USDC, USDT, GHO). The loan accrues interest at a rate that floats with how much of the supply side is currently being borrowed. As long as the position stays sufficiently overcollateralized, it stays open indefinitely; if the collateral value drops too far, anyone can liquidate the position by repaying part of the debt and seizing collateral at a discount.
 
-Both flows happen on a **Spoke** contract. A Spoke is a market: it defines which assets you can supply, which you can borrow, which count as collateral, and at what parameters. All your positions (supplies, borrows, collateral flags) on a given Spoke are tied together into one health factor. You cannot supply on one Spoke and borrow against that collateral on a different Spoke: each Spoke is a self-contained position boundary.
+Both flows happen on a **Spoke** contract. A Spoke is a market: it defines which assets you can supply, which you can borrow, which count as collateral, and at what parameters. Each asset you supply can be toggled on or off as collateral individually, and all of your activity on a given Spoke (your supplies, your borrows, and which of your supplies are currently enabled as collateral) is tied together into a single health factor. You cannot supply on one Spoke and borrow against that collateral on a different Spoke: each Spoke is a self-contained position boundary.
 
 Each Spoke holds a set of **reserves** (one per asset). Each reserve points to a **Hub** for that asset's liquidity pool. The Hub is where the actual tokens sit and where interest accounting happens. A single Spoke can have reserves pointing to different Hubs (for example, the Ethena Ecosystem Spoke routes Ethena assets through the Plus Hub and stablecoins through the Core Hub). Prices come from a per-spoke **AaveOracle** that wraps Chainlink feeds with a growth-rate cap; interest rate parameters come from an **InterestRateStrategy** per Hub; protocol revenue is sent to a single **Treasury**.
 
@@ -304,9 +352,11 @@ Supplier yield comes directly from interest paid by borrowers. There is no token
 
 3. **The protocol takes a cut.** A configurable \`liquidityFee\` (set per asset by governance via the HubConfigurator) is deducted from the interest accrued between index updates. This fee is tracked as \`realizedFees\` on the Hub and sent to the Treasury (the \`feeReceiver\` address in each asset's config). The fee is subtracted from the pool before computing supplier share value, so suppliers receive the borrower interest minus the protocol's percentage.
 
-4. **Riskier borrowers pay more.** On top of the base interest rate, borrowers with lower-quality collateral pay a **risk premium** that scales with their position's collateral composition. This premium is tracked separately (\`premiumShares\` and \`premiumOffsetRay\`) and flows into the same pool, benefiting suppliers.
+4. **Riskier borrowers pay more.** Each reserve on a Spoke has a \`collateralRisk\` value (in BPS, set by the PoolAdmin, capped at 1000% / 100,000 BPS). When a user borrows, the Spoke sorts their collaterals from safest to riskiest (by \`collateralRisk\` ascending) and "uses" them in that order to back the debt. A user whose debt is fully covered by safe collateral (zero \`collateralRisk\`) pays only the base rate; a user who has to dip into riskier collateral pays a surcharge proportional to the fraction of debt backed by risky collateral. For example, $200 of safe collateral + $400 of collateral with a 5% risk value, backing $600 of debt, yields a premium of 400·5%/600 = 3.33% on top of the base rate. This premium is tracked separately (\`premiumShares\` and \`premiumOffsetRay\`) and flows into the same pool, benefiting suppliers. On the current deployment, \`collateralRisk\` is zero for every reserve across all Spokes, so the mechanism exists but is dormant.
 
-In short: the yield is the interest spread. Borrowers pay \`baseRate + riskPremium\`, suppliers receive \`baseRate + riskPremium - protocolFee\`, and the Treasury receives \`protocolFee\`. All rates are algorithmically determined by utilization and collateral quality, not by governance votes or token emissions.
+5. **Idle liquidity can be reinvested into external yield strategies.** Each Hub asset supports a \`reinvestmentController\` that can sweep idle tokens out of the Hub and return them later; any surplus it reclaims grows the pool. This path is currently disabled on every asset on every Hub (see "Reinvestment controllers" below for the mechanism, risk, and activation).
+
+In short: the primary yield is the interest spread. Borrowers pay \`baseRate + riskPremium\`, suppliers receive \`baseRate + riskPremium - protocolFee\`, and the Treasury receives \`protocolFee\`. All rates are algorithmically determined by utilization and collateral quality, not by governance votes or token emissions. A future secondary yield source may come from reinvestment of idle liquidity, but this is not currently enabled.
 
 ## User flows
 
@@ -324,7 +374,11 @@ All user interactions happen on a **Spoke** contract. Users (or their approved p
 
 - **Set collateral**: \`setUsingAsCollateral(reserveId, usingAsCollateral, onBehalfOf)\`. Toggles whether a supplied asset counts as collateral for borrowing. Disabling collateral releases the asset from liquidation risk but reduces borrowing power.
 
-All of these except \`liquidationCall\` require the caller to be an approved **position manager** for the \`onBehalfOf\` user. Users approve position managers via \`setUserPositionManager\` (or via EIP-712 signature). Two default position managers are pre-registered: a NativeTokenGateway (for ETH wrapping) and a SignatureGateway (for ERC-20 permit flows).
+All of these actions (except \`liquidationCall\`) are gated by an \`onlyPositionManager(onBehalfOf)\` check. A **position manager** is a contract or EOA authorised to act on another user's position: it can call \`supply\`, \`withdraw\`, \`borrow\`, \`repay\`, and \`setUsingAsCollateral\` with that user as \`onBehalfOf\`. The check allows a caller through if either (a) the caller is the user themselves, or (b) the caller is both **globally active** as a position manager on the Spoke *and* **explicitly approved** by the specific user.
+
+Global activation is controlled by the protocol admin: \`updatePositionManager(address, bool)\` is \`restricted\`, so only \`ADMIN_ROLE\` holders on the AccessManager can flip a contract to active. User approval is self-service: the user calls \`setUserPositionManager(address, bool)\` (or signs an EIP-712 message consumed by \`setUserPositionManagersWithSig\`) to add or remove approvals on their own account. A position manager can also voluntarily drop its authority over a specific user via \`renouncePositionManagerRole\`. A position manager cannot approve further position managers on the user's behalf — that action is always tied to the user's own \`msg.sender\`.
+
+This two-sided gating is how router-style UX flows (ETH wrapping, permit-based approvals, batched multicalls) can operate on user positions without holding approvals on the user's token balances directly: the admin whitelists the router contract globally, and each user opts in individually.
 
 ## Architecture
 
@@ -333,55 +387,54 @@ Aave V4 splits its protocol into two contract families:
 - A **Hub** holds the per-asset accounting: the registry of supported assets, the per-asset interest rate strategy, the per-asset spoke registry, and the per-asset treasury split. Hubs and Spokes communicate via direct EVM contract calls (not cross-chain messaging), so they must be deployed on the same chain.
 - A **Spoke** sits on a specific chain and holds a set of **reserves** (one per supported asset). Each reserve defines the per-asset config (collateral and borrow flags, freeze, pause, oracle source) and points to a specific Hub for that asset's liquidity pool. A single Spoke can have reserves pointing to different Hubs (e.g., the Ethena Ecosystem Spoke has Ethena assets routed through the Plus Hub and stablecoin assets routed through the Core Hub).
 
-On Ethereum there are ${NUM_HUBS} Hubs and ${NUM_SPOKES} Spokes. The Spokes are organized by market type: a main "Prime" spoke that lists most blue-chip assets, plus several risk-isolated spokes for stables, BTC, Ethena, and the major correlated-LST pairs (wstETH, weETH, rsETH).
-
-## Trust map
-
-Users trust five actors across two independent access control systems:
-
-**System 1: OpenZeppelin V5 AccessManager** gates every privileged action on every Hub and every Spoke through the \`restricted\` modifier. Two actors hold the top-level ADMIN_ROLE:
-- The **AaveGovV3Executor** (Aave Governance V3 proposal execution). Changes through this path require a full governance proposal and voting cycle.
-- The **AaveV4AdminMultisig** (5/8 multisig). This multisig can bypass the governance proposal process entirely: it holds ADMIN_ROLE directly and can reconfigure reserves, swap oracles, change position managers, freeze markets, and upgrade all proxy implementations with no delay.
-
-**System 2: legacy ACLManager** (bytes32 roles from Aave V3) gates PriceCapAdapter discount rates and risk parameter adjustments. Three additional actors operate through this system:
-- The **RiskCouncilMultisig** (2/2 multisig): can adjust supply/borrow caps, interest rates, and LTV ratios within governance-set bounds, without a governance proposal (via the RiskSteward contracts).
-- The **GhoRiskCouncilMultisig** (3/4 multisig): can adjust GHO borrow rates and bucket capacities within bounds, and pause/unpause GHO minting (via the GhoAaveSteward and GhoDirectMinter contracts).
-- The **EmergencyAdminMultisig** (5/9 multisig): can trigger emergency actions on the legacy Aave V3 system.
-
-The most critical privileged operations:
-
-- **\`updatePositionManager\`** (on every Spoke, gated by \`restricted\`): can activate or deactivate any contract as a position manager. An active position manager can supply, withdraw, borrow, and repay on behalf of ALL users who have approved it. Changing this to a malicious contract is the most direct path to draining user funds. Only the AaveV4AdminMultisig and AaveGovV3Executor (ADMIN_ROLE holders) can do this.
-- **\`updateReservePriceSource\`** (on every Spoke, gated by \`restricted\`): can swap the oracle price feed for any reserve. A malicious feed enables unfair liquidations or prevents legitimate ones. Same ADMIN_ROLE gating.
-- **\`transfer\` / \`withdraw\`** (on the Treasury, gated by \`onlyOwner\`): the **AaveV4AdminMultisig** (5/8 multisig) can move any ERC20 token the Treasury holds to any address with no timelock.
+On Ethereum there are ${NUM_HUBS} Hubs and ${NUM_SPOKES} Spokes, organized by market type (a main market listing most blue-chip assets, plus several risk-isolated markets for stables, BTC, Ethena, and correlated-LST pairs). The per-Hub and per-Spoke config tables live in the sections below.
 
 ## Oracles
 
-Each Spoke has its own paired **AaveOracle** that exposes one price source per reserveId. The price sources are typically Aave-deployed **PriceCapAdapters** that wrap a Chainlink feed (or for liquid-staked / wrapped assets, a ratio provider) with a growth-rate cap. The discount rate on these caps can be adjusted by the **RiskCouncilMultisig** (2/2) and **GhoRiskCouncilMultisig** (3/4) through the RiskSteward and GhoAaveSteward automation contracts, within governance-set bounds. These adjustments go through the legacy **ACLManager** (separate from the V5 AccessManager), not through the governance proposal process.
+Each Spoke has its own paired **AaveOracle** that exposes one price source per reserveId. The price sources are typically Aave-deployed **PriceCapAdapters** that wrap a Chainlink feed (or for liquid-staked / wrapped assets, a ratio provider) with a growth-rate cap on the underlying ratio. The discount rate on these caps is tunable within governance-set bounds (see the upgrades & governance section).
+
+For the full set of actors who can swap oracles or adjust cap discount rates, see the upgrades & governance section below and the permissions section.
+`,
+    upgradesAndGovernance: `Privileged authority over Aave V4 is concentrated in a small number of multisigs and one onchain governance endpoint, and upgrades execute with no timelock. Every Hub, every Spoke, the Treasury, every PriceCapAdapter, the ACLManager, and the AccessManager itself is deployed behind a TransparentUpgradeableProxy.
+
+Two independent access control systems gate privileged calls. The OpenZeppelin V5 \`AccessManager\` gates every admin function on every Hub and Spoke through the \`restricted\` modifier, using role labels such as \`ADMIN_ROLE\`, \`HUB_CONFIGURATOR_ROLE\`, and \`SPOKE_CONFIGURATOR_ROLE\`. The top-level \`ADMIN_ROLE\` currently has two members: the **AaveV4AdminMultisig** (a 5-of-8 Gnosis Safe) and the **AaveGovV3Executor** (the onchain endpoint that runs proposals approved through Aave Governance V3). Both members are configured with an execution delay of zero, so privileged calls execute immediately once the multisig quorum or the DAO vote is reached. In parallel, a legacy \`ACLManager\` inherited from Aave V3 (with bytes32 roles \`POOL_ADMIN\`, \`RISK_ADMIN\`, \`EMERGENCY_ADMIN\`) continues to gate the PriceCapAdapters used by V4 oracles; discount-rate adjustments on those caps flow through this older system rather than through the V4 AccessManager.
+
+Upgrades go through several \`ProxyAdmin\` contracts whose owners resolve to either the AaveV4AdminMultisig or the AaveGovV3Executor. There is no separate upgrade timelock: once either owner submits an upgrade, it takes effect in the same transaction. The single most concentrated trust assumption is therefore the AaveV4AdminMultisig: five of its eight signers can replace the implementation of any V4 contract at will.
+
+Because the AaveV4AdminMultisig holds \`ADMIN_ROLE\` directly, the same five signers can execute any \`restricted\` function on any Hub or Spoke without going through the Aave DAO. In one transaction, and with no delay, they can:
+
+- swap the oracle feed on any reserve via \`updateReservePriceSource\` (a wrong price enables unfair liquidations or blocks legitimate ones);
+- list, reconfigure, or pause reserves via \`addReserve\` and \`updateReserveConfig\` on any Spoke;
+- halt or deactivate entire Spokes and assets via the HubConfigurator (\`haltSpoke\`, \`deactivateSpoke\`, \`haltAsset\`, \`deactivateAsset\`);
+- redirect protocol fees via \`updateFeeReceiver\` and \`updateLiquidityFee\`;
+- install a reinvestment controller that can sweep idle Hub liquidity into an external strategy via \`updateReinvestmentController\`;
+- replace the interest-rate strategy on any Hub via \`updateInterestRateStrategy\`;
+- activate or deactivate a position manager on any Spoke via \`updatePositionManager\`;
+- move any ERC20 balance held by the Treasury (whose owner is the same multisig).
+
+The AaveGovV3Executor can do all of the same things, but only after an Aave Governance V3 onchain vote executes through the governance executor; the DAO vote process is public and takes days end-to-end, but the resulting transaction then executes on V4 with no additional delay.
+
+Position-manager activation is the one privileged call that does **not** directly threaten user funds: the \`onlyPositionManager\` check on the Spoke requires both admin activation *and* explicit per-user approval (\`setUserPositionManager\`), so the admin cannot drain a user who has not individually approved the activated contract. The practical risk there is a "lure" pattern: the admin activates a contract that users are then encouraged to approve.
+
+Two routine-tuning paths exist for risk parameters, bounded by ranges set at deploy time or by governance. Neither can upgrade contracts or move funds. The **RiskCouncilMultisig** (2-of-2) operates the \`RiskSteward\` and can adjust supply caps, borrow caps, LTV and liquidation parameters, and PriceCapAdapter discount rates, within per-reserve bounds returned onchain (with a 3-day cooldown between updates on the same reserve). The **GhoRiskCouncilMultisig** (3-of-4) operates the \`GhoAaveSteward\` and \`GhoDirectMinter\` and can adjust GHO borrow rates, bucket capacities, and pause or unpause GHO minting, within bounds. Neither steward can raise its own bounds; only the AaveV4AdminMultisig or the DAO can.
+
+The **EmergencyAdminMultisig** (5-of-9) holds the \`EMERGENCY_ADMIN\` role on the legacy V3-era ACLManager and can trigger emergency actions (such as pausing a PriceCapAdapter) on the V3 system that V4 oracles still depend on. It does not hold any V4 AccessManager role.
 `,
     otherConsiderations: [
       {
-        name: 'Cross-chain spoke registry',
-        description:
-          "The Hub keeps a per-asset list of every Spoke registered for that asset. All Hubs and Spokes on Ethereum communicate via direct contract calls (no cross-chain messaging). If Aave V4 deploys on another chain, that chain gets its own independent Hub(s) and Spoke(s).",
-        references: [],
-        risks: [],
-      },
-      {
-        name: 'Multi-market topology',
-        description: `Aave V4 deploys ${NUM_SPOKES} distinct Spokes on Ethereum, each with its own asset list and risk parameters (MainSpoke, StablesSpoke, BTCSpoke, EthenaIsolatedSpoke, RsETHCorrelatedSpoke, ...). All Spokes share the same AccessManager and the same governance chain, so a single Aave Governance V3 vote can reconfigure any of them. All Spoke implementations use the same access control pattern: restricted modifier on every admin function, onlyPositionManager on user functions, permissionless liquidation.`,
-        references: [],
-        risks: [],
-      },
-      {
-        name: 'Two independent access control systems',
-        description:
-          'Aave V4 uses two separate, independent access control systems with five total end actors. The OZ V5 AccessManager gates all Hub and Spoke admin functions (reserve listing, oracle source replacement, interest rate changes, pause/freeze, position manager assignment) and is controlled by the AaveV4AdminMultisig (5/8) and AaveGovV3Executor. The legacy ACLManager gates PriceCapAdapter discount rate changes and is operated by the RiskCouncilMultisig (2/2), GhoRiskCouncilMultisig (3/4), and EmergencyAdminMultisig (5/9) through automation steward contracts. The two systems have different role holders, different admin hierarchies, and different trust chains.',
-        references: [],
-        risks: [],
-      },
-      {
         name: 'Hubs',
-        description: `${NUM_HUBS} Hubs pool liquidity across Spokes. Each Hub has its own InterestRateStrategy, fee configuration, and per-asset spoke registry. For each asset: the protocol fee (percentage of interest taken by the Treasury), the number of Spokes that can draw/add liquidity for that asset, and the interest rate curve parameters (base rate, slope before optimal utilization, slope after optimal utilization, optimal utilization target).
+        description: `${NUM_HUBS} Hubs pool liquidity across Spokes. Each Hub has its own InterestRateStrategy, fee configuration, and per-asset spoke registry.
+
+The interest rate borrowers pay on a Hub is a kinked curve driven by **utilization** (\`drawn / (liquidity + drawn)\`, the fraction of the pool that is currently borrowed):
+
+![Kinked interest-rate curve for USDC on the CoreHub (base 0%, slope 1 4% up to the 92% optimal kink, slope 2 20% from the kink to 100%)](/images/architecture/aave-v4-interest-rate-curve.svg)
+
+- **Base rate**: the rate charged when utilization is zero (nothing borrowed).
+- **Optimal util**: the target utilization governance wants the pool to sit at. It is the "kink" on the curve.
+- **Slope 1**: the extra rate added as utilization grows from zero to the optimal point. At optimal util, the borrow rate equals \`base + slope 1\`.
+- **Slope 2**: the extra rate added between optimal and 100% utilization. At 100% util, the borrow rate equals \`base + slope 1 + slope 2\` (typically very large, to make borrowing prohibitively expensive when liquidity is scarce and to keep some available for withdrawers).
+
+The table below shows per-asset: the number of Spokes registered for that asset, current idle liquidity, the protocol fee taken by the Treasury, the four rate-curve parameters, whether a reinvestment controller is active (see "Reinvestment controllers"), and any accrued deficit (bad debt absorbed by suppliers).
 
 ${hubDetails}`,
         references: [],
@@ -390,6 +443,13 @@ ${hubDetails}`,
       {
         name: 'Spokes',
         description: `${NUM_SPOKES} Spokes on Ethereum, each a self-contained market with its own position boundary, liquidation parameters, and oracle. Each reserve within a Spoke routes to a specific Hub for liquidity.
+
+Each reserve is bounded on both sides by two per-(Hub, asset, Spoke) caps set by governance, expressed in whole tokens (so a cap of \`500K\` on USDC means 500,000 USDC):
+
+- **addCap**: the maximum amount that can be supplied to the Hub through this Spoke (caps the Spoke's share of the pool's liquidity). Reaching it blocks further deposits on this reserve until existing supply is withdrawn or the cap is raised.
+- **drawCap**: the maximum amount that can be borrowed from the Hub through this Spoke (caps the Spoke's outstanding debt to the Hub). Reaching it blocks further borrows on this reserve. It also bounds the worst-case bad debt a single Spoke can inflict on a Hub: if every position on that Spoke is liquidated at zero recovery, the loss to the shared Hub pool cannot exceed the drawCap.
+
+A value of \`∞\` means the cap is set to the uint40 sentinel and is effectively unlimited. A value of \`0\` means the corresponding action is currently disabled on that reserve.
 
 ${spokeDetails}`,
         references: [],
@@ -400,6 +460,30 @@ ${spokeDetails}`,
         description: `${NUM_ROLES} roles configured on the AccessManager: ADMIN_ROLE, HUB_CONFIGURATOR_ROLE, HUB_CONFIGURATOR_DOMAIN_ADMIN_ROLE, HUB_FEE_MINTER_ROLE, HUB_DEFICIT_ELIMINATOR_ROLE, SPOKE_DOMAIN_ADMIN_ROLE, SPOKE_CONFIGURATOR_ROLE, SPOKE_USER_POSITION_UPDATER_ROLE, SPOKE_CONFIGURATOR_DOMAIN_ADMIN_ROLE. ${NUM_PRICE_ADAPTERS} PriceCapAdapters are deployed across all markets.`,
         references: [],
         risks: [],
+      },
+      {
+        name: 'Reinvestment controllers',
+        description: `Each Hub asset has a configurable \`reinvestmentController\` address. When set to a non-zero address, this controller can:
+
+- **\`sweep(assetId, amount)\`**: withdraw idle liquidity tokens from the Hub to the controller's address. The Hub tracks the removed amount in \`asset.swept\` so supplier share value is preserved.
+- **\`reclaim(assetId, amount)\`**: return tokens to the Hub, decreasing \`swept\` and increasing \`liquidity\`.
+
+The intended use is deploying idle liquidity into external yield strategies. If the controller reclaims more than it swept, the excess grows the pool for all suppliers. The swept amount is included in the interest rate formula denominator (\`drawn / (liquidity + drawn + swept)\`), so sweeping does not artificially inflate borrow rates.
+
+**Risk**: when active, the controller can physically remove all idle liquidity from the Hub. If a supplier tries to withdraw more than the remaining \`liquidity\`, the transaction reverts until the controller reclaims. A malicious or compromised controller could sweep funds and never return them.
+
+**Current status**: all assets on all three Hubs have \`reinvestmentController\` set to the zero address (disabled). No idle liquidity is currently being reinvested. Governance (via HubConfigurator.updateReinvestmentController, gated by the AccessManager) can activate a controller at any time.`,
+        references: [],
+        risks: [
+          {
+            category: 'Funds can be frozen if',
+            text: 'a reinvestment controller is activated and sweeps most idle liquidity, making withdrawals temporarily unavailable until the controller reclaims.',
+          },
+          {
+            category: 'Funds can be lost if',
+            text: 'a reinvestment controller is activated and the controller contract or its external yield strategy is compromised, preventing reclaim of swept funds.',
+          },
+        ],
       },
     ],
   },

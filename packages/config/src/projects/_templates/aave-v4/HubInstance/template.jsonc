@@ -52,6 +52,17 @@
         "method": "getSpokeCount",
         "length": "{{ getAssetCount }}"
       }
+    },
+    "spokeConfigs": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "description": "Per-(assetId, spoke) SpokeConfig: addCap, drawCap, riskPremiumThreshold, active, halted. Reconstructed from UpdateSpokeConfig events; the latest emission per (assetId, spoke) pair wins.",
+      "handler": {
+        "type": "event",
+        "select": "config",
+        "set": { "event": "UpdateSpokeConfig" },
+        "groupBy": ["assetId", "spoke"]
+      }
     }
   }
 }

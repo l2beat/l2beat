@@ -1,6 +1,6 @@
 {
   "name": "aave-v4",
-  "timestamp": 1775724196,
+  "timestamp": 1776672695,
   "configHash": "0xff1404656bb03745941b707354054f3dc570581bd9077b577bc3ebc1f73eef36",
   "entries": [
     {
@@ -135,16 +135,16 @@
         "aggregator": "eth:0xA674a0fD742F37BD5077AFc90D1E82485c91989C",
         "decimals": 8,
         "description": "EURC / USD",
-        "latestAnswer": 116508014,
-        "latestRound": "18446744073709552184",
+        "latestAnswer": 117400275,
+        "latestRound": "18446744073709552199",
         "latestRoundData": {
-          "roundId": "18446744073709552184",
-          "answer": 116508014,
-          "startedAt": 1775674813,
-          "updatedAt": 1775674847,
-          "answeredInRound": "18446744073709552184"
+          "roundId": "18446744073709552199",
+          "answer": 117400275,
+          "startedAt": 1776627507,
+          "updatedAt": 1776627527,
+          "answeredInRound": "18446744073709552199"
         },
-        "latestTimestamp": 1775674847,
+        "latestTimestamp": 1776627527,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 1,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -181,10 +181,10 @@
         "authority": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
         "getAsset": [
           {
-            "liquidity": "43854348951457376823698",
+            "liquidity": "117555502556443572520862",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "43854348951457376823698",
+            "addedShares": "117555502556443572520862",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -192,7 +192,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775514011,
+            "lastUpdateTimestamp": 1776252647,
             "underlying": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -200,10 +200,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 0,
+            "liquidity": "22592033343509504515",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": 0,
+            "addedShares": "22592033343509504515",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -211,7 +211,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1774299851,
+            "lastUpdateTimestamp": 1776262799,
             "underlying": "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -219,10 +219,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "818013404494982362",
+            "liquidity": "11988481311685292767470",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "818013404494982362",
+            "addedShares": "11988481311685292767470",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -230,7 +230,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702219,
+            "lastUpdateTimestamp": 1776663659,
             "underlying": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -238,18 +238,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "1143283078504710751949",
-            "realizedFees": "396572745559443522",
+            "liquidity": "4797239190036737383309",
+            "realizedFees": "2252409005575443620",
             "decimals": 18,
-            "addedShares": "8819516204462639632555",
+            "addedShares": "12479933295101276912757",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": "7675396505124042357278",
+            "drawnShares": "7683438070508166188883",
             "premiumShares": 0,
             "liquidityFee": 2500,
-            "drawnIndex": "1000552357977209172723060532",
-            "drawnRate": "43520947777870086389468224",
-            "lastUpdateTimestamp": 1775702243,
+            "drawnIndex": "1001519203647554015598708741",
+            "drawnRate": "30799292357141599809684015",
+            "lastUpdateTimestamp": 1776642983,
             "underlying": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -257,10 +257,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 50004339781,
+            "liquidity": 50004599781,
             "realizedFees": 650961,
             "decimals": 6,
-            "addedShares": 50000000030,
+            "addedShares": 50000260010,
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -268,7 +268,7 @@
             "liquidityFee": 1500,
             "drawnIndex": "1000218371734686791654256301",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702279,
+            "lastUpdateTimestamp": 1776419951,
             "underlying": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -276,18 +276,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "50089954537015289609303",
-            "realizedFees": "706336571501324942",
+            "liquidity": "48730632915304772406891",
+            "realizedFees": "706970052618716818",
             "decimals": 18,
-            "addedShares": "50082882406475414399466",
+            "addedShares": "50052885545803668423515",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 0,
+            "drawnShares": "1328946938727260717052",
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000281430453952588405510722",
-            "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702351,
+            "drawnIndex": "1000286197244099970549685560",
+            "drawnRate": "1327735054623447828124846",
+            "lastUpdateTimestamp": 1776611675,
             "underlying": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -295,18 +295,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 50002224864,
+            "liquidity": 40590439119,
             "realizedFees": 0,
             "decimals": 6,
-            "addedShares": 50002457163,
+            "addedShares": 50002557162,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 232300,
+            "drawnShares": 9412117490,
             "premiumShares": 0,
             "liquidityFee": 1500,
-            "drawnIndex": "1000000000457267123287671232",
-            "drawnRate": "227239810946668269816",
-            "lastUpdateTimestamp": 1775702315,
+            "drawnIndex": "1000000059070768305717684101",
+            "drawnRate": "9207035905930986982362161",
+            "lastUpdateTimestamp": 1776573239,
             "underlying": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
             "irStrategy": "eth:0x31280650661b8443723fa9739b3A164E3696af48",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -365,7 +365,198 @@
         "MAX_ALLOWED_SPOKE_CAP": 1099511627775,
         "MAX_ALLOWED_UNDERLYING_DECIMALS": 18,
         "MAX_RISK_PREMIUM_THRESHOLD": 16777215,
-        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6
+        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6,
+        "spokeConfigs": {
+          "0": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x90774889c22D2F2Adf44da1f04C7c95542590df4": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              2000000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x58131E79531caB1d52301228d1f7b842F26B9649": [
+              400000,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "1": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xdd2Eb78BF9e6aC5068B95aD2d451e8c9Af10ac81": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              250000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x58131E79531caB1d52301228d1f7b842F26B9649": [
+              50000,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "2": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x24f8c062e1E0451736C1D6E023510DA262a41df4": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              1000000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x58131E79531caB1d52301228d1f7b842F26B9649": [
+              250000,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "3": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x502Cd81da6a8F1785eb2eEE72713B7388E16A854": [
+              78000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              1000000,
+              960000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x58131E79531caB1d52301228d1f7b842F26B9649": [
+              312500,
+              325000,
+              0,
+              true,
+              false
+            ]
+          },
+          "4": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xc94bdd83D2c7655C280655D60954e79E88D4F949": [
+              37500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              500000,
+              625000,
+              0,
+              true,
+              false
+            ]
+          },
+          "5": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xA54382db40EC602c0a173A08f9E86Ed40F9D4D10": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              1000000,
+              1150000,
+              0,
+              true,
+              false
+            ]
+          },
+          "6": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x80835EB50694EE0e519743f67e5401e6FD300006": [
+              37500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              500000,
+              625000,
+              0,
+              true,
+              false
+            ]
+          }
+        }
       },
       "fieldMeta": {
         "authority": {
@@ -383,6 +574,11 @@
         },
         "getSpokeCount": {
           "description": "Number of registered spokes per assetId. The hub is cross-chain so multiple spokes (one per chain or market) may register interest in the same asset."
+        },
+        "spokeConfigs": {
+          "severity": "HIGH",
+          "description": "Per-(assetId, spoke) SpokeConfig: addCap, drawCap, riskPremiumThreshold, active, halted. Reconstructed from UpdateSpokeConfig events; the latest emission per (assetId, spoke) pair wins.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
@@ -400,13 +596,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x06002e9c4412CB7814a791eA3666D905871E536A",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277111,
       "sinceBlock": 24720895,
       "values": {
@@ -482,6 +671,16 @@
                   "member": "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A",
                   "since": 1774359887,
                   "executionDelay": 0
+                },
+                {
+                  "member": "eth:0x14339e2178A954d5FB839D5Ff31644fE0F25F517",
+                  "since": 1775865623,
+                  "executionDelay": 0
+                },
+                {
+                  "member": "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9",
+                  "since": 1776540911,
+                  "executionDelay": 0
                 }
               ]
             },
@@ -495,7 +694,15 @@
                 }
               ]
             },
-            "SPOKE_CONFIGURATOR_DOMAIN_ADMIN_ROLE": { "members": [] }
+            "SPOKE_CONFIGURATOR_DOMAIN_ADMIN_ROLE": {
+              "members": [
+                {
+                  "member": "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9",
+                  "since": 1776541523,
+                  "executionDelay": 0
+                }
+              ]
+            }
           },
           "targets": {
             "eth:0x1F0753480bB03EaA00863224602267B7E0525C3d": {
@@ -792,7 +999,9 @@
         ],
         "getRoleLabelCount": 9,
         "hubConfiguratorDomainAdminRoleMembers": [
-          "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A"
+          "eth:0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A",
+          "eth:0x14339e2178A954d5FB839D5Ff31644fE0F25F517",
+          "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9"
         ],
         "hubConfiguratorRoleMembers": [
           "eth:0x1F0753480bB03EaA00863224602267B7E0525C3d"
@@ -837,8 +1046,8 @@
         "DECIMALS": 8,
         "description": "PT Capped USDe USDT/USD linear discount 07MAY2026",
         "discountRatePerYear": "39500000000000000",
-        "getCurrentDiscount": 2990818604134956,
-        "latestAnswer": 99699918,
+        "getCurrentDiscount": 1802782454972095,
+        "latestAnswer": 99858651,
         "MATURITY": 1778112000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "256900000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0xAeBf0Bb9f57E89260d57f31AF34eB58657d96Ce0",
@@ -876,13 +1085,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277303,
       "sinceBlock": 24720911,
       "values": {
@@ -895,6 +1097,24 @@
       }
     },
     {
+      "name": "Executor",
+      "address": "eth:0x14339e2178A954d5FB839D5Ff31644fE0F25F517",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x23c3ac94471b4884163cef513ccf495c364970c1152de69f3737e2189334e8dd"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1775753363,
+      "sinceBlock": 24843461,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9"
+      },
+      "implementationNames": {
+        "eth:0x14339e2178A954d5FB839D5Ff31644fE0F25F517": "Executor"
+      }
+    },
+    {
       "name": "AaveV4AdminMultisig",
       "address": "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9",
       "type": "Contract",
@@ -904,276 +1124,6 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "activate/deactivate position managers that can act on behalf of all users.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "change reinvestment controllers (who can sweep idle liquidity).",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "grant/revoke any AccessManager role and change role-to-function mappings.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "halt/deactivate any Spoke or asset on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "list/delist assets on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "pause/freeze individual reserves or entire markets on any Spoke.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "redirect protocol fee receivers on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap interest rate strategies and update interest rate parameters.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap oracle price sources on any Spoke.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap the authority pointer on any gated contract, replacing the governance system.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "description": "invest Treasury funds into Hubs.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "description": "transfer any ERC20 token the Treasury holds to any address, with no timelock.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "description": "transfer ownership of the Treasury (2-step, must be accepted by new owner).",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "description": "withdraw assets from any Hub to any address, with no timelock.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x06002e9c4412CB7814a791eA3666D905871E536A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x078247481bCFa9AB3C566f7a769352b8B4189532" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x5BeA32dE95a6107E3B8A9Faa5CB1D182C7D60D0d" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x58131E79531caB1d52301228d1f7b842F26B9649",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x2A2DEEe71645Ef881C788C85eD0C8E9f152B6531" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x1De446C91cF141c76f6eeF2331128ED7A4536846" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x128E41124dbc7d81434f332F9759B93243758F7B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x22249b31797bD067E37F49dC93614C316976B158" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xfFeAcCAd70f4393701272212dACD791c01957f7f" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xD56EF224603F64b5d9530b49cA690ED76C3d3cF1" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x890B79dDcdCCd663B4D7fC121A7A70184489b505" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xba1B3D55D249692b669A164024A838309B7508AF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xbceB5eBf77DcBBE1d2081d6BF591F04154BBa494" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xDdC6B7F9e0E1A17a2140Ed4d1bA75E68a2D45B43" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA0a8d221F6592780F00dF65eE9ABc2489395C29f" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8867D58d75745020669D61677ae29d69330c6cD5" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x078247481bCFa9AB3C566f7a769352b8B4189532",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x128E41124dbc7d81434f332F9759B93243758F7B",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x1De446C91cF141c76f6eeF2331128ED7A4536846",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x22249b31797bD067E37F49dC93614C316976B158",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x2A2DEEe71645Ef881C788C85eD0C8E9f152B6531",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x55b71C0aeD3c616162eE7c608c089A1055CEA3Bf",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x5BeA32dE95a6107E3B8A9Faa5CB1D182C7D60D0d",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x8867D58d75745020669D61677ae29d69330c6cD5",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x890B79dDcdCCd663B4D7fC121A7A70184489b505",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xA0a8d221F6592780F00dF65eE9ABc2489395C29f",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xbceB5eBf77DcBBE1d2081d6BF591F04154BBa494",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xD56EF224603F64b5d9530b49cA690ED76C3d3cF1",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xDdC6B7F9e0E1A17a2140Ed4d1bA75E68a2D45B43",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xfFeAcCAd70f4393701272212dACD791c01957f7f",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1773937667,
       "sinceBlock": 24692727,
@@ -1195,7 +1145,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 3,
+        "nonce": 7,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1248,20 +1198,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1765456151,
       "sinceBlock": 23989439,
       "values": {
@@ -1334,7 +1270,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1401,7 +1338,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1468,7 +1406,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1535,7 +1474,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1602,7 +1542,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ]
         ],
         "getUpdateType": "PendleDiscountRateUpdate_Core",
@@ -1624,13 +1565,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277339,
       "sinceBlock": 24720914,
       "values": {
@@ -1652,44 +1586,6 @@
       ],
       "proxyType": "immutable",
       "description": "Privileged admin interface for the Hub, gated through the AccessManager's restricted modifier. Every function on this contract is a trust-critical operation: listing/delisting assets, swapping interest rate strategies, redirecting fee receivers, adding/removing spokes, and setting position caps. The HubConfigurator is the primary path through which governance changes Hub-side parameters.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "add/remove/halt/deactivate spokes on the Hub.",
-          "role": ".hubConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "change reinvestment controllers.",
-          "role": ".hubConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "list/delist assets on the Hub.",
-          "role": ".hubConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "redirect fee receivers on the Hub.",
-          "role": ".hubConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "reset or set spoke add/draw caps.",
-          "role": ".hubConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap interest rate strategies and update rate parameters.",
-          "role": ".hubConfiguratorRoleMembers"
-        }
-      ],
       "sinceTimestamp": 1774276967,
       "sinceBlock": 24720883,
       "values": {
@@ -1727,16 +1623,16 @@
         "aggregator": "eth:0x0e3dd634FFbF7EA89BbDCF09Ccc463302FD5f903",
         "decimals": 8,
         "description": "XAU / USD",
-        "latestAnswer": 472766000000,
-        "latestRound": "92233720368547765101",
+        "latestAnswer": 478845500000,
+        "latestRound": "92233720368547765205",
         "latestRoundData": {
-          "roundId": "92233720368547765101",
-          "answer": 472766000000,
-          "startedAt": 1775723829,
-          "updatedAt": 1775723843,
-          "answeredInRound": "92233720368547765101"
+          "roundId": "92233720368547765205",
+          "answer": 478845500000,
+          "startedAt": 1776671805,
+          "updatedAt": 1776671819,
+          "answeredInRound": "92233720368547765205"
         },
-        "latestTimestamp": 1775723843,
+        "latestTimestamp": 1776671819,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 5,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -1755,13 +1651,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x943827DCA022D0F354a8a8c332dA1e5Eb9f9F931",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277015,
       "sinceBlock": 24720887,
       "values": {
@@ -1793,7 +1682,7 @@
         "description": "Capped frxUSD / USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99991696,
+        "latestAnswer": 99963714,
         "MAX_STABLE_CAP_VALUE": 200000000
       },
       "fieldMeta": {
@@ -1838,7 +1727,7 @@
         "description": "Capped USDT/USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99998997
+        "latestAnswer": 100039000
       },
       "fieldMeta": {
         "ACL_MANAGER": {
@@ -1880,16 +1769,16 @@
         "aggregator": "eth:0x7d95b7bf7bB7750d818F42Df114739B6C88CF9bC",
         "decimals": 8,
         "description": "RLUSD / USD",
-        "latestAnswer": 100003988,
-        "latestRound": "18446744073709552315",
+        "latestAnswer": 99993255,
+        "latestRound": "18446744073709552326",
         "latestRoundData": {
-          "roundId": "18446744073709552315",
-          "answer": 100003988,
-          "startedAt": 1775675960,
-          "updatedAt": 1775675975,
-          "answeredInRound": "18446744073709552315"
+          "roundId": "18446744073709552326",
+          "answer": 99993255,
+          "startedAt": 1776626609,
+          "updatedAt": 1776626627,
+          "answeredInRound": "18446744073709552326"
         },
-        "latestTimestamp": 1775675975,
+        "latestTimestamp": 1776626627,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 1,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -1908,13 +1797,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x58131E79531caB1d52301228d1f7b842F26B9649",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277483,
       "sinceBlock": 24720926,
       "values": {
@@ -1944,16 +1826,16 @@
         "aggregator": "eth:0x96d6e33B411dc1f4E3F1e894A5A5d9CE0F96738D",
         "decimals": 8,
         "description": "LINK / USD",
-        "latestAnswer": 875761655,
-        "latestRound": "129127208515966887045",
+        "latestAnswer": 924928576,
+        "latestRound": "129127208515966887478",
         "latestRoundData": {
-          "roundId": "129127208515966887045",
-          "answer": 875761655,
-          "startedAt": 1775721621,
-          "updatedAt": 1775721659,
-          "answeredInRound": "129127208515966887045"
+          "roundId": "129127208515966887478",
+          "answer": 924928576,
+          "startedAt": 1776672028,
+          "updatedAt": 1776672047,
+          "answeredInRound": "129127208515966887478"
         },
-        "latestTimestamp": 1775721659,
+        "latestTimestamp": 1776672047,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -1974,20 +1856,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aave V3 GhoDirectMinter. Contract that can mint/burn GHO tokens via an Aave V3 Pool facilitator. Holds RISK_ADMIN on the ACLManager. The guardian can pause minting. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1735575551,
       "sinceBlock": 21516440,
       "values": {
@@ -2031,20 +1899,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "trigger emergency actions on the legacy Aave V3 system.",
-          "role": ".emergencyAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "trigger emergency actions on the legacy Aave V3 system.",
-          "role": ".emergencyAdmins"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1720032287,
       "sinceBlock": 20227856,
@@ -2067,7 +1921,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 13,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2232,7 +2086,7 @@
             "assetId": 3,
             "decimals": 18,
             "collateralRisk": 0,
-            "flags": 8,
+            "flags": 10,
             "dynamicConfigKey": 0
           },
           {
@@ -2241,7 +2095,7 @@
             "assetId": 0,
             "decimals": 18,
             "collateralRisk": 0,
-            "flags": 12,
+            "flags": 10,
             "dynamicConfigKey": 0
           }
         ],
@@ -2249,15 +2103,15 @@
           {
             "collateralRisk": 0,
             "paused": false,
-            "frozen": false,
+            "frozen": true,
             "borrowable": false,
             "receiveSharesEnabled": true
           },
           {
             "collateralRisk": 0,
             "paused": false,
-            "frozen": false,
-            "borrowable": true,
+            "frozen": true,
+            "borrowable": false,
             "receiveSharesEnabled": true
           }
         ],
@@ -2371,16 +2225,16 @@
         "aggregator": "eth:0x0d5F4aADf3fde31BBB55dB5F42C080F18aD54Df5",
         "decimals": 8,
         "description": "USDT / USD",
-        "latestAnswer": 99998997,
-        "latestRound": "55340232221128655489",
+        "latestAnswer": 100039000,
+        "latestRound": "55340232221128655500",
         "latestRoundData": {
-          "roundId": "55340232221128655489",
-          "answer": 99998997,
-          "startedAt": 1775674202,
-          "updatedAt": 1775674223,
-          "answeredInRound": "55340232221128655489"
+          "roundId": "55340232221128655500",
+          "answer": 100039000,
+          "startedAt": 1776624889,
+          "updatedAt": 1776624911,
+          "answeredInRound": "55340232221128655500"
         },
-        "latestTimestamp": 1775674223,
+        "latestTimestamp": 1776624911,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -2411,11 +2265,11 @@
         "description": "Capped sUSDe / USDT / USD",
         "getMaxRatioGrowthPerSecond": 18240835758,
         "getMaxYearlyGrowthRatePercent": 5000,
-        "getRatio": "1226623165921066575",
+        "getRatio": "1227934390207171111",
         "getSnapshotRatio": "1150485992969698694",
         "getSnapshotTimestamp": 1737789743,
         "isCapped": false,
-        "latestAnswer": 122661086,
+        "latestAnswer": 122841328,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -2460,20 +2314,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7e6a6B115D31d4A837E3C737c49Cf6Fafe6112C3",
-          "description": "adjust supply/borrow caps, interest rate parameters, LTV ratios, and price cap configs within hardcoded bounds, with a 3-day cooldown between updates per parameter.",
-          "role": ".RISK_COUNCIL"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFCE597866Ffaf617EFdcA1C1Ad50eBCB16B5171E",
-          "description": "adjust supply/borrow caps, interest rate parameters, LTV ratios, and price cap configs within hardcoded bounds, with a 3-day cooldown between updates per parameter.",
-          "role": ".RISK_COUNCIL"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683744035,
       "sinceBlock": 17231833,
@@ -2481,15 +2321,15 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "eth:0xc2cf0387f2a83A7F5C6675F4CDe7F367ea1B989a",
-          "eth:0x5d49dBcdd300aECc2C311cFB56593E71c445d60d"
+          "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc",
+          "eth:0xbA037E4746ff58c55dc8F27a328C428F258DDACb"
         ],
         "$threshold": 2,
         "domainSeparator": "0x22d89b177dc651d0fe06b69db3e9d33dd4162495e3886a3908375584464f8972",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 346,
+        "nonce": 352,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2518,11 +2358,11 @@
         "description": "Capped rsETH / ETH / USD",
         "getMaxRatioGrowthPerSecond": 3199827927,
         "getMaxYearlyGrowthRatePercent": 983,
-        "getRatio": "1069022848397488096",
+        "getRatio": "1069610361882844043",
         "getSnapshotRatio": "1026549069391100903",
         "getSnapshotTimestamp": 1728904283,
         "isCapped": false,
-        "latestAnswer": 233115976297,
+        "latestAnswer": 245833897523,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 1209600,
         "PERCENTAGE_FACTOR": 10000,
@@ -2562,20 +2402,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1765456187,
       "sinceBlock": 23989442,
       "values": {
@@ -2612,20 +2438,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1765456235,
       "sinceBlock": 23989446,
       "values": {
@@ -2708,104 +2520,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave Governance V3 Executor. The chain-specific executor that runs proposals approved by Aave Governance V3. From Aave V4's perspective, this is the upgrade authority of the AccessManager and a leaf trust root: deeper Aave Gov V3 internals (PayloadsController, Governance, voting portals) belong in Aave Gov V3's own discovery.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".poolAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure pool parameters on the legacy Aave V3 system.",
-          "role": ".poolAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "activate/deactivate position managers that can act on behalf of all users.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "change reinvestment controllers (who can sweep idle liquidity).",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "grant/revoke any AccessManager role and change role-to-function mappings.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "grant/revoke the HUB_CONFIGURATOR_ROLE.",
-          "role": ".hubConfiguratorDomainAdminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "grant/revoke the HUB_FEE_MINTER_ROLE and HUB_DEFICIT_ELIMINATOR_ROLE.",
-          "role": ".hubConfiguratorDomainAdminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "halt/deactivate any Spoke or asset on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "list/delist assets on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "pause/freeze individual reserves or entire markets on any Spoke.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "redirect protocol fee receivers on any Hub.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap interest rate strategies and update interest rate parameters.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap oracle price sources on any Spoke.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap the authority pointer on any gated contract, replacing the governance system.",
-          "role": ".adminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".poolAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure pool parameters on the legacy Aave V3 system.",
-          "role": ".poolAdmins"
-        }
-      ],
       "sinceTimestamp": 1694513963,
       "sinceBlock": 18119610,
       "values": {
@@ -2834,16 +2548,16 @@
         "aggregator": "eth:0xd8B9aA6E811c935eF63e877CFA7Be276931293DA",
         "decimals": 8,
         "description": "AAVE / USD",
-        "latestAnswer": 9052208280,
-        "latestRound": "92233720368547778120",
+        "latestAnswer": 9247839000,
+        "latestRound": "92233720368547778509",
         "latestRoundData": {
-          "roundId": "92233720368547778120",
-          "answer": 9052208280,
-          "startedAt": 1775721624,
-          "updatedAt": 1775721659,
-          "answeredInRound": "92233720368547778120"
+          "roundId": "92233720368547778509",
+          "answer": 9247839000,
+          "startedAt": 1776672002,
+          "updatedAt": 1776672023,
+          "answeredInRound": "92233720368547778509"
         },
-        "latestTimestamp": 1775721659,
+        "latestTimestamp": 1776672023,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 5,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -2864,20 +2578,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aave V3 GhoDirectMinter. Contract that can mint/burn GHO tokens via an Aave V3 Pool facilitator. Holds RISK_ADMIN on the ACLManager. The guardian can pause minting. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1755787667,
       "sinceBlock": 23190151,
       "values": {
@@ -2920,13 +2620,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xCca852Bc40e560adC3b1Cc58CA5b55638ce826c9",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277063,
       "sinceBlock": 24720891,
       "values": {
@@ -3115,7 +2808,7 @@
         "description": "Capped USDC / USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 99982464,
+        "latestAnswer": 99972000,
         "MAX_STABLE_CAP_VALUE": 200000000
       },
       "fieldMeta": {
@@ -3149,13 +2842,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277267,
       "sinceBlock": 24720908,
       "values": {
@@ -3189,11 +2875,11 @@
         "getMaxRatioGrowthPerSecond": 636124479,
         "getMaxRatioGrowthPerSecondScaled": 636124479459417,
         "getMaxYearlyGrowthRatePercent": 200,
-        "getRatio": "1003571245009779163",
+        "getRatio": "1003661249413062169",
         "getSnapshotRatio": "1003041079211609093",
         "getSnapshotTimestamp": 1771706435,
         "isCapped": false,
-        "latestAnswer": 7121856847089,
+        "latestAnswer": 7511993051110,
         "MAXIMUM_SNAPSHOT_TERM": 15552000,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -3234,20 +2920,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 GhoAaveSteward. Automation contract that holds RISK_ADMIN to adjust GHO-specific parameters within hardcoded bounds: max 5% rate parameter change per update, 1-day cooldown. The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1738249247,
       "sinceBlock": 21738111,
       "values": {
@@ -3304,16 +2976,16 @@
         "aggregator": "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5",
         "decimals": 8,
         "description": "ETH / USD",
-        "latestAnswer": 218064540573,
-        "latestRound": "129127208515966889257",
+        "latestAnswer": 229835000000,
+        "latestRound": "129127208515966889653",
         "latestRoundData": {
-          "roundId": "129127208515966889257",
-          "answer": 218064540573,
-          "startedAt": 1775721637,
-          "updatedAt": 1775721659,
-          "answeredInRound": "129127208515966889257"
+          "roundId": "129127208515966889653",
+          "answer": 229835000000,
+          "startedAt": 1776672023,
+          "updatedAt": 1776672047,
+          "answeredInRound": "129127208515966889653"
         },
-        "latestTimestamp": 1775721659,
+        "latestTimestamp": 1776672047,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -3322,6 +2994,11 @@
       "implementationNames": {
         "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "EACAggregatorProxy"
       }
+    },
+    {
+      "address": "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GoldSpoke",
@@ -3593,20 +3270,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 RiskSteward. Automation contract that holds RISK_ADMIN to adjust risk parameters within hardcoded bounds (3-day cooldown per parameter). The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1749194579,
       "sinceBlock": 22644041,
       "values": {
@@ -3824,32 +3487,6 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2cE01c87Fec1b71A9041c52CaED46Fc5f4807285",
-          "description": "pause and unpause GHO minting and burning on this facilitator.",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5513224daaEABCa31af5280727878d52097afA05",
-          "description": "pause and unpause GHO minting and burning on this facilitator.",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5C905d62B22e4DAa4967E517C4a047Ff6026C731",
-          "description": "adjust GHO borrow rates (max 5% change per update) and bucket capacities, with a 1-day cooldown between updates.",
-          "role": ".RISK_COUNCIL"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98217A06721Ebf727f2C8d9aD7718ec28b7aAe34",
-          "description": "adjust GHO borrow rates (max 5% change per update) and bucket capacities, with a 1-day cooldown between updates.",
-          "role": ".RISK_COUNCIL"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1711093967,
       "sinceBlock": 19488798,
@@ -3867,7 +3504,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 159,
+        "nonce": 160,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3897,11 +3534,11 @@
         "getMaxRatioGrowthPerSecond": 3427475262,
         "getMaxRatioGrowthPerSecondScaled": 3427475262735560,
         "getMaxYearlyGrowthRatePercent": 880,
-        "getRatio": "1231387616265532089",
+        "getRatio": "1232284325871378326",
         "getSnapshotRatio": "1228282498700325540",
         "getSnapshotTimestamp": 1772535659,
         "isCapped": false,
-        "latestAnswer": 268521974808,
+        "latestAnswer": 283222068036,
         "MAXIMUM_SNAPSHOT_TERM": 15552000,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -3941,13 +3578,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277195,
       "sinceBlock": 24720902,
       "values": {
@@ -3990,13 +3620,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277003,
       "sinceBlock": 24720886,
       "values": {
@@ -4026,16 +3649,16 @@
         "aggregator": "eth:0xc9E1a09622afdB659913fefE800fEaE5DBbFe9d7",
         "decimals": 8,
         "description": "USDC / USD",
-        "latestAnswer": 99982464,
-        "latestRound": "55340232221128655724",
+        "latestAnswer": 99972000,
+        "latestRound": "55340232221128655746",
         "latestRoundData": {
-          "roundId": "55340232221128655724",
-          "answer": 99982464,
-          "startedAt": 1775721629,
-          "updatedAt": 1775721659,
-          "answeredInRound": "55340232221128655724"
+          "roundId": "55340232221128655746",
+          "answer": 99972000,
+          "startedAt": 1776672006,
+          "updatedAt": 1776672023,
+          "answeredInRound": "55340232221128655746"
         },
-        "latestTimestamp": 1775721659,
+        "latestTimestamp": 1776672023,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 3,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -4072,10 +3695,10 @@
         "authority": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
         "getAsset": [
           {
-            "liquidity": "54283931213839479610",
+            "liquidity": "385656323533664812322",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "54283931213839479610",
+            "addedShares": "385656323533664812322",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -4083,7 +3706,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775704715,
+            "lastUpdateTimestamp": 1776668339,
             "underlying": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4091,10 +3714,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 599999972,
+            "liquidity": 2999497191,
             "realizedFees": 0,
             "decimals": 8,
-            "addedShares": 599999972,
+            "addedShares": 2999497191,
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -4102,7 +3725,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775701955,
+            "lastUpdateTimestamp": 1776655367,
             "underlying": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4110,10 +3733,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 81458208,
+            "liquidity": 638773078,
             "realizedFees": 0,
             "decimals": 8,
-            "addedShares": 81458208,
+            "addedShares": 638773078,
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -4121,7 +3744,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775701991,
+            "lastUpdateTimestamp": 1776639011,
             "underlying": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4129,10 +3752,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "113992429488301410735",
+            "liquidity": "257246716745999357290",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "113992429488301410735",
+            "addedShares": "257246716745999357290",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -4140,7 +3763,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775711483,
+            "lastUpdateTimestamp": 1776671075,
             "underlying": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4148,18 +3771,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 70289319836,
-            "realizedFees": 1433015,
+            "liquidity": 105223692099,
+            "realizedFees": 21567641,
             "decimals": 6,
-            "addedShares": 100003185823,
+            "addedShares": 749532875428,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 29718074584,
+            "drawnShares": 644018393537,
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000374729254079637007065766",
-            "drawnRate": "12923349052203869063562861",
-            "lastUpdateTimestamp": 1775702063,
+            "drawnIndex": "1001168149933198219361258563",
+            "drawnRate": "37378291108336333811251770",
+            "lastUpdateTimestamp": 1776655439,
             "underlying": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4167,18 +3790,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 66260744844,
-            "realizedFees": 2279225,
+            "liquidity": 372177876685,
+            "realizedFees": 14810733,
             "decimals": 6,
-            "addedShares": 117482131034,
+            "addedShares": 717221644832,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 51224202471,
+            "drawnShares": 345067292141,
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000433131647630213131396091",
-            "drawnRate": "18961434969179529875268105",
-            "lastUpdateTimestamp": 1775711555,
+            "drawnIndex": "1001124906737024443978007751",
+            "drawnRate": "20929633359881421898319710",
+            "lastUpdateTimestamp": 1776671495,
             "underlying": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4186,18 +3809,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "60044231139249908310182",
-            "realizedFees": "655237960002601694",
+            "liquidity": "386775416456831441273108",
+            "realizedFees": "8300713070495024881",
             "decimals": 18,
-            "addedShares": "100066696275977838291878",
+            "addedShares": "599921949563595561077452",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": "40022273346719394481726",
+            "drawnShares": "213176179915237545972031",
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000272555478856131423335159",
-            "drawnRate": "17778762138538046254706126",
-            "lastUpdateTimestamp": 1775702147,
+            "drawnIndex": "1000817459811570821764731464",
+            "drawnRate": "15800422124978642367513585",
+            "lastUpdateTimestamp": 1776625067,
             "underlying": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
             "irStrategy": "eth:0xDCd924047a4bDBFef9CCDDe845E5D45373Ad276D",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -4256,7 +3879,170 @@
         "MAX_ALLOWED_SPOKE_CAP": 1099511627775,
         "MAX_ALLOWED_UNDERLYING_DECIMALS": 18,
         "MAX_RISK_PREMIUM_THRESHOLD": 16777215,
-        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6
+        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6,
+        "spokeConfigs": {
+          "0": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x2087513383330B961A3753B47627Bbf149F31c70": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              500,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "1": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x5AE3d87De89CA6Ce501e8317887F71EABED69E18": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              30,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "2": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD38098faf52D8E915EdED84fBF30F81C17906938": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              25,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "3": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xFCD3D3C69cd032DE0cc78fE529B7447D2fe7F666": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              600,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "4": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x486415fb1F8b062c89ED548f871cf64304AACb31": [
+              37500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              1500000,
+              1750000,
+              0,
+              true,
+              false
+            ]
+          },
+          "5": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x46c588DD8453aC259c1f6a54b4C9A93C2aC3762D": [
+              37500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              1500000,
+              1880000,
+              0,
+              true,
+              false
+            ]
+          },
+          "6": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x900fD46d565d1ac8995928c0179052ec02a6D0E1": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              3000000,
+              3375000,
+              0,
+              true,
+              false
+            ]
+          }
+        }
       },
       "fieldMeta": {
         "authority": {
@@ -4274,6 +4060,11 @@
         },
         "getSpokeCount": {
           "description": "Number of registered spokes per assetId. The hub is cross-chain so multiple spokes (one per chain or market) may register interest in the same asset."
+        },
+        "spokeConfigs": {
+          "severity": "HIGH",
+          "description": "Per-(assetId, spoke) SpokeConfig: addCap, drawCap, riskPremiumThreshold, active, halted. Reconstructed from UpdateSpokeConfig events; the latest emission per (assetId, spoke) pair wins.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
@@ -4873,20 +4664,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 GhoAaveSteward. Automation contract that holds RISK_ADMIN to adjust GHO-specific parameters within hardcoded bounds: max 5% rate parameter change per update, 1-day cooldown. The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1736359739,
       "sinceBlock": 21581454,
       "values": {
@@ -4898,7 +4675,7 @@
           "variableRateSlope2MaxChange": 500
         },
         "getGhoTimelocks": {
-          "ghoBorrowCapLastUpdate": 1765487231,
+          "ghoBorrowCapLastUpdate": 1776598535,
           "ghoSupplyCapLastUpdate": 0,
           "ghoBorrowRateLastUpdate": 1773612287
         },
@@ -4984,16 +4761,16 @@
         "aggregator": "eth:0x62a897c3e81d809c7444BB63D7D51E1F2EbB6C3D",
         "decimals": 8,
         "description": "frxUSD / USD",
-        "latestAnswer": 99991696,
-        "latestRound": "18446744073709551983",
+        "latestAnswer": 99963714,
+        "latestRound": "18446744073709551994",
         "latestRoundData": {
-          "roundId": "18446744073709551983",
-          "answer": 99991696,
-          "startedAt": 1775675496,
-          "updatedAt": 1775675519,
-          "answeredInRound": "18446744073709551983"
+          "roundId": "18446744073709551994",
+          "answer": 99963714,
+          "startedAt": 1776626196,
+          "updatedAt": 1776626219,
+          "answeredInRound": "18446744073709551994"
         },
-        "latestTimestamp": 1775675519,
+        "latestTimestamp": 1776626219,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 1,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -5049,38 +4826,6 @@
       ],
       "proxyType": "immutable",
       "description": "Privileged admin interface for Spokes, gated through the AccessManager's restricted modifier. Controls the most security-sensitive Spoke operations: oracle price source replacement (updateReservePriceSource), position manager activation (updatePositionManager), per-reserve pause/freeze flags, collateral risk weights, liquidation parameters, and reserve listing/delisting. All functions carry the restricted modifier.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "activate/deactivate position managers on Spokes.",
-          "role": ".spokeConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "change collateral risk weights and liquidation parameters.",
-          "role": ".spokeConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "list/delist reserves on Spokes.",
-          "role": ".spokeConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "pause/freeze individual reserves or all reserves.",
-          "role": ".spokeConfiguratorRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
-          "description": "swap oracle price sources on Spokes.",
-          "role": ".spokeConfiguratorRoleMembers"
-        }
-      ],
       "sinceTimestamp": 1774276967,
       "sinceBlock": 24720883,
       "values": {
@@ -5109,13 +4854,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277375,
       "sinceBlock": 24720917,
       "values": {
@@ -5147,8 +4885,8 @@
         "DECIMALS": 8,
         "description": "PT Capped sUSDe USDT/USD linear discount 07MAY2026",
         "discountRatePerYear": "40200000000000000",
-        "getCurrentDiscount": 3043820452815829,
-        "latestAnswer": 99694618,
+        "getCurrentDiscount": 1834730498477929,
+        "latestAnswer": 99855455,
         "MATURITY": 1778112000,
         "MAX_DISCOUNT_RATE_PER_YEAR": "256700000000000000",
         "PENDLE_PRINCIPAL_TOKEN": "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
@@ -5198,7 +4936,7 @@
         "description": "Capped EURC/USD",
         "getPriceCapRatio": 104000000,
         "isCapped": false,
-        "latestAnswer": 116508014,
+        "latestAnswer": 117400275,
         "RATIO_DECIMALS": 8
       },
       "fieldMeta": {
@@ -5434,16 +5172,16 @@
         "aggregator": "eth:0x966Dad3B93C207A9EE3a79C336145e013C5cD3fc",
         "decimals": 8,
         "description": "EUR / USD",
-        "latestAnswer": 116640000,
-        "latestRound": "92233720368547761973",
+        "latestAnswer": 117696000,
+        "latestRound": "92233720368547762014",
         "latestRoundData": {
-          "roundId": "92233720368547761973",
-          "answer": 116640000,
-          "startedAt": 1775677123,
-          "updatedAt": 1775677139,
-          "answeredInRound": "92233720368547761973"
+          "roundId": "92233720368547762014",
+          "answer": 117696000,
+          "startedAt": 1776669655,
+          "updatedAt": 1776669671,
+          "answeredInRound": "92233720368547762014"
         },
-        "latestTimestamp": 1775677139,
+        "latestTimestamp": 1776669671,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 5,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -5766,13 +5504,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xba1B3D55D249692b669A164024A838309B7508AF",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277447,
       "sinceBlock": 24720923,
       "values": {
@@ -5928,7 +5659,7 @@
         "decimals": 8,
         "description": "Capped USDT/USD",
         "isCapped": false,
-        "latestAnswer": 99998997
+        "latestAnswer": 100039000
       },
       "fieldMeta": {
         "ACL_MANAGER": {
@@ -6046,11 +5777,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "eth:0xc2cf0387f2a83A7F5C6675F4CDe7F367ea1B989a",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "EthenaEcosystemSpokeOracle",
       "address": "eth:0xc390dbe9fc00D6db73C52d375642b47008C33c90",
       "type": "Contract",
@@ -6112,32 +5838,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x013E2C7567b6231e865BB9273F8c7656103611c0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1769779895,
       "sinceBlock": 24347999,
       "values": {
@@ -6210,7 +5910,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -6277,7 +5978,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -6344,7 +6046,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -6411,7 +6114,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -6478,7 +6182,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ]
         ],
         "getUpdateType": "CapoPriceCapUpdate_Core",
@@ -6518,18 +6223,18 @@
         "authority": "eth:0x08aE3BE30958cDd1847ec58fFfd4C451a87fDF01",
         "getAsset": [
           {
-            "liquidity": "326601146752846008280",
-            "realizedFees": "42885564443532925",
+            "liquidity": "134130963752812165947",
+            "realizedFees": "426766312466479972",
             "decimals": 18,
-            "addedShares": "1377338488055279889535",
+            "addedShares": "3441035872671031177464",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": "1050676607419318602864",
+            "drawnShares": "3305992889020434984432",
             "premiumShares": 0,
             "liquidityFee": 1500,
-            "drawnIndex": "1000484907451305940192462874",
-            "drawnRate": "19488458240653265636027996",
-            "lastUpdateTimestamp": 1775718071,
+            "drawnIndex": "1001454695047152995611282100",
+            "drawnRate": "95362482611633719254574338",
+            "lastUpdateTimestamp": 1776672359,
             "underlying": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6537,10 +6242,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "383271719409030276232",
+            "liquidity": "409358799249135757823",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "383271719409030276232",
+            "addedShares": "409358799249135757823",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6548,7 +6253,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775717483,
+            "lastUpdateTimestamp": 1776638783,
             "underlying": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6556,10 +6261,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "557989694469345847652",
+            "liquidity": "1979819873522011524674",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "557989694469345847652",
+            "addedShares": "1979819873522011524674",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6567,7 +6272,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702747,
+            "lastUpdateTimestamp": 1776671111,
             "underlying": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6575,10 +6280,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "362090987869885939591",
+            "liquidity": "1230385012635484193403",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "362090987869885939591",
+            "addedShares": "1230385012635484193403",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6586,7 +6291,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702555,
+            "lastUpdateTimestamp": 1776539783,
             "underlying": "eth:0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6594,18 +6299,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 183075379929,
-            "realizedFees": 22356032,
+            "liquidity": 32773579649,
+            "realizedFees": 85050361,
             "decimals": 6,
-            "addedShares": 584926470302,
+            "addedShares": 1376528573079,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 401824924870,
+            "drawnShares": 1342994142811,
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000707856851534090627688882",
-            "drawnRate": "29876062123720088139205022",
-            "lastUpdateTimestamp": 1775715803,
+            "drawnIndex": "1001637044156074994544939871",
+            "drawnRate": "180539945489105236159831650",
+            "lastUpdateTimestamp": 1776672011,
             "underlying": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6613,18 +6318,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 535871393079,
-            "realizedFees": 34241609,
+            "liquidity": 2258202563085,
+            "realizedFees": 111261245,
             "decimals": 6,
-            "addedShares": 1000386836906,
+            "addedShares": 4544648737992,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 464638856367,
+            "drawnShares": 2286972145481,
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000701370135049320630867600",
-            "drawnRate": "20198969238833941659067489",
-            "lastUpdateTimestamp": 1775717555,
+            "drawnIndex": "1001467549742095421707745284",
+            "drawnRate": "21892671779775921032436930",
+            "lastUpdateTimestamp": 1776669623,
             "underlying": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6632,18 +6337,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "20072866264587222534243",
-            "realizedFees": "5123713292294716136",
+            "liquidity": "378920192501225532056499",
+            "realizedFees": "20672784867814324749",
             "decimals": 18,
-            "addedShares": "147114403479563794216148",
+            "addedShares": "564955723311699428171518",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": "127028569000611349849993",
+            "drawnShares": "186331381793031617314839",
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000620916665590274023357812",
-            "drawnRate": "38382985591363958584411536",
-            "lastUpdateTimestamp": 1775703119,
+            "drawnIndex": "1001512207557216108351907697",
+            "drawnRate": "14665656751235013810025378",
+            "lastUpdateTimestamp": 1776635327,
             "underlying": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6651,18 +6356,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 91667183218,
+            "liquidity": "9851000091667183218",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": 91667183218,
+            "addedShares": "10000000091667183218",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 0,
+            "drawnShares": "149000000000000000",
             "premiumShares": 0,
             "liquidityFee": 2000,
             "drawnIndex": "1000000000000000000000000000",
-            "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702963,
+            "drawnRate": "744999993170794912860400",
+            "lastUpdateTimestamp": 1776576527,
             "underlying": "eth:0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6670,18 +6375,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 96421129899,
-            "realizedFees": 1268669,
+            "liquidity": 483507981425,
+            "realizedFees": 11889906,
             "decimals": 6,
-            "addedShares": 150002474779,
+            "addedShares": 499975971523,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 53578718629,
+            "drawnShares": 16550386915,
             "premiumShares": 0,
             "liquidityFee": 2000,
-            "drawnIndex": "1000167410269301033367413249",
-            "drawnRate": "15876900191078420567490979",
-            "lastUpdateTimestamp": 1775703011,
+            "drawnIndex": "1000582856273725860632944760",
+            "drawnRate": "1471802761105770037777798",
+            "lastUpdateTimestamp": 1776661019,
             "underlying": "eth:0xe343167631d89B6Ffc58B88d6b7fB0228795491D",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6689,18 +6394,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "211187965761848127935494",
-            "realizedFees": "20041880288492821688",
+            "liquidity": "1019153158326387996520495",
+            "realizedFees": "41174477197293758693",
             "decimals": 18,
-            "addedShares": "410030130016339637201289",
+            "addedShares": "1409740904371111120862868",
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": "198840959480668826664684",
+            "drawnShares": "390731859639492199050795",
             "premiumShares": 0,
             "liquidityFee": 2000,
-            "drawnIndex": "1000505679695853740688457838",
-            "drawnRate": "21558667191193495358463719",
-            "lastUpdateTimestamp": 1775703059,
+            "drawnIndex": "1000932026160884547969758634",
+            "drawnRate": "12325513805956886503999919",
+            "lastUpdateTimestamp": 1776652571,
             "underlying": "eth:0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6708,18 +6413,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 14884410,
-            "realizedFees": 77,
+            "liquidity": 256945757,
+            "realizedFees": 320257,
             "decimals": 6,
-            "addedShares": 17884308,
+            "addedShares": 273011888,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 2999971,
+            "drawnShares": 16652944,
             "premiumShares": 0,
             "liquidityFee": 1000,
-            "drawnIndex": "1000275813938563267695377552",
-            "drawnRate": "10253285891772979063935519",
-            "lastUpdateTimestamp": 1775702927,
+            "drawnIndex": "1001658179669283187603376627",
+            "drawnRate": "3725399851740624191548732",
+            "lastUpdateTimestamp": 1776670211,
             "underlying": "eth:0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6727,18 +6432,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 817150966,
-            "realizedFees": 30,
+            "liquidity": 3874226632,
+            "realizedFees": 645,
             "decimals": 8,
-            "addedShares": 825066165,
+            "addedShares": 3999983275,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 7916471,
+            "drawnShares": 125750680,
             "premiumShares": 0,
             "liquidityFee": 2000,
-            "drawnIndex": "1000074848313584900539593479",
-            "drawnRate": "2979782497450543563056250",
-            "lastUpdateTimestamp": 1775687855,
+            "drawnIndex": "1000178271889137934387977182",
+            "drawnRate": "4072163831121058600671457",
+            "lastUpdateTimestamp": 1776660083,
             "underlying": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6746,18 +6451,18 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 21609356,
-            "realizedFees": 1,
+            "liquidity": 77352708,
+            "realizedFees": 8,
             "decimals": 8,
-            "addedShares": 21731318,
+            "addedShares": 78211093,
             "swept": 0,
             "premiumOffsetRay": 0,
-            "drawnShares": 122000,
+            "drawnShares": 858558,
             "premiumShares": 0,
             "liquidityFee": 2000,
-            "drawnIndex": "1000058084228997612032594429",
-            "drawnRate": "2780718688435755804375649",
-            "lastUpdateTimestamp": 1775675423,
+            "drawnIndex": "1000157934116106355197950152",
+            "drawnRate": "3048957043373292298225265",
+            "lastUpdateTimestamp": 1776628331,
             "underlying": "eth:0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6765,10 +6470,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 4392,
+            "liquidity": 39053,
             "realizedFees": 0,
             "decimals": 8,
-            "addedShares": 4392,
+            "addedShares": 39053,
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6776,7 +6481,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702615,
+            "lastUpdateTimestamp": 1776505787,
             "underlying": "eth:0x8236a87084f8B84306f72007F36F2618A5634494",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6784,10 +6489,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": 47714749,
+            "liquidity": 71359459,
             "realizedFees": 0,
             "decimals": 6,
-            "addedShares": 47714749,
+            "addedShares": 71359459,
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6795,7 +6500,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775704511,
+            "lastUpdateTimestamp": 1776622019,
             "underlying": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6803,10 +6508,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "3094678728743529635839",
+            "liquidity": "4508886503367243688425",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "3094678728743529635839",
+            "addedShares": "4508886503367243688425",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6814,7 +6519,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775722643,
+            "lastUpdateTimestamp": 1776657191,
             "underlying": "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6822,10 +6527,10 @@
             "deficitRay": 0
           },
           {
-            "liquidity": "31249125158538431645276",
+            "liquidity": "53624613006088785549824",
             "realizedFees": 0,
             "decimals": 18,
-            "addedShares": "31249125158538431645276",
+            "addedShares": "53624613006088785549824",
             "swept": 0,
             "premiumOffsetRay": 0,
             "drawnShares": 0,
@@ -6833,7 +6538,7 @@
             "liquidityFee": 0,
             "drawnIndex": "1000000000000000000000000000",
             "drawnRate": 0,
-            "lastUpdateTimestamp": 1775702819,
+            "lastUpdateTimestamp": 1776657803,
             "underlying": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
             "irStrategy": "eth:0xAD88791B0F81D1FA242f637eB05bee0cbc53fe2f",
             "reinvestmentController": "eth:0x0000000000000000000000000000000000000000",
@@ -6952,7 +6657,596 @@
         "MAX_ALLOWED_SPOKE_CAP": 1099511627775,
         "MAX_ALLOWED_UNDERLYING_DECIMALS": 18,
         "MAX_RISK_PREMIUM_THRESHOLD": 16777215,
-        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6
+        "MIN_ALLOWED_UNDERLYING_DECIMALS": 6,
+        "spokeConfigs": {
+          "0": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x7320CF22Ac095bA2a2e0a652F77efB836c2E751b": [
+              250,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              5500,
+              475,
+              0,
+              true,
+              false
+            ],
+            "eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd": [
+              0,
+              2000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219": [
+              0,
+              2500,
+              0,
+              true,
+              false
+            ],
+            "eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4": [
+              0,
+              2500,
+              0,
+              true,
+              false
+            ]
+          },
+          "1": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xcb0E7dA9c635628f6d4827355AeCa75aB8d3560f": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              650,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xe1900480ac69f0B296841Cd01cC37546d92F35Cd": [
+              2000,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "2": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x559cEc2C840D9DBB18936Afc5E5341D78bfC7Cbe": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              200,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219": [
+              2500,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "3": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x45a04Ca1A5cbEeA4B44356c75EDd29b33eB2527a": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x3131FE68C4722e726fe6B2819ED68e514395B9a4": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "4": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x5eC44a70F309854fe04d495cFE1B5dA63DD1cc73": [
+              312500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              4000000,
+              4000000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              125000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              400000,
+              135000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              0,
+              375000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              0,
+              375000,
+              0,
+              true,
+              false
+            ]
+          },
+          "5": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x531E90a2376902DE8915789Fcc1075e3B0c153E7": [
+              312500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              6000000,
+              6000000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              125000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              400000,
+              135000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              0,
+              375000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              0,
+              375000,
+              0,
+              true,
+              false
+            ]
+          },
+          "6": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x58C14a5E061c9bC6926c5b853445290F296C2F7B": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              1500000,
+              1500000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              62500,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              0,
+              12500,
+              0,
+              true,
+              false
+            ]
+          },
+          "7": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xC8a125AE4275a78AADc53B46Ca10566Bc9B249E0": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              500000,
+              340000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              62500,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              0,
+              90000,
+              0,
+              true,
+              false
+            ]
+          },
+          "8": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xAC2435E3C25e8246870D33ce0a26988A46d5DB68": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              2000000,
+              1350000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              62500,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              0,
+              90000,
+              0,
+              true,
+              false
+            ]
+          },
+          "9": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x2226749630775ee20230Ad65214fB339087eF30D": [
+              125000,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              2500000,
+              1700000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              62500,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              0,
+              62500,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              0,
+              200000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xba1B3D55D249692b669A164024A838309B7508AF": [
+              0,
+              200000,
+              0,
+              true,
+              false
+            ]
+          },
+          "10": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x6D9e2Cdd61CaF69af99b275704B6e272C41c6718": [
+              112500,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              225000,
+              150000,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              0,
+              50000,
+              0,
+              true,
+              false
+            ],
+            "eth:0xD8B93635b8C6d0fF98CbE90b5988E3F2d1Cd9da1": [
+              300000,
+              312500,
+              0,
+              true,
+              false
+            ],
+            "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08": [
+              0,
+              150000,
+              0,
+              true,
+              false
+            ]
+          },
+          "11": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x82A9CC4656784E55Ef2E78F704028B5E1Bfc1732": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              40,
+              5,
+              0,
+              true,
+              false
+            ],
+            "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D": [
+              0,
+              5,
+              0,
+              true,
+              false
+            ]
+          },
+          "12": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x33B41B74366F55327d959FfF6D6b6fBc2853dbB1": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              20,
+              3,
+              0,
+              true,
+              false
+            ],
+            "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D": [
+              0,
+              3,
+              0,
+              true,
+              false
+            ]
+          },
+          "13": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x7961F140B570490849DB878AE222570ea838799d": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x7EC68b5695e803e98a21a9A05d744F28b0a7753D": [
+              9,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "14": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x4E712562fcb5337011398B6C630f55b60641cd5e": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x65407b940966954b23dfA3caA5C0702bB42984DC": [
+              250,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "15": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x0A65197b16C5969F92672051c9C9C0C75B369135": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              12000,
+              0,
+              0,
+              true,
+              false
+            ]
+          },
+          "16": {
+            "eth:0xB9B0b8616f6Bf6841972a52058132BE08d723155": [
+              1099511627775,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0xE69C2045095C8Ab3E2a7d77de2328faE5baF797c": [
+              0,
+              0,
+              0,
+              true,
+              false
+            ],
+            "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485": [
+              75000,
+              0,
+              0,
+              true,
+              false
+            ]
+          }
+        }
       },
       "fieldMeta": {
         "authority": {
@@ -6970,6 +7264,11 @@
         },
         "getSpokeCount": {
           "description": "Number of registered spokes per assetId. The hub is cross-chain so multiple spokes (one per chain or market) may register interest in the same asset."
+        },
+        "spokeConfigs": {
+          "severity": "HIGH",
+          "description": "Per-(assetId, spoke) SpokeConfig: addCap, drawCap, riskPremiumThreshold, active, halted. Reconstructed from UpdateSpokeConfig events; the latest emission per (assetId, spoke) pair wins.",
+          "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
@@ -7060,13 +7359,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x973a023A77420ba610f06b3858aD991Df6d85A08",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277411,
       "sinceBlock": 24720920,
       "values": {
@@ -7365,20 +7657,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 automation agent (AaveDiscountRateAgent). Holds RISK_ADMIN on the ACLManager to perform automated discount rate adjustments. The agent's admin is the Aave Governance V3 Executor via the AgentHub.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1765456211,
       "sinceBlock": 23989444,
       "values": {
@@ -7450,7 +7728,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -7517,7 +7796,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -7584,7 +7864,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -7651,7 +7932,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ],
           [
             "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -7718,7 +8000,8 @@
             "eth:0x3de0ff76E8b528C092d47b9DaC775931cef80F49",
             "eth:0x9Bf45ab47747F4B4dD09B3C2c73953484b4eB375",
             "eth:0xB0F70C0bD6FD87dbEb7C10dC692a2a6106817072",
-            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2"
+            "eth:0x619D75E3b790eBC21c289f2805Bb7177A7D732E2",
+            "eth:0x9db38D74a0D29380899aD354121DfB521aDb0548"
           ]
         ],
         "getUpdateType": "RateStrategyUpdate_Core",
@@ -7821,13 +8104,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbF10BDfE177dE0336aFD7fcCF80A904E15386219",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277231,
       "sinceBlock": 24720905,
       "values": {
@@ -7979,7 +8255,7 @@
         "description": "Capped RLUSD / USD",
         "getPriceCap": 104000000,
         "isCapped": false,
-        "latestAnswer": 100003988
+        "latestAnswer": 99993255
       },
       "fieldMeta": {
         "ACL_MANAGER": {
@@ -8024,11 +8300,11 @@
         "description": "Capped weETH / eETH(ETH) / USD",
         "getMaxRatioGrowthPerSecond": 2870766009,
         "getMaxYearlyGrowthRatePercent": 875,
-        "getRatio": "1092210867729220464",
+        "getRatio": "1093025204332473410",
         "getSnapshotRatio": "1034656878645040505",
         "getSnapshotTimestamp": 1711416299,
         "isCapped": false,
-        "latestAnswer": 238172461080,
+        "latestAnswer": 251215447837,
         "MINIMAL_RATIO_INCREASE_LIFETIME": 3,
         "MINIMUM_SNAPSHOT_DELAY": 604800,
         "PERCENTAGE_FACTOR": 10000,
@@ -8119,16 +8395,16 @@
         "aggregator": "eth:0x4a3411ac2948B33c69666B35cc6d055B27Ea84f1",
         "decimals": 8,
         "description": "BTC / USD",
-        "latestAnswer": 7096513458813,
-        "latestRound": "129127208515966880806",
+        "latestAnswer": 7484590100000,
+        "latestRound": "129127208515966881139",
         "latestRoundData": {
-          "roundId": "129127208515966880806",
-          "answer": 7096513458813,
-          "startedAt": 1775721629,
-          "updatedAt": 1775721659,
-          "answeredInRound": "129127208515966880806"
+          "roundId": "129127208515966881139",
+          "answer": 7484590100000,
+          "startedAt": 1776672013,
+          "updatedAt": 1776672035,
+          "answeredInRound": "129127208515966881139"
         },
-        "latestTimestamp": 1775721659,
+        "latestTimestamp": 1776672035,
         "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
         "phaseId": 7,
         "proposedAggregator": "eth:0x0000000000000000000000000000000000000000",
@@ -8153,20 +8429,6 @@
       ],
       "proxyType": "immutable",
       "description": "Aave V3 RiskSteward. Automation contract that holds RISK_ADMIN to adjust risk parameters within hardcoded bounds (3-day cooldown per parameter). The RISK_COUNCIL address can trigger these changes without a governance proposal. Owned by Aave Governance (Executor).",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "change PriceCapAdapter discount rates (setDiscountRatePerYear), affecting wrapped-asset price caps and liquidation thresholds.",
-          "role": ".riskAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
-          "description": "configure risk parameters on the legacy Aave V3 system.",
-          "role": ".riskAdmins"
-        }
-      ],
       "sinceTimestamp": 1749194447,
       "sinceBlock": 22644030,
       "values": {
@@ -8242,13 +8504,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x94e7A5dCbE816e498b89aB752661904E2F56c485",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1774277159,
       "sinceBlock": 24720899,
       "values": {
@@ -8629,6 +8884,17 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x14339e2178A954d5FB839D5Ff31644fE0F25F517": [
+      "constructor()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event ExecutedAction(address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, bool withDelegatecall) payable returns (bytes)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x187AAE17d4931310B3fc75743e7F16Bdc9eD77e9": [
       "constructor(address _singleton)"
@@ -11961,7 +12227,7 @@
     "aave-v4/ACLManager": "0x9ce71927d8e20006874687609a6aedeca777131474ebf56a1caeb77487e79b72",
     "aave-v4/AssetInterestRateStrategy": "0x7a6e1ae60752e8659a7473db19e9a5d56f6f0a387f69231ec613fa36c9368085",
     "aave-v4/HubConfigurator": "0x7f4ebb7129f22004e00b0693521d5ede3bb82fed30587f1f37672b3153be372a",
-    "aave-v4/HubInstance": "0xdd1b0140af88507dab1863216a0b866744cfd09191c12ea59e1c81078f89a5db",
+    "aave-v4/HubInstance": "0x636cf0ad6ab3ef89cb981ed3cfed2bed28925bac1cd49068df3abb1dfe71b207",
     "aave-v4/LiquidationLogic": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "aave-v4/PriceCapAdapter": "0x605b1f8717a85c81a4907634fbf614767184e10b8a8f46ebdc181e685a5fa62b",
     "aave-v4/SpokeConfigurator": "0x7f4ebb7129f22004e00b0693521d5ede3bb82fed30587f1f37672b3153be372a",
@@ -11971,6 +12237,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 24841035 },
-  "permissionsConfigHash": "0x9da3a49fd1ffadc30056e9baf3e3a5855cb2d2dd850a9b1105e9bd78a3074175"
+  "usedBlockNumbers": { "ethereum": 24919828 }
 }

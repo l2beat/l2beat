@@ -241,7 +241,15 @@
                                 }
                               ]
                             },
-                            "groupBy": { "type": "string" },
+                            "groupBy": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
                             "ignoreRelative": { "type": "boolean" },
                             "set": {
                               "anyOf": [
@@ -300,7 +308,15 @@
                                 }
                               ]
                             },
-                            "groupBy": { "type": "string" },
+                            "groupBy": {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "array",
+                                  "items": { "type": "string" }
+                                }
+                              ]
+                            },
                             "ignoreRelative": { "type": "boolean" },
                             "set": {},
                             "add": {
@@ -431,7 +447,7 @@
                     {
                       "type": "object",
                       "properties": {
-                        "type": { "const": "kintoAccessControl" },
+                        "type": { "const": "accessManagerV5" },
                         "roleNames": {
                           "type": "object",
                           "propertyNames": { "type": "string" },
