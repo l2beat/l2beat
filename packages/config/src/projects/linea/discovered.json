@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1775561168,
+  "timestamp": 1776683677,
   "configHash": "0x5d65359f0dc679f9293b57d3bb52529c793b7e887a7ae8757ae7bf79d07f4836",
   "entries": [
     {
@@ -361,6 +361,28 @@
           "role": ".Operators"
         }
       ]
+    },
+    {
+      "name": "LidoStVaultYieldProvider",
+      "address": "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3",
+      "type": "Contract",
+      "template": "linea/LidoStakingVaultYieldProvider",
+      "sourceHashes": [
+        "0x7ee148e011c8bede6032fd936b398fc91310895ff79d18c8da7c538e1dd75140"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1770742547,
+      "sinceBlock": 24427705,
+      "values": {
+        "$immutable": true,
+        "CONNECT_DEPOSIT": "1000000000000000000",
+        "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "YIELD_MANAGER": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94"
+      },
+      "implementationNames": {
+        "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3": "LidoStVaultYieldProvider"
+      }
     },
     {
       "address": "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
@@ -784,7 +806,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 72,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1133,9 +1155,9 @@
         "CONTRACT_VERSION": "7.1",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0x71aed2e590688cd3972b7b696a7870cbc4c6ae9b4ea3ad363f37d595c2a69c6c",
-        "currentFinalizedState": "0xc7997170babce2db5cc635bfeca7dc3d645ba2d88f6103414d33cf00e677eed9",
-        "currentPeriodAmountInWei": "2359399267772655694",
+        "currentFinalizedShnarf": "0x15a38a144e83d9bd4358b63afe6ea2894a1c17f7671dbb986b32bab70e025795",
+        "currentFinalizedState": "0x1e420cc9cefc34da091c0bed9c76f078828b7200bd8a0d02ac82697b2c187811",
+        "currentPeriodAmountInWei": "165776217312996150827",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1490,12 +1512,15 @@
         "UNPAUSE_NATIVE_YIELD_REPORTING_ROLE": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5",
         "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858",
         "UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE": "0xf3b4edd31d82596b9f4e954680c4101d115ae7609dd7c1e14a6fdb7387f56e5c",
-        "userFundsInYieldProvidersTotal": 0,
+        "userFundsInYieldProvidersTotal": "1000000000000000000",
         "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
         "YIELD_REPORTER_ROLE": "0xa980ae8105ebca8c4bda1143caefa4ff96b61271718a11b7239cdb9eabfc7e27",
-        "yieldProviderCount": 0,
+        "yieldProviderByIndex": [
+          "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3"
+        ],
+        "yieldProviderCount": 1,
         "yieldStakingManagerAC": [
           "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
         ],
@@ -2119,8 +2144,8 @@
         },
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "194002427772655694",
-        "currentPeriodEnd": 1775585488,
+        "currentPeriodAmountInWei": "3450000000000000000",
+        "currentPeriodEnd": 1776758581,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -2140,11 +2165,11 @@
         "l1l2MessageSetter": [
           "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 801027,
+        "lastAnchoredL1MessageNumber": 801738,
         "limitInWei": "24000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 106773,
+        "nextMessageNumber": 106919,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -2821,6 +2846,47 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3": [
+      "constructor(address _l1MessageService, address _yieldManager, address _vaultHub, address _vaultFactory, address _steth, address _validatorContainerProofVerifier)",
+      "error ArrayLengthsDoNotMatch()",
+      "error CallerNotProxyAdmin()",
+      "error ContextIsNotYieldManager()",
+      "error MintLSTDisabledDuringOssification()",
+      "error NoEthSent()",
+      "error NoValidatorExitForUnstakePermissionless()",
+      "error NoVendorExitDataProvided()",
+      "error OperationNotSupportedDuringOssification(uint8 operationType)",
+      "error OperationNotSupportedDuringStakingPause(uint8 operationType)",
+      "error SingleValidatorOnlyForUnstakePermissionless()",
+      "error UnknownYieldProviderVendor()",
+      "error UnpauseStakingForbiddenWhenOssified()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event LSTLiabilityPrincipalSynced(uint8 indexed yieldProviderVendor, uint96 indexed yieldProviderIndex, uint256 oldLSTLiabilityPrincipal, uint256 newLSTLiabilityPrincipal)",
+      "event LidoStVaultYieldProviderDeployed(address l1MessageService, address yieldManager, address vaultHub, address vaultFactory, address steth, address validatorContainerProofVerifier)",
+      "function CONNECT_DEPOSIT() view returns (uint256)",
+      "function L1_MESSAGE_SERVICE() view returns (address)",
+      "function STETH() view returns (address)",
+      "function VALIDATOR_CONTAINER_PROOF_VERIFIER() view returns (address)",
+      "function VAULT_FACTORY() view returns (address)",
+      "function VAULT_HUB() view returns (address)",
+      "function YIELD_MANAGER() view returns (address)",
+      "function beforeWithdrawFromYieldProvider(address _yieldProvider, bool _isPermissionlessReserveDeficitWithdrawal)",
+      "function exitVendorContracts(address _yieldProvider, bytes _vendorExitData)",
+      "function fundYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function initializeVendorContracts(bytes _vendorInitializationData) returns (tuple(uint8 yieldProviderVendor, address primaryEntrypoint, address ossifiedEntrypoint, uint256 usersFundsIncrement) registrationData)",
+      "function initiateOssification(address _yieldProvider)",
+      "function pauseStaking(address _yieldProvider)",
+      "function progressPendingOssification(address _yieldProvider) returns (uint8 progressOssificationResult)",
+      "function reportYield(address _yieldProvider) returns (uint256 newReportedYield, uint256 outstandingNegativeYield)",
+      "function syncLSTLiabilityPrincipal(address _yieldProvider)",
+      "function unpauseStaking(address _yieldProvider)",
+      "function unstake(address _yieldProvider, bytes _withdrawalParams) payable",
+      "function unstakePermissionless(address _yieldProvider, uint256 _requiredUnstakeAmountWei, uint64 _validatorIndex, uint64 _slot, bytes _withdrawalParams, bytes _withdrawalParamsProof) payable returns (uint256 unstakedAmountWei)",
+      "function withdrawFromYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function withdrawLST(address _yieldProvider, uint256 _amount, address _recipient)",
+      "function withdrawableValue(address _yieldProvider) payable returns (uint256 availableBalance)"
     ],
     "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -4046,11 +4112,12 @@
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/L2MessageService_v1_0": "0xaa6a49f15c42e763f232df26b0c23e0aede0af912ff884a6b4bb094a27e30601",
     "linea/L2Roles": "0x87df637d02e99d769d43f393133e5ea3e583758a151bdccb3bf7a6a1bd6c6187",
+    "linea/LidoStakingVaultYieldProvider": "0xc3f19fa44794b28bab13fe7e59ad3e8982927823f5cea3abf7c1cde603f2da71",
     "linea/LineaRollup_NativeYield_v7_1": "0x32ac09897450f6f3aa651ca8d4421a08adb045c30651edcdbd6dbf04f4732452",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
-    "linea/YieldManager": "0x79687f873e91b1cb445ebdf7fd97fd735ee5316f46ded4ce44afda3132157517"
+    "linea/YieldManager": "0xd2e14da483a48105a5200c246ccaf5b00f9e781f312953ee46daabb7a9055b35"
   },
-  "usedBlockNumbers": { "ethereum": 24827500, "linea": 30101790 },
-  "permissionsConfigHash": "0xaeef17e1f6b1cdb7b3fb5f1a87aa3285524fed1a421d49e56fc6ebb55b34a68e"
+  "usedBlockNumbers": { "ethereum": 24920741, "linea": 30302887 },
+  "permissionsConfigHash": "0xdee44b939aea0e91675f0feaa7be8ba94d085abcef64e55d081de1f0825de683"
 }

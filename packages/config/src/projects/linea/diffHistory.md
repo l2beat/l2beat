@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x730e83d95d7679b2f415665fe0a4954bc6241507
+
+# Diff at Mon, 20 Apr 2026 14:15:07 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d9425d72430f52ecfaaa73cd408cc555f17ba016 block: 1775561168
+- current timestamp: 1776683677
+
+## Description
+
+Added Lido yield provider for Linea native yield. Currently there is total of 1 ETH (exactly) deployed via Lido Yield Provider, the contracts are fully ready for wider usage of the yield feature.
+
+## Watched changes
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      values.yieldProviderByIndex.0:
++        "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3"
++++ severity: HIGH
+      values.yieldProviderCount:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/.flat/LidoStVaultYieldProvider.sol       | 938 +++++++++++++++++++++
+ 1 file changed, 938 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561168 (main branch discovery), not current.
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      values.yieldProviderByIndex:
++        []
+    }
+```
+
 Generated with discovered.json: 0x506dc6dc6e784aeda0696c193e708085ac60a85a
 
 # Diff at Tue, 07 Apr 2026 11:27:14 GMT:

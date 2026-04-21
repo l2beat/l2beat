@@ -16,5 +16,4 @@ export const debridgeDln: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

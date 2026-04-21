@@ -36,7 +36,6 @@ export function getSearchBarProjectEntries<
     | 'daLayer'
     | 'daBridge'
     | 'interopConfig'
-    | 'isScaling'
     | 'isDaLayer'
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
@@ -46,7 +45,7 @@ export function getSearchBarProjectEntries<
 >(project: T, allProjects: T[]): SearchBarProjectEntry[] {
   const results: SearchBarProjectEntry[] = []
   if (
-    !project.isScaling &&
+    !project.scalingInfo &&
     !project.daLayer &&
     !project.daBridge &&
     !project.ecosystemConfig &&
@@ -71,7 +70,7 @@ export function getSearchBarProjectEntries<
     tags: commonTags,
   } satisfies Partial<SearchBarProjectEntry>
 
-  if (project.isScaling) {
+  if (project.scalingInfo) {
     results.push({
       ...common,
       href: `/scaling/projects/${project.slug}`,

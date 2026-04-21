@@ -16,5 +16,4 @@ export const mayan: BaseProject = {
     ],
     type: 'intent',
   },
-  isInteropProtocol: true,
 }

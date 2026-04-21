@@ -79,7 +79,7 @@ async function getDynamicPaths(): Promise<string[]> {
     daBridges,
   ] = await Promise.all([
     ps.getProjects({
-      where: ['isScaling'],
+      where: ['scalingInfo'],
       whereNot: ['archivedAt'],
       optional: ['tvsConfig'],
     }),

@@ -14,7 +14,7 @@ export async function generateProjectOgImages(
   },
 ) {
   const projects = await ps.getProjects({
-    optional: ['isScaling', 'isDaLayer', 'zkCatalogInfo', 'interopConfig'],
+    optional: ['scalingInfo', 'isDaLayer', 'zkCatalogInfo', 'interopConfig'],
   })
 
   for (const project of projects) {
@@ -93,12 +93,12 @@ async function generateProjectOgImage(
 export function getOpengraphProjectTypes(
   project: Project<
     never,
-    'isScaling' | 'isDaLayer' | 'zkCatalogInfo' | 'interopConfig'
+    'scalingInfo' | 'isDaLayer' | 'zkCatalogInfo' | 'interopConfig'
   >,
 ) {
   const types: ('scaling' | 'zk-catalog' | 'data-availability' | 'interop')[] =
     []
-  if (project.isScaling) {
+  if (project.scalingInfo) {
     types.push('scaling')
   }
   if (project.zkCatalogInfo) {

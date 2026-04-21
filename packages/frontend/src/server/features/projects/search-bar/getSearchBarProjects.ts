@@ -34,7 +34,6 @@ export async function getSearchBarProjects(search: string) {
       'scalingInfo',
       'daLayer',
       'daBridge',
-      'isScaling',
       'isDaLayer',
       'isUpcoming',
       'ecosystemConfig',

@@ -1935,6 +1935,32 @@
       {
         "chain": "ethereum",
         "tx": "0x74d2a903013d5a37f12038c74246cc186e779e212747292e5c5c0f5e959df421"
+      },
+      // unichain related txs
+      {
+        "chain": "ethereum",
+        "tx": "0x649cfb5a89b65c1dd71e082e2af083df986a56d5c57865731997f7fcd4b02777"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0x8dcf7afd10aad147976524365f7032324580e89d40fc6ad7400b602ba06346ee"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0x634a1c590ee45268f643562f24b161be70697b8a0414e579de788d1855c27fe6"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc0c36f3dc6c442b3c0ad8172eed87189570d20dd571583c5c47ff7525596c2f3"
+      },
+      // ETH sent directly via OptimismPortal (bypassing StandardBridge) - L1->L2
+      {
+        "chain": "ethereum",
+        "tx": "0xfff7bec8cee081db53a953b8bbaff13ba2b791b072db31d09c818398cefc9a0f"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0xc6ae8abbfdb4b01f4cae51e52748c86186ac0dfe6568585b5479d7df5f1ad6b9"
       }
     ],
     "events": [
@@ -2303,6 +2329,70 @@
       { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" }
     ],
     "transfers": ["opstack-standardbridge.L1ToL2Transfer"]
+  },
+  "opstack-standardbridge-unichain-eth": {
+    "tags": ["opstack"],
+    "description": "unichain <-> ethereum (eth)",
+    "txs": [
+      // L1 -> L2: 5 ETH deposit (script-found)
+      {
+        "chain": "ethereum",
+        "tx": "0x8833416874efc4c740f2bf8c993ad07670b0642754831d879acea34f0e0b4a54"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0x86c91a53d4cb8ef78cd12de2c784b8cfa664bacf276b0f0577ad5e2d88869dee"
+      },
+      // L2 -> L1: ETH withdrawal
+      {
+        "chain": "unichain",
+        "tx": "0x634a1c590ee45268f643562f24b161be70697b8a0414e579de788d1855c27fe6"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xc0c36f3dc6c442b3c0ad8172eed87189570d20dd571583c5c47ff7525596c2f3"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
+  },
+  "opstack-standardbridge-unichain-erc20": {
+    "tags": ["opstack"],
+    "description": "unichain <-> ethereum (erc20)",
+    "txs": [
+      // L1 -> L2: ERC20 deposit
+      {
+        "chain": "ethereum",
+        "tx": "0x793fc6e58d2ab0ef0d88eb1e902801a99878f0f5d49d3579bf07d93c4c83f9d3"
+      },
+      {
+        "chain": "unichain",
+        "tx": "0xf3ab091247cc65cf9b80c96705b5958043cee8e32e36c6dd3073513004954e22"
+      },
+      // L2 -> L1: ERC20 withdrawal
+      {
+        "chain": "unichain",
+        "tx": "0xeedafd459966b4af16973b25815b1fce3d93d136713165abbb51b6e0ea175983"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x29beb21e991da378d2b5e946bde1bb903581692464bbabc8f0d8c73162dbc3fa"
+      }
+    ],
+    "messages": [
+      { "type": "opstack.L1ToL2Message", "app": "opstack-standardbridge" },
+      { "type": "opstack.L2ToL1Message", "app": "opstack-standardbridge" }
+    ],
+    "transfers": [
+      "opstack-standardbridge.L1ToL2Transfer",
+      "opstack-standardbridge.L2ToL1Transfer"
+    ]
   },
   "opstack-standardbridge-ink-eth": {
     "tags": ["opstack"],

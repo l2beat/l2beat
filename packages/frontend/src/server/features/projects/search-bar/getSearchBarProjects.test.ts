@@ -52,7 +52,6 @@ function scalingProject(
     id: ProjectId(slug),
     slug,
     name,
-    isScaling: true,
     scalingInfo: {
       layer,
       type: scalingCategory,
