@@ -13,6 +13,11 @@ export const AI_MODELS = {
     displayName: 'Claude Sonnet 4.5 (Anthropic)',
     modelId: 'claude-sonnet-4-5-20250929',
   },
+  'claude-opus-4-6': {
+    provider: 'claude',
+    displayName: 'Claude Opus 4.6 (Anthropic)',
+    modelId: 'claude-opus-4-6',
+  },
 } as const
 
 export type ModelKey = keyof typeof AI_MODELS

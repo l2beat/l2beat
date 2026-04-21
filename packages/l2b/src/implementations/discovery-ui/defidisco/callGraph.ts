@@ -40,6 +40,25 @@ const SLITHER_PATH =
   process.env.SLITHER_PATH || path.join(SLITHER_VENV_PATH, 'bin', 'slither')
 const SLITHIR_CACHE_FOLDER = 'slithir-cache'
 
+// Map from discovery chain prefix to Slither network name
+// Slither supports NETWORK:0x.. format natively for many chains
+// See: slither --help for supported networks
+const CHAIN_TO_SLITHER_NETWORK: Record<string, string> = {
+  eth: 'mainnet',
+  base: 'base',
+  arb1: 'arbi',
+  oeth: 'optim',
+  polygon: 'poly',
+  gnosis: 'gno',
+  scroll: 'scroll',
+  linea: 'linea',
+  blast: 'blast',
+  zksync: 'era.zksync',
+  avax: 'avax',
+  celo: 'celo',
+  // Add more as needed — run `slither --help` for full list
+}
+
 // =============================================================================
 // Slithir Cache Types
 // =============================================================================
@@ -64,12 +83,17 @@ interface ParsedFunction {
     functionName: string
     arguments: string[]
   }[]
-  libraryCalls: { library: string; functionName: string }[]
+  libraryCalls: { library: string; functionName: string; arguments: string[] }[]
   highLevelCalls: {
     storageVariable: string
     interfaceType: string
     calledFunction: string
   }[]
+  // Map from SlithIR temp/ref names (TMP_xxx, REF_xxx) to the source variable
+  // name that was cast to an interface. Populated from `CONVERT x to IType`
+  // lines. Used to resolve synthesized SafeERC20 storageVariables back to the
+  // caller's state variable (e.g. TMP_461 → rewardToken).
+  convertAliases: Map<string, string>
 }
 
 interface ParsedContract {
@@ -146,19 +170,27 @@ export async function generateCallGraph(
   onProgress?: (message: string) => void,
   verbose = false,
 ): Promise<ApiCallGraphResponse> {
+  // Load discovered.json once for all operations
+  const discovered = configReader.readDiscovery(project)
+
+  // Determine chain from discovered.json entries
+  const chain = discovered.entries?.[0]?.address?.split(':')[0] || 'eth'
+
   // Get Etherscan API key from environment
   const etherscanApiKey =
     process.env.ETHERSCAN_API_KEY_FOR_DISCOVERY ||
     process.env.L2B_ETHERSCAN_API_KEY
 
-  if (!etherscanApiKey) {
+  // Slither requires --etherscan-apikey for all chains, but non-Etherscan
+  // explorers (e.g. Blockscout for Base) don't actually need a real key
+  const needsRealKey = chain === 'eth'
+  if (!etherscanApiKey && needsRealKey) {
     throw new Error(
       'ETHERSCAN_API_KEY_FOR_DISCOVERY or L2B_ETHERSCAN_API_KEY not configured in environment',
     )
   }
 
-  // Load discovered.json once for all operations
-  const discovered = configReader.readDiscovery(project)
+  const apiKey = etherscanApiKey || 'no-key-needed'
 
   // Get contracts to analyze (non-external only)
   const contracts = getContractsToAnalyze(
@@ -220,7 +252,8 @@ export async function generateCallGraph(
       // runs on implementation address for proxies (since interested in business logic of the contract, not proxy logic)
       const slitherResult = await runSlitherOnContract(
         contract.slitherAddress,
-        etherscanApiKey,
+        apiKey,
+        chain,
         onProgress,
       )
 
@@ -827,6 +860,7 @@ function parseSlithirStructured(output: string): ParsedSlithir {
           internalCalls: [],
           libraryCalls: [],
           highLevelCalls: [],
+          convertAliases: new Map<string, string>(),
         }
         currentContract.functions.set(functionName!, currentFunction)
       }
@@ -834,6 +868,18 @@ function parseSlithirStructured(output: string): ParsedSlithir {
     }
 
     if (!currentFunction) continue
+
+    // Parse CONVERT: "TMP_X = CONVERT srcVar to IType"
+    // Records that TMP_X aliases srcVar cast to IType, so SafeERC20 synthesis
+    // can unwrap the cast and report the original storage variable.
+    // Note: srcVar uses \S+ and Slither normalizes to bare identifiers in
+    // practice; if a qualified form like `this.rewardToken` ever appears the
+    // alias lookup will miss and we fall back to the raw Slither temp name.
+    const convertMatch = line.match(/(\w+)\s*=\s*CONVERT\s+(\S+)\s+to\s+\w+/)
+    if (convertMatch) {
+      const [, tmpName, srcVar] = convertMatch
+      currentFunction.convertAliases.set(tmpName!, srcVar!)
+    }
 
     // Parse INTERNAL_CALL: "TMP = INTERNAL_CALL, ContractName.funcName(params)(args)"
     // Example: "INTERNAL_CALL, BorrowerOperations._adjustTrove(ITroveManager,uint256,TroveChange,uint256)(troveManagerCached,_troveId,troveChange,0)"
@@ -871,17 +917,43 @@ function parseSlithirStructured(output: string): ParsedSlithir {
       continue
     }
 
-    // Parse LIBRARY_CALL: "TMP = LIBRARY_CALL, dest:LibName, function:LibName.funcName(params), arguments:[...]"
+    // Parse LIBRARY_CALL: "TMP = LIBRARY_CALL, dest:LibName, function:LibName.funcName(params), arguments:[arg1, arg2, ...]"
     if (line.includes('LIBRARY_CALL')) {
-      const libMatch = line.match(
-        /LIBRARY_CALL,\s*dest:(\w+),\s*function:(\w+)\.(\w+)\(/,
+      const libMatchWithArgs = line.match(
+        /LIBRARY_CALL,\s*dest:(\w+),\s*function:(\w+)\.(\w+)\([^)]*\),\s*arguments:\[([^\]]*)\]/,
       )
-      if (libMatch) {
-        const [, library, , funcName] = libMatch
+      if (libMatchWithArgs) {
+        const [, library, , funcName, argsStr] = libMatchWithArgs
+        // Slither wraps each argument in single quotes: ['TMP_461', 'minter', '_claimable']
+        // Strip them so the value matches CONVERT aliases and downstream resolvers.
+        // TODO: this naive comma split mis-parses nested commas (tuple/struct
+        // literals, inline calls like `foo(a,b)` as an arg). Slither emits bare
+        // identifiers for the argument slots we care about (first arg to
+        // SafeERC20 is always the IERC20 temp), so it's safe in practice.
+        const args = argsStr
+          ? argsStr
+              .split(',')
+              .map((a) => a.trim().replace(/^['"]|['"]$/g, ''))
+              .filter((a) => a.length > 0)
+          : []
         currentFunction.libraryCalls.push({
           library: library!,
           functionName: funcName!,
+          arguments: args,
         })
+      } else {
+        // Fallback: match without arguments
+        const libMatch = line.match(
+          /LIBRARY_CALL,\s*dest:(\w+),\s*function:(\w+)\.(\w+)\(/,
+        )
+        if (libMatch) {
+          const [, library, , funcName] = libMatch
+          currentFunction.libraryCalls.push({
+            library: library!,
+            functionName: funcName!,
+            arguments: [],
+          })
+        }
       }
       continue
     }
@@ -958,6 +1030,65 @@ function buildTypeSubstitutionMap(
   }
 
   return substitutions
+}
+
+/**
+ * Map OpenZeppelin SafeERC20 wrappers to their underlying IERC20 operations.
+ * These wrappers route the real token call through `_callOptionalReturn` + a
+ * low-level `Address.functionCall`, so SlithIR produces no HIGH_LEVEL_CALL for
+ * the transfer/approve itself. Synthesize one from the wrapper name so the call
+ * graph stays truthful for any protocol using `using SafeERC20 for IERC20`.
+ */
+const SAFE_ERC20_WRAPPERS: Record<string, string> = {
+  safeTransfer: 'transfer',
+  safeTransferFrom: 'transferFrom',
+  safeApprove: 'approve',
+  safeIncreaseAllowance: 'increaseAllowance',
+  safeDecreaseAllowance: 'decreaseAllowance',
+  forceApprove: 'approve',
+}
+
+function synthesizeSafeERC20Call(
+  lc: { library: string; functionName: string; arguments: string[] },
+  typeSubstitutions: TypeSubstitutionMap,
+  convertAliases: Map<string, string>,
+): {
+  storageVariable: string
+  interfaceType: string
+  calledFunction: string
+} | null {
+  if (lc.library !== 'SafeERC20') return null
+  const mappedFn = SAFE_ERC20_WRAPPERS[lc.functionName]
+  if (!mappedFn) return null
+  // First argument is the IERC20 token; fall back to IERC20 substitution if we
+  // couldn't capture args (old SlithIR format, etc.).
+  let storageVariable =
+    lc.arguments[0] ?? typeSubstitutions.get('IERC20') ?? 'token'
+  // Unwrap `TMP_X = CONVERT rewardToken to IERC20` aliases so we report the
+  // actual state variable. Apply iteratively in case of chained converts.
+  let didUnwrap = false
+  for (let i = 0; i < 4 && convertAliases.has(storageVariable); i++) {
+    storageVariable = convertAliases.get(storageVariable)!
+    didUnwrap = true
+  }
+  // When we're inside a library body, typeSubstitutions holds the caller's
+  // IERC20 argument. Prefer it over a bare identifier that did NOT go through
+  // a CONVERT cast — that identifier is likely the library's forwarded IERC20
+  // parameter, not a caller-side state variable. Also keeps the REF_/TMP_
+  // fallback for synthetic slither names.
+  const subbed = typeSubstitutions.get('IERC20')
+  if (subbed) {
+    const isSynthetic =
+      storageVariable.startsWith('REF_') || storageVariable.startsWith('TMP_')
+    if (isSynthetic || !didUnwrap) {
+      storageVariable = subbed
+    }
+  }
+  return {
+    storageVariable,
+    interfaceType: 'IERC20',
+    calledFunction: mappedFn,
+  }
 }
 
 /**
@@ -1072,6 +1203,21 @@ function collectHighLevelCalls(
 
   // Follow LIBRARY_CALLs
   for (const lc of func.libraryCalls) {
+    // SafeERC20 wrappers (safeTransfer, safeTransferFrom, safeApprove, ...) do
+    // their actual token call via `_callOptionalReturn` → low-level `Address.functionCall`,
+    // so Slither emits no HIGH_LEVEL_CALL for the underlying transfer/approve. Recursing
+    // into the library body would miss the call entirely (or mis-capture the pre-check
+    // `allowance(...)` inside `safeApprove`). Synthesize an HLC from the wrapper name.
+    const synthesized = synthesizeSafeERC20Call(
+      lc,
+      typeSubstitutions,
+      func.convertAliases,
+    )
+    if (synthesized) {
+      calls.push(synthesized)
+      continue
+    }
+
     const libContract = parsedSlithir.contracts.get(lc.library)
     if (!libContract) {
       onProgress?.(
@@ -1086,13 +1232,31 @@ function collectHighLevelCalls(
       )
       continue
     }
+
+    // Build a type substitution map for the library body so that interface-typed
+    // parameters (e.g. IERC20 token) resolve back to the caller's storage variable.
+    // Blast radius: previously library bodies inherited the parent substitutions
+    // unchanged. With this change, any library whose params include an interface
+    // type now gets those params remapped to the caller's actual args — which
+    // can shift resolved addresses for HIGH_LEVEL_CALLs emitted inside the
+    // library body. This is a correctness fix (parent state vars don't live in
+    // the library's scope), but it's broader than the SafeERC20 case.
+    let newSubstitutions = typeSubstitutions
+    if (lc.arguments.length > 0) {
+      newSubstitutions = buildTypeSubstitutionMap(
+        libFunc,
+        lc.arguments,
+        typeSubstitutions,
+      )
+    }
+
     calls.push(
       ...collectHighLevelCalls(
         parsedSlithir,
         lc.library,
         lc.functionName,
         visited,
-        typeSubstitutions, // Library calls don't typically pass contract references as params
+        newSubstitutions,
         onProgress,
       ),
     )
@@ -1181,6 +1345,7 @@ function parseSlithirForContract(
 async function runSlitherOnContract(
   address: string,
   etherscanApiKey: string,
+  chain: string,
   onProgress?: (message: string) => void,
 ): Promise<{ output: string; error?: string }> {
   return new Promise((resolve) => {
@@ -1193,10 +1358,15 @@ async function runSlitherOnContract(
       return
     }
 
-    // Clean address - remove eth: prefix
+    // Build Slither target address: NETWORK:0x.. for non-mainnet chains
     const cleanAddress = stripChainPrefix(address)
+    const slitherNetwork = CHAIN_TO_SLITHER_NETWORK[chain]
+    const slitherTarget =
+      !slitherNetwork || slitherNetwork === 'mainnet'
+        ? cleanAddress
+        : `${slitherNetwork}:${cleanAddress}`
 
-    onProgress?.(`Running slither on ${cleanAddress}...`)
+    onProgress?.(`Running slither on ${slitherTarget}...`)
 
     // Set up environment with slither venv bin path (contains solc wrapper from solc-select)
     const slitherVenvBin = path.join(SLITHER_VENV_PATH, 'bin')
@@ -1206,10 +1376,10 @@ async function runSlitherOnContract(
       SOLC_VERSION: '', // Let crytic-compile auto-detect
     }
 
-    // Always fetch from Etherscan - the crytic-export cache format doesn't work with slither directly
-    // Slither will use its own internal caching mechanism
+    // Slither fetches source from the chain's block explorer
+    // For non-mainnet chains, the NETWORK:0x.. format routes to the right explorer
     const args = [
-      cleanAddress,
+      slitherTarget,
       '--print',
       'slithir',
       '--etherscan-apikey',

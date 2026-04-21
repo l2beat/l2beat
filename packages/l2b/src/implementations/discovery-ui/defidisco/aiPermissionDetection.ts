@@ -15,12 +15,42 @@ export interface AiDetectionResult {
 
 const AI_DETECTION_PROMPT = `You are a smart contract security analyzer. Analyze the provided Solidity source code and identify all PERMISSIONED state-changing functions.
 
-IMPORTANT: Only report functions that have access control (like onlyOwner, onlyAdmin, onlyRole, modifiers, require statements checking msg.sender, etc.). Do NOT include functions that anyone can call.
+ANALYSIS PROCEDURE (follow in order):
 
-For each permissioned function, identify the owner/admin addresses using PATH EXPRESSIONS
+STEP 1: Identify all external/public non-view/non-pure functions. These are the ONLY functions to report.
 
-IMPORTANT RULES FOR PATHS:
-- Only include EXTERNAL functions that change state (exclude view/pure/internal functions)
+STEP 2: For each function from Step 1, check for DIRECT access control:
+- Modifiers that check msg.sender (onlyOwner, onlyAdmin, onlyRole, etc.)
+- Direct require/if statements comparing msg.sender to a storage variable
+- If found, the function is permissioned. Identify the storage fields msg.sender is compared against.
+
+STEP 3: If NO direct access control was found in Step 2, check if the function calls any INTERNAL or PRIVATE functions that perform msg.sender checks:
+- Look at every internal/private function the external function calls
+- Check if those internal functions contain require/if statements comparing msg.sender to storage variables
+- If found, the external function is permissioned. The ownerDefinitions come from the STORAGE FIELDS that msg.sender is compared against inside those internal functions.
+- IMPORTANT: Do NOT infer fields from function names. You MUST read the actual function body to find what msg.sender is compared against.
+
+STEP 3 EXAMPLE:
+  // This internal function restricts callers:
+  function _requireCallerIsBOorTroveMorSP() internal view {
+      require(
+          msg.sender == borrowerOperationsAddress ||
+          msg.sender == troveManagerAddress ||
+          msg.sender == stabilityPoolAddress,
+          "...");
+  }
+  // This external function calls it, so it IS permissioned:
+  function sendETH(address _account, uint _amount) external {
+      _requireCallerIsBOorTroveMorSP();
+      // ...
+  }
+  // Result: sendETH is permissioned with ownerDefinitions from the storage fields
+  // in _requireCallerIsBOorTroveMorSP: borrowerOperationsAddress, troveManagerAddress, stabilityPoolAddress
+
+MULTIPLE CALLER CHECKS:
+When a msg.sender check uses OR logic (msg.sender == A || msg.sender == B), include ALL allowed callers as separate ownerDefinitions.
+
+OWNER DEFINITION PATH FORMAT:
 - Owner definitions use a unified PATH format: "<contractRef>.<valuePath>"
   - Use "$self" when accessing fields in the CURRENT contract being analyzed
   - Use "@fieldName" ONLY when you need to FOLLOW an address field to ANOTHER contract and access that other contract's fields
@@ -78,12 +108,16 @@ Examples:
      "ownerDefinitions": [{"path": "$self.accessControl.MINTER_ROLE"}]
    }
 
-3. Function with AccessControl using an external access control contract:
+3. Function calling internal helper that checks msg.sender against multiple fields:
    {
-     "functionName": "upgrade",
+     "functionName": "sendETH",
      "isPermissioned": true,
-     "sourceFile": "MyContract.sol",
-     "ownerDefinitions": [{"path": "@aclContract.accessControl.DEFAULT_ADMIN_ROLE"}]
+     "sourceFile": "ActivePool.sol",
+     "ownerDefinitions": [
+       {"path": "$self.borrowerOperationsAddress"},
+       {"path": "$self.troveManagerAddress"},
+       {"path": "$self.stabilityPoolAddress"}
+     ]
    }
 
 4. Function accessible by admin role OR specific governor:
@@ -324,7 +358,6 @@ export function filterSourceCodeForAI(
 
   const lines = sourceCode.split('\n')
   const filtered: string[] = []
-  let inAbstractContract = false
   let inInterface = false
   let inLibrary = false
   let contractBraceDepth = 0
@@ -337,14 +370,8 @@ export function filterSourceCodeForAI(
       continue
     }
 
-    // Track abstract contracts, interfaces, and libraries
-    if (
-      line.includes('abstract contract') ||
-      line.includes('abstract  contract')
-    ) {
-      inAbstractContract = true
-      contractBraceDepth = 0
-    }
+    // Track interfaces and libraries (skip them, but keep abstract contracts
+    // since they contain internal functions with msg.sender checks)
     if (line.includes('interface ') && line.includes('{')) {
       inInterface = true
       contractBraceDepth = 0
@@ -354,16 +381,15 @@ export function filterSourceCodeForAI(
       contractBraceDepth = 0
     }
 
-    // Track brace depth for abstract/interface/library
-    if (inAbstractContract || inInterface || inLibrary) {
+    // Track brace depth for interface/library
+    if (inInterface || inLibrary) {
       for (const char of line) {
         if (char === '{') contractBraceDepth++
         if (char === '}') contractBraceDepth--
       }
 
-      // End of abstract/interface/library
+      // End of interface/library
       if (contractBraceDepth === 0 && line.includes('}')) {
-        inAbstractContract = false
         inInterface = false
         inLibrary = false
       }

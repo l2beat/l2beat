@@ -16,7 +16,7 @@
     "contractCount": 21,
     "permissionedFunctionCount": 67,
     "scoredFunctionCount": 11,
-    "adminCount": 4,
+    "adminCount": 1,
     "dependencyCount": 5,
     "totalCapitalAtRisk": 862185732.508011,
     "totalTokenValueAtRisk": 0,
@@ -54,8 +54,8 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
-              "name": "Unknown",
+              "address": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
+              "name": "AssetList",
               "viewOnlyPath": false,
               "calledFunctions": [
                 "getAssetInfo"
@@ -132,8 +132,8 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x1c06f5089053a5909F6a9a369BEF938a713fF614",
-              "name": "Unknown",
+              "address": "eth:0xeCebB250078a4B203B40dDC89951cA79DF8A4016",
+              "name": "AssetList",
               "viewOnlyPath": false,
               "calledFunctions": [
                 "getAssetInfo"
@@ -312,8 +312,8 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
-              "name": "Unknown",
+              "address": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
+              "name": "AssetList",
               "viewOnlyPath": false,
               "calledFunctions": [
                 "getAssetInfo"
@@ -380,8 +380,8 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0xA9367093737b97747Fab3964cEEc83Dc93188fae",
-              "name": "Unknown",
+              "address": "eth:0x75267dAc0FCC5529c22C9Ec7b658D7b50d1A3e40",
+              "name": "AssetList",
               "viewOnlyPath": false,
               "calledFunctions": [
                 "getAssetInfo"
@@ -506,18 +506,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "name": "cUSDCv3",
               "viewOnlyPath": false,
@@ -542,18 +530,6 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 157145576.02091742,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -625,18 +601,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "name": "cUSDCv3",
               "viewOnlyPath": false,
@@ -661,18 +625,6 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 157145576.02091742,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1247,11 +1199,13 @@
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
+              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+              "name": "cWETHv3",
               "viewOnlyPath": false,
               "calledFunctions": [
-                "changeAdmin"
+                "changeAdmin",
+                "upgradeTo",
+                "upgradeToAndCall"
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
@@ -1267,19 +1221,6 @@
                 "upgradeTo"
               ],
               "fundsUsd": 705040156.4870936,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
-              "name": "cWETHv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo",
-                "upgradeToAndCall"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1300,6 +1241,15 @@
             }
           ],
           "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            },
             {
               "type": "delay",
               "description": "Delay before execution",
@@ -1320,11 +1270,13 @@
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
+              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+              "name": "cWETHv3",
               "viewOnlyPath": false,
               "calledFunctions": [
-                "upgradeTo"
+                "upgradeTo",
+                "changeAdmin",
+                "upgradeToAndCall"
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
@@ -1340,19 +1292,6 @@
                 "upgradeTo"
               ],
               "fundsUsd": 705040156.4870936,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
-              "name": "cWETHv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo",
-                "upgradeToAndCall"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1381,6 +1320,15 @@
                 "fieldName": "delay"
               },
               "delaySeconds": 172800
+            },
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
             }
           ]
         },
@@ -1393,12 +1341,13 @@
           "directTokenValueUsd": 0,
           "reachableContracts": [
             {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
+              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+              "name": "cWETHv3",
               "viewOnlyPath": false,
               "calledFunctions": [
                 "upgradeToAndCall",
-                "proxiableUUID"
+                "changeAdmin",
+                "upgradeTo"
               ],
               "fundsUsd": 0,
               "tokenValueUsd": 0,
@@ -1414,19 +1363,6 @@
                 "upgradeTo"
               ],
               "fundsUsd": 705040156.4870936,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
-              "name": "cWETHv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo",
-                "upgradeToAndCall"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             },
@@ -1447,6 +1383,15 @@
             }
           ],
           "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            },
             {
               "type": "delay",
               "description": "Delay before execution",
@@ -1472,8 +1417,8 @@
               "viewOnlyPath": false,
               "calledFunctions": [
                 "deploy",
-                "changeAdmin",
                 "upgradeTo",
+                "changeAdmin",
                 "upgradeToAndCall"
               ],
               "fundsUsd": 0,
@@ -1481,10 +1426,71 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
+              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
+              "name": "cUSDCv3",
               "viewOnlyPath": false,
               "calledFunctions": [
+                "upgradeToAndCall",
+                "changeAdmin",
+                "upgradeTo"
+              ],
+              "fundsUsd": 705040156.4870936,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
+              "name": "cUSDTv3",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "admin",
+                "implementation",
+                "changeAdmin",
+                "upgradeTo",
+                "upgradeToAndCall"
+              ],
+              "fundsUsd": 157145576.02091742,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ],
+          "mitigations": [
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            },
+            {
+              "type": "delay",
+              "description": "Delay before execution",
+              "delayRef": {
+                "contractAddress": "eth:0x6d903f6003cca6255D85CcA4D3B5E5146dC33925",
+                "fieldName": "delay"
+              },
+              "delaySeconds": 172800
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
+          "contractName": "CometProxyAdmin",
+          "functionName": "deployUpgradeToAndCall",
+          "impact": "critical",
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
+              "name": "cWETHv3",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "deploy",
+                "upgradeToAndCall",
+                "changeAdmin",
                 "upgradeTo"
               ],
               "fundsUsd": 0,
@@ -1529,73 +1535,7 @@
                 "fieldName": "delay"
               },
               "delaySeconds": 172800
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1EC63B5883C3481134FD50D5DAebc83Ecd2E8779",
-          "contractName": "CometProxyAdmin",
-          "functionName": "deployUpgradeToAndCall",
-          "impact": "critical",
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3",
-              "name": "cWETHv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "deploy",
-                "changeAdmin",
-                "upgradeTo",
-                "upgradeToAndCall"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
             },
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
-              "name": "cUSDCv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "changeAdmin",
-                "upgradeTo"
-              ],
-              "fundsUsd": 705040156.4870936,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xA17581A9E3356d9A858b789D68B4d866e593aE94",
-              "name": "cUSDTv3",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "admin",
-                "implementation",
-                "changeAdmin",
-                "upgradeTo",
-                "upgradeToAndCall"
-              ],
-              "fundsUsd": 157145576.02091742,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ],
-          "mitigations": [
             {
               "type": "delay",
               "description": "Delay before execution",
@@ -1686,18 +1626,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "name": "cUSDCv3",
               "viewOnlyPath": false,
@@ -1722,18 +1650,6 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 157145576.02091742,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }
@@ -1836,18 +1752,6 @@
               "fundsAtRisk": true
             },
             {
-              "address": "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "changeAdmin",
-                "upgradeTo"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
               "address": "eth:0xc3d688B66703497DAA19211EEdff47f25384cdc3",
               "name": "cUSDCv3",
               "viewOnlyPath": false,
@@ -1872,18 +1776,6 @@
                 "upgradeToAndCall"
               ],
               "fundsUsd": 157145576.02091742,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x2222222d7164433c4C09B0b0D809a9b52C04C205",
-              "name": "Unknown",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "upgradeToAndCall",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 0,
               "tokenValueUsd": 0,
               "fundsAtRisk": true
             }

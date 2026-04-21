@@ -1,0 +1,21 @@
+{
+  "framework": "ve(3,3) vote-escrow",
+  "voteExecution": "onchain",
+  "votingUnit": "veAERO",
+  "proposalRequirements": "weekly vote on gauge emissions",
+  "votingProcess": "veAERO holders vote weekly per epoch on gauges/nudges; proposals created in epoch n execute in epoch n+1. Protocol changes via 3/7 multisig.",
+  "proposalPeriod": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5",
+      "fieldName": "WEEK"
+    }
+  },
+  "executionDelay": {
+    "kind": "fieldRef",
+    "ref": {
+      "contractAddress": "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5",
+      "fieldName": "WEEK"
+    }
+  }
+}

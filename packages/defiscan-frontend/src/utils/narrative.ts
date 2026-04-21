@@ -61,7 +61,10 @@ function getAdminTypeSummary(admins: CompiledAdmin[]): string {
     counts.set(t, (counts.get(t) ?? 0) + 1)
   }
   return Array.from(counts.entries())
-    .map(([type, count]) => `${count} ${humanAdminType(type)}${count > 1 ? 's' : ''}`)
+    .map(
+      ([type, count]) =>
+        `${count} ${humanAdminType(type)}${count > 1 ? 's' : ''}`,
+    )
     .join(', ')
 }
 
@@ -93,9 +96,10 @@ function humanAdminType(type: string): string {
 
 /** Generate human-readable admin narrative */
 export function generateAdminNarrative(admin: CompiledAdmin): string {
-  const capitalStr = admin.totalReachableCapital > 0
-    ? ` with access to ${formatUsdValue(admin.totalReachableCapital)} in TVL`
-    : ''
+  const capitalStr =
+    admin.totalReachableCapital > 0
+      ? ` with access to ${formatUsdValue(admin.totalReachableCapital)} in TVL`
+      : ''
 
   const funcCount = admin.functions.length
   const funcStr = `${funcCount} permissioned function${funcCount !== 1 ? 's' : ''}`
@@ -104,7 +108,9 @@ export function generateAdminNarrative(admin: CompiledAdmin): string {
 }
 
 /** Group dependencies by entity for narrative display */
-export function groupDependenciesByEntity(deps: CompiledDependency[]): Map<string, CompiledDependency[]> {
+export function groupDependenciesByEntity(
+  deps: CompiledDependency[],
+): Map<string, CompiledDependency[]> {
   const grouped = new Map<string, CompiledDependency[]>()
   for (const dep of deps) {
     const key = dep.entity ?? 'Other'
@@ -124,7 +130,7 @@ export interface KeyFinding {
 
 export function getKeyFindings(review: CompiledReview): KeyFinding[] {
   const findings: KeyFinding[] = []
-  const { admins, totals, dependencies } = review
+  const { admins, totals, dependencies, contracts } = review
 
   // Check for immutability — no human-controlled or governance admins
   const hasHumanOrGov = admins.some(
@@ -143,6 +149,28 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
       detail:
         'All admin controls resolve to immutable contracts or revoked addresses. No admin can modify protocol behavior after deployment.',
     })
+  } else {
+    // Code immutability — distinct from admin immutability. Fires whenever every
+    // in-scope protocol contract is deployed as immutable bytecode, even if a
+    // multisig exists to tweak on-chain parameters. The multisig cannot swap
+    // implementations, so its reach is bounded to parameters on already-deployed code.
+    // Exclude EOAs (keepers, foundation addresses) and Gnosis Safes (signer-set
+    // wallets, not protocol logic) — they're the governance layer.
+    const NON_PROTOCOL_PROXY_TYPES = new Set(['gnosis safe', 'EOA'])
+    const protocolContracts = contracts.filter(
+      (c) => !c.isExternal && !NON_PROTOCOL_PROXY_TYPES.has(c.proxyType ?? ''),
+    )
+    const allImmutable =
+      protocolContracts.length > 0 &&
+      protocolContracts.every((c) => (c.proxyType ?? '') === 'immutable')
+    if (allImmutable) {
+      findings.push({
+        type: 'positive',
+        title: 'Immutable code',
+        detail:
+          'Every protocol contract is deployed as immutable bytecode. Admins can still write to on-chain parameters exposed by these contracts, but they cannot change the code itself.',
+      })
+    }
   }
 
   // Check for EOAs
@@ -163,7 +191,9 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
   // Check for multisig
   const multisigs = admins.filter((a) => a.adminType === 'Multisig')
   if (multisigs.length > 0) {
-    const maxMultisigCapital = Math.max(...multisigs.map((m) => m.totalReachableCapital))
+    const maxMultisigCapital = Math.max(
+      ...multisigs.map((m) => m.totalReachableCapital),
+    )
     if (maxMultisigCapital > 0) {
       findings.push({
         type: 'warning',
@@ -182,11 +212,12 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
     findings.push({
       type: 'info',
       title: `${formatUsdValue(tvs)} TVS`,
-      detail: hasToken && hasTvl
-        ? `Total Value Secured by the protocol: ${formatUsdValue(totals.totalCapitalAtRisk)} in TVL (funds locked in protocol contracts) and ${formatUsdValue(tokenValue)} in protocol token market cap.`
-        : hasTvl
-          ? `Total Value Secured by the protocol, consisting of ${formatUsdValue(totals.totalCapitalAtRisk)} in TVL (tokens held in contracts).`
-          : `Total Value Secured by the protocol, consisting of ${formatUsdValue(tokenValue)} in protocol token market cap.`,
+      detail:
+        hasToken && hasTvl
+          ? `Total Value Secured by the protocol: ${formatUsdValue(totals.totalCapitalAtRisk)} in TVL (funds locked in protocol contracts) and ${formatUsdValue(tokenValue)} in protocol token market cap.`
+          : hasTvl
+            ? `Total Value Secured by the protocol, consisting of ${formatUsdValue(totals.totalCapitalAtRisk)} in TVL (tokens held in contracts).`
+            : `Total Value Secured by the protocol, consisting of ${formatUsdValue(tokenValue)} in protocol token market cap.`,
     })
   }
 
@@ -195,15 +226,17 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
     findings.push({
       type: 'positive',
       title: 'Fully autonomous protocol',
-      detail: 'The protocol does not depend on any external contracts, operating entirely through its own on-chain logic.',
+      detail:
+        'The protocol does not depend on any external contracts, operating entirely through its own on-chain logic.',
     })
   } else {
     const entities = new Set(dependencies.map((d) => d.entity).filter(Boolean))
     const entityCount = entities.size
     const contractCount = dependencies.length
-    const entityLabel = entityCount > 0
-      ? `${entityCount} external vendor${entityCount !== 1 ? 's' : ''}`
-      : `${contractCount} external dependenc${contractCount !== 1 ? 'ies' : 'y'}`
+    const entityLabel =
+      entityCount > 0
+        ? `${entityCount} external vendor${entityCount !== 1 ? 's' : ''}`
+        : `${contractCount} external dependenc${contractCount !== 1 ? 'ies' : 'y'}`
     findings.push({
       type: 'warning',
       title: entityLabel,
@@ -234,7 +267,7 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
     }
   }
 
-  if (allMitigations.length > 0) {
+  if (allMitigations.length > 0 && mitigatedFnCount > 0) {
     // Deduplicate mitigations
     const seen = new Set<string>()
     const unique: Mitigation[] = []
@@ -282,13 +315,20 @@ export function getKeyFindings(review: CompiledReview): KeyFinding[] {
 /** Glossary of DeFi terms */
 export const GLOSSARY: Record<string, string> = {
   EOA: 'Externally Owned Account — a blockchain address controlled by a single private key, representing one person or entity.',
-  Multisig: 'Multi-signature wallet — requires multiple parties to approve a transaction (e.g., 3-of-5 means 3 out of 5 keyholders must sign).',
-  Timelock: 'A smart contract mechanism that enforces a mandatory waiting period before changes take effect, giving users time to react.',
-  Proxy: 'A contract pattern that allows upgrading the underlying logic while keeping the same address. Users interact with the proxy, which delegates to an implementation.',
-  'Permissioned Function': 'A smart contract function that can only be called by specific addresses (admins), not by the general public.',
+  Multisig:
+    'Multi-signature wallet — requires multiple parties to approve a transaction (e.g., 3-of-5 means 3 out of 5 keyholders must sign).',
+  Timelock:
+    'A smart contract mechanism that enforces a mandatory waiting period before changes take effect, giving users time to react.',
+  Proxy:
+    'A contract pattern that allows upgrading the underlying logic while keeping the same address. Users interact with the proxy, which delegates to an implementation.',
+  'Permissioned Function':
+    'A smart contract function that can only be called by specific addresses (admins), not by the general public.',
   TVL: 'Total Value Locked — the total USD value of funds in the protocol that could be affected if an admin key is compromised or misused.',
-  Immutable: 'A contract that cannot be changed after deployment — its code and behavior are permanently fixed on the blockchain.',
+  Immutable:
+    'A contract that cannot be changed after deployment — its code and behavior are permanently fixed on the blockchain.',
   CDP: 'Collateralized Debt Position — a mechanism where users lock collateral to borrow assets, commonly used in stablecoin protocols.',
-  Oracle: 'A service that brings external data (like asset prices) onto the blockchain for smart contracts to use.',
-  Governance: 'A contract or system that manages decision-making for a protocol, typically through token voting or delegated authority.',
+  Oracle:
+    'A service that brings external data (like asset prices) onto the blockchain for smart contracts to use.',
+  Governance:
+    'A contract or system that manages decision-making for a protocol, typically through token voting or delegated authority.',
 }

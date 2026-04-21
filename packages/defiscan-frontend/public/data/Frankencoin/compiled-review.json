@@ -16,10 +16,10 @@
     "contractCount": 25,
     "permissionedFunctionCount": 73,
     "scoredFunctionCount": 18,
-    "adminCount": 19,
+    "adminCount": 4,
     "dependencyCount": 12,
-    "totalCapitalAtRisk": 86012769.3399547,
-    "totalTokenValueAtRisk": 35964390.48381721,
+    "totalCapitalAtRisk": 71037157.09438577,
+    "totalTokenValueAtRisk": 0,
     "totalTokenValue": 35964390.48381721,
     "linesOfCode": 1976,
     "verifiedContractCount": 25,
@@ -2148,8 +2148,8 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 14975612.245568939,
-    "totalTokenValueAtRisk": 35964390.48381721
+    "totalFundsAtRisk": 0,
+    "totalTokenValueAtRisk": 0
   },
   "dependencies": [
     {
@@ -4424,39 +4424,6 @@
             "isEnabled": true,
             "capacity": "200000000000000000000000",
             "rate": "1388888888888888888"
-          }
-        },
-        {
-          "field": "description",
-          "after": "Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields."
-        },
-        {
-          "field": "fieldMeta",
-          "after": {
-            "getRateLimitAdmin": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Polygon": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Arbitrum": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Optimism": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Base": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Avalanche": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Gnosis": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_BSC": {
-              "severity": "HIGH"
-            }
           }
         }
       ]

@@ -16,7 +16,7 @@
     "contractCount": 64,
     "permissionedFunctionCount": 494,
     "scoredFunctionCount": 84,
-    "adminCount": 43,
+    "adminCount": 41,
     "dependencyCount": 12,
     "totalCapitalAtRisk": 932442976.2937695,
     "totalTokenValueAtRisk": 6359329484.175378,
@@ -7592,6 +7592,7 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
@@ -7618,6 +7619,7 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
@@ -7867,6 +7869,7 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
@@ -7893,6 +7896,7 @@
                 "burnShares",
                 "mintShares",
                 "shares",
+                "transferFrom",
                 "permit",
                 "balanceOf"
               ],
@@ -8594,16 +8598,22 @@
       "dependencyType": "callgraph"
     },
     {
-      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-      "name": "Lido stETH Token",
-      "description": "Lido's liquid staked ETH token. The Liquifier contract interacts with stETH for liquidity operations, and EtherFiRestaker holds stETH positions deposited into EigenLayer strategies.",
-      "entity": "Lido stETH",
+      "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
+      "name": "Lido WithdrawalQueueERC721",
+      "description": "Lido's withdrawal queue. EtherFiRestaker requests stETH-to-ETH withdrawals through this contract when rebalancing or exiting Lido positions.",
+      "entity": "Lido",
       "isAutoDetected": true,
       "viewOnlyPath": false,
       "calledFunctions": [
-        "allowance",
+        "approve",
+        "claimWithdrawals",
+        "MIN_STETH_WITHDRAWAL_AMOUNT",
+        "MAX_STETH_WITHDRAWAL_AMOUNT",
+        "requestWithdrawals",
+        "getWithdrawalRequests",
+        "getWithdrawalStatus",
         "balanceOf",
-        "approve"
+        "transferFrom"
       ],
       "functions": [
         {
@@ -8615,553 +8625,6 @@
           "directTokenValueUsd": 0,
           "reachableContracts": []
         },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "stEthRequestWithdrawal",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "transferStETH",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "redeemEEth",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "balanceOf",
-                "totalShares",
-                "burnShares",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "sharesForAmount",
-                "amountForShare",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "redeemEEthWithPermit",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "permit",
-                "balanceOf",
-                "totalShares",
-                "burnShares",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "sharesForAmount",
-                "amountForShare",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "redeemWeEth",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalShares",
-                "transfer",
-                "balanceOf",
-                "burnShares",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap"
-              ],
-              "fundsUsd": 5742073585.233676,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "sharesForAmount",
-                "amountForShare",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "redeemWeEthWithPermit",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalShares",
-                "transfer",
-                "balanceOf",
-                "burnShares",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "permit",
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap"
-              ],
-              "fundsUsd": 5742073585.233676,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "sharesForAmount",
-                "amountForShare",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "balanceOf",
-                "totalShares",
-                "permit",
-                "burnShares",
-                "transfer",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "permit"
-              ],
-              "fundsUsd": 5742073585.233676,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "amountForShare",
-                "sharesForAmount",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
-          "contractName": "EtherFiRedemptionManager",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
-              "name": "ether.fi ETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "balanceOf",
-                "totalShares",
-                "permit",
-                "burnShares",
-                "transfer",
-                "shares"
-              ],
-              "fundsUsd": 0,
-              "tokenValueUsd": 6359329484.175378,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-              "name": "Wrapped eETH Token",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "getEETHByWeETH",
-                "balanceOf",
-                "unwrap",
-                "permit"
-              ],
-              "fundsUsd": 5742073585.233676,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-              "name": "EtherFiRestaker",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "transferStETH",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 908200149.204579,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            },
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "ethAmountLockedForWithdrawal",
-                "getTotalPooledEther",
-                "amountForShare",
-                "sharesForAmount",
-                "sharesForWithdrawalAmount",
-                "withdraw",
-                "burnEEthShares",
-                "totalValueOutOfLp",
-                "burnEEthSharesForNonETHWithdrawal",
-                "getTotalEtherClaimOf"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        }
-      ],
-      "totalFundsAtRisk": 6674494007.121837,
-      "totalTokenValueAtRisk": 6359329484.175378,
-      "dependencyType": "callgraph"
-    },
-    {
-      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-      "name": "EigenLayer RewardsCoordinator",
-      "description": "Distributes restaking rewards to EtherFi's restaker contract. EtherFiRestaker sets its rewards claimer through the DelegationManager which interacts with this coordinator.",
-      "entity": "EigenLayer",
-      "isAutoDetected": true,
-      "viewOnlyPath": false,
-      "calledFunctions": [
-        "setClaimerFor"
-      ],
-      "functions": [
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "setRewardsClaimer",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeTo",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        },
-        {
-          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
-          "contractName": "EtherFiRestaker",
-          "functionName": "upgradeToAndCall",
-          "viewOnlyPath": false,
-          "directFundsUsd": 908200149.204579,
-          "directTokenValueUsd": 0,
-          "reachableContracts": [
-            {
-              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
-              "name": "LiquidityPool",
-              "viewOnlyPath": false,
-              "calledFunctions": [
-                "totalValueOutOfLp",
-                "proxiableUUID"
-              ],
-              "fundsUsd": 24220272.68358201,
-              "tokenValueUsd": 0,
-              "fundsAtRisk": true
-            }
-          ]
-        }
-      ],
-      "totalFundsAtRisk": 932420421.8881611,
-      "totalTokenValueAtRisk": 0,
-      "dependencyType": "callgraph"
-    },
-    {
-      "address": "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
-      "name": "Lido WithdrawalQueueERC721",
-      "description": "Lido's withdrawal queue. EtherFiRestaker requests stETH-to-ETH withdrawals through this contract when rebalancing or exiting Lido positions.",
-      "entity": "Lido",
-      "isAutoDetected": true,
-      "viewOnlyPath": false,
-      "calledFunctions": [
-        "claimWithdrawals",
-        "MIN_STETH_WITHDRAWAL_AMOUNT",
-        "MAX_STETH_WITHDRAWAL_AMOUNT",
-        "requestWithdrawals",
-        "getWithdrawalRequests",
-        "getWithdrawalStatus",
-        "balanceOf"
-      ],
-      "functions": [
         {
           "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
           "contractName": "EtherFiRestaker",
@@ -9445,6 +8908,559 @@
       "dependencyType": "callgraph"
     },
     {
+      "address": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+      "name": "EigenLayer RewardsCoordinator",
+      "description": "Distributes restaking rewards to EtherFi's restaker contract. EtherFiRestaker sets its rewards claimer through the DelegationManager which interacts with this coordinator.",
+      "entity": "EigenLayer",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "setClaimerFor"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "setRewardsClaimer",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+      "name": "Lido stETH Token",
+      "description": "Lido's liquid staked ETH token. The Liquifier contract interacts with stETH for liquidity operations, and EtherFiRestaker holds stETH positions deposited into EigenLayer strategies.",
+      "entity": "Lido stETH",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "balanceOf",
+        "approve",
+        "transfer"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "stEthRequestWithdrawal",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "transferStETH",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+          "contractName": "EtherFiRestaker",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 908200149.204579,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalValueOutOfLp",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "redeemEEth",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "totalShares",
+                "transfer",
+                "transferFrom",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "sharesForAmount",
+                "amountForShare",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "redeemEEthWithPermit",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "permit",
+                "balanceOf",
+                "totalShares",
+                "transfer",
+                "transferFrom",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "sharesForAmount",
+                "amountForShare",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "redeemWeEth",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalShares",
+                "transfer",
+                "balanceOf",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getEETHByWeETH",
+                "balanceOf",
+                "unwrap",
+                "transferFrom"
+              ],
+              "fundsUsd": 5742073585.233676,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "sharesForAmount",
+                "amountForShare",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "redeemWeEthWithPermit",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "totalShares",
+                "transfer",
+                "balanceOf",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "permit",
+                "getEETHByWeETH",
+                "balanceOf",
+                "unwrap",
+                "transferFrom"
+              ],
+              "fundsUsd": 5742073585.233676,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "sharesForAmount",
+                "amountForShare",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "upgradeTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "totalShares",
+                "transfer",
+                "transferFrom",
+                "permit",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getEETHByWeETH",
+                "balanceOf",
+                "unwrap",
+                "transferFrom",
+                "permit"
+              ],
+              "fundsUsd": 5742073585.233676,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "amountForShare",
+                "sharesForAmount",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xDadEf1fFBFeaAB4f68A9fD181395F68b4e4E7Ae0",
+          "contractName": "EtherFiRedemptionManager",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+              "name": "ether.fi ETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "balanceOf",
+                "totalShares",
+                "transfer",
+                "transferFrom",
+                "permit",
+                "burnShares",
+                "shares"
+              ],
+              "fundsUsd": 0,
+              "tokenValueUsd": 6359329484.175378,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "getEETHByWeETH",
+                "balanceOf",
+                "unwrap",
+                "transferFrom",
+                "permit"
+              ],
+              "fundsUsd": 5742073585.233676,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x1B7a4C3797236A1C37f8741c0Be35c2c72736fFf",
+              "name": "EtherFiRestaker",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferStETH",
+                "proxiableUUID"
+              ],
+              "fundsUsd": 908200149.204579,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            },
+            {
+              "address": "eth:0x308861A430be4cce5502d0A12724771Fc6DaF216",
+              "name": "LiquidityPool",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "ethAmountLockedForWithdrawal",
+                "getTotalPooledEther",
+                "amountForShare",
+                "sharesForAmount",
+                "sharesForWithdrawalAmount",
+                "withdraw",
+                "burnEEthShares",
+                "totalValueOutOfLp",
+                "burnEEthSharesForNonETHWithdrawal",
+                "getTotalEtherClaimOf"
+              ],
+              "fundsUsd": 24220272.68358201,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        }
+      ],
+      "totalFundsAtRisk": 6674494007.121837,
+      "totalTokenValueAtRisk": 6359329484.175378,
+      "dependencyType": "callgraph"
+    },
+    {
       "address": "eth:0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
       "name": "Coinbase cbETH Token",
       "description": "Coinbase's wrapped staked ETH token. The Liquifier can accept and process cbETH deposits as an alternative liquid staking token input.",
@@ -9674,7 +9690,8 @@
       "calledFunctions": [
         "exchangeRate",
         "totalSupply",
-        "permit"
+        "permit",
+        "transfer"
       ],
       "functions": [
         {
@@ -9788,6 +9805,15 @@
               "fundsAtRisk": true
             }
           ]
+        },
+        {
+          "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
+          "contractName": "Liquifier",
+          "functionName": "sendToEtherFiRestaker",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
         },
         {
           "contractAddress": "eth:0x9FFDF407cDe9a93c47611799DA23924Af3EF764F",
@@ -10163,7 +10189,19 @@
           "viewOnlyPath": false,
           "directFundsUsd": 0,
           "directTokenValueUsd": 0,
-          "reachableContracts": []
+          "reachableContracts": [
+            {
+              "address": "eth:0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "name": "Wrapped eETH Token",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "transferFrom"
+              ],
+              "fundsUsd": 5742073585.233676,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
         },
         {
           "contractAddress": "eth:0xcd2eb13D6831d4602D80E5db9230A57596CDCA63",
@@ -10227,7 +10265,7 @@
           "reachableContracts": []
         }
       ],
-      "totalFundsAtRisk": 24220272.68358201,
+      "totalFundsAtRisk": 5766293857.917258,
       "totalTokenValueAtRisk": 6359329484.175378,
       "dependencyType": "callgraph"
     }
@@ -10245,17 +10283,17 @@
     },
     {
       "entity": "LayerZero",
-      "totalFundsAtRisk": 24220272.68358201,
-      "totalTokenValueAtRisk": 6359329484.175378
-    },
-    {
-      "entity": "Lido stETH",
-      "totalFundsAtRisk": 6674494007.121837,
+      "totalFundsAtRisk": 5766293857.917258,
       "totalTokenValueAtRisk": 6359329484.175378
     },
     {
       "entity": "Lido",
       "totalFundsAtRisk": 932420421.8881611,
+      "totalTokenValueAtRisk": 6359329484.175378
+    },
+    {
+      "entity": "Lido stETH",
+      "totalFundsAtRisk": 6674494007.121837,
       "totalTokenValueAtRisk": 6359329484.175378
     },
     {

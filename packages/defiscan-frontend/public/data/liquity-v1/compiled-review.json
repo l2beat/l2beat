@@ -10,16 +10,16 @@
     "chain": "Ethereum",
     "projectType": "stablecoin",
     "tokenName": "LUSD",
-    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $190.80M in total value across its contracts."
+    "description": "Liquity V1 is an immutable, governance-free borrowing protocol on Ethereum that issues LUSD stablecoins against ETH collateral at a minimum 110% collateralization ratio. All smart contracts are non-upgradeable with ownership renounced to the zero address, making the protocol fully autonomous. The system relies on Chainlink and Tellor as dual oracle sources for ETH/USD pricing, with an automatic fallback mechanism between the two. The protocol holds $0 in total value across its contracts."
   },
   "totals": {
     "contractCount": 18,
     "permissionedFunctionCount": 32,
     "scoredFunctionCount": 0,
-    "adminCount": 4,
+    "adminCount": 0,
     "dependencyCount": 2,
-    "totalCapitalAtRisk": 190799752.39676282,
-    "totalTokenValueAtRisk": 59394309.806361556,
+    "totalCapitalAtRisk": 0,
+    "totalTokenValueAtRisk": 0,
     "totalTokenValue": 59394309.806361556,
     "linesOfCode": 6930,
     "verifiedContractCount": 18,
@@ -2153,8 +2153,8 @@
     }
   ],
   "adminTotals": {
-    "totalFundsAtRisk": 190799752.39676282,
-    "totalTokenValueAtRisk": 59394309.806361556
+    "totalFundsAtRisk": 0,
+    "totalTokenValueAtRisk": 0
   },
   "dependencies": [
     {

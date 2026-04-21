@@ -62,6 +62,24 @@
       }
     },
     {
+      "slug": "aerodrome",
+      "name": "Aerodrome Finance",
+      "chain": "Base",
+      "projectType": "dex",
+      "tokenName": "AERO",
+      "totals": {
+        "contractCount": 36,
+        "permissionedFunctionCount": 226,
+        "scoredFunctionCount": 175,
+        "adminCount": 4,
+        "dependencyCount": 0,
+        "totalCapitalAtRisk": 307960533.9536741,
+        "totalTokenValueAtRisk": 570970485.7378225,
+        "totalTokenValue": 570970485.7378225,
+        "linesOfCode": 15990
+      }
+    },
+    {
       "slug": "compound-v3",
       "name": "Compound V3",
       "chain": "Ethereum",
@@ -163,12 +181,12 @@
     }
   ],
   "globalTotals": {
-    "totalCapitalAtRisk": 24634007497.44423,
-    "totalTokenValueAtRisk": 28188981217.30687,
-    "totalTokenValue": 28314260207.757484,
-    "protocolsReviewed": 8,
-    "totalContractCount": 260,
-    "totalAdminCount": 78,
+    "totalCapitalAtRisk": 24941968031.397903,
+    "totalTokenValueAtRisk": 28759951703.04469,
+    "totalTokenValue": 28885230693.495304,
+    "protocolsReviewed": 9,
+    "totalContractCount": 296,
+    "totalAdminCount": 82,
     "totalUpdateCount": 618
   },
   "dependencies": [

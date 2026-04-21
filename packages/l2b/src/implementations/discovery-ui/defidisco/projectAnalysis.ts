@@ -1272,6 +1272,18 @@ export class ProjectAnalysis {
       }
     }
 
+    // Only aggregate capital from admins that actually represent a human or
+    // upgradeable-code compromise vector. Immutable contracts and revoked
+    // addresses surface in the ownership chain (they can call permissioned
+    // functions as part of the intended protocol flow) but they are not a
+    // risk surface — Immutable has no compromise path, Revoked can't act.
+    // Keeping them in the aggregation inflated "Impacted TVS" on protocols
+    // like Aerodrome where the Minter is an Immutable admin transitively
+    // reaching the token contract.
+    const NON_RISK_ADMIN_TYPES = new Set(['Immutable', 'Revoked'])
+    const isRiskAdmin = (a: AdminEntry): boolean =>
+      !NON_RISK_ADMIN_TYPES.has(a.type) || a.isGovernance === true
+
     // Same deduplication logic as v2Scoring AdminInventoryModule
     const contractCapitalMap = new Map<
       string,
@@ -1283,6 +1295,7 @@ export class ProjectAnalysis {
     }
 
     for (const admin of admins) {
+      if (!isRiskAdmin(admin)) continue
       for (const func of admin.functions) {
         if (func.directFundsUsd > 0 || func.directTokenValueUsd > 0) {
           const addr = resolveAddr(func.contractAddress)
@@ -1314,7 +1327,7 @@ export class ProjectAnalysis {
     }
 
     return {
-      adminCount: admins.length,
+      adminCount: admins.filter(isRiskAdmin).length,
       totalCapitalAtRisk,
       totalTokenValueAtRisk,
     }

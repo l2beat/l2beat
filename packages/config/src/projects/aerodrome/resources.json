@@ -1,0 +1,137 @@
+{
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://aerodrome.finance"
+    },
+    {
+      "type": "frontend",
+      "url": "https://aerodrome.finance",
+      "frontendSubtype": "official",
+      "label": "Aerodrome App"
+    },
+    {
+      "type": "docs",
+      "url": "https://aerodrome.finance/docs"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/aerodrome-finance"
+    },
+    {
+      "type": "x",
+      "url": "https://x.com/AerodromeFi"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/aerodrome-finance/contracts/blob/main/LICENSE",
+      "label": "BUSL-1.1",
+      "licenseScope": "Core Contracts"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/aerodrome-finance/slipstream/blob/main/LICENSE.md",
+      "label": "BUSL-1.1",
+      "licenseScope": "Slipstream"
+    },
+    {
+      "type": "license",
+      "url": "https://github.com/aerodrome-finance/docs/blob/main/LICENSE",
+      "label": "LGPL-3.0",
+      "licenseScope": "Documentation"
+    },
+    {
+      "type": "license",
+      "url": "https://aerodrome.finance",
+      "label": "Closed-source",
+      "licenseScope": "Frontend"
+    },
+    {
+      "type": "defiscan-v1",
+      "url": "https://www.defiscan.info/protocols/aerodrome/base"
+    },
+    {
+      "url": "https://aero.drome.eth.limo/",
+      "type": "frontend",
+      "label": "IPFS 1",
+      "frontendSubtype": "third-party"
+    },
+    {
+      "url": "https://aero.drome.eth.link/",
+      "type": "frontend",
+      "label": "IPFS 2",
+      "frontendSubtype": "third-party"
+    }
+  ],
+  "audits": [
+    {
+      "author": "ABDK Consulting",
+      "date": "2024",
+      "scope": "Slipstream concentrated liquidity",
+      "url": "https://github.com/aerodrome-finance/slipstream/blob/main/audits/abdk/audit.pdf"
+    },
+    {
+      "author": "Trail of Bits",
+      "date": "2024",
+      "scope": "Slipstream formal verification",
+      "url": "https://github.com/aerodrome-finance/slipstream/blob/main/audits/tob/audit.pdf"
+    },
+    {
+      "author": "Code4rena",
+      "date": "2022-05",
+      "scope": "Velodrome v1 (inherited)",
+      "url": "https://code4rena.com/audits/2022-05-velodrome-finance-contest"
+    },
+    {
+      "author": "Spearbit",
+      "date": "2023-07",
+      "scope": "Velodrome v2 & Relay v1 (inherited)",
+      "url": "https://github.com/spearbit/portfolio/raw/master/pdfs/Velodrome-Spearbit-Security-Review.pdf"
+    },
+    {
+      "author": "Spearbit",
+      "date": "2024-01",
+      "scope": "Slipstream (inherited)",
+      "url": "https://github.com/spearbit/portfolio/raw/master/pdfs/Velodrome-Spearbit-Security-Review-Nov23.pdf"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2024-11",
+      "scope": "Superchain interoperability",
+      "url": "https://www.chainsecurity.com/security-audit/velodrome-superchain-interoperability"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2024-11",
+      "scope": "Superchain diff",
+      "url": "https://www.chainsecurity.com/security-audit/superchain-diff"
+    },
+    {
+      "author": "ChainSecurity",
+      "date": "2024-11",
+      "scope": "Superchain Slipstream",
+      "url": "https://www.chainsecurity.com/security-audit/velodrome-superchain-slipstream"
+    },
+    {
+      "author": "Sherlock",
+      "date": "2024-11",
+      "scope": "Superchain release",
+      "url": "https://github.com/sherlock-protocol/sherlock-reports/raw/main/audits/2024.11.13%20-%20Final%20-%20Velodrome.pdf"
+    },
+    {
+      "author": "MixBytes",
+      "date": "2025-10",
+      "scope": "Pool Launcher",
+      "url": "https://github.com/mixbytes/audits_public/tree/master/Velodrome/Pool%20Launcher"
+    },
+    {
+      "author": "Immunefi",
+      "date": "2023",
+      "scope": "Bug Bounty Program",
+      "url": "https://immunefi.com/bounty/velodromefinance/",
+      "bounty": 100000
+    }
+  ],
+  "linesOfCode": 15990,
+  "lastModified": "2026-04-21T15:04:03.292Z"
+}

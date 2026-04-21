@@ -122,7 +122,8 @@ export const chains: ChainConfig[] = [
     shortName: 'base',
     multicall: getMulticall3Config(5022),
     explorer: {
-      type: 'etherscan',
+      type: 'blockscout',
+      url: 'https://base.blockscout.com/api',
     },
     coingeckoPlatform: 'base',
   },

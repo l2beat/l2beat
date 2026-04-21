@@ -311,3 +311,45 @@ If admin or dependency data needs to change, modify `ProjectAnalysis` — not th
 
 - **Mitigations** — shown when any admin or dependency function carries mitigations. Reports coverage (all / some) and distinct mitigation type labels (Timelocks, Value Ranges, Relative Value Caps, Other Constraints)
 - **TVS (Total Value Secured)** — replaces the old TVL-only finding. Title is the combined TVS (e.g. "$220M TVS"). Detail text breaks the value down into TVL + token market cap, or either one alone. `TVS = totalCapitalAtRisk + (totalTokenValue ?? totalTokenValueAtRisk)`
+
+## Radar Scoring
+
+`deriveRadarData(review)` in `packages/defiscan-frontend/src/utils/radar.ts` derives the five-axis radar chart shown on the Report hero and Gallery cards from a `CompiledReview`. Each axis is scored 0–100.
+
+Axes: `CONTROL`, `DEPENDENCIES`, `ACCESS`, `VERIFIABILITY`, `ABILITY TO EXIT`.
+
+### CONTROL
+
+Cascades by worst-case admin severity. Per-admin impact = `totalReachableCapital + totalReachableTokenValue`. Only admins with impact > 0 are considered.
+
+- **90** — no admin has reachable fund impact
+- **25** — any admin with impact is an `EOA` or `EOAPermissioned` (dominates everything else)
+- **75 / 55** — any `Multisig` has impact. Score depends on the sum of multisig impact as a share of TVS (`totalCapitalAtRisk + totalTokenValue`): `< 30%` → **75**, otherwise **55**. If TVS is `0`, the share is treated as 100%
+- **80** — only contract-type admins (Timelock, governance contracts, etc.) have impact
+
+Cascade order is strict: EOA > Multisig > contract-only > none. EOA presence dominates regardless of multisig share.
+
+### DEPENDENCIES
+
+Count-based: `0 → 90`, `1–2 → 70`, `3–5 → 50`, `6+ → 30`.
+
+### ACCESS
+
+Count of `resources[].type === 'frontend'`: `0 → 20`, `1 → 50`, `2–3 → 75`, `4+ → 90`.
+
+### VERIFIABILITY
+
+Additive, four components, total clamped to 100 and rounded.
+
+| Component | Weight | Tiers |
+|---|---|---|
+| **Coverage** | 50 | `100% → 50`, `95–100% → 40`, `90–95% → 20`, `<90% → 5`, **missing → 40** (default when `totals.coverage` is `undefined`, distinct from a real `0`) |
+| **Audits** | 25 | `0 → 0`, `1 → 10`, `2 → 18`, `3 → 22`, `4+ → 25` |
+| **LoC** (inverse — smaller = more auditable) | 15 | `≤5k → 15`, `≤10k → 12`, `≤20k → 8`, `≤50k → 4`, `>50k → 1`, **missing (0) → neutral 8** |
+| **Bug bounty** (`max(audits[].bounty)` USD) | 10 | `$0 → 0`, `<$100k → 2`, `<$500k → 5`, `<$1M → 7`, `≥$1M → 10` |
+
+Coverage uses `>=` at bucket edges, so exactly `0.95` → 40 and exactly `0.90` → 20.
+
+### ABILITY TO EXIT
+
+Currently a constant `65` placeholder — not yet derived from compiled data.

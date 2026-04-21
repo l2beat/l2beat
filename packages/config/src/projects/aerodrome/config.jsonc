@@ -1,0 +1,178 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aerodrome",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 60,
+  "initialAddresses": [
+    "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+    "base:0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43",
+    "base:0x45cA74858C579E717ee29A86042E0d53B252B504",
+    "base:0xF4171B0953b52Fa55462E4d76ecA1845Db69af00",
+    "base:0xC7150B9909DFfCB5e12E4Be6999D6f4b827eE497",
+    "base:0xDB45818A6db280ecfeB33cbeBd445423d0216b5D"
+  ],
+  "names": {
+    "base:0x7766Eb408B671BE8bc237639b20A0eC45e2750C7": "Redistributor Keeper",
+    "base:0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a": "Aerodrome Foundation and Incentives",
+    "base:0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D": "Emergency Council",
+    "base:0xE6A41fE61E7a1996B59d508661e3f524d6A32075": "Undeclared Multisig"
+  },
+  "overrides": {
+    "base:0xD30677bd8dd15132F251Cb54CbDA552d2A05Fb08": {
+      "ignoreDiscovery": true
+    },
+    "base:0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5": {
+      "ignoreInWatchMode": [
+        "activePeriod",
+        "weekly",
+        "teamRate"
+      ]
+    },
+    "base:0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4": {
+      "ignoreMethods": [
+        "balanceOfNFT",
+        "deactivated",
+        "idToManaged",
+        "locked",
+        "pointHistory",
+        "supply",
+        "slopeChanges",
+        "totalSupplyAt",
+        "totalSupply",
+        "userPointEpoch",
+        "voted",
+        "tokenURI",
+        "numCheckpoints",
+        "delegates",
+        "escrowType",
+        "getApproved",
+        "getPastTotalSupply",
+        "managedToFree",
+        "managedToLocked",
+        "ownerOf"
+      ]
+    },
+    "base:0x227f65131A261548b057215bB1D5Ab2997964C7d": {
+      "ignoreMethods": [
+        "timeCursorOf",
+        "tokenLastBalance",
+        "tokensPerWeek",
+        "startTime",
+        "WEEK",
+        "claimable",
+        "lastTokenTime"
+      ]
+    },
+    "base:0x16613524e02ad97eDfeF371bC883F2F5d6C480A5": {
+      "ignoreMethods": [
+        "epochVoteEnd",
+        "epochVoteStart",
+        "isWhitelistedNFT",
+        "lastVoted",
+        "usedWeights",
+        "pools",
+        "epochStart",
+        "epochNext",
+        "totalWeight",
+        "length"
+      ],
+      "fields": {
+        "rewardToken": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631"
+          },
+          "description": "AERO token address (internal immutable, set in constructor from ve.token())"
+        }
+      }
+    },
+    "base:0x11a53f31Bf406de59fCf9613E1922bd3E283A4B4": {
+      "ignoreMethods": ["activePeriod", "totalEmissions", "totalWeight"]
+    },
+    "base:0xd4C6eDDBE963aFA2D7b1562d0F2F3F9462E6525b": {
+      "ignoreDiscovery": true
+    },
+    "base:0xDB45818A6db280ecfeB33cbeBd445423d0216b5D": {
+      "ignoreDiscovery": true
+    },
+    "base:0xaDe65c38CD4849aDBA595a4323a8C7DdfE89716a": {
+      "ignoreMethods": ["allPools", "allPoolsLength", "tickSpacings"]
+    },
+    "base:0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A": {
+      "ignoreMethods": ["allPools", "allPoolsLength", "tickSpacings"]
+    },
+    "base:0x5C3F18F06CC09CA1910767A34a20F771039E37C0": {
+      "fields": {
+        "_owner": {
+          "handler": { "type": "storage", "slot": 0, "returnType": "address" }
+        }
+      }
+    },
+    "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da": {
+      "ignoreMethods": ["allPools"]
+    },
+    "base:0xE28Adc50c7551CFf69FCF32D45d037e5F6554264": {
+      "ignoreDiscovery": true
+    },
+    "base:0xf4bAb6A129164aBa9B113cB96BA4266dF49f8743": {
+      "ignoreDiscovery": true
+    },
+    "base:0xe9970892455e54Bab465A398fa575Fef2B187546": {
+      "ignoreDiscovery": true
+    },
+    "base:0x4B364C2B5fe67B8566CDe8D0C5335F791030bECC": {
+      "ignoreDiscovery": true
+    },
+    "base:0x942e97a4c6FdC38B4CD1c0298D37d81fDD8E5A16": {
+      "ignoreMethods": ["observations", "unstakedFee"]
+    },
+    "base:0xA4e46b4f701c62e14DF11B48dCe76A7d793CD6d7": {
+      "ignoreMethods": ["lastObservation"]
+    },
+    "base:0xC0d2086B6f70C0C40423626167096c6196cFA0c8": {
+      "ignoreMethods": [
+        "lastUpdateTime",
+        "rewardGrowthInside",
+        "rewardRateByEpoch",
+        "rewards",
+        "rewardsByEpoch"
+      ]
+    },
+    "base:0xeC8E5342B19977B4eF8892e02D8DAEcfa1315831": {
+      "ignoreMethods": ["observations", "unstakedFee"]
+    },
+    "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
+    "base:0xa990C6a764b73BF43cee5Bb40339c3322FB9D55F": {
+      "ignoreMethods": ["positions", "tokenByIndex", "WETH9"]
+    },
+    "base:0xcF77a3Ba9A5CA399B7c97c74d54e5b1Beb874E43": {
+      "ignoreMethods": ["weth"]
+    },
+    "base:0xf632031B94D72deE0D99DeF846c9b6211041337f": {
+      "ignoreMethods": ["WETH9"]
+    },
+    "base:0xc2cc3256434AfbC36Bb5e815e1Bb2151310a1a0b": {
+    },
+    "base:0x090b2A6bb475c00e2256e2095A60887cD710803b": {
+    },
+    "base:0x87D8f999BBa9343E8099552426775B51C338E8CB": {
+    },
+    "base:0xF4Ecd78EBEB6d36CF7f80B5B6B41453515fe2785": {
+    },
+    "base:0x385293CaE378C813F16f0C1334d774AdDDf56AbB": {
+      "fields": {
+        "MAX_BPS": {
+          "severity": "HIGH"
+        },
+        "MAX_MIN_STAKE_TIME": {
+          "severity": "HIGH"
+        },
+        "redistributor": {
+          "severity": "HIGH"
+        }
+      }
+    }
+  }
+}

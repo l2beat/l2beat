@@ -16,7 +16,7 @@
     "contractCount": 23,
     "permissionedFunctionCount": 16,
     "scoredFunctionCount": 14,
-    "adminCount": 7,
+    "adminCount": 6,
     "dependencyCount": 9,
     "totalCapitalAtRisk": 168989821.85093307,
     "totalTokenValueAtRisk": 0,
@@ -608,6 +608,33 @@
       ],
       "functions": [
         {
+          "contractAddress": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+          "contractName": "1/6 17% Safe",
+          "functionName": "checkNSignatures",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+          "contractName": "1/6 17% Safe",
+          "functionName": "checkSignatures",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0x0000aeB716a0DF7A9A1AAd119b772644Bc089dA8",
+          "contractName": "1/6 17% Safe",
+          "functionName": "execTransaction",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        },
+        {
           "contractAddress": "eth:0x0A0e559bc3b0950a7e448F0d4894db195b9cf8DD",
           "contractName": "5/8 63% Safe",
           "functionName": "checkNSignatures",
@@ -694,160 +721,6 @@
       "dependencyType": "callgraph"
     },
     {
-      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
-      "name": "Chainlink USDC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data. Used by Morpho Blue markets where the vault deploys capital to determine collateral valuations and health ratios. The vault's exposure to markets relying on this feed makes it a critical dependency for accurate position accounting.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
-      "name": "Chainlink USDC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Used to value collateral and determine borrowing capacity in markets where vault capital is deployed.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0xc0053f3fbccd593758258334dfce24c2a9a673ad",
-      "name": "Chainlink USDC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral valuation in lending markets where the vault maintains positions.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
-      "name": "Chainlink USDC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Enables accurate pricing of collateral in markets where vault funds are allocated.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
-      "name": "Chainlink BTC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing BTC/USD price data for Morpho Blue markets with BTC-denominated collateral. Used to value Bitcoin collateral in markets where the vault deploys USDC.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
-      "name": "Chainlink USDC/USD Price Feed",
-      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral and debt valuation in lending markets receiving vault capital.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
-      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
-      "name": "Chainlink wstETH Price Feed",
-      "description": "Custom Chainlink price feed for wstETH (wrapped staked ETH). Provides pricing for wstETH collateral in Morpho Blue markets where the vault maintains USDC lending positions. Critical for accurate valuation of liquid staking derivative collateral.",
-      "entity": "Chainlink",
-      "isAutoDetected": false,
-      "viewOnlyPath": false,
-      "calledFunctions": [],
-      "functions": [
-        {
-          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
-          "contractName": "Morpho",
-          "functionName": "liquidate",
-          "viewOnlyPath": false,
-          "directFundsUsd": 0,
-          "directTokenValueUsd": 0,
-          "reachableContracts": []
-        }
-      ],
-      "totalFundsAtRisk": 0,
-      "totalTokenValueAtRisk": 0
-    },
-    {
       "address": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
       "name": "Morpho Blue",
       "description": "Core lending protocol where all vault deposits are allocated. The vault supplies USDC to various lending markets on Morpho Blue, making it the fundamental dependency for capital deployment, yield generation, and withdrawal operations. All vault positions and reallocations interact directly with Morpho Blue.",
@@ -855,14 +728,103 @@
       "isAutoDetected": true,
       "viewOnlyPath": false,
       "calledFunctions": [
+        "idToMarketParams",
         "market",
         "extSloads",
-        "idToMarketParams",
-        "accrueInterest",
+        "withdraw",
         "supply",
-        "withdraw"
+        "accrueInterest",
+        "position",
+        "owner"
       ],
       "functions": [
+        {
+          "contractAddress": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "contractName": "MorphoHelper",
+          "functionName": "move",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "reallocate"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "contractName": "MorphoHelper",
+          "functionName": "reallocate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "reallocate"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "contractName": "MorphoHelper",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "reallocate",
+                "setSupplyQueue",
+                "updateWithdrawQueue",
+                "config"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "contractName": "MorphoHelper",
+          "functionName": "vault_updateWithdrawQueue",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "updateWithdrawQueue"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": false
+            }
+          ]
+        },
         {
           "contractAddress": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
           "contractName": "MetaMorpho",
@@ -984,17 +946,220 @@
           "directFundsUsd": 168989821.85093307,
           "directTokenValueUsd": 0,
           "reachableContracts": []
+        },
+        {
+          "contractAddress": "eth:0xfd32fA2ca22c76dD6E550706Ad913FC6CE91c75D",
+          "contractName": "PublicAllocator",
+          "functionName": "reallocateTo",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "config",
+                "reallocate"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
         }
       ],
       "totalFundsAtRisk": 168989821.85093307,
       "totalTokenValueAtRisk": 0,
       "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0xc0053f3FBcCD593758258334Dfce24C2A9A673aD",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral valuation in lending markets where the vault maintains positions.",
+      "entity": "Chainlink",
+      "isAutoDetected": true,
+      "viewOnlyPath": false,
+      "calledFunctions": [
+        "latestRoundData"
+      ],
+      "functions": [
+        {
+          "contractAddress": "eth:0x9E9110cFd24cd851ea5bc73a27975B33E308f9e1",
+          "contractName": "MorphoHelper",
+          "functionName": "upgradeToAndCall",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": [
+            {
+              "address": "eth:0xBEEF01735c132Ada46AA9aA4c54623cAA92A64CB",
+              "name": "MetaMorpho",
+              "viewOnlyPath": false,
+              "calledFunctions": [
+                "reallocate",
+                "setSupplyQueue",
+                "updateWithdrawQueue",
+                "config"
+              ],
+              "fundsUsd": 168989821.85093307,
+              "tokenValueUsd": 0,
+              "fundsAtRisk": true
+            }
+          ]
+        },
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 168989821.85093307,
+      "totalTokenValueAtRisk": 0,
+      "dependencyType": "callgraph"
+    },
+    {
+      "address": "eth:0x86392dc19c0b719886221c78ab11eb8cf5c52812",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data. Used by Morpho Blue markets where the vault deploys capital to determine collateral valuations and health ratios. The vault's exposure to markets relying on this feed makes it a critical dependency for accurate position accounting.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
+    },
+    {
+      "address": "eth:0x986b5e1e1755e3c2440e960477f25201b0a8bbd4",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Used to value collateral and determine borrowing capacity in markets where vault capital is deployed.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
+    },
+    {
+      "address": "eth:0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Enables accurate pricing of collateral in markets where vault funds are allocated.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
+    },
+    {
+      "address": "eth:0xf4030086522a5beea4988f8ca5b36dbc97bee88c",
+      "name": "Chainlink BTC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing BTC/USD price data for Morpho Blue markets with BTC-denominated collateral. Used to value Bitcoin collateral in markets where the vault deploys USDC.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
+    },
+    {
+      "address": "eth:0xfdfd9c85ad200c506cf9e21f1fd8dd01932fbb23",
+      "name": "Chainlink USDC/USD Price Feed",
+      "description": "Chainlink EACAggregatorProxy providing USDC/USD price data for Morpho Blue markets. Supports collateral and debt valuation in lending markets receiving vault capital.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
+    },
+    {
+      "address": "eth:0x4f67e4d9bd67efa28236013288737d39aef48e79",
+      "name": "Chainlink wstETH Price Feed",
+      "description": "Custom Chainlink price feed for wstETH (wrapped staked ETH). Provides pricing for wstETH collateral in Morpho Blue markets where the vault maintains USDC lending positions. Critical for accurate valuation of liquid staking derivative collateral.",
+      "entity": "Chainlink",
+      "isAutoDetected": false,
+      "viewOnlyPath": false,
+      "calledFunctions": [],
+      "functions": [
+        {
+          "contractAddress": "eth:0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+          "contractName": "Morpho",
+          "functionName": "liquidate",
+          "viewOnlyPath": false,
+          "directFundsUsd": 0,
+          "directTokenValueUsd": 0,
+          "reachableContracts": []
+        }
+      ],
+      "totalFundsAtRisk": 0,
+      "totalTokenValueAtRisk": 0
     }
   ],
   "dependencyEntityGroups": [
     {
       "entity": "Chainlink",
-      "totalFundsAtRisk": 0,
+      "totalFundsAtRisk": 168989821.85093307,
       "totalTokenValueAtRisk": 0
     },
     {

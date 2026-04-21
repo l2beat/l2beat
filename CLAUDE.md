@@ -67,6 +67,10 @@ git fetch upstream && git merge upstream/main
 - `api.ts` - DeFiDisco API functions (unavoidable)
 - `DiscoveryApp.tsx` - Single route entry per top-level page (e.g. `/ui/monitor-admin`)
 - `HomePage.tsx` - Entry buttons for top-level DeFiDisco pages
+- **Cross-chain discovery glue in the core `discovery` package** (required because DeFiDisco analyzes L2 protocols that upstream L2BEAT discovery didn't originally target; keep these edits narrow and well-commented):
+  - `packages/discovery/src/config/chains.ts` - Switch Base from `etherscan` to `blockscout` explorer so Slither and discovery can fetch verified sources from `base.blockscout.com` without an Etherscan API key
+  - `packages/discovery/src/flatten/ParsedFilesManager.ts` - Deduplicate files that share a `normalizedPath` after remapping. Blockscout returns both the user-facing import path and the library path (e.g. `@openzeppelin/...` + `lib/openzeppelin-contracts/...`), which then collide during flattening
+  - `packages/discovery/src/utils/BlockscoutModels.ts` - Loosen the `CompilerSettings.libraries` schema to accept both the flat `Record<string, string>` shape (older contracts) and the nested `Record<string, Record<string, string>>` shape (newer Blockscout payloads)
 
 ### Repository Setup
 
@@ -116,6 +120,7 @@ Detailed documentation for each feature is in `docs/developers/features/`. Read 
 - Review Compiler (`compiled-review.json` — thin assembly layer over ProjectAnalysis, template variable resolution, bulk compile-all endpoint, `adminTotals`/`dependencyTotals` for cross-entity deduplicated capital. `totals.coverage` / `totals.verifiedContractCount` are computed by `computeCoverage(discovery)` from `discovered.json.entries[].unverified` — non-EOA entries are verified when `unverified !== true`)
 - Impact Cap (`impactCap` on mitigations — structured field reference or hardcoded USD, `ImpactCapUnit` scaling, `effectiveCapUsd` on reachable contracts, "$X Max Impact" badge display)
 - Mitigations Display (badges in explorer tabs + report cards, key findings card, `deduplicateMitigations`)
+- Radar Scoring (`deriveRadarData()` in `packages/defiscan-frontend/src/utils/radar.ts` — 5-axis 0-100 scores driving the Report hero and Gallery radar charts; full per-axis tiers in the scoring-and-review doc)
 
 ### Infrastructure — `docs/developers/features/infrastructure.md`
 - DeFiScan Panel (contract analysis dashboard)
@@ -338,7 +343,9 @@ packages/
 │       ├── AggregateService.ts       # Handler dispatch + caching
 │       └── handlers/                 # Per-protocol aggregate handlers
 │           ├── uniswapV2Factory.ts   # The Graph subgraph (requires THEGRAPH_API_KEY)
-│           └── frankencoinMintinghub.ts  # Frankencoin API (no key needed)
+│           ├── frankencoinMintinghub.ts  # Frankencoin API (no key needed)
+│           ├── aerodromeV2Factory.ts     # DefiLlama TVL + on-chain allPoolsLength() via Base Blockscout RPC (no key)
+│           └── aerodromeClFactory.ts     # DefiLlama Slipstream TVL + pool count across both CL factories (no key)
 └── config/src/projects/compound-v3/
     ├── permission-overrides.json
     ├── resources.json                # Per-project resources, audits & LoC count ({ resources: ResourceEntry[], audits: AuditEntry[], linesOfCode?: number })

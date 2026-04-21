@@ -98,7 +98,7 @@ export class ParsedFilesManager {
     result.options = options ?? result.options
 
     const remappings = decodeRemappings(remappingStrings)
-    result.files = files.map(({ path, content }) => {
+    const allFiles = files.map(({ path, content }) => {
       const remappedPath = resolveRemappings(path, remappings)
       return {
         path: remappedPath,
@@ -108,6 +108,17 @@ export class ParsedFilesManager {
         topLevelDeclarations: [],
         importDirectives: [],
       }
+    })
+    // Deduplicate files with the same normalizedPath (e.g. Blockscout may
+    // return both @openzeppelin/... and lib/openzeppelin-contracts/... which
+    // resolve to the same path after remapping).
+    const seen = new Set<string>()
+    result.files = allFiles.filter((f) => {
+      if (seen.has(f.normalizedPath)) {
+        return false
+      }
+      seen.add(f.normalizedPath)
+      return true
     })
 
     // Pass 1: Find all contract declarations

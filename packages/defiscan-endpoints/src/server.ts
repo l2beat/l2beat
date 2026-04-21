@@ -13,6 +13,8 @@ import { healthRouter } from './routes/health'
 import { positionsRouter } from './routes/positions'
 import { tokenRouter } from './routes/token'
 import {
+  AerodromeClFactoryHandler,
+  AerodromeV2FactoryHandler,
   AggregateService,
   FrankencoinMintinghubHandler,
   UniswapV2FactoryHandler,
@@ -109,6 +111,8 @@ export function createDefiscanServer(
   )
   const aggregateService = new AggregateService(
     [
+      new AerodromeClFactoryHandler(),
+      new AerodromeV2FactoryHandler(),
       new UniswapV2FactoryHandler(config.thegraph.apiKey),
       new FrankencoinMintinghubHandler(),
     ],

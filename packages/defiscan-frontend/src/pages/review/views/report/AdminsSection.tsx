@@ -109,11 +109,14 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
     )
   }
 
-  // Sort all admins by reachable capital descending for top-3
+  // Sort all admins by total reachable impact (TVL + token value) descending for top-3.
+  // Multisigs that only control token emissions (no TVL reach) still surface here.
+  const adminImpact = (a: CompiledAdmin) =>
+    a.totalReachableCapital + (a.totalReachableTokenValue ?? 0)
   const sortedByImpact = [...activeAdmins].sort(
-    (a, b) => b.totalReachableCapital - a.totalReachableCapital,
+    (a, b) => adminImpact(b) - adminImpact(a),
   )
-  const maxCapital = Math.max(...sortedByImpact.map((a) => a.totalReachableCapital), 0)
+  const maxCapital = Math.max(...sortedByImpact.map(adminImpact), 0)
   // Use pre-computed cross-admin deduplicated totals from the compiler,
   // falling back to raw sum for old compiled reviews.
   const impactedCapital = review.adminTotals
@@ -149,7 +152,8 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
         />
         <div className="flex flex-col gap-6">
           {displayedAdmins.map((admin) => {
-            const barWidth = maxCapital > 0 ? (admin.totalReachableCapital / maxCapital) * 100 : 0
+            const rowImpact = adminImpact(admin)
+            const barWidth = maxCapital > 0 ? (rowImpact / maxCapital) * 100 : 0
             const rawAddress = stripChainPrefix(admin.address)
             const mitigations = deduplicateMitigations(
               admin.functions?.flatMap((f) => f.mitigations ?? []) ?? [],
@@ -158,7 +162,7 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
               <ImpactBarRow
                 key={admin.address}
                 title={admin.name}
-                impactUsd={admin.totalReachableCapital}
+                impactUsd={rowImpact}
                 barPercent={barWidth}
                 badges={
                   <>
@@ -179,9 +183,26 @@ export function AdminsSection({ review, onShowMore }: AdminsSectionProps) {
                         Governance
                       </span>
                     )}
-                    {mitigations.map((m, i) => (
-                      <MitigationBadge key={i} mitigation={m} />
-                    ))}
+                    {(() => {
+                      const MAX_BADGES = 4
+                      const visible = mitigations.slice(0, MAX_BADGES)
+                      const remaining = mitigations.length - visible.length
+                      return (
+                        <>
+                          {visible.map((m, i) => (
+                            <MitigationBadge key={i} mitigation={m} />
+                          ))}
+                          {remaining > 0 && (
+                            <span
+                              className="shrink-0 text-text-muted text-[10px] leading-4 ml-0.5"
+                              title={`${mitigations.length} unique mitigations total`}
+                            >
+                              +{remaining}
+                            </span>
+                          )}
+                        </>
+                      )
+                    })()}
                   </>
                 }
               />

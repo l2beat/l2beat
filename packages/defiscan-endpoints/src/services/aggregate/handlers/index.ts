@@ -1,3 +1,5 @@
+export { AerodromeClFactoryHandler } from './aerodromeClFactory'
+export { AerodromeV2FactoryHandler } from './aerodromeV2Factory'
 export { FrankencoinMintinghubHandler } from './frankencoinMintinghub'
 export { UniswapV2FactoryHandler } from './uniswapV2Factory'
 export type { AggregateHandler } from './types'

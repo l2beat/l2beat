@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "lastModified": "2026-04-16T08:30:15.582Z",
+  "tags": [
+    {
+      "contractAddress": "base:0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A",
+      "isExternal": false,
+      "fetchAggregate": true,
+      "aggregateHandler": "aerodrome-cl-factory",
+      "aggregateLabel": "CL Factory TVL",
+      "timestamp": "2026-03-23T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "base:0x420DD381b31aEf6683db6B902084cB0FFECe40Da",
+      "isExternal": false,
+      "fetchAggregate": true,
+      "aggregateHandler": "aerodrome-v2-factory",
+      "aggregateLabel": "V2 Factory TVL",
+      "timestamp": "2026-03-23T00:00:00.000Z"
+    },
+    {
+      "contractAddress": "base:0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+      "isExternal": false,
+      "isToken": true,
+      "timestamp": "2026-04-16T08:30:15.582Z"
+    }
+  ]
+}

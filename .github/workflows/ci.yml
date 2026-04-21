@@ -51,20 +51,8 @@ jobs:
               - 'packages/shared-pure/**'
               - 'packages/validate/**'
             monitor:
-              - 'pnpm-lock.yaml'
-              - 'pnpm-workspace.yaml'
-              - 'package.json'
-              - 'turbo.json'
-              - 'tsconfig*.json'
               - '.github/workflows/ci.yml'
               - 'packages/backend/**'
-              - 'packages/backend-tools/**'
-              - 'packages/config/**'
-              - 'packages/database/**'
-              - 'packages/discovery/**'
-              - 'packages/shared/**'
-              - 'packages/shared-pure/**'
-              - 'packages/validate/**'
 
   build-protocolbeat:
     name: Build Protocolbeat

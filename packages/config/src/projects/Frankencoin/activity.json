@@ -68,39 +68,6 @@
             "capacity": "200000000000000000000000",
             "rate": "1388888888888888888"
           }
-        },
-        {
-          "field": "description",
-          "after": "Chainlink CCIP BurnMintTokenPool for ZCHF cross-chain transfers. Rate limits are enforced per remote chain on inbound mints; see inboundRateLimit_* fields."
-        },
-        {
-          "field": "fieldMeta",
-          "after": {
-            "getRateLimitAdmin": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Polygon": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Arbitrum": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Optimism": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Base": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Avalanche": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_Gnosis": {
-              "severity": "HIGH"
-            },
-            "inboundRateLimit_BSC": {
-              "severity": "HIGH"
-            }
-          }
         }
       ]
     },

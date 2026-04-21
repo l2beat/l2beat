@@ -221,5 +221,46 @@
       // Accounting (V3)
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
     },
+    "eth:0x48c4929630099b217136b64089E8543dB0E5163a": {
+      "ignoreInWatchMode": [
+        "allowedRecipients",
+        "getAllowedRecipients",
+        "getPeriodState",
+        "spendableBalance"
+      ]
+    },
+    "eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea": {
+      "ignoreInWatchMode": [
+        "getMotions",
+        "motions"
+      ]
+    },
+    "eth:0x75100bd564415731B5936A4A94D0dC29DdE5dB3C": {
+      "ignoreInWatchMode": [
+        "_now",
+        "_nowDateTime"
+      ]
+    },
+    "eth:0x64B6aF9A108dCdF470E48e4c0147127F26221A7C": {
+      "ignoreInWatchMode": [
+        "estimateTradeOutput"
+      ]
+    },
+    "eth:0x3e2D251275A92a8169A3B17A2C49016e2de492a7": {
+      "ignoreInWatchMode": [
+        "estimateTradeOutput",
+        "estimateTradeOutputFromCurrentBalance"
+      ]
+    },
+    "eth:0x2B5a3944A654439379B206DE999639508bA2e850": {
+      "ignoreInWatchMode": [
+        "estimateTradeOutput"
+      ]
+    },
+    "eth:0x2a30F5aC03187674553024296bed35Aa49749DDa": {
+      "ignoreInWatchMode": [
+        "getCurrentDayTime"
+      ]
+    },
   }
 }

@@ -79,7 +79,13 @@ export function deduplicateMitigations(
       result.push(m)
     }
   }
-  return result
+  // Stable sort: mitigations carrying an impact cap surface first so the
+  // overflow slice in report/explorer lists keeps the most informative badges.
+  return result.sort(
+    (a, b) =>
+      (a.impactCapUsd !== undefined ? 0 : 1) -
+      (b.impactCapUsd !== undefined ? 0 : 1),
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -201,11 +207,32 @@ export function ExpandedAdminFunctions({ admin }: { admin: CompiledAdmin }) {
   )
 }
 
+/**
+ * Per-function TVS impact = direct funds + direct token value + reachable
+ * contract funds/token value (capped by effectiveCapUsd where applicable).
+ * Mirrors the admin-level totalReachable* aggregation but scoped to one
+ * function, so the researcher can see which function actually carries the
+ * impact.
+ */
+function functionTvsImpact(fn: CompiledAdminFunction): number {
+  let total = fn.directFundsUsd + fn.directTokenValueUsd
+  for (const rc of fn.reachableContracts) {
+    if (!rc.fundsAtRisk) continue
+    const raw = rc.fundsUsd + rc.tokenValueUsd
+    total +=
+      rc.effectiveCapUsd !== undefined ? Math.min(raw, rc.effectiveCapUsd) : raw
+  }
+  return total
+}
+
 export function AdminFunctionTable({
   functions,
 }: {
   functions: CompiledAdminFunction[]
 }) {
+  const sorted = [...functions].sort(
+    (a, b) => functionTvsImpact(b) - functionTvsImpact(a),
+  )
   return (
     <table className="w-full text-xs">
       <thead>
@@ -213,48 +240,51 @@ export function AdminFunctionTable({
           <th className="text-left pb-1 font-medium">Contract</th>
           <th className="text-left pb-1 font-medium">Function</th>
           <th className="text-left pb-1 font-medium">Mitigations</th>
-          <th className="text-right pb-1 font-medium">TVS</th>
+          <th className="text-right pb-1 font-medium">TVS Impact</th>
         </tr>
       </thead>
       <tbody>
-        {functions.map((fn) => (
-          <tr
-            key={`${fn.contractAddress}-${fn.functionName}`}
-            className="border-t border-border/30"
-          >
-            <td className="py-1.5 text-text-secondary">{fn.contractName}</td>
-            <td className="py-1.5">
-              <span className="font-mono text-text-primary">
-                {fn.functionName}()
-              </span>
-              {fn.isUpgrade && (
-                <span className="ml-1 rounded px-1 text-[10px] font-medium bg-red-500/20 text-red-400">
-                  upgrade
+        {sorted.map((fn) => {
+          const tvs = functionTvsImpact(fn)
+          return (
+            <tr
+              key={`${fn.contractAddress}-${fn.functionName}`}
+              className="border-t border-border/30"
+            >
+              <td className="py-1.5 text-text-secondary">{fn.contractName}</td>
+              <td className="py-1.5">
+                <span className="font-mono text-text-primary">
+                  {fn.functionName}()
                 </span>
-              )}
-            </td>
-            <td className="py-1.5">
-              {fn.mitigations && fn.mitigations.length > 0 ? (
-                <div className="flex flex-wrap gap-0.5">
-                  {fn.mitigations.map((m, i) => (
-                    <MitigationBadge key={i} mitigation={m} />
-                  ))}
-                </div>
-              ) : (
-                <span className="text-text-muted">-</span>
-              )}
-            </td>
-            <td className="py-1.5 text-right tabular-nums">
-              {fn.directFundsUsd > 0 ? (
-                <span className="text-capital font-medium">
-                  {formatUsdValue(fn.directFundsUsd)}
-                </span>
-              ) : (
-                <span className="text-text-muted">-</span>
-              )}
-            </td>
-          </tr>
-        ))}
+                {fn.isUpgrade && (
+                  <span className="ml-1 rounded px-1 text-[10px] font-medium bg-red-500/20 text-red-400">
+                    upgrade
+                  </span>
+                )}
+              </td>
+              <td className="py-1.5">
+                {fn.mitigations && fn.mitigations.length > 0 ? (
+                  <div className="flex flex-wrap gap-0.5">
+                    {fn.mitigations.map((m, i) => (
+                      <MitigationBadge key={i} mitigation={m} />
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-text-muted">-</span>
+                )}
+              </td>
+              <td className="py-1.5 text-right tabular-nums">
+                {tvs > 0 ? (
+                  <span className="text-capital font-medium">
+                    {formatUsdValue(tvs)}
+                  </span>
+                ) : (
+                  <span className="text-text-muted">-</span>
+                )}
+              </td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   )
